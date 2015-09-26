@@ -1,0 +1,44 @@
+<div class='latex_section'>
+	Definition
+</div>
+<div class='latex_body'>
+	Given $f(x) = g(h(x))$, the derivative is defined as:
+	<div class='latex_equation'>$f'(x) = g'(h(x)) \cdot h'(x)$</div>
+	where a prime denotes the first derivative. For the above to work
+	$h(x)$ and $g(x)$ must be differentiable at $x$ and $h(x)$ respectively. 
+</div>
+
+<div class='latex_section'>
+	Proof by Formal Definition
+</div>
+<div class='latex_body'>
+	Using the limit definition of the derivative:
+	<div class='latex_equation'>
+		$\eqalign{
+			f'(x) &= \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h} \cdot \frac{h(x+h) - h(x)}{h(x+h) - h(x)} \\
+			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h(x+h) - h(x)} \cdot \frac{h(x+h) - h(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h(x+h) - h(x)} \cdot \lim_{h \rightarrow 0} \frac{h(x+h) - h(x)}{h} 
+		}$
+	</div>
+	Now the trick is to let $\Delta = h(x+h) - h(x)$ so that:
+	<div class='latex_equation'>
+		$\eqalign{
+			f'(x) &= \lim_{h \rightarrow 0} \frac{g(h(x) + \Delta) - g(h(x))}{\Delta} \cdot \lim_{h \rightarrow 0} \frac{h(x+h) - h(x)}{h} \\
+			&= g'(h(x)) \cdot h'(x)
+		}$
+	</div>
+	Now to be a little formal consider the fact that during the evaluation an extra factor was brought into the denominator. Usually this does
+	not present a problem unless that factor is zero. So what happens if $\Delta = 0$? To figure this out go back to the beginning of the proof:
+	<div class='latex_equation'>
+		$\eqalign{
+			f'(x) &= \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(h(x + \Delta)) - g(h(x))}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(h(x)) - g(h(x))}{h} \\
+			&= 0
+		}$
+	</div>
+	So in the end if that extra factor happens to be zero, then the derivative is equivalently zero.
+</div>

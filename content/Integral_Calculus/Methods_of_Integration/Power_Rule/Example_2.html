@@ -1,0 +1,36 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int \Big( \frac{3}{x^2} + x^7 \Big) dx
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			According to the power rule:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int x^n dx = \frac{x^{n+1}}{n+1} + C
+				}$
+			</div>
+			so:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int \Big( \frac{3}{x^2} + x^7 \Big) dx &= 3 \int x^{-2} dx + \int x^7 dx \\
+					&= 3 \cdot \frac{x^{-1}}{-1} + \frac{x^8}{8} + C \\
+					&= -\frac{3}{x} + \frac{x^8}{8} + C \\
+				}$
+			</div>
+		</div>
+	</div>
+</div>

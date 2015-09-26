@@ -1,0 +1,37 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int_e^3 \frac{\ln(x)}{x} dx
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class='hidden_div'>
+		<div class='latex_body'>
+			Make the following substitution:
+			<div class='latex_equation'>
+				$\eqalign{
+					u &= \ln(x) \\
+					du &= \frac{dx}{x}
+				}$
+			</div>
+			to simplify the integral:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int_e^3 \frac{\ln(x)}{x} dx &= \int_{\ln(e)}^{\ln(3)} u du \\
+					&= \frac{u^2}{2} \Big|_1^{\ln(3)} \\
+					&= \frac{\ln^2(3) - 1}{2}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

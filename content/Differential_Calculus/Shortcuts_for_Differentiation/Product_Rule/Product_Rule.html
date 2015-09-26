@@ -1,0 +1,63 @@
+<div class='latex_section'>
+	Definition
+</div>
+<div class='latex_body'>
+	Given $h(x) = f(x)g(x)$, the derivative is defined as:
+	<div class='latex_equation'>$h'(x) = f'(x)g(x) + f(x)g'(x)$</div>
+	where a prime denotes the first derivative and $f(x)$ and $g(x)$ must be differentiable at $x$ for the above to work.
+</div>
+
+<div class='latex_section'>
+	Proof by Formal Definition
+</div>
+<div class='latex_body'>
+	<div class='latex_equation'>
+		$\eqalign{
+			h'(x) &= \lim_{h \rightarrow 0} \frac{h(x+h) - h(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{f(x+h)g(x+h) - f(x)g(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{f(x+h)g(x+h) - f(x)g(x+h) + f(x)g(x+h) - f(x)g(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \Big( \frac{f(x+h) - f(x)}{h} \cdot g(x+h) \Big) + \lim_{h \rightarrow 0} \Big( f(x+h) \cdot \frac{g(x+h) - g(x)}{h} \Big) \\
+			&= \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h} \cdot \lim_{h \rightarrow 0} g(x+h) + \lim_{h \rightarrow 0} f(x+h) \cdot \lim_{h \rightarrow 0} \frac{g(x+h) - g(x)}{h} \\
+			&= f'(x)g(x) + f(x)g'(x) 
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Proof by Logarithmic Differentiation
+</div>
+<div class='latex_body'>
+	<div class='latex_equation'>
+		$\eqalign{
+			h(x) &= f(x)g(x) \\
+			\ln(h(x)) &= \ln(f(x)g(x)) \\
+			\ln(h(x)) &= \ln(f(x)) + \ln(g(x)) \\
+			\frac{d}{dx} \ln(h(x)) &= \frac{d}{dx} \Big( \ln(f(x)) + \ln(g(x)) \Big) \\
+			\frac{h'(x)}{h(x)} &= \frac{f'(x)}{f(x)} + \frac{g'(x)}{g(x)} \\
+			h'(x) &= f(x)g(x) \Big( \frac{f'(x)}{f(x)} + \frac{g'(x)}{g(x)} \Big) \\
+			h'(x) &= f'(x)g(x) + f(x)g'(x)
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Proof by Linear Approximation
+</div>
+<div class='latex_body'>
+	A third way of proving the product rule utilizes the fact that any change in a
+	function can be written locally as:
+	<div class='latex_equation'>
+		$k(x + h) = k(x) + k'(x)h + \psi(h) \hspace{.3cm}$ iff $\hspace{.3cm} \eqalign{\lim_{h \rightarrow 0} \psi(h) = 0}$
+	</div>
+	Note the fact that $\psi(h)$ will be a polynomial of at least degree two and use this to evaluate the limit approach to the derivative:
+	<div class='latex_equation'>
+		$\eqalign{
+			h'(x) &= \lim_{h \rightarrow 0} \frac{h(x+h) - h(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{f(x+h)g(x+h) - f(x)g(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{(f(x)+f'(x)h+\psi_1(h))(g(x)+g'(x)h+\psi_2(h)) - f(x)g(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{f'(x)g(x)h + f(x)g'(x)h + f'(x)g'(x)h^2 + f(x)\psi_2(h) + g(x)\psi_1(h) + f'(x)h\psi_2(h) + g'(x)h\psi_1(h) + \psi_1(h)\psi_2(h)}{h} \\
+			&= \lim_{h \rightarrow 0} \Big( f'(x)g(x) + f(x)g'(x) + f'(x)g'(x)h + f(x)\frac{\psi_2(h)}{h} + g(x)\frac{\psi_1(h)}{h} + f'(x)\psi_2(h) + g'(x)\psi_1(h) + \frac{\psi_1(h)\psi_2(h)}{h} \Big) \\
+			&= f'(x)g(x) + f(x)g'(x)
+		}$
+	</div>
+</div>

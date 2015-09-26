@@ -1,0 +1,37 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int (3+x)^7 dx
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class='hidden_div'>
+		<div class='latex_body'>
+			Make the following substitution:
+			<div class='latex_equation'>
+				$\eqalign{
+					u &= 3+x \\
+					du &= dx
+				}$
+			</div>
+			to simplify the integral:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int (3+x)^7 dx &= \int u^7 du \\
+					&= \frac{u^8}{8} + C \\
+					&= \frac{(3+x)^8}{8} + C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

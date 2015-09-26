@@ -1,0 +1,38 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int \frac{x\cos(x^2)}{\sqrt{\sin(x^2)}} dx
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class='hidden_div'>
+		<div class='latex_body'>
+			Make the following substitution:
+			<div class='latex_equation'>
+				$\eqalign{
+					u &= \sin(x^2) \\
+					du &= 2x\cos(x^2) dx \rightarrow \frac{du}{2} = x\cos(x^2) dx
+				}$
+			</div>
+			to simplify the integral:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int \frac{x\cos(x^2)}{\sqrt{\sin(x^2)}} dx &= \int \frac{du}{2\sqrt{u}} \\
+					&= \frac{1}{2} \int u^{-\frac{1}{2}} du \\
+					&= u^\frac{1}{2} + C \\
+					&= \sqrt{\sin(x^2)} + C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

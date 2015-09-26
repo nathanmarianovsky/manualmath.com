@@ -1,0 +1,35 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int \Big( t\sqrt{t} + \frac{1}{t\sqrt{t}} \Big) dt
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class='latex_body'>
+			According to the power rule:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int t^n dt = \frac{t^{n+1}}{n+1} + C
+				}$
+			</div>
+			so:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int \Big( t\sqrt{t} + \frac{1}{t\sqrt{t}} \Big) dt &= \int t^\frac{3}{2} dt + \int t^{-\frac{3}{2}} dt \\
+					&= \frac{2}{5}t^\frac{5}{2} - 2t^{-\frac{1}{2}} + C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

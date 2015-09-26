@@ -1,0 +1,51 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int \frac{e^{2x}}{e^{2x} + 1} dx
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class='hidden_div'>
+		<div class='latex_body'>
+			Make the following substitution:
+			<div class='latex_equation'>
+				$\eqalign{
+					u &= e^{2x} \\
+					du &= 2e^{2x} dx \rightarrow \frac{du}{2} = e^{2x} dx
+				}$
+			</div>
+			to simplify the integral:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int \frac{e^{2x}}{e^{2x} + 1} du &= \frac{1}{2} \int \frac{du}{u + 1}
+				}$
+			</div>
+			To continue another substitution is necessary:
+			<div class='latex_equation'>
+				$\eqalign{
+					w &= u + 1 \\
+					dw &= du
+				}$
+			</div>
+			Now the integral becomes:
+			<div class='latex_equation'>
+				$\eqalign{
+					\frac{1}{2} \int \frac{du}{u + 1} &= \frac{1}{2} \int \frac{dw}{w} \\
+					&= \frac{1}{2} \ln|w| + C \\
+					&= \frac{1}{2} \ln|u + 1| + C \\
+					&= \frac{1}{2} \ln|e^{2x} + 1| + C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

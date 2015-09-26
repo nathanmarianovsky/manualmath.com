@@ -1,0 +1,90 @@
+<div class='latex_section'>
+	Definition for Indefinite Integral
+</div>
+<div class='latex_body'>
+	Given an integral in the form of:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int u dv
+		}$
+	</div>
+	where a prime denotes the first derivative, the approach
+	is to rewrite the integration as:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int u dv = uv - \int v du
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Definition for Definite Integral
+</div>
+<div class='latex_body'>
+	Given an integral in the form of:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int_a^b u dv
+		}$
+	</div>
+	where a prime denotes the first derivative, the approach
+	is to rewrite the integration as:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int_a^b u dv = uv \Big|_a^b - \int_a^b v du
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Knowing How to Choose the Components
+</div>
+<div class='latex_body'>
+	Given an integral that is composed of two different elementary functions,
+	how do you go about picking which component is which? Most people will say that
+	there is an intuition when it comes to picking, and I will not disagree because
+	enough of these should get you in the hang of what to pick. But now for the novice,
+	take notice of the following acronym:
+	<div class='latex_equation'>
+		$\eqalign{
+			&\text{L} \hspace{.2cm} \text{ogarithm} \\
+			&\text{I} \hspace{.35cm} \text{inverse} \\
+			&\text{P} \hspace{.2cm} \text{olynomial} \\
+			&\text{E} \hspace{.2cm} \text{xponential} \\
+			&\text{T} \hspace{.2cm} \text{rigonometric}
+		}$
+	</div>
+	where inverse refers to a trigonometric inverse such as $\arctan(x)$. 
+	Given an integral which consists of any two of these, let $u$ be the one higher
+	up in acronym and $dv$ the rest.
+</div>
+
+<div class='latex_section'>
+	Proof using the Product Rule for Differentiation
+</div>
+<div class='latex_body'>
+	Assuming the product rule for differentiation holds true:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{d}{dx} \Big( uv \Big) &= \frac{d}{dx} \Big( u \Big) \cdot v + u \cdot \frac{d}{dx} \Big( v \Big) \\
+			d(uv) &= v du + u dv \\
+			u dv &= d(uv) - v du
+		}$
+	</div>
+	Now to arrive at the result known for improper integrals, take the improper integral of both sides:
+	<div class='latex_equation'>
+		$\eqalign{
+			u dv &= d(uv) - v du \\
+			\int u dv &= \int d(uv) - \int v du \\
+			\int u dv &= uv - \int v du
+		}$
+	</div>
+	To obtain the result of the definite integral, take the definite integral of both sides:
+	<div class='latex_equation'>
+		$\eqalign{
+			u dv &= d(uv) - v du \\
+			\int_a^b u dv &= \int_a^b d(uv) - \int_a^b v du \\
+			\int_a^b u dv &= uv \Big|_a^b - \int_a^b v du
+		}$
+	</div>
+</div>

@@ -1,0 +1,52 @@
+#latex {
+	color: black;
+	font-family: 'Computer Modern Serif, sans-serif';
+	width: 800px;
+	margin: 0 auto 50px auto;
+	font-size: 15px;
+}
+
+.latex_section {
+	position: relative;
+	text-align: center;
+	font-family: 'Georgia';
+	font-size: 30px;
+	text-decoration: underline;
+	padding: 15px 0 15px 0;
+}
+
+.latex_equation {
+	position: relative;
+	text-align: center;
+	font-family: 'Georgia';
+	font-size: 15px;
+	padding: 7px 0 7px 0;
+}
+
+.show_solution {
+	display: block;
+	position: relative;
+	text-align: center;
+	margin: 10px auto 0 auto;
+	font-size: 20px;
+}
+
+.latex_equation table {
+	position: relative;
+	border: 1px solid black;
+	margin: 0 auto 0 auto;
+	width: 50%;
+}
+
+.latex_equation tr {
+	position: relative;
+	border: 1px solid black;
+	margin: 0 auto 0 auto;
+}
+
+.latex_equation td {
+	position: relative;
+	border: 1px solid black;
+	margin: 0 auto 0 auto;
+	text-align: center;
+}

@@ -1,0 +1,43 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int_1^e \frac{3+x}{x} dx
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class='latex_body'>
+			According to the power rule:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int_a^b x^n dx = \frac{x^{n+1}}{n+1} \Big|_a^b
+				}$
+			</div>
+			and:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int_a^b x^{-1} dx = \ln|x| \Big|_a^b
+				}$
+			</div>
+			when $n = -1$. So:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int_1^e \frac{3+x}{x} dx &= 3 \int_1^e \frac{dx}{x} + \int_1^e dx \\
+					&= 3 \cdot \Big( \ln|x| \Big|_1^e \Big) + \Big( x \Big|_1^e \Big) \\
+					&= 3 \Big( \ln(e) - \ln(1) \Big) + \Big( e - 1 \Big) \\
+					&= 2 + e 
+				}$
+			</div>
+		</div>
+	</div>
+</div>

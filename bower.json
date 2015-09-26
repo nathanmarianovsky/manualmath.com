@@ -1,0 +1,19 @@
+{
+  "name": "man_math",
+  "version": "0.0.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/nathanmarianovsky/man_math",
+  "authors": [
+    "Nathan Marianovsky <nathanmarianovsky@gmail.com>"
+  ],
+  "dependencies": {
+    "materializecss-amd": "~1.0.1"
+  }
+}

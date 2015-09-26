@@ -1,0 +1,53 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int (t+2)\sqrt{2+3t} dt
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class='hidden_div'>
+		<div class='latex_body'>
+			In this scenario the integral is bundled with a polynomial
+			and some other non-elementary function. This other function
+			is not handled by the acronym, but consider the following logic.
+			We know how to integrate the radical if we would choose it to be
+			$dv$. So now the question rests in which one do we choose for $u$.
+			Notice that if we pick the radical to be $u$, the derivative is nothing
+			prettier, while at the same time the integral of the polynomial only
+			gets higher in degree. So I offer that we go the other way with these
+			components:
+			<div class='latex_equation'>
+				$\eqalign{
+					u = t + 2 \rightarrow& du = dt \\
+					dv = \sqrt{2+3t} dt \rightarrow& v = \frac{2}{9}(2+3t)^\frac{3}{2}
+				}$
+			</div>
+			Now applying the formula yields:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int (t+2)\sqrt{2+3t} dt &= \frac{2}{9}(t+2)(2+3t)^\frac{3}{2} - \frac{2}{9} \int (2+3t)^\frac{3}{2} dt \\
+					&= \frac{2}{9}(t+2)(2+3t)^\frac{3}{2} - \frac{4}{135}(2+3t)^\frac{5}{2} + C
+				}$
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#show_solution").click(function() {
+        $("#hidden_div").show();
+        $(this).hide();
+        var solution = MathJax.Hub.getAllJax("hidden_div");
+        MathJax.Hub.Rerender("hidden_div");
+	    });
+</script>

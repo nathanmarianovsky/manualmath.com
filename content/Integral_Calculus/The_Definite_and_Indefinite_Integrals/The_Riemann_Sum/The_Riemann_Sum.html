@@ -1,0 +1,72 @@
+<div class='latex_section'>
+	The Exact Area Under a Curve
+</div>
+<div class='latex_body'>
+	Finally after discussing five different approximations,
+	in this section it will shown how the exact area under a 
+	curve is computed. For starters let:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int_a^b f(x) dx
+		}$
+	</div>
+	represent the exact area under the curve $f(x)$ on the range
+	$[a,b]$. To compute this $\textit{definite integral}$, the Riemann
+	Sum is defined either through the right approximation:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int_a^b f(x) dx &= \lim_{\Delta x \rightarrow 0} \sum_{i=1}^n f(x_i) \Delta x \\
+			&= \lim_{n \rightarrow \infty} \frac{b-a}{n} \sum_{i=1}^n f(x_i)
+		}$
+	</div>
+	or the left approximation:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int_a^b f(x) dx &= \lim_{\Delta x \rightarrow 0} \sum_{i=0}^{n-1} f(x_i) \Delta x \\
+			&= \lim_{n \rightarrow \infty} \frac{b-a}{n} \sum_{i=0}^{n-1} f(x_i)
+		}$
+	</div>
+	and
+	<div class='latex_equation'>
+		$\eqalign{
+			\Delta x = \frac{b-a}{n}
+		}$
+	</div>
+	is defined as the constant width. The reason why either the left or right approximation can be used
+	with an infinite number of subdivisions can be found in the section relating to these approximations.
+	Though essentially it is because as an infinite number of subdivisions are taken, both approximations
+	will approach the exact value. With this we say:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int_a^b f(x) dx \hspace{.5cm} \text{exists iff} \hspace{.5cm} \lim_{n \rightarrow \infty} \frac{b-a}{n} \sum_{i=1}^n f(x_i) = \lim_{n \rightarrow \infty} \frac{b-a}{n} \sum_{i=0}^{n-1} f(x_i)
+		}$
+	</div>
+	It is exactly for this setup that we chose
+	a constant width for the approximations since all approximations are of the form
+	of a Riemann Sum. This setup serves as the general definition of the Riemann Integral,
+	but certainly has a downside. Computing by hand can be done for some examples, but problems
+	can become impossible very quickly.
+</div>
+
+<div class='latex_section'>
+	Properties of Sums & Useful Identities
+</div>
+<div class='latex_body'>
+	For examples relating to this section you will need to
+	know the following properties of sums which make it a linear
+	operator:
+	<div class='latex_equation'>
+		$\eqalign{
+			\sum_i \Big( a_i + b_i \Big) &= \sum_i a_i + \sum_i b_i \\
+			\sum_i \lambda a_i &= \lambda \sum_i a_i \hspace{.5cm} \text{where} \hspace{.3cm} \lambda \in \mathbb{R}
+		}$
+	</div>
+	and the following identities for computation:
+	<div class='latex_equation'>
+		$\eqalign{
+			\sum_{i=0}^n i &= \frac{n(n+1)}{2} \\
+			\sum_{i=0}^n i^2 &= \frac{n(n+1)(2n+1)}{6} \\
+			\sum_{i=0}^n i^3 &= \Big( \frac{n(n+1)}{2} \Big)^2
+		}$
+	</div>
+</div>

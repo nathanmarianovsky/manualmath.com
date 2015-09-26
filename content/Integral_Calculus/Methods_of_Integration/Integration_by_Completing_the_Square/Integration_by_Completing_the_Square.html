@@ -1,0 +1,67 @@
+<div class='latex_section'>
+	A Reminder of How to Complete the Square
+</div>
+<div class='latex_body'>
+	Given a quadratic function in the most general form:
+	<div class='latex_equation'>
+		$\eqalign{
+			f(x) = ax^2 + bx + c \\
+		}$
+	</div>
+	by completing the square the function can be put in the form:
+	<div class='latex_equation'>
+		$\eqalign{
+			f(x) = a(x - h)^2 + k
+		}$
+	</div>
+	For a derivation, observe:
+	<div class='latex_equation'>
+		$\eqalign{
+			f(x) &= ax^2 + bx + c \\
+			&= a \Big( x^2 + \frac{b}{a}x + \frac{c}{a} \Big) \\
+			&= a \Big( x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} - \frac{b^2}{4a^2} + \frac{c}{a} \Big) \\
+			&= a \Bigg( \Big[ x + \frac{b}{2a} \Big]^2 + \frac{c}{a} - \frac{b^2}{4a^2} \Bigg) \\
+			&= a \Big( x + \frac{b}{a} \Big)^2 + c - \frac{b^2}{4a} \\
+			&= a \Big( x + \frac{b}{a} \Big)^2 + \frac{4ac-b^2}{4a}
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Application in Integration
+</div>
+<div class='latex_body'>
+	So now the more important part: How does this apply towards integration?
+	Generally speaking this is a very special case, but is definitely worth mentioning.
+	Assume that an integral is given in the form:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int \frac{dx}{ax^2+bx+c}
+		}$
+	</div>
+	where the quadratic on the bottom cannot be reduced any further using strictly real roots.
+	By completing the square:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int \frac{dx}{ax^2+bx+c} &= \int \frac{dx}{a\Big( x + \frac{b}{a} \Big)^2 + \frac{4ac-b^2}{4a}} \\
+			&= \frac{4a}{4ac-b^2} \int \frac{dx}{1 + \frac{4a^2}{4ac-b^2}\Big( x + \frac{b}{a} \Big)^2} \\
+			&= \frac{4a}{4ac-b^2} \int \frac{dx}{1 + \Big( \frac{2a}{\sqrt{4ac-b^2}} \Big( x + \frac{b}{a} \Big) \Big)^2}
+		}$
+	</div>
+	and using a substitution:
+	<div class='latex_equation'>
+		$\eqalign{
+			u &= \frac{2a}{4ac-b^2} \Big( x + \frac{a}{c} \Big) \\
+			du &= \frac{2a}{4ac-b^2} dx \rightarrow \frac{4ac-b^2}{2a} du = dx
+		}$
+	</div>
+	gives:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{4a}{4ac-b^2} \int \frac{dx}{1 + \Big( \frac{2a}{\sqrt{4ac-b^2}} \Big( x + \frac{b}{a} \Big) \Big)^2} &= 
+			\frac{2}{\sqrt{4ac-b^2}} \int \frac{du}{1+u^2} \\
+			&= \frac{2}{\sqrt{4ac-b^2}} \arctan(u) + C \\
+			&= \frac{2}{\sqrt{4ac-b^2}} \arctan \Bigg( \frac{2}{\sqrt{4ac-b^2}} \Big( x + \frac{b}{a} \Big) \Bigg) + C
+		}$
+	</div>
+</div>

@@ -1,0 +1,75 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int e^x \sin(x) dx
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class='hidden_div'>
+		<div class='latex_body'>
+			In this scenario the integral is bundled with an exponential
+			and a trigonometric function. Since exponentials take precendence
+			on the $\textbf{LIPET}$ acrynomy, define the components as:
+			<div class='latex_equation'>
+				$\eqalign{
+					u = e^x \rightarrow& du = e^x dx \\
+					dv = \sin(x) dx \rightarrow& v = \cos(x)
+				}$
+			</div>
+			Now applying the formula yields:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int e^x \sin(x) dx &= e^x \cos(x) - \int e^x \cos(x) dx
+				}$
+			</div>
+			Try parts once more, except this time define the components as:
+			<div class='latex_equation'>
+				$\eqalign{
+					u = e^x \rightarrow& du = e^x dx \\
+					dv = \cos(x) dx \rightarrow& v = -\sin(x)
+				}$
+			</div>
+			Now applying the formula yields:
+			<div class='latex_equation'>
+				$\eqalign{
+					e^x \cos(x) - \int e^x \cos(x) dx &= e^x \cos(x) - \Big( -e^x \sin(x) + \int e^x \sin(x) dx \Big) \\
+					&= e^x \cos(x) + e^x \sin(x) - \int e^x \sin(x) dx
+				}$
+			</div>
+			This is the really interesting part of this integral which turns out to its recursive nature. To better
+			understand this situation write down the initial integral and the most recent result together:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int e^x \sin(x) dx &= e^x \cos(x) + e^x \sin(x) - \int e^x \sin(x) dx \\
+					2 \int e^x \sin(x) dx &= e^x \cos(x) + e^x \sin(x) \\
+					\int e^x \sin(x) dx &= \frac{1}{2} e^x \Big( \cos(x) + \sin(x) \Big)
+				}$
+			</div>
+			To finish off remember that since this is an indefinite integral, the constant of integration is needed:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int e^x \sin(x) dx = \frac{1}{2} e^x \Big( \cos(x) + \sin(x) \Big) + C
+				}$
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#show_solution").click(function() {
+        $("#hidden_div").show();
+        $(this).hide();
+        var solution = MathJax.Hub.getAllJax("hidden_div");
+        MathJax.Hub.Rerender("hidden_div");
+	    });
+</script>

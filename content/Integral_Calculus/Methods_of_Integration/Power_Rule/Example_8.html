@@ -1,0 +1,35 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int (\pi + x^{11}) dx
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class='latex_body'>
+			According to the power rule:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int t^n dt = \frac{t^{n+1}}{n+1} + C
+				}$
+			</div>
+			so:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int (\pi + x^{11}) dx &= \pi \int dx + \int x^{11} dx \\
+					&= \pi x + \frac{1}{12}x^{12} + C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

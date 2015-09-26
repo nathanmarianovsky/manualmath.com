@@ -1,0 +1,206 @@
+<div class='latex_section'>
+	Trigonometric Substitution
+</div>
+<div class='latex_body'>
+	I first remind you about these specific identities:
+	<div class='latex_equation'>
+		$\eqalign{
+			\cos^2(x) + \sin^2(x) &= 1 \\
+			1 + \tan^2(x) &= \sec^2(x) \\
+			\cot^2(x) + 1 &= \csc^2(x)
+		}$
+	</div>
+	Now given an integral in any of these forms:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx, \hspace{.3cm} \int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx,
+			\hspace{.3cm} \text{or} \hspace{.3cm} \int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx \hspace{.3cm} \text{where}
+			\hspace{.3cm} n \in \mathbb{Z}
+		}$
+	</div>
+	there exist specific reverse substitutions which will
+	make the integration possible. These integrals can also come in two forms,
+	definite and indefinite. For the definie case, redefine the boundaries
+	at each substitution. For an indefinite integral remember to always put
+	the solution in terms of the original variable.
+</div>
+
+<div class='latex_section'>
+	First Case
+</div>
+<div class='latex_body'>
+	Take the case of:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx
+		}$
+	</div>
+	and make the substitution:
+	<div class='latex_equation'>
+		$\eqalign{
+			x &= a\sin(\theta) \\
+			dx &= a\cos(\theta) d\theta
+		}$
+	</div>
+	which when plugged in gives:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx &= \int f(a\sin(\theta)) \Big( a^2 - a^2\sin^2(\theta) \Big)^\frac{n}{2} a\cos(\theta) d\theta \\
+			&= \int f(a\sin(\theta)) a^{n+1} \Big( 1 - \sin^2(\theta) \Big)^\frac{n}{2} \cos(\theta) d\theta \\
+			&= a^{n+1} \int f(a\sin(\theta)) \Big( \sqrt{\cos^2(\theta)} \Big)^n \cos(\theta) d\theta \\
+			&= a^{n+1} \int f(a\sin(\theta)) \Big| \cos^n(\theta) \Big| \cos(\theta) d\theta 
+		}$
+	</div>
+	At the point the obstacle becomes the absolute value. To make life easy,
+	just ignore the absolute value so long as the assumption that $\cos(\theta) > 0$
+	is held true. Moving on:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx &= a^{n+1} \int f(a\sin(\theta)) \cos^{n+1}(\theta) d\theta 
+		}$
+	</div>
+	Incidentially this integral can also be computed using the substitution:
+	<div class='latex_equation'>
+		$\eqalign{
+			x &= a\cos(\theta) \\
+			dx &= -a\sin(\theta) d\theta
+		}$
+	</div>
+	which when plugged in gives:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx &= \int f(a\cos(\theta)) \Big( a^2 - a^2\cos^2(\theta) \Big)^\frac{n}{2} (-a\sin(\theta)) d\theta \\
+			&= - \int f(a\cos(\theta)) a^{n+1} \Big( 1 - \cos^2(\theta) \Big)^\frac{n}{2} \sin(\theta) d\theta \\
+			&= -a^{n+1} \int f(a\cos(\theta)) \Big( \sqrt{\sin^2(\theta)} \Big)^n \sin(\theta) d\theta \\
+			&= -a^{n+1} \int f(a\cos(\theta)) \Big| \sin^n(\theta) \Big| \sin(\theta) d\theta
+		}$
+	</div>
+	Once again the absolute value provides an obstacle. Like before make life easy
+	by ignoring the absolute value so long as the assumption that $\sin(\theta) > 0$
+	is held true. Moving on:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx &= -a^{n+1} \int f(a\cos(\theta)) \sin^{n+1}(\theta) d\theta
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Second Case
+</div>
+<div class='latex_body'>
+	Take the case of:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx
+		}$
+	</div>
+	and make the substitution:
+	<div class='latex_equation'>
+		$\eqalign{
+			x &= a\tan(\theta) \\
+			dx &= a\sec^2(\theta) d\theta
+		}$
+	</div>
+	which when plugged in gives:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx &= \int f(a\tan(\theta)) \Big( a^2 + a^2\tan^2(\theta) \Big)^\frac{n}{2} a\sec^2(\theta) d\theta \\
+			&= \int f(a\tan(\theta)) a^{n+1} \Big( 1 + \tan^2(x) \Big)^\frac{n}{2} \sec^2(\theta) d\theta \\
+			&= a^{n+1} \int f(a\tan(\theta)) \Big( \sqrt{\sec^2(\theta)} \Big)^n \sec^2(\theta) d\theta \\
+			&= a^{n+1} \int f(a\tan(\theta)) \Big| \sec^n(\theta) \Big| \sec^2(\theta) d\theta
+		}$
+	</div>
+	At the point the obstacle becomes the absolute value. To make life easy,
+	just ignore the absolute value so long as the assumption that $\sec(\theta) > 0$
+	is held true. Moving on:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx &= a^{n+1} \int f(a\tan(\theta)) \sec^{n+2}(\theta) d\theta
+		}$
+	</div>
+	Incidentially this integral can also be computed using the substitution:
+	<div class='latex_equation'>
+		$\eqalign{
+			x &= a\cot(\theta) \\
+			dx &= -a\csc^2(\theta) d\theta
+		}$
+	</div>
+	which when plugged in gives:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx &= \int f(a\cot(\theta)) \Big( a^2 + a^2\cot^2(\theta) \Big)^\frac{n}{2} (-a\csc^2(\theta)) d\theta \\
+			&= - \int f(a\cot(\theta)) a^{n+1} \Big( 1 + \cot^2(\theta) \Big)^\frac{n}{2} \csc^2(\theta) d\theta \\
+			&= -a^{n+1} \int f(a\cot(\theta)) \Big( \sqrt{\csc^2(\theta)} \Big)^n \csc^2(\theta) d\theta \\
+			&= -a^{n+1} \int f(a\cot(\theta)) \Big| \csc^n(\theta) \Big| \csc^2(\theta) d\theta
+		}$
+	</div>
+	Once again the absolute value provides an obstacle. Like before make life easy
+	by ignoring the absolute value so long as the assumption that $\csc(\theta) > 0$
+	is held true. Moving on:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx &= -a^{n+1} \int f(a\cot(\theta)) \csc^{n+2}(\theta) d\theta
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Third Case
+</div>
+<div class='latex_body'>
+	Take the case of:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx
+		}$
+	</div>
+	and make the substitution:
+	<div class='latex_equation'>
+		$\eqalign{
+			x &= a\sec(\theta) \\
+			dx &= a\sec(\theta)\tan(\theta) d\theta
+		}$
+	</div>
+	which when plugged in gives:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx &= \int f(a\sec(\theta)) \Big( a^2\sec^2(\theta) - a^2 \Big)^\frac{n}{2} a\sec(\theta)\tan(\theta) d\theta \\
+			&= \int f(a\sec(\theta)) a^{n+1} \Big( \sec^2(x) - 1 \Big)^{n}{2} \sec(\theta)\tan(\theta) d\theta \\
+			&= a^{n+1} \int f(a\sec(\theta)) \Big( \sqrt{\tan^2(\theta)} \Big)^n \sec(\theta)\tan(\theta) d\theta \\
+			&= a^{n+1} \int f(a\sec(\theta)) \Big| \tan^n(\theta) \Big| \sec(\theta)\tan(\theta) d\theta
+		}$
+	</div>
+	At the point the obstacle becomes the absolute value. To make life easy,
+	just ignore the absolute value so long as the assumption that $\tan(\theta) > 0$
+	is held true. Moving on:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx &= a^{n+1} \int f(a\sec(\theta)) \tan^{n+1}(\theta)\sec(\theta) d\theta
+		}$
+	</div>
+	Incidentially this integral can also be computed using the substitution:
+	<div class='latex_equation'>
+		$\eqalign{
+			x &= a\csc(\theta) \\
+			dx &= -a\csc(\theta)\cot(\theta) d\theta
+		}$
+	</div>
+	which when plugged in gives:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx &= \int f(a\csc(\theta)) \Big( a^2\csc^2(\theta) - a^2 \Big)^\frac{n}{2} (-a\csc(\theta)\cot(\theta)) d\theta \\
+			&= - \int f(a\csc(\theta)) a^{n+1} \Big( \csc^2(\theta) - 1 \Big)^\frac{n}{2} \csc(\theta)\cot(\theta) d\theta \\
+			&= -a^{n+1} \int f(a\csc(\theta)) \Big( \sqrt{\cot(\theta)} \Big)^n \csc(\theta)\cot(\theta) d\theta \\
+			&= -a^{n+1} \int f(a\csc(\theta)) \Big| \cot^n(\theta) \Big| \csc(\theta)\cot(\theta) d\theta
+		}$
+	</div>
+	Once again the absolute value provides an obstacle. Like before make life easy
+	by ignoring the absolute value so long as the assumption that $\cot(\theta) > 0$
+	is held true. Moving on:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx &= -a^{n+1} \int f(a\csc(\theta)) \cot^{n+1}(\theta) \csc(\theta) d\theta
+		}$
+	</div>
+</div>

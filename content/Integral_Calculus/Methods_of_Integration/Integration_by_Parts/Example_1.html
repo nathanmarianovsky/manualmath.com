@@ -1,0 +1,47 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Evaluate the following:
+	<div class='latex_equation'>
+		$\eqalign{
+			\int t\sin(t) dt
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class='hidden_div'>
+		<div class='latex_body'>
+			In this scenario the integral is bundled with a polynomial
+			and trigonometric function. Since polynomials take precendence
+			on the $\textbf{LIPET}$ acrynomy, define the components as:
+			<div class='latex_equation'>
+				$\eqalign{
+					u = t \rightarrow& du = dt \\
+					dv = \sin(t) dt \rightarrow& v = -\cos(t)
+				}$
+			</div>
+			Now applying the formula yields:
+			<div class='latex_equation'>
+				$\eqalign{
+					\int t\sin(t) dt &= -t\cos(t) + \int \cos(t) dt \\
+					&= -t\cos(t) + \sin(t) + C
+				}$
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#show_solution").click(function() {
+        $("#hidden_div").show();
+        $(this).hide();
+        var solution = MathJax.Hub.getAllJax("hidden_div");
+        MathJax.Hub.Rerender("hidden_div");
+	    });
+</script>

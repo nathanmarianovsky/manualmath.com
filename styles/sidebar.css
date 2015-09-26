@@ -1,0 +1,25 @@
+main, footer {
+  padding-left: 320px;
+}
+
+.side-nav {
+	top: 64px;
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
+#logo, .collapsible-header {
+  line-height: 64px;
+}
+
+a {
+	font-size: 13px; 
+	line-height: 32px; 
+	min-height: 64px; 
+	display: table-cell;
+	vertical-align: middle;
+}

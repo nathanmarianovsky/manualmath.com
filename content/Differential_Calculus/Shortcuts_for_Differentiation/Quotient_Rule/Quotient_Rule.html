@@ -1,0 +1,44 @@
+<div class='latex_section'>
+	Definition
+</div>
+<div class='latex_body'>
+	Given $h(x) = \frac{f(x)}{g(x)}$, the derivative is defined as:
+	<div class='latex_equation'>$\eqalign{h'(x) = \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}}$</div>
+	where a prime denotes the first derivative. Same as the product rule, $f(x)$ and $g(x)$ must be differentiable
+	at $x$ with an extra requirement that $g(x) \neq 0$.
+</div>
+
+<div class='latex_section'>
+	Proof by Product Rule
+</div>
+<div class='latex_body'>
+	<div class='latex_equation'>
+		$\eqalign{
+			h(x) &= \frac{f(x)}{g(x)} \\
+			g(x)h(x) &= f(x) \\
+			\frac{d}{dx} \Big( g(x)h(x) \Big) &= \frac{d}{dx} f(x) \\
+			g'(x)h(x) + g(x)h'(x) &= f'(x) \\
+			g(x)h'(x) &= f'(x) - g'(x) \cdot \frac{f(x)}{g(x)} \\
+			h'(x) &= \frac{f'(x)}{g(x)} - \frac{f(x)g'(x)}{(g(x))^2} \\
+			h'(x) &= \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Proof by Logarithmic Differentiation
+</div>
+<div class='latex_body'>
+	<div class='latex_equation'>
+		$\eqalign{
+			h(x) &= \frac{f(x)}{g(x)} \\
+			\ln(h(x)) &= \ln \Big( \frac{f(x)}{g(x)} \Big) \\
+			\ln(h(x)) &= \ln(f(x)) - \ln(g(x)) \\
+			\frac{d}{dx} \ln(h(x)) &= \frac{d}{dx} \Big( \ln(f(x)) - \ln(g(x)) \Big) \\
+			\frac{h'(x)}{h(x)} &= \frac{f'(x)}{f(x)} - \frac{g'(x)}{g(x)} \\
+			h'(x) &= \frac{f(x)}{g(x)} \Big( \frac{f'(x)}{f(x)} - \frac{g'(x)}{g(x)} \Big) \\
+			h'(x) &= \frac{f'(x)}{g(x)} - \frac{f(x)g'(x)}{(g(x))^2} \\
+			h'(x) &= \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}
+		}$
+	</div>
+</div>
