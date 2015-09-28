@@ -3,7 +3,7 @@
 	    <div class='nav-wrapper'>
 	    	<a href='home.php' class='brand-logo'>man math</a>
 	    	<ul class='hide-on-med-and-down'>
-	    		<a class='page-title' id='page_title'>Home</a>
+	    		<a class='page-title' id='page_title'></a>
 	    	</ul>
 	    </div>
 	    <a href="#" data-activates='nav-mobile' class='button-collapse top-nav full hide-on-large-only left'>

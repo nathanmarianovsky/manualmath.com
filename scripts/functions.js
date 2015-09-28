@@ -1,11 +1,43 @@
 define(function() {
 	var exports = {};
 
+	/*
+
+	Purpose:
+	Compares two objects based on their order property.
+
+	Parameters:
+		lhs: 
+			The left hand side object
+		rhs: 
+			The right hand side object
+
+	Note:
+	If the left object has a smaller order, -1 is returned. Otherwise
+	1 is returned.
+
+	*/
 	exports.compare_object_order = function(lhs, rhs) {
 		if(lhs.order < rhs.order) { return -1; }
 		else { return 1; }
 	};
 
+	/*
+
+	Purpose:
+	Creates the necessary association of all the subjects, topics, sections, and examples.
+
+	Parameters:
+		subjects: 
+			An array of all the subjects
+		topics: 
+			An array of all the topics
+		sections:
+			An array of all the sections
+		examples:
+			An array of all the examples
+
+	*/
 	exports.organize = function(subjects, topics, sections, examples) {
 		for(i = 0; i < sections.length; i++) {
 			sections[i].examples = [];
@@ -33,6 +65,17 @@ define(function() {
 		}
 	};
 
+	/*
+
+	Purpose:
+	Once all of subjects, topics, sections, and examples are associated this function
+	will change the order within the arrays based on the order property from the database.
+
+	Parameters:
+		subjects: 
+			An array of all the subjects
+
+	*/
 	exports.sort_subjects = function(subjects) {
 		for(i = 0; i < subjects.length; i++) {
 			subjects[i].topics.sort(exports.compare_object_order);
@@ -45,6 +88,12 @@ define(function() {
 		}
 	};
 
+	/*
+
+	Purpose:
+	Loads home.php into the main element if it is empty.
+
+	*/
 	exports.default_load = function() {
 		if($('main').is(':empty')) {
 			$('#page_title').text('Home');
@@ -53,6 +102,17 @@ define(function() {
 		}
 	}
 
+	/*
+
+	Purpose:
+	Empties the sides navigation and adds the side navigation containing
+	all of the subjects.
+
+	Parameters:
+		subjects: 
+			An array of all the subjects
+
+	*/
 	exports.subject_side_nav = function(subjects) {
 		$('.side-nav').empty();
 		subjects.forEach(function(subject) {
@@ -65,6 +125,17 @@ define(function() {
 		});
 	};
 
+	/*
+
+	Purpose:
+	Empties the sides navigation and adds the side navigation containing
+	all of the topics associated to a single subject.
+
+	Parameters:
+		subject: 
+			An object representing the current subject
+
+	*/
 	exports.topic_side_nav = function(subject) {
 		$('.side-nav').empty();
 		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'subject_li' + subject.sid).fadeIn('slow'));
@@ -84,6 +155,19 @@ define(function() {
 		});
 	}
 
+	/*
+
+	Purpose:
+	Empties the sides navigation and adds the side navigation containing
+	all of the sections associated to a single topic.
+
+	Parameters:
+		subject: 
+			An object representing the current subject
+		topic:
+			An object representing the current topic
+
+	*/
 	exports.section_side_nav = function(topic, subject) {
 		$('.side-nav').empty();
 		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'topic_li' + topic.tid).fadeIn('slow'));
@@ -103,6 +187,19 @@ define(function() {
 		});
 	}
 
+	/*
+
+	Purpose:
+	Empties the sides navigation and adds the side navigation containing
+	all of the examples and notes associated to a single section.
+
+	Parameters:
+		topic:
+			An object representing the current topic
+		section: 
+			An object representing the current section
+
+	*/
 	exports.example_side_nav = function(section, topic) {
 		$('.side-nav').empty();
 		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'section_li' + section.section_id).fadeIn('slow'));
@@ -126,6 +223,24 @@ define(function() {
 		});
 	}
 
+	/*
+
+	Purpose:
+	Handles all of the navigation performed by the links.
+
+	Parameters:
+		router:
+			An object representing the current router
+		subjects: 
+			An array containing all of the subjects
+		topics:
+			An array containing all of the topics
+		sections:
+			An array containing all of the sections
+		examples:
+			An array containing all of the examples
+
+	*/
 	exports.handle_links = function(router, subjects, topics, sections, examples) {
 		$('a').click(function(e) {
 			var link = $(this);
