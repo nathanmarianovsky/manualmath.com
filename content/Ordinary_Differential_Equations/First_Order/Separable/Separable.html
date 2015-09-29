@@ -1,0 +1,71 @@
+<div class='latex_section'>
+	The Setup
+</div>
+<div class='latex_body'>
+	Given a differential equation in the form:
+	<div class='latex_equation'>
+		$\eqalign{
+			y' = f(x,y)
+		}$
+	</div>
+	where $y'$ denotes the first derivative, under certain conditions
+	the function becomes separable.
+</div>
+
+<div class='latex_section'>
+	Separation under Multiplication
+</div>
+<div class='latex_body'>
+	Assume that the function can be separated under multiplication as:
+	<div class='latex_equation'>
+		$\eqalign{
+			f(x,y) = j(x)k(y)
+		}$
+	</div>
+	Plugging this into the differential equation yields:
+	<div class='latex_equation'>
+		$\eqalign{
+			y' &= j(x)k(y)
+		}$
+	</div>
+	The next step is to rewrite the derivative in Leibniz's notation and separate the
+	differentials so that both sides can be integrated:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{dy}{dx} &= j(x)k(y) \\
+			\frac{dy}{k(y)} &= j(x) dx \\
+			\int \frac{dy}{k(y)} &= \int j(x) dx \\
+			K(y) &= J(x) + C \\
+			K(y) - J(x) &= C
+		}$
+	</div>
+	where $K(y)$ and $J(x)$ represent the antiderivatives of $(k(y))^{-1}$ and $j(x)$ respectively.
+	The above solution was left in implicit form, but sometimes the solution can be put in explicit form
+	if the algebra allows it.
+</div>
+
+<div class='latex_section'>
+	Separation under Addition
+</div>
+<div class='latex_body'>
+	I now want to show that when talking about separability in relation to first
+	order differential equations, separability under addition is never useful to solving
+	the equation at hand. So assume that the function can be separated under addition as:
+	<div class='latex_equation'>
+		$\eqalign{
+			f(x,y) = g(x) + h(y)
+		}$
+	</div>
+	Plugging this into the differential equation and following through like before:
+	<div class='latex_equation'>
+		$\eqalign{
+			y' &= g(x) + h(y) \\
+			\frac{dy}{dx} &= g(x) + h(y) \\
+			dy &= \Big( g(x) + h(y) \Big) dx
+		}$
+	</div>
+	At that last step is should become apparent that no matter what algebraic manipulation
+	you perform, there is no way to put all of the $x$'s and $y$'s on independent sides. So
+	whenever someone mentions separable differential equation, it is usually implied that it is
+	separability under multiplication.
+</div>

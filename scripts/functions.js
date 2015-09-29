@@ -96,11 +96,29 @@ define(function() {
 	*/
 	exports.default_load = function() {
 		if($('main').is(':empty')) {
-			$('#page_title').text('Home');
 			$('title').text('Home');
 			$('main').load('/client/home.php');
 		}
-	}
+	};
+
+	/*
+
+	Purpose:
+	Handles the coloring of the li tags on the example_side_nav.
+
+	*/
+	exports.handle_li_coloring = function() {
+		$('li').each(function() {
+			if($(this).hasClass('active')) {
+				$(this).addClass('light-blue accent-4');
+			}
+			else {
+				if($(this).hasClass('light-blue accent-4')) {
+					$(this).removeClass('light-blue accent-4');
+				}
+			}
+		});
+	};
 
 	/*
 

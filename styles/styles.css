@@ -1,10 +1,14 @@
 #page_title {
 	font-size: 20px;
-	padding-left: 400px;
+	padding: 10px 0 0 0;
 }
 
-.brand-logo {
-	left: 85px;
+#page_title_ul {
+	padding: 0 0 0 400px;
+}
+
+#brand-logo {
+	padding: 10px 0 0 90px;
 }
 
 .box_message {
