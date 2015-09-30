@@ -1,0 +1,57 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Solve the following differential equation:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{dy}{dx} = \frac{y^2 - 1}{x}
+		}$
+	</div>
+	where $y(1) = 2$.
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			Since the function is separable:
+			<div class='latex_equation'>
+				$\eqalign{
+					\frac{dy}{dx} &= \frac{y^2 + 1}{x} \\
+					\frac{dy}{y^2 + 1} &= \frac{dx}{x} \\
+					\int \frac{dy}{y^2 + 1} &= \int \frac{dx}{x} \\
+					\arctan(y) &= \ln|x| + C \\
+					\arctan(y) - \ln|x| &= C					
+				}$
+			</div>
+			Now if we want to, finding the explicit solution can easily be achieved
+			from the implicit solution:
+			<div class='latex_equation'>
+				$\eqalign{
+					\arctan(y) - \ln|x| &= C \\
+					\arctan(y) &= \ln|x| + C \\
+					y &= \tan(\ln|x| + C)
+				}$
+			</div>
+			To finish off the initial value has to be used to determine the value of the constant of integration:
+			<div class='latex_equation'>
+				$\eqalign{
+					2 &= y(1) \\
+					2 &= \tan(\ln|1| + C) \\
+					2 &= \tan(C) \\
+					C &= \arctan(2)
+				}$
+			</div>
+			With this the final solution can be written as:
+			<div class='latex_equation'>
+				$\eqalign{
+					y = \tan(\ln|x| + \arctan(2))
+				}$
+			</div>
+		</div>
+	</div>
+</div>

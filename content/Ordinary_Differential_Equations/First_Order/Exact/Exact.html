@@ -1,0 +1,95 @@
+<div class='latex_section'>
+	The Setup
+</div>
+<div class='latex_body'>
+	Given a differential equation in the form:
+	<div class='latex_equation'>
+		$\eqalign{
+			M(x,y) dx + N(x,y) dy = 0
+		}$
+	</div>
+	the method used to obtain the solution is analogous to finding the potential function
+	to a conservative vector field.
+</div>
+
+<div class='latex_section'>
+	Motivating the Approach
+</div>
+<div class='latex_body'>
+	Before mentioning the differential equation again, I first need to mention $\textit{Schwarz's Theorem}$
+	(or $\textit{Clairaut's Theorem}$) which states that when given a function $f: \mathbb{R}^n \rightarrow \mathbb{R}$, then:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial^2 f}{\partial x_i \partial x_j} \Bigg|_P = \frac{\partial^2 f}{\partial x_j \partial x_i} \Bigg|_P 
+			\hspace{.5cm} \forall i,j \in \{1,2,\dots,n\}
+		}$
+	</div>
+	This is essentially a formal way of saying that second partial derivatives commute for any two variables. This will lay the groundwork
+	for how the differential equation is handled.
+</div>
+
+<div class='latex_section'>
+	Solving the Equation
+</div>
+<div class='latex_body'>
+	To understand the approach in full detail I need to first explain the differential of a function. Given any function $F(x,y)$, the differential
+	of the function is defined as:
+	<div class='latex_equation'>
+		$\eqalign{
+			dF = \frac{\partial F}{\partial x} dx + \frac{\partial F}{\partial y} dy
+		}$
+	</div>
+	which is basically a way to measure how the overall function changes with respect to changes in the variables. Notice right away that this 
+	differential pretty much matches the differential equation we want to solve. So now playing the matching game gives:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial F}{\partial x} &= M(x,y) \\
+			\frac{\partial F}{\partial y} &= N(x,y) \\
+			dF &= 0
+		}$
+	</div>
+	The first two can easily be understood, but how do we interpret the last statement? If the differential of a function is defined to be zero,
+	then it is essentially the same as saying that over the course of some curve, the function remains unchanged. This of course only happens when 
+	a function is constant. Another question you may want to now ask is how do we know that this approach can be used to obtain a solution? In vector
+	calculus a differential equating to zero is the same as saying that the function represents a conservative vector field and it happens that there is a condition
+	which will guarantee a solution:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}
+		}$
+	</div>
+	which is the same as stating:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial^2 F}{\partial x \partial y} &= \frac{\partial^2 F}{\partial y \partial x}
+		}$
+	</div>
+	which has to hold true given that the function is twice differentiable. So now to solve the differential equation we are left with two equations to handle. 
+	The first of which is: 
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial F}{\partial x} &= M(x,y) \\
+			\frac{dF}{dx} &= M(x,y) \\
+			dF &= M(x,y) dx \\
+			\int dF &= \int M(x,y) dx \\
+			F(x,y) &= f(x,y) + h(x)
+		}$
+	</div>
+	and the second:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial F}{\partial y} &= N(x,y) \\
+			\frac{dF}{dy} &= N(x,y) \\
+			dF &= N(x,y) dy \\
+			\int dF &= \int N(x,y) dy \\
+			F(x,y) &= f(x,y) + g(y)
+		}$
+	</div>
+	Notice that both integrations will spit out stuff that is common but also stuff that is independent. Formally the final solution is given as:
+	<div class='latex_equation'>
+		$\eqalign{
+			C = f(x,y) + h(x) + g(x)
+		}$
+	</div>
+	where the $C$ handles the constants of integration that should have come out of the integration above. 
+</div>

@@ -1,0 +1,58 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Solve the following differential equation:
+	<div class='latex_equation'>
+		$\eqalign{
+			y' = e^{-y}(2x - 4)
+		}$
+	</div>
+	where $y(5) = 0$.
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			Since the function is separable:
+			<div class='latex_equation'>
+				$\eqalign{
+					y' &= e^{-y}(2x - 4) \\
+					\frac{dy}{dx} &= e^{-y}(2x - 4) \\
+					e^y dy &= (2x - 4) dx \\
+					\int e^y dy &= \int (2x - 4) dx \\
+					e^y &= x^2 - 4x + C \\
+					e^y - x^2 + 4x &= C
+				}$
+			</div>
+			Now if we want to, finding the explicit solution can easily be achieved
+			from the implicit solution:
+			<div class='latex_equation'>
+				$\eqalign{
+					e^y - x^2 + 4x &= C \\
+					e^y &= x^2 - 4x + C \\
+					y &= \ln(x^2 - 4x + C)
+				}$
+			</div>
+			To finish off the initial value has to be used to determine the value of the constant of integration:
+			<div class='latex_equation'>
+				$\eqalign{
+					0 &= y(5) \\
+					0 &= \ln((5)^2 - 4(5) + C) \\
+					1 &= 5 + C \\
+					C &= -4
+				}$
+			</div>
+			With this the final solution can be written as:
+			<div class='latex_equation'>
+				$\eqalign{
+					y = \ln(x^2 - 4x - 4)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,36 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Find all solutions to:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{dy}{dt} = 1 + \frac{1}{y^2}
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			Since the function is separable:
+			<div class='latex_equation'>
+				$\eqalign{
+					\frac{dy}{dt} &= 1 + \frac{1}{y^2} \\
+					\frac{dy}{1 + y^{-2}} &= dt \\
+					\int \frac{dy}{1 + y^{-2}} &= \int dt \\
+					\int \frac{y^2}{y^2 + 1} dy &= t + C \\
+					\int \Big( 1 - \frac{1}{y^2 + 1} \Big) dy &= t + C \\
+					y - \arctan(y) &= t + C \\
+					y - \arctan(y) - t &= C
+				}$
+			</div>
+			The above scenario does not provide any simple means of obtaining the explicit
+			solution, therefore just stick with the implicit solution. 
+		</div>
+	</div>
+</div>
