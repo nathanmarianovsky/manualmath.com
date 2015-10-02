@@ -1,6 +1,7 @@
 #page_title {
 	font-size: 20px;
-	padding: 10px 0 0 0;
+	position: absolute;
+	top: 25%;
 }
 
 #page_title_ul {
@@ -8,7 +9,9 @@
 }
 
 #brand-logo {
-	padding: 10px 0 0 90px;
+	padding: 0 0 0 90px;
+	position: absolute;
+	top: 25%;
 }
 
 .box_message {

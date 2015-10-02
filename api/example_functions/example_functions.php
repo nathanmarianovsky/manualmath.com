@@ -38,7 +38,7 @@ function get_examples($con, $args) {
 
 	if(isset($args['sid'])) {
 		$sid = $args['sid'];
-		$sql = $con->prepare("SELECT tid FROM Topic WHERE sid=?");
+		$sql = $con->prepare("SELECT tid FROM topic WHERE sid=?");
 		$sql->bind_param("i", $sid);
 		$sql->bind_result($tid);
 		$sql->execute();
@@ -51,7 +51,7 @@ function get_examples($con, $args) {
 
 		if(sizeof($tmp_tid) > 0) {
 			foreach($tmp_tid as $tid) {
-				$sql = $con->prepare("SELECT section_id FROM Section WHERE tid=?");
+				$sql = $con->prepare("SELECT section_id FROM section WHERE tid=?");
 				$sql->bind_param("i", $tid);
 				$sql->bind_result($section_id);
 				$sql->execute();
@@ -65,7 +65,7 @@ function get_examples($con, $args) {
 
 			if(sizeof($tmp_section_id) > 0) {
 				foreach($tmp_section_id as $section_id) {
-					$sql = $con->prepare("SELECT eid,ename,`order` FROM Example WHERE section_id=?");
+					$sql = $con->prepare("SELECT eid,ename,`order` FROM example WHERE section_id=?");
 					$sql->bind_param("i", $section_id);
 					$sql->bind_result($eid, $ename, $order);
 					$sql->execute();
@@ -84,7 +84,7 @@ function get_examples($con, $args) {
 
 	else if(isset($args['sname'])) {
 		$sname = $args['sname'];
-		$sql = $con->prepare("SELECT sid FROM Subject WHERE sname=?");
+		$sql = $con->prepare("SELECT sid FROM subject WHERE sname=?");
 		$sql->bind_param("s", $sname);
 		$sql->bind_result($sid);
 		$sql->execute();
@@ -92,7 +92,7 @@ function get_examples($con, $args) {
 		$sql->close();
 
 		if(isset($sid)) {
-			$sql = $con->prepare("SELECT tid FROM Topic WHERE sid=?");
+			$sql = $con->prepare("SELECT tid FROM topic WHERE sid=?");
 			$sql->bind_param("i", $sid);
 			$sql->bind_result($tid);
 			$sql->execute();
@@ -105,7 +105,7 @@ function get_examples($con, $args) {
 
 			if(sizeof($tmp_tid) > 0) {
 				foreach($tmp_tid as $tid) {
-					$sql = $con->prepare("SELECT section_id FROM Section WHERE tid=?");
+					$sql = $con->prepare("SELECT section_id FROM section WHERE tid=?");
 					$sql->bind_param("i", $tid);
 					$sql->bind_result($section_id);
 					$sql->execute();
@@ -119,7 +119,7 @@ function get_examples($con, $args) {
 
 				if(sizeof($tmp_section_id) > 0) {
 					foreach($tmp_section_id as $section_id) {
-						$sql = $con->prepare("SELECT eid,ename,`order` FROM Example WHERE section_id=?");
+						$sql = $con->prepare("SELECT eid,ename,`order` FROM example WHERE section_id=?");
 						$sql->bind_param("i", $section_id);
 						$sql->bind_result($eid, $ename, $order);
 						$sql->execute();
@@ -139,7 +139,7 @@ function get_examples($con, $args) {
 
 	else if(isset($args['tid'])) {
 		$tid = $args['tid'];
-		$sql = $con->prepare("SELECT section_id FROM Section WHERE tid=?");
+		$sql = $con->prepare("SELECT section_id FROM section WHERE tid=?");
 		$sql->bind_param("i", $tid);
 		$sql->bind_result($section_id);
 		$sql->execute();
@@ -152,7 +152,7 @@ function get_examples($con, $args) {
 
 		if(sizeof($tmp_section_id) > 0) {
 			foreach($tmp_section_id as $section_id) {
-				$sql = $con->prepare("SELECT eid,ename,`order` FROM Example WHERE section_id=?");
+				$sql = $con->prepare("SELECT eid,ename,`order` FROM example WHERE section_id=?");
 				$sql->bind_param("i", $section_id);
 				$sql->bind_result($eid, $ename, $order);
 				$sql->execute();
@@ -170,7 +170,7 @@ function get_examples($con, $args) {
 
 	else if(isset($args['tname'])) {
 		$tname = $args['tname'];
-		$sql = $con->prepare("SELECT tid FROM Topic WHERE tname=?");
+		$sql = $con->prepare("SELECT tid FROM topic WHERE tname=?");
 		$sql->bind_param("s", $tname);
 		$sql->bind_result($tid);
 		$sql->execute();
@@ -183,7 +183,7 @@ function get_examples($con, $args) {
 
 		if(sizeof($tmp_tid) > 0) {
 			foreach($tmp_tid as $tid) {
-				$sql = $con->prepare("SELECT section_id FROM Section WHERE tid=?");
+				$sql = $con->prepare("SELECT section_id FROM section WHERE tid=?");
 				$sql->bind_param("i", $tid);
 				$sql->bind_result($section_id);
 				$sql->execute();
@@ -197,7 +197,7 @@ function get_examples($con, $args) {
 
 			if(sizeof($tmp_section_id) > 0) {
 				foreach($tmp_section_id as $section_id) {
-					$sql = $con->prepare("SELECT eid,ename,`order` FROM Example WHERE section_id=?");
+					$sql = $con->prepare("SELECT eid,ename,`order` FROM example WHERE section_id=?");
 					$sql->bind_param("i", $section_id);
 					$sql->bind_result($eid, $ename, $order);
 					$sql->execute();
@@ -216,7 +216,7 @@ function get_examples($con, $args) {
 
 	else if(isset($args['section_id'])) {
 		$section_id = $args['section_id'];
-		$sql = $con->prepare("SELECT eid,ename,`order` FROM Example WHERE section_id=?");
+		$sql = $con->prepare("SELECT eid,ename,`order` FROM example WHERE section_id=?");
 		$sql->bind_param("i", $section_id);
 		$sql->bind_result($eid, $ename, $order);
 		$sql->execute();
@@ -232,7 +232,7 @@ function get_examples($con, $args) {
 
 	else if(isset($args['section_name'])) {
 		$section_name = $args['section_name'];
-		$sql = $con->prepare("SELECT section_id FROM Section WHERE section_name=?");
+		$sql = $con->prepare("SELECT section_id FROM section WHERE section_name=?");
 		$sql->bind_param("s", $section_name);
 		$sql->bind_result($section_id);
 		$sql->execute();
@@ -245,7 +245,7 @@ function get_examples($con, $args) {
 
 		if(sizeof($tmp_section_id) > 0) {
 			foreach($tmp_section_id as $section_id) {
-				$sql = $con->prepare("SELECT eid,ename,`order` FROM Example WHERE section_id=?");
+				$sql = $con->prepare("SELECT eid,ename,`order` FROM example WHERE section_id=?");
 				$sql->bind_param("i", $section_id);
 				$sql->bind_result($eid, $ename, $order);
 				$sql->execute();
@@ -263,7 +263,7 @@ function get_examples($con, $args) {
 
 	else if(isset($args['eid'])) {
 		$eid = $args['eid'];
-		$sql = $con->prepare("SELECT section_id,ename,`order` FROM Example WHERE eid=?");
+		$sql = $con->prepare("SELECT section_id,ename,`order` FROM example WHERE eid=?");
 		$sql->bind_param("i", $eid);
 		$sql->bind_result($section_id, $ename, $order);
 		$sql->execute();
@@ -279,7 +279,7 @@ function get_examples($con, $args) {
 
 	else if(isset($args['ename'])) {
 		$ename = $args['ename'];
-		$sql = $con->prepare("SELECT eid,section_id,`order` FROM Example WHERE ename=?");
+		$sql = $con->prepare("SELECT eid,section_id,`order` FROM example WHERE ename=?");
 		$sql->bind_param("s", $ename);
 		$sql->bind_result($eid, $section_id, $order);
 		$sql->execute();
@@ -294,7 +294,7 @@ function get_examples($con, $args) {
 	}
 
 	else {
-		$sql = $con->prepare("SELECT eid,ename,section_id,`order` FROM Example");
+		$sql = $con->prepare("SELECT eid,ename,section_id,`order` FROM example");
 		$sql->bind_result($eid, $ename, $section_id, $order);
 		$sql->execute();
 		while($sql->fetch()) {
@@ -326,7 +326,7 @@ If there is no such example found, an appropriate response is returned.
 function get_example_file($con, $args) {
 	if(isset($args['eid'])) {
 		$eid = $args['eid'];
-		$sql = $con->prepare("SELECT section_id,ename FROM Example WHERE eid=?");
+		$sql = $con->prepare("SELECT section_id,ename FROM example WHERE eid=?");
 		$sql->bind_param('i', $eid);
 		$sql->bind_result($section_id, $ename);
 		$sql->execute();
@@ -334,7 +334,7 @@ function get_example_file($con, $args) {
 		$sql->close();
 
 		if(isset($section_id) && isset($ename)) {
-			$sql = $con->prepare("SELECT tid,section_name FROM Section WHERE section_id=?");
+			$sql = $con->prepare("SELECT tid,section_name FROM section WHERE section_id=?");
 			$sql->bind_param('i', $section_id);
 			$sql->bind_result($tid, $section_name);
 			$sql->execute();
@@ -342,7 +342,7 @@ function get_example_file($con, $args) {
 			$sql->close();
 
 			if(isset($tid) && isset($section_name)) {
-				$sql = $con->prepare("SELECT sid,tname FROM Topic WHERE tid=?");
+				$sql = $con->prepare("SELECT sid,tname FROM topic WHERE tid=?");
 				$sql->bind_param('i', $tid);
 				$sql->bind_result($sid, $tname);
 				$sql->execute();
@@ -350,7 +350,7 @@ function get_example_file($con, $args) {
 				$sql->close();
 
 				if(isset($sid) && isset($tname)) {
-					$sql = $con->prepare("SELECT sname FROM Subject WHERE sid=?");
+					$sql = $con->prepare("SELECT sname FROM subject WHERE sid=?");
 					$sql->bind_param('i', $sid);
 					$sql->bind_result($sname);
 					$sql->execute();

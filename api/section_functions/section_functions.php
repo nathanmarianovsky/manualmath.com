@@ -34,7 +34,7 @@ function get_sections($con, $args) {
 
 	if(isset($args['sid'])) {
 		$sid = $args['sid'];
-		$sql = $con->prepare("SELECT tid FROM Topic WHERE sid=?");
+		$sql = $con->prepare("SELECT tid FROM topic WHERE sid=?");
 		$sql->bind_param("i", $sid);
 		$sql->bind_result($tid);
 		$sql->execute();
@@ -47,7 +47,7 @@ function get_sections($con, $args) {
 
 		if(sizeof($tmp_tid) > 0) {
 			foreach($tmp_tid as $tid) {
-				$sql = $con->prepare("SELECT section_id,section_name,`order` FROM Section WHERE tid=?");
+				$sql = $con->prepare("SELECT section_id,section_name,`order` FROM section WHERE tid=?");
 				$sql->bind_param("i", $tid);
 				$sql->bind_result($section_id, $section_name, $order);
 				$sql->execute();
@@ -65,7 +65,7 @@ function get_sections($con, $args) {
 
 	else if(isset($args['sname'])) {
 		$sname = $args['sname'];
-		$sql = $con->prepare("SELECT sid FROM Subject WHERE sname=?");
+		$sql = $con->prepare("SELECT sid FROM subject WHERE sname=?");
 		$sql->bind_param("s", $sname);
 		$sql->bind_result($sid);
 		$sql->execute();
@@ -73,7 +73,7 @@ function get_sections($con, $args) {
 		$sql->close();
 
 		if(isset($sid)) {
-			$sql = $con->prepare("SELECT tid FROM Topic WHERE sid=?");
+			$sql = $con->prepare("SELECT tid FROM topic WHERE sid=?");
 			$sql->bind_param("i", $sid);
 			$sql->bind_result($tid);
 			$sql->execute();
@@ -86,7 +86,7 @@ function get_sections($con, $args) {
 
 			if(sizeof($tmp_tid) > 0) {
 				foreach($tmp_tid as $tid) {
-					$sql = $con->prepare("SELECT section_id,section_name,`order` FROM Section WHERE tid=?");
+					$sql = $con->prepare("SELECT section_id,section_name,`order` FROM section WHERE tid=?");
 					$sql->bind_param("i", $tid);
 					$sql->bind_result($section_id, $section_name, $order);
 					$sql->execute();
@@ -105,7 +105,7 @@ function get_sections($con, $args) {
 
 	else if(isset($args['tid'])) {
 		$tid = $args['tid'];
-		$sql = $con->prepare("SELECT section_id,section_name,`order` FROM Section WHERE tid=? ORDER BY `order` ASC");
+		$sql = $con->prepare("SELECT section_id,section_name,`order` FROM section WHERE tid=? ORDER BY `order` ASC");
 		$sql->bind_param("i", $tid);
 		$sql->bind_result($section_id, $section_name, $order);
 		$sql->execute();
@@ -121,7 +121,7 @@ function get_sections($con, $args) {
 
 	else if(isset($args['tname'])) {
 		$tname = $args['tname'];
-		$sql = $con->prepare("SELECT tid FROM Topic WHERE tname=?");
+		$sql = $con->prepare("SELECT tid FROM topic WHERE tname=?");
 		$sql->bind_param("s", $tname);
 		$sql->bind_result($tid);
 		$sql->execute();
@@ -134,7 +134,7 @@ function get_sections($con, $args) {
 
 		if(sizeof($tmp_tid) > 0) {
 			foreach($tmp_tid as $tid) {
-				$sql = $con->prepare("SELECT section_id,section_name,`order` FROM Section WHERE tid=?");
+				$sql = $con->prepare("SELECT section_id,section_name,`order` FROM section WHERE tid=?");
 				$sql->bind_param("i", $tid);
 				$sql->bind_result($section_id, $section_name, $order);
 				$sql->execute();
@@ -152,7 +152,7 @@ function get_sections($con, $args) {
 
 	else if(isset($args['section_id'])) {
 		$section_id = $args['section_id'];
-		$sql = $con->prepare("SELECT section_name,tid,`order` FROM Section WHERE section_id=?");
+		$sql = $con->prepare("SELECT section_name,tid,`order` FROM section WHERE section_id=?");
 		$sql->bind_param('i', $section_id);
 		$sql->bind_result($section_name, $tid, $order);
 		$sql->execute();
@@ -168,7 +168,7 @@ function get_sections($con, $args) {
 
 	else if(isset($args['section_name'])) {
 		$section_name = $args['section_name'];
-		$sql = $con->prepare("SELECT section_id,tid,`order` FROM Section WHERE section_name=?");
+		$sql = $con->prepare("SELECT section_id,tid,`order` FROM section WHERE section_name=?");
 		$sql->bind_param('s', $section_name);
 		$sql->bind_result($section_id, $tid, $order);
 		$sql->execute();
@@ -183,7 +183,7 @@ function get_sections($con, $args) {
 	}
 
 	else {
-		$sql = $con->prepare("SELECT section_id,tid,section_name,`order` FROM Section");
+		$sql = $con->prepare("SELECT section_id,tid,section_name,`order` FROM section");
 		$sql->bind_result($section_id, $tid, $section_name, $order);
 		$sql->execute();
 		while($sql->fetch()) {
@@ -216,7 +216,7 @@ If there is no such section found, an appropriate response is returned.
 function get_section_file($con, $args) {
 	if(isset($args['section_id'])) {
 		$section_id = $args['section_id'];
-		$sql = $con->prepare("SELECT tid,section_name FROM Section WHERE section_id=?");
+		$sql = $con->prepare("SELECT tid,section_name FROM section WHERE section_id=?");
 		$sql->bind_param('i', $section_id);
 		$sql->bind_result($tid, $section_name);
 		$sql->execute();
@@ -224,7 +224,7 @@ function get_section_file($con, $args) {
 		$sql->close();
 
 		if(isset($tid) && isset($section_name)) {
-			$sql = $con->prepare("SELECT sid,tname FROM Topic WHERE tid=?");
+			$sql = $con->prepare("SELECT sid,tname FROM topic WHERE tid=?");
 			$sql->bind_param('i', $tid);
 			$sql->bind_result($sid, $tname);
 			$sql->execute();
@@ -232,7 +232,7 @@ function get_section_file($con, $args) {
 			$sql->close();
 
 			if(isset($sid) && isset($tname)) {
-				$sql = $con->prepare("SELECT sname FROM Subject WHERE sid=?");
+				$sql = $con->prepare("SELECT sname FROM subject WHERE sid=?");
 				$sql->bind_param('i', $sid);
 				$sql->bind_result($sname);
 				$sql->execute();

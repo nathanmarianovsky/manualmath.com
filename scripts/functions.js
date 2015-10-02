@@ -25,6 +25,29 @@ define(function() {
 	/*
 
 	Purpose:
+	Handles the API calls.
+
+	Parameters:
+		arguments: 
+			The API calls as a list
+
+	*/
+	exports.getAll = function() {
+		var urls = Array.prototype.slice.call(arguments);
+		var promises = urls.map(function(url) {
+			return $.get(url);
+		});
+		var def = $.Deferred();
+		$.when.apply($, promises).done(function() {
+			var responses = Array.prototype.slice.call(arguments);
+			def.resolve.apply(def, responses.map(function(res) { return res[0]; }));
+		});
+		return def.promise();
+	};
+
+	/*
+
+	Purpose:
 	Creates the necessary association of all the subjects, topics, sections, and examples.
 
 	Parameters:
@@ -104,17 +127,39 @@ define(function() {
 	/*
 
 	Purpose:
+	Converts rgb/rgba colors codes to hex.
+
+	Parameters:
+		orig: 
+			The rgb/rgba color code
+
+	*/
+	exports.rgba_to_hex = function(orig) {
+		var rgb = orig.replace(/\s/g,'').match(/^rgba?\((\d+),(\d+),(\d+)/i);
+		return (rgb && rgb.length === 4) ? "#" +
+		  	("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+		  	("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+		  	("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : orig;
+	};
+
+	/*
+
+	Purpose:
 	Handles the coloring of the li tags on the example_side_nav.
 
 	*/
 	exports.handle_li_coloring = function() {
 		$('li').each(function() {
 			if($(this).hasClass('active')) {
-				$(this).addClass('light-blue accent-4');
+				$(this).css('background-color', '#4693ec');
+				$(this).find('a').css('color', 'white');
 			}
 			else {
-				if($(this).hasClass('light-blue accent-4')) {
-					$(this).removeClass('light-blue accent-4');
+				if($(this).css('background-color')) {
+					if(exports.rgba_to_hex($(this).css('background-color')) == '#4693ec') {
+						$(this).css('background-color', 'transparent');
+						$(this).find('a').css('color', '#444');
+				}
 				}
 			}
 		});
@@ -137,7 +182,7 @@ define(function() {
 			$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'subjects_li' + subject.sid).fadeIn('slow'));
 			$('#subjects_li' + subject.sid).append($('<a>').addClass('collapsible-header bold').attr('id', 'subjects_' + subject.sid).text(subject.clean_name).css({
 				'line-height': '64px',
-				'font-size': '10px'
+				'font-size': '12px'
 			}));
 			$('#subjects_' + subject.sid).append($('<i>').addClass('material-icons right').text('arrow_forward'));
 		});
@@ -167,7 +212,7 @@ define(function() {
 			$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'topics_li' + topic.tid).fadeIn('slow'));
 			$('#topics_li' + topic.tid).append($('<a>').addClass('collapsible-header bold').attr('id', 'topics_' + topic.tid).text(topic.clean_name).css({
 				'line-height': '64px',
-				'font-size': '10px'
+				'font-size': '12px'
 			}));
 			$('#topics_' + topic.tid).append($('<i>').addClass('material-icons right').text('arrow_forward'));
 		});
@@ -199,7 +244,7 @@ define(function() {
 			$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'sections_li' + section.section_id).fadeIn('slow'));
 			$('#sections_li' + section.section_id).append($('<a>').addClass('collapsible-header bold').attr('id', 'sections_' + section.section_id).text(section.clean_name).css({
 				'line-height': '64px',
-				'font-size': '10px'
+				'font-size': '12px'
 			}));
 			$('#sections_' + section.section_id).append($('<i>').addClass('material-icons right').text('arrow_forward'));
 		});
@@ -236,7 +281,7 @@ define(function() {
 			$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'examples_li' + example.eid).fadeIn('slow'));
 			$('#examples_li' + example.eid).append($('<a>').addClass('collapsible-header bold').attr('id', 'examples_' + example.eid).text(example.clean_name).css({
 				'line-height': '64px',
-				'font-size': '10px'
+				'font-size': '12px'
 			}));
 		});
 	}

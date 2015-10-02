@@ -15,20 +15,9 @@ define(['jquery', 'materialize', 'router5', 'mathjax', 'app/functions', 'app/rou
 			defaultRoute: 'home'
 		});
 
-		var getAll = function() {
-			var urls = Array.prototype.slice.call(arguments);
-			var promises = urls.map(function(url) {
-				return $.get(url);
-			});
-			var def = $.Deferred();
-			$.when.apply($, promises).done(function() {
-				var responses = Array.prototype.slice.call(arguments);
-				def.resolve.apply(def, responses.map(function(res) { return res[0]; }));
-			});
-			return def.promise();
-		};
+		$('.top-nav').css('background-color', '#6c8fe4');
 
-		getAll('../api/subjects', '../api/topics', '../api/sections', '../api/examples').done(function(subjects, topics, sections, examples) {
+		functions.getAll('../api/subjects', '../api/topics', '../api/sections', '../api/examples').done(function(subjects, topics, sections, examples) {
 			functions.organize(subjects, topics, sections, examples);
 			functions.sort_subjects(subjects);
 

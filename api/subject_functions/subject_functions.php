@@ -25,7 +25,7 @@ function get_subjects($con, $args) {
 
 	if(isset($args['sid'])) {
 		$sid = $args['sid'];
-		$sql = $con->prepare("SELECT sname,`order` FROM Subject WHERE sid=?");
+		$sql = $con->prepare("SELECT sname,`order` FROM subject WHERE sid=?");
 		$sql->bind_param('i', $sid);
 		$sql->bind_result($sname, $order);
 		$sql->execute();
@@ -42,7 +42,7 @@ function get_subjects($con, $args) {
 
 	else if(isset($args['sname'])) {
 		$sname = $args['sname'];
-		$sql = $con->prepare("SELECT sid,`order` FROM Subject WHERE sname=?");
+		$sql = $con->prepare("SELECT sid,`order` FROM subject WHERE sname=?");
 		$sql->bind_param('s', $sname);
 		$sql->bind_result($sid, $order);
 		$sql->execute();
@@ -58,7 +58,7 @@ function get_subjects($con, $args) {
 	}
 
 	else {
-		$sql = $con->prepare("SELECT sid,sname,`order` FROM Subject ORDER BY `order` ASC");
+		$sql = $con->prepare("SELECT sid,sname,`order` FROM subject ORDER BY `order` ASC");
 		$sql->bind_result($sid, $sname, $order);
 		$sql->execute();
 		while($sql->fetch()) {

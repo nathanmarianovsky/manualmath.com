@@ -84,7 +84,7 @@ define(['app/functions'], function(functions) {
 									$('main').append($('<div>').attr('id', 'latex'));
 									$('#latex').load('/content/' + subject.sname + '/' + topic.tname + '/' + section.section_name + '/' + section.section_name + '.html');
 									functions.example_side_nav(section, topic);
-									$('#section_name' + section.section_id).addClass('active light-blue accent-4');
+									$('#section_name' + section.section_id).addClass('active');
 									MathJax.Hub.Queue(['Typeset',MathJax.Hub,'main']);
 								}
 							});
@@ -92,6 +92,7 @@ define(['app/functions'], function(functions) {
 					});
 				}
 			});
+			functions.handle_li_coloring();
 			MathJax.Hub.Queue(['Typeset',MathJax.Hub,'main']);
 			functions.handle_links(router, subjects, topics, sections, examples);
 		});

@@ -29,7 +29,7 @@ function get_topics($con, $args) {
 
 	if(isset($args['sid'])) {
 		$sid = $args['sid'];
-		$sql = $con->prepare("SELECT tid,tname,`order` FROM Topic WHERE sid=? ORDER BY `order` ASC");
+		$sql = $con->prepare("SELECT tid,tname,`order` FROM topic WHERE sid=? ORDER BY `order` ASC");
 		$sql->bind_param("i", $sid);
 		$sql->bind_result($tid, $tname, $order);
 		$sql->execute();
@@ -46,7 +46,7 @@ function get_topics($con, $args) {
 
 	else if(isset($args['sname'])) {
 		$sname = $args['sname'];
-		$sql = $con->prepare("SELECT sid FROM Subject WHERE sname=?");
+		$sql = $con->prepare("SELECT sid FROM subject WHERE sname=?");
 		$sql->bind_param("s", $sname);
 		$sql->bind_result($sid);
 		$sql->execute();
@@ -54,7 +54,7 @@ function get_topics($con, $args) {
 		$sql->close();
 
 		if(isset($sid)) {
-			$sql = $con->prepare("SELECT tid,tname,`order` FROM Topic WHERE sid=? ORDER BY `order` ASC");
+			$sql = $con->prepare("SELECT tid,tname,`order` FROM topic WHERE sid=? ORDER BY `order` ASC");
 			$sql->bind_param("i", $sid);
 			$sql->bind_result($tid, $tname, $order);
 			$sql->execute();
@@ -71,7 +71,7 @@ function get_topics($con, $args) {
 
 	else if(isset($args['tid'])) {
 		$tid = $args['tid'];
-		$sql = $con->prepare("SELECT sid,tname,`order` FROM Topic WHERE tid=?");
+		$sql = $con->prepare("SELECT sid,tname,`order` FROM topic WHERE tid=?");
 		$sql->bind_param('i', $tid);
 		$sql->bind_result($sid, $tname, $order);
 		$sql->execute();
@@ -87,7 +87,7 @@ function get_topics($con, $args) {
 
 	else if(isset($args['tname'])) {
 		$tname = $args['tname'];
-		$sql = $con->prepare("SELECT sid,tid,`order` FROM Topic WHERE tname=?");
+		$sql = $con->prepare("SELECT sid,tid,`order` FROM topic WHERE tname=?");
 		$sql->bind_param('s', $tname);
 		$sql->bind_result($sid, $tid, $order);
 		$sql->execute();
@@ -102,7 +102,7 @@ function get_topics($con, $args) {
 	}
 
 	else {
-		$sql = $con->prepare("SELECT sid,tid,tname,`order` FROM Topic");
+		$sql = $con->prepare("SELECT sid,tid,tname,`order` FROM topic");
 		$sql->bind_result($sid, $tid, $tname, $order);
 		$sql->execute();
 		while($sql->fetch()) {
