@@ -24,27 +24,29 @@ define(['app/functions'], function(functions) {
 			functions.subject_side_nav(subjects);
 			$('#page_title').text('Home');
 			$('title').text('Home');
-			$('main').load('/client/home.php');
+			$('main').empty();
+			$('main').append($('<div>').attr('id', 'home_page'));
+			$('#home_page').load('/client/home.php');
 			functions.handle_links(router, subjects, topics, sections, examples);
 		});
 
-		router.addRouteListener('all', function(toState, fromState) {
-			$('#page_title').text('All Subjects');
-			functions.subject_side_nav(subjects);
-			functions.default_load();
-			functions.handle_links(router, subjects, topics, sections, examples);
-		});
+		// router.addRouteListener('all', function(toState, fromState) {
+		// 	$('#page_title').text('All Subjects');
+		// 	functions.subject_side_nav(subjects);
+		// 	$('main').empty();
+		// 	$('main').append($('<div>').attr('id', 'home_page'));
+		// 	$('#home_page').load('/client/home.php');
+		// 	functions.handle_links(router, subjects, topics, sections, examples);
+		// });
 
 		router.addRouteListener('subject', function(toState, fromState) {
 			subjects.forEach(function(subject) {
 				if(subject.sname == toState.params.sname) {
-					// $('main').empty();
+					$('main').empty();
 					$('#page_title').text(subject.clean_name);
 					$('title').text(subject.clean_name);
-					if($.trim($('main').html())=='') {
-						$('main').append($('<div>').attr('id', 'latex'));
-						$('#latex').load('/content/' + subject.sname + '/' + subject.sname + '.html');
-					}
+					$('main').append($('<div>').attr('id', 'subject_page'));
+					$('#subject_page').load('/content/' + subject.sname + '/' + subject.sname + '.html');
 					functions.topic_side_nav(subject);
 				}
 			});
@@ -56,13 +58,11 @@ define(['app/functions'], function(functions) {
 				if(subject.sname == toState.params.sname) {
 					subject.topics.forEach(function(topic) {
 						if(topic.tname == toState.params.tname) {
-							// $('main').empty();
+							$('main').empty();
 							$('#page_title').text(subject.clean_name + ' - ' + topic.clean_name);
 							$('title').text(subject.clean_name + ' - ' + topic.clean_name);
-							if($.trim($('main').html())=='') {
-								$('main').append($('<div>').attr('id', 'latex'));
-								$('#latex').load('/content/' + subject.sname + '/' + topic.tname + '/' + topic.tname + '.html');
-							}
+							$('main').append($('<div>').attr('id', 'topic_page'));
+							$('#topic_page').load('/content/' + subject.sname + '/' + topic.tname + '/' + topic.tname + '.html');
 							functions.section_side_nav(topic, subject);
 						}
 					});

@@ -7,8 +7,6 @@
 		<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css'>
 		<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 		<link rel='stylesheet' type='text/css' href='/styles/styles.css'>
-		<link rel='stylesheet' type='text/css' href='/styles/sidebar.css'>
-		<link rel='stylesheet' type='text/css' href='/styles/latex.css'>
 		<script data-main='/scripts/config' type='text/javascript' src='/node_modules/requirejs/require.js'></script>
 	</head>
 	<body>
@@ -16,17 +14,17 @@
 			<div class='navbar-fixed'>
 				<nav class='top-nav'>
 				    <div class='nav-wrapper'>
-				    	<a href='home.php' id='brand-logo' class='brand-logo tooltipped' data-position='right' data-delay='50' data-tooltip='Click on me to go home!'>man math</a>
-				    	<ul class='hide-on-med-and-down' id='page_title_ul'>
-			    			<a href='#' id='page_title'></a>	
-				    	</ul>
+					    <a href='#' id='hamburger_button' data-activates='nav-mobile' class='button-collapse'>
+					      	<i class='mdi-navigation-menu'></i>
+					    </a>
+				    	<div id='header_div'>
+				    		<a href='home.php' id='logo'>man math</a>
+			    			<a id='page_title'></a>
+				    	</div>
 				    </div>
-				    <a href="#" data-activates='nav-mobile' class='button-collapse top-nav full hide-on-large-only left'>
-				      <i class='mdi-navigation-menu'></i>
-				    </a>
 				</nav>
 			</div>
-			<ul id='nav-mobile' class='side-nav fixed' style='width:350px;'></ul>
+			<ul id='nav-mobile' class='side-nav fixed'></ul>
 		</header>
 		<main></main>
 	</body>

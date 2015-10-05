@@ -15,7 +15,15 @@ define(['jquery', 'materialize', 'router5', 'mathjax', 'app/functions', 'app/rou
 			defaultRoute: 'home'
 		});
 
-		$('.top-nav').css('background-color', '#6c8fe4');
+		// console.log(window.innerWidth);
+
+		// $(window).on('resize', functions.handle_page_width);
+
+		// if(window.innerWidth < '1200px') {
+		// 	$('#nav-mobile').css('visibility', 'hidden');
+		// 	// console.log('true');
+		// 	$('#nav-mobile').css('display', 'none');
+		// }
 
 		functions.getAll('../api/subjects', '../api/topics', '../api/sections', '../api/examples').done(function(subjects, topics, sections, examples) {
 			functions.organize(subjects, topics, sections, examples);
@@ -26,6 +34,23 @@ define(['jquery', 'materialize', 'router5', 'mathjax', 'app/functions', 'app/rou
 			$(".button-collapse").sideNav({
 				menuWidth: 350
 			});
+
+			// $('.drag-target').on('swiperight', function() {
+			// 	$(this).css({
+			// 		'display': 'inline',
+			// 		'visibility': 'visible'
+			// 	});
+			// });
+			if(window.innerWidth < 992) {
+				console.log(window.innerWidth);
+				$('#hamburger_button').click(function() {
+					// $('#nav-mobile').css('visibility', 'visible');
+					$('#nav-mobile').css({
+						'display': 'inline',
+						'visibility': 'visible'
+					});
+				});
+			}
 
 			router.start();
 		});
