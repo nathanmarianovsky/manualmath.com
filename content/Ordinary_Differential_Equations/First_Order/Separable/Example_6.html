@@ -1,0 +1,46 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Find all solutions to:
+	<div class='latex_equation'>
+		$\eqalign{
+			T' = k(T - T_0)
+		}$
+	</div>
+	where $T_0 \in \mathbb{R}$.
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			Since the function is separable:
+			<div class='latex_equation'>
+				$\eqalign{
+					T' &= k(T - T_0) \\
+					\frac{dT}{dt} &= k(T - T_0) \\
+					\frac{dT}{T - T_0} &= k dt \\
+					\int \frac{dT}{T - T_0} &= \int k dt \\
+					\ln|T - T_0| &= kt + C \\
+					\ln|T - T_0| - kt &= C
+				}$
+			</div>
+			In case an implicit solution does not satisfy you, here is how the explicit solution can be
+			found using simple algebraic manipulation:
+			<div class='latex_equation'>
+				$\eqalign{
+					\ln|T - T_0| - kt &= C \\
+					\ln|T - T_0| &= kt + C \\
+					T - T_0 &= e^{kt + C} \\
+					T &= e^{kt}e^C + T_0 \\
+					T &= De^{kt} + T_0
+				}$
+			</div>
+			where $D = e^C$ is a more comfortable way of writing down the constant of integration.
+		</div>
+	</div>
+</div>
