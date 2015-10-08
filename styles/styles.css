@@ -35,13 +35,8 @@
 	}
 
 	#hamburger_button {
-		/*left: 20px;*/
 		display: none;
 		visibility: hidden;
-	}
-
-	#nav-mobile {
-		/*visibility: hidden;*/
 	}
 
 	#header_div {
@@ -72,8 +67,6 @@
 		margin: 0 auto 50px auto;
 		font-size: 15px;
 	}
-
-	
 }
 
 /* Styles for screens with minimum and maximum widths of 800px and 992px respectively */
@@ -87,43 +80,58 @@
 		display: inline;
 	}
 
-	#nav-mobile {
-		/*visibility: hidden;*/
-	}
- 
-	.nav-wrapper {
-		/*display: block;*/
-		/*margin: 0 auto 0 auto;*/
-		text-align: center;
-	}
-
-	#header_div {
-		margin: 0 0 0 58px;
-		line-height: 64px;
-		text-align: center;
-	}
-
     #logo {
-		/*line-height: 10px;*/
-		display: block;
-	  	/*vertical-align: top;*/
-	  	/*bottom: 15px;*/
-	  	/*margin: 0 0 15px 0;*/
+		display: inline;
+	  	position: relative;
+	  	padding: 15px 0 0 80px;
 	}
 
 	#page_title {
-	  	/*padding: 0 0 0 400px;*/
+	  	padding: 15px 0 0 80px;
 		font-size: 20px;
-		/*line-height: 80px;*/
-		display: block;
-		/*vertical-align: bottom;*/
-		/*top: 20px;*/
-		/*margin-bottom: 30px;*/
+		display: inline;
+	}
+
+	#latex {
+		color: black;
+		font-family: 'Computer Modern Serif, sans-serif';
+		width: 600px;
+		margin: 0 auto 50px auto;
+		font-size: 15px;
 	}
 }
 
+/* Styles for screens with minimum and maximum widths of 800px and 992px respectively */
+@media only screen and (max-width : 800px) {
+	header, main, footer {
+		padding-left: 0;
+	}
 
+	#hamburger_button {
+		left: 20px;
+		display: inline;
+	}
 
+    #logo {
+		display: inline;
+	  	position: relative;
+	  	padding: 15px 0 0 80px;
+	}
+
+	#page_title {
+	  	padding: 15px 0 0 80px;
+		font-size: 20px;
+		display: inline;
+	}
+
+	#latex {
+		color: black;
+		font-family: 'Computer Modern Serif, sans-serif';
+		width: 300px;
+		margin: 0 auto 50px auto;
+		font-size: 15px;
+	}
+}
 
 /* Styles for all screens */
 .top-nav {
