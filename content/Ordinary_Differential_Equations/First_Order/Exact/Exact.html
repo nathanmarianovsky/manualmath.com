@@ -93,3 +93,72 @@
 	</div>
 	where the $C$ handles the constants of integration that should have come out of the integration above. 
 </div>
+
+<div class='latex_section'>
+	Cases with an Integration Factor
+</div>
+<div class='latex_body'>
+	Sometimes it may happen that the necessary condition is not true:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial M}{\partial y} \neq \frac{\partial N}{\partial x}
+		}$
+	</div>
+	and though it may seem hopeless, there is a way to fix this situation. Lets assume that there exists a factor
+	$\mu(x,y)$ such that:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial}{\partial y} \Big( \mu M \Big) &= \frac{\partial}{\partial x} \Big( \mu N \Big) \\
+			\frac{\partial \mu}{\partial y} M + \mu \frac{\partial M}{\partial y} &= \frac{\partial \mu}{\partial x} N + \mu \frac{\partial N}{\partial x}
+		}$
+	</div>
+	The above is a partial differential equation which is a little too hard to solve. So we can consider two common cases instead. First assume that $\mu$ is
+	strictly a function of $x$ giving:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial \mu}{\partial x} N + \mu \frac{\partial N}{\partial x} = \mu \frac{\partial M}{\partial y} \\
+		}$
+	</div>
+	I can now abandon the partial derivative for a normal derivative on the $\mu$ since it is a function of one variable and in order to make the work cleaner I
+	will use subscripts to denote partial derivatives where needed:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{d\mu}{dx} N &= \mu \Big( M_y - N_x \Big) \\
+			\frac{d\mu}{\mu} &= \Big( \frac{M_y - N_x}{N} \Big) dx \\
+			\int \frac{d\mu}{\mu} &= \int \Big( \frac{M_y - N_x}{N} \Big) dx \\
+			\ln|\mu| &= \int \Big( \frac{M_y - N_x}{N} \Big) dx \\
+			\mu &= e^{\int \Big( \frac{M_y - N_x}{N} \Big) dx} \\
+			\mu &= e^{K(x) + C} \\
+			\mu &= e^{K(x)}e^C \\
+			\mu &= De^{K(x)}
+		}$
+	</div>
+	where $D = e^C$ is an easier way of writing down the constant of integration and $K(x)$ is the antiderivative of $\frac{M_y - N_x}{N}$. 
+	In order for the above integrating factor to work note that the integrand must be a function of $x$ strictly. Now for the case where $\mu$ is a function of
+	$y$ only:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{\partial \mu}{\partial y} M + \mu \frac{\partial M}{\partial y} = \mu \frac{\partial N}{\partial x} \\
+		}$
+	</div>
+	Just like before I will use subscripts to denote partial derivatives and turn the partial derivative into a normal derivative for $\mu$:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{d\mu}{dy} M &= \mu \Big( N_x - M_y \Big) \\
+			\frac{d\mu}{\mu} &= \Big( \frac{N_x - M_y}{M} \Big) dy \\
+			\int \frac{d\mu}{\mu} &= \int \Big( \frac{N_x - M_y}{M} \Big) dy \\
+			\ln|\mu| &= \int \Big( \frac{N_x - M_y}{M} \Big) dy \\
+			\mu &= e^{\int \Big( \frac{N_x - M_y}{M} \Big) dy} \\
+			\mu &= e^{J(y) + C} \\
+			\mu &= e^{J(y)}e^C \\
+			\mu &= De^{J(y)}
+		}$
+	</div>
+	where $D = e^C$ is once again an easier way of writing down the constant of integration, $J(y)$ is the antiderivative of $\frac{N_x - M_y}{N}$, and the integrand must be a function of $y$ strictly so that the integrating factor works. In both cases we get a whole family of integrating factors similar to the scenario from the integrating factor
+	for first-order linear differential equations. So once again we choose the easy path and let $D = 1$ so that we have:
+	<div class='latex_equation'>
+		$\eqalign{
+			\mu &= e^{K(x)} \hspace{.3cm} \text{or} \hspace{.3cm} \mu &= e^{J(y)}
+		}$
+	</div>
+</div>

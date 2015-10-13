@@ -1,0 +1,68 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Solve the following differential equation for $t > 0$:
+	<div class='latex_equation'>
+		$\eqalign{
+			2t\frac{dy}{dt} - y = t + 1
+		}$
+	</div>
+	where $y(2) = 4$.
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			First rearranging gives:
+			<div class='latex_equation'>
+				$\eqalign{
+					2t\frac{dy}{dt} - y &= t + 1 \\
+					\frac{dy}{dt} - \frac{1}{2t}y = \frac{1}{2} + \frac{1}{2t}
+				}$
+			</div>
+			Now this is in the form of a first-order linear differential equation.
+			Next the integrating factor is needed:
+			<div class='latex_equation'>
+				$\eqalign{
+					\mu &= e^{\int -\frac{1}{2t} dt} \\
+					&= e^{-\frac{1}{2}\ln|t|} \\
+					&= e^{\ln(|t|^{-\frac{1}{2}})} \\
+					&= |t|^{-\frac{1}{2}} \\
+					&= t^{-\frac{1}{2}}
+				}$
+			</div>
+			where dropping the absolute value is only allowed since $t > 0$ is given as a condition.
+			Now multiplying the equation throughout by the integrating factor gives:
+			<div class='latex_equation'>
+				$\eqalign{
+					t^{-\frac{1}{2}}\frac{dy}{dt} - \frac{1}{2}t^{-\frac{3}{2}}y &= \frac{1}{2}t^{-\frac{1}{2}} + \frac{1}{2}t^{-\frac{3}{2}} \\
+					\frac{d}{dt} \Big( t^{-\frac{1}{2}}y \Big) &= \frac{1}{2}t^{-\frac{1}{2}} + \frac{1}{2}t^{-\frac{3}{2}} \\
+					d\Big( t^{-\frac{1}{2}}y \Big) &= \Big( \frac{1}{2}t^{-\frac{1}{2}} + \frac{1}{2}t^{-\frac{3}{2}} \Big) dt \\
+					\int d\Big( t^{-\frac{1}{2}}y \Big) &= \int \Big( \frac{1}{2}t^{-\frac{1}{2}} + \frac{1}{2}t^{-\frac{3}{2}} \Big) dt \\
+					t^{-\frac{1}{2}}y &= t^\frac{1}{2} - t^{-\frac{1}{2}} + C \\
+					y &= t - 1 + Ct^\frac{1}{2}
+				}$
+			</div>
+			To determine the value of $C$ use the initial value given:
+			<div class='latex_equation'>
+				$\eqalign{
+					4 &= y(2) \\
+					4 &= (2) - 1 + C(2)^\frac{1}{2} \\
+					3 &= \sqrt{2}C \\
+					C &= \frac{3}{\sqrt{2}}
+				}$
+			</div>
+			so that the final solution can be written down as:
+			<div class='latex_equation'>
+				$\eqalign{
+					y = t - 1 + 3\sqrt{\frac{t}{2}}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

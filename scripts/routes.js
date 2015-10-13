@@ -30,14 +30,21 @@ define(['app/functions'], function(functions) {
 			functions.handle_links(router, subjects, topics, sections, examples);
 		});
 
-		// router.addRouteListener('all', function(toState, fromState) {
-		// 	$('#page_title').text('All Subjects');
-		// 	functions.subject_side_nav(subjects);
-		// 	$('main').empty();
-		// 	$('main').append($('<div>').attr('id', 'home_page'));
-		// 	$('#home_page').load('/client/home.php');
-		// 	functions.handle_links(router, subjects, topics, sections, examples);
-		// });
+		router.addRouteListener('notation', function(toState, fromState) {
+			if($('.side-nav').is(':empty')) {
+				functions.subject_side_nav(subjects);
+			}
+			$('#page_title').text('Notation');
+			$('title').text('Notation');
+			$('main').empty();
+			$('main').append($('<div>').attr('id', 'latex'));
+			$('#latex').load('/client/notation.php');
+			$('#notation_li').addClass('active');
+			MathJax.Hub.Queue(['Typeset',MathJax.Hub,'main']);
+			functions.handle_links(router, subjects, topics, sections, examples);
+			functions.handle_li_coloring();
+			MathJax.Hub.Queue(['Typeset',MathJax.Hub,'main']);
+		});
 
 		router.addRouteListener('subject', function(toState, fromState) {
 			subjects.forEach(function(subject) {

@@ -1,0 +1,52 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Determine all solutions to:
+	<div class='latex_equation'>
+		$\eqalign{
+			t\ln(t)\frac{dr}{dt} + r = te^t
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			First rearranging gives:
+			<div class='latex_equation'>
+				$\eqalign{
+					t\ln(t)\frac{dr}{dt} + r &= te^t \\
+					\frac{dr}{dt} + \frac{1}{t\ln(t)}r &= \frac{e^t}{\ln(t)}
+				}$
+			</div>
+			Now this is in the form of a first-order linear differential equation.
+			Next the integrating factor is needed:
+			<div class='latex_equation'>
+				$\eqalign{
+					\mu &= e^{\int \frac{1}{t\ln(t)} dt} \\
+					&= e^{\ln|\ln(t)|} \\
+					&= |\ln(t)| \\
+					&= \ln(t)
+				}$
+			</div>
+			where dropping the absolute value is allowed since the original domain of the function to begin
+			with is $(0,\infty)$. Even if $t \in (0,1)$, putting a negative sign in front will not change the result.
+			Now multiplying the equation throughout by the integrating factor gives:
+			<div class='latex_equation'>
+				$\eqalign{
+					\ln(t)\frac{dr}{dt} + \frac{1}{t}r &= e^t \\
+					\frac{d}{dt}(\ln(t)r) &= e^t \\
+					d(\ln(t)r) &= e^t dt \\
+					\int d(\ln(t)r) &= \int e^t dt \\
+					\ln(t)r &= e^t + C \\
+					r &= \frac{e^t + C}{\ln(t)}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

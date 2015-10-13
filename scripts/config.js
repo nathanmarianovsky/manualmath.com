@@ -20,8 +20,8 @@ require.config({
                 tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
             });
             MathJax.Hub.Startup.onload();
-            return MathJax;
-          }
+                return MathJax;
+            }
         }
     }
 });

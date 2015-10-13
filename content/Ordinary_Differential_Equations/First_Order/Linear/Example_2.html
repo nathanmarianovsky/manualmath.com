@@ -1,0 +1,68 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Solve the following differential equation:
+	<div class='latex_equation'>
+		$\eqalign{
+			ty' - 2y = t^5\sin(2t) - t^3 + 4t^4
+		}$
+	</div>
+	where $y(\pi) = \frac{3}{2}\pi^4$.
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			First rearranging gives:
+			<div class='latex_equation'>
+				$\eqalign{
+					ty' - 2y &= t^5\sin(2t) - t^3 + 4t^4 \\
+					y' - \frac{2}{t}y &= t^4\sin(2t) - t^2 + 4t^3
+				}$
+			</div>
+			Now this is in the form of a first-order linear differential equation.
+			Next the integrating factor is needed:
+			<div class='latex_equation'>
+				$\eqalign{
+					\mu &= e^{\int -\frac{2}{t} dt} \\
+					&= e^{-2\ln|t|} \\
+					&= e^{\ln(|t|^{-2})} \\
+					&= (|t|)^{-2} \\
+					&= t^{-2}
+				}$
+			</div>
+			Now multiplying the equation throughout by the integrating factor gives:
+			<div class='latex_equation'>
+				$\eqalign{
+					y' - \frac{2}{t}y &= t^4\sin(2t) - t^2 + 4t^3 \\
+					t^{-2}y' - 2t^{-3}y &= t^2\sin(2t) - 1 + 4t \\
+					\frac{d}{dt} (t^{-2}y) &= t^2\sin(2t) - 1 + 4t \\
+					d(t^{-2}y) &= (t^2\sin(2t) - 1 + 4t) dt \\
+					\int d(t^{-2}y) &= \int (t^2\sin(2t) - 1 + 4t) dt \\
+					t^{-2}y &= \frac{1}{4}((1 - 2t^2)\cos(2t) + 2t\sin(2t)) - t + 2t^2 + C \\
+					y &= \frac{1}{4}((t^2 - 2t^4)\cos(2t) + 2t^3\sin(2t)) - t^3 + 2t^4 + Ct^2
+				}$
+			</div>
+			To determine the value of $C$ use the initial value given:
+			<div class='latex_equation'>
+				$\eqalign{
+					\frac{3}{2}\pi^4 &= y(\pi) \\
+					\frac{3}{2}\pi^4 &= \frac{1}{4}(((\pi)^2 - 2(\pi)^4)\cos(2\pi) + 2(\pi)^3\sin(2\pi)) - (\pi)^3 + 2(\pi)^4 + C(\pi)^2 \\
+					0 &= \frac{1}{4}\pi^2 - \pi^3 + C\pi^2 \\
+					C &= \pi - \frac{1}{4}
+				}$
+			</div>
+			so that the final solution can be written down as:
+			<div class='latex_equation'>
+				$\eqalign{
+					y = \frac{1}{4}((t^2 - 2t^4)\cos(2t) + 2t^3\sin(2t)) - t^3 + 2t^4 + \Big( \pi - \frac{1}{4} \Big)t^2
+				}$
+			</div>
+		</div>
+	</div>
+</div>

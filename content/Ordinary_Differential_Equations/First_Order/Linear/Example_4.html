@@ -1,0 +1,70 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Solve the following differential equation:
+	<div class='latex_equation'>
+		$\eqalign{
+			\cos^2(t)\sin(t)y' = -\cos^3(t)y + 1
+		}$
+	</div>
+	where $y\Big( \frac{\pi}{4} \Big) = 0$.
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			First rearranging gives:
+			<div class='latex_equation'>
+				$\eqalign{
+					\cos^2(t)\sin(t)y' &= -\cos^3(t)y + 1 \\
+					\cos^2(t)\sin(t)y' + \cos^3(t)y &= 1 \\
+					y' + \frac{\cos(t)}{\sin(t)}y &= \frac{1}{\cos^2(t)\sin(t)}
+				}$
+			</div>
+			Now this is in the form of a first-order linear differential equation.
+			Next the integrating factor is needed:
+			<div class='latex_equation'>
+				$\eqalign{
+					\mu &= e^{\int \frac{\cos(t)}{\sin(t)} dt} \\
+					&= e^{\ln|\sin(t)|} \\
+					&= |\sin(t)| \\
+					&= \sin(t)
+				}$
+			</div>
+			where the absolute value is allowed to be dropped since any multiple of the integrating factor
+			is also an integrating factor. So putting a negative sign will not change the outcome.
+			Now multiplying the equation throughout by the integrating factor gives:
+			<div class='latex_equation'>
+				$\eqalign{
+					\sin(t)y' + \cos(t)y &= \frac{1}{\cos^2(t)} \\
+					\frac{d}{dt} (\sin(t)y) &= \sec^2(t) \\
+					d(\sin(t)y) &= \sec^2(t) dt \\
+					\int d(\sin(t)y) &= \int \sec^2(t) dt \\
+					\sin(t)y &= \tan(t) + C \\
+					y &= \frac{\tan(t)}{\sin(t)} + \frac{C}{\sin(t)} \\
+					y &= \sec(t) + C\csc(t)
+				}$
+			</div>
+			To determine the value of $C$ use the initial value given:
+			<div class='latex_equation'>
+				$\eqalign{
+					0 &= y\Big( \frac{\pi}{4} \Big) \\
+					0 &= \sec\Big( \frac{\pi}{4} \Big) + C\csc\Big( \frac{\pi}{4} \Big) \\
+					0 &= \sqrt{2} + C\sqrt{2} \\
+					C &= -1
+				}$
+			</div>
+			so that the final solution can be written down as:
+			<div class='latex_equation'>
+				$\eqalign{
+					y = \sec(t) - \csc(t)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,34 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Find all solutions to:
+	<div class='latex_equation'>
+		$\eqalign{
+			\frac{dy}{dx} = \frac{\sin(x)}{\ln(y)}
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			Since the function is separable:
+			<div class='latex_equation'>
+				$\eqalign{
+					\frac{dy}{dx} &= \frac{\sin(x)}{\ln(y)} \\
+					\ln(y) dy &= \sin(x) dx \\
+					\int \ln(y) dy &= \int \sin(x) dx \\
+					y\ln(y) - y &= -\cos(x) + C \\
+					y\ln(y) - y + \cos(x) &= C
+				}$
+			</div>
+			The above solution does not provide any simple means of obtaining an explicit solution,
+			therefore just stick with the implicit solution.
+		</div>
+	</div>
+</div>

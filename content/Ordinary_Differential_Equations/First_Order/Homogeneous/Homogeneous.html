@@ -1,0 +1,69 @@
+<div class='latex_section'>
+	The Setup
+</div>
+<div class='latex_body'>
+	Given a differential equation in the form:
+	<div class='latex_equation'>
+		$\eqalign{
+			y' = f(x,y)
+		}$
+	</div>
+	where $y'$ denotes the first derivative, an exact solution can be obtained with the use of a substitution
+	if the function is homogeneous of order zero.
+</div>
+
+<div class='latex_section'>
+	Homogeneous Functions
+</div>
+<div class='latex_body'>
+	Before tackling the differential equation, it is important to understand what homogeneous functions are. Formally
+	any function that satisfies:
+	<div class='latex_equation'>
+		$\eqalign{
+			f(tx,ty) = t^n f(x,y)
+		}$
+	</div>
+	is known as a homogeneous function of degree $n$. For the differential equation we are going to need the function
+	to be homogeneous of degree zero thus giving the condition:
+	<div class='latex_equation'>
+		$\eqalign{
+			f(tx,ty) = f(x,y)
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solving the Equation
+</div>
+<div class='latex_body'>
+	Now given that the function on the right hand side of the differential equation from above is homogeneous of 
+	degree zero, then make the following substitution:
+	<div class='latex_equation'>
+		$\eqalign{
+			y &= ux \\
+			y' &= u'x + u
+		}$
+	</div>
+	so that the differential equation becomes separable:
+	<div class='latex_equation'>
+		$\eqalign{
+			y' &= f(x,y) \\
+			u'x + u &= f(x,ux) \\
+			u'x + u &= f(1,u) \\
+			u'x &= f(1,u) - u \\
+			\frac{du}{dx}x &= f(1,u) - u \\
+			\frac{du}{f(1,u) - u} &= \frac{dx}{x} \\
+			\int \frac{du}{f(1,u) - u} &= \int \frac{dx}{x} \\
+			W(u) &= \ln|x| + C \\
+			W(u) - \ln|x| &= C
+		}$
+	</div>
+	where $W(u)$ denotes the antiderivative of $(f(1,u) - u)^{-1}$. To finish off consider the fact that the original
+	equation consisted of $x$'s and $y$'s. So to get back into this form just use the fact that $u = \frac{y}{x}$:
+	<div class='latex_equation'>
+		$\eqalign{
+			W\Big( \frac{y}{x} \Big) - \ln|x| = C
+		}$
+	</div>
+	Usually the solution is left in implicit form since the algebra is typically too hard to determine an explicit solution.
+</div>

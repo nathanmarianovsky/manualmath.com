@@ -5,7 +5,7 @@
 	Find all solutions to:
 	<div class='latex_equation'>
 		$\eqalign{
-			\frac{dy}{dx} - x^2y^2 = x^2
+			2y' = e^{x + y + 3}
 		}$
 	</div>
 </div>
@@ -20,21 +20,22 @@
 			Since the function is separable:
 			<div class='latex_equation'>
 				$\eqalign{
-					\frac{dy}{dx} - x^2y^2 &= x^2 \\
-					\frac{dy}{dx} &= x^2y^2 + x^2 \\
-					\frac{dy}{dx} &= x^2(y^2 + 1) \\
-					\frac{dy}{y^2 + 1} &= x^2 dx \\
-					\int \frac{dy}{y^2 + 1} &= \int x^2 dx \\
-					\arctan(y) &= \frac{x^3}{3} + C \\
-					\arctan(y) - \frac{x^3}{3} &= C
+					2y' &= e^{x + y + 3} \\
+					2\frac{dy}{dx} &= e^{x + 3}e^{y} \\
+					2e^{-y} dy &= e^{x + 3} dx \\
+					\int 2e^{-y} dy &= \int e^{x + 3} dx \\
+					-2e^{-y} &= e^{x + 3} + C \\
+					2e^{-y} + e^{x + 3} &= -C
 				}$
 			</div>
-			The above solution could have been put in explicit form using simple algebraic manipulation:
+			To put the solution in explicit form:
 			<div class='latex_equation'>
 				$\eqalign{
-					\arctan(y) - \frac{x^3}{3} &= C \\
-					\arctan(y) &= \frac{x^3}{3} + C \\
-					y &= \tan\Big( \frac{x^3}{3} + C \Big)
+					2e^{-y} + e^{x + 3} &= -C \\
+					2e^{-y} &= -e^{x + 3} - C \\
+					e^{-y} &= \frac{-e^{x + 3} - C}{2} \\
+					-y &= \ln\Big( \frac{-e^{x + 3} - C}{2} \Big) \\
+					y &= \ln\Big( -\frac{2}{e^{x + 3} + C} \Big)
 				}$
 			</div>
 		</div>

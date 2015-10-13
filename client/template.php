@@ -17,7 +17,7 @@
 					    <a href='#' id='hamburger_button' data-activates='nav-mobile' class='button-collapse'>
 					      	<i class='mdi-navigation-menu'></i>
 					    </a>
-					    <a href='home.php' id='logo'>man math</a>
+					    <a href='home.php' id='logo'><img src='/client/logo.png'></a>
 				    	<!-- <div id='header_div'> -->
 			    			<a id='page_title'></a>
 				    	<!-- </div> -->
