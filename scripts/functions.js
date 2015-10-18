@@ -221,6 +221,7 @@ define(function() {
 			}));
 			$('#subjects_' + subject.sid).append($('<i>').addClass('material-icons right').text('arrow_forward'));
 		});
+		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'extra_li').fadeIn('slow'));
 	};
 
 	/*
@@ -257,7 +258,8 @@ define(function() {
 			}));
 			$('#topics_' + topic.tid).append($('<i>').addClass('material-icons right').text('arrow_forward'));
 		});
-	}
+		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'extra_li').fadeIn('slow'));
+	};
 
 	/*
 
@@ -295,7 +297,8 @@ define(function() {
 			}));
 			$('#sections_' + section.section_id).append($('<i>').addClass('material-icons right').text('arrow_forward'));
 		});
-	}
+		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'extra_li').fadeIn('slow'));
+	};
 
 	/*
 
@@ -337,7 +340,8 @@ define(function() {
 				'font-size': font
 			}));
 		});
-	}
+		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'extra_li').fadeIn('slow'));
+	};
 
 	/*
 

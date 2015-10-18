@@ -1,0 +1,47 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Determine all solutions to:
+	<div class='latex_equation'>
+		$\eqalign{
+			w'' + p(x)w' = q(x)
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			First make the substitution:
+			<div class='latex_equation'>
+				$\eqalign{
+					y &= w' \\
+					y' &= w''
+				}$
+			</div>
+			and plug in to get:
+			<div class='latex_equation'>
+				$\eqalign{
+					y' + p(x)y &= q(x) \\
+					y &= \frac{1}{\mu(x)}(L(x) + C)
+				}$
+			</div>
+			the general solution obtained in the notes. Now to solve for $w$:
+			<div class='latex_equation'>
+				$\eqalign{
+					\frac{dw}{dx} &= y(x) \\
+					dw &= y(x) dx \\
+					\int dw &= \int \frac{1}{\mu(x)}(L(x) + C) dx \\
+					w(x) &= J(x) + D
+				}$
+			</div>
+			where $J(x)$ denotes the antiderivative of $(\mu(x))^{-1}(L(x) + C)$ and $D$ is the
+			constant of integration coming out of the second integral. 
+		</div>
+	</div>
+</div>

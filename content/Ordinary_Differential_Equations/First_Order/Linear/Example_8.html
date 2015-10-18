@@ -1,0 +1,38 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Prove that:
+	<div class='latex_equation'>
+		$\eqalign{
+			y(x) = \frac{1}{\mu(x)}\Big( y_0 + \int_{x_0}^x \mu(s)q(s) ds \Big)
+		}$
+	</div>
+	is a solution to the first-order linear differential equation where $y(x_0) = y_0$ 
+	and $\mu(x)$ is the integrating factor by differentiating both sides. What is the
+	difference between this solution and the one found in the notes?
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			To take the derivative of both sides use the product rule:
+			<div class='latex_equation'>
+				$\eqalign{
+					y'(x) &= \frac{d}{dx} \Big[ \frac{1}{\mu(x)}\Big( y_0 + \int_{x_0}^x \mu(s)q(s) ds \Big) \Big] \\
+					&= -\frac{\mu'(x)}{\mu^2(x)}\Big( y_0 + \int_{x_0}^x \mu(s)q(s) ds \Big) + \frac{1}{\mu(x)} \cdot \frac{d}{dx}\Big( y_0 + \int_{x_0}^x \mu(s)q(s) ds \Big) \\
+					&= -\frac{\mu'(x)}{\mu(x)} \cdot \frac{1}{\mu(x)}\Big( y_0 + \int_{x_0}^x \mu(s)q(s) ds \Big) + \frac{\mu(x)q(x)}{\mu(x)} \\
+					&= -\frac{p(x)\mu(x)}{\mu(x)}y + q(x) \\
+					&= -p(x)y + q(x)
+				}$
+			</div>
+			This form of the solution specifically uses the fact that there is some initial condition. In order to use definite integrals, one
+			of the boundaries has to represent the initial condition, otherwise there is not enough information. So generally when there may not be
+			more information, an indefinite integral is utilized to account for the family of solutions.
+		</div>
+	</div>
+</div>

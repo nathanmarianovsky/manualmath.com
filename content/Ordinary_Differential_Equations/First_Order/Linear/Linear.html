@@ -39,8 +39,13 @@
 			\mu &= D e^{P(x)}
 		}$
 	</div>
-	where $P(x)$ denotes the antiderivative of $p(x)$. Towards the end I specifically
-	went out of my way to stress how the constant plays out. Notice that there is not one
+	where:
+	<div class='latex_equation'>
+		$\eqalign{
+			P(x) = \int p(x) dx
+		}$
+	</div>
+	Towards the end I specifically went out of my way to stress how the constant plays out. Notice that there is not one
 	definite integrating factor, but rather a whole family of them. So which one do we choose?
 	As a human being you want to make your life easier, so just let $D = 1$ and move on. With this
 	choice the integrating factor is officially defined as:
@@ -52,7 +57,7 @@
 </div>
 
 <div class='latex_section'>
-	Obtaining General Solution First
+	Solving the Equation
 </div>
 <div class='latex_body'>
 	With the integrating factor officially defined, solving the differential equation becomes a 
@@ -65,53 +70,14 @@
 			d(\mu(x) y) &= \mu(x) q(x) dx \\
 			\int d(\mu(x) y) &= \int \mu(x) q(x) dx \\
 			\mu(x) y(x) &= \int \mu(x) q(x) dx \\
-			y(x) &= \frac{1}{\mu(x)} \int \mu(x) q(x) dx
+			y(x) &= \frac{1}{\mu(x)}(L(x) + C)
 		}$
 	</div>
-	The integral on the right hand side will spit out a constant that is usually left in the general solution.
-	Given an initial condition, plug in the point to determine the value of the constant for the particular solution.
-</div>
-
-<div class='latex_section'>
-	Getting the Particular Solution First
-</div>
-<div class='latex_body'>
-	In the previous calculation I used the indefinite integral and I did so for a reason. You may not always be given
-	an initial condition, so the general solution is what is wanted. Even though you can take the general solution with
-	some initial value to get the particular solution, lets now use the definite integral to calculate the particular solution
-	right off the bat given that $y(x_0) = y_0$:
+	where:
 	<div class='latex_equation'>
 		$\eqalign{
-			y' + p(s)y &= q(s) \\
-			\mu(s) y' + \mu(s) p(s)y &= \mu(s) q(s) \\
-			\frac{d}{ds} (\mu(s) y) &= \mu(s) q(s) \\
-			d(\mu(s) y) &= \mu(s) q(s) ds \\
-			\int_{x_0}^x d(\mu(s) y) &= \int_{x_0}^x \mu(s) q(s) ds \\
-			(\mu(s) y) \Big|_{x_0}^x &= \int_{x_0}^x \mu(s) q(s) ds \\
-			(\mu(x) y(x)) - (\mu(x_0) y(x_0)) &= \int_{x_0}^x \mu(s) q(s) ds \\
-			\mu(x) y(x) &= \mu(x_0) y(x_0) + \int_{x_0}^x \mu(s) q(s) ds \\
-			y(x) &= \frac{1}{\mu(x)} \Big( \mu(x_0) y(x_0) + \int_{x_0}^x \mu(s) q(s) ds \Big)
+			L(x) = \int \mu(x) q(x) dx
 		}$
 	</div>
-	Now lets comment on a few things. I first of all switched the functions in the beginning to have variable $s$ instead of $x$ so that
-	I could use $x$ on the bounds of the integrals. Now formally:
-	<div class='latex_equation'>
-		$\eqalign{
-			\mu(x) = e^{\int_{x_0}^x p(s) ds}
-		}$
-	</div>
-	which implies
-	<div class='latex_equation'>
-		$\eqalign{
-			\mu(x_0) = e^{\int_{x_0}^{x_0} p(s) ds} = e^0 = 1
-		}$
-	</div>
-	and allows us to write down the final solution as:
-	<div class='latex_equation'>
-		$\eqalign{
-			y(x) = \frac{1}{\mu(x)} \Big( y_0 + \int_{x_0}^x \mu(s) q(s) ds \Big)
-		}$
-	</div>
-	Note that whether using the indefinite or definite integral, the final solution should always come out to be the same as can easily
-	be confirmed by close comparison of the final formulas for both methods.
+	Given an initial condition, the value of $C$ can be determined, otherwise leave this as the general solution.
 </div>

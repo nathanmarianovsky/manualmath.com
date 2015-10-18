@@ -2,14 +2,13 @@
 	The Setup
 </div>
 <div class='latex_body'>
-	Given a differential equation in the form:
+	A Bernoulli differential equation is typically modeled as:
 	<div class='latex_equation'>
 		$\eqalign{
-			y' + m(x)y = k(x)y^N
+			y' + m(x)y = k(x)y^N \hspace{.3cm} \text{where} \hspace{.3cm} N \in \mathbb{R} \setminus \{0,1\}
 		}$
 	</div>
-	where $y'$ denotes the first derivative, $N \in \mathbb{R} \setminus \{0,1\}$, and no matter the functions $m(x)$ and $k(x)$
-	a solution can always be obtained. We restrict $N$ to not be zero because that case would be trivial since the problem reduces down to a first-order
+	where $y'$ denotes the first derivative. We restrict $N$ to not be zero because that case would be trivial since the problem reduces down to a first-order
 	linear differential equation. For $N = 1$ just reorganize to see that the same thing happens:
 	<div class='latex_equation'>
 		$\eqalign{
@@ -19,7 +18,13 @@
 			y' + g(x)y &= 0
 		}$
 	</div>
-	where I used $g(x) = m(x) - k(x)$ as a way to conform to the standard first-order linear differential equation.
+	where:
+	<div class='latex_equation'>
+		$\eqalign{
+			g(x) = m(x) - k(x)
+		}$
+	</div>
+	is used to conform to the standard first-order linear differential equation.
 </div>
 
 <div class='latex_section'>
@@ -49,7 +54,13 @@
 			u' + (1-N)m(x)u &= (1-N)k(x)
 		}$
 	</div>
-	To put the equation in the standard form let $M(x) = (1-N)m(x)$ and $K(x) = (1-N)k(x)$ so that:
+	To put the equation in the standard form let:
+	<div class='latex_equation'>
+		$\eqalign{
+			M(x) = (1-N)m(x) \hspace{.3cm} \text{and} \hspace{.3cm} K(x) = (1-N)k(x)
+		}$
+	</div>
+	so that:
 	<div class='latex_equation'>
 		$\eqalign{
 			u' + M(x)u = K(x)
@@ -73,4 +84,6 @@
 			y &= \Big[ (1-N) e^{(N-1) \int m(x) dx} \int e^{(1-N) \int m(x) dx} k(x) dx \Big]^\frac{1}{1-N}
 		}$
 	</div>
+	Note that sometimes the exponent on the right side can be an even root. When this occurs both the positive and negative results
+	have to be considered in the final form of $y$.
 </div>

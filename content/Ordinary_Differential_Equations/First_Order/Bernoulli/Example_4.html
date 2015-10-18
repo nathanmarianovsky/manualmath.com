@@ -1,0 +1,77 @@
+<div class='latex_section'>
+	Problem
+</div>
+<div class='latex_body'>
+	Determine the family of solutions to:
+	<div class='latex_equation'>
+		$\eqalign{
+			x\frac{dy}{dx} + y = y^2x^2\ln(x)
+		}$
+	</div>
+</div>
+
+<div class='latex_section'>
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class='show_solution'>
+	<div style='display: none;' class='hidden_div'>
+		<div class='latex_body'>
+			Begin by rearranging to see the Bernoulli form and divide throughout by the non-linear term:
+			<div class='latex_equation'>
+				$\eqalign{
+					x\frac{dy}{dx} + y &= y^2x^2\ln(x) \\
+					\frac{dy}{dx} + \frac{1}{x}y &= y^2x\ln(x) \\
+					y'y^{-2} + \frac{1}{x}y^{-1} &= x\ln(x)
+				}$
+			</div>
+			Now make the substitution:
+			<div class='latex_equation'>
+				$\eqalign{
+					u &= y^{-1} \\
+					u' &= -y^{-2}y'
+				}$
+			</div>
+			and plug in to get:
+			<div class='latex_equation'>
+				$\eqalign{
+					y'y^{-2} + \frac{1}{x}y^{-1} &= x\ln(x) \\
+					-u' + \frac{1}{x}u &= x\ln(x) \\
+					u' - \frac{1}{x}u &= -x\ln(x)
+				}$
+			</div>
+			a first-order linear differential equation. Now an integrating factor is needed:
+			<div class='latex_equation'>
+				$\eqalign{
+					\mu &= e^{\int p(x) dx} \\
+					&= e^{\int -\frac{1}{x} dx} \\
+					&= e^{-\ln|x|} \\
+					&= e^{\ln(|x|^{-1})} \\
+					&= \frac{1}{|x|} \\
+					&= \frac{1}{x}
+				}$
+			</div>
+			where dropping the absolute value is allowed since putting a negative sign in front will not chance anything. 
+			Next multiplying throughout and solving for $u$ gives:
+			<div class='latex_equation'>
+				$\eqalign{
+					u' - \frac{1}{x}u &= -x\ln(x) \\
+					\frac{1}{x}u' - \frac{1}{x^2}u &= -\ln(x) \\
+					\frac{d}{dx}\Big( \frac{u}{x} \Big) &= -\ln(x) \\
+					d\Big( \frac{u}{x} \Big) &= -\ln(x) dx \\
+					\int d\Big( \frac{u}{x} \Big) &= \int -\ln(x) dx \\
+					\frac{u}{x} &= -x\ln(x) + x + C \\
+					u &= -x^2\ln(x) + x^2 + Cx
+				}$
+			</div>
+			Now to solve for $y$ use the original substitution:
+			<div class='latex_equation'>
+				$\eqalign{
+					y^{-1} &= u \\
+					y &= u^{-1} \\
+					&= \frac{1}{-x^2\ln(x) + x^2 + Cx}
+				}$
+			</div>
+		</div>
+	</div>
+</div>
