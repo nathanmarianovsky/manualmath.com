@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER["DOCUMENT_ROOT"] . "/classes/subject.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "api/classes/subject.php";
 
 /*
 

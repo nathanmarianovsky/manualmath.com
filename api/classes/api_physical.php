@@ -1,7 +1,7 @@
 <?php
 
 require_once "api_abstract.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/resources/config.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/api/config.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/api/subject_functions/subject_functions.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/api/topic_functions/topic_functions.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "/api/section_functions/section_functions.php";
