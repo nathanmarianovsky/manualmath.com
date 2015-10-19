@@ -1,22 +1,22 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Definition
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given $f(x) = x^n$ for some $n \in \mathbb{R}$, the derivative is defined as:
-	<div class='latex_equation'>$f'(x) = nx^{n-1}$</div>
+	<div class="latex_equation">$f'(x) = nx^{n-1}$</div>
 	where a prime denotes the first derivative. 
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Proof by Induction
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	First assume that the above definition holds true $\forall n \in \mathbb{N}$.
 	For the base case consider $n = 0$:
-	<div class='latex_equation'>$f(x) = 1 \implies f'(x) = 0$</div>
+	<div class="latex_equation">$f(x) = 1 \implies f'(x) = 0$</div>
 	which is a known fact since the rate of change of a constant function is always zero.
 	Now for the inductive step, lets prove that for $n+1$, $f'(x) = (n+1)x^n$:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f(x) &= x^{n+1} \\
 			f(x) &= x^n \cdot x \\
@@ -29,17 +29,17 @@
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Proof with Binomial Theorem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	A more rigorous approach is to exploit the Binomial Theorem which states that:
-	<div class='latex_equation'>$\eqalign{(1 + x)^n = \sum_{i=0}^n {n \choose i} x^i}$</div>
+	<div class="latex_equation">$\eqalign{(1 + x)^n = \sum_{i=0}^n {n \choose i} x^i}$</div>
 	where $n \in \mathbb{N}$ and
-	<div class='latex_equation'>$\eqalign{{n \choose i} = \frac{n!}{i!(n-i)!}}$</div>
+	<div class="latex_equation">$\eqalign{{n \choose i} = \frac{n!}{i!(n-i)!}}$</div>
 	is known as the binomial coefficient. Now approach finding the derivative through the normal
 	limit definition:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f'(x) &= \lim_{h \rightarrow 0} \frac{(x+h)^n - x^n}{h} \\
 			&= \lim_{h \rightarrow 0} \frac{1}{h} \Big( \Big(h \Big( 1 + \frac{x}{h} \Big) \Big)^n - x^n \Big) \\
@@ -57,13 +57,13 @@
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Proof by Chain Rule
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	First assume that the above definition holds true $\forall n \in \mathbb{N}$.
 	Now to prove for some $k \in \mathbb{Q}$, let $k = \frac{p}{q}$:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{d}{dx} x^k &= \frac{d}{dx} x^\frac{p}{q} \\
 			&= \frac{d}{dx} \Big( x^p \Big)^\frac{1}{q} \\

@@ -1,48 +1,48 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Evaluate the following:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int_0^5 \ln(1+t) dt
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
 	<input type="button" value="Show Solution" class="show_solution">
-	<div style="display: none;" class='hidden_div'>
-		<div class='latex_body'>
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
 			In this scenario the integral is bundled with just a
 			logarithm. We can also consider the polynomial $f(x) = 1$ to be in 
 			there just to make sense of the parts. Since logarithms take precendence
 			on the $\textbf{LIPET}$ acrynomy, define the components as:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					u = \ln(1+t) \rightarrow& du = \frac{dt}{1+t} \\
 					dv = dt \rightarrow& v = t
 				}$
 			</div>
 			Now applying the formula yields:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int_0^5 \ln(1+t) dt &= t\ln(1+t) \Big|_0^5 - \int_0^5 \frac{t}{1+t} dt \\
 					&= 5\ln(6) - \int_0^5 \frac{t}{1+t} dt
 				}$
 			</div>
 			To integrate the rest consider the following substitution:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					w &= 1 + t \rightarrow w - 1 = t \\
 					dw &= dt
 				}$
 			</div>
 			Plugging in gives:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					5\ln(6) - \int_0^5 \frac{t}{1+t} dt &= 5\ln(6) - \int_1^6 \frac{w-1}{w} dw \\
 					&= 5\ln(6) - \int_1^6 dw + \int_1^6 \frac{dw}{w} \\

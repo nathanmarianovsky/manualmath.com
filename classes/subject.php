@@ -32,7 +32,7 @@ class Subject {
 	public function expose() {
 		$subject = get_object_vars($this);
 		if(sizeof($this->topics) > 0) {
-			$subject['topics'] = array_map(function($topic){ return $topic->expose(); }, $subject['topics']);
+			$subject["topics"] = array_map(function($topic){ return $topic->expose(); }, $subject["topics"]);
 		}
 		return $subject;
 	}

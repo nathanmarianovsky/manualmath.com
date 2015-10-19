@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/classes/subject.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/classes/subject.php";
 
 /*
 
@@ -23,10 +23,10 @@ If there are no subjects found, then an empty array is returned.
 function get_subjects($con, $args) {
 	$subjects = array();
 
-	if(isset($args['sid'])) {
-		$sid = $args['sid'];
+	if(isset($args["sid"])) {
+		$sid = $args["sid"];
 		$sql = $con->prepare("SELECT sname,`order` FROM subject WHERE sid=?");
-		$sql->bind_param('i', $sid);
+		$sql->bind_param("i", $sid);
 		$sql->bind_result($sname, $order);
 		$sql->execute();
 		$sql->fetch();
@@ -40,10 +40,10 @@ function get_subjects($con, $args) {
 		
 	}
 
-	else if(isset($args['sname'])) {
-		$sname = $args['sname'];
+	else if(isset($args["sname"])) {
+		$sname = $args["sname"];
 		$sql = $con->prepare("SELECT sid,`order` FROM subject WHERE sname=?");
-		$sql->bind_param('s', $sname);
+		$sql->bind_param("s", $sname);
 		$sql->bind_result($sid, $order);
 		$sql->execute();
 		$sql->fetch();

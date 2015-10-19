@@ -1,9 +1,9 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Determine all solutions to:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			x^2y' + 2xy = \cos^2(x)
 		}$
@@ -13,16 +13,16 @@
 	Justify why this makes sense.
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
-	<input type='button' value='Show Solution' class='show_solution'>
-	<div style='display: none;' class='hidden_div'>
-		<div class='latex_body'>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
 			Take notice that the left hand side is already in the form of a product rule.
 			Just proceed to solving:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					x^2y' + 2xy &= \cos^2(x) \\
 					\frac{d}{dx}(x^2y) &= \cos^2(x) \\
@@ -33,17 +33,17 @@
 				}$
 			</div>
 			Now for the family of curves:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				<img src="/content/Ordinary_Differential_Equations/First_Order/Linear/Example_6.jpg">
 			</div>
 			The graph seems to point to the fact that:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\lim_{x \rightarrow \infty} y(x) = \lim_{x \rightarrow -\infty} y(x) = 0
 				}$
 			</div>
 			To make sense of this, take the limits on the general solution:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\lim_{x \rightarrow \infty} y(x) &= \lim_{x \rightarrow \infty} \Big( \frac{1}{2x^2}(x + \sin(x)\cos(x)) + \frac{C}{x^2} \Big) \\
 					&= \lim_{x \rightarrow \infty} \frac{x + \sin(x)\cos(x)}{2x^2} + \lim_{x \rightarrow \infty} \frac{C}{x^2} \\

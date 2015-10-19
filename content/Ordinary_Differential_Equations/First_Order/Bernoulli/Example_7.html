@@ -1,24 +1,24 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Determine the family of solutions to:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{dy}{dx} = y\cot(x) + y^3\csc(x)
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
-	<input type='button' value='Show Solution' class='show_solution'>
-	<div style='display: none;' class='hidden_div'>
-		<div class='latex_body'>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
 			Begin by rearranging to see the Bernoulli form and divide throughout by the non-linear term:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{dy}{dx} &= y\cot(x) + y^3\csc(x) \\
 					y' - \cot(x)y &= \csc(x)y^3 \\
@@ -26,14 +26,14 @@
 				}$
 			</div>
 			Now make the substitution:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					u &= y^{-2} \\
 					u' &= -2y^{-3}y'
 				}$
 			</div>
 			and plug in to get:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					y'y^{-3} - \cot(x)y^{-2} &= \csc(x) \\
 					-\frac{1}{2}u' - \cot(x)u &= \csc(x) \\
@@ -41,7 +41,7 @@
 				}$
 			</div>
 			a first-order linear differential equation. Now an integrating factor is needed:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\mu &= e^{\int p(x) dx} \\
 					&= e^{\int 2\cot(x) dx} \\
@@ -52,7 +52,7 @@
 			</div>
 			where dropping the absolute value is allowed since squaring guarantees a positive result.
 			Next multiplying throughout and solving for $u$ gives:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					u' + 2\cot(x)u &= -2\csc(x) \\
 					\sin^2(x)u' + 2\cos(x)\sin(x)u &= -2\sin(x) \\
@@ -64,7 +64,7 @@
 				}$
 			</div>
 			Now to solve for $y$ use the original substitution:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					y^{-2} &= u \\
 					y &= \pm u^{-\frac{1}{2}} \\

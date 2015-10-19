@@ -1,9 +1,9 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Distinct Linear Factors
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given a rational function in the form:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f(x) = \frac{P(x)}{(x-a_1)(x-a_2)\dots(x-a_n)}
 		}$
@@ -11,13 +11,13 @@
 	where $P(x)$ is a polynomial of degree less than $n$ and
 	each $a_i$ is unique, the method of partial fractions states
 	that the function can be broken down as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f(x) = \frac{C_1}{x-a_1} + \frac{C_2}{x-a_2} + \dots + \frac{C_n}{x-a_n}
 		}$
 	</div>
 	where the $C$'s can be found by satisfying the equation:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			P(x) &= C_1(x-a_2)(x-a_3)\dots(x-a_n) + C_2(x-a_1)(x-a_3)(x-a_4)\dots(x-a_n) \\
 			&+ \dots + C_n(x-a_1)(x-a_2)\dots(x-a_{n-1})
@@ -25,12 +25,12 @@
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Repeated Linear Factor
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given a rational function in the form:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f(x) = \frac{P(x)}{(x-a)^n}
 		}$
@@ -38,25 +38,25 @@
 	where $P(x)$ is a polynomial of degree less than $n$,
 	the method of partial fractions states
 	that the function can be broken down as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f(x) = \frac{C_1}{(x-a)} + \frac{C_2}{(x-a)^2} + \dots + \frac{C_n}{(x-a)^n}
 		}$
 	</div>
 	where the $C$'s can be found by satisfying the equation:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			P(x) = C_1(x-a)^{n-1} + C_2(x-a)^{n-2} + \dots + C_{n-1}(x-a) + C_n
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Irreducible Non-Linear Factor
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given a rational function in the form:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f(x) = \frac{P(x)}{(x-b)(a_0 + a_1x + a_2x^2 + \dots a_nx^n)}
 		}$
@@ -64,25 +64,25 @@
 	where $P(x)$ is a polynomial of degree less than $n+1$,
 	the method of partial fractions states
 	that the function can be broken down as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f(x) = \frac{C_1}{(x-b)} + \frac{C_2 + C_3x + C_4x^2 + \dots + C_{n+1}x^{n-1}}{(a_0 + a_1x + a_2x^2 + \dots a_nx^n)}
 		}$
 	</div>
 	where the $C$'s can be found by satisfying the equation:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			P(x) = C_1(a_0 + a_1x + a_2x^2 + \dots a_nx^n) + (C_2 + C_3x + C_4x^2 + \dots + C_{n+1}x^{n-1})(x-b)
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Repeated Irreducible Non-Linear Factor
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given a rational function in the form:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f(x) = \frac{P(x)}{(a_0 + a_1x + a_2x^2 + \dots a_nx^n)^k}
 		}$
@@ -90,7 +90,7 @@
 	where $P(x)$ is a polynomial of degree less than $n+1$,
 	the method of partial fractions states
 	that the function can be broken down as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			f(x) &= \frac{C_{1,0} + C_{1,1}x + C_{1,2}x^2 + \dots + C_{1,n+1}x^{n-1}}{(a_0 + a_1x + a_2x^2 + \dots a_nx^n)} \\
 			&+ \frac{C_{2,0} + C_{2,1}x + C_{2,2}x^2 + \dots + C_{2,n+1}x^{n-1}}{(a_0 + a_1x + a_2x^2 + \dots a_nx^n)^2} \\
@@ -98,7 +98,7 @@
 		}$
 	</div>
 	where the $C$'s can be found by satisfying the equation:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			P(x) &= (C_{1,0} + C_{1,1}x + C_{1,2}x^2 + \dots + C_{1,n+1}x^{n-1})(a_0 + a_1x + a_2x^2 + \dots a_nx^n)^{k-1} \\
 			&+ (C_{2,0} + C_{2,1}x + C_{2,2}x^2 + \dots + C_{2,n+1}x^{n-1})(a_0 + a_1x + a_2x^2 + \dots a_nx^n)^{k-2} \\
@@ -107,15 +107,15 @@
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Application Towards Integration
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	The method of partial fractions is a useful tool when integrating
 	a rational function. First consider the structure of the rational function.
 	If the degree of the numerator is the same as the degree of the denominator or greater, 
 	then perform division first:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{p(x)}{q(x)} = k(x) + \frac{r(x)}{q(x)}
 		}$

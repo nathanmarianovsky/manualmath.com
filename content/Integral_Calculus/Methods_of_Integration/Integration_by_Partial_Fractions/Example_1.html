@@ -1,24 +1,24 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Evaluate the following:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int \frac{x+1}{6x+x^2} dx
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
 	<input type="button" value="Show Solution" class="show_solution">
-	<div style="display: none;" class='hidden_div'>
-		<div class='latex_body'>
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
 			Before integrating using the method of partial fractions:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{x+1}{6x+x^2} &= \frac{x+1}{x(6+x)} \\
 					&= \frac{C_1}{x} + \frac{C_2}{6+x}
@@ -26,7 +26,7 @@
 			</div>
 			This breakup is the case of distinct linear factors. Now
 			to determine the constants:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{x+1}{6x+x^2} &= \frac{C_1}{x} + \frac{C_2}{6+x} \\
 					\frac{x+1}{6x+x^2} &= \frac{C_1(6+x)}{x(6+x)} + \frac{C_2(x)}{x(6+x)} \\
@@ -36,14 +36,14 @@
 			Normally at this point you could compare the coefficients of all powers of $x$
 			to determine the constants. A much faster way is to pick particular values for $x$
 			that help determine the coefficients:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					&x = 0: \hspace{.5cm} 1 = 6C_1 \rightarrow C_1 = \frac{1}{6} \\
 					&x = -6: \hspace{.3cm} -5 = -6C_2 \rightarrow C_2 = \frac{5}{6}
 				}$
 			</div>
 			With the constants determined, the integration follows as:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int \frac{x+1}{6x+x^2} dx &= \frac{1}{6} \int \Big( \frac{1}{x} + \frac{5}{6+x} \Big) dx \\
 					&= \frac{1}{6} \Bigg[ \int \frac{dx}{x} + 5 \int \frac{dx}{6+x} \Bigg] \\

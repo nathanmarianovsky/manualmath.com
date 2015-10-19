@@ -6,8 +6,6 @@
 
 	#logo {
 		padding: 0 0 0 40px;
-		width: 250px;
-		height: 70px;
 		display: inline-block;
 	}
 
@@ -18,18 +16,11 @@
 
 	#page_title {
 	  	padding: 0 0 0 130px;
-		font-size: 20px;
-		line-height: 64px;
 		display: inline-block;
-		vertical-align: top;
 	}
 
 	#latex {
-		color: black;
-		font-family: 'Computer Modern Serif, sans-serif';
 		width: 1200px;
-		margin: 0 auto 50px auto;
-		font-size: 18px;
 	}
 
 	#nav-mobile {
@@ -39,6 +30,10 @@
 
 	.box_message {
 		width: 1200px;
+	}
+
+	#about_page .box_text {
+		font-size: 15px;
 	}
 }
 
@@ -50,8 +45,6 @@
 
 	#logo {
 		padding: 0 0 0 40px;
-		width: 250px;
-		height: 70px;
 		display: inline-block;
 	}
 
@@ -62,18 +55,11 @@
 
 	#page_title {
 	  	padding: 0 0 0 130px;
-		font-size: 20px;
-		line-height: 64px;
 		display: inline-block;
-		vertical-align: top;
 	}
 
 	#latex {
-		color: black;
-		font-family: 'Computer Modern Serif, sans-serif';
 		width: 800px;
-		margin: 0 auto 50px auto;
-		font-size: 15px;
 	}
 
 	#nav-mobile {
@@ -83,6 +69,10 @@
 
 	.box_message {
 		width: 800px;
+	}
+
+	#about_page .box_text {
+		font-size: 15px;
 	}
 }
 
@@ -97,16 +87,8 @@
 		visibility: hidden;
 	}
 
-	#header_div {
-		margin: 0 0 0 58px;
-		line-height: 64px;
-		text-align: center;
-	}
-
 	#logo {
 		padding: 0 0 0 40px;
-		width: 250px;
-		height: 70px;
 		display: inline-block;
 	}
 
@@ -117,18 +99,11 @@
 
 	#page_title {
 	  	padding: 0 0 0 130px;
-		font-size: 20px;
-		line-height: 64px;
 		display: inline-block;
-		vertical-align: top;
 	}
 
 	#latex {
-		color: black;
-		font-family: 'Computer Modern Serif, sans-serif';
 		width: 600px;
-		margin: 0 auto 50px auto;
-		font-size: 15px;
 	}
 
 	#latex img {
@@ -142,6 +117,10 @@
 
 	.box_message {
 		width: 600px;
+	}
+
+	#about_page .box_text {
+		font-size: 15px;
 	}
 }
 
@@ -158,8 +137,6 @@
 
 	#logo {
 		padding: 15px 0 0 80px;
-		width: 250px;
-		height: 70px;
 		display: inline;
 		position: relative;
 	}
@@ -171,18 +148,11 @@
 
 	#page_title {
 	  	padding: 15px 0 0 80px;
-		font-size: 20px;
-		line-height: 64px;
 		display: inline;
-		vertical-align: top;
 	}
 
 	#latex {
-		color: black;
-		font-family: 'Computer Modern Serif, sans-serif';
 		width: 600px;
-		margin: 0 auto 50px auto;
-		font-size: 15px;
 	}
 
 	#latex img {
@@ -195,6 +165,10 @@
 
 	.box_message {
 		width: 600px;
+	}
+
+	#about_page .box_text {
+		font-size: 10px;
 	}
 }
 
@@ -211,8 +185,6 @@
 
     #logo {
 		padding: 15px 0 0 80px;
-		width: 250px;
-		height: 70px;
 		display: inline;
 		position: relative;
 	}
@@ -224,18 +196,11 @@
 
 	#page_title {
 	  	padding: 15px 0 0 80px;
-		font-size: 20px;
-		line-height: 64px;
 		display: inline;
-		vertical-align: top;
 	}
 
 	#latex {
-		color: black;
-		font-family: 'Computer Modern Serif, sans-serif';
 		width: 300px;
-		margin: 0 auto 50px auto;
-		font-size: 15px;
 	}
 
 	#latex img {
@@ -248,6 +213,10 @@
 
 	.box_message {
 		width: 300px;
+	}
+
+	#about_page .box_text {
+		font-size: 10px;
 	}
 }
 
@@ -264,8 +233,6 @@
 
     #logo {
 		padding: 15px 0 0 80px;
-		width: 250px;
-		height: 70px;
 		display: inline;
 		position: relative;
 	}
@@ -277,18 +244,11 @@
 
 	#page_title {
 	  	padding: 15px 0 0 80px;
-		font-size: 20px;
-		line-height: 64px;
 		display: inline;
-		vertical-align: top;
 	}
 
 	#latex {
-		color: black;
-		font-family: 'Computer Modern Serif, sans-serif';
 		width: 100px;
-		margin: 0 auto 50px auto;
-		font-size: 15px;
 	}
 
 	#latex img {
@@ -302,11 +262,26 @@
 	.box_message {
 		width: 100px;
 	}
+
+	#about_page .box_text {
+		font-size: 10px;
+	}
 }
 
 /* Styles for all screens */
 .top-nav {
-	background-color: #00a0aa;
+	background-color: #1163A9;
+}
+
+#page_title {
+	font-size: 20px;
+	line-height: 64px;
+	vertical-align: top;
+}
+
+#logo {
+	width: 250px;
+	height: 70px;
 }
 
 .collapsible-header {
@@ -314,19 +289,43 @@
 }
 
 .box_message {
-	border: 1px solid black;
-	border-radius: 10px; 
 	margin: 20px auto 0 auto;
 }
 
-.box_text {
+.box_message h1 {
+	margin: 40px auto 150px auto;
+	font-size: 40px;
+}
+
+#about_page .box_message h2 {
+	font-size: 25px;
+}
+
+#about_page .box_text {
 	margin: 10px;
+}
+
+#about_page .box_text table {
+	/*margin: 0 0 0 20px;*/
+	display: table-row;
+}
+
+#about_page .box_text table li {
+	margin: 0 0 0 20px;
+	display: table-cell;
+}
+
+#latex {
+	color: black;
+	font-family: "Computer Modern Serif, sans-serif";
+	margin: 0 auto 50px auto;
+	font-size: 15px;
 }
 
 .latex_section {
 	position: relative;
 	text-align: center;
-	font-family: 'Georgia';
+	font-family: "Georgia";
 	font-size: 30px;
 	text-decoration: underline;
 	padding: 15px 0 15px 0;
@@ -335,7 +334,7 @@
 .latex_equation {
 	position: relative;
 	text-align: center;
-	font-family: 'Georgia';
+	font-family: "Georgia";
 	font-size: 15px;
 	padding: 7px 0 7px 0;
 }

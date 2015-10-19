@@ -5,12 +5,12 @@
   $
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Hyperbolic Substitution
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	I first remind you about these specific identities:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\cosh^2(x) - \sinh^2(x) &= 1 \\
 			\tanh^2(x) + \sech^2(x) &= 1 \\
@@ -18,7 +18,7 @@
 		}$
 	</div>
 	Now given an integral in any of these forms:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx, \hspace{.3cm} \int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx,
 			\hspace{.3cm} \text{or} \hspace{.3cm} \int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx \hspace{.3cm} \text{where}
@@ -32,25 +32,25 @@
 	simpler.
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	First Case
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Take the case of:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx
 		}$
 	</div>
 	and make the substitution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			x &= a\tanh(\theta) \\
 			dx &= a\sech^2(\theta) d\theta
 		}$
 	</div>
 	which when plugged in gives:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx &= \int f(a\tanh(\theta)) \Big( a^2 - a^2\tanh^2(\theta) \Big)^\frac{n}{2} a\sech^2(\theta) d\theta \\
 			&= \int f(a\tanh(\theta)) a^{n+1} \Big( 1 - \tanh^2(\theta) \Big)^\frac{n}{2} \sech^2(\theta) d\theta \\
@@ -60,20 +60,20 @@
 	</div>
 	At the point the obstacle becomes the absolute value. It so happens that
 	$\sech(\theta)$ is always positive so:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx &= a^{n+1} \int f(a\tanh(\theta)) \sech^{n+2}(\theta) d\theta
 		}$
 	</div>
 	Incidentially this integral can also be computed using the substitution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			x &= a\sech(\theta) \\
 			dx &= -a\sech(\theta)\tanh(\theta) d\theta
 		}$
 	</div>
 	which when plugged in gives:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx &= \int f(a\sech(\theta)) \Big( a^2 - a^2\sech^2(\theta) \Big)^\frac{n}{2} (-a\sech(\theta)\tanh(\theta)) d\theta \\
 			&= - \int f(a\sech(\theta)) a^{n+1} \Big( 1 - \sech^2(\theta) \Big)^\frac{n}{2} \sech(\theta)\tanh(\theta) d\theta \\
@@ -84,32 +84,32 @@
 	Once again the absolute value provides an obstacle. Like before make life easy
 	by ignoring the absolute value so long as the assumption that $\tanh(\theta) > 0$
 	is held true. Moving on:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 - x^2 \Big)^\frac{n}{2} dx &= -a^{n+1} \int f(a\sech(\theta)) \tanh^{n+1}(\theta) \sech(\theta) d\theta
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Second Case
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Take the case of:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx
 		}$
 	</div>
 	and make the substitution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			x &= a\sinh(\theta) \\
 			dx &= a\cosh(\theta) d\theta
 		}$
 	</div>
 	which when plugged in gives:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx &= \int f(a\sinh(\theta)) \Big( a^2 + a^2\sinh^2(\theta) \Big)^\frac{n}{2} a\cosh(\theta) d\theta \\
 			&= \int f(a\sinh(\theta)) a^{n+1} \Big( 1 + \sinh^2(\theta) \Big)^\frac{n}{2} \cosh(\theta) d\theta \\
@@ -119,20 +119,20 @@
 	</div>
 	At the point the obstacle becomes the absolute value. It so happens that
 	$\cosh(\theta)$ is always positive so:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx &= a^{n+1} \int f(a\sinh(\theta)) \cosh^{n+1}(\theta) d\theta
 		}$
 	</div>
 	Incidentially this integral can also be computed using the substitution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			x &= a\csch(\theta) \\
 			dx &= -a\csch(\theta)\coth(\theta) d\theta
 		}$
 	</div>
 	which when plugged in gives:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx &= \int f(a\csch(\theta)) \Big( a^2 + a^2\csch^2(\theta) \Big)^\frac{n}{2} (-a\csch(\theta)\coth(\theta)) d\theta \\
 			&= - \int f(a\csch(\theta)) a^{n+1} \Big( 1 + \csch^2(\theta) \Big)^\frac{n}{2} \csch(\theta)\coth(\theta) d\theta \\
@@ -143,32 +143,32 @@
 	Once again the absolute value provides an obstacle. Like before make life easy
 	by ignoring the absolute value so long as the assumption that $\coth(\theta) > 0$
 	is held true. Moving on:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( a^2 + x^2 \Big)^\frac{n}{2} dx &= -a^{n+1} \int f(a\csch(\theta)) \coth^{n+1}(\theta) \csch(\theta) sd\theta
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Third Case
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Take the case of:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx
 		}$
 	</div>
 	and make the substitution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			x &= a\cosh(\theta) \\
 			dx &= a\sinh(\theta) d\theta
 		}$
 	</div>
 	which when plugged in gives:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx &= \int f(a\cosh(\theta)) \Big( a^2\cosh^2(\theta) - a^2 \Big)^\frac{n}{2} a\sinh(\theta) d\theta \\
 			&= \int f(a\cosh(\theta)) a^{n+1} \Big( \cosh^2(\theta) - 1 \Big)^\frac{n}{2} \sinh(\theta) d\theta \\
@@ -179,20 +179,20 @@
 	At the point the obstacle becomes the absolute value. To make life easy,
 	just ignore the absolute value so long as the assumption that $\sinh(\theta) > 0$
 	is held true. Moving on:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx &= a^{n+1} \int f(a\cosh(\theta)) \sinh^{n+1}(\theta) d\theta
 		}$
 	</div>
 	Incidentially this integral can also be computed using the substitution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			x &= a\coth(\theta) \\
 			dx &= -a\csch^2(\theta) d\theta
 		}$
 	</div>
 	which when plugged in gives:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx &= \int f(a\coth(\theta)) \Big( a^2\coth^(\theta) - a^2 \Big)^\frac{n}{2} (-a\csch^2(\theta)) d\theta \\
 			&= - \int f(a\coth(\theta)) a^{n+1} \Big( \coth^2(\theta) - 1 \Big)^\frac{n}{2} \csch^2(\theta) d\theta \\
@@ -203,7 +203,7 @@
 	Once again the absolute value provides an obstacle. Like before make life easy
 	by ignoring the absolute value so long as the assumption that $\csch(\theta) > 0$
 	is held true. Moving on:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x)\Big( x^2 - a^2 \Big)^\frac{n}{2} dx &= -a^{n+1} \int f(a\coth(\theta)) \csch^{n+2}(\theta) d\theta
 		}$

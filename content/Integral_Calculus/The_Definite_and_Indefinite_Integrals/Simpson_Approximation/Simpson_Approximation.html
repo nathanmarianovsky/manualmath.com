@@ -1,7 +1,7 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Simpson's Approximation
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	The approximations mentioned beforehand have all been based
 	on the idea of linear polynomials. Specifically notice that
 	rectangles are used one way or another in the left, right,
@@ -9,11 +9,11 @@
 	there must be a way of approximating with something other than rectangles,
 	and it so happens there is and it is known as Simpson's Approximation.
 	By using quadratic polynomials to approximate:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		<img src="/content/Integral_Calculus/The_Definite_and_Indefinite_Integrals/Simpson_Approximation/Simpson_Approximation.png">
 	</div>
 	Simpson's Rule states that the area under the curve is:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\textbf{Area}_{S}(2n) &= \frac{1}{6} \Big( y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + \dots + 4y_{2n-1} + y_{2n} \Big) \Delta x \\
 			&= \frac{1}{6} \Big( y_0 + 4\sum_{i=0}^{n-1} y_{2i+1} + 2\sum_{i=0}^{n-1} y_{2i} + y_{2n} \Big) \Delta x
@@ -22,14 +22,14 @@
 	where $n \in \mathbb{N}$.
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Deriving Simpson's Approximation
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	It is usually interesting to see how quadratic polynomials
 	can be used to approximate an area. To start off, consider this
 	scenario:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		<img src="/content/Integral_Calculus/The_Definite_and_Indefinite_Integrals/Simpson_Approximation/Deriving_Simpson_Approximation.png">
 	</div>
 	where we want to find the area on the range $[-h,h]$. At the same
@@ -37,7 +37,7 @@
 	that there are two "rectangles" being used to approximate this. It is 
 	actually because of this that only an even number of partitions can
 	be used for Simpson's approximation. So first to find the exact area:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\textbf{Area} &= \int_{-h}^h (ax^2 + bx + c) dx \\
 			&= a \int_{-h}^h x^2 + b \int_{-h}^h x + c \int_{-h}^h dx \\
@@ -49,7 +49,7 @@
 	</div>
 	Before moving on with the exact area, consider that the above setup
 	has exactly three points attached to it. For each of these points:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			y_0 &= ah^2 - bh + c \\
 			y_1 &= c \\
@@ -57,13 +57,13 @@
 		}$
 	</div>
 	In other words:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			y_0 + 4y_1 + y_2 = 2ah^2 + 6c
 		}$
 	</div>
 	So now the exact area can be defined as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\textbf{Area} &= \frac{h}{3} \Big( y_0 + 4y_1 + y_2 \Big) \\
 			&= \frac{\Delta x}{3} \Big( y_0 + 4y_1 + y_2 \Big)
@@ -72,14 +72,14 @@
 	Now to extend this consider the fact that this original setup had only
 	three points. What if the region has more points? So on every set of three
 	points we can setup the area as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\textbf{Area}_S(n) &= \frac{\Delta x}{3} \Big( y_0 + 4y_1 + y_2 \Big) + \frac{\Delta x}{3} \Big( y_2 + 4y_3 + y_4 \Big) + \dots + \frac{\Delta x}{3} \Big( y_{n-2} + 4y_{n-1} + y_n \Big) \\
 			&= \frac{1}{3} \Big( y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + \dots + 4y_{n-1} + y_n \Big) \Delta x
 		}$
 	</div>
 	Now since $n$ has to be an even number, we can rewrite the definition as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\textbf{Area}_S(2n) &= \frac{1}{3} \Big( y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + \dots + 4y_{2n-1} + y_{2n} \Big) \Delta x' \\
 			&= \frac{1}{3} \Big( y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + \dots + 4y_{2n-1} + y_{2n} \Big) \frac{x_{2n}-x_0}{2n} \\
@@ -88,7 +88,7 @@
 		}$
 	</div>
 	where
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\Delta x' = \frac{x_{2n}-x_0}{2n}
 		}$
@@ -97,14 +97,14 @@
 	the original width is used in order to not worry about the width changing.
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Simpson's Approximation as a Weighted Average
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Using some algebraic manipulation it can be shown that Simpson's
 	approximation is just a weighted average of the midpoint and
 	trapezoidal approximations:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\textbf{Area}_S(2n) &= \frac{1}{6} \Big( y_0 + 4y_1 + 2y_2 + 4y_3 + 2y_4 + \dots + 4y_{2n-1} + y_{2n} \Big) \Delta x \\
 			&= \frac{1}{3} \Big( y_0 + 2y_1 + 2y_2 + 4y_3 + 2y_4 + \dots + 2y_{2n-1} + y_{2n} \Big) \Delta x' + \frac{1}{3} \Big( y_1 + y_3 + y_5 + \dots + y_{2n-1} \Big) \Delta x \\
@@ -115,15 +115,15 @@
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Comparison to the Midpoint and Trapezoid Approximations
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Seeing as how Simpson's approximation can be written as a weighted average
 	of both the midpoint and trapezoid approximations, it should be obvious that
 	it lies between the two approximations. To see this consider the two possible cases.
 	First if $\textbf{Area}_T(n)
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			
 		}$

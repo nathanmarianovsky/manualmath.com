@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/classes/section.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/classes/section.php";
 
 /*
 
@@ -32,8 +32,8 @@ function get_sections($con, $args) {
 	$sections = array();
 	$tmp_tid = array();
 
-	if(isset($args['sid'])) {
-		$sid = $args['sid'];
+	if(isset($args["sid"])) {
+		$sid = $args["sid"];
 		$sql = $con->prepare("SELECT tid FROM topic WHERE sid=?");
 		$sql->bind_param("i", $sid);
 		$sql->bind_result($tid);
@@ -63,8 +63,8 @@ function get_sections($con, $args) {
 		}
 	}
 
-	else if(isset($args['sname'])) {
-		$sname = $args['sname'];
+	else if(isset($args["sname"])) {
+		$sname = $args["sname"];
 		$sql = $con->prepare("SELECT sid FROM subject WHERE sname=?");
 		$sql->bind_param("s", $sname);
 		$sql->bind_result($sid);
@@ -103,8 +103,8 @@ function get_sections($con, $args) {
 		}
 	}
 
-	else if(isset($args['tid'])) {
-		$tid = $args['tid'];
+	else if(isset($args["tid"])) {
+		$tid = $args["tid"];
 		$sql = $con->prepare("SELECT section_id,section_name,`order` FROM section WHERE tid=? ORDER BY `order` ASC");
 		$sql->bind_param("i", $tid);
 		$sql->bind_result($section_id, $section_name, $order);
@@ -119,8 +119,8 @@ function get_sections($con, $args) {
 		$sql->close();
 	}
 
-	else if(isset($args['tname'])) {
-		$tname = $args['tname'];
+	else if(isset($args["tname"])) {
+		$tname = $args["tname"];
 		$sql = $con->prepare("SELECT tid FROM topic WHERE tname=?");
 		$sql->bind_param("s", $tname);
 		$sql->bind_result($tid);
@@ -150,10 +150,10 @@ function get_sections($con, $args) {
 		}
 	}
 
-	else if(isset($args['section_id'])) {
-		$section_id = $args['section_id'];
+	else if(isset($args["section_id"])) {
+		$section_id = $args["section_id"];
 		$sql = $con->prepare("SELECT section_name,tid,`order` FROM section WHERE section_id=?");
-		$sql->bind_param('i', $section_id);
+		$sql->bind_param("i", $section_id);
 		$sql->bind_result($section_name, $tid, $order);
 		$sql->execute();
 		$sql->fetch();
@@ -166,10 +166,10 @@ function get_sections($con, $args) {
 		}
 	}
 
-	else if(isset($args['section_name'])) {
-		$section_name = $args['section_name'];
+	else if(isset($args["section_name"])) {
+		$section_name = $args["section_name"];
 		$sql = $con->prepare("SELECT section_id,tid,`order` FROM section WHERE section_name=?");
-		$sql->bind_param('s', $section_name);
+		$sql->bind_param("s", $section_name);
 		$sql->bind_result($section_id, $tid, $order);
 		$sql->execute();
 		while($sql->fetch()) {
@@ -214,10 +214,10 @@ If there is no such section found, an appropriate response is returned.
 
 */
 function get_section_file($con, $args) {
-	if(isset($args['section_id'])) {
-		$section_id = $args['section_id'];
+	if(isset($args["section_id"])) {
+		$section_id = $args["section_id"];
 		$sql = $con->prepare("SELECT tid,section_name FROM section WHERE section_id=?");
-		$sql->bind_param('i', $section_id);
+		$sql->bind_param("i", $section_id);
 		$sql->bind_result($tid, $section_name);
 		$sql->execute();
 		$sql->fetch();
@@ -225,7 +225,7 @@ function get_section_file($con, $args) {
 
 		if(isset($tid) && isset($section_name)) {
 			$sql = $con->prepare("SELECT sid,tname FROM topic WHERE tid=?");
-			$sql->bind_param('i', $tid);
+			$sql->bind_param("i", $tid);
 			$sql->bind_result($sid, $tname);
 			$sql->execute();
 			$sql->fetch();
@@ -233,35 +233,35 @@ function get_section_file($con, $args) {
 
 			if(isset($sid) && isset($tname)) {
 				$sql = $con->prepare("SELECT sname FROM subject WHERE sid=?");
-				$sql->bind_param('i', $sid);
+				$sql->bind_param("i", $sid);
 				$sql->bind_result($sname);
 				$sql->execute();
 				$sql->fetch();
 				$sql->close();
 
 				if(isset($sname)) {
-					$file = $_SERVER['DOCUMENT_ROOT'] . '/content/' . $sname . '/' . $tname . '/' . $section_name . '/' . $section_name . '.html';
+					$file = $_SERVER["DOCUMENT_ROOT"] . "/content/" . $sname . "/" . $tname . "/" . $section_name . "/" . $section_name . ".html";
 					if(file_exists($file)) {
 						return file_get_contents($file);
 					}
 					else {
-						return 'The section seems to exists, but there is no file for it';
+						return "The section seems to exists, but there is no file for it";
 					}
 				}
 				else {
-					return 'There is no associated subject to this sid';
+					return "There is no associated subject to this sid";
 				}
 			}
 			else {
-				return 'There is no associated topic to this tid';
+				return "There is no associated topic to this tid";
 			}
 		}
 		else {
-			return 'There is no associated section to this section_id';
+			return "There is no associated section to this section_id";
 		}
 	}
 	else {
-		return 'There was no eid passed in as a parameter';
+		return "There was no eid passed in as a parameter";
 	}
 }
 

@@ -1,24 +1,24 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Evaluate the following:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int \frac{1}{w^4-w^3} dw
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
 	<input type="button" value="Show Solution" class="show_solution">
-	<div style="display: none;" class='hidden_div'>
-		<div class='latex_body'>
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
 			Before integrating using the method of partial fractions:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{1}{w^4-w^3} &= \frac{1}{w^3(w-1)} \\
 					&= \frac{C_1}{w} + \frac{C_2}{w^2} + \frac{C_3}{w^3} + \frac{C_4}{w-1}
@@ -26,7 +26,7 @@
 			</div>
 			This breakup is the case of distinct linear factors, one of which is repeated.
 			Now to determine the constants:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{1}{w^3(w-1)} &= \frac{C_1}{w} + \frac{C_2}{w^2} + \frac{C_3}{w^3} + \frac{C_4}{w-1} \\
 					\frac{1}{w^3(w-1)} &= \frac{C_1(w^2)(w-1)}{w^3(w-1)} + \frac{C_2(w)(w-1)}{w^3(w-1)} + \frac{C_3(w-1)}{w^3(w-1)} + \frac{C_4(w^3)}{w^3(w-1)} \\
@@ -36,7 +36,7 @@
 				}$
 			</div>
 			A system of four equations is left to find the values of the four constants:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					1 &= -C_3 \rightarrow C_3 = -1 \\
 					0 &= C_3 - C_2 \rightarrow C_2 = C_3 = -1 \\
@@ -45,7 +45,7 @@
 				}$
 			</div>
 			With the constants determined, the integration follows as:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int \frac{1}{w^4-w^3} dw &= \int \Big( -\frac{1}{w} - \frac{1}{w^2} - \frac{1}{w^3} + \frac{1}{w-1} \Big) dw \\
 					&= - \int \frac{dw}{w} - \int \frac{dw}{w^2} - \int \frac{dw}{w^3} + \int \frac{dw}{w-1} \\

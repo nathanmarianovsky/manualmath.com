@@ -1,17 +1,17 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Mathematical Notation
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	While most of mathematics has a common language, there are small things here and there
 	that each author typically chooses to use that may not conform to the rest of the world.
 	So to make the notation I am going to use a little easier to read, this page will provide a 
 	way of housing all the notation and its corresponding meaning:
-	<!-- <div class='latex_equation'>
+	<!-- <div class="latex_equation">
 		$\eqalign{
-			y' + m(x)y = k(x)y^N
+			y" + m(x)y = k(x)y^N
 		}$
 	</div> -->
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		<table>
 	    	<tr>
 		    	<td>iff</td>

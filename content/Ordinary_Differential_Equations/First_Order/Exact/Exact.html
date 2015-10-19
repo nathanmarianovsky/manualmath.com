@@ -1,9 +1,9 @@
-<div class='latex_section'>
+<div class="latex_section">
 	The Setup
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given a differential equation in the form:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			M(x,y) dx + N(x,y) dy = 0
 		}$
@@ -12,13 +12,13 @@
 	to a conservative vector field.
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Motivating the Approach
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Before mentioning the differential equation again, I first need to mention $\textit{Schwarz's Theorem}$
 	(or $\textit{Clairaut's Theorem}$) which states that when given a function $f: \mathbb{R}^n \rightarrow \mathbb{R}$, then:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial^2 f}{\partial x_i \partial x_j} \Bigg|_P = \frac{\partial^2 f}{\partial x_j \partial x_i} \Bigg|_P 
 			\hspace{.5cm} \forall i,j \in \{1,2,\dots,n\}
@@ -28,20 +28,20 @@
 	for how the differential equation is handled.
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solving the Equation
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	To understand the approach in full detail I need to first explain the differential of a function. Given any function $F(x,y)$, the differential
 	of the function is defined as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			dF = \frac{\partial F}{\partial x} dx + \frac{\partial F}{\partial y} dy
 		}$
 	</div>
 	which is basically a way to measure how the overall function changes with respect to changes in the variables. Notice right away that this 
 	differential pretty much matches the differential equation we want to solve. So now playing the matching game gives:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial F}{\partial x} &= M(x,y) \\
 			\frac{\partial F}{\partial y} &= N(x,y) \\
@@ -53,20 +53,20 @@
 	a function is constant. Another question you may want to now ask is how do we know that this approach can be used to obtain a solution? In vector
 	calculus a differential equating to zero is the same as saying that the function represents a conservative vector field and it happens that there is a condition
 	which will guarantee a solution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}
 		}$
 	</div>
 	which is the same as stating:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial^2 F}{\partial x \partial y} &= \frac{\partial^2 F}{\partial y \partial x}
 		}$
 	</div>
 	which has to hold true given that the function is twice differentiable. So now to solve the differential equation we are left with two equations to handle. 
 	The first of which is: 
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial F}{\partial x} &= M(x,y) \\
 			\frac{dF}{dx} &= M(x,y) \\
@@ -76,7 +76,7 @@
 		}$
 	</div>
 	and the second:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial F}{\partial y} &= N(x,y) \\
 			\frac{dF}{dy} &= N(x,y) \\
@@ -86,7 +86,7 @@
 		}$
 	</div>
 	Notice that both integrations will spit out stuff that is common but also stuff that is independent. Formally the final solution is given as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			C = f(x,y) + h(x) + g(x)
 		}$
@@ -94,19 +94,19 @@
 	where the $C$ handles the constants of integration that should have come out of the integration above. 
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Cases with an Integration Factor
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Sometimes it may happen that the necessary condition is not true:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial M}{\partial y} \neq \frac{\partial N}{\partial x}
 		}$
 	</div>
 	and though it may seem hopeless, there is a way to fix this situation. Lets assume that there exists a factor
 	$\mu(x,y)$ such that:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial}{\partial y} \Big( \mu M \Big) &= \frac{\partial}{\partial x} \Big( \mu N \Big) \\
 			\frac{\partial \mu}{\partial y} M + \mu \frac{\partial M}{\partial y} &= \frac{\partial \mu}{\partial x} N + \mu \frac{\partial N}{\partial x}
@@ -114,14 +114,14 @@
 	</div>
 	The above is a partial differential equation which is a little too hard to solve. So we can consider two common cases instead. First assume that $\mu$ is
 	strictly a function of $x$ giving:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial \mu}{\partial x} N + \mu \frac{\partial N}{\partial x} = \mu \frac{\partial M}{\partial y} \\
 		}$
 	</div>
 	I can now abandon the partial derivative for a normal derivative on the $\mu$ since it is a function of one variable and in order to make the work cleaner I
 	will use subscripts to denote partial derivatives where needed:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{d\mu}{dx} N &= \mu \Big( M_y - N_x \Big) \\
 			\frac{d\mu}{\mu} &= \Big( \frac{M_y - N_x}{N} \Big) dx \\
@@ -136,13 +136,13 @@
 	where $D = e^C$ is an easier way of writing down the constant of integration and $K(x)$ is the antiderivative of $\frac{M_y - N_x}{N}$. 
 	In order for the above integrating factor to work note that the integrand must be a function of $x$ strictly. Now for the case where $\mu$ is a function of
 	$y$ only:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial \mu}{\partial y} M + \mu \frac{\partial M}{\partial y} = \mu \frac{\partial N}{\partial x} \\
 		}$
 	</div>
 	Just like before I will use subscripts to denote partial derivatives and turn the partial derivative into a normal derivative for $\mu$:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{d\mu}{dy} M &= \mu \Big( N_x - M_y \Big) \\
 			\frac{d\mu}{\mu} &= \Big( \frac{N_x - M_y}{M} \Big) dy \\
@@ -156,7 +156,7 @@
 	</div>
 	where $D = e^C$ is once again an easier way of writing down the constant of integration, $J(y)$ is the antiderivative of $\frac{N_x - M_y}{N}$, and the integrand must be a function of $y$ strictly so that the integrating factor works. In both cases we get a whole family of integrating factors similar to the scenario from the integrating factor
 	for first-order linear differential equations. So once again we choose the easy path and let $D = 1$ so that we have:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\mu &= e^{K(x)} \hspace{.3cm} \text{or} \hspace{.3cm} \mu &= e^{J(y)}
 		}$

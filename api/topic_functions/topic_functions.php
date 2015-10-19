@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/classes/topic.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/classes/topic.php";
 
 /*
 
@@ -27,8 +27,8 @@ If there are no topics found, then an empty array is returned.
 function get_topics($con, $args) {
 	$topics = array();
 
-	if(isset($args['sid'])) {
-		$sid = $args['sid'];
+	if(isset($args["sid"])) {
+		$sid = $args["sid"];
 		$sql = $con->prepare("SELECT tid,tname,`order` FROM topic WHERE sid=? ORDER BY `order` ASC");
 		$sql->bind_param("i", $sid);
 		$sql->bind_result($tid, $tname, $order);
@@ -44,8 +44,8 @@ function get_topics($con, $args) {
 		$sql->close();
 	}
 
-	else if(isset($args['sname'])) {
-		$sname = $args['sname'];
+	else if(isset($args["sname"])) {
+		$sname = $args["sname"];
 		$sql = $con->prepare("SELECT sid FROM subject WHERE sname=?");
 		$sql->bind_param("s", $sname);
 		$sql->bind_result($sid);
@@ -69,10 +69,10 @@ function get_topics($con, $args) {
 		}
 	}
 
-	else if(isset($args['tid'])) {
-		$tid = $args['tid'];
+	else if(isset($args["tid"])) {
+		$tid = $args["tid"];
 		$sql = $con->prepare("SELECT sid,tname,`order` FROM topic WHERE tid=?");
-		$sql->bind_param('i', $tid);
+		$sql->bind_param("i", $tid);
 		$sql->bind_result($sid, $tname, $order);
 		$sql->execute();
 		$sql->fetch();
@@ -85,10 +85,10 @@ function get_topics($con, $args) {
 		}
 	}
 
-	else if(isset($args['tname'])) {
-		$tname = $args['tname'];
+	else if(isset($args["tname"])) {
+		$tname = $args["tname"];
 		$sql = $con->prepare("SELECT sid,tid,`order` FROM topic WHERE tname=?");
-		$sql->bind_param('s', $tname);
+		$sql->bind_param("s", $tname);
 		$sql->bind_result($sid, $tid, $order);
 		$sql->execute();
 		while($sql->fetch()) {

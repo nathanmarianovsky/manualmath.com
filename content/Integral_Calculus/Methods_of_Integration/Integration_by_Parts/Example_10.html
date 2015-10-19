@@ -1,9 +1,9 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Deduce the following identities:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			&\int x^n e^x dx = x^n e^x - n \int x^{n-1} e^x dx \\
 			&\int x^n \cos(ax) dx = \frac{1}{a}x^n \sin(ax) - \frac{n}{a} \int x^{n-1} \sin(ax) dx \\
@@ -14,63 +14,63 @@
 	where $a \in \mathbb{R}$.
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
 	<input type="button" value="Show Solution" class="show_solution">
-	<div style="display: none;" class='hidden_div'>
-		<div class='latex_body'>
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
 			Each of these identities just requires using integration
 			by parts once to arrive at the results above. For the first
 			integral consider the following setup:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					u = x^n \rightarrow& du = nx^{n-1} dx \\
 					dv = e^x dx \rightarrow& v = e^x
 				}$
 			</div>
 			Now applying the formula yields:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int x^n e^x dx = x^n e^x - n \int x^{n-1} e^x dx
 				}$
 			</div>
 			For the second identity consider this setup:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					u = x^n \rightarrow& du = nx^{n-1} dx \\
 					dv = \cos(ax) dx \rightarrow& v = \frac{\sin(ax)}{a}
 				}$
 			</div>
 			Now applying the formula yields:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int x^n \cos(ax) dx = \frac{1}{a}x^n \sin(ax) - \frac{n}{a} \int x^{n-1} \sin(ax) dx
 				}$
 			</div>
 			For the third identity consider this setup:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					u = x^n \rightarrow& du = nx^{n-1} dx \\
 					dv = \sin(ax) dx \rightarrow& v = -\frac{\cos(ax)}{a}
 				}$
 			</div>
 			Now applying the formula yields:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int x^n \sin(ax) dx = -\frac{1}{a}x^n \cos(ax) + \frac{n}{a} \int x^{n-1} \cos(ax) dx
 				}$
 			</div>
 			For the fourth identity consider this setup:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					u = \cos^{n-1}(x) \rightarrow& du = (1-n)\cos^{n-2}(x)\sin(x) dx \\
 					dv = \cos(x) dx \rightarrow& v = \sin(x)
 				}$
 			</div>
 			Now applying the formula yields:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int \cos^n(x) dx &= \sin(x)\cos^{n-1}(x) - (1-n) \int \cos^{n-2}(x) \sin^2(x) dx \\
 					\int \cos^n(x) dx &= \sin(x)\cos^{n-1}(x) + (n-1) \int \cos^{n-2}(x) (1 - \cos^2(x)) dx \\

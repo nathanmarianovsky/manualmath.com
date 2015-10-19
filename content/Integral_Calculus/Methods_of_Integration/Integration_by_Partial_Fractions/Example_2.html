@@ -1,24 +1,24 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Evaluate the following:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int \frac{8}{y^3-4y} dy
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
 	<input type="button" value="Show Solution" class="show_solution">
-	<div style="display: none;" class='hidden_div'>
-		<div class='latex_body'>
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
 			Before integrating using the method of partial fractions:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{8}{y^3-4y} &= \frac{8}{y(y+2)(y-2)} \\
 					&= \frac{C_1}{y} + \frac{C_2}{y+2} + \frac{C_3}{y-2}
@@ -26,7 +26,7 @@
 			</div>
 			This breakup is the case of distinct linear factors. Now
 			to determine the constants:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{8}{y^3-4y} &= \frac{C_1}{y} + \frac{C_2}{y+2} + \frac{C_3}{y-2} \\
 					\frac{8}{y^3-4y} &= \frac{C_1(y+2)(y-2)}{y(y+2)(y-2)} + \frac{C_2(y)(y-2)}{y(y+2)(y-2)} +
@@ -37,7 +37,7 @@
 			Normally at this point you could compare the coefficients of all powers of $y$
 			to determine the constants. A much faster way is to pick particular values for $y$
 			that help determine the coefficients:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					&y = 0: \hspace{.5cm} 8 = -4C_1 \rightarrow C_1 = -2 \\
 					&y = 2: \hspace{.3cm} 8 = 8C_3 \rightarrow C_3 = 1 \\
@@ -45,7 +45,7 @@
 				}$
 			</div>
 			With the constants determined, the integration follows as:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int \frac{8}{y^3-4y} dy &= \int \Big( \frac{-2}{y} + \frac{1}{y+2} + \frac{1}{y-2} \Big) dy \\
 					&= -2 \int \frac{dy}{y} + \int \frac{dy}{y+2} + \int \frac{dy}{y-2} \\

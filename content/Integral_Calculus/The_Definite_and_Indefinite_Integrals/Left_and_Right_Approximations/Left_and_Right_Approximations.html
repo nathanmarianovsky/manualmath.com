@@ -1,7 +1,7 @@
-<div class='latex_section'>
+<div class="latex_section">
 	The Area Under a Curve
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	The study of integral calculus mainly starts with wanting to find
 	the area under any arbitrary curve that is bounded and continous.
 	But before introducing how exact area is computed, consider the use of
@@ -10,15 +10,15 @@
 	the ideas of underestimates and overestimates. Given any curve in $\mathbb{R}^2$,
 	the area under the curve on the range $[a,b]$ can be approximated by using rectangles
 	such as below:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		<img src="/content/Integral_Calculus/The_Definite_and_Indefinite_Integrals/Left_and_Right_Approximations/Left_and_Right_Approximations.gif">
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Left and Right Approximations
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	In the scope of undegraduate integral calculus classes, the functions of interest
 	are usually stricted to being $\textit{monotonic}$ functions. This means that
 	the function is either strictly increasing or decreasing on the interval of interest,
@@ -26,7 +26,7 @@
 	can be approximated simply as the left and right approximations. Assume that the above
 	picture of $f(x)$ has $n$ partitions instead of six. With a setup of $n$ partitions,
 	the table of values for the function on the interval for all $n+1$ points becomes:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		<table>
 	    	<tr>
 		    	<td>$\textbf{x}$</td>
@@ -50,7 +50,7 @@
 	</div>
 	For each rectangle the height is represented as the function evaluated at the point and
 	the width is going to be defined as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\Delta x = \frac{b-a}{n}
 		}$
@@ -61,7 +61,7 @@
 	for each rectangle there are two points associated to it. One point is the left endpoint and the other 
 	the right endpoint. For the left approximation we will always choose the left points and for the right
 	approximation the right endpoints. So to be formal:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\textbf{Area}_L(n) &= \sum_{i=0}^{n} f(x_i) \Delta x \\
 			\textbf{Area}_R(n) &= \sum_{i=1}^{n+1} f(x_i) \Delta x
@@ -69,7 +69,7 @@
 	</div>
 	You can imagine that the more partitions that are used, the more accurate the answer is. To see this
 	more clearly, observe the difference in the approximations:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\Big| \textbf{Area}_R(n) - \textbf{Area}_L(n) \Big| &= \Big| \sum_{i=1}^{n+1} f(x_i) \Delta x - \sum_{i=0}^n f(x_i) \Delta x \Big| \\
 			&= \Big| f(x_{n+1}) \Delta x + \sum_{i=1}^n f(x_i) \Delta x - f(x_0) \Delta x - \sum_{i=1}^n f(x_i) \Delta x \Big| \\
@@ -78,14 +78,14 @@
 		}$
 	</div>
 	Now take a limit:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\lim_{\Delta x \rightarrow 0} \Big| \textbf{Area}_R(n) - \textbf{Area}_L(n) \Big| &= \lim_{\Delta x \rightarrow 0} \Big| f(x_{n+1}) - f(x_0) \Big| \Delta x = 0
 		}$
 	</div>
 	This limit implies that the left and right approximations are equalivalent. So the only thing left to figure out is when does
 	$\Delta x \rightarrow 0$? Observe that:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\lim_{n \rightarrow \infty} \Delta x = \lim_{n \rightarrow \infty} \frac{b - a}{n} = 0
 		}$
@@ -94,10 +94,10 @@
 	the left and right approximations simultaneously.
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Comparison of Approximations
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given any arbitrary function whose area we want to find on a range
 	$[a,b]$, how do we tell which approximation is an overestimate and which
 	is an underestimate? The very fact that we already restricted these approximations

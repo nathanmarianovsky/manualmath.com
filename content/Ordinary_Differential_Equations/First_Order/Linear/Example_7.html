@@ -1,9 +1,9 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Determine all solutions to:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			xy' = y + x^2\sin(x)
 		}$
@@ -12,15 +12,15 @@
 	Do all the plots feature a common intersection point?
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
-	<input type='button' value='Show Solution' class='show_solution'>
-	<div style='display: none;' class='hidden_div'>
-		<div class='latex_body'>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
 			First rearranging gives:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					xy' &= y + x^2\sin(x) \\
 					xy' - y &= x^2\sin(x) \\
@@ -29,7 +29,7 @@
 			</div>
 			Now this is in the form of a first-order linear differential equation.
 			Next the integrating factor is needed:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\mu &= e^{\int -x^{-1} dx} \\
 					&= e^{-\ln|x|} \\
@@ -40,7 +40,7 @@
 			</div>
 			where dropping the absolute value is allowed since multiplying by a negative gives the same result.
 			Now multiplying the equation throughout by the integrating factor gives:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					x^{-1}y' - x^{-2}y &= \sin(x) \\
 					\frac{d}{dx}(x^{-1}y) &= \sin(x) \\
@@ -51,7 +51,7 @@
 				}$
 			</div>
 			Now for the family of curves:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				<img src="/content/Ordinary_Differential_Equations/First_Order/Linear/Example_7.jpg">
 			</div>
 			The graph seems to point to the fact that all the different plots intersect at the origin. 

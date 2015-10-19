@@ -118,9 +118,9 @@ define(function() {
 
 	*/
 	exports.default_load = function() {
-		if($('main').is(':empty')) {
-			$('title').text('Home');
-			$('main').load('/client/home.php');
+		if($("main").is(":empty")) {
+			$("title").text("Home");
+			$("main").load("/client/home.php");
 		}
 	};
 
@@ -135,7 +135,7 @@ define(function() {
 
 	*/
 	exports.rgba_to_hex = function(orig) {
-		var rgb = orig.replace(/\s/g,'').match(/^rgba?\((\d+),(\d+),(\d+)/i);
+		var rgb = orig.replace(/\s/g,"").match(/^rgba?\((\d+),(\d+),(\d+)/i);
 		return (rgb && rgb.length === 4) ? "#" +
 		  	("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
 		  	("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
@@ -149,16 +149,16 @@ define(function() {
 
 	*/
 	exports.handle_li_coloring = function() {
-		$('li').each(function() {
-			if($(this).hasClass('active')) {
-				$(this).css('background-color', '#4693ec');
-				$(this).find('a').css('color', 'white');
+		$("li").each(function() {
+			if($(this).hasClass("active")) {
+				$(this).css("background-color", "#4693ec");
+				$(this).find("a").css("color", "white");
 			}
 			else {
-				if($(this).css('background-color')) {
-					if(exports.rgba_to_hex($(this).css('background-color')) == '#4693ec') {
-						$(this).css('background-color', '');
-						$(this).find('a').css('color', '#444');
+				if($(this).css("background-color")) {
+					if(exports.rgba_to_hex($(this).css("background-color")) == "#4693ec") {
+						$(this).css("background-color", "");
+						$(this).find("a").css("color", "#444");
 					}
 				}
 			}
@@ -180,11 +180,11 @@ define(function() {
 			closeOnClick: true
 		});
 		if(window.innerWidth < 992) {
-			$('.button-collapse').sideNav('hide');
+			$(".button-collapse").sideNav("hide");
 		}
-		$('#hambuger_button').click(function(e) {
+		$("#hambuger_button").click(function(e) {
 			e.preventDefault();
-			$('.button-collapse').sideNav('show');
+			$(".button-collapse").sideNav("show");
 		});
 	};
 
@@ -200,28 +200,33 @@ define(function() {
 
 	*/
 	exports.subject_side_nav = function(subjects) {
-		$('.side-nav').empty();
-		var font = '12px';
-		var height = '64px';
-		if(window.innerWidth < '992') {
-			font = '25px';
-			height = '120px';
+		$(".side-nav").empty();
+		var font = "12px";
+		var height = "64px";
+		if(window.innerWidth < "992") {
+			font = "25px";
+			height = "120px";
 		}
-		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'notation_li').fadeIn('slow'));
-		$('#notation_li').append($('<a>').addClass('collapsible-header bold').attr('id', 'notation').attr('href', 'notation.php').text('Notation').css({
-			'line-height': height,
-			'font-size': font
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "about_li").fadeIn("slow"));
+		$("#about_li").append($("<a>").addClass("collapsible-header bold").attr("id", "about").attr("href", "about.php").text("About").css({
+			"line-height": height,
+			"font-size": font
 		}));
-		$('.side-nav').append($('<li>').addClass('divider'));
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "notation_li").fadeIn("slow"));
+		$("#notation_li").append($("<a>").addClass("collapsible-header bold").attr("id", "notation").attr("href", "notation.php").text("Notation").css({
+			"line-height": height,
+			"font-size": font
+		}));
+		$(".side-nav").append($("<li>").addClass("divider"));
 		subjects.forEach(function(subject) {
-			$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'subjects_li' + subject.sid).fadeIn('slow'));
-			$('#subjects_li' + subject.sid).append($('<a>').addClass('collapsible-header bold').attr('id', 'subjects_' + subject.sid).text(subject.clean_name).css({
-				'line-height': height,
-				'font-size': font
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid).fadeIn("slow"));
+			$("#subjects_li" + subject.sid).append($("<a>").addClass("collapsible-header bold").attr("id", "subjects_" + subject.sid).text(subject.clean_name).css({
+				"line-height": height,
+				"font-size": font
 			}));
-			$('#subjects_' + subject.sid).append($('<i>').addClass('material-icons right').text('arrow_forward'));
+			$("#subjects_" + subject.sid).append($("<i>").addClass("material-icons right").text("arrow_forward"));
 		});
-		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'extra_li').fadeIn('slow'));
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "extra_li").fadeIn("slow"));
 	};
 
 	/*
@@ -236,29 +241,29 @@ define(function() {
 
 	*/
 	exports.topic_side_nav = function(subject) {
-		$('.side-nav').empty();
-		var font = '12px';
-		var height = '64px';
-		if(window.innerWidth < '992') {
-			font = '25px';
-			height = '120px';
+		$(".side-nav").empty();
+		var font = "12px";
+		var height = "64px";
+		if(window.innerWidth < "992") {
+			font = "25px";
+			height = "120px";
 		}
-		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'subject_li' + subject.sid).fadeIn('slow'));
-		$('#subject_li' + subject.sid).append($('<a>').addClass('collapsible-header bold').attr('id', 'subjectnav').text('All Subjects').css({
-			'line-height': height,
-			'font-size': font
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid).fadeIn("slow"));
+		$("#subject_li" + subject.sid).append($("<a>").addClass("collapsible-header bold").attr("id", "subjectnav").text("All Subjects").css({
+			"line-height": height,
+			"font-size": font
 		}));
-		$('#subjectnav').append($('<i>').addClass('material-icons right').text('arrow_backward'));
-		$('.side-nav').append($('<li>').addClass('divider'));
+		$("#subjectnav").append($("<i>").addClass("material-icons right").text("arrow_backward"));
+		$(".side-nav").append($("<li>").addClass("divider"));
 		subject.topics.forEach(function(topic) {
-			$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'topics_li' + topic.tid).fadeIn('slow'));
-			$('#topics_li' + topic.tid).append($('<a>').addClass('collapsible-header bold').attr('id', 'topics_' + topic.tid).text(topic.clean_name).css({
-				'line-height': height,
-				'font-size': font
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid).fadeIn("slow"));
+			$("#topics_li" + topic.tid).append($("<a>").addClass("collapsible-header bold").attr("id", "topics_" + topic.tid).text(topic.clean_name).css({
+				"line-height": height,
+				"font-size": font
 			}));
-			$('#topics_' + topic.tid).append($('<i>').addClass('material-icons right').text('arrow_forward'));
+			$("#topics_" + topic.tid).append($("<i>").addClass("material-icons right").text("arrow_forward"));
 		});
-		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'extra_li').fadeIn('slow'));
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "extra_li").fadeIn("slow"));
 	};
 
 	/*
@@ -275,29 +280,29 @@ define(function() {
 
 	*/
 	exports.section_side_nav = function(topic, subject) {
-		$('.side-nav').empty();
-		var font = '12px';
-		var height = '64px';
-		if(window.innerWidth < '992') {
-			font = '25px';
-			height = '120px';
+		$(".side-nav").empty();
+		var font = "12px";
+		var height = "64px";
+		if(window.innerWidth < "992") {
+			font = "25px";
+			height = "120px";
 		}
-		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'topic_li' + topic.tid).fadeIn('slow'));
-		$('#topic_li' + topic.tid).append($('<a>').addClass('collapsible-header bold').attr('id', 'topicnav_' + topic.tid).text(subject.clean_name).css({
-			'line-height': height,
-			'font-size': font
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topic_li" + topic.tid).fadeIn("slow"));
+		$("#topic_li" + topic.tid).append($("<a>").addClass("collapsible-header bold").attr("id", "topicnav_" + topic.tid).text(subject.clean_name).css({
+			"line-height": height,
+			"font-size": font
 		}));
-		$('#topicnav_' + topic.tid).append($('<i>').addClass('material-icons right').text('arrow_backward'));
-		$('.side-nav').append($('<li>').addClass('divider'));
+		$("#topicnav_" + topic.tid).append($("<i>").addClass("material-icons right").text("arrow_backward"));
+		$(".side-nav").append($("<li>").addClass("divider"));
 		topic.sections.forEach(function(section) {
-			$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'sections_li' + section.section_id).fadeIn('slow'));
-			$('#sections_li' + section.section_id).append($('<a>').addClass('collapsible-header bold').attr('id', 'sections_' + section.section_id).text(section.clean_name).css({
-				'line-height': height,
-				'font-size': font
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id).fadeIn("slow"));
+			$("#sections_li" + section.section_id).append($("<a>").addClass("collapsible-header bold").attr("id", "sections_" + section.section_id).text(section.clean_name).css({
+				"line-height": height,
+				"font-size": font
 			}));
-			$('#sections_' + section.section_id).append($('<i>').addClass('material-icons right').text('arrow_forward'));
+			$("#sections_" + section.section_id).append($("<i>").addClass("material-icons right").text("arrow_forward"));
 		});
-		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'extra_li').fadeIn('slow'));
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "extra_li").fadeIn("slow"));
 	};
 
 	/*
@@ -314,33 +319,33 @@ define(function() {
 
 	*/
 	exports.example_side_nav = function(section, topic) {
-		$('.side-nav').empty();
-		var font = '12px';
-		var height = '64px';
-		if(window.innerWidth < '992') {
-			font = '25px';
-			height = '120px';
+		$(".side-nav").empty();
+		var font = "12px";
+		var height = "64px";
+		if(window.innerWidth < "992") {
+			font = "25px";
+			height = "120px";
 		}
-		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'section_li' + section.section_id).fadeIn('slow'));
-		$('#section_li' + section.section_id).append($('<a>').addClass('collapsible-header bold').attr('id', 'sectionnav_' + section.section_id).text(topic.clean_name).css({
-			'line-height': height,
-			'font-size': font
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_li" + section.section_id).fadeIn("slow"));
+		$("#section_li" + section.section_id).append($("<a>").addClass("collapsible-header bold").attr("id", "sectionnav_" + section.section_id).text(topic.clean_name).css({
+			"line-height": height,
+			"font-size": font
 		}));
-		$('#sectionnav_' + section.section_id).append($('<i>').addClass('material-icons right').text('arrow_backward'));
-		$('.side-nav').append($('<li>').addClass('divider'));
-		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'section_name' + section.section_id).fadeIn('slow'));
-		$('#section_name' + section.section_id).append($('<a>').addClass('collapsible-header bold').attr('id', 'sectionname_' + section.section_id).text('Notes').css({
-			'line-height': height,
-			'font-size': font
+		$("#sectionnav_" + section.section_id).append($("<i>").addClass("material-icons right").text("arrow_backward"));
+		$(".side-nav").append($("<li>").addClass("divider"));
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_name" + section.section_id).fadeIn("slow"));
+		$("#section_name" + section.section_id).append($("<a>").addClass("collapsible-header bold").attr("id", "sectionname_" + section.section_id).text("Notes").css({
+			"line-height": height,
+			"font-size": font
 		}));
 		section.examples.forEach(function(example) {
-			$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'examples_li' + example.eid).fadeIn('slow'));
-			$('#examples_li' + example.eid).append($('<a>').addClass('collapsible-header bold').attr('id', 'examples_' + example.eid).text(example.clean_name).css({
-				'line-height': height,
-				'font-size': font
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid).fadeIn("slow"));
+			$("#examples_li" + example.eid).append($("<a>").addClass("collapsible-header bold").attr("id", "examples_" + example.eid).text(example.clean_name).css({
+				"line-height": height,
+				"font-size": font
 			}));
 		});
-		$('.side-nav').append($('<li>').addClass('no-padding').attr('id', 'extra_li').fadeIn('slow'));
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "extra_li").fadeIn("slow"));
 	};
 
 	/*
@@ -362,63 +367,63 @@ define(function() {
 
 	*/
 	exports.handle_links = function(router, subjects, topics, sections, examples) {
-		$('a').click(function(e) {
+		$("a").click(function(e) {
 			var link = $(this);
 			e.preventDefault();
-			if(link.attr('href') == 'home.php') {
-				router.navigate('home');
+			if(link.attr("href") == "about.php") {
+				router.navigate("about");
 			}
-			else if(link.attr('href') == 'notation.php') {
-				router.navigate('notation');
+			else if(link.attr("href") == "notation.php") {
+				router.navigate("notation");
 			}
 			else {
-				var id = link.attr('id');
+				var id = link.attr("id");
 				if(id) {
-					var holder = id.split('_');
+					var holder = id.split("_");
 					var id_string = holder[0];
 					if(holder.length > 1) {
 						var id_num = holder[1];
 					}
-					if(id_string == 'subjects') {
+					if(id_string == "subjects") {
 						subjects.forEach(function(subject) {
 							if(subject.sid == id_num) {
-								router.navigate('subject', {sname: subject.sname});
+								router.navigate("subject", {sname: subject.sname});
 							}
 						});
 					}
-					else if(id_string == 'subjectnav') {
-						router.navigate('home');
+					else if(id_string == "subjectnav") {
+						router.navigate("about");
 					}
-					else if(id_string == 'topics') {
+					else if(id_string == "topics") {
 						topics.forEach(function(topic) {
 							if(topic.tid == id_num) {
 								subjects.forEach(function(subject) {
 									if(subject.sid == topic.sid) {
-										router.navigate('subject.topic', {sname: subject.sname, tname: topic.tname});
+										router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});
 									}
 								});
 							}
 						});
 					}
-					else if(id_string == 'topicnav') {
+					else if(id_string == "topicnav") {
 						topics.forEach(function(topic) {
 							if(topic.tid == id_num) {
 								subjects.forEach(function(subject) {
 									if(subject.sid == topic.sid) {
-										router.navigate('subject', {sname: subject.sname});
+										router.navigate("subject", {sname: subject.sname});
 									}
 								});
 							}
 						});
 					}
-					else if(id_string == 'sections') {
+					else if(id_string == "sections") {
 						sections.forEach(function(section) {
 							if(section.section_id == id_num) {
 								topics.forEach(function(topic) {
 									if(topic.tid == section.tid) {
 										subjects.forEach(function(subject) {
 											if(subject.sid == topic.sid) {
-												router.navigate('subject.topic.section', {sname: subject.sname, tname: topic.tname, section_name: section.section_name});
+												router.navigate("subject.topic.section", {sname: subject.sname, tname: topic.tname, section_name: section.section_name});
 											}
 										});
 									}
@@ -426,14 +431,14 @@ define(function() {
 							}
 						});
 					}
-					else if(id_string == 'sectionnav') {
+					else if(id_string == "sectionnav") {
 						sections.forEach(function(section) {
 							if(section.section_id == id_num) {
 								topics.forEach(function(topic) {
 									if(topic.tid == section.tid) {
 										subjects.forEach(function(subject) {
 											if(subject.sid == topic.sid) {
-												router.navigate('subject.topic', {sname: subject.sname, tname: topic.tname});
+												router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});
 											}
 										});
 									}
@@ -441,14 +446,14 @@ define(function() {
 							}
 						});
 					}
-					else if(id_string == 'sectionname') {
+					else if(id_string == "sectionname") {
 						sections.forEach(function(section) {
 							if(section.section_id == id_num) {
 								topics.forEach(function(topic) {
 									if(topic.tid == section.tid) {
 										subjects.forEach(function(subject) {
 											if(subject.sid == topic.sid) {
-												router.navigate('subject.topic.section.current_page', {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
+												router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
 											}
 										});
 									}
@@ -456,7 +461,7 @@ define(function() {
 							}
 						});
 					}
-					else if(id_string == 'examples') {
+					else if(id_string == "examples") {
 						examples.forEach(function(example) {
 							if(example.eid == id_num) {
 								sections.forEach(function(section) {
@@ -465,7 +470,7 @@ define(function() {
 											if(topic.tid == section.tid) {
 												subjects.forEach(function(subject) {
 													if(subject.sid == topic.sid) {
-														router.navigate('subject.topic.section.current_page', {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: example.ename});
+														router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: example.ename});
 													}
 												});
 											}

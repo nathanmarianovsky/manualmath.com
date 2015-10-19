@@ -1,10 +1,10 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Polynomial Antiderivative
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given $f(x) = x^n$ where $n \in \mathbb{R} \setminus \{-1\}$, the antiderivative is
 	defined as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x) dx = \int x^n dx = \frac{x^{n+1}}{n+1} + C
 		}$
@@ -12,12 +12,12 @@
 	where $C$ is the constant of integration. 
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Proof using the Power Rule for Differentiation
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Assuming the power rule for differentiation holds true:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{d}{dx} x^{n+1} &= (n+1)x^n \\
 			d(x^{n+1}) &= (n+1)x^n dx \\
@@ -28,12 +28,12 @@
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	The Special Case
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given $f(x) = x^{-1}$, the antiderivative is defined as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x) dx = \int x^{-1} dx = \ln|x| + C
 		}$
@@ -41,13 +41,13 @@
 	where $C$ is the constant of integration and $x \in \mathbb{R} \setminus \{0\}$. 
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Proof of the Special Case
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Given $f(x) = x^{-1}$, the antiderivative can be obtained
 	by making the following substitution if $x \in (0, \infty)$:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			x &= e^u \\
 			dx &= e^u du = x du \\
@@ -55,20 +55,20 @@
 		}$
 	</div>
 	Plugging into the integral gives:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x) dx = \int x^{-1} dx = \int du = u + C
 		}$
 	</div>
 	Now to get convert back into a function of $x$ notice that if
 	$x = e^u$ implies $u = \ln(x)$:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x) dx = u + C = \ln(x) + C
 		}$
 	</div>
 	To handle the case of $x \in (-\infty, 0)$, make the following substitution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			x &= -e^u \\
 			dx &= -e^u du = x du \\
@@ -76,21 +76,21 @@
 		}$
 	</div>
 	Plugging into the integral gives:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x) dx = \int x^{-1} dx = \int du = u + C
 		}$
 	</div>
 	Now to get convert back into a function of $x$ notice that if
 	$x = -e^u$ implies $u = \ln(-x)$:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x) dx = u + C = \ln(-x) + C
 		}$
 	</div>
 	To finish off, these two cases can be put together into in a single form
 	that handles any $x \in \mathbb{R} \setminus \{0\}$:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int f(x) dx = \int x^{-1} dx = \ln|x| + C
 		}$

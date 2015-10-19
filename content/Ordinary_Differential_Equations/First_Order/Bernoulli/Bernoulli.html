@@ -1,16 +1,16 @@
-<div class='latex_section'>
+<div class="latex_section">
 	The Setup
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	A Bernoulli differential equation is typically modeled as:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			y' + m(x)y = k(x)y^N \hspace{.3cm} \text{where} \hspace{.3cm} N \in \mathbb{R} \setminus \{0,1\}
 		}$
 	</div>
 	where $y'$ denotes the first derivative. We restrict $N$ to not be zero because that case would be trivial since the problem reduces down to a first-order
 	linear differential equation. For $N = 1$ just reorganize to see that the same thing happens:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			y' + m(x)y &= k(x)y \\
 			y' + m(x)y - k(x)y &= 0 \\
@@ -19,7 +19,7 @@
 		}$
 	</div>
 	where:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			g(x) = m(x) - k(x)
 		}$
@@ -27,47 +27,47 @@
 	is used to conform to the standard first-order linear differential equation.
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solving the Equation
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	The whole point of Bernoulli's differential equation is to use the right substitution such that
 	the problem is reduced down to a first-order linear differential equation. To begin first devide
 	both sides by the non-linear term:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			y' + m(x)y &= k(x)y^N \\
 			y'y^{-N} + m(x)y^{1-N} &= k(x)
 		}$
 	</div>
 	Now make the following substitution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			u &= y^{1-N} \\
 			u' &= (1-N)y'y^{-N}
 		}$
 	</div>
 	and plug in:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\frac{u'}{1-N} + m(x)u &= k(x) \\
 			u' + (1-N)m(x)u &= (1-N)k(x)
 		}$
 	</div>
 	To put the equation in the standard form let:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			M(x) = (1-N)m(x) \hspace{.3cm} \text{and} \hspace{.3cm} K(x) = (1-N)k(x)
 		}$
 	</div>
 	so that:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			u' + M(x)u = K(x)
 		}$
 	</div>
 	Using the solution from the first-order linear section states that:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			u &= \frac{1}{\mu} \int \mu K(x) dx \\
 			&= \Big( e^{\int M(x) dx} \Big)^{-1} \int e^{\int M(x) dx} K(x) dx \\
@@ -77,7 +77,7 @@
 	</div>
 	Now there is just one thing left. The original differential equation was asking for a solution to $y$,
 	not $u$. So to go back use the substitution:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			y^{1-N} &= u \\
 			y &= u^\frac{1}{1-N} \\

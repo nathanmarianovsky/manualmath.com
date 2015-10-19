@@ -1,47 +1,47 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Evaluate the following:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int x\arctan(x^2) dx
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
 	<input type="button" value="Show Solution" class="show_solution">
-	<div style="display: none;" class='hidden_div'>
-		<div class='latex_body'>
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
 			In this scenario the integral is bundled with a polynomial
 			and an inverse trigonometric function. Since inverse trigonometric
 			functions take precendence on the $\textbf{LIPET}$ acrynomy,
 			define the components as:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					u = \arctan(x^2) \rightarrow& du = \frac{2x}{x^4+1} dx \\
 					dv = x dx \rightarrow& v = \frac{1}{2}x^2
 				}$
 			</div>
 			Now applying the formula yields:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int x\arctan(x^2) dx &= \frac{1}{2}x^2\arctan(x^2) - \int \frac{x^3}{x^4+1} dx 
 				}$
 			</div>
 			To integrate the rest consider the following substitution:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					w &= x^4+1 \\
 					dw &= 4x^3 dx \rightarrow \frac{dw}{4} = x^3 dx
 				}$
 			</div>
 			Plugging in gives:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{1}{2}x^2\arctan(x^2) - \int \frac{x^3}{x^4+1} dx &= \frac{1}{2}x^2\arctan(x^2)
 					- \frac{1}{4} \int \frac{dw}{w} \\

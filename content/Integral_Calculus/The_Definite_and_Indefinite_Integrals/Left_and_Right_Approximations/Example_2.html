@@ -1,27 +1,27 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Approximate the area under the curve $f(x) = x^2$ on the domain $[-2,2]$ using the left
 	and right approximations with $n = 4$. What is the difference
 	in the approximations? Does the difference imply that this calculation gives the exact area?
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
-	<input type='button' value='Show Solution' class='show_solution'>
-	<div style='display: none;' class='hidden_div'>
-		<div class='latex_body'>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
 			First to define the width of each rectanlge:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\Delta x = \frac{b - a}{n} = \frac{2 - (-2)}{4} = 1
 				}$
 			</div>
 			Now for the values needed:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				<table>
 			    	<tr>
 				    	<td>$\textbf{x}$</td>
@@ -42,7 +42,7 @@
 				</table>
 			</div>
 			With this the approximations can be written down as:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\textbf{Area}_L(n) &= \sum_{i=0}^{3} f(x_i) \Delta x \\
 					&= \Big( 4 + 1 + 0 + 1 \Big) \cdot 1 \\
@@ -53,7 +53,7 @@
 				}$
 			</div>
 			As for the difference:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\Big| \textbf{Area}_R(n) - \textbf{Area}_L(n) \Big| &= \Big| 6 - 6 \Big| \\
 					&= 0

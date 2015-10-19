@@ -1,28 +1,28 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Approximate the area under the curve $f(x) = x^2$ on the domain $[0,3]$ using the left
 	and right approximations with $n = 6$. What is the difference
 	in the approximations? What is the difference if instead 10 partitions
 	are used?
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
-	<input type='button' value='Show Solution' class='show_solution'>
-	<div style='display: none;' class='hidden_div'>
-		<div class='latex_body'>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
 			First to define the width of each rectanlge:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\Delta x = \frac{b - a}{n} = \frac{3 - 0}{6} = \frac{1}{2}
 				}$
 			</div>
 			Now for the values needed:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				<table>
 			    	<tr>
 				    	<td>$\textbf{x}$</td>
@@ -47,7 +47,7 @@
 				</table>
 			</div>
 			With this the approximations can be written down as:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\textbf{Area}_L(n) &= \sum_{i=0}^{6} f(x_i) \Delta x \\
 					&= \Big( 0 + \frac{1}{4} + 1 + \frac{9}{4} + 4 + \frac{25}{4} \Big) \cdot \frac{1}{2} \\
@@ -58,14 +58,14 @@
 				}$
 			</div>
 			As for the difference:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\Big| \textbf{Area}_R(n) - \textbf{Area}_L(n) \Big| &= \Big| \frac{91}{8} - \frac{55}{8} \Big| \\
 					&= \frac{9}{2}
 				}$
 			</div>
 			If instead $n = 10$:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\Big| \textbf{Area}_R(n) - \textbf{Area}_L(n) \Big| &= \Big| f(x_{n+1}) - f(x_0) \Big| \cdot \Delta x \\
 					&= \Big| 9 - 0 \Big| \cdot \frac{3 - 0}{10} \\

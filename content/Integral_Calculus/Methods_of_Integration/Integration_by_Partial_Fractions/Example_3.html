@@ -1,24 +1,24 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Evaluate the following:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int \frac{2(s+1)}{s(s^2+3s+2)} ds
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
 	<input type="button" value="Show Solution" class="show_solution">
-	<div style="display: none;" class='hidden_div'>
-		<div class='latex_body'>
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
 			Before integrating using the method of partial fractions:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{2(s+1)}{s(s^2+3s+2)} &= \frac{2(s+1)}{s(s+2)(s+1)} \\
 					&= \frac{2}{s(s+2)} \\
@@ -27,7 +27,7 @@
 			</div>
 			This breakup is the case of distinct linear factors. Now
 			to determine the constants:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\frac{2}{s(s+2)} &= \frac{C_1}{s} + \frac{C_2}{s+2} \\
 					\frac{2}{s(s+2)} &= \frac{C_1(s+2)}{s(s+2)} + \frac{C_2(s)}{s(s+2)} \\
@@ -37,14 +37,14 @@
 			Normally at this point you could compare the coefficients of all powers of $s$
 			to determine the constants. A much faster way is to pick particular values for $s$
 			that help determine the coefficients:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					&x = 0: \hspace{.5cm} 2 = 2C_1 \rightarrow C_1 = 1 \\
 					&x = -2: \hspace{.3cm} 2 = -2C_2 \rightarrow C_2 = -1
 				}$
 			</div>
 			With the constants determined, the integration follows as:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int \frac{2(s+1)}{s(s^2+3s+2)} ds &= \int \Big( \frac{1}{s} - \frac{1}{s+2} \Big) ds \\
 					&= \int \frac{ds}{s} - \int \frac{ds}{s+2} \\

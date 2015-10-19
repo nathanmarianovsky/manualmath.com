@@ -42,7 +42,7 @@ class Section {
 	public function expose() {
 		$section = get_object_vars($this);
 		if(sizeof($this->examples) > 0) {
-			$section['examples'] = array_map(function($example){ return $example->expose(); }, $section['examples']);
+			$section["examples"] = array_map(function($example){ return $example->expose(); }, $section["examples"]);
 		}
 		return $section;
 	}

@@ -1,22 +1,22 @@
-<div class='latex_section'>
+<div class="latex_section">
 	Problem
 </div>
-<div class='latex_body'>
+<div class="latex_body">
 	Evaluate the following:
-	<div class='latex_equation'>
+	<div class="latex_equation">
 		$\eqalign{
 			\int (t+2)\sqrt{2+3t} dt
 		}$
 	</div>
 </div>
 
-<div class='latex_section'>
+<div class="latex_section">
 	Solution
 </div>
 <div>
 	<input type="button" value="Show Solution" class="show_solution">
-	<div style="display: none;" class='hidden_div'>
-		<div class='latex_body'>
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
 			In this scenario the integral is bundled with a polynomial
 			and some other non-elementary function. This other function
 			is not handled by the acronym, but consider the following logic.
@@ -26,14 +26,14 @@
 			prettier, while at the same time the integral of the polynomial only
 			gets higher in degree. So I offer that we go the other way with these
 			components:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					u = t + 2 \rightarrow& du = dt \\
 					dv = \sqrt{2+3t} dt \rightarrow& v = \frac{2}{9}(2+3t)^\frac{3}{2}
 				}$
 			</div>
 			Now applying the formula yields:
-			<div class='latex_equation'>
+			<div class="latex_equation">
 				$\eqalign{
 					\int (t+2)\sqrt{2+3t} dt &= \frac{2}{9}(t+2)(2+3t)^\frac{3}{2} - \frac{2}{9} \int (2+3t)^\frac{3}{2} dt \\
 					&= \frac{2}{9}(t+2)(2+3t)^\frac{3}{2} - \frac{4}{135}(2+3t)^\frac{5}{2} + C

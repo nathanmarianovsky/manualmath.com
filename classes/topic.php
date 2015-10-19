@@ -36,8 +36,8 @@ class Topic {
 
 	public function expose() {
 		$topic = get_object_vars($this);
-		if(sizeof($topic['sections']) > 0) {
-			$topic['sections'] = array_map(function($section){ return $section->expose(); }, $topic['sections']);
+		if(sizeof($topic["sections"]) > 0) {
+			$topic["sections"] = array_map(function($section){ return $section->expose(); }, $topic["sections"]);
 		}
 		return $topic;
 	}
