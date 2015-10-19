@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER["DOCUMENT_ROOT"] . "api/classes/section.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/api/classes/section.php";
 
 /*
 
