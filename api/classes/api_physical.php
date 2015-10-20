@@ -74,7 +74,7 @@ class MyAPI extends API {
         }
     }
 
-    protected function get_example_file() {
+    protected function get_example_content() {
         global $db;
         if($this->method == "GET") {
             if(sizeof($this->args) == 1) {
@@ -153,7 +153,7 @@ class MyAPI extends API {
         }
     }
 
-    protected function get_section_file() {
+    protected function get_section_content() {
         global $db;
         if($this->method == "GET") {
             if(sizeof($this->args) == 1) {
@@ -226,6 +226,29 @@ class MyAPI extends API {
         }
     }
 
+    protected function get_topic_content() {
+        global $db;
+        if($this->method == "GET") {
+            if(sizeof($this->args) == 1) {
+                $main_arg = $this->args[0];
+                $params = array();
+                if(is_numeric($main_arg)) {
+                    $params["tid"] = $main_arg;
+                    return get_topic_file($db, $params);
+                }
+                else {
+                    return "The tid has to be a numeric value";
+                }
+            }
+            else {
+                return "The number of parameters is not correct";
+            }
+        }
+        else {
+            return "This only accepts GET requests";
+        }
+    }
+
     protected function subjects() {
         global $db;
         $params = array();
@@ -259,6 +282,29 @@ class MyAPI extends API {
                 }
                 else {
                     return "This is not an accepted data type";
+                }
+            }
+            else {
+                return "The number of parameters is not correct";
+            }
+        }
+        else {
+            return "This only accepts GET requests";
+        }
+    }
+
+    protected function get_subject_content() {
+        global $db;
+        if($this->method == "GET") {
+            if(sizeof($this->args) == 1) {
+                $main_arg = $this->args[0];
+                $params = array();
+                if(is_numeric($main_arg)) {
+                    $params["sid"] = $main_arg;
+                    return get_subject_file($db, $params);
+                }
+                else {
+                    return "The sid has to be a numeric value";
                 }
             }
             else {

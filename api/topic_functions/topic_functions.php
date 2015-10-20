@@ -119,4 +119,57 @@ function get_topics($con, $args) {
 	return $topics;
 }
 
+/*
+
+Purpose:
+Returns the contents of the file associated to the topic
+
+Parameters:
+	tid: 
+		Gives the contents of the unique topic
+
+Note:
+If there is no such topic found, an appropriate response is returned.
+
+*/
+function get_topic_file($con, $args) {
+	if(isset($args["tid"])) {
+		$tid = $args["tid"];
+		$sql = $con->prepare("SELECT sid,tname FROM topic WHERE tid=?");
+		$sql->bind_param("i", $tid);
+		$sql->bind_result($sid, $tname);
+		$sql->execute();
+		$sql->fetch();
+		$sql->close();
+
+		if(isset($sid) && isset($tname)) {
+			$sql = $con->prepare("SELECT sname FROM subject WHERE sid=?");
+			$sql->bind_param("i", $sid);
+			$sql->bind_result($sname);
+			$sql->execute();
+			$sql->fetch();
+			$sql->close();
+
+			if(isset($sname)) {
+				$file = $_SERVER["DOCUMENT_ROOT"] . "/content/" . $sname . "/" . $tname . "/" . $tname . ".html";
+				if(file_exists($file)) {
+					return file_get_contents($file);
+				}
+				else {
+					return "The topic seems to exists, but there is no file for it";
+				}
+			}
+			else {
+				return "There is no associated subject to this sid";
+			}
+		}
+		else {
+			return "There is no associated topic to this tid";
+		}
+	}
+	else {
+		return "There was no tid passed in as a parameter";
+	}
+}
+
 ?>
