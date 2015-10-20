@@ -16,6 +16,7 @@ class Section {
 		$this->section_name = $_section_name;
 		$this->order = $_order;
 		$tmp = str_replace("-", ": ", $_section_name);
+		$tmp = str_replace("AND", "-", $tmp);
 		$this->clean_name = str_replace("_", " ", $tmp);
 		if(sizeof($_examples) > 0) {
 			for($i = 0; $i < sizeof($_examples); $i++) {

@@ -13,7 +13,7 @@
 		The notes house a way to provide exactly what the section is about, sometimes with formal proofs and even explanations for the purpose of the mathematics
 		at hand, while the examples provide concrete cases for the user to see the theory at work. The progression in examples typically increases with difficulty,
 		thus providing a well balanced collection of different cases typically associated to the section. The goal in mind when using "man math" is to be able to
-		use the website and close it either knowing some new knowledge or having cleared up a misunderstanding.
+		use the website and close it either having gained some new knowledge or having cleared up a misunderstanding beforehand.
 	</div>
 </div>
 
@@ -21,10 +21,10 @@
 	<h2>Using the Website</h2>
 	<div class="box_text">
 		Two ways to go from here:
-		<table>
+		<div class="list">
 		    <li>Choose a subject on the left to go forward</li>
 		    <li>Click on notation to see all the notation used on this website</li>
-		</table>
+		</div>
 	</div>
 </div>
 
@@ -42,6 +42,10 @@
 	<div class="box_text">
 		The current version is v.0.0.2. Changes since the last release include:
 		<li>Mobile Support - The menu can be opened up either clicking the hamburger button or sliding from the left</li>
+		<li>Notation Page - Houses all the notation</li>
+		<li>About Page - No more home page</li>
+		<li>Menu Selection Coloring</li>
+		If you would like to see the source code directly, everything is open-sourced <a href="http://www.github.com/nathanmarianovsky/manualmath.com" target="_blank">Here</a>
 	</div>
 </div>
 

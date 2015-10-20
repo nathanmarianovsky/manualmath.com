@@ -21,11 +21,10 @@
 	<div class="latex_equation">
 		$\eqalign{
 			\frac{\partial^2 f}{\partial x_i \partial x_j} \Bigg|_P = \frac{\partial^2 f}{\partial x_j \partial x_i} \Bigg|_P 
-			\hspace{.5cm} \forall i,j \in \{1,2,\dots,n\}
+			\hspace{.5cm} \forall i,j \in \{1,2,\dots,n\} \hspace{.5cm} \text{if} \hspace{.5cm} f \in C^2(\mathbb{R}^n)
 		}$
 	</div>
-	which is essentially a formal way of saying that second partial derivatives commute for any two variables. This will lay the groundwork
-	for how the differential equation is handled.
+	which is essentially a formal way of saying that second partial derivatives commute for any two variables given a function has continuous second partial derivatives. This will lay the groundwork for how the differential equation is handled.
 </div>
 
 <div class="latex_section">
@@ -124,16 +123,21 @@
 	<div class="latex_equation">
 		$\eqalign{
 			\frac{d\mu}{dx} N &= \mu \Big( M_y - N_x \Big) \\
-			\frac{d\mu}{\mu} &= \Big( \frac{M_y - N_x}{N} \Big) dx \\
-			\int \frac{d\mu}{\mu} &= \int \Big( \frac{M_y - N_x}{N} \Big) dx \\
-			\ln|\mu| &= \int \Big( \frac{M_y - N_x}{N} \Big) dx \\
-			\mu &= e^{\int \Big( \frac{M_y - N_x}{N} \Big) dx} \\
+			\frac{d\mu}{\mu} &= \frac{M_y - N_x}{N} dx \\
+			\int \frac{d\mu}{\mu} &= \int \frac{M_y - N_x}{N} dx \\
+			\ln|\mu| &= \int \frac{M_y - N_x}{N} dx \\
+			\mu &= e^{\int \frac{M_y - N_x}{N} dx} \\
 			\mu &= e^{K(x) + C} \\
 			\mu &= e^{K(x)}e^C \\
-			\mu &= De^{K(x)}
+			\mu &= De^{K(x)} \\
 		}$
 	</div>
-	where $D = e^C$ is an easier way of writing down the constant of integration and $K(x)$ is the antiderivative of $\frac{M_y - N_x}{N}$. 
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			D = e^c \hspace{.2cm} \text{and} \hspace{.2cm} K(x) = \int \frac{M_y - N_x}{N} dx
+		}$
+	</div>
 	In order for the above integrating factor to work note that the integrand must be a function of $x$ strictly. Now for the case where $\mu$ is a function of
 	$y$ only:
 	<div class="latex_equation">
@@ -145,17 +149,22 @@
 	<div class="latex_equation">
 		$\eqalign{
 			\frac{d\mu}{dy} M &= \mu \Big( N_x - M_y \Big) \\
-			\frac{d\mu}{\mu} &= \Big( \frac{N_x - M_y}{M} \Big) dy \\
-			\int \frac{d\mu}{\mu} &= \int \Big( \frac{N_x - M_y}{M} \Big) dy \\
-			\ln|\mu| &= \int \Big( \frac{N_x - M_y}{M} \Big) dy \\
-			\mu &= e^{\int \Big( \frac{N_x - M_y}{M} \Big) dy} \\
+			\frac{d\mu}{\mu} &= \frac{N_x - M_y}{M} dy \\
+			\int \frac{d\mu}{\mu} &= \int \frac{N_x - M_y}{M} dy \\
+			\ln|\mu| &= \int \frac{N_x - M_y}{M} dy \\
+			\mu &= e^{\int \frac{N_x - M_y}{M} dy} \\
 			\mu &= e^{J(y) + C} \\
 			\mu &= e^{J(y)}e^C \\
 			\mu &= De^{J(y)}
 		}$
 	</div>
-	where $D = e^C$ is once again an easier way of writing down the constant of integration, $J(y)$ is the antiderivative of $\frac{N_x - M_y}{N}$, and the integrand must be a function of $y$ strictly so that the integrating factor works. In both cases we get a whole family of integrating factors similar to the scenario from the integrating factor
-	for first-order linear differential equations. So once again we choose the easy path and let $D = 1$ so that we have:
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			D = e^c \hspace{.2cm} \text{and} \hspace{.2cm} J(y) = \int \frac{N_x - M_y}{M} dy
+		}$
+	</div>
+	Like before, the integrand must be a function of $y$ strictly so that the integrating factor works. In both cases we get a whole family of integrating factors similar to the scenario from the integrating factor for first-order linear differential equations. So once again we choose the easy path and let $D = 1$ so that we have:
 	<div class="latex_equation">
 		$\eqalign{
 			\mu &= e^{K(x)} \hspace{.3cm} \text{or} \hspace{.3cm} \mu &= e^{J(y)}

@@ -289,7 +289,7 @@
 }
 
 .box_message {
-	margin: 20px auto 0 auto;
+	margin: 20px auto 50px auto;
 }
 
 .box_message h1 {
@@ -297,22 +297,21 @@
 	font-size: 40px;
 }
 
-#about_page .box_message h2 {
+.box_message h2 {
 	font-size: 25px;
 }
 
-#about_page .box_text {
+.box_text {
 	margin: 10px;
 }
 
-#about_page .box_text table {
-	/*margin: 0 0 0 20px;*/
-	display: table-row;
+.box_text a {
+	color: inherit;
+	text-decoration: underline;
 }
 
-#about_page .box_text table li {
-	margin: 0 0 0 20px;
-	display: table-cell;
+.box_text li {
+	margin: 0 0 0 30px;
 }
 
 #latex {
@@ -365,4 +364,11 @@
 	border: 1px solid black;
 	margin: 0 auto 0 auto;
 	text-align: center;
+}
+
+#differential_notation {
+	position: relative;
+	border: 1px solid black;
+	margin: 0 auto 0 auto;
+	width: 80%;
 }
