@@ -25,11 +25,6 @@ define(function() {
 			"line-height": height,
 			"font-size": font
 		}));
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "notation_li").fadeIn("slow"));
-		$("#notation_li").append($("<a>").addClass("collapsible-header bold").attr("id", "notation").attr("href", "notation.php").text("Notation").css({
-			"line-height": height,
-			"font-size": font
-		}));
 		$(".side-nav").append($("<li>").addClass("divider"));
 		subjects.forEach(function(subject) {
 			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid).fadeIn("slow"));
@@ -61,6 +56,17 @@ define(function() {
 			font = "25px";
 			height = "120px";
 		}
+		// $(".side-nav").append($("<li>").addClass("no-padding").attr("id", "about_li").fadeIn("slow"));
+		// $("#about_li").append($("<a>").addClass("collapsible-header bold").attr("id", "aboutsubject_" + subject.sid).attr("href", "about.html").text("About").css({
+		// 	"line-height": height,
+		// 	"font-size": font
+		// }));
+		// $(".side-nav").append($("<li>").addClass("no-padding").attr("id", "notation_li").fadeIn("slow"));
+		// $("#notation_li").append($("<a>").addClass("collapsible-header bold").attr("id", "notation_" + subject.sid).attr("href", "notation.php").text("Notation").css({
+		// 	"line-height": height,
+		// 	"font-size": font
+		// }));
+		// $(".side-nav").append($("<li>").addClass("divider"));
 		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid).fadeIn("slow"));
 		$("#subject_li" + subject.sid).append($("<a>").addClass("collapsible-header bold").attr("id", "subjectnav").text("All Subjects").css({
 			"line-height": height,
@@ -100,6 +106,12 @@ define(function() {
 			font = "25px";
 			height = "120px";
 		}
+		// $(".side-nav").append($("<li>").addClass("no-padding").attr("id", "about_li").fadeIn("slow"));
+		// $("#about_li").append($("<a>").addClass("collapsible-header bold").attr("id", "abouttopic_" + topic.tid).attr("href", "about.html").text("About").css({
+		// 	"line-height": height,
+		// 	"font-size": font
+		// }));
+		// $(".side-nav").append($("<li>").addClass("divider"));
 		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topic_li" + topic.tid).fadeIn("slow"));
 		$("#topic_li" + topic.tid).append($("<a>").addClass("collapsible-header bold").attr("id", "topicnav_" + topic.tid).text(subject.clean_name).css({
 			"line-height": height,

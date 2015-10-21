@@ -3,7 +3,6 @@ define(["jquery", "materialize", "router5", "mathjax", "app/functions", "app/rou
 
 		var router = new router5.Router5([
 			new router5.RouteNode("about", "/client/about"),
-			new router5.RouteNode("notation", "/client/notation"),
 			new router5.RouteNode("subject", "/client/:sname", [
 				new router5.RouteNode("topic", "/:tname", [
 					new router5.RouteNode("section", "/:section_name", [

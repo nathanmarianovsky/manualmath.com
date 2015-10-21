@@ -26,9 +26,6 @@ define(function() {
 			if(link.attr("href") == "about.php") {
 				router.navigate("about");
 			}
-			else if(link.attr("href") == "notation.php") {
-				router.navigate("notation");
-			}
 			else {
 				var id = link.attr("id");
 				if(id) {
@@ -37,17 +34,24 @@ define(function() {
 					if(holder.length > 1) {
 						var id_num = holder[1];
 					}
-					if(id_string == "subjects") {
+					if(id_string == "subjects" || id_string == "aboutsubject") {
 						subjects.forEach(function(subject) {
 							if(subject.sid == id_num) {
 								router.navigate("subject", {sname: subject.sname});
 							}
 						});
 					}
+					else if(id_string == "notation") {
+						subjects.forEach(function(subject) {
+							if(subject.sid == id_num) {
+								router.navigate("subject.notation", {sname: subject.sname});
+							}
+						});
+					}
 					else if(id_string == "subjectnav") {
 						router.navigate("about");
 					}
-					else if(id_string == "topics") {
+					else if(id_string == "topics" || id_string == "abouttopic") {
 						topics.forEach(function(topic) {
 							if(topic.tid == id_num) {
 								subjects.forEach(function(subject) {
