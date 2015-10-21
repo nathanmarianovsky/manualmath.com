@@ -44,11 +44,10 @@
 	equation is actually structured. A differential equation is said to be $\textit{linear}$ if it can be written in the format:
 	<div class="latex_equation">
 		$\eqalign{
-			y^{(n)} = \sum_{i=0}^{n-1} a_i(x)y^{(i)} + k(x)
+			\sum_{i=0}^{n} a_i(x)y^{(i)} = k(x)
 		}$
 	</div>
-	where $a_i(x)$ are some functions of $x$ strictly attached to some derivative of $y(x)$ and $k(x)$ is a standalone part. Essentially this is just saying
-	that the $n$th derivative of $y(x)$ can be written as a linear combination of all lower derivatives plus a standalone part that does not involve any derivatives. If an equation cannot be written in this format, then it is known as a $\textit{non-linear}$ differential equation. For example:
+	where $a_i(x)$ are some functions of $x$ strictly attached to some derivative of $y(x)$ and $k(x)$ is a standalone part. If an equation cannot be written in this format, then it is known as a $\textit{non-linear}$ differential equation. For example:
 	<div class="latex_equation">
 		$\eqalign{
 			y^{(5)} + x^2y^{(4)}y^2 = \sin(x)y^{(3)}
