@@ -31,37 +31,10 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				$("#notation_li").removeClass("active");
 			}
 			$("#about_li").addClass("active");
+			functions.handle_logo_link("about");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 		});
-
-		// router.addRouteListener("subject.notation", function(toState, fromState) {
-		// 	subjects.forEach(function(subject) {
-		// 		if(subject.sname == toState.params.sname) {
-		// 			if(fromState) {
-		// 				if(fromState.name != "subject") {
-		// 					navs.topic_side_nav(subject);
-		// 				}
-		// 			}
-		// 			if($(".side-nav").is(":empty")) {
-		// 				navs.topic_side_nav(subject);
-		// 			}
-		// 			$("#page_title").text(subject.clean_name + " - Notation");
-		// 			$("title").text(subject.clean_name + " - Notation");
-		// 			$("main").empty();
-		// 			$("main").append($("<div>").attr("id", "notation_page"));
-		// 			$("#notation_page").load("/content/" + subject.sname + "/notation.html");
-		// 		}
-		// 	});
-		// 	if($("#about_li").hasClass("active")) {
-		// 		$("#about_li").removeClass("active");
-		// 	}
-		// 	$("#notation_li").addClass("active");
-		// 	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-		// 	links.handle_links(router, subjects, topics, sections, examples);
-		// 	functions.handle_li_coloring();
-		// 	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-		// });
 
 		router.addRouteListener("subject", function(toState, fromState) {
 			subjects.forEach(function(subject) {
@@ -92,6 +65,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				$("#notation_li").removeClass("active");
 			}
 			$("#about_li").addClass("active");
+			functions.handle_logo_link("subject");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
@@ -118,6 +92,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				}
 			});
 			$("#about_li").addClass("active");
+			functions.handle_logo_link("subject.topic");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
@@ -144,6 +119,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 					});
 				}
 			});
+			functions.handle_logo_link("subject.topic.section");
 			functions.handle_li_coloring();
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			links.handle_links(router, subjects, topics, sections, examples);
@@ -202,6 +178,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 					});
 				}
 			});
+			functions.handle_logo_link("subject.topic.section.current_page");
 			functions.handle_li_coloring();
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			links.handle_links(router, subjects, topics, sections, examples);

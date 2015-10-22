@@ -1,0 +1,47 @@
+/* Styles for screens with maximum width of 800px */
+@media only screen and (max-width : 799px) and (min-width : 400px) {
+	header, main, footer {
+		padding-left: 0;
+	}
+
+	#hamburger_button {
+		left: 20px;
+		display: inline;
+	}
+
+    #logo {
+		padding: 15px 0 0 80px;
+		display: inline;
+		position: relative;
+	}
+
+	#logo img {
+		width: 210px;
+		padding: 8px 0 0 10px;
+	}
+
+	#page_title {
+	  	padding: 15px 0 0 80px;
+		display: inline;
+	}
+
+	#latex {
+		width: 300px;
+	}
+
+	#latex img {
+		width: 150px;
+	}
+
+	#nav-mobile {
+		top: 64px;
+	}
+
+	.box_message {
+		width: 300px;
+	}
+
+	#about_page .box_text {
+		font-size: 10px;
+	}
+}

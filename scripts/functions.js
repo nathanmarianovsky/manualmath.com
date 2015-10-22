@@ -132,6 +132,25 @@ define(function() {
 	/*
 
 	Purpose:
+	Takes away the pointer events associated to the logo link on the about page.
+
+	Parameters:
+		page: 
+			The name of the page currently set
+
+	*/
+	exports.handle_logo_link = function(page) {
+		if(page == "about") {
+			$("#logo").css("pointer-events", "none");
+		}
+		else {
+			$("#logo").css("pointer-events", "");
+		}
+	};
+
+	/*
+
+	Purpose:
 	Handles the coloring of the li tags on the example_side_nav.
 
 	*/

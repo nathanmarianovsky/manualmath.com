@@ -7,6 +7,12 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" type="text/css" href="/styles/styles.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_0_min_399_max.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_400_min_799_max.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_800_min_991_max.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_992_min_1199_max.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_1200_min_1599_max.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_1600_min.css">
 		<script data-main="/scripts/config" type="text/javascript" src="/node_modules/requirejs/require.js"></script>
 	</head>
 	<body>
