@@ -5,11 +5,16 @@
 	Given the differential equation:
 	<div class="latex_equation">
 		$\eqalign{
-			e^y y^{(7)} + \sin(x)y^{(2)} = \pi 
+			\frac{dy}{dx} = -\frac{x}{y}
 		}$
 	</div>
-	where $y^{(n)}$ denotes the $n$th derivative, what is the order?
-	Is it linear, and if so is it homogeneous? 
+	show that the curve:
+	<div class="latex_equation">
+		$\eqalign{
+			x^2 + y^2 = 25
+		}$
+	</div>
+	is an implicit solution.
 </div>
 
 <div class="latex_section">
@@ -19,9 +24,16 @@
 	<input type='button' value='Show Solution' class="show_solution">
 	<div style='display: none;' class="hidden_div">
 		<div class="latex_body">
-			Since the highest derivative to appear in the differential equation is the seventh derivative,
-			the order is seven. It is not linear because of the exponential factor, especially worse that it is
-			multiplied by one of the derivatives. 
+			Using implicit differentiation:
+			<div class="latex_equation">
+				$\eqalign{
+					x^2 + y^2 &= 25 \\
+					\frac{d}{dx} \Big[ x^2 + y^2 \Big] &= \frac{d}{dx} \Big[ 25 \Big] \\
+					2x + 2y\cdot\frac{dy}{dx} &= 0 \\
+					2y\cdot\frac{dy}{dx} &= -2x \\
+					\frac{dy}{dx} &= -\frac{x}{y}
+				}$
+			</div>
 		</div>
 	</div>
 </div>

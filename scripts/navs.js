@@ -38,8 +38,9 @@ define(function() {
 				$("#subjects_" + subject.sid + " i").css("width", "8rem");
 			}
 		});
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "extra_li").fadeIn("slow"));
-		$("#extra_li").append($("<a>").text(""));
+		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+		$(".extra_li").append($("<a>").text(""));
 	};
 
 	/*
@@ -84,8 +85,9 @@ define(function() {
 				$("#topics_" + topic.tid + " i").css("width", "8rem");
 			}
 		});
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "extra_li").fadeIn("slow"));
-		$("#extra_li").append($("<a>").text(""));
+		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+		$(".extra_li").append($("<a>").text(""));
 	};
 
 	/*
@@ -132,8 +134,9 @@ define(function() {
 				$("#sections_" + section.section_id + " i").css("width", "8rem");
 			}
 		});
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "extra_li").fadeIn("slow"));
-		$("#extra_li").append($("<a>").text(""));
+		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+		$(".extra_li").append($("<a>").text(""));
 	};
 
 	/*
@@ -184,8 +187,9 @@ define(function() {
 				examples_li.css("background-color", "white");
 			}
 		});
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "extra_li").fadeIn("slow"));
-		$("#extra_li").append($("<a>").text(""));
+		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+		$(".extra_li").append($("<a>").text(""));
 	};
 
 	return exports;

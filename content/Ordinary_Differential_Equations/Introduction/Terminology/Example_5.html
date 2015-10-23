@@ -1,0 +1,49 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} + 2xy = 1
+		}$
+	</div>
+	show that:
+	<div class="latex_equation">
+		$\eqalign{
+			y = e^{-x^2} \int_0^x e^{t^2} dt + Ce^{-x^2} \hspace{.3cm} \text{where} \hspace{.3cm} C \in \mathbb{R}
+		}$
+	</div>
+	is a solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First we need the first derivative which requires taking the derivative of the integral. The integrand happens to not have a known closed form therefore, there must be a different way. Using the $\textit{Second Fundamental Theorem of Calculus}$:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= e^{-x^2} \int_0^x e^{t^2} dt + Ce^{-x^2} \\
+					\frac{d}{dx} \Big[ y \Big] &= \frac{d}{dx} \Big[ e^{-x^2} \int_0^x e^{t^2} dt + Ce^{-x^2} \Big] \\
+					\frac{dy}{dx} &= -2xe^{-x^2}\int_0^x e^{t^2} dt + e^{-x^2} \cdot \frac{d}{dx} \int_0^x e^{t^2} dt - 2Cxe^{-x^2} \\
+					\frac{dy}{dx} &= -2xe^{-x^2}\int_0^x e^{t^2} dt + e^{-x^2} \cdot e^{x^2} - 2Cxe^{-x^2} \\
+					\frac{dy}{dx} &= -2xe^{-x^2}\int_0^x e^{t^2} dt + 1 - 2Cxe^{-x^2}
+				}$
+			</div>
+			Plugging into the differential equation yields:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dx} + 2xy &= 1 \\
+					\frac{dy}{dx} &= 1 - 2xy \\
+					-2xe^{-x^2}\int_0^x e^{t^2} dt + 1 - 2Cxe^{-x^2} &= 1 - 2x\Big[ e^{-x^2} \int_0^x e^{t^2} dt + Ce^{-x^2} \Big] \\
+					-2xe^{-x^2}\int_0^x e^{t^2} dt - 2Cxe^{-x^2} &= -2xe^{-x^2} \int_0^x e^{t^2} dt - 2Cxe^{-x^2} \\
+					0 &= 0
+				}$
+			</div>
+		</div>
+	</div>
+</div>

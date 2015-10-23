@@ -18,13 +18,18 @@
 	<body>
 		<header>
 			<div class="navbar-fixed">
-				<nav class="top-nav">
+				<nav class="top-nav" id="first_top_nav">
 				    <div class="nav-wrapper">
 					    <a href="#" id="hamburger_button" data-activates="nav-mobile" class="button-collapse">
 					      	<i class="mdi-navigation-menu"></i>
 					    </a>
 					    <a href="about.php" id="logo"><img src="/client/logo.png"></a>
-		    			<a id="page_title"></a>
+					    <a class="page_title" id="desktop_title"></a>
+				    </div>
+				</nav>
+				<nav class="top-nav" id="second_top_nav">
+				    <div class="nav-wrapper">
+		    			<a class="page_title" id="mobile_title"></a>
 				    </div>
 				</nav>
 			</div>

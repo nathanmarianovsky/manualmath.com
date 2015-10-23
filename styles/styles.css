@@ -3,10 +3,16 @@
 	background-color: #1163A9;
 }
 
-#page_title {
+#second_top_nav {
+	top: 60px;
+	box-shadow: none;
+}
+
+.page_title {
 	font-size: 20px;
 	line-height: 64px;
 	vertical-align: top;
+	padding-left: 140px;
 }
 
 #logo {
@@ -23,7 +29,9 @@
 }
 
 .box_message h1 {
-	margin: 40px auto 150px auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 150px;
 	font-size: 40px;
 }
 
@@ -103,10 +111,7 @@
 	width: 80%;
 }
 
-#extra_li {
+.extra_li {
 	background-color: white;
-}
-
-#extra_li a {
 	pointer-events: none;
 }

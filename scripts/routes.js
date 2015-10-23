@@ -22,7 +22,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 	exports.add_listeners = function(router, subjects, topics, sections, examples) {
 		router.addRouteListener("about", function(toState, fromState) {
 			navs.subject_side_nav(subjects);
-			$("#page_title").text("About");
+			$(".page_title").text("About");
 			$("title").text("About");
 			$("main").empty();
 			$("main").append($("<div>").attr("id", "about_page"));
@@ -48,7 +48,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 						navs.topic_side_nav(subject);
 					}
 					$("main").empty();
-					$("#page_title").text(subject.clean_name);
+					$(".page_title").text(subject.clean_name);
 					$("title").text(subject.clean_name);
 					$("main").append($("<div>").attr("id", "subject_page"));
 					var subject_page = $("#subject_page").load("/content/" + subject.sname + "/" + subject.sname + ".html");
@@ -77,7 +77,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 					subject.topics.forEach(function(topic) {
 						if(topic.tname == toState.params.tname) {
 							$("main").empty();
-							$("#page_title").text(subject.clean_name + " - " + topic.clean_name);
+							$(".page_title").text(subject.clean_name + " - " + topic.clean_name);
 							$("title").text(subject.clean_name + " - " + topic.clean_name);
 							$("main").append($("<div>").attr("id", "topic_page"));
 							var topic_page = $("#topic_page").load("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html");
@@ -106,7 +106,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 							topic.sections.forEach(function(section) {
 								if(section.section_name == toState.params.section_name) {
 									$("main").empty();
-									$("#page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
+									$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 									$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 									$("main").append($("<div>").attr("id", "latex"));
 									$("#latex").load("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html");
@@ -146,7 +146,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 												$("#examples_li" + example.eid).removeClass("active");
 											}
 										});
-										$("#page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
+										$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 										$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 										$("main").append($("<div>").attr("id", "latex"));
 										$("#latex").load("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html");
@@ -158,7 +158,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 											}
 											if(example.ename == toState.params.current_page_name) {
 												$("#examples_li" + example.eid).addClass("active");
-												$("#page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
+												$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 												$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 												$("main").append($("<div>").attr("id", "latex"));
 												$("#latex").load("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html", function() {

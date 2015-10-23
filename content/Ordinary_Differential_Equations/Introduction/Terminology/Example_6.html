@@ -1,0 +1,65 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = \sqrt{1 - y^2}
+		}$
+	</div>
+	find the solution by determining the antiderivative and determine its interval of existance. 
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Essentially we need to use an integral to work backwards:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dx} &= \sqrt{1 - y^2} \\
+					\frac{dx}{dy} &= \frac{1}{\sqrt{1 - y^2}} \\
+					\int \Big[ \frac{dx}{dy} \Big] dy &= \int \Big[ \frac{1}{\sqrt{1 - y^2}} \Big] dy \\
+					\int dx &= \int \frac{dy}{\sqrt{1 - y^2}} \\
+					x &= \int \frac{\cos(\theta)}{\sqrt{1 - \sin^2(\theta)}} d\theta \\
+					x &= \int \frac{\cos(\theta)}{\sqrt{\cos^2(\theta)}} d\theta \\
+					x &= \int d\theta \\
+					x &= \theta + C \\
+					x &= \arcsin(y) + C \\
+					0 &= \arcsin(y) - x + C
+				}$
+			</div>
+			This provides us with an implicit solution, but the explicit solution can also be determined:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= \arcsin(y) - x + C \\
+					\arcsin(y) &= x - C \\
+					y &= \sin(x - C) \\
+					y &= \sin(x + K)
+				}$
+			</div>
+			where:
+			<div class="latex_equation">
+				$\eqalign{
+					K = -C
+				}$
+			</div>
+			gets rid of the unneccesary negative sign. To look at the interval of existance, it is important to first take into
+			account the domain of the differential equation. For the differential equation to exist, we must have it such that:
+			<div class="latex_equation">
+				$\eqalign{
+					1 - y^2 &\geq 0 \\
+					1 &\geq y^2 \\
+					1 &\geq \sqrt{y^2} \\
+					1 &\geq |y| \\
+					-1 \leq &y \leq 1
+				}$
+			</div>
+			which if you notice, also satisfies the implicit solution's domain since $\arcsin$ is only defined for $y \in [-1,1]$.
+		</div>
+	</div>
+</div>
