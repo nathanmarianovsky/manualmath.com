@@ -102,3 +102,11 @@
 	margin: 0 auto 0 auto;
 	width: 80%;
 }
+
+#extra_li {
+	background-color: white;
+}
+
+#extra_li a {
+	pointer-events: none;
+}

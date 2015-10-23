@@ -45,4 +45,9 @@
 	#about_page .box_text {
 		font-size: 15px;
 	}
+
+	#extra_li {
+		font-size: 12px;
+		line-height: 64px;
+	}
 }
