@@ -7,6 +7,10 @@
 	#second_top_nav {
 		display: none;
 	}
+	
+	#third_top_nav {
+		display: none;
+	}
 
 	#hamburger_button {
 		display: none;
@@ -33,17 +37,9 @@
 		display: inline-block;
 	}
 
-	#latex {
-		width: 800px;
-	}
-
 	#nav-mobile {
 		top: 64px;
 		width: 350px;
-	}
-
-	.box_message {
-		width: 800px;
 	}
 
 	#about_page .box_text {

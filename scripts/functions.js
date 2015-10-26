@@ -184,8 +184,13 @@ define(function() {
 	*/
 	exports.handle_side_nav = function() {
 		var width = 0;
-		if(window.innerWidth > 992) { width = 350; }
-		else { width = window.innerWidth * .75; }
+		if(window.innerWidth >= 992) { width = 350; }
+		else if(window.innerWidth < 992 && window.innerWidth >= 500) { 
+			width = window.innerWidth * .75;
+		}
+		else {
+			width = window.innerWidth;
+		}
 		$(".button-collapse").sideNav({
 			menuWidth: width,
 			closeOnClick: true

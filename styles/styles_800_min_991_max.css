@@ -8,6 +8,15 @@
 		padding-top: 60px;
 	}
 
+	nav {
+		height: 64px;
+		line-height: 64px;
+	}
+
+	#third_top_nav {
+		display: none;
+	}
+
 	#desktop_title {
 		display: none;
 	}
@@ -21,19 +30,22 @@
 		display: inline;
 	}
 
+	#hamburger_button i {
+		line-height: 64px;
+		height: 64px;
+	}
+
 	.nav-wrapper {
 		text-align: center;
 	}
 
 	#logo {
-		padding: 10px 0 0 0;
-		display: block;
-		margin: 0 auto;
-		left: 50px;
+		display: inline;
 		position: relative;
 	}
 
 	#logo img {
+		padding: 9px 0 0 0;
 		width: 210px;
 	}
 
@@ -42,20 +54,12 @@
 		display: inline;
 	}
 
-	#latex {
-		width: 600px;
-	}
-
 	#latex img {
 		width: 400px;
 	}
 
 	#nav-mobile {
 		top: 124px;
-	}
-
-	.box_message {
-		width: 600px;
 	}
 
 	#about_page .box_text {

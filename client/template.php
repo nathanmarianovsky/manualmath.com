@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="author" content="Nathan Marianovsky">
+		<meta name="application-name" content="man math">
+		<meta name="description" content="A Comprehensive Math Resource">
 		<title></title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -25,6 +27,11 @@
 					    </a>
 					    <a href="about.php" id="logo"><img src="/client/logo.png"></a>
 					    <a class="page_title" id="desktop_title"></a>
+				    </div>
+				</nav>
+				<nav class="top-nav" id="third_top_nav">
+				    <div class="nav-wrapper">
+		    			<a href="about.php" id="mobile_logo"><img src="/client/logo.png"></a>
 				    </div>
 				</nav>
 				<nav class="top-nav" id="second_top_nav">

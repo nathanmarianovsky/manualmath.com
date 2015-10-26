@@ -10,6 +10,11 @@
 
 	nav {
 		height: 64px;
+		line-height: 64px;
+	}
+
+	#third_top_nav {
+		display: none;
 	}
 
 	#desktop_title {
@@ -25,27 +30,28 @@
 		display: inline;
 	}
 
+	#hamburger_button i {
+		line-height: 64px;
+		height: 64px;
+	}
+
 	.nav-wrapper {
 		text-align: center;
 	}
 
     #logo {
-		padding: 15px 0 0 80px;
 		display: inline;
 		position: relative;
 	}
 
 	#logo img {
+		padding: 9px 0 0 0;
 		width: 210px;
 	}
 
-	#page_title {
-	  	padding: 15px 0 0 80px;
+	#mobile_title {
 		display: inline;
-	}
-
-	#latex {
-		width: 300px;
+		font-size: 15px;
 	}
 
 	#latex img {
@@ -53,11 +59,7 @@
 	}
 
 	#nav-mobile {
-		top: 64px;
-	}
-
-	.box_message {
-		width: 300px;
+		top: 124px;
 	}
 
 	#about_page .box_text {

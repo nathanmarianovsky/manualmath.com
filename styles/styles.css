@@ -8,6 +8,11 @@
 	box-shadow: none;
 }
 
+#third_top_nav {
+	top: 60px;
+	box-shadow: none;
+}
+
 .page_title {
 	font-size: 20px;
 	line-height: 64px;
@@ -20,12 +25,17 @@
 	height: 70px;
 }
 
+#mobile_title {
+	padding-left: 0;
+}
+
 .collapsible-header {
   	line-height: 64px;
 }
 
 .box_message {
 	margin: 20px auto 50px auto;
+	width: 80%;
 }
 
 .box_message h1 {
@@ -57,6 +67,7 @@
 	font-family: "Computer Modern Serif, sans-serif";
 	margin: 0 auto 50px auto;
 	font-size: 15px;
+	width: 80%;
 }
 
 .latex_section {
