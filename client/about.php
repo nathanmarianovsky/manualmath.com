@@ -13,14 +13,14 @@
 		The notes house a way to provide exactly what the section is about, sometimes with formal proofs and even explanations for the purpose of the mathematics
 		at hand, while the examples provide concrete cases for the user to see the theory at work. The progression in examples typically increases with difficulty,
 		thus providing a well balanced collection of different cases typically associated to the section. The goal in mind when using "man math" is to be able to
-		use the website and close it either having gained some new knowledge or having cleared up a misunderstanding beforehand.
+		use the website and close it either having gained some new knowledge or having cleared up a misunderstanding that was present beforehand.
 	</div>
 </div>
 
 <div class="box_message">
 	<h2>Using the Website</h2>
 	<div class="box_text">
-		For the desktop user the menu is visible at all times. On mobile to view the menu either click the hamburger button on the top left or slide out the
+		For the desktop user the menu is visible at all times on the left side of the page. To view the menu  on mobile either click the hamburger button on the top left or slide out the
 		menu from the left. When looking at the menu, there is one option:
 		<div class="list">
 		    <li>Choose a subject to go forward</li>
@@ -42,9 +42,8 @@
 	<div class="box_text">
 		The current version is v.0.0.2. Changes since the last release include:
 		<li>Mobile Support - It was a lot easier than I thought it would be</li>
-		<li>Notation Page - Houses all the notation</li>
 		<li>About Page - (No more home page) Finally I gave it some content</li>
-		<li>Subject Page - Gives a brief overview on a subject</li>
+		<li>Subject Page - Gives a brief overview on a subject and its notation</li>
 		<li>Topic Page - Gives a brief overview on a topic</li>
 		<li>Menu Selection Coloring</li>
 		<li>Logo and Favicon</li>
@@ -57,6 +56,6 @@
 	<div class="box_text">
 		Nathan Marianovsky is a graduate from the New York University Polytechnic School of Engineering with a Bachelors of Science in Mathematics where
 		he currently works as an adjunct instructor. Nathan has spent his years at Poly working as a math tutor during his earlier undergraduate years and
-		as the head math tutor during the later ones.	
+		as the head math tutor during the later ones. 
 	</div>
 </div>

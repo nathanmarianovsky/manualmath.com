@@ -26,14 +26,16 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$("title").text("About");
 			$("main").empty();
 			$("main").append($("<div>").attr("id", "about_page"));
-			$("#about_page").load("/client/about.php");
-			if($("#notation_li").hasClass("active")) {
-				$("#notation_li").removeClass("active");
-			}
+			var page = $("#about_page").load("/client/about.php");
+			$.get("/client/notation.php").done(function(notation) {
+				page.append(notation);
+			});
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			$("#about_li").addClass("active");
 			functions.handle_logo_link("about");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
 		router.addRouteListener("subject", function(toState, fromState) {
@@ -61,9 +63,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 				}
 			});
-			if($("#notation_li").hasClass("active")) {
-				$("#notation_li").removeClass("active");
-			}
 			$("#about_li").addClass("active");
 			functions.handle_logo_link("subject");
 			functions.handle_li_coloring();
