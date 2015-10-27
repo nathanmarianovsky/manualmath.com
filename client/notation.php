@@ -1,7 +1,7 @@
 <div class="box_message">
 	<h2>Notation</h2>
 	<div class="box_text">
-		Here you will find all the notation used throughout all subjects available:
+		Here you will find all the notation used throughout all subjects available on this website:
 		<div class="latex_equation">
 			<table>
 		    	<tr>
@@ -39,6 +39,10 @@
 				<tr>
 			    	<td>$\mathbb{R}$</td>
 				    <td>The Set of Real Numbers</td>
+				</tr>
+				<tr>
+			    	<td>$f:A \rightarrow B$</td>
+				    <td>The Mapping $f$ from $A$ to $B$</td>
 				</tr>
 			</table>
 		</div>

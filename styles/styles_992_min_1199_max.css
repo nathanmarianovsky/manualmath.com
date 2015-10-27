@@ -37,22 +37,10 @@
 		display: inline-block;
 	}
 
-	/*#latex {
-		width: 600px;
-	}*/
-
-	#latex img {
-		width: 400px;
-	}
-
 	#nav-mobile {
 		top: 64px;
 		width: 350px;
 	}
-
-	/*.box_message {
-		width: 600px;
-	}*/
 
 	#about_page .box_text {
 		font-size: 15px;

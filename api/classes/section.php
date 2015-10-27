@@ -15,8 +15,9 @@ class Section {
 		$this->tid = $_tid;
 		$this->section_name = $_section_name;
 		$this->order = $_order;
-		$tmp = str_replace("-", ": ", $_section_name);
+		$tmp = str_replace("COLON", ": ", $_section_name);
 		$tmp = str_replace("AND", "-", $tmp);
+		$tmp = str_replace("APOSTROPHE", "'", $tmp);
 		$this->clean_name = str_replace("_", " ", $tmp);
 		if(sizeof($_examples) > 0) {
 			for($i = 0; $i < sizeof($_examples); $i++) {

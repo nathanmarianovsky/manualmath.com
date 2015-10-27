@@ -37,12 +37,17 @@
 				$\eqalign{
 					\frac{d^{(n-1)}}{dx^{(n-1)}} &= y(x) \\
 					d^{(n-1)}w &= y(x) dx^{(n-1)} \\
-					\underbrace{\int \int \int \dots \int}_{n-1 \hspace{.1cm} \text{of them}} d^{(n-1)}w &= \underbrace{\int \int \int \dots \int}_{n-1 \hspace{.1cm} \text{of them}} \frac{1}{\mu(x)}(L(x) + C) dx^{(n-1)} \\
+					\underbrace{\int \int \int \dots \int}_{n-1 \hspace{.1cm} \text{of them}} d^{(n-1)}w &= \underbrace{\int \int \int \dots \int}_{n-1 \hspace{.1cm} \text{of them}} \frac{1}{\mu(x)}(L(x) + C_1) dx^{(n-1)} \\
 					w(x) &= T(x) + C_n
 				}$
 			</div>
-			where $T(x)$ denotes the $(n-1)$th antiderivative of $(\mu(x))^{-1}(L(x) + C_1)$ and $C_n$ is the
-			constant of integration coming out of the last integral.
+			where:
+			<div class="latex_equation">
+				$\eqalign{
+					T(x) = \underbrace{\int \int \int \dots \int}_{n-1 \hspace{.1cm} \text{of them}} \frac{1}{\mu(x)}(L(x) + C_1) dx^{(n-1)}
+				}$
+			</div>
+			and $C_n$ is the constant of integration coming out of the last integral.
 		</div>
 	</div>
 </div>

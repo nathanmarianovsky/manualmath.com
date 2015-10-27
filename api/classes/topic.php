@@ -10,12 +10,15 @@ class Topic {
 	private $sections;
 	private $order;
 
-	public function populate($_sid, $_tid, $_tname, $_sections, $_order) {
+	public function populate($_sid, $_tid, $_tname, $_sections, $_order = 0) {
 		$this->sid = $_sid;
 		$this->tid = $_tid;
 		$this->tname = $_tname;
 		$this->order = $_order;
-		$this->clean_name = str_replace("_", " ", $_tname);
+		$tmp = str_replace("COLON", ": ", $_tname);
+		$tmp = str_replace("AND", "-", $tmp);
+		$tmp = str_replace("APOSTROPHE", "'", $tmp);
+		$this->clean_name = str_replace("_", " ", $tmp);
 		$holder = NULL;
 		for($i = 0; $i < sizeof($_sections); $i++) {
 			$this->sections[] = $_sections[$i];

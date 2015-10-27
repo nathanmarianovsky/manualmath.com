@@ -54,8 +54,8 @@
 		font-size: 15px;
 	}
 
-	#latex img {
-		width: 150px;
+	.latex_equation {
+		font-size: 12px;
 	}
 
 	#nav-mobile {

@@ -115,6 +115,10 @@
 	text-align: center;
 }
 
+#latex img {
+	width: 80%;
+}
+
 .extra_li {
 	background-color: white;
 	pointer-events: none;

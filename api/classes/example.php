@@ -12,7 +12,9 @@ class Example {
 		$this->section_id = $_section_id;
 		$this->ename = $_ename;
 		$this->order = $_order;
-		$tmp = str_replace("-", ": ", $_ename);
+		$tmp = str_replace("COLON", ": ", $_ename);
+		$tmp = str_replace("AND", "-", $tmp);
+		$tmp = str_replace("APOSTROPHE", "'", $tmp);
 		$this->clean_name = str_replace("_", " ", $tmp);
 	}
 

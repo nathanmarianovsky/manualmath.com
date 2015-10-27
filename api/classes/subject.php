@@ -9,11 +9,14 @@ class Subject {
 	private $clean_name;
 	private $order;
 
-	public function populate($_sid, $_sname, $_topics, $_order) {
+	public function populate($_sid, $_sname, $_topics, $_order = 0) {
 		$this->sid = $_sid;
 		$this->sname = $_sname;
 		$this->order = $_order;
-		$this->clean_name = str_replace("_", " ", $_sname);
+		$tmp = str_replace("COLON", ": ", $_sname);
+		$tmp = str_replace("AND", "-", $tmp);
+		$tmp = str_replace("APOSTROPHE", "'", $tmp);
+		$this->clean_name = str_replace("_", " ", $tmp);
 		foreach($_topics as $tmp) {
 			$this->topics[] = $tmp;
 		}
