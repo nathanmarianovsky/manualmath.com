@@ -27,13 +27,32 @@
 					\int dx &= \int \frac{dy}{\sqrt{1 - y^2}} \\
 					x &= \int \frac{\cos(\theta)}{\sqrt{1 - \sin^2(\theta)}} d\theta \\
 					x &= \int \frac{\cos(\theta)}{\sqrt{\cos^2(\theta)}} d\theta \\
+					x &= \int \frac{\cos(\theta)}{|\cos(\theta)|} d\theta \\
 					x &= \int d\theta \\
 					x &= \theta + C \\
 					x &= \arcsin(y) + C \\
 					0 &= \arcsin(y) - x + C
 				}$
 			</div>
-			This provides us with an implicit solution, but the explicit solution can also be determined:
+			where the absolute value can ignored because:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= \arcsin(y) - x + C \\
+					\frac{d}{dx} (0) &= \frac{d}{dx} (\arcsin(y) - x + C) \\
+					0 &= \frac{y'}{\sqrt{1 - y^2}} - 1 \\
+					y' &= \sqrt{1 - y^2}
+				}$
+			</div>
+			On the other hand if we assumed that $cos(\theta) < 0$, then the solution would take on the form and give rise to the differential equation:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= -\arcsin(y) - x + C \\
+					\frac{d}{dx} (0) &= \frac{d}{dx} (-\arcsin(y) - x + C) \\
+					0 &= -\frac{y'}{\sqrt{1 - y^2}} - 1 \\
+					y' &= -\sqrt{1 - y^2}
+				}$
+			</div>
+			which is not the one we want. With this we have an implicit solution, but the explicit solution can also be determined:
 			<div class="latex_equation">
 				$\eqalign{
 					0 &= \arcsin(y) - x + C \\
@@ -48,8 +67,7 @@
 					K = -C
 				}$
 			</div>
-			gets rid of the unneccesary negative sign. To look at the interval of existance, it is important to first take into
-			account the domain of the differential equation. For the differential equation to exist, we must have it such that:
+			gets rid of the unneccesary negative sign. To look at the interval of existance, it is important to first take into account the domain of the differential equation. For the differential equation to exist, we must have it such that:
 			<div class="latex_equation">
 				$\eqalign{
 					1 - y^2 &\geq 0 \\

@@ -1,0 +1,56 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Consider the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = e^{-x^2}
+		}$
+	</div>
+	Provide reasoning why the solution to this differential equation must be an increasing function on the whole interval of existance. Next determine the differential equation's behavior at both ends of the $x$-axis. To finish up determine the concavity of the solution on the whole domain and use all of this information to draw out the graph of a single solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			To understand the decreasing/increasing behavior of any given function, the behavior is always determined by the derivative. Since the derivative is given and is known to be always positive for all real numbers, the solution must be an increasing function on the whole interval of existance. To determine the given differential equation's behavior at the endpoints:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow -\infty} \frac{dy}{dx} &= \lim_{x \rightarrow -\infty} e^{-x^2} = 0 \\
+					\lim_{x \rightarrow \infty} \frac{dy}{dx} &= \lim_{x \rightarrow \infty} e^{-x^2} = 0
+				}$
+			</div>
+			As for the concavity of any given function, the behavior is determined by the second derivative. So to find the second derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dx} &= e^{-x^2} \\
+					\frac{d^2y}{dx^2} &= \frac{d}{dx} e^{-x^2} \\
+					&= -2xe^{-x^2}
+				}$
+			</div>
+			Next we need the point(s) of inflection:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= \frac{d^2y}{dx^2} \\
+					0 &= -2xe^{-x^2} \\
+					x &= 0
+				}$
+			</div>
+			Now if $x < 0$ the second derivative is positive, otherwise for $x > 0$ the second derivative is negative. This implies that the solution is going to be concave up for $x \in (-\infty,0)$ and concave down for $x \in (0,\infty)$. With all of this information, the solution will take on the form:
+			<div class="latex_equation">
+				<img src="/content/Ordinary_Differential_Equations/Introduction/Terminology/Example_7.jpg">
+			</div>
+			Notice that the original function seems to always be positive which you can make sense of when considering that the derivative is always positive. A property of integrals tells us that given some function:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) \geq 0 \hspace{.5cm} \forall x \in [a,b] \implies \int_a^b f(x) dx \geq 0
+				}$
+			</div>
+		</div>
+	</div>
+</div>
