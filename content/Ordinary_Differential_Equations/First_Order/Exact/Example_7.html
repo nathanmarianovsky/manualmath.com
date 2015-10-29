@@ -1,0 +1,71 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			(2y^2 + 3x) dx + 2xy dy = 0
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			If we are to guess that this equation is exact, first identify the components as:
+			<div class="latex_equation">
+				$\eqalign{
+					M(x,y) &= 2y^2 + 3x \\
+					N(x,y) &= 2xy
+				}$
+			</div>
+			Now to check if these satisfy the condition:
+			<div class="latex_equation">
+				$\eqalign{
+					M_y &= N_x \\
+					\frac{\partial}{\partial y} (2y^2 + 3x) &= (\frac{\partial}{\partial x}) (2xy) \\
+					4y &\neq 2y
+				}$
+			</div>
+			Unfortunately the condition does not hold, but perhaps an integrating factor can fix this:
+			<div class="latex_equation">
+				$\eqalign{
+					\mu(x) &= e^{\int \frac{M_y - N_x}{N} dx} \\
+					&= e^{\int \frac{4y - 2y}{2xy} dx} \\
+					&= e^{\int \frac{dx}{x}} \\
+					&= e^{\ln|x|} \\
+					&= |x| \\
+					&= x
+				}$
+			</div>
+			where the absolute value can be dropped since multiplying by a constant will not change the outcome. Now:
+			<div class="latex_equation">
+				$\eqalign{
+					M_y &= N_x \\
+					\frac{\partial}{\partial y} (2y^2x + 3x^2) &= (\frac{\partial}{\partial x}) (2x^2y) \\
+					4yx &= 4xy
+				}$
+			</div>
+			With the condition checked, to determine the solution:
+			<div class="latex_equation">
+				$\eqalign{
+					\int M(x,y) dx &= \int (2y^2x + 3x^2) dx \\
+					&= y^2x^2 + x^3 \\
+					\int N(x,y) dy &= \int (2x^2y) dy \\
+					&= x^2y^2
+				}$
+			</div>
+			and with this the final solution is written down as:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= x^2y^2 + x^3
+				}$
+			</div>
+		</div>
+	</div>
+</div>

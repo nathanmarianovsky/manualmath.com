@@ -1,0 +1,54 @@
+<div class="latex_section">
+	Slope Fields
+</div>
+<div class="latex_body">
+	In order to gain a better understanding of differential equations, slope fields provide a geometrical approach to a first order differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y' = f(x,y)
+		}$
+	</div>
+	To view the slope field, take $\mathbb{R}^2$ and for every point evaluate the derivative. Then at each point draw a small vector and use the magnitude of the derivative to correspond to the magnitude of the vector. If the value is a large positive number, the vector will point more upwards. For values near zero the vector will point horizontally, and for very negative values it will point downwards. To make the patten clear, all of the vectors point in the "right" direction, thus all arrows will be bound between the angles $\Big[ -\frac{\pi}{2}, \frac{\pi}{2} \Big]$. For example consider the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y' = x
+		}$
+	</div>
+	which provides the slope field:
+	<div class="latex_equation">
+		<img src="/content/Ordinary_Differential_Equations/Introduction/Slope_Fields_and_Solution_Curves/Slope_Field.jpg">
+	</div>
+	Notice how for each value of $x$ the vectors are consistent vertically. This happens because the derivative is independent of $y$, meaning that you can take a single horizontal section of the slope field and copy it above and below to generate the rest since they are identical. Unfortunately, not all cases are this easy if we consider:
+	<div class="latex_equation">
+		$\eqalign{
+			y' = 2x - y
+		}$
+	</div>
+	which provides the slope field:
+	<div class="latex_equation">
+		<img src="/content/Ordinary_Differential_Equations/Introduction/Slope_Fields_and_Solution_Curves/Slope_Field_Example.jpg">
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution Curves
+</div>
+<div class="latex_body">
+	With the slope field in mind, consider that the vectors drawn typically follow some sort of pattern. This patten actually helps to identify the family of solutions. Using the previous example:
+	<div class="latex_equation">
+		$\eqalign{
+			y' = 2x - y
+		}$
+	</div>
+	provides the solution curves:
+	<div class="latex_equation">
+		<img src="/content/Ordinary_Differential_Equations/Introduction/Slope_Fields_and_Solution_Curves/Solution_Curve_Example.jpg">
+	</div>
+	The solution to this is known to be:
+	<div class="latex_equation">
+		$\eqalign{
+			y = 2x - 2 + Ce^{-x}
+		}$
+	</div>
+	and for different values of $C$ the function may behave differently. Observing closely confirms that when $C = 0$ the solution is a straight line, and for all other values the solution will behave like a line at very large values of $x$ since the exponential term becomes negligible. 
+</div>

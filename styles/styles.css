@@ -117,6 +117,7 @@
 
 #latex img {
 	width: 80%;
+	max-height: 650px;
 }
 
 .extra_li {

@@ -1,0 +1,37 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = xe^x
+		}$
+	</div>
+	use the First Fundamental Theorem of Calculus to find the general solution and sketch some of the solution curves.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			In order to find the solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) &= \int \frac{dy}{dx} dx \\
+					&= \int xe^x dx \\
+					&= xe^x - \int e^x dx \\
+					&= xe^x - e^x + C \\
+					&= (x - 1)e^x + C
+				}$
+			</div>
+			With this the solution curves take on the form:
+			<div class="latex_equation">
+				<img src="/content/Ordinary_Differential_Equations/Introduction/Slope_Fields_and_Solution_Curves/Example_10.jpg">
+			</div>
+		</div>
+	</div>
+</div>

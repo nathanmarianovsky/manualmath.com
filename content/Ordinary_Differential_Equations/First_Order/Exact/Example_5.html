@@ -1,0 +1,67 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			(y^2\cos(x) - 3x^2y - 2x) dx + (2y\sin(x) - x^3 + \ln(y)) dy = 0
+		}$
+	</div>
+	where $y(0) = e$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			If we are to guess that this equation is exact, first identify the components as:
+			<div class="latex_equation">
+				$\eqalign{
+					M(x,y) &= y^2\cos(x) - 3x^2y - 2x \\
+					N(x,y) &= 2y\sin(x) - x^3 + \ln(y)
+				}$
+			</div>
+			Now to check if these satisfy the condition:
+			<div class="latex_equation">
+				$\eqalign{
+					M_y &= N_x \\
+					\frac{\partial}{\partial y} (y^2\cos(x) - 3x^2y - 2x) &= \frac{\partial}{\partial x} (2y\sin(x) - x^3 + \ln(y)) \\
+					2y\cos(x) - 3x^2 &= 2y\cos(x) - 3x^2
+				}$
+			</div>
+			With the condition checked, to determine the solution:
+			<div class="latex_equation">
+				$\eqalign{
+					\int M(x,y) dx &= \int (y^2\cos(x) - 3x^2y - 2x) dx \\
+					&= y^2\sin(x) - x^3y - x^2 \\
+					\int N(x,y) dy &= \int (2y\sin(x) - x^3 + \ln(y)) dy \\
+					&= y^2\sin(x) - x^3y + y\ln(y) - y
+				}$
+			</div>
+			and with this the final solution is written down as:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= y^2\sin(x) - x^3y - x^2 + y\ln(y) - y
+				}$
+			</div>
+			Now to satisfy the initial condition the solution must lie along the curve that passes through the point $(0,e)$:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= y^2\sin(x) - x^3y - x^2 + y\ln(y) - y \\
+					&= (e)^2\sin(0) - (0)^3(e) - (0)^2 + (e)\ln(e) - e \\
+					&= 0
+				}$
+			</div>
+			and so the final solution is written as:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= y^2\sin(x) - x^3y - x^2 + y\ln(y) - y
+				}$
+			</div>
+		</div>
+	</div>
+</div>

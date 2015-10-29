@@ -1,0 +1,76 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			(y^2 + xy^3) dx + (5y^2 - xy + y^3\sin(y)) dy = 0
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			If we are to guess that this equation is exact, first identify the components as:
+			<div class="latex_equation">
+				$\eqalign{
+					M(x,y) &= y^2 + xy^3 \\
+					N(x,y) &= 5y^2 - xy + y^3\sin(y)
+				}$
+			</div>
+			Now to check if these satisfy the condition:
+			<div class="latex_equation">
+				$\eqalign{
+					M_y &= N_x \\
+					\frac{\partial}{\partial y} (y^2 + xy^3) &= (\frac{\partial}{\partial x}) (5y^2 - xy + y^3\sin(y)) \\
+					2y + 3xy^2 &\neq -y + 3y^2\sin(y) + y^3\cos(y)
+				}$
+			</div>
+			Unfortunately the condition does not hold, but perhaps an integrating factor can fix this:
+			<div class="latex_equation">
+				$\eqalign{
+					\mu(x) &= e^{\int \frac{N_x - M_y}{M} dy} \\
+					&= e^{\int \frac{(-y + 3y^2\sin(y) + y^3\cos(y)) - (2y + 3xy^2)}{y^2 + xy^3} dy} \\
+					&= e^{\int \frac{-3y + 3y^2\sin(y) + y^3\cos(y) - 3xy^2}{y^2(1 + xy)} dy} \\
+					&= e^{\int \frac{-3y + 3\sin(y) + y\cos(y) - 3x}{1 + xy} dy}
+				}$
+			</div>
+			No matter the simplification, there is no way to cancel out the $y$'s, so trying the other integrating factor gives:
+			<div class="latex_equation">
+				$\eqalign{
+					\mu(y) &= e^{\int \frac{M_y - N_x}{N} dx} \\
+					&= e^{\int \frac{(2y + 3xy^2) - (-y + 3y^2\sin(y) + y^3\cos(y))}{5y^2 - xy + y^3\sin(y)} dx} \\
+					&= e^{\int \frac{3y + 3xy^2 - 3y^2\sin(y) - y^3\cos(y)}{5y^2 - xy + y^3\sin(y)} dx}
+				}$
+			</div>
+			<div class="latex_equation">
+				$\eqalign{
+					M_y &= N_x \\
+					\frac{\partial}{\partial y} (2y^2x + 3x^2) &= (\frac{\partial}{\partial x}) (2x^2y) \\
+					4yx &= 4xy
+				}$
+			</div>
+			With the condition checked, to determine the solution:
+			<div class="latex_equation">
+				$\eqalign{
+					\int M(x,y) dx &= \int (2y^2x + 3x^2) dx \\
+					&= y^2x^2 + x^3 \\
+					\int N(x,y) dy &= \int (2x^2y) dy \\
+					&= x^2y^2
+				}$
+			</div>
+			and with this the final solution is written down as:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= x^2y^2 + x^3
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,76 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{3y^2 - t^2}{y^5} \frac{dy}{dt} + \frac{t}{2y^4} = 0
+		}$
+	</div>
+	where $y(1) = 1$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			If we are to guess that this equation is exact, first reorganize:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{3y^2 - t^2}{y^5} \frac{dy}{dt} + \frac{t}{2y^4} &= 0 \\
+					\frac{t}{2y^4} dt + \frac{3y^2 - t^2}{y^5} dy &= 0
+				}$
+			</div>
+			and identify the components as:
+			<div class="latex_equation">
+				$\eqalign{
+					M(t,y) &= \frac{t}{2y^4} \\
+					N(t,y) &= \frac{3y^2 - t^2}{y^5}
+				}$
+			</div>
+			Now to check if these satisfy the condition:
+			<div class="latex_equation">
+				$\eqalign{
+					M_y &= N_t \\
+					\frac{\partial}{\partial y} \frac{t}{2y^4} &= \frac{\partial}{\partial t} \frac{3y^2 - t^2}{y^5} \\
+					-\frac{2t}{y^5} &= -\frac{2t}{y^5}
+				}$
+			</div>
+			With the condition checked, to determine the solution:
+			<div class="latex_equation">
+				$\eqalign{
+					\int M(t,y) dt &= \int \frac{t}{2y^4} dt \\
+					&= \frac{t^2}{4y^4} \\
+					\int N(t,y) dy &= \int \frac{3y^2 - t^2}{y^5} dy \\
+					&= \int (3y^{-3} - t^2y^{-5}) dy \\
+					&= -\frac{3}{2}y^{-2} + \frac{1}{4}t^2y^{-4}
+				}$
+			</div>
+			and with this the final solution is written down as:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= \frac{t^2}{4y^4} - \frac{3}{2y^2}
+				}$
+			</div>
+			Now to satisfy the initial condition the solution must lie along the curve that passes through the point $(1,1)$:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= \frac{t^2}{4y^4} - \frac{3}{2y^2} \\
+					&= \frac{(1)^2}{4(1)^4} - \frac{3}{2(1)^2} \\
+					&= \frac{1}{4} - \frac{3}{2} \\
+					&= -\frac{5}{4}
+				}$
+			</div>
+			and so the final solution is written as:
+			<div class="latex_equation">
+				$\eqalign{
+					-\frac{5}{4} &= \frac{t^2}{4y^4} - \frac{3}{2y^2}
+				}$
+			</div>
+		</div>
+	</div>
+</div>
