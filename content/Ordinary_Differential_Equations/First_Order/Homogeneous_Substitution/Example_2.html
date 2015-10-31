@@ -1,0 +1,67 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			x\frac{dy}{dx} = y + \sqrt{x^2 - y^2}
+		}$
+	</div>
+	where $x > 0$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First rewriting this gives:
+			<div class="latex_equation">
+				$\eqalign{
+					x\frac{dy}{dx} &= y + \sqrt{x^2 - y^2} \\
+					\frac{dy}{dx} &= \frac{y + \sqrt{x^2 - y^2}}{x}
+				}$
+			</div>
+			Now to see if the homogeneous substitution can be used, first lets check that the function is homogeneous with degree zero:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x,y) &= \frac{y + \sqrt{x^2 - y^2}}{x} \\
+					f(tx,ty) &= \frac{(ty) + \sqrt{(tx)^2 - (ty)^2}}{(tx)} \\
+					&= \frac{ty + t\sqrt{x^2 - y^2}}{tx} \\
+					&= \frac{y + \sqrt{x^2 - y^2}}{x} \\
+					&= f(x,y)
+				}$
+			</div>
+			With the condition checked, using the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= ux \\
+					y' &= u'x + u
+				}$
+			</div>
+			and plugging in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= \frac{y + \sqrt{x^2 - y^2}}{x} \\
+					u'x + u &= \frac{ux + \sqrt{x^2 - u^2x^2}}{x} \\
+					u'x + u &= u + \sqrt{1 - u^2} \\
+					u'x &= \sqrt{1 - u^2} \\
+					\frac{du}{dx} x &= \sqrt{1 - u^2} \\
+					\frac{du}{\sqrt{1 - u^2}} &= \frac{dx}{x} \\
+					\int \frac{du}{\sqrt{1 - u^2}} &= \int \frac{dx}{x} \\
+					\arcsin(u) &= \ln|x| + C \\
+					\arcsin(u) - \ln|x| &= C
+				}$
+			</div>
+			To finish off consider that the original equation started with $x$'s and $y$'s, but so far we have a solution in terms of $x$'s and $u$'s. So replace all of the $u$'s to get:
+			<div class="latex_equation">
+				$\eqalign{
+					\arcsin\Big( \frac{y}{x} \Big) - \ln|x| &= C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

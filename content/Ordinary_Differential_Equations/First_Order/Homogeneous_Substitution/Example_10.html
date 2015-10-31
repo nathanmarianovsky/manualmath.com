@@ -1,0 +1,96 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			(a_0x + a_1y + a_2) dx + (b_0x + b_1y + b_2) dy = 0
+		}$
+	</div>
+	and the transformation:
+	<div class="latex_equation">
+		$\eqalign{
+			t &= x + \alpha \\
+			z &= y + \beta
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			\alpha, \beta \in \mathbb{R}
+		}$
+	</div>
+	determine $\alpha$ and $\beta$ in terms of the $a$'s and $b$'s s.t. the differential equation can be solved using a homogeneous substitution. You may assume that $a_0b_1 - a_1b_0 \neq 0$ in order to write down a unique solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First reorganizing:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dx} = -\frac{a_0x + a_1y + a_2}{b_0x + b_1y + b_2}
+				}$
+			</div>
+			Now using the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					t &= x + \alpha \implies dt = dx \\
+					z &= y + \beta \implies dz = dy
+				}$
+			</div>
+			and with this the differential equation can be rewritten as:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dx} &= -\frac{a_0x + a_1y + a_2}{b_0x + b_1y + b_2} \\
+					\frac{dz}{dt} &= -\frac{a_0(t - \alpha) + a_1(z - \beta) + a_2}{b_0(t - \alpha) + b_1(z - \beta) + b_2} \\
+					&= -\frac{a_0t + a_1z + (a_2 - a_0\alpha - a_1\beta)}{b_0t + b_1z + (b_2 - b_0\alpha - b_1\beta)}
+				}$
+			</div>
+			Now for this function to be homogeneous of degree zero we must have the constants on both the numerator and denominator disappear:
+			<div class="latex_equation">
+				$\eqalign{
+					a_2 - a_0\alpha - a_1\beta &= 0 \\
+					b_2 - b_0\alpha - b_1\beta &= 0
+				}$
+			</div>
+			To solve this system of equations for $\alpha$ and $\beta$ first rewrite in matrix form:
+			<div class="latex_equation">
+				$\eqalign{
+					\begin{pmatrix}
+						a_0 & a_1 \\
+						b_0 & b_1
+					\end{pmatrix} \begin{pmatrix}
+						\alpha \\
+						\beta
+					\end{pmatrix} = \begin{pmatrix}
+						a_2 \\ b_2
+					\end{pmatrix}
+				}$
+			</div>
+			and use the inverse to solve the system:
+			<div class="latex_equation">
+				$\eqalign{
+					\begin{pmatrix}
+						\alpha \\
+						\beta
+					\end{pmatrix} &= \frac{1}{a_0b_1 - a_1b_0} \begin{pmatrix}
+						b_1 & -a_1 \\
+						-b_0 & a_0
+					\end{pmatrix} \begin{pmatrix}
+						a_2 \\ b_2
+					\end{pmatrix} \\
+					&= \begin{pmatrix}
+						\frac{b_1b_2 - a_1a_2}{a_0b_1 - a_1b_0} \\
+						\frac{a_0a_2 - b_0b_2}{a_0b_1 - a_1b_0}
+					\end{pmatrix}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

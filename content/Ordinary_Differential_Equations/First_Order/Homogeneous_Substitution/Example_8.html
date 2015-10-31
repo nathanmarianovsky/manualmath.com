@@ -1,0 +1,89 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			(x + ye^{\frac{y}{x}}) dx - xe^{\frac{y}{x}} dy = 0
+		}$
+	</div>
+	where $y(1) = 0$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First rewriting this gives:
+			<div class="latex_equation">
+				$\eqalign{
+					(x + ye^{\frac{y}{x}}) dx - xe^{\frac{y}{x}} dy &= 0 \\
+					xe^{\frac{y}{x}} dy &= (x + ye^{\frac{y}{x}}) dx \\
+					\frac{dy}{dx} &= e^{-\frac{y}{x}} + \frac{y}{x}
+				}$
+			</div>
+			Now to see if the homogeneous substitution can be used, first lets check that the function is homogeneous with degree zero:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x,y) &= e^{-\frac{y}{x}} + \frac{y}{x} \\
+					f(tx,ty) &= e^{-\frac{(ty)}{(tx)}} + \frac{(ty)}{(tx)} \\
+					&= e^{-\frac{y}{x}} + \frac{y}{x} \\
+					&= f(x,y)
+				}$
+			</div>
+			With the condition checked, using the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= ux \\
+					y' &= u'x + u
+				}$
+			</div>
+			and plugging in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= e^{-\frac{y}{x}} + \frac{y}{x} \\
+					u'x + u &= e^{-\frac{ux}{x}} + \frac{ux}{x} \\
+					u'x + u &= e^{-u} + u \\
+					\frac{du}{dx}x &= e^{-u} \\
+					e^u du &= \frac{dx}{x} \\
+					\int e^u du &= \int \frac{dx}{x} \\
+					e^u &= \ln|x| + C \\
+					e^u - \ln|x| &= C
+				}$
+			</div>
+			To finish off consider that the original equation started with $x$'s and $y$'s, but so far we have a solution in terms of $x$'s and $u$'s. So replace all of the $u$'s to get:
+			<div class="latex_equation">
+				$\eqalign{
+					e^{\frac{y}{x}} - \ln|x| = C
+				}$
+			</div>
+			Now using the initial condition:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= e^{\frac{y}{x}} - \ln|x| \\
+					&= e^{\frac{0}{1}} - \ln(1) \\
+					&= 1
+				}$
+			</div>
+			the final solution is written down as:
+			<div class="latex_equation">
+				$\eqalign{
+					e^{\frac{y}{x}} - \ln|x| = 1
+				}$
+			</div>
+			In this scenario it is even possible to get the solution in explicit form:
+			<div class="latex_equation">
+				$\eqalign{
+					e^{\frac{y}{x}} - \ln|x| &= 1 \\
+					e^{\frac{y}{x}} &= \ln|x| + 1 \\
+					\frac{y}{x} &= \ln(\ln|x| + 1) \\
+					y &= x\ln(\ln|x| + 1)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -2,13 +2,22 @@
 	Problem
 </div>
 <div class="latex_body">
-	Determine all solutions to:
+	Determine a continuous solution to:
 	<div class="latex_equation">
 		$\eqalign{
-			w^{(n)} + p(x)w^{(n-1)} = q(x)
+			y' + P(x)y = 4x
 		}$
 	</div>
-	where $(n)$ denotes the $n$th derivative.
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			P(x) = \begin{cases}
+				2 & 0 \leq x \leq 1 \\
+				-\frac{2}{x} & x > 1
+			\end{cases}
+		}$
+	</div>
+	and $y(0) = 3$.
 </div>
 
 <div class="latex_section">
@@ -18,36 +27,95 @@
 	<input type='button' value='Show Solution' class="show_solution">
 	<div style='display: none;' class="hidden_div">
 		<div class="latex_body">
-			First make the substitution:
+			To approach this, just consider the different cases separately. First for $x \in [0,1]$:
 			<div class="latex_equation">
 				$\eqalign{
-					y &= w^{(n-1)} \\
-					y' &= w^{(n)}
+					y' + 2y = 4x
 				}$
 			</div>
-			and plug in to get:
+			has the integrating factor:
 			<div class="latex_equation">
 				$\eqalign{
-					y' + p(x)y &= q(x) \\
-					y &= \frac{1}{\mu(x)}(L(x) + C_1)
+					\mu &= e^{\int P(x) dx} \\
+					&= e^{\int 2 dx} \\
+					&= e^{2x}
 				}$
 			</div>
-			the general solution obtained in the notes. Now to solve for $w$:
+			which leads to the solution:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d^{(n-1)}}{dx^{(n-1)}} &= y(x) \\
-					d^{(n-1)}w &= y(x) dx^{(n-1)} \\
-					\underbrace{\int \int \int \dots \int}_{n-1 \hspace{.1cm} \text{of them}} d^{(n-1)}w &= \underbrace{\int \int \int \dots \int}_{n-1 \hspace{.1cm} \text{of them}} \frac{1}{\mu(x)}(L(x) + C_1) dx^{(n-1)} \\
-					w(x) &= T(x) + C_n
+					y' + 2y &= 4x \\
+					e^{2x}y' + 2e^{2x}y &= 4xe^{2x} \\
+					\frac{d}{dx} (e^{2x}y) &= 4xe^{2x} \\
+					d(e^{2x}y) &= 4xe^{2x} dx \\
+					\int d(e^{2x}y) &= \int 4xe^{2x} dx \\
+					e^{2x}y &= e^{2x}(2x - 1) + C_1 \\
+					y &= 2x - 1 + C_1e^{-2x}
 				}$
 			</div>
-			where:
+			Now for $x \in (1, \infty)$:
 			<div class="latex_equation">
 				$\eqalign{
-					T(x) = \underbrace{\int \int \int \dots \int}_{n-1 \hspace{.1cm} \text{of them}} \frac{1}{\mu(x)}(L(x) + C_1) dx^{(n-1)}
+					y' - \frac{2}{x}y = 4x
 				}$
 			</div>
-			and $C_n$ is the constant of integration coming out of the last integral.
+			has the integrating factor:
+			<div class="latex_equation">
+				$\eqalign{
+					\mu &= e^{\int P(x) dx} \\
+					&= e^{\int -\frac{2}{x} dx} \\
+					&= e^{-2\ln|x|} \\
+					&= e^{\ln(|x|^{-2})} \\
+					&= |x|^{-2} \\
+					&= x^{-2}
+				}$
+			</div>
+			which leads to the solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y' - \frac{2}{x}y &= 4x \\
+					x^{-2}y' - 2x^{-3}y &= 4x^{-1} \\
+					\frac{d}{dx} (x^{-2}y) &= 4x^{-1} \\
+					d(x^{-2}y) &= 4x^{-1} dx \\
+					\int d(x^{-2}y) &= \int 4x^{-1} dx \\
+					x^{-2}y &= 4\ln|x| + C_2 \\
+					y &= 4x^2\ln|x| + C_2x^2
+				}$
+			</div>
+			Putting these two solutions together gives:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = \begin{cases}
+						2x - 1 + C_1e^{-2x} & 0 \leq x \leq 1 \\
+						4x^2\ln|x| + C_2x^2 & x > 1
+					\end{cases}
+				}$
+			</div>
+			Now using the initial condition:
+			<div class="latex_equation">
+				$\eqalign{
+					3 &= y(0) \\
+					3 &= 2(0) - 1 + C_1e^{-2(0)} \\
+					3 &= -1 + C_1 \\
+					C_1 &= 4
+				}$
+			</div>
+			To determine the other constant use the fact that the solution has to be continuous which means that at $x = 1$ the two pieces must evaluate to the same value:
+			<div class="latex_equation">
+				$\eqalign{
+					2(1) - 1 + 4e^{-2(1)} &= 4(1)^2\ln(1) + C_2(1)^2 \\
+					1 + 4e^{-2} &= C_2
+				}$
+			</div>
+			Putting all of this together gives the final solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = \begin{cases}
+						2x - 1 + 4e^{-2x} & 0 \leq x \leq 1 \\
+						4x^2\ln|x| + (1 + 4e^{-2})x^2 & x > 1
+					\end{cases}
+				}$
+			</div>
 		</div>
 	</div>
 </div>

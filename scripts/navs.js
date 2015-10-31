@@ -34,7 +34,7 @@ define(function() {
 	*/
 	exports.extra = function() {
 		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
-		if(window.innerWidth < 800) {
+		if(window.innerWidth < 992) {
 			$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
 		}
 		if(window.innerWidth < 400) {

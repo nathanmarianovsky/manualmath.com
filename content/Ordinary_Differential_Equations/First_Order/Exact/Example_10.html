@@ -1,0 +1,67 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Prove that all first order separable differential equations are exact.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Any separable differential equation can be written in the format:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dx} = j(x)k(y)
+				}$
+			</div>
+			Now reorganizing:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dx} &= j(x)k(y) \\
+					\frac{1}{k(y)} dy &= j(x) dx \\
+					-j(x) dx + \frac{1}{k(y)} dy &= 0
+				}$
+			</div>
+			and identifying the components as:
+			<div class="latex_equation">
+				$\eqalign{
+					M(x,y) &= -j(x) \\
+					N(x,y) &= \frac{1}{k(y)}
+				}$
+			</div>
+			checks the condition:
+			<div class="latex_equation">
+				$\eqalign{
+					M_y &= N_x \\
+					\frac{\partial}{\partial y} -j(x) &= \frac{\partial}{\partial x} \frac{1}{k(y)} \\
+					0 &= 0
+				}$
+			</div>
+			With the condition checked, to determine the solution:
+			<div class="latex_equation">
+				$\eqalign{
+					\int M(x,y) dx &= \int -j(x) dx \\
+					&= -J(x) \\
+					\int N(x,y) dy &= \int \frac{1}{k(y)} dx \\
+					&= K(y)
+				}$
+			</div>
+			Putting all of this together gives the final solution:
+			<div class="latex_equation">
+				$\eqalign{
+					C = K(y) - J(x)
+				}$
+			</div>
+			where:
+			<div class="latex_equation">
+				$\eqalign{
+					K(y) = \int \frac{dy}{k(y)} \hspace{.5cm} \text{and} \hspace{.5cm} J(x) = \int j(x) dx
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,74 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			(x - y) dx + x dy = 0
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First rewriting this gives:
+			<div class="latex_equation">
+				$\eqalign{
+					(x - y) dx + x dy &= 0 \\
+					x dy &= (y - x) dx \\
+					\frac{dy}{dx} &= \frac{y - x}{x}
+				}$
+			</div>
+			Now to see if the homogeneous substitution can be used, first lets check that the function is homogeneous with degree zero:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x,y) &= \frac{y - x}{x} \\
+					f(tx,ty) &= \frac{(ty) - (tx)}{(tx)} \\
+					&= \frac{y - x}{x} \\
+					&= f(x,y)
+				}$
+			</div>
+			With the condition checked, using the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= ux \\
+					y' &= u'x + u
+				}$
+			</div>
+			and plugging in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= \frac{y - x}{x} \\
+					u'x + u &= \frac{ux - x}{x} \\
+					u'x + u &= u - 1 \\
+					u'x &= -1 \\
+					\frac{du}{dx} x &= -1 \\
+					du &= -\frac{dx}{x} \\
+					\int du &= \int -\frac{dx}{x} \\
+					u &= -\ln|x| + C \\
+					u + \ln|x| &= C
+				}$
+			</div>
+			To finish off consider that the original equation started with $x$'s and $y$'s, but so far we have a solution in terms of $x$'s and $u$'s. So replace all of the $u$'s to get:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{y}{x} + \ln|x| = C
+				}$
+			</div>
+			Typically solutions are left in implicit form, but this solution can actually be written in explicit form:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{y}{x} + \ln|x| &= C \\
+					\frac{y}{x} &= -\ln|x| + C \\
+					y &= -x\ln|x| + Cx
+				}$
+			</div>
+		</div>
+	</div>
+</div>

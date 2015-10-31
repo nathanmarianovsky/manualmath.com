@@ -1,0 +1,80 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			(x^2 + 2y^2)\frac{dy}{dx} = xy
+		}$
+	</div>
+	where $y(-1) = 1$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First rewriting this gives:
+			<div class="latex_equation">
+				$\eqalign{
+					(x^2 + 2y^2)\frac{dy}{dx} &= xy \\
+					\frac{dy}{dx} &= \frac{xy}{x^2 + 2y^2}
+				}$
+			</div>
+			Now to see if the homogeneous substitution can be used, first lets check that the function is homogeneous with degree zero:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x,y) &= \frac{xy}{x^2 + 2y^2} \\
+					f(tx,ty) &= \frac{(tx)(ty)}{(tx)^2 + 2(ty)^2} \\
+					&= \frac{xy}{x^2 + 2y^2} \\
+					&= f(x,y)
+				}$
+			</div>
+			With the condition checked, using the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= ux \\
+					y' &= u'x + u
+				}$
+			</div>
+			and plugging in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= \frac{xy}{x^2 + 2y^2} \\
+					u'x + u &= \frac{x(ux)}{x^2 + 2(ux)^2} \\
+					u'x + u &= \frac{u}{1 + 2u^2} \\
+					\frac{du}{dx}x &= \frac{u}{1 + 2u^2} - \frac{u(1 + 2u^2)}{1 + 2u^2} \\
+					\frac{du}{dx}x &= -\frac{2u^3}{1 + 2u^2} \\
+					\frac{1 + 2u^2}{2u^3} du &= -\frac{dx}{x} \\
+					\int \frac{1 + 2u^2}{2u^3} du &= \int -\frac{dx}{x} \\
+					-\frac{1}{4}u^{-2} + \ln|u| &= -\ln|x| + C \\
+					-\frac{1}{4u^2} + \ln|ux| &= C
+				}$
+			</div>
+			To finish off consider that the original equation started with $x$'s and $y$'s, but so far we have a solution in terms of $x$'s and $u$'s. So replace all of the $u$'s to get:
+			<div class="latex_equation">
+				$\eqalign{
+					-\frac{x^2}{4y^2} + \ln|y| = C
+				}$
+			</div>
+			Now using the initial condition:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= -\frac{x^2}{4y^2} + \ln|y| \\
+					&= -\frac{(-1)^2}{4(1)^2} + \ln|(1)| \\
+					&= -\frac{1}{4}
+				}$
+			</div>
+			the final solution is written down as:
+			<div class="latex_equation">
+				$\eqalign{
+					-\frac{x^2}{4y^2} + \ln|y| = -\frac{1}{4}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

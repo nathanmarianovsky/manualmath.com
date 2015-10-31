@@ -1,0 +1,59 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = \frac{x + 3y}{3x + y}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			To see if the homogeneous substitution can be used, first lets check that the function is homogeneous with degree zero:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x,y) &= \frac{x + 3y}{3x + y} \\
+					f(tx,ty) &= \frac{(tx) + 3(ty)}{3(tx) + (ty)} \\
+					&= \frac{x + 3y}{3x + y} \\
+					&= f(x,y)
+				}$
+			</div>
+			With the condition checked, using the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= ux \\
+					y' &= u'x + u
+				}$
+			</div>
+			and plugging in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= \frac{x + 3y}{3x + y} \\
+					u'x + u &= \frac{x + 3(ux)}{3x + (ux)} \\
+					u'x + u &= \frac{1 + 3u}{3 + u} \\
+					\frac{du}{dx}x &= \frac{1 + 3u}{3 + u} - \frac{u(3 + u)}{3 + u} \\
+					\frac{du}{dx}x &= \frac{1 - u^2}{3 + u} \\
+					\frac{3 + u}{1 - u^2} du &= \frac{dx}{x} \\
+					\int \frac{3 + u}{1 - u^2} du &= \int \frac{dx}{x} \\
+					\ln|1 + u| - 2\ln|1 - u| &= \ln|x| + C \\
+					\ln\Bigg| \frac{1 + u}{(1 - u)^2} \Bigg| - \ln|x| &= C
+				}$
+			</div>
+			To finish off consider that the original equation started with $x$'s and $y$'s, but so far we have a solution in terms of $x$'s and $u$'s. So replace all of the $u$'s to get:
+			<div class="latex_equation">
+				$\eqalign{
+					\ln\Bigg| \frac{1 + \frac{y}{x}}{(1 - \frac{y}{x})^2} \Bigg| - \ln|x| &= C \\
+					\ln\Bigg| \frac{x^2 + xy}{(x - y)^2} \Bigg| - \ln|x| &= C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

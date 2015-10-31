@@ -1,0 +1,66 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			-y dx + (x + \sqrt{xy}) dy = 0
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First rewriting this gives:
+			<div class="latex_equation">
+				$\eqalign{
+					-y dx + (x + \sqrt{xy}) dy &= 0 \\
+					(x + \sqrt{xy}) dy &= y dx \\
+					\frac{dy}{dx} &= \frac{y}{x + \sqrt{xy}}
+				}$
+			</div>
+			Now to see if the homogeneous substitution can be used, first lets check that the function is homogeneous with degree zero:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x,y) &= \frac{y}{x + \sqrt{xy}} \\
+					f(tx,ty) &= \frac{(ty)}{(tx) + \sqrt{(tx)(ty)}} \\
+					&= \frac{y}{x + \sqrt{xy}} \\
+					&= f(x,y)
+				}$
+			</div>
+			With the condition checked, using the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= ux \\
+					y' &= u'x + u
+				}$
+			</div>
+			and plugging in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= \frac{y}{x + \sqrt{xy}} \\
+					u'x + u &= \frac{ux}{x + \sqrt{ux^2}} \\
+					u'x + u &= \frac{u}{1 + \sqrt{u}} \\
+					\frac{du}{dx}x &= \frac{u}{1 + \sqrt{u}} - \frac{u(1 + sqrt{u})}{1 + \sqrt{u}} \\
+					\frac{du}{dx}x &= -\frac{u^{\frac{3}{2}}}{1 + \sqrt{u}} \\
+					\frac{1 + \sqrt{u}}{u^{\frac{3}{2}}} du &= -\frac{dx}{x} \\
+					\int \frac{1 + \sqrt{u}}{u^{\frac{3}{2}}} du &= \int -\frac{dx}{x} \\
+					-2u^{-\frac{1}{2}} + \ln|u| &= -\ln|x| + C \\
+					\ln|ux| - \frac{2}{\sqrt{u}} &= C
+				}$
+			</div>
+			To finish off consider that the original equation started with $x$'s and $y$'s, but so far we have a solution in terms of $x$'s and $u$'s. So replace all of the $u$'s to get:
+			<div class="latex_equation">
+				$\eqalign{
+					\ln|y| - \frac{2}{\sqrt{\frac{y}{x}}} = C
+				}$
+			</div>
+		</div>
+	</div>
+</div>
