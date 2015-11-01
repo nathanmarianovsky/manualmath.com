@@ -1,0 +1,47 @@
+<div class="latex_section">
+	The Setup
+</div>
+<div class="latex_body">
+	Given a differential equation in the form:
+	<div class="latex_equation">
+		$\eqalign{
+			y' = f(x,y)
+		}$
+	</div>
+	where $y'$ denotes the first derivative and $y(x_0) = y_0$, a simple approach known as $\textit{Euler's Method}$ serves as a numerical approximation to the first order differential equation.
+</div>
+
+<div class="latex_section">
+	Deriving the Approximation
+</div>
+<div class="latex_body">
+	A simple approach to writing down Euler's Method can be attained from considering the formal definition of the derivative:
+	<div class="latex_equation">
+		$\eqalign{
+			y'(x) = \lim_{h \rightarrow 0} \frac{y(x + h) - y(x)}{h}
+		}$
+	</div>
+	and while this definition provides an exact solution because it allows the difference to become infinitesimally small, for numerical approximations we can just say:
+	<div class="latex_equation">
+		$\eqalign{
+			y'(x) \approx \frac{y(x + h) - y(x)}{h}
+		}$
+	</div>
+	if we assume that $h$ is small enough. Now reorganizing this:
+	<div class="latex_equation">
+		$\eqalign{
+			y'(x) &\approx \frac{y(x + h) - y(x)}{h} \\
+			hy'(x) &\approx y(x + h) - y(x) \\
+			y(x + h) &\approx y(x) + hy'(x) \\
+			y(x + h) &\approx y(x) + hf(x,y)
+		}$
+	</div>
+	where the setup of the differential equation is used to replace the derivative. Now notice that we can discretize the system by letting:
+	<div class="latex_equation">
+		$\eqalign{
+			x_{n + 1} &= x_n + h \\
+			y_{n + 1} &\approx y_n + hf(x_n,y_n)
+		}$
+	</div>
+	where the starting point is given by the initial condition $y(x_0) = y_0$.
+</div>

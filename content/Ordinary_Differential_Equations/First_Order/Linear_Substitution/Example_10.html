@@ -1,0 +1,56 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Keeping substitution in mind, rewrite the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = f(x)e^y + g(x)
+		}$
+	</div>
+	as a first order linear differential equation.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Lets try the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					u &= e^y \\
+					u' &= uy'
+				}$
+			</div>
+			and plugging in:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= f(x)e^y + g(x) \\
+					\frac{u'}{u} &= f(x)u + g(x) \\
+					u' &= f(x)u^2 + g(x)u \\
+					u' - g(x)u &= f(x)u^2
+				}$
+			</div>
+			which unfortunately is a Bernoulli differential equation. Even though another substitution can be used to transform the Bernoulli equation into a first order linear one, instead try the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					u &= e^{-y} \\
+					u' &= -uy'
+				}$
+			</div>
+			on the original equation:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= f(x)e^y + g(x) \\
+					-\frac{u'}{u} &= f(x)u{-1} + g(x) \\
+					-u' &= f(x) + g(x)u \\
+					u' + g(x)u &= -f(x)
+				}$
+			</div>
+			which gives a first order linear differential equation.
+		</div>
+	</div>
+</div>

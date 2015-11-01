@@ -1,0 +1,43 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Keeping substitution in mind, solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			xy' = y\ln(xy)
+		}$
+	</div>
+	where $y'$ is the first derivative.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			To motivate the approach consider the fact that we want to simplify the inside of the logarithm as much as possible. Therefore, it would be useful if the inside could become a single variable. Using the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= \frac{u}{x} \\
+					y' &= \frac{u'x - u}{x^2}
+				}$
+			</div>
+			and plugging in:
+			<div class="latex_equation">
+				$\eqalign{
+					xy' &= y\ln(xy) \\
+					x \cdot \frac{u'x - u}{x^2} &= \frac{u}{x}\ln\Big( x \cdot \frac{u}{x} \Big) \\
+					u'x - u &= u\ln(u) \\
+					\frac{du}{dx}x &= u(\ln(u) - 1) \\
+					\frac{du}{u(\ln(u) - 1)} &= \frac{dx}{x} \\
+					\int \frac{du}{u(\ln(u) - 1)} &= \int \frac{dx}{x} \\
+					\ln|\ln(u) - 1| &= \ln|x| + C \\
+					\ln\Bigg| \frac{\ln(xy) - 1}{x} \Bigg| &= C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

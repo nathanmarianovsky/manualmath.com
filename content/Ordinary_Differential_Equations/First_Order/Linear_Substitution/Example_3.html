@@ -1,0 +1,42 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = 2 + \sqrt{y - 2x + 3}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since the function contains a linear input make the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					u &= y - 2x + 3 \\
+					u' &= y' - 2
+				}$
+			</div>
+			and plug in:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= 2 + \sqrt{y - 2x + 3} \\
+					y' - 2 &= \sqrt{y - 2x + 3} \\
+					u' &= \sqrt{u} \\
+					\frac{du}{dx} &= u^{\frac{1}{2}} \\
+					u^{-\frac{1}{2}} du &= dx \\
+					\int u^{-\frac{1}{2}} du &= \int dx \\
+					2\sqrt{u} &= x + C \\
+					2\sqrt{y - 2x + 3} - x &= C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

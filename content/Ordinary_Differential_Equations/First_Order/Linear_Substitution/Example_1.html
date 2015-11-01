@@ -1,0 +1,42 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = (x + y + 1)^2
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since the function contains a linear input make the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					u &= x + y + 1 \\
+					u' &= 1 + y'
+				}$
+			</div>
+			and plug in:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= (x + y + 1)^2 \\
+					u' - 1 &= u^2 \\
+					\frac{du}{dx} &= u^2 + 1 \\
+					\frac{du}{1 + u^2} &= dx \\
+					\int \frac{du}{1 + u^2} &= \int dx \\
+					\arctan(u) &= x + C \\
+					\arctan(u) - x &= C \\
+					\arctan(x + y + 1) - x &= C
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,47 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Prove that any autonomous differential equation is independent of translations related to the independent variable. As an extension, deduce the fix needed to the differential equation if the independent variable is a multiplied by some factor $\alpha$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Assuming that the autonomous system takes the form:
+			<div class="latex_equation">
+				$\eqalign{
+					y'(x) = f(y(x))
+				}$
+			</div>
+			a translation in the independent variable would mean that a new solution would take on the form $y(x - k)$, which implies:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} y(x - k) &= y'(x - k)
+				}$
+			</div>
+			and so the new differential equation becomes:
+			<div class="latex_equation">
+				$\eqalign{
+					y'(x - k) = f(y(x - k))
+				}$
+			</div>
+			which is not any different than the original one. Now if instead we are looking at a solution of the form $y(\alpha x)$, this implies:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} y(\alpha x) &= \alpha y'(\alpha x)
+				}$
+			</div>
+			and so the new differential equation becomes:
+			<div class="latex_equation">
+				$\eqalign{
+					y'(\alpha x) = \frac{1}{\alpha} f(y(\alpha x))
+				}$
+			</div>
+		</div>
+	</div>
+</div>

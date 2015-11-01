@@ -1,0 +1,49 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = 1 + e^{y - x + 5}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since the function contains a linear input make the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					u &= y - x + 5 \\
+					u' &= y' - 1
+				}$
+			</div>
+			and plug in:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= 1 + e^{y - x + 5} \\
+					y' - 1 &= e^{y - x + 5} \\
+					u' &= e^u \\
+					\frac{du}{dx} &= e^u \\
+					e^{-u} du &= dx \\
+					\int e^{-u} du &= \int dx \\
+					-e^u &= x + C \\
+					e^{y - x + 5} + x &= K
+				}$
+			</div>
+			where:
+			<div class="latex_equation">
+				$\eqalign{
+					K = -C
+				}$
+			</div>
+			gets rid of the unnecessary negative sign.
+		</div>
+	</div>
+</div>

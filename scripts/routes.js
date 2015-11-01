@@ -30,11 +30,12 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$.get("/client/notation.php").done(function(notation) {
 				page.append(notation);
 			});
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			$("#about_li").addClass("active");
 			functions.handle_logo_link("about");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
@@ -68,6 +69,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
 		router.addRouteListener("subject.topic", function(toState, fromState) {
@@ -95,6 +97,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
 		router.addRouteListener("subject.topic.section", function(toState, fromState) {
@@ -120,8 +123,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			});
 			functions.handle_logo_link("subject.topic.section");
 			functions.handle_li_coloring();
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			links.handle_links(router, subjects, topics, sections, examples);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
 		router.addRouteListener("subject.topic.section.current_page", function(toState, fromState) {
@@ -179,8 +183,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			});
 			functions.handle_logo_link("subject.topic.section.current_page");
 			functions.handle_li_coloring();
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			links.handle_links(router, subjects, topics, sections, examples);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 	};
 

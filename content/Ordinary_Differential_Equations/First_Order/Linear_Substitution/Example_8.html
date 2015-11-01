@@ -1,0 +1,57 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Solve the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = \cos(x + y) + 1
+		}$
+	</div>
+	where $y(0) = \frac{\pi}{4}$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since the function contains a linear input make the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					u &= x + y \\
+					u' &= 1 + y'
+				}$
+			</div>
+			and plug in:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= \cos(x + y) + 1 \\
+					y' - 1 &= \cos(x + y) \\
+					u' &= \cos(u) \\
+					\frac{du}{dx} &= \cos(u) \\
+					\sec(u) du &= dx \\
+					\int \sec(u) du &= \int dx \\
+					\ln|\sec(u) + \tan(u)| &= x + C \\
+					\ln|\sec(x + y) + \tan(x + y)| - x &= C
+				}$
+			</div>
+			Now for the constant use the initial condition:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= \ln|\sec(x + y) + \tan(x + y)| - x \\
+					&= \ln\Bigg| \sec\Big( \frac{\pi}{4} \Big) + \tan\Big( \frac{\pi}{4} \Big) \Bigg| \\
+					&= \ln(\sqrt{2} + 1)
+				}$
+			</div>
+			and so the final solution is:
+			<div class="latex_equation">
+				$\eqalign{
+					\ln|\sec(x + y) + \tan(x + y)| - x = \ln(\sqrt{2} + 1)
+				}$
+			</div>
+		</div>
+	</div>
+</div>
