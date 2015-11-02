@@ -2,17 +2,13 @@
 	Definition
 </div>
 <div class="latex_body">
-	When discussing differential equations, there exist two main classes: ODEs and PDEs. PDEs, partial differential equations,
-	which involve functions of more than a single independent variable are typically harder to approach and so will not be
-	discussed further here. Thus, when referencing differential equations here, we are going to be talking about ODEs, ordinary differential equations, which involve only functions of a single variable and any of its derivatives. To be formal, an equation in the form:
+	When discussing differential equations, there exist two main classes: ODEs and PDEs. PDEs, partial differential equations, which involve functions of more than a single independent variable are typically harder to approach and so will not be discussed further here. Thus, when referencing differential equations here, we are going to be talking about ODEs, ordinary differential equations, which involve only functions of a single variable and any of its derivatives. To be formal, an equation in the form:
 	<div class="latex_equation">
 		$\eqalign{
 			y^{(n)} = F(x,y,y^{(1)},y^{(2)},\dots,y^{(n-1)})
 		}$
 	</div>
-	is known as an $\textit{explicit differential equation}$ where $y^{(n)}$ denotes the $n$th derivative, $x$ is the independent variable,
-	and $F$ is some function of the independent variable and all derivatives of $y(x)$ except for the $n$th one. While this formulization
-	gives a clear definition, it may not always be possible to solve for $y^{(n)}$ using known analytic methods. Therefore, an $\textit{implicit}$ $\textit{ differential equation}$ is one in the form:
+	is known as an $\textit{explicit differential equation}$ where $y^{(n)}$ denotes the $n$th derivative, $x$ is the independent variable, and $F$ is some function of the independent variable and all derivatives of $y(x)$ except for the $n$th one. While this formulization gives a clear definition, it may not always be possible to solve for $y^{(n)}$ using known analytic methods. Therefore, an $\textit{implicit}$ $\textit{ differential equation}$ is one in the form:
 	<div class="latex_equation">
 		$\eqalign{
 			0 = F(x,y,y^{(1)},y^{(2)},\dots,y^{(n-1)},y^{(n)})
@@ -25,8 +21,7 @@
 	Order
 </div>
 <div class="latex_body">
-	A typical way to characterize a given differential equation is to use its $\textit{order}$ where the order is defined to be the natural number
-	corresponding to the highest derivative involved. For example:
+	A typical way to characterize a given differential equation is to use its $\textit{order}$ where the order is defined to be the natural number corresponding to the highest derivative involved. For example:
 	<div class="latex_equation">
 		$\eqalign{
 			y^{(5)} + x^2y^{(4)}y^2 = \sin(x)y^{(3)}
@@ -39,8 +34,7 @@
 	Linear
 </div>
 <div class="latex_body">
-	While order definitely gives a good characterization of a differential equation, it does not provide any means of understanding how the differential
-	equation is actually structured. A differential equation is said to be $\textit{linear}$ if it can be written in the format:
+	While order definitely gives a good characterization of a differential equation, it does not provide any means of understanding how the differential equation is actually structured. A differential equation is said to be $\textit{linear}$ if it can be written in the format:
 	<div class="latex_equation">
 		$\eqalign{
 			\sum_{i=0}^{n} a_i(x)y^{(i)} = k(x)
@@ -58,8 +52,7 @@
 			7\sin(x)y^{(4)} + 3\ln|x| = 2y + 3e^xy^{(2)}
 		}$
 	</div>
-	is a linear differential equation. Now using the setup for a linear differential equation, further classifications exist depending on the standalone part.
-	If $k(x) = 0$ the linear differential equation is also classified as $\textit{homogeneous}$, otherwise it is $\textit{non-homogeneous}$. 
+	is a linear differential equation. Now using the setup for a linear differential equation, further classifications exist depending on the standalone part. If $k(x) = 0$ the linear differential equation is also classified as $\textit{homogeneous}$, otherwise it is $\textit{non-homogeneous}$. 
 </div>
 
 <div class="latex_section">
