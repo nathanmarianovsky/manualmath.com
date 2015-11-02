@@ -8,19 +8,14 @@
 			y' + p(x)y = q(x)
 		}$
 	</div>
-	where $y'$ denotes the first derivative, under any functions
-	$p(x)$ and $q(x)$ that are bounded and have only a finite number of discontinuties
-	the solution can always be obtained.
+	where $y'$ denotes the first derivative, under any functions $p(x)$ and $q(x)$ that are bounded and have only a finite number of discontinuties the solution can always be obtained.
 </div>
 
 <div class="latex_section">
 	Motivating the Need for an Integrating Factor
 </div>
 <div class="latex_body">
-	When approaching the differential equation above, it might be a good idea
-	if the left side can be rewritten as a product rule. Unfortunately, the given
-	equation does not conform to a product rule, but perhaps we can define some factor
-	such that:
+	When approaching the differential equation above, it might be a good idea if the left side can be rewritten as a product rule. Unfortunately, the given equation does not conform to a product rule, but perhaps we can define some factor such that:
 	<div class="latex_equation">
 		$\eqalign{
 			\mu y' + \mu p(x)y = \frac{d}{dx} (\mu y)
@@ -45,10 +40,7 @@
 			P(x) = \int p(x) dx
 		}$
 	</div>
-	Towards the end I specifically went out of my way to stress how the constant plays out. Notice that there is not one
-	definite integrating factor, but rather a whole family of them. So which one do we choose?
-	As a human being you want to make your life easier, so just let $D = 1$ and move on. With this
-	choice the integrating factor is officially defined as:
+	Towards the end I specifically went out of my way to stress how the constant plays out. Notice that there is not one definite integrating factor, but rather a whole family of them. So which one do we choose? As a human being you want to make your life easier, so just let $D = 1$ and move on. With this choice the integrating factor is officially defined as:
 	<div class="latex_equation">
 		$\eqalign{
 			\mu = e^{P(x)}
@@ -60,8 +52,7 @@
 	Solving the Equation
 </div>
 <div class="latex_body">
-	With the integrating factor officially defined, solving the differential equation becomes a 
-	trivial task:
+	With the integrating factor officially defined, solving the differential equation becomes a trivial task:
 	<div class="latex_equation">
 		$\eqalign{
 			y' + p(x)y &= q(x) \\

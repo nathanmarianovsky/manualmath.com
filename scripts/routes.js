@@ -54,7 +54,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 					$("title").text(subject.clean_name);
 					$("main").append($("<div>").attr("id", "subject_page"));
 					var subject_page = $("#subject_page").load("/content/" + subject.sname + "/" + subject.sname + ".html");
-					$.get("/content/" + subject.sname + "/notation.html").done(function(notation) {
+					$.get("/content/" + subject.sname + "/Notation.html").done(function(notation) {
 						subject_page.append(notation);
 						$.get("/client/subject_directions.php").done(function(content) {
 							subject_page.append(content);

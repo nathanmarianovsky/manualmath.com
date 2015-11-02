@@ -8,8 +8,7 @@
 			y' + m(x)y = k(x)y^N \hspace{.3cm} \text{where} \hspace{.3cm} N \in \mathbb{R} \setminus \{0,1\}
 		}$
 	</div>
-	where $y'$ denotes the first derivative. We restrict $N$ to not be zero because that case would be trivial since the problem reduces down to a first-order
-	linear differential equation. For $N = 1$ just reorganize to see that the same thing happens:
+	where $y'$ denotes the first derivative. We restrict $N$ to not be zero because that case would be trivial since the problem reduces down to a first-order linear differential equation. For $N = 1$ just reorganize to see that the same thing happens:
 	<div class="latex_equation">
 		$\eqalign{
 			y' + m(x)y &= k(x)y \\
@@ -31,9 +30,7 @@
 	Solving the Equation
 </div>
 <div class="latex_body">
-	The whole point of Bernoulli's differential equation is to use the right substitution such that
-	the problem is reduced down to a first-order linear differential equation. To begin first devide
-	both sides by the non-linear term:
+	The whole point of Bernoulli's differential equation is to use the right substitution such that the problem is reduced down to a first-order linear differential equation. To begin first devide both sides by the non-linear term:
 	<div class="latex_equation">
 		$\eqalign{
 			y' + m(x)y &= k(x)y^N \\
@@ -75,8 +72,7 @@
 			&= (1-N) e^{(N-1) \int m(x) dx} \int e^{(1-N) \int m(x) dx} k(x) dx 
 		}$
 	</div>
-	Now there is just one thing left. The original differential equation was asking for a solution to $y$,
-	not $u$. So to go back use the substitution:
+	Now there is just one thing left. The original differential equation was asking for a solution to $y$, not $u$. So to go back use the substitution:
 	<div class="latex_equation">
 		$\eqalign{
 			y^{1-N} &= u \\
@@ -84,6 +80,5 @@
 			y &= \Big[ (1-N) e^{(N-1) \int m(x) dx} \int e^{(1-N) \int m(x) dx} k(x) dx \Big]^\frac{1}{1-N}
 		}$
 	</div>
-	Note that sometimes the exponent on the right side can be an even root. When this occurs both the positive and negative results
-	have to be considered in the final form of $y$.
+	Note that sometimes the exponent on the right side can be an even root. When this occurs both the positive and negative results have to be considered in the final form of $y$.
 </div>
