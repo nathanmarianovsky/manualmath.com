@@ -1,4 +1,8 @@
 /* Styles for all screens */
+body * {
+	max-height: 1000000em;
+}
+
 .top-nav {
 	background-color: #1163A9;
 }
@@ -22,6 +26,10 @@
 	line-height: 64px;
 	vertical-align: top;
 	padding-left: 140px;
+}
+
+.drag-target {
+	width: 15px;
 }
 
 #logo {
@@ -70,8 +78,8 @@
 	color: black;
 	font-family: "Computer Modern Serif, sans-serif";
 	margin: 0 auto 50px auto;
-	font-size: 15px;
-	width: 80%;
+	font-size: 20px;
+	width: 70%;
 }
 
 .latex_section {
@@ -79,16 +87,15 @@
 	text-align: center;
 	font-family: "Georgia";
 	font-size: 30px;
-	text-decoration: underline;
 	padding: 15px 0 15px 0;
+	margin-top: 30px;
 }
 
 .latex_equation {
 	position: relative;
 	text-align: center;
 	font-family: "Georgia";
-	font-size: 15px;
-	padding: 7px 0 7px 0;
+	padding: 20px 0 20px 0;
 }
 
 .show_solution {

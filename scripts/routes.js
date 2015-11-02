@@ -36,7 +36,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			links.handle_links(router, subjects, topics, sections, examples);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
 		router.addRouteListener("subject", function(toState, fromState) {
@@ -69,7 +68,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
 		router.addRouteListener("subject.topic", function(toState, fromState) {
@@ -97,10 +95,12 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
 		router.addRouteListener("subject.topic.section", function(toState, fromState) {
+			if(window.innerWidth < 992) {
+				$(".button-collapse").sideNav("hide");
+			}
 			subjects.forEach(function(subject) {
 				if(subject.sname == toState.params.sname) {
 					subject.topics.forEach(function(topic) {
@@ -125,10 +125,12 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
 		router.addRouteListener("subject.topic.section.current_page", function(toState, fromState) {
+			if(window.innerWidth < 992) {
+				$(".button-collapse").sideNav("hide");
+			}
 			subjects.forEach(function(subject) {
 				if(subject.sname == toState.params.sname) {
 					subject.topics.forEach(function(topic) {
@@ -184,7 +186,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo_link("subject.topic.section.current_page");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 	};

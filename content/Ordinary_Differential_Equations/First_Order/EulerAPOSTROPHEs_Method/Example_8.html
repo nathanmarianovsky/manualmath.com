@@ -1,0 +1,105 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx}  = y - y^2
+		}$
+	</div>
+	and the initial condition $y(0) = 0.5$, determine $y(0.5)$ using a $h = 0.1$ with Euler's Method up to four decimal places and compare the result to the exact solution by finding the error.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Using Euler's Method:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>$n$</td>
+					    <td>$x_{n + 1} = x_n + h$</td>
+					    <td>$y_{n + 1} = y_n + hf(x_n,y_n)$</td>
+					</tr>
+					<tr>
+				    	<td>0</td>
+					    <td>$x_1 = x_0 + h = 0.1$</td>
+					    <td>$y_1 = y_0 + hf(x_0,y_0) = 0.5250$</td>
+					</tr>
+					<tr>
+				    	<td>1</td>
+					    <td>$x_2 = x_1 + h = 0.2$</td>
+					    <td>$y_2 = y_1 + hf(x_1,y_1) = 0.5499$</td>
+					</tr>
+					<tr>
+				    	<td>2</td>
+					    <td>$x_3 = x_2 + h = 0.3$</td>
+					    <td>$y_3 = y_2 + hf(x_2,y_2) = 0.5747$</td>
+					</tr>
+					<tr>
+				    	<td>3</td>
+					    <td>$x_4 = x_3 + h = 0.4$</td>
+					    <td>$y_4 = y_3 + hf(x_3,y_3) = 0.5991$</td>
+					</tr>
+					<tr>
+				    	<td>4</td>
+					    <td>$x_5 = x_4 + h = 0.5$</td>
+					    <td>$y_5 = y_4 + hf(x_4,y_4) = 0.6231$</td>
+					</tr>
+				</table>
+			</div>
+			So according to Euler's Method $y(0.5) \approx 0.6231$. To solve for exactly separate:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dx} &= y - y^2 \\
+					\frac{dy}{y(1 - y)} &= dx \\
+					\int \frac{dy}{y(1 - y)} &= \int dx \\
+					\ln\Bigg| \frac{y}{1 - y} \Bigg| &= x + C \\
+					\frac{y}{1 - y} &= De^x \\
+					y &= De^x - Dye^x \\
+					y(1 + De^x) &= De^x \\
+					y &= \frac{De^x}{1 + De^x}
+				}$
+			</div>
+			where:
+			<div class="latex_equation">
+				$\eqalign{
+					D = e^C
+				}$
+			</div>
+			Now using the initial condition:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= \frac{De^x}{1 + De^x} \\
+					\frac{1}{2} &= \frac{D}{1 + D} \\
+					1 + D &= 2D \\
+					D &= 1
+				}$
+			</div>
+			which gives the final solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y = \frac{e^x}{1 + e^x}
+				}$
+			</div>
+			Now to determine the exact value:
+			<div class="latex_equation">
+				$\eqalign{
+					y(0.5) &= \frac{e^{(0.5)}}{1 + e^{(0.5)}}
+					&= 0.6225
+				}$
+			</div>
+			and so the error is:
+			<div class="latex_equation">
+				$\eqalign{
+					\Delta = \Big| \hspace{.1cm} \text{Exact} \hspace{.1cm} - \text{Approximation} \hspace{.1cm} \Big| = |0.6225 - 0.6231| =  0.0006
+				}$
+			</div>
+		</div>
+	</div>
+</div>

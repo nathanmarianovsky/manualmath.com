@@ -13,14 +13,14 @@ define(function() {
 	*/
 	exports.get_details = function(obj) {
 		if(window.innerWidth < 992 && window.innerWidth >= 800) {
-			obj.font = "25px";
+			obj.font = "30px";
 			obj.height = "120px";
 		}
-		else if(window.innerWidth < 800 && window.innerWidth >= 400) {
-			obj.font = "13px";
+		else if(window.innerWidth < 800 && window.innerWidth >= 500) {
+			obj.font = "20px";
 			obj.height = "120px";
 		}
-		else if(window.innerWidth < 400) {
+		else if(window.innerWidth < 500) {
 			obj.font = "10px";
 			obj.height = "120px";
 		}
@@ -37,10 +37,22 @@ define(function() {
 		if(window.innerWidth < 992) {
 			$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
 		}
-		if(window.innerWidth < 400) {
+		if(window.innerWidth < 500) {
 			$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
 		}
 		$(".extra_li").append($("<a>").text(""));
+	};
+
+	/*
+
+	Purpose:
+	Gives the divider in the menu more height on mobile screens so as to stand out more.
+
+	*/
+	exports.handle_divider = function() {
+		if(window.innerWidth < 992) {
+			$(".divider").css("height", "5px");
+		}
 	};
 
 	/*
@@ -67,6 +79,7 @@ define(function() {
 			"font-size": obj.font
 		}));
 		$(".side-nav").append($("<li>").addClass("divider"));
+		exports.handle_divider();
 		subjects.forEach(function(subject) {
 			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid).fadeIn("slow"));
 			var subjects_li = $("#subjects_li" + subject.sid).append($("<a>").addClass("collapsible-header bold").attr("id", "subjects_" + subject.sid).text(subject.clean_name).css({
@@ -76,7 +89,6 @@ define(function() {
 			$("#subjects_" + subject.sid).append($("<i>").addClass("material-icons right").text("arrow_forward"));
 			if(window.innerWidth < 992) {
 				subjects_li.css("background-color", "white");
-				$("#subjects_" + subject.sid + " i").css("width", "8rem");
 			}
 		});
 		exports.extra();
@@ -108,9 +120,9 @@ define(function() {
 		$("#subjectnav").append($("<i>").addClass("material-icons right").text("arrow_backward"));
 		if(window.innerWidth < 992) {
 			subject_li.css("background-color", "white");
-			$("#subjectnav i").css("width", "5rem");
 		}
 		$(".side-nav").append($("<li>").addClass("divider"));
+		exports.handle_divider();
 		subject.topics.forEach(function(topic) {
 			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid).fadeIn("slow"));
 			var topics_li = $("#topics_li" + topic.tid).append($("<a>").addClass("collapsible-header bold").attr("id", "topics_" + topic.tid).text(topic.clean_name).css({
@@ -120,7 +132,6 @@ define(function() {
 			$("#topics_" + topic.tid).append($("<i>").addClass("material-icons right").text("arrow_forward"));
 			if(window.innerWidth < 992) {
 				topics_li.css("background-color", "white");
-				$("#topics_" + topic.tid + " i").css("width", "8rem");
 			}
 		});
 		exports.extra();
@@ -154,9 +165,9 @@ define(function() {
 		$("#topicnav_" + topic.tid).append($("<i>").addClass("material-icons right").text("arrow_backward"));
 		if(window.innerWidth < 992) {
 			topic_li.css("background-color", "white");
-			$("#topicnav_" + topic.tid + " i").css("width", "5rem");
 		}
 		$(".side-nav").append($("<li>").addClass("divider"));
+		exports.handle_divider();
 		topic.sections.forEach(function(section) {
 			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id).fadeIn("slow"));
 			var sections_li = $("#sections_li" + section.section_id).append($("<a>").addClass("collapsible-header bold").attr("id", "sections_" + section.section_id).text(section.clean_name).css({
@@ -166,7 +177,6 @@ define(function() {
 			$("#sections_" + section.section_id).append($("<i>").addClass("material-icons right").text("arrow_forward"));
 			if(window.innerWidth < 992) {
 				sections_li.css("background-color", "white");
-				$("#sections_" + section.section_id + " i").css("width", "8rem");
 			}
 		});
 		exports.extra();
@@ -199,6 +209,7 @@ define(function() {
 		}));
 		$("#sectionnav_" + section.section_id).append($("<i>").addClass("material-icons right").text("arrow_backward"));
 		$(".side-nav").append($("<li>").addClass("divider"));
+		exports.handle_divider();
 		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_name" + section.section_id).fadeIn("slow"));
 		var section_name = $("#section_name" + section.section_id).append($("<a>").addClass("collapsible-header bold").attr("id", "sectionname_" + section.section_id).text("Notes").css({
 			"line-height": obj.height,
@@ -207,7 +218,6 @@ define(function() {
 		if(window.innerWidth < 992) {
 			section_name.css("background-color", "white");
 			section_li.css("background-color", "white");
-			$("#sectionnav_" + section.section_id + " i").css("width", "5rem");
 		}
 		section.examples.forEach(function(example) {
 			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid).fadeIn("slow"));

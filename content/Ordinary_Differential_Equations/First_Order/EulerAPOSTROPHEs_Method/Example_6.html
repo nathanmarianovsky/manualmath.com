@@ -1,0 +1,106 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = y(10 - 2y)
+		}$
+	</div>
+	and the initial condition $y(0) = 1$, determine $y(1)$ using a $h = 0.2$ with Euler's Method up to four decimal places and compare the result to the exact solution by finding the error.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Using Euler's Method:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>$n$</td>
+					    <td>$x_{n + 1} = x_n + h$</td>
+					    <td>$y_{n + 1} = y_n + hf(x_n,y_n)$</td>
+					</tr>
+					<tr>
+				    	<td>0</td>
+					    <td>$x_1 = x_0 + h = 0.2$</td>
+					    <td>$y_1 = y_0 + hf(x_0,y_0) = 2.6000$</td>
+					</tr>
+					<tr>
+				    	<td>1</td>
+					    <td>$x_2 = x_1 + h = 0.4$</td>
+					    <td>$y_2 = y_1 + hf(x_1,y_1) = 5.0960$</td>
+					</tr>
+					<tr>
+				    	<td>2</td>
+					    <td>$x_3 = x_2 + h = 0.6$</td>
+					    <td>$y_3 = y_2 + hf(x_2,y_2) = 4.9003$</td>
+					</tr>
+					<tr>
+				    	<td>3</td>
+					    <td>$x_4 = x_3 + h = 0.8$</td>
+					    <td>$y_4 = y_3 + hf(x_3,y_3) = 5.0957$</td>
+					</tr>
+					<tr>
+				    	<td>4</td>
+					    <td>$x_5 = x_4 + h = 1$</td>
+					    <td>$y_5 = y_4 + hf(x_4,y_4) = 4.9006$</td>
+					</tr>
+				</table>
+			</div>
+			So according to Euler's Method $y(1) \approx 4.9006$. To solve for exactly separate:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dx} &= y(10 - 2y) \\
+					\frac{dy}{y(10 - 2y)} &= dx \\
+					\int \frac{dy}{y(10 - 2y)} &= \int dx \\
+					\frac{1}{10}\ln\Bigg| \frac{y}{5 - y} \Bigg| &= x + C \\
+					\frac{y}{5 - y} &= e^{10x + 10C} \\
+					y &= 5e^{10x + D} - ye^{10x + D} \\
+					y(1 + e^{10x + D}) &= 5e^{10x + D} \\
+					y &= \frac{5e^{10x + D}}{1 + e^{10x + D}}
+				}$
+			</div>
+			where:
+			<div class="latex_equation">
+				$\eqalign{
+					D = 10C
+				}$
+			</div>
+			Now using the initial condition:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= \frac{5e^{10x + D}}{1 + e^{10x + D}} \\
+					1 &= \frac{5e^D}{1 + e^D} \\
+					1 + e^D &= 5e^D \\
+					1 &= 4e^D \\
+					D &= \ln\Big( \frac{1}{4} \Big)
+				}$
+			</div>
+			which gives the final solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y = \frac{5e^{10x}}{4 + e^{10x}}
+				}$
+			</div>
+			Now to determine the exact value:
+			<div class="latex_equation">
+				$\eqalign{
+					y(1) &= \frac{5e^{10(1)}}{4 + e^{10(1)}}
+					&= 4.9991
+				}$
+			</div>
+			and so the error is:
+			<div class="latex_equation">
+				$\eqalign{
+					\Delta = \Big| \hspace{.1cm} \text{Exact} \hspace{.1cm} - \text{Approximation} \hspace{.1cm} \Big| = |4.9991 - 4.9006| =  0.0985
+				}$
+			</div>
+		</div>
+	</div>
+</div>

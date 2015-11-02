@@ -1,5 +1,5 @@
-/* Styles for screens with minimum and maximum widths of 800px and 992px respectively */
-@media only screen and (max-width : 991px) and (min-width : 800px) {
+/* Styles for screens with maximum width of 800px */
+@media only screen and (max-width : 799px) and (min-width : 500px) {
 	header, main, footer {
 		padding-left: 0;
 	}
@@ -35,7 +35,7 @@
 		text-align: center;
 	}
 
-	#logo {
+    #logo {
 		display: inline;
 		position: relative;
 	}
@@ -43,6 +43,11 @@
 	#logo img {
 		padding: 13px 0 0 70px;
 		width: 350px;
+	}
+
+	#mobile_title {
+		display: inline;
+		font-size: 15px;
 	}
 
 	#nav-mobile {
@@ -75,6 +80,6 @@
 	}
 
 	.collapsible-header i {
-		font-size: 30px;
+		font-size: 20px;
 	}
 }

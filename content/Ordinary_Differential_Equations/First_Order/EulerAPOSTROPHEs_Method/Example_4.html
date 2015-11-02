@@ -1,0 +1,115 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = (x - y)^2
+		}$
+	</div>
+	and the initial condition $y(0) = .5$, determine $y(0.5)$ using a $h = 0.1$ with Euler's Method up to four decimal places and compare the result to the exact solution by finding the error.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Using Euler's Method:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>$n$</td>
+					    <td>$x_{n + 1} = x_n + h$</td>
+					    <td>$y_{n + 1} = y_n + hf(x_n,y_n)$</td>
+					</tr>
+					<tr>
+				    	<td>0</td>
+					    <td>$x_1 = x_0 + h = 0.1$</td>
+					    <td>$y_1 = y_0 + hf(x_0,y_0) = 0.5250$</td>
+					</tr>
+					<tr>
+				    	<td>1</td>
+					    <td>$x_2 = x_1 + h = 0.2$</td>
+					    <td>$y_2 = y_1 + hf(x_1,y_1) = 0.5431$</td>
+					</tr>
+					<tr>
+				    	<td>2</td>
+					    <td>$x_3 = x_2 + h = 0.3$</td>
+					    <td>$y_3 = y_2 + hf(x_2,y_2) = 0.5549$</td>
+					</tr>
+					<tr>
+				    	<td>3</td>
+					    <td>$x_4 = x_3 + h = 0.4$</td>
+					    <td>$y_4 = y_3 + hf(x_3,y_3) = 0.5614$</td>
+					</tr>
+					<tr>
+				    	<td>4</td>
+					    <td>$x_5 = x_4 + h = 0.5$</td>
+					    <td>$y_5 = y_4 + hf(x_4,y_4) = 0.5640$</td>
+					</tr>
+				</table>
+			</div>
+			So according to Euler's Method $y(0.5) \approx 0.5640$. To solve for exactly, use the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					u &= x - y \\
+					u' &= 1 - y'
+				}$
+			</div>
+			to make the equation separable:
+			<div class="latex_equation">
+				$\eqalign{
+					y' &= (x - y)^2 \\
+					1 - u' &= u^2 \\
+					\frac{du}{dx} &= 1 - u^2 \\
+					\frac{du}{1 - u^2} &= dx \\
+					\int \frac{du}{1 - u^2} &= \int dx \\
+					\frac{1}{2}\ln\Bigg| \frac{1 + u}{1 - u} \Bigg| &= x + C \\
+					\frac{1}{2}\ln\Bigg| \frac{1 + x - y}{1 - x + y} \Bigg| - x &= C
+				}$
+			</div>
+			Now using the initial condition:
+			<div class="latex_equation">
+				$\eqalign{
+					C &= \frac{1}{2}\ln\Bigg| \frac{1 + x - y}{1 - x + y} \Bigg| - x \\
+					&= \frac{1}{2}\ln\Bigg| \frac{1 + (0) - (0.5)}{1 - (0) + (0.5)} \Bigg| - (0) \\
+					&= \frac{1}{2}\ln\Big( \frac{1}{3} \Big)
+				}$
+			</div>
+			which gives the final solution:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{1}{2}\ln\Bigg| \frac{1 + x - y}{1 - x + y} \Bigg| - x = \frac{1}{2}\ln\Big( \frac{1}{3} \Big)
+				}$
+			</div>
+			To determine the value of $y$ first lets isolate it:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{1}{2}\ln\Bigg| \frac{1 + x - y}{1 - x + y} \Bigg| - x &= \frac{1}{2}\ln\Big( \frac{1}{3} \Big) \\
+					\frac{1}{2}\ln\Bigg| \frac{1 + x - y}{1 - x + y} \Bigg| &= 2x + \ln\Big( \frac{1}{3} \Big) \\
+					\frac{1 + x - y}{1 - x + y} &= e^{2x + \ln\Big( \frac{1}{3} \Big)} \\
+					1 + x - y &= \frac{1}{3}e^{2x}(1 - x + y) \\
+					1 - \frac{1}{3}e^{2x} + x \Big( 1 + \frac{1}{3}e^{2x} \Big) &= y\Big( 1 + \frac{1}{3}e^{2x} \Big) \\
+					y &= \frac{3 - e^{2x} + x(3 + e^{2x})}{3 + e^{2x}}
+				}$
+			</div>
+			Now to determine the exact value:
+			<div class="latex_equation">
+				$\eqalign{
+					y(0.5) &= \frac{3 - e^{2(0.5)} + (0.5)(3 + e^{2(0.5)})}{3 + e^{2(0.5)}} \\
+					&= 0.5493
+				}$
+			</div>
+			and so the error is:
+			<div class="latex_equation">
+				$\eqalign{
+					\Delta = \Big| \hspace{.1cm} \text{Exact} \hspace{.1cm} - \text{Approximation} \hspace{.1cm} \Big| = |0.5493 - 0.5640| =  0.0147
+				}$
+			</div>
+		</div>
+	</div>
+</div>
