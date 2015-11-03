@@ -12,16 +12,6 @@
 </div>
 
 <div class="box_message">
-	<h2>Using the Website</h2>
-	<div class="box_text">
-		For the desktop user the menu is visible at all times on the left side of the page. To view the menu  on mobile either click the hamburger button on the top left or slide out the menu from the left. When looking at the menu, there is one option:
-		<div class="list">
-		    <li>Choose a subject to go forward</li>
-		</div>
-	</div>
-</div>
-
-<div class="box_message">
 	<h2>About the Name</h2>
 	<div class="box_text">
 		The inspiration behind "man math" draws from the command line prompt known as "man" on linux. It is a shorthand for "manual" and is typically used to open the manual to some package. In this case, the package happens to be "math" which provides a mathematical library full of notes and examples on different sections.	
