@@ -53,8 +53,10 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 					$(".page_title").text(subject.clean_name);
 					$("title").text(subject.clean_name);
 					$("main").append($("<div>").attr("id", "subject_page"));
-					var subject_page = $("#subject_page").load("/content/" + subject.sname + "/" + subject.sname + ".html");
+					var subject_page = $("#subject_page").load("/content/" + subject.sname + "/" + subject.sname + ".html").append($("<div>").attr("id", "holder"));
+					$("#holder").load("/client/loading.php");
 					$.get("/content/" + subject.sname + "/Notation.html").done(function(notation) {
+						$("#holder").hide();
 						subject_page.append(notation);
 						$.get("/client/subject_directions.php").done(function(content) {
 							subject_page.append(content);
@@ -68,6 +70,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
 		router.addRouteListener("subject.topic", function(toState, fromState) {
@@ -79,8 +82,10 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 							$(".page_title").text(subject.clean_name + " - " + topic.clean_name);
 							$("title").text(subject.clean_name + " - " + topic.clean_name);
 							$("main").append($("<div>").attr("id", "topic_page"));
-							var topic_page = $("#topic_page").load("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html");
+							var topic_page = $("#topic_page").load("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").append($("<div>").attr("id", "holder"));
+							$("#holder").load("/client/loading.php");;
 							$.get("/client/topic_directions.php").done(function(content) {
+								$("#holder").hide();
 								topic_page.append(content);
 								$("#second_li").text("Click on " + subject.clean_name + " in the menu to go back to the subject page");
 							});
@@ -94,6 +99,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo_link("subject.topic");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
@@ -124,6 +130,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo_link("subject.topic.section");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 
@@ -186,6 +193,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo_link("subject.topic.section.current_page");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 		});
 	};

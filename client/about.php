@@ -47,7 +47,10 @@
 		<li>Topic Page - Gives a brief overview on a topic</li>
 		<li>Menu Selection Coloring</li>
 		<li>Logo and Favicon</li>
-		If you would like to see the source code directly, everything is open-sourced <a href="http://www.github.com/nathanmarianovsky/manualmath.com" target="_blank">Here</a>
+		If you would like to see the source code directly, everything is open-sourced <a href="http://www.github.com/nathanmarianovsky/manualmath.com" target="_blank">Here</a>.
+		<br>
+		<br>
+		If you happen to find bugs or problems with the content either post an issue on the github repository or email me at nathanmarianovsky@gmail.com with you browser, browser version, device, and a description of the problem.
 	</div>
 </div>
 
