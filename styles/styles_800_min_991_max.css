@@ -41,8 +41,12 @@
 	}
 
 	#logo img {
-		padding: 13px 0 0 70px;
-		width: 350px;
+		padding: 12px 0 0 0;
+		width: 30px;
+	}
+
+	#logo_title {
+		right: 0px;
 	}
 
 	#nav-mobile {

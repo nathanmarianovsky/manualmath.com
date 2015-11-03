@@ -27,7 +27,10 @@
 					    <a href="#" id="hamburger_button" data-activates="nav-mobile" class="button-collapse">
 					      	<i class="mdi-navigation-menu"></i>
 					    </a>
-					    <a href="about.php" id="logo"><img src="/client/logo.svg"></a>
+					    <a href="about.php" id="logo">
+					    	<img src="/client/logo.svg">
+					    	<span id="logo_title"><span class="logoBlue">m</span>anual <span class="logoBlue">m</span>ath</span>
+					    </a>
 					    <a class="page_title" id="desktop_title"></a>
 				    </div>
 				</nav>

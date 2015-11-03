@@ -33,7 +33,6 @@ body * {
 }
 
 #logo {
-	width: 250px;
 	height: 70px;
 }
 
@@ -135,4 +134,17 @@ body * {
 .extra_li {
 	background-color: white;
 	pointer-events: none;
+}
+
+#logo_title {
+	color: #54FFA9;
+	font-family: "Roboto Mono";
+	font-size: 25px;
+	position: relative;
+	bottom: 8px;
+	margin-left: 10px;
+}
+
+.logoBlue {
+	color: #00B7FF;
 }
