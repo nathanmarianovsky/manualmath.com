@@ -27,8 +27,17 @@
 	}
 
 	#hamburger_button i {
-		line-height: 64px;
+		line-height: 115px;
 		height: 64px;
+	}
+
+	#first_top_nav {
+		box-shadow: none;
+		z-index: 2;
+	}
+
+	#second_top_nav {
+		z-index: 1;
 	}
 
 	.nav-wrapper {
@@ -38,6 +47,7 @@
 	#logo {
 		display: inline;
 		position: relative;
+		right: 20px;
 	}
 
 	#logo img {

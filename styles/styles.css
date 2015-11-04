@@ -12,11 +12,6 @@ body * {
 	box-shadow: none;
 }
 
-#third_top_nav {
-	top: 60px;
-	box-shadow: none;
-}
-
 #nav-mobile {
 	overflow-x: hidden;
 }
@@ -147,4 +142,8 @@ body * {
 
 .logoBlue {
 	color: #00B7FF;
+}
+
+#hamburger_button i {
+	font-size: 60px;
 }

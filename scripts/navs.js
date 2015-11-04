@@ -73,13 +73,6 @@ define(function() {
 			height: "64px"
 		}
 		exports.get_details(obj);
-		// $(".side-nav").append($("<li>").addClass("no-padding").attr("id", "about_li").fadeIn("slow"));
-		// $("#about_li").append($("<a>").addClass("collapsible-header bold").attr("id", "about").attr("href", "about.php").text("About").css({
-		// 	"line-height": obj.height,
-		// 	"font-size": obj.font
-		// }));
-		// $(".side-nav").append($("<li>").addClass("divider"));
-		// exports.handle_divider();
 		subjects.forEach(function(subject) {
 			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid).fadeIn("slow"));
 			var subjects_li = $("#subjects_li" + subject.sid).append($("<a>").addClass("collapsible-header bold").attr("id", "subjects_" + subject.sid).text(subject.clean_name).css({

@@ -33,9 +33,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 				});
 			});
-			// $("#about_li").addClass("active");
 			functions.handle_logo_link("about");
-			// functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 		});
 

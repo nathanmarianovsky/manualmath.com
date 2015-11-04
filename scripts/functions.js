@@ -185,7 +185,7 @@ define(function() {
 	exports.handle_side_nav = function() {
 		var width = 0;
 		if(window.innerWidth >= 992) { width = 350; }
-		else if(window.innerWidth < 992 && window.innerWidth >= 500) { 
+		else if(window.innerWidth < 992 && window.innerWidth >= 600) { 
 			width = window.innerWidth * .75;
 		}
 		else {
