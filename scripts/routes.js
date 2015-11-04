@@ -29,13 +29,13 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$.get("/client/about.php").done(function(content) {
 				$("#about_page").append(content);
 				$.get("/client/notation.php").done(function(notation) {
-					$("#about_page").append(notation);
+					$("#notation_box").append(notation);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 				});
 			});
-			$("#about_li").addClass("active");
+			// $("#about_li").addClass("active");
 			functions.handle_logo_link("about");
-			functions.handle_li_coloring();
+			// functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 		});
 

@@ -11,6 +11,15 @@
 	</div>
 </div>
 
+<div class="box_message" id="notation_box"></div>
+
+<div class="box_message">
+	<h2>About the Author</h2>
+	<div class="box_text">
+		Nathan Marianovsky received a Bachelors of Science in Mathematics from the New York University Polytechnic School of Engineering (now Tandon School of Engineering), where he currently employed as an adjunct instructor in the math department.
+	</div>
+</div>
+
 <div class="box_message">
 	<h2>About the Name</h2>
 	<div class="box_text">
@@ -21,23 +30,15 @@
 <div class="box_message">
 	<h2>Recent Changes</h2>
 	<div class="box_text">
-		The current version is v.0.0.2. Changes since the last release include:
-		<li>Mobile Support - It was a lot easier than I thought it would be</li>
-		<li>About Page - (No more home page) Finally I gave it some content</li>
-		<li>Subject Page - Gives a brief overview on a subject and its notation</li>
-		<li>Topic Page - Gives a brief overview on a topic</li>
-		<li>Menu Selection Coloring</li>
-		<li>Logo and Favicon</li>
+		The current version is v.0.0.3. Changes since the last release include:
+		<li>Logo Redesign</li>
+		<li>Math Formula Rendering Issue Fixed</li>
+		<li>Images not Loading Fixed</li>
+		<li>No more about link on the landing side</li>
+		<li>Fixed some of the content</li>
 		If you would like to see the source code directly, everything is open-sourced <a href="http://www.github.com/nathanmarianovsky/manualmath.com" target="_blank">Here</a>.
 		<br>
 		<br>
 		If you happen to find bugs or problems with the content either post an issue on the github repository or email me at nathanmarianovsky@gmail.com with your browser, browser version, device, and a description of the problem.
-	</div>
-</div>
-
-<div class="box_message">
-	<h2>About the Author</h2>
-	<div class="box_text">
-		Nathan Marianovsky received a Bachelors of Science in Mathematics from the New York University Polytechnic School of Engineering (now Tandon School of Engineering), where he currently employed as an adjunct instructor in the math department.
 	</div>
 </div>
