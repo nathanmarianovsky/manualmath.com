@@ -16,7 +16,7 @@
 <div class="box_message">
 	<h2>About the Author</h2>
 	<div class="box_text">
-		Nathan Marianovsky received a Bachelors of Science in Mathematics from the New York University Polytechnic School of Engineering (now Tandon School of Engineering), where he currently employed as an adjunct instructor in the math department.
+		Nathan Marianovsky received a Bachelors of Science in Mathematics from the New York University Polytechnic School of Engineering (now Tandon School of Engineering), where he is currently employed as an adjunct instructor in the math department.
 	</div>
 </div>
 
@@ -34,7 +34,7 @@
 		<li>Logo Redesign</li>
 		<li>Math Formula Rendering Issue Fixed</li>
 		<li>Images not Loading Fixed</li>
-		<li>No more about link on the landing side</li>
+		<li>No more about link on the landing page menu</li>
 		<li>Fixed some of the content</li>
 		If you would like to see the source code directly, everything is open-sourced <a href="http://www.github.com/nathanmarianovsky/manualmath.com" target="_blank">Here</a>.
 		<br>
