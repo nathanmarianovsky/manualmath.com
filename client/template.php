@@ -37,7 +37,8 @@
 					    </a>
 					    <a href="about.php" id="logo">
 					    	<img src="/client/logo.svg">
-					    	<span id="logo_title"><span class="logoBlue">m</span>anual <span class="logoBlue">m</span>ath</span>
+					    	<!-- <span id="logo_title"><span class="logoBlue">m</span>anual <span class="logoBlue">m</span>ath</span> -->
+					    	<span id="logo_title">manual math</span>
 					    </a>
 					    <a class="page_title" id="desktop_title"></a>
 				    </div>
