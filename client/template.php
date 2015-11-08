@@ -3,19 +3,26 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="author" content="Nathan Marianovsky">
-		<meta name="application-name" content="man math">
+		<meta name="application-name" content="manual math">
 		<meta name="description" content="A Comprehensive Math Resource">
 		<title></title>
+		<!-- Materialize CSS Library -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+		<!-- Google Material Icons -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<!-- Roboto Mono -->
 		<link href='https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext' rel='stylesheet' type='text/css'>
+		<!-- CSS Style Sheets -->
 		<link rel="stylesheet" type="text/css" href="/styles/styles.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_0_min_599_max.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_600_min_799_max.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_800_min_991_max.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_992_min.css">
+		<!-- Icon -->
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+		<!-- Require JS -->
 		<script data-main="/scripts/config" type="text/javascript" src="/node_modules/requirejs/require.js"></script>
+		<!-- Google Analytics -->
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -27,6 +34,7 @@
 	</head>
 	<body>
 		<header>
+			<!-- Top Bar -->
 			<div class="navbar-fixed">
 				<nav class="top-nav" id="first_top_nav">
 				    <div class="nav-wrapper">
@@ -46,6 +54,7 @@
 				    </div>
 				</nav>
 			</div>
+			<!-- Side Menu -->
 			<ul id="nav-mobile" class="side-nav fixed"></ul>
 		</header>
 		<main></main>
