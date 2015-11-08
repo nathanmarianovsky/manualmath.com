@@ -10,8 +10,8 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link href='https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="/styles/styles.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_0_min_499_max.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_500_min_799_max.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_0_min_599_max.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_600_min_799_max.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_800_min_991_max.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_992_min.css">
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">

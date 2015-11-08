@@ -1,5 +1,5 @@
-/* Styles for screens with minimum and maximum widths of 800px and 992px respectively */
-@media only screen and (max-width : 991px) and (min-width : 800px) {
+/* Styles for screens with maximum width of 800px */
+@media only screen and (max-width : 799px) and (min-width : 600px) {
 	/* Pushes the main content from the left and top */
 	main {
 		padding-left: 0;
@@ -36,7 +36,7 @@
 		text-align: center;
 	}
 
-	#logo {
+    #logo {
 		display: inline;
 		position: relative;
 		right: 40px;
@@ -47,6 +47,11 @@
 		width: 30px;
 	}
 
+	#mobile_title {
+		display: inline;
+		font-size: 15px;
+	}
+
 	#nav-mobile {
 		top: 124px;
 	}
@@ -54,7 +59,7 @@
 	.page_title {
 		font-size: 20px;
 	}
-	
+
 
 
 	/* All CSS properties related to anything belonging to the menu */
@@ -65,7 +70,7 @@
 
 	#nav-mobile .menu_items {
 		line-height: 120px;
-		font-size: 30px;
+		font-size: 20px;
 	}
 
 	#nav-mobile li {
@@ -73,7 +78,7 @@
 	}
 
 	.collapsible-header i {
-		font-size: 30px;
+		font-size: 20px;
 	}
 
 	#nav-mobile .divider {
@@ -84,7 +89,11 @@
 
 
 	/* All CSS properties related to anything belonging to the latex page */
+	.latex_equation {
+		font-size: 12px;
+	}
+
 	#latex {
 		font-size: 20px;
-	}	
+	}
 }

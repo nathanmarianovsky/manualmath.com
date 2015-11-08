@@ -85,8 +85,9 @@ nav {
 	width: 15px;
 }
 
-.collapsible-header {
+#nav-mobile .menu_items {
   	line-height: 64px;
+  	font-size: 12px;
 }
 
 .extra_li {
