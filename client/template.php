@@ -13,9 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="/styles/styles_0_min_499_max.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_500_min_799_max.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_800_min_991_max.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_992_min_1199_max.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_1200_min_1599_max.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_1600_min.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_992_min.css">
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 		<script data-main="/scripts/config" type="text/javascript" src="/node_modules/requirejs/require.js"></script>
 		<script>
@@ -37,7 +35,6 @@
 					    </a>
 					    <a href="about.php" id="logo">
 					    	<img src="/client/logo.svg">
-					    	<!-- <span id="logo_title"><span class="logoBlue">m</span>anual <span class="logoBlue">m</span>ath</span> -->
 					    	<span id="logo_title">manual math</span>
 					    </a>
 					    <a class="page_title" id="desktop_title"></a>

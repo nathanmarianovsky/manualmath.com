@@ -1,0 +1,57 @@
+<div class="latex_section">
+	Linear Independence of Functions
+</div>
+<div class="latex_body">
+	From linear algebra any two vectors are linearly dependent if $\exists \hspace{.1cm} c_1,c_2 \in \mathbb{R}$ s.t.:
+	<div class="latex_equation">
+		$\eqalign{
+			\overrightarrow{0} = c_1\overrightarrow{v}_1 + c_2\overrightarrow{v}_2
+		}$
+	</div>
+	Otherwise, if the trivial solution $c_1 = c_2 = 0$ is the only solution the vectors are linearly independent. Similarly any two functions are said to be $\textit{linearly dependent}$ if $\exists \hspace{.1cm} c_1,c_2 \in \mathbb{R}$ s.t.:
+	<div class="latex_equation">
+		$\eqalign{
+			0 = c_1y_1(x) + c_2y_2(x)
+		}$
+	</div>
+	Otherwise, if the trivial solution $c_1 = c_2 = 0$ is the only solution the functions are $\textit{linearly independent}$. Now notice that if the above statement is to hold true, then so must:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{d}{dx}(0) &= \frac{d}{dx}(c_1y_1'(x) + c_2y_2'(x)) \\
+			0 &= c_1y_1'(x) + c_2y_2'(x)
+		}$
+	</div>
+	iff $y_1,y_2 \in C^1$ which means that the functions have continuous first derivatives. Now putting these two equations together gives:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &= c_1y_1(x) + c_2y_2(x) \\
+			0 &= c_1y_1'(x) + c_2y_2'(x)
+		}$
+	</div>
+	which can be rewritten in matrix form as:
+	<div class="latex_equation">
+		$\eqalign{
+			\begin{pmatrix}
+				0 \\
+				0
+			\end{pmatrix} = \begin{pmatrix}
+				y_1 & y_2 \\
+				y_1' & y_2'
+			\end{pmatrix} \begin{pmatrix}
+				c_1 \\
+				c_2
+			\end{pmatrix}
+		}$
+	</div>
+	and is guaranteed to have the trivial solution as the unique solution iff:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &\neq \det \begin{pmatrix}
+				y_1 & y_2 \\
+				y_1' & y_2'
+			\end{pmatrix} \\
+			0 &\neq y_1y_2' - y_2y_1'
+		}$
+	</div>
+	With the determinant non-zero, the matrix is guaranteed to have an inverse, and typically this determinant is commonly referred to as the $\textit{Wronskian}$.
+</div>

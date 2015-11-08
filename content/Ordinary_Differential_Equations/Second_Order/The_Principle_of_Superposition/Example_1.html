@@ -1,0 +1,44 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			0 = 2y'' + 8y' + 6y
+		}$
+	</div>
+	and two independent solutions:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = e^{-3x} \hspace{.5cm} \text{and} \hspace{.5cm} y_2(x) = e^{-x}
+		}$
+	</div>
+	determine the general solution and show that it satisfies the differential equation.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since this is a homogeneous linear second order differential equation, the general solution will be given by the homogeneous solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h(x) = c_1e^{-3x} + c_2e^{-x}
+				}$
+			</div>
+			To confirm this:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= 2y_h'' + 8y_h' + 6y_h \\
+					0 &= 2\frac{d^2}{dx^2}(c_1e^{-3x} + c_2e^{-x}) + 8\frac{d}{dx}(c_1e^{-3x} + c_2e^{-x}) + 6(c_1e^{-3x} + c_2e^{-x}) \\
+					0 &= 2(9c_1e^{-3x} + c_2e^{-x}) + 8(-3c_1e^{-3x} - c_2e^{-x}) + 6(c_1e^{-3x} + c_2e^{-x}) \\
+					0 &= 0
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,45 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the two functions:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = f(x) + k_1 \hspace{.5cm} \text{and} \hspace{.5cm} y_2(x) = f(x) + k_2
+		}$
+	</div>
+	where $f(x) \in C^1$ and $k_1,k_2 \in \mathbb{R}$, determine what condition makes the two linearly dependent.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Looking at the Wronskian:
+			<div class="latex_equation">
+				$\eqalign{
+					W(y_1,y_2) &= \det \begin{pmatrix}
+						y_1 & y_2 \\
+						y_1' & y_2'
+					\end{pmatrix} \\
+					&= \det \begin{pmatrix}
+						f(x) + k_1 & f(x) + k_2 \\
+						f'(x) & f'(x)
+					\end{pmatrix} \\
+					&= f'(x)(f(x) + k_1) - f'(x)(f(x) + k_2) \\
+					&= f'(x)(k_1 - k_2)
+				}$
+			</div>
+			It seems that whenever $k_1 = k_2$ the two are linearly dependent. This essentially states that given any function, a linearly independent function could be constructed from the one given by performing a vertical translation. Of course this does not hold true if:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) = 0 \implies f(x) = C
+				}$
+			</div>
+			where $C$ is any real number.
+		</div>
+	</div>
+</div>

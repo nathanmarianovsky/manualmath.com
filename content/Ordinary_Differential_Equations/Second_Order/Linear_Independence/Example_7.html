@@ -1,0 +1,44 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the two functions:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = f(x) + g(x) \hspace{.5cm} \text{and} \hspace{.5cm} y_2(x) = f(x) - g(x)
+		}$
+	</div>
+	where $f(x),g(x) \in C^1$, determine what condition makes the two linearly dependent.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Looking at the Wronskian:
+			<div class="latex_equation">
+				$\eqalign{
+					W(y_1,y_2) &= \det \begin{pmatrix}
+						y_1 & y_2 \\
+						y_1' & y_2'
+					\end{pmatrix} \\
+					&= \det \begin{pmatrix}
+						f(x) + g(x) & f(x) - g(x) \\
+						f'(x) + g'(x) & f'(x) - g'(x)
+					\end{pmatrix} \\
+					&= (f(x) + g(x))(f'(x) - g'(x)) - (f(x) - g(x))(f'(x) + g'(x)) \\
+					&= 2(g(x)f'(x) - f(x)g'(x))
+				}$
+			</div>
+			From this it seems that in order to make the two functions linearly dependent, they must satisfy:
+			<div class="latex_equation">
+				$\eqalign{
+					0 = g(x)f'(x) - f(x)g'(x)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,43 +1,35 @@
 /* Styles for screens with maximum width of 800px */
 @media only screen and (max-width : 799px) and (min-width : 500px) {
-	header, main, footer {
-		padding-left: 0;
-	}
-
+	/* Pushes the main content from the left and top */
 	main {
+		padding-left: 0;
 		padding-top: 60px;
 	}
 
-	nav {
-		height: 64px;
-		line-height: 64px;
+
+
+	/* All CSS properties related to anything belonging to the top nav(s) */
+	#first_top_nav {
+		box-shadow: none;
+	}
+
+	#second_top_nav {
+		display: inline;
 	}
 
 	#desktop_title {
 		display: none;
 	}
 
-	#short_description {
-		margin-top: 40px;
-	}
-
 	#hamburger_button {
 		left: 20px;
 		display: inline;
+		visibility: visible;
 	}
 
 	#hamburger_button i {
-		line-height: 115px;
+		line-height: 64px;
 		height: 64px;
-	}
-
-	#first_top_nav {
-		box-shadow: none;
-		z-index: 2;
-	}
-
-	#second_top_nav {
-		z-index: 1;
 	}
 
 	.nav-wrapper {
@@ -47,16 +39,12 @@
     #logo {
 		display: inline;
 		position: relative;
-		right: 20px;
+		right: 40px;
 	}
 
 	#logo img {
 		padding: 12px 0 0 0;
 		width: 30px;
-	}
-
-	#logo_title {
-		right: 0px;
 	}
 
 	#mobile_title {
@@ -68,32 +56,30 @@
 		top: 124px;
 	}
 
-	#about_page .box_text, #topic_page .box_text {
-		font-size: 15px;
+	.page_title {
+		font-size: 20px;
 	}
 
+
+
+	/* All CSS properties related to anything belonging to the menu */
 	.extra_li {
 		font-size: 25px;
 		line-height: 120px;
 	}
 
-	.box_message h1 {
-		margin-top: 100px;
+	.collapsible-header i {
+		font-size: 20px;
 	}
 
+
+
+	/* All CSS properties related to anything belonging to the latex page */
 	.latex_equation {
-		font-size: 20px;
-	}
-
-	.page_title {
-		font-size: 20px;
+		font-size: 12px;
 	}
 
 	#latex {
-		font-size: 25px;
-	}
-
-	.collapsible-header i {
 		font-size: 20px;
 	}
 }

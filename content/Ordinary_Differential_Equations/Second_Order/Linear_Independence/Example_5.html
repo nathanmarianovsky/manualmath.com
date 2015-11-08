@@ -1,0 +1,39 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the two functions:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = e^{k_1x} \hspace{.5cm} \text{and} \hspace{.5cm} y_2(x) = e^{k_2x}
+		}$
+	</div>
+	where $k_1,k_2 \in \mathbb{R}$, determine what values of $k_1$ and $k_2$ make these two linearly dependent and independent.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Looking at the Wronskian:
+			<div class="latex_equation">
+				$\eqalign{
+					W(y_1,y_2) &= \det \begin{pmatrix}
+						y_1 & y_2 \\
+						y_1' & y_2'
+					\end{pmatrix} \\
+					&= \det \begin{pmatrix}
+						e^{k_1x} & e^{k_2x} \\
+						k_1e^{k_1x} & k_2e^{k_2x} 
+					\end{pmatrix} \\
+					&= k_2e^{(k_1 + k_2)x} - k_1e^{(k_1 + k_2)x} \\
+					&= (k_2 - k_1)e^{(k_1 + k_2)x}
+				}$
+			</div>
+			It seems that whenever $k_1 = k_2$ the two are linearly dependent, otherwise they are independent.
+		</div>
+	</div>
+</div>

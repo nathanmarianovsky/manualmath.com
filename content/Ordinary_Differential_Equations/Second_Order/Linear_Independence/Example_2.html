@@ -1,0 +1,39 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the two functions:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = x^7 \hspace{.5cm} \text{and} \hspace{.5cm} y_2(x) = 6x^7 + 4
+		}$
+	</div>
+	where $x \neq 0$, determine whether they are linearly independent or not.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Looking at the Wronskian:
+			<div class="latex_equation">
+				$\eqalign{
+					W(y_1,y_2) &= \det \begin{pmatrix}
+						y_1 & y_2 \\
+						y_1' & y_2'
+					\end{pmatrix} \\
+					&= \det \begin{pmatrix}
+						x^7 & 6x^7 + 4 \\
+						7x^6 & 42x^6 
+					\end{pmatrix} \\
+					&= 42x^{13} - 42x^{13} + 28x^6 \\
+					&= 28x^6
+				}$
+			</div>
+			Since the Wronskian is non-zero, the two functions are linearly independent.
+		</div>
+	</div>
+</div>

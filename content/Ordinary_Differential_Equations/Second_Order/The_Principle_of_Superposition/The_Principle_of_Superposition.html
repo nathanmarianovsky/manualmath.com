@@ -1,0 +1,76 @@
+<div class="latex_section">
+	Statement for Homogeneous Equations
+</div>
+<div class="latex_body">
+	Given a homogeneous linear second order differential equation in the form:
+	<div class="latex_equation">
+		$\eqalign{
+			0 = y'' + f(x)y' + g(x)y
+		}$
+	</div>
+	and there exist two independent solutions s.t.:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &= y_1'' + f(x)y_1' + g(x)y_1 \\
+			0 &= y_2'' + f(x)y_2' + g(x)y_2
+		}$
+	</div>
+	then the general solution is defined as:
+	<div class="latex_equation">
+		$\eqalign{
+			y_h(x) = c_1y_1(x) + c_2y_2(x)
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			c_1,c_2 \in \mathbb{R}
+		}$
+	</div>
+	and $h$ stands for homogeneous. To prove this just plug into the differential equation to confirm that it satisfies as a solution:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &= y_h'' + f(x)y_h' + g(x)y_h \\
+			0 &= (c_1y_1 + c_2y_2)'' + f(x)(c_1y_1 + c_2y_2)' + g(x)(c_1y_1 + c_2y_2) \\
+			0 &= c_1(y_1'' + f(x)y_1' + g(x)y_1) + c_2(y_2'' + f(x)y_2' + g(x)y_2) \\
+			0 &= c_1(0) + c_2(0) \\
+			0 &= 0
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Statement for Non-Homogeneous Equations
+</div>
+<div class="latex_body">
+	Given a homogeneous linear second order differential equation in the form:
+	<div class="latex_equation">
+		$\eqalign{
+			k(x) = y'' + f(x)y' + g(x)y
+		}$
+	</div>
+	and the solutions that satisfy:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &= y_h'' + f(x)y_h' + g(x)y_h \\
+			k(x) &= y_{nh}'' + f(x)y_{nh}' + g(x)y_{nh}
+		}$
+	</div>
+	the general solution to this equation is given as:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = y_h(x) + y_{nh}(x)
+		}$
+	</div>
+	where $nh$ stands for the non-homogeneous solution. To prove this just plug into the original differential equation to confirm that it satisfies as a solution:
+	<div class="latex_equation">
+		$\eqalign{
+			k(x) &= y'' + f(x)y' + g(x)y \\
+			k(x) &= (y_h + y_{nh})'' + f(x)(y_h + y_{nh})' + g(x)(y_h + y_{nh}) \\
+			k(x) &= (y_h'' + f(x)y_h' + g(x)y_h) + (y_{nh}'' + f(x)y_{nh}' + g(x)y_{nh}) \\
+			k(x) &= 0 + k(x) \\
+			0 &= 0
+		}$
+	</div>
+	Note that while the homogeneous solution will have undetermined constants, the non-homogeneous solution will never have this. The easiest way to see this is to check that if instead we took a multiple of the non-homogeneous solution and plugged in, it would not satisfy as a solution. Also note that books typically reference the non-homogeneous solution as the particular solution, but I will refrain from doing that so as to not confuse it with the particular solution that references the solution to a differential equation with initial condition(s).
+</div>
