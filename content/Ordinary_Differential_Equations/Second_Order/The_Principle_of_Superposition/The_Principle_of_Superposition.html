@@ -43,32 +43,43 @@
 	Statement for Non-Homogeneous Equations
 </div>
 <div class="latex_body">
-	Given a homogeneous linear second order differential equation in the form:
+	Given a non-homogeneous linear second order differential equation in the form:
 	<div class="latex_equation">
 		$\eqalign{
-			k(x) = y'' + f(x)y' + g(x)y
+			k_1(x) + k_2(x) + k_3(x) + \dots + k_n(x) = y'' + f(x)y' + g(x)y
 		}$
 	</div>
 	and the solutions that satisfy:
 	<div class="latex_equation">
 		$\eqalign{
 			0 &= y_h'' + f(x)y_h' + g(x)y_h \\
-			k(x) &= y_{nh}'' + f(x)y_{nh}' + g(x)y_{nh}
+			k_1(x) &= j_1'' + f(x)j_1' + g(x)j_1 \\
+			k_2(x) &= j_2'' + f(x)j_2' + g(x)j_2 \\
+			k_3(x) &= j_3'' + f(x)j_3' + g(x)j_3 \\
+			&\vdots \\
+			k_n(x) &= j_n'' + f(x)j_n' + g(x)j_n
 		}$
 	</div>
-	the general solution to this equation is given as:
+	then the general solution to the equation is given as:
 	<div class="latex_equation">
 		$\eqalign{
 			y(x) = y_h(x) + y_{nh}(x)
 		}$
 	</div>
-	where $nh$ stands for the non-homogeneous solution. To prove this just plug into the original differential equation to confirm that it satisfies as a solution:
+	where:
 	<div class="latex_equation">
 		$\eqalign{
-			k(x) &= y'' + f(x)y' + g(x)y \\
-			k(x) &= (y_h + y_{nh})'' + f(x)(y_h + y_{nh})' + g(x)(y_h + y_{nh}) \\
-			k(x) &= (y_h'' + f(x)y_h' + g(x)y_h) + (y_{nh}'' + f(x)y_{nh}' + g(x)y_{nh}) \\
-			k(x) &= 0 + k(x) \\
+			y_{nh}(x) = j_1(x) + j_2(x) + j_3(x) + \dots + j_n(x)
+		}$
+	</div>
+	To distinguish from the homogeneous solution, $nh$ stands for the non-homogeneous solution. To prove that this works just plug into the original differential equation to confirm that it satisfies as a solution:
+	<div class="latex_equation">
+		$\eqalign{
+			k_1(x) + k_2(x) + k_3(x) + \dots + k_n(x) &= y'' + f(x)y' + g(x)y \\
+			\sum_{i = 1}^n k_i(x) &= (y_h + y_{nh})'' + f(x)(y_h + y_{nh})' + g(x)(y_h + y_{nh}) \\
+			\sum_{i = 1}^n k_i(x) &= (y_h'' + f(x)y_h' + g(x)y_h) + (y_{nh}'' + f(x)y_{nh}' + g(x)y_{nh}) \\
+			\sum_{i = 1}^n k_i(x) &= 0 + \sum_{l = 1}^n (j_l'' + f(x)j_l' + g(x)j_l) \\
+			\sum_{i = 1}^n k_i(x) &= \sum_{l = 1}^n k_l(x) \\
 			0 &= 0
 		}$
 	</div>

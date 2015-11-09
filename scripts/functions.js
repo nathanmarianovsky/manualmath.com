@@ -198,6 +198,18 @@ define(function() {
 		if(window.innerWidth < 992) {
 			$(".button-collapse").sideNav("hide");
 		}
+		// $(window).resize(function() {
+		// 	if(window.innerWidth < 992) {
+		// 		var new_width = .75 * $(this).width();
+		// 		$(".button-collapse").sideNav({
+		// 			menuWidth: new_width
+		// 		});
+		// 		$(".drag-target").css({
+		// 			"display": "none",
+		// 			"visibility": "hidden"
+		// 		});
+		// 	}
+		// });
 	};
 
 	return exports;
