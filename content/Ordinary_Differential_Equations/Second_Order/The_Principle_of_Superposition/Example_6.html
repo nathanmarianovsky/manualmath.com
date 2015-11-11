@@ -5,13 +5,13 @@
 	Given the set of functions:
 	<div class="latex_equation">
 		$\eqalign{
-			\mathcal{S} = \{ \cosh(2x), \sinh(2x) \}
+			\mathcal{S} = \Big\{ e^{\frac{x}{2}}, xe^{\frac{x}{2}} \Big\}
 		}$
 	</div>
 	Determine whether $\mathcal{S}$ satisfies as a fundamental set for the differential equation:
 	<div class="latex_equation">
 		$\eqalign{
-			y'' - 4y = 0
+			4y'' - 4y' + y = 0
 		}$
 	</div>
 </div>
@@ -31,25 +31,25 @@
 						y_1' & y_2'
 					\end{pmatrix} \\
 					&= \det \begin{pmatrix}
-						\cosh(2x) & \sinh(2x) \\
-						2\sinh(2x) & 2\cosh(2x)
+						e^{\frac{x}{2}} & xe^{\frac{x}{2}} \\
+						\frac{1}{2}e^{\frac{x}{2}} & e^{\frac{x}{2}} + \frac{x}{2}e^{\frac{x}{2}}
 					\end{pmatrix} \\
-					&= 2\cosh^2(2x) - 2\sinh^2(2x) \\
-					&= 2
+					&= \Big( e^x + \frac{x}{2}e^x \Big) - \Big( \frac{x}{2}e^x \Big) \\
+					&= e^x
 				}$
 			</div>
 			With their independence assured, we form the homogeneous solution:
 			<div class="latex_equation">
 				$\eqalign{
-					y_h = c_1\cosh(2x) + c_2\sinh(2x)
+					y_h = c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}}
 				}$
 			</div>
 			and check that it satisfies the differential equation:
 			<div class="latex_equation">
 				$\eqalign{
-					0 &= y_h'' - 4y_h \\
-					0 &= (c_1\cosh(2x) + c_2\sinh(2x))'' - 4(c_1\cosh(2x) + c_2\sinh(2x)) \\
-					0 &= (4c_1\cosh(2x) + 4c_2\sinh(2x)) - (4c_1\cosh(2x) + 4c_2\sinh(2x)) \\
+					0 &= 4y_h'' - 4y_h' + y_h \\
+					0 &= 4\Big( c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} \Big)'' - 4\Big( c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} \Big)' + \Big( c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} \Big) \\
+					0 &= c_1e^{\frac{x}{2}} + 4c_2e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} - 2c_1e^{\frac{x}{2}} - 4c_2e^{\frac{x}{2}} - 2c_2xe^{\frac{x}{2}} + c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} \\
 					0 &= 0
 				}$
 			</div>

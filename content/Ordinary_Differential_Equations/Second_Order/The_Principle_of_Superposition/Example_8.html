@@ -1,0 +1,45 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Suppose that:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1 &= e^x \\
+			y_2 &= e^{-x}
+		}$
+	</div>
+	are two solutions of a homogeneous linear second order differential equation. Explain why:
+	<div class="latex_equation">
+		$\eqalign{
+			y_3 &= \cosh(x) \\
+			y_4 &= \sinh(x)
+		}$
+	</div>
+	are also solutions of the equation.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since we are dealing with a homogeneous linear equation, the general solution is given by the homogeneous solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h = c_1e^x + c_2e^{-x}
+				}$
+			</div>
+			In comparison:
+			<div class="latex_equation">
+				$\eqalign{
+					\cosh(x) &= \frac{e^x + e^{-x}}{2} \\
+					\sinh(x) &= \frac{e^x - e^{-x}}{2}
+				}$
+			</div>
+			So letting $c_1 = c_2 = \frac{1}{2}$ gives the hyperbolic cosine and $c_1 = -c_2 = \frac{1}{2}$ gives the hyperbolic sine. 
+		</div>
+	</div>
+</div>

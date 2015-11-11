@@ -1,6 +1,6 @@
 {
-  "name": "man_math",
-  "version": "0.0.0",
+  "name": "manualmath.com",
+  "version": "1.0.0",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -9,7 +9,7 @@
     "test",
     "tests"
   ],
-  "homepage": "https://github.com/nathanmarianovsky/man_math",
+  "homepage": "https://github.com/nathanmarianovsky/manualmath.com",
   "authors": [
     "Nathan Marianovsky <nathanmarianovsky@gmail.com>"
   ],
