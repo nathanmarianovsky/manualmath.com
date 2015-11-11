@@ -19,4 +19,5 @@ gulp.task("build_materialize", ["materialize_packages"], function() {
 	return exec("gulp build");
 });
 
+// Default task that runs all of the tasks above in the correct order and timing
 gulp.task("default", ["build_materialize"]);

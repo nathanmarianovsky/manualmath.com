@@ -43,6 +43,14 @@
 		    	<td>$f:A \rightarrow B$</td>
 			    <td>The Mapping $f$ from $A$ to $B$</td>
 			</tr>
+			<tr>
+		    	<td>$\subset$</td>
+			    <td>Proper Subset</td>
+			</tr>
+			<tr>
+		    	<td>$\subseteq$</td>
+			    <td>Subset</td>
+			</tr>
 		</table>
 	</div>
 </div>

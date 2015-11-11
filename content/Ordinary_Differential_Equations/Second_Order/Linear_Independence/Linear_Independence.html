@@ -14,10 +14,17 @@
 			0 = c_1y_1(x) + c_2y_2(x)
 		}$
 	</div>
-	Otherwise, if the trivial solution $c_1 = c_2 = 0$ is the only solution the functions are $\textit{linearly independent}$. Now notice that if the above statement is to hold true, then so must:
+	Otherwise, if the trivial solution $c_1 = c_2 = 0$ is the only solution the functions are $\textit{linearly independent}$.
+</div>
+
+<div class="latex_section">
+	The Wronskian
+</div>
+<div class="latex_body">
+	Now given the relation for determining the dependence of two functions, same as above, we can go on to say:
 	<div class="latex_equation">
 		$\eqalign{
-			\frac{d}{dx}(0) &= \frac{d}{dx}(c_1y_1'(x) + c_2y_2'(x)) \\
+			\frac{d}{dx}(0) &= \frac{d}{dx}(c_1y_1(x) + c_2y_2(x)) \\
 			0 &= c_1y_1'(x) + c_2y_2'(x)
 		}$
 	</div>
@@ -53,5 +60,83 @@
 			0 &\neq y_1y_2' - y_2y_1'
 		}$
 	</div>
-	With the determinant non-zero, the matrix is guaranteed to have an inverse, and typically this determinant is commonly referred to as the $\textit{Wronskian}$.
+	With the determinant non-zero, the matrix is guaranteed to have an inverse, and typically this determinant is referred to as the $\textit{Wronskian}$.
+</div>
+
+<div class="latex_section">
+	Fundamental Set of Solutions
+</div>
+<div class="latex_body">
+	Building off of independent solutions leads right to what is called the $\textit{fundamental set of solutions}$. Given a homogeneous linear second order equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + p(x)y' + q(x) = 0
+		}$
+	</div>
+	where $y_1$ and $y_2$ are known independent solutions, the fundamental set of solutions is formally defined as:
+	<div class="latex_equation">
+		$\eqalign{
+			\mathcal{S} = \{y_1, y_2\}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Abel's Identity
+</div>
+<div class="latex_body">
+	The Wronskian, while easy to determine with the definition above, has another form. Assume that we are given a homogeneous linear second order equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + p(x)y' + q(x) &= 0 \\
+			-(p(x)y' + q(x)y) &= y''
+		}$
+	</div>
+	and its fundamental set of solutions:
+	<div class="latex_equation">
+		$\eqalign{
+			\mathcal{S} = \{y_1, y_2\}
+		}$
+	</div>
+	With this, the Wronskian is defined as:
+	<div class="latex_equation">
+		$\eqalign{
+			W(y_1, y_2) = y_1y_2' - y_2y_1'
+		}$
+	</div>
+	Now taking the derivative gives:
+	<div class="latex_equation">
+		$\eqalign{
+			\require{cancel}
+			W'(y_1, y_2) &= \frac{d}{dx}(y_1y_2' - y_2y_1') \\
+			&= \cancel{y_1'y_2'} + y_1y_2'' - \cancel{y_2'y_1'} - y_2y_1'' \\
+			&= y_1y_2'' - y_2y_1'' \\
+			&= -y_1(p(x)y_2' + q(x)y_2) + y_2(p(x)y_1' + q(x)y_1) \\
+			&= -p(x)(y_1y_2' - y_2y_1') \\
+			&= -p(x)W(y_1, y_2)
+		}$
+	</div>
+	where I used the differential equation to replace the second derivatives. Now we have a separable first order differential equation that can be solved to obtain the Wronskian:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dW}{dx} &= -p(x)W \\
+			\frac{dW}{W} &= -p(x) dx \\			
+			\int \frac{dW}{W} &= \int -p(x) dx \\			
+			\ln|W| &= P(x) + C \\
+			W &= Ke^{P(x)}
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			P(x) = -\int p(x) dx \hspace{.5cm} \text{and} \hspace{.5cm} K = e^C
+		}$
+	</div>
+	but the drawback here is that there is an unknown constant. So to make sense of this we have to talk about the fundamental solutions existing on some interval, $I \subset \mathbb{R}$. If we have an interval on which the solutions exist then we may choose any arbitrary point, $x_o \in I$, so that:
+	<div class="latex_equation">
+		$\eqalign{	
+			W(x) &= W(x_0) \int_{x_0}^x -p(t) dt \\
+		}$
+	</div>
+	This is what is known as Abel's Identity which states that either the Wronskian is always going to be zero or non-zero $\forall x_0 \in I$. 
 </div>

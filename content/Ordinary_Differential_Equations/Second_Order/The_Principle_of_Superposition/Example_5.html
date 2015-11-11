@@ -1,0 +1,58 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the set of functions:
+	<div class="latex_equation">
+		$\eqalign{
+			\mathcal{S} = \Big\{ e^{\frac{x}{2}}, xe^{\frac{x}{2}} \Big\}
+		}$
+	</div>
+	Determine whether $\mathcal{S}$ satisfies as a fundamental set for the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			4y'' - 4y' + y = 0
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First we have to check for the independence of the functions by looking at the Wronskian:
+			<div class="latex_equation">
+				$\eqalign{
+					W(y_1, y_2) &= \det \begin{pmatrix}
+						y_1 & y_2 \\
+						y_1' & y_2'
+					\end{pmatrix} \\
+					&= \det \begin{pmatrix}
+						e^{\frac{x}{2}} & xe^{\frac{x}{2}} \\
+						\frac{1}{2}e^{\frac{x}{2}} & e^{\frac{x}{2}} + \frac{x}{2}e^{\frac{x}{2}}
+					\end{pmatrix} \\
+					&= \Big( e^x + \frac{x}{2}e^x \Big) - \Big( \frac{x}{2}e^x \Big) \\
+					&= e^x
+				}$
+			</div>
+			With their independence assured, we form the homogeneous solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h = c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}}
+				}$
+			</div>
+			and check that it satisfies the differential equation:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= 4y_h'' - 4y_h' + y_h \\
+					0 &= 4\Big( c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} \Big)'' - 4\Big( c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} \Big)' + \Big( c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} \Big) \\
+					0 &= c_1e^{\frac{x}{2}} + 4c_2e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} - 2c_1e^{\frac{x}{2}} - 4c_2e^{\frac{x}{2}} - 2c_2xe^{\frac{x}{2}} + c_1e^{\frac{x}{2}} + c_2xe^{\frac{x}{2}} \\
+					0 &= 0
+				}$
+			</div>
+		</div>
+	</div>
+</div>

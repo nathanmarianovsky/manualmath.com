@@ -1,7 +1,6 @@
 {
-  "name": "man_math",
+  "name": "manualmath.com",
   "version": "1.0.0",
-  "main": "index.js",
   "dependencies": {
     "jquery": "^2.1.4",
     "requirejs": "^2.1.20",
@@ -13,17 +12,17 @@
     "gulp-util": "^3.0.7"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install_everything": "gulp"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nathanmarianovsky/man_math.git"
+    "url": "git+https://github.com/nathanmarianovsky/manualmath.com.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nathanmarianovsky/man_math/issues"
+    "url": "https://github.com/nathanmarianovsky/manualmath.com/issues"
   },
-  "homepage": "https://github.com/nathanmarianovsky/man_math#readme",
+  "homepage": "https://github.com/nathanmarianovsky/manualmath.com#readme",
   "description": ""
 }
