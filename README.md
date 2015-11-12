@@ -34,7 +34,7 @@ All of the functionality associated to the actual website can be found inside th
 
 
 # Using the API
-## Getting Objects
+### Getting Objects
 The API used for this website has been written in PHP and can be found inside the "/api" folder. Now to use the actual API, there exist ways to extract the subjects, topics, sections, and examples from the database. Overall I can summarize all of the endpoints into a single generalization:
 ```
 localhost/api/type_of_object_wanted/type_of_object_whose_data_is_passing_in/object_type_of_parameter/object_parameter
@@ -66,7 +66,7 @@ localhost/api/examples/example/name/example_1
 ```
 Note that since example names are not unique, this will return all of the examples who have such a name. The only time when a name is going to be unique is for any subject, otherwise expect that you might get back more than one result.
 
-## Getting File Contents
+### Getting File Contents
 The API also has calls to get back the html content associated to any given section or examples. To get the contents of a section call:
 ```
 localhost/api/get_section_content/id
@@ -76,6 +76,27 @@ and for examples:
 localhost/api/get_example_content/id
 ```
 where "id" in both cases has to be replaced with the actual id of the section or example. Notice that unlike getting objects, I only allow you to use the id here as a parameter since the id guarantees a unique object.
+
+
+# Version History
+
+### v.0.0.3
+* Logo Redesign
+* Math Formula Rendering Issue Fixed
+* Images not Loading Fixed
+* No More About Link on the Landing Page Menu
+* Fixed Some of the Content
+
+### v.0.0.2
+* Mobile Support
+* About Page - Nore More Home Page
+* Subject Page - Gives a Brief Overview on a Subject and its Notation
+* Topic Page - Gives a Brief Overview on a Topic
+* Menu Selection Coloring
+* Logo and Favicon
+
+### v.0.0.1
+* Initial Release
 
 # License
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">manualmath.com</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/nathanmarianovsky/manualmath.com" property="cc:attributionName" rel="cc:attributionURL">nathanmarianovsky</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
