@@ -1,0 +1,55 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the non-homogeneous solution:
+	<div class="latex_equation">
+		$\eqalign{
+			y_{nh} = 4x^2 + 2
+		}$
+	</div>
+	that satisfies the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + k_1y' + k_2y = f(x)
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			k_1, k_2 \in \mathbb{R}
+		}$
+	</div>
+	Use this information to determine the non-homogeneous solution to:
+	<div class="latex_equation">
+		$\eqalign{
+			w'' + k_1w' + k_2w = 2f(x)
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			A good idea might be to try double the given non-homogeneous solution:
+			<div class="latex_equation">
+				$\eqalign{
+					w_{nh} = 2y_{nh} = 8x^2 + 4
+				}$
+			</div>
+			and plugging in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					2f(x) &= w_{nh}'' + k_1w_{nh}' + k_2w_{nh} \\
+					2f(x) &= (2y_{nh})'' + k_1(2y_{nh})' + k_2(2y_{nh}) \\
+					2f(x) &= 2(y_{nh}'' + k_1y_{nh}' + k_2y_{nh}) \\
+					0 &= 0
+				}$
+			</div>
+		</div>
+	</div>
+</div>

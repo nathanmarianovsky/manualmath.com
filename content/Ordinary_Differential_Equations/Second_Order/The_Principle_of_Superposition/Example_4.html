@@ -37,27 +37,45 @@
 			<div class="latex_equation">
 				$\eqalign{
 					x^2 &= y'' + 7y' + 12y \\
-					x^2 &= 
+					x^2 &= \Big( c_1e^{-4x} + c_2e^{-3x} + \frac{x^2}{12} - \frac{7x}{72} + \frac{37}{864} \Big)'' \\
+					& \hspace{.4cm} + 7\Big( c_1e^{-4x} + c_2e^{-3x} + \frac{x^2}{12} - \frac{7x}{72} + \frac{37}{864} \Big)' \\
+					& \hspace{.4cm} + 12\Big( c_1e^{-4x} + c_2e^{-3x} + \frac{x^2}{12} - \frac{7x}{72} + \frac{37}{864} \Big) \\
+					x^2 &= \Big( 16c_1e^{-4x} + 9c_2e^{-3x} + \frac{1}{6} \Big) \\
+					& \hspace{.4cm} + \Big( -28c_1e^{-4x} - 21c_2e^{-3x} + \frac{7x}{6} - \frac{49}{72} \Big) \\
+					& \hspace{.4cm} + \Big( 12c_1e^{-4x} + 12c_2e^{-3x} + x^2 - \frac{7x}{6} + \frac{37}{72} \Big) \\
+					0 &= 0
 				}$
 			</div>
 			Now for the second solution:
 			<div class="latex_equation">
 				$\eqalign{
-					5x^2 + 3x - 16 &= w'' - 6w' + 5w \\
-					5x^2 + 3x - 16 &= \frac{d^2}{dx^2}(c_1e^x + c_2e^{5x} + x^2 + 3x) \\
-					& \hspace{.4cm} - 6\frac{d}{dx}(c_1e^x + c_2e^{5x} + x^2 + 3x) \\
-					& \hspace{.4cm} + 5(c_1e^x + c_2e^{5x} + x^2 + 3x) \\
-					5x^2 + 3x - 16 &= (c_1e^x + 25c_2e^{5x} + 2) \\
-					& \hspace{.4cm} - 6(c_1e^x + 5c_2e^{5x} + 2x + 3) \\
-					& \hspace{.4cm} + 5(c_1e^x + c_2e^{5x} + x^2 + 3x) \\
-					5x^2 + 3x - 16 &= 5x^2 + 3x - 16 \\
+					e^{7x} &= y'' + 7y' + 12y \\
+					e^{7x} &= \Big( c_1e^{-4x} + c_2e^{-3x} + \frac{e^{7x}}{110} \Big)'' \\
+					& \hspace{.4cm} + 7\Big( c_1e^{-4x} + c_2e^{-3x} + \frac{e^{7x}}{110} \Big)' \\
+					& \hspace{.4cm} + 12\Big( c_1e^{-4x} + c_2e^{-3x} + \frac{e^{7x}}{110} \Big) \\
+					e^{7x} &= \Big( 16c_1e^{-4x} + 9c_2e^{-3x} + \frac{49e^{7x}}{110} \Big) \\
+					& \hspace{.4cm} + \Big( -28c_1e^{-4x} - 21c_2e^{-3x} + \frac{49e^{7x}}{110} \Big) \\
+					& \hspace{.4cm} + \Big( 12c_1e^{-4x} + 12c_2e^{-3x} + \frac{12e^{7x}}{110} \Big) \\
+					0 &= 0
+				}$
+			</div>
+			and the third solution:
+			<div class="latex_equation">
+				$\eqalign{
+					\cos(2x) &= y'' + 7y' + 12y \\
+					\cos(2x) &= \Big( c_1e^{-4x} + c_2e^{-3x} + \frac{7\sin(2x)}{130} + \frac{2\cos(2x)}{65} \Big)'' \\
+					& \hspace{.4cm} + 7\Big( c_1e^{-4x} + c_2e^{-3x} + \frac{7\sin(2x)}{130} + \frac{2\cos(2x)}{65} \Big)' \\
+					& \hspace{.4cm} + 12\Big( c_1e^{-4x} + c_2e^{-3x} + \frac{7\sin(2x)}{130} + \frac{2\cos(2x)}{65} \Big) \\
+					\cos(2x) &= \Big( 16c_1e^{-4x} + 9c_2e^{-3x} - \frac{28\sin(2x)}{130} - \frac{8\cos(2x)}{65} \Big) \\
+					& \hspace{.4cm} + \Big( -28c_1e^{-4x} - 21c_2e^{-3x} + \frac{98\cos(2x)}{130} - \frac{28\sin(2x)}{65} \Big) \\
+					& \hspace{.4cm} + \Big( 12c_1e^{-4x} + 12c_2e^{-3x} + \frac{84\sin(2x)}{130} + \frac{24\cos(2x)}{65} \Big) \\
 					0 &= 0
 				}$
 			</div>
 			Lastly to solve the new differential equation, using the principle of superposition of non-homogeneous differential equations:
 			<div class="latex_equation">
 				$\eqalign{
-					z(x) = c_1e^x + c_2e^{5x} + 3e^{2x} + x^2 + 3x
+					z(x) = c_1e^{-4x} + c_2e^{-3x} + \frac{x^2}{12} - \frac{7x}{72} + \frac{37}{864} + \frac{e^{7x}}{110} + \frac{7\sin(2x)}{130} + \frac{2\cos(2x)}{65}
 				}$
 			</div>
 		</div>
