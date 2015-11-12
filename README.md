@@ -18,11 +18,29 @@ With this the project is ready to go.
 
 
 # Changing the Content
+### Physical Files
 In order to change the content of the website, there are two main folders to look at:
 
 1. At "/client/" we have "about.php" and "notation.php". The first one houses the content for the site's landing page and the second is the notation that is mentioned on this site. 
 
 2. At "/content/" we have the rest. Inside there will be folders for each different subject. When looking at each subject there will be two html files associated that load the content of the subject alongside folders that represent the topics. Then looking inside any of the topics associated to the subject will have a single html file associated to the topic alongside folders that represent the sections. Finally looking inside any of the sections associated to the topic will have a single html file associated to the section alongside html files that represent the examples associated to the section. Sometimes there may also be image files inside the section folders, but these are just images used inside either the notes or examples.
+
+### Changing the Database
+To begin with, the database is setup according to the following ERR diagram:
+
+<p align="center">
+ <img width=500 height=500 src="/database_setup.png">
+</p>
+
+So after setting up, add subjects, topics, sections, and examples into the database as needed. As far as names go inside the database, for any object they must match the file name and adhere to the rules:
+
+* All " " spaces must be replaced with "_"
+* All "-" characters must be replaced with "AND"
+* All "'" characters must be replaced with "APOSTROPHE"
+* All ":" characters must be replaced with "COLON"
+* Subject name, sname, is unique to a given subject
+
+The id given to any object is completely arbitrary so long as the id is unique to that object, which essentially means that when looking at sections there can only be a single section with an id of 7, but there may exist a subject, topic, and even example that have the same id. The order is what helps provide a "natural" ordering to the objects as needed. 
 
 
 # Styling
@@ -34,33 +52,40 @@ All of the functionality associated to the actual website can be found inside th
 
 
 # Using the API
-### Getting Objects
-The API used for this website has been written in PHP and can be found inside the "/api" folder. Now to use the actual API, there exist ways to extract the subjects, topics, sections, and examples from the database. Overall I can summarize all of the endpoints into a single generalization:
+### Getting All Objects of a Certain Type
+The API used for this website has been written in PHP and can be found inside the "/api" folder. Now to use the actual API, there exist ways to extract the subjects, topics, sections, and examples from the database. So lets say that you want to get either all of the subjects, topics, sections, or examples that are available in the database. You would call on:
+```
+localhost/api/type_of_object_wanted
+```
+where "type_of_object_wanted" represents what we want to get and can be one of four things:
+* subjects
+* topics
+* sections
+* examples
+
+
+### Getting Specific Object(s)
+Now what if we want to get a specific object given that we know some information that can be used to identify it. Overall I can summarize all of the calls into a single generalization:
 ```
 localhost/api/type_of_object_wanted/type_of_object_whose_data_is_passing_in/object_type_of_parameter/object_parameter
 ```
-Here localhost represents the local build but can obviously be replaced with the actual domain. As for the rest:
+Here localhost represents the local build but can obviously be replaced with the actual domain and "type_of_object_wanted" is the same as before with the same options. As for the rest:
 
-* type_of_object_wanted: This represents what we want to get. Specifically this can be one of four things:
-  * subjects
-  * topics
-  * sections
-  * examples
-* type_of_object_whose_data_is_passing_in: This represents the object of whose data is going to be provided. Specifically this can be one of four things:
+* "type_of_object_whose_data_is_passing_in": This represents the object of whose data is going to be provided. Specifically this can be one of four things:
   * subject
   * topic
   * section
   * example
-* object_type_of_parameter: This represents the type of parameter that we are going to use from "type_of_object_whose_data_is_passing_in". Specifically this can be one of two things:
+* "object_type_of_parameter": This represents the type of parameter that we are going to use from "type_of_object_whose_data_is_passing_in". Specifically this can be one of two things:
   * id
   * name
-* object_parameter: This represents the actual parameter value that is either the id or the name.
+* "object_parameter": This represents the actual parameter value that is either the id or the name.
 
 So for example, if I wanted to get the all the subjects associated with a topic whose id is 7 I would call:
 ```
 localhost/api/subjects/topic/id/7
 ```
-Now how about if I wanted to get the example whose name is "example_1":
+Now if I wanted to get the example whose name is "example_1":
 ```
 localhost/api/examples/example/name/example_1
 ```
@@ -97,6 +122,20 @@ where "id" in both cases has to be replaced with the actual id of the section or
 
 ### v.0.0.1
 * Initial Release
+
+
+# Future Plans
+In the near future I see a couple of things that I want to change about the website:
+* Design a CMS, content management system, that will provide a user with the ability to control the contents of the website through a simple web interface rather than having to add content through a development environment
+* Rewrite the API in Node.js
+* Add the subjects (these represent the main ones of interest, over time the list may evolve):
+ * Precalculus
+ * Differential Calculus
+ * Integral Calculus
+ * Linear Algebra
+ * Vector Calculus
+ * Complex Variables
+ * Probability
 
 # License
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">manualmath.com</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/nathanmarianovsky/manualmath.com" property="cc:attributionName" rel="cc:attributionURL">nathanmarianovsky</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
