@@ -1,5 +1,4 @@
 <h1 align=center>Documentation</h1>
-[![NPM version][npm-image]][npm-url]
 
 
 # Setting Up
@@ -57,19 +56,18 @@ The API used for this website has been written in PHP and can be found inside th
 ```
 localhost/api/type_of_object_wanted
 ```
-where "type_of_object_wanted" represents what we want to get and can be one of four things:
+where "localhost" can remain if you are running a local build or replaced with the domain name and "type_of_object_wanted" represents what we want to get which can be one of four things:
 * subjects
 * topics
 * sections
 * examples
-
 
 ### Getting Specific Object(s)
 Now what if we want to get a specific object given that we know some information that can be used to identify it. Overall I can summarize all of the calls into a single generalization:
 ```
 localhost/api/type_of_object_wanted/type_of_object_whose_data_is_passing_in/object_type_of_parameter/object_parameter
 ```
-Here localhost represents the local build but can obviously be replaced with the actual domain and "type_of_object_wanted" is the same as before with the same options. As for the rest:
+where "type_of_object_wanted" is the same as before with the same options. As for the rest:
 
 * "type_of_object_whose_data_is_passing_in": This represents the object of whose data is going to be provided. Specifically this can be one of four things:
   * subject
@@ -139,6 +137,3 @@ In the near future I see a couple of things that I want to change about the webs
 
 # License
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">manualmath.com</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/nathanmarianovsky/manualmath.com" property="cc:attributionName" rel="cc:attributionURL">nathanmarianovsky</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
-
-[npm-url]: https://npmjs.org/package/gulp
-[npm-image]: http://img.shields.io/npm/v/gulp.svg
