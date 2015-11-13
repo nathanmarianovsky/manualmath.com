@@ -1,4 +1,6 @@
-<h1 align=center>Documentation</h1>
+<p align=center>
+ <img src="/client/logo_with_text.png">
+</p>
 
 
 # Setting Up
@@ -54,9 +56,9 @@ All of the functionality associated to the actual website can be found inside th
 ### Getting All Objects of a Certain Type
 The API used for this website has been written in PHP and can be found inside the "/api" folder. Now to use the actual API, there exist ways to extract the subjects, topics, sections, and examples from the database. So lets say that you want to get either all of the subjects, topics, sections, or examples that are available in the database. You would call on:
 ```
-localhost/api/type_of_object_wanted
+localhost/api/param
 ```
-where "localhost" can remain if you are running a local build or replaced with the domain name and "type_of_object_wanted" represents what we want to get which can be one of four things:
+where "localhost" can remain if you are running a local build or replaced with the domain name and param represents what we want to get which can be one of four things:
 * subjects
 * topics
 * sections
@@ -65,19 +67,24 @@ where "localhost" can remain if you are running a local build or replaced with t
 ### Getting Specific Object(s)
 Now what if we want to get a specific object given that we know some information that can be used to identify it. Overall I can summarize all of the calls into a single generalization:
 ```
-localhost/api/type_of_object_wanted/type_of_object_whose_data_is_passing_in/object_type_of_parameter/object_parameter
+localhost/api/param1/param2/param3/param4
 ```
-where "type_of_object_wanted" is the same as before with the same options. As for the rest:
+where:
 
-* "type_of_object_whose_data_is_passing_in": This represents the object of whose data is going to be provided. Specifically this can be one of four things:
+* param1: This represents the object we want. Specifically this can be one of four things:
+  * subjects
+  * topics
+  * sections
+  * examples
+* param2: This represents the object of whose data is going to be provided. Specifically this can be one of four things:
   * subject
   * topic
   * section
   * example
-* "object_type_of_parameter": This represents the type of parameter that we are going to use from "type_of_object_whose_data_is_passing_in". Specifically this can be one of two things:
+* param3: This represents the type of data associated to the object in param2. Specifically this can be one of two things:
   * id
   * name
-* "object_parameter": This represents the actual parameter value that is either the id or the name.
+* param4: This represents the actual data value that is either the id or the name.
 
 So for example, if I wanted to get the all the subjects associated with a topic whose id is 7 I would call:
 ```
