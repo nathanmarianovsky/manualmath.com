@@ -1,0 +1,84 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			xy'' + y' = 0
+		}$
+	</div>
+	and a solution:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = \ln(x)
+		}$
+	</div>
+	Use reduction of order to determine a second solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			For reduction of order we have the setup:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 &= v\ln(x) \\
+					y_2' &= v'\ln(x) + vx^{-1} \\
+					y_2'' &= v''\ln(x) + 2v'x^{-1} - vx^{-2}
+				}$
+			</div>
+			Plugging this in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= xy_2'' + y_2' \\
+					0 &= x(v''\ln(x) + 2v'x^{-1} - vx^{-2}) + (v'\ln(x) + vx^{-1}) \\
+					0 &= v''x\ln(x) + v'(\ln(x) + 2)
+				}$
+			</div>
+			Now make the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					w = v'
+				}$
+			</div>
+			and continue:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= v''x\ln(x) + v'(\ln(x) + 2) \\
+					0 &= w'x\ln(x) + w(\ln(x) + 2) \\
+					\frac{dw}{dx}x\ln(x) &= -w(\ln(x) + 2) \\
+					\frac{dw}{w} &= -\frac{\ln(x) + 2}{x\ln(x)} dx \\
+					\int \frac{dw}{w} &= -\int \Big( \frac{1}{x} + \frac{2}{x\ln(x)} \Big) dx \\
+					\ln|w| &= -\ln|x| - 2\ln|\ln(x)| + C \\
+					w &= \frac{D_1}{x\ln^2(x)}
+				}$
+			</div>
+			where dropping the absolute value is allowed since the original domain is already restricted to the positive real numbers due to the first solution. Now to solve for $v$:
+			<div class="latex_equation">
+				$\eqalign{
+					v' &= w \\
+					\frac{dv}{dx} &= \frac{D_1}{x\ln^2(x)} \\
+					\int dv &= D_1\int \frac{1}{x\ln^2(x)} dx \\
+					v &= -\frac{D_1}{\ln(x)} + D_2
+				}$
+			</div>
+			With this the second solution takes on the form:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = vx^2 = \Big( -\frac{D_1}{\ln(x)} + D_2 \Big)\ln(x) = -D_1 + D_2\ln(x)
+				}$
+			</div>
+			This seems to take on the form of the homogeneous solution, but so if we want the second solution that would be part of the fundamental set it actually is:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = 1
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,93 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	The non-linear first order differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = q_0(x) + q_1(x)y + q_2(x)y^2
+		}$
+	</div>
+	is known as a Riccati equation. Assume you have some known solution, $y_1(x)$, and that:
+	<div class="latex_equation">
+		$\eqalign{
+			y_2(x) = y_1(x) + v
+		}$
+	</div>
+	Use this substitution to obtain the second solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First we need:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 &= y_1 + v \\
+					y_2' &= y_1' + v'
+				}$
+			</div>
+			which when plugged in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2' &= q_0(x) + q_1(x)y_2 + q_2(x)y_2^2 \\
+					y_1' + v' &= q_0(x) + q_1(x)(y_1 + v) + q_2(x)(y_1 + v)^2 \\
+					y_1' + v' &= (q_0(x) + q_1(x)y_1 + q_2(x)y_1^2) + q_1(x)v + 2q_2(x)y_1v + q_2(x)v^2 \\
+					y_1' + v' &= y_1' + q_1(x)v + 2q_2(x)y_1v + q_2(x)v^2 \\
+					v' &= v(q_1(x) + 2q_2(x)y_1(x)) + q_2(x)v^2 \\
+					v' + (-q_1(x) - 2q_2(x)y_1(x))v &= q_2(x)v^2
+				}$
+			</div>
+			a Bernoulli differential equation. Now making the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					w &= v^{-1} \\
+					w' &= -v^{-2}v'
+				}$
+			</div>
+			and plugging in:
+			<div class="latex_equation">
+				$\eqalign{
+					v' + (-q_1(x) - 2q_2(x)y_1(x))v &= q_2(x)v^2 \\
+					v^{-2}v' + (-q_1(x) - 2q_2(x)y_1(x))v^{-1} &= q_2(x) \\
+					-w' - (q_1(x) + 2q_2(x)y_1(x))w &= q_2(x) \\
+					w' + (q_1(x) + 2q_2(x)y_1(x))w &= -q_2(x)
+				}$
+			</div>
+			gives a first order linear differential equation. First we need an integrating factor:
+			<div class="latex_equation">
+				$\eqalign{
+					\mu &= e^{\int (q_1(x) + 2q_2(x)y_1(x)) dx}
+				}$
+			</div>
+			Now multiplying through and solving:
+			<div class="latex_equation">
+				$\eqalign{
+					w' + (q_1(x) + 2q_2(x)y_1(x))w &= -q_2(x) \\
+					\mu w' + (q_1(x) + 2q_2(x)y_1(x))\mu w &= -q_2(x)\mu \\
+					\frac{d}{dx} (w\mu) &= -q_2(x)\mu \\
+					\int d(w\mu) &= \int -q_2(x)\mu dx \\
+					w &= -\mu^{-1} \int q_2(x)\mu dx + C\mu^{-1} 
+				}$
+			</div>
+			Now we need to determine $v$:
+			<div class="latex_equation">
+				$\eqalign{
+					v^{-1} &= w \\
+					v &= w^{-1} \\
+					&= \Big( -\mu^{-1} \int q_2(x)\mu dx + C\mu^{-1} \Big)^{-1}
+				}$
+			</div>
+			With this we can finally write down the second solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2(x) = y_1(x) + v = y_1(x) + \Big( -\mu^{-1} \int q_2(x)\mu dx + C\mu^{-1} \Big)^{-1}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

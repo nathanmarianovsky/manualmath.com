@@ -101,6 +101,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 						if(topic.tname == toState.params.tname) {
 							topic.sections.forEach(function(section) {
 								if(section.section_name == toState.params.section_name) {
+									navs.example_side_nav(section, topic);
 									$("main").empty();
 									$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 									$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
@@ -109,7 +110,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 										$("#latex").append(content);
 										MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 									});
-									navs.example_side_nav(section, topic);
 									$("#section_name" + section.section_id).addClass("active");
 								}
 							});

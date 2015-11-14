@@ -1,0 +1,102 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the non-linear first order differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dy}{dx} = -\frac{4}{x^2} - \frac{1}{x}y + y^2
+		}$
+	</div>
+	and a solution:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = \frac{2}{x}
+		}$
+	</div>
+	Assume:
+	<div class="latex_equation">
+		$\eqalign{
+			y_2(x) = y_1(x) + v
+		}$
+	</div>
+	and determine the second solution using this substitution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First we need:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 &= \frac{2}{x} + v \\
+					y_2' &= -\frac{2}{x^2} + v'
+				}$
+			</div>
+			which when plugged in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2' &= -\frac{4}{x^2} - \frac{1}{x}y_2 + y_2^2 \\
+					-\frac{2}{x^2} + v' &= -\frac{4}{x^2} - \frac{1}{x}\Big( \frac{2}{x} + v \Big) + \Big( \frac{2}{x} + v \Big)^2 \\
+					-\frac{2}{x^2} + v' &= -\frac{6}{x^2} - \frac{1}{x}v + \Big( \frac{4}{x^2} + v^2 + \frac{4}{x}v \Big) \\
+					v' &= \frac{3}{x}v + v^2 \\
+					v' - \frac{3}{x}v &= v^2
+				}$
+			</div>
+			a Bernoulli differential equation. Now making the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					w &= v^{-1} \\
+					w' &= -v^{-2}v'
+				}$
+			</div>
+			and plugging in:
+			<div class="latex_equation">
+				$\eqalign{
+					v' - \frac{3}{x}v &= v^2 \\
+					v^{-2}v' - \frac{3}{x}v^{-1} &= 1 \\
+					-w' - \frac{3}{x}w &= 1 \\
+					w' + \frac{3}{x}w &= -1
+				}$
+			</div>
+			gives a first order linear differential equation. First we need an integrating factor:
+			<div class="latex_equation">
+				$\eqalign{
+					\mu &= e^{\int \frac{3}{x} dx} \\
+					&= e^{3\ln|x|} \\
+					&= |x|^3 \\
+					&= x^3
+				}$
+			</div>
+			Now multiplying through and solving:
+			<div class="latex_equation">
+				$\eqalign{
+					w' + \frac{3}{x}w &= -1 \\
+					x^3w' + 3x^2w &= -x^3 \\
+					\frac{d}{dx} (x^3w) &= -x^3 \\
+					\int d(x^3w) &= \int -x^3 dx \\
+					x^3w &= -\frac{1}{4}x^4 + C_1 \\
+					w &= -\frac{1}{4}x + Cx^{-3}
+				}$
+			</div>
+			Now we need to determine $v$:
+			<div class="latex_equation">
+				$\eqalign{
+					v^{-1} &= w \\
+					v &= w^{-1} \\
+					&= \Big( -\frac{x}{4} + \frac{C}{x^3} \Big)^{-1}
+				}$
+			</div>
+			With this we can finally write down the second solution:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2(x) = \frac{2}{x} + v = \frac{2}{x} + \Big( -\frac{x}{4} + \frac{C}{x^3} \Big)^{-1}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,94 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			xy'' - xy' + y = 0
+		}$
+	</div>
+	verify that:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = x
+		}$
+	</div>
+	is a solution and use reduction of order to determine a second solution in the form of an infinite series.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			First to verify:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= xy_1'' - xy_1' + y_1 \\
+					0 &= x(0) - x(1) + (x) \\
+					0 &= 0
+				}$
+			</div>
+			Now for reduction of order we have the setup:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 &= vx \\
+					y_2' &= v'x + v \\
+					y_2'' &= v''x + 2v'
+				}$
+			</div>
+			Plugging this in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= xy_2'' - xy_2' + y_2 \\
+					0 &= x(v''x + 2v') - x(v'x + v) + vx \\
+					0 &= v''x^2 + v'(2x - x^2)
+				}$
+			</div>
+			Now make the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					w = v'
+				}$
+			</div>
+			and continue:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= v''x^2 + v'(2x - x^2) \\
+					0 &= w'x^2 + w(2x - x^2) \\
+					\frac{dw}{dx}x^2 &= w(x^2 - 2x) \\
+					\frac{dw}{w} &= 1 - \frac{2}{x} dx \\
+					\int \frac{dw}{w} &= \int \Big( 1 - \frac{2}{x} \Big) dx \\
+					\ln|w| &= x - 2\ln|x| + C \\
+					w &= D_1\frac{e^x}{x^2}
+				}$
+			</div>
+			Now to solve for $v$:
+			<div class="latex_equation">
+				$\eqalign{
+					v' &= w \\
+					\frac{dv}{dx} &= D_1\frac{e^x}{x^2} \\
+					\int dv &= D_1\int \frac{e^x}{x^2} dx \\
+					v &= D_1\int \Bigg( \sum_{n = 0}^\infty \frac{x^{n - 2}}{n!} \Bigg) dx \\
+					&= \sum_{n = 0}^\infty \frac{D_1}{n!} \int x^{n - 2} dx \\
+					&= \sum_{n = 0}^\infty \frac{D_1}{(n - 1)n!} x^{n - 1} + D_2
+				}$
+			</div>
+			where the interchange of the order with the summation and integration is allowed so long as we are inside the radius of convergence. With this the second solution takes on the form:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = vx = \Big( \sum_{n = 0}^\infty \frac{D_1}{(n - 1)n!} x^{n - 1} + D_2 \Big)x = \sum_{n = 0}^\infty \frac{D_1}{(n - 1)n!} x^n + D_2x
+				}$
+			</div>
+			This seems to take on the form of the homogeneous solution, but so if we want the second solution that would be part of the fundamental set it actually is:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = \sum_{n = 0}^\infty \frac{x^n}{(n - 1)n!}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

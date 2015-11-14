@@ -1,0 +1,85 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' - 4y = 0
+		}$
+	</div>
+	and a solution:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = e^{-2x}
+		}$
+	</div>
+	Use reduction of order to determine a second solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			For reduction of order we have the setup:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 &= ve^{-2x} \\
+					y_2' &= v'e^{-2x} - 2ve^{-2x} \\
+					y_2'' &= v''e^{-2x} - 4v'e^{-2x} + 4ve^{-2x}
+				}$
+			</div>
+			Plugging this in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= y_2'' - 4y_2 \\
+					0 &= (v''e^{-2x} - 4v'e^{-2x} + 4ve^{-2x}) - 4(ve^{-2x}) \\
+					0 &= (v'' - 4v')e^{-2x} \\
+					0 &= v'' - 4v'
+				}$
+			</div>
+			Now make the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					w = v'
+				}$
+			</div>
+			and continue:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= v'' - 4v' \\
+					0 &= w' - 4w \\
+					\frac{dw}{dx} &= 4w \\
+					\frac{dw}{w} &= 4 dx \\ 
+					\int \frac{dw}{w} &= \int 4 dx \\ 
+					\ln|w| &= 4x + C \\
+					w &= D_1e^{4x}
+				}$
+			</div>
+			Now to solve for $v$:
+			<div class="latex_equation">
+				$\eqalign{
+					v' &= w \\
+					\frac{dv}{dx} &= D_1e^{4x} \\
+					\int dv &= D_1\int e^{4x} dx \\
+					v &= \frac{D_1}{4}e^{4x} + D_2
+				}$
+			</div>
+			With this the second solution takes on the form:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = ve^{-2x} = \Big( \frac{D_1}{4}e^{4x} + D_2 \Big)e^{-2x} = \frac{D_1}{4}e^{2x} + D_2e^{-2x}
+				}$
+			</div>
+			This seems to take on the form of the homogeneous solution, but so if we want the second solution that would be part of the fundamental set it actually is:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = e^{2x}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

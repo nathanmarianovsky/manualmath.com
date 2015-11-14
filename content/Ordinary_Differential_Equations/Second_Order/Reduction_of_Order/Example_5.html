@@ -1,0 +1,84 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + 9y = 0
+		}$
+	</div>
+	and a solution:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = \sin(3x)
+		}$
+	</div>
+	Use reduction of order to determine a second solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			For reduction of order we have the setup:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 &= v\sin(3x) \\
+					y_2' &= v'\sin(3x) + 3v\cos(3x) \\
+					y_2'' &= v''\sin(3x) + 6v'\cos(3x) - 9v\sin(3x)
+				}$
+			</div>
+			Plugging this in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= y_2'' + 9y_2 \\
+					0 &= (v''\sin(3x) + 6v'\cos(3x) - 9v\sin(3x)) + 9v\sin(3x) \\
+					0 &= v''\sin(3x) + 6v'\cos(3x)
+				}$
+			</div>
+			Now make the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					w = v'
+				}$
+			</div>
+			and continue:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= v''\sin(3x) + 6v'\cos(3x) \\
+					0 &= w'\sin(3x) + 6w\cos(3x) \\
+					\frac{dw}{dx}\sin(3x) &= -6w\cos(3x) \\
+					\frac{dw}{w} &= -\frac{6\cos(3x)}{\sin(3x)} dx \\
+					\int \frac{dw}{w} &= \int -\frac{6\cos(3x)}{\sin(3x)} dx \\
+					\ln|w| &= -2\ln|\sin(3x)| + C \\
+					w &= D_1\csc^2(3x)
+				}$
+			</div>
+			Now to solve for $v$:
+			<div class="latex_equation">
+				$\eqalign{
+					v' &= w \\
+					\frac{dv}{dx} &= D_1\csc^2(3x) \\
+					\int dv &= D_1\int \csc^2(3x) dx \\
+					v &= -\frac{1}{3}D_1\cot(3x) + D_2
+				}$
+			</div>
+			With this the second solution takes on the form:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = v\sin(3x) = \Big( -\frac{1}{3}D_1\cot(3x) + D_2 \Big)\sin(3x) = -\frac{D_1}{3}\cos(3x) + D_2\sin(3x)
+				}$
+			</div>
+			This seems to take on the form of the homogeneous solution, but so if we want the second solution that would be part of the fundamental set it actually is:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = \cos(3x)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

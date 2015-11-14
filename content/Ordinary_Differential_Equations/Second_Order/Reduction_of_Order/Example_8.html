@@ -1,0 +1,113 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + ay' + by = 0
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			a,b \in \mathbb{R}
+		}$
+	</div>
+	and a solution:
+	<div class="latex_equation">
+		$\eqalign{
+			y_1(x) = e^{mx}
+		}$
+	</div>
+	Use reduction of order to determine a second solution. What does the solution look like when $2m + a = 0$? How about when $m \in \mathbb{C}$?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			For reduction of order we have the setup:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 &= ve^{mx} \\
+					y_2' &= v'e^{mx} + mve^{mx} \\
+					y_2'' &= v''e^{mx} + 2mv'e^{mx} + m^2ve^{mx}
+				}$
+			</div>
+			Plugging this in gives:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= y_2'' + ay_2' + by_2 \\
+					0 &= (v''e^{mx} + 2mv'e^{mx} + m^2ve^{mx}) + a(v'e^{mx} + mve^{mx}) + bve^{mx} \\
+					0 &= e^{mx}\Big[ v'' + v'(2m + a) + v(y_1'' + ay_1' + by_1) \Big] \\
+					0 &= v'' + v'(2m + a)
+				}$
+			</div>
+			Now make the substitution:
+			<div class="latex_equation">
+				$\eqalign{
+					w = v'
+				}$
+			</div>
+			and continue:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= v'' + v'(2m + a) \\
+					0 &= w' + w(2m + a) \\
+					\frac{dw}{dx} &= -w(2m + a) \\
+					\frac{dw}{w} &= -(2m + a) dx \\
+					\int \frac{dw}{w} &= \int -(2m + a) dx \\
+					\ln|w| &= -(2m + a)x + C \\
+					w &= D_1e^{-(2m + a)x}
+				}$
+			</div>
+			Now to solve for $v$:
+			<div class="latex_equation">
+				$\eqalign{
+					v' &= w \\
+					\frac{dv}{dx} &= D_1e^{-(2m + a)x} \\
+					\int dv &= D_1\int e^{-(2m + a)x} dx \\
+					v &= \frac{D_1}{-(2m + a)}e^{-(2m + a)x} + D_2
+				}$
+			</div>
+			With this the second solution takes on the form:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = ve^{mx} = \Big( \frac{D_1}{-(2m + a)}e^{-(2m + a)x} + D_2 \Big)e^{mx} = \frac{D_1}{-(2m + a)}e^{-(m + a)x} + D_2e^{mx}
+				}$
+			</div>
+			This seems to take on the form of the homogeneous solution, but so if we want the second solution that would be part of the fundamental set it actually is:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = e^{-(m + a)x}
+				}$
+			</div>
+			Of course this assumed that $2m + a \neq 0$. If this was not the case, then:
+			<div class="latex_equation">
+				$\eqalign{
+					v' &= w \\
+					\frac{dv}{dx} &= D_1 \\
+					\int dv &= D_1\int dx \\
+					v &= D_1x + D_2
+				}$
+			</div>
+			With this the second solution takes on the form:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = ve^{mx} = \Big( D_1x + D_2 \Big)e^{mx} = D_1xe^{mx} + D_2e^{mx}
+				}$
+			</div>
+			This seems to take on the form of the homogeneous solution, but so if we want the second solution that would be part of the fundamental set it actually is:
+			<div class="latex_equation">
+				$\eqalign{
+					y_2 = xe^x
+				}$
+			</div>
+			Lastly if $m \in \mathbb{C}$ and we let $m = k + li$ where $l \neq 0$, then $m + a \in \mathbb{C}$. This implies that the original solution when assuming that $2m + a \neq 0$ will remain the same except the for the fact that the constant will be imaginary instead of real. 
+		</div>
+	</div>
+</div>
