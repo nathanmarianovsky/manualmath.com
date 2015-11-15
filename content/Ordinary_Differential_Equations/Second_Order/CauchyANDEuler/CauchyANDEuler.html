@@ -1,0 +1,263 @@
+<div class="latex_section">
+	Characteristic Polynomial
+</div>
+<div class="latex_body">
+	The Cauchy-Euler differential equation is known as a linear second order differential equation in the form: 
+	<div class="latex_equation">
+		$\eqalign{
+			x^2y'' + axy' + by = 0
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			a,b \in \mathbb{R} \hspace{.5cm} \text{and} \hspace{.5cm} x > 0
+		}$
+	</div>
+	Now suppose that the solution takes on the form:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = x^m \hspace{.5cm} \text{where} \hspace{.5cm} m \in \mathbb{R}
+		}$
+	</div>
+	and plug into the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &= x^2y'' + axy' + by \\
+			0 &= x^2(m(m - 1)x^{m - 2}) + ax(mx^{m - 1}) + bx^m \\
+			0 &= x^m(m(m - 1) + am + b) \\
+			0 &= m^2 + (a - 1)m + b
+		}$
+	</div>
+	to arrive at what is known as the $\textit{characterisitc polynomial}$. Now depending upon the values that $m$ takes on, the solution takes on different forms. So to isolate $m$, use the quadratic formula:
+	<div class="latex_equation">
+		$\eqalign{
+			m = \frac{1 - a \pm \sqrt{(a - 1)^2 - 4b}}{2}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Two Real Roots
+</div>
+<div class="latex_body">
+	Lets assume that the discriminant is strictly positive:
+	<div class="latex_equation">
+		$\eqalign{
+			(a - 1)^2 - 4b > 0
+		}$
+	</div>
+	With this we know that there are going to be two real values that $m$ can take on. So using the principle of superposition for homogeneous differential equations the general solution will take on the form:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = c_1x^{m_1} + c_2x^{m_2} 
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Repeated Root
+</div>
+<div class="latex_body">
+	Lets assume that the discriminant is zero now:
+	<div class="latex_equation">
+		$\eqalign{
+			(a - 1)^2 - 4b = 0
+		}$
+	</div>
+	With this we know that there is going to be one real value that $m$ can take on. So lets use reduction of order to obtain the second solution with the setup:
+	<div class="latex_equation">
+		$\eqalign{
+			y_2 &= vx^m \\
+			y_2' &= v'x^m + mvx^{m - 1} \\
+			y_2'' &= v''x^m + 2mv'x^{m - 1} + m(m - 1)vx^{m - 2}
+		}$
+	</div>
+	Plugging this in gives:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &= x^2y_2'' + axy_2' + by_2 \\
+			0 &= x^2(v''x^m + 2mv'x^{m - 1} + m(m - 1)vx^{m - 2}) + ax(v'x^m + mvx^{m - 1}) + bvx^m \\
+			0 &= v''x^{m + 2} + v'(2mx^{m + 1} + ax^{m + 1}) + v(m(m - 1)x^m + amx^m + bx^m) \\
+			0 &= v''x + v'(2m + a)
+		}$
+	</div>
+	Now make the substitution:
+	<div class="latex_equation">
+		$\eqalign{
+			w = v'
+		}$
+	</div>
+	and continue:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &= v''x + v'(2m + a) \\
+			0 &= w'x + w(2m + a) \\
+			\frac{dw}{dx}x &= -w(2m + a)
+		}$
+	</div>
+	Now use the fact that the discriminant is zero which implies $m = \frac{1 - a}{2}$ and that $2m + a = 1$:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{dw}{dx}x &= -w \\
+			\int \frac{dw}{w} &= -\int \frac{dx}{x} \\
+			\ln|w| &= -\ln|x| + C \\
+			w &= \frac{D_1}{x}
+		}$
+	</div>
+	where the absolute value is allowed to be dropped since we already restricted $x$ to be positive. Now using this to solve for $v$:
+	<div class="latex_equation">
+		$\eqalign{
+			v' &= w \\
+			\frac{dv}{dx} &= \frac{D_1}{x} \\
+			\int dv &= D_1\int \frac{dx}{x} \\
+			v &= D_1\ln|x| + D_2
+		}$
+	</div>
+	With this the second solution takes on the form:
+	<div class="latex_equation">
+		$\eqalign{
+			y_2(x) = \ln(x)x^m
+		}$
+	</div>
+	where the absolute value is once again allowed to be dropped since $x$ is already positive by assumption. Now the general solution is written down as:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = c_1x^m + c_2\ln(x)x^m
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Two Imaginary Roots
+</div>
+<div class="latex_body">
+	Lets assume that the discriminant is strictly negative:
+	<div class="latex_equation">
+		$\eqalign{
+			(a - 1)^2 - 4b < 0
+		}$
+	</div>
+	With this we know that there are going to be two imaginary values that $m$ can take on. So using the principle of superposition for homogeneous differential equations the general solution will take on the form:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = c_1x^{m_1} + c_2x^{m_2} 
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			m_1,m_2 \in \mathbb{C} 
+		}$
+	</div>
+	Unfortunately nobody likes having imaginary exponentials therefore lets make use of Euler's Formula:
+	<div class="latex_equation">
+		$\eqalign{
+			e^{iz} = \cos(z) + i\sin(z) \hspace{.5cm} \text{where} \hspace{.5cm} z \in \mathbb{C}
+		}$
+	</div>
+	Take the general solution and assume that the roots can be written as $m_1,m_2 = \alpha \pm \beta i$:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) &= c_1x^{m_1} + c_2x^{m_2} \\
+			&= c_1e^{m_1\ln(x)} + c_2e^{m_2\ln(x)} \\
+			&= c_1e^{(\alpha + \beta i)\ln(x)} + c_2e^{(\alpha - \beta i)\ln(x)} \\
+			&= e^{\alpha \ln(x)} (c_1e^{i(\beta \ln(x))} + c_2e^{i(-\beta \ln(x))}) \\
+			&= e^{\alpha \ln(x)} \Big[ c_1(\cos(\beta \ln(x)) + i\sin(\beta \ln(x))) + c_2(\cos(-\beta \ln(x)) + i\sin(-\beta \ln(x))) \Big] \\
+			&= e^{\alpha \ln(x)} \Big[ (c_1 + c_2)\cos(\beta \ln(x)) + (c_1i - c_2i)\sin(\beta \ln(x)) \Big] \\
+			&= e^{\alpha \ln(x)} \Big[ k_1\cos(\beta \ln(x)) + k_2\sin(\beta \ln(x)) \Big] \\
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			k_1 = c_1 + c_2 \hspace{.5cm} \text{and} \hspace{.5cm} k_2 = i(c_1 - c_2)
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Motivating the Guess for the Solution
+</div>
+<div class="latex_body">
+	When deriving the characteristic polynomial we assumed that the solution took on a particular form, but you have to wonder why specifically the power function and not some other function. To make sense of this we are going to convert the Cauchy-Euler differential equation into a constant coefficient linear differential equation which we already know all the details of. Start by making the substitution:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) &= \phi(\ln(x)) \\
+			y'(x) &= \frac{\phi'(\ln(x))}{x} \\
+			y''(x) &= \frac{\phi''(\ln(x)) - \phi'(\ln(x))}{x^2}
+		}$
+	</div>
+	and plug into the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &= x^2y'' + axy' + by \\
+			0 &= x^2 \cdot \frac{\phi''(\ln(x)) - \phi'(\ln(x))}{x^2} + ax \cdot \frac{\phi'(\ln(x))}{x} + b\phi(\ln(x)) \\
+			0 &= \phi''(\ln(x)) + (a - 1)\phi'(\ln(x)) + b\phi(\ln(x))
+		}$
+	</div>
+	Now to simplify let $t = \ln(x)$ to arrive at:
+	<div class="latex_equation">
+		$\eqalign{
+			0 = \phi''(t) + (a - 1)\phi'(t) + b\phi(t)
+		}$
+	</div>
+	the constant coefficient linear equation. We know that this equation will satisfy the characterisitic polynomial:
+	<div class="latex_equation">
+		$\eqalign{
+			0 = m^2 + (a - 1)m + b
+		}$
+	</div>
+	which is exactly the same one we found through our guess. Notice that whatever solutions we determine here for $\phi$ can be transformed back to solutions of $y$ as:
+	<div class="latex_equation">
+		$\eqalign{
+			\phi(t) = e^{kt} \implies y = \phi(\ln(x)) = e^{k\ln(x)} = x^k
+		}$
+	</div>
+	which justifies our guess for the solution. With this we are done, but there is still one interesting fact to consider. In the very beginning I set the domain of $x$ to be strictly positive, but we can definitely work out a solution for negative values of $x$. To begin, make the substitution:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) &= \phi(\ln(-x)) \\
+			y'(x) &= \frac{\phi'(\ln(-x))}{x} \\
+			y''(x) &= \frac{\phi''(\ln(-x)) - \phi'(\ln(-x))}{x^2}
+		}$
+	</div>
+	and plug into the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &= x^2y'' + axy' + by \\
+			0 &= x^2 \cdot \frac{\phi''(\ln(-x)) - \phi'(\ln(-x))}{x^2} + ax \cdot \frac{\phi'(\ln(-x))}{x} + b\phi(\ln(-x)) \\
+			0 &= \phi''(\ln(-x)) + (a - 1)\phi'(\ln(-x)) + b\phi(\ln(-x))
+		}$
+	</div>
+	Now to simplify let $t = \ln(-x)$ to arrive at:
+	<div class="latex_equation">
+		$\eqalign{
+			0 = \phi''(t) + (a - 1)\phi'(t) + b\phi(t)
+		}$
+	</div>
+	the constant coefficient linear equation. We know that this equation will satisfy the characterisitic polynomial:
+	<div class="latex_equation">
+		$\eqalign{
+			0 = m^2 + (a - 1)m + b
+		}$
+	</div>
+	which is exactly the same one we found through our guess. Notice that whatever solutions we determine here for $\phi$ can be transformed back to solutions of $y$ as:
+	<div class="latex_equation">
+		$\eqalign{
+			\phi(t) = e^{mt} \implies y = \phi(\ln(-x)) = e^{m\ln(-x)} = (-x)^m
+		}$
+	</div>
+	So whenever dealing with negative values of $x$, just adjust your guess by a reflection about the $y$-axis. Overall we can consolidate all of this information into saying that the proper guess for the Cauchy-Euler differential equation is one of the form:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = |x|^m \hspace{.5cm} \text{where} \hspace{.5cm} x \in \mathbb{R} \setminus \{0\}
+		}$
+	</div>
+	and the proper substitution to transform the equation for all values of $x$ would take the form:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = \phi(\ln|x|)
+		}$
+	</div>
+</div>

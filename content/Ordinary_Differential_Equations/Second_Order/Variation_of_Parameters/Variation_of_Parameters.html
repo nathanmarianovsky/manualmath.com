@@ -1,0 +1,131 @@
+<div class="latex_section">
+	Setup
+</div>
+<div class="latex_body">
+	Given a non-homogeneous linear second order differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + p(x)y' + q(x)y = f(x)
+		}$
+	</div>
+	the non-homogeneous solution can always be written down as:
+	<div class="latex_equation">
+		$\eqalign{
+			y_{nh} = v_1y_1 + v_2y_2
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			y_h = c_1y_1 + c_2y_2 \hspace{.5cm} \text{and} \hspace{.5cm} c_1,c_2 \in \mathbb{R}
+		}$
+	</div>
+	In order to determine the functions $v_1$ and $v_2$, the following system of equations has to be satisfied:
+	<div class="latex_equation">
+		$\eqalign{
+			v_1'y_1 + v_2'y_2 &= 0 \\
+			v_1'y_1' + v_2'y_2' &= f(x)
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solving the System with the Wronskian
+</div>
+<div class="latex_body">
+	Looking at the system of equations shows that we can rewrite it in matrix form as:
+	<div class="latex_equation">
+		$\eqalign{
+			\begin{pmatrix}
+				y_1 & y_2 \\
+				y_1' & y_2'
+			\end{pmatrix} \begin{pmatrix}
+				v_1' \\
+				v_2'
+			\end{pmatrix} &= \begin{pmatrix}
+				0 \\
+				f(x)
+			\end{pmatrix}
+		}$
+	</div>
+	and using the inverse the system can be solved as:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{d}{dx} \begin{pmatrix}
+				v_1 \\
+				v_2
+			\end{pmatrix} &= \frac{1}{W(y_1,y_2)} \begin{pmatrix}
+				y_2' & -y_2 \\
+				-y_1' & y_1
+			\end{pmatrix} \begin{pmatrix}
+				0 \\
+				f(x)
+			\end{pmatrix} \\
+			\begin{pmatrix}
+				v_1 \\
+				v_2
+			\end{pmatrix} &= \int \frac{1}{W(y_1,y_2)} \begin{pmatrix}
+				y_2' & -y_2 \\
+				-y_1' & y_1
+			\end{pmatrix} \begin{pmatrix}
+				0 \\
+				f(x)
+			\end{pmatrix} dx
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			W(y_1,y_2) = y_1y_2' - y_2y_1'
+		}$
+	</div>
+	is the Wronskian. 
+</div>
+
+<div class="latex_section">
+	Deriving the Equations
+</div>
+<div class="latex_body">
+	Taking the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + p(x)y' + q(x)y = f(x)
+		}$
+	</div>
+	we first assume:
+	<div class="latex_equation">
+		$\eqalign{
+			y_{nh} = v_1y_1 + v_2y_2
+		}$
+	</div>
+	where $y_1$ and $y_2$ are the two independent solutions to the homogeneous equation. Differentiation once gives:
+	<div class="latex_equation">
+		$\eqalign{
+			y_{nh}' = v_1'y_1 + v_1y_1' + v_2'y_2 + v_2y_2'
+		}$
+	</div>
+	Now we choose to let:
+	<div class="latex_equation">
+		$\eqalign{
+			v_1'y_1 + v_2'y_2 = 0
+		}$
+	</div>
+	which is the first of our equations and by differentiating once more:
+	<div class="latex_equation">
+		$\eqalign{
+			y_{nh}' &= v_1y_1' + v_2y_2' \\
+			y_{nh}'' &= v_1'y_1' + v_1y_1'' + v_2'y_2' + v_2y_2''
+		}$
+	</div>
+	and plugging into the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\require{cancel}
+			f(x) &= y_{nh}'' + p(x)y_{nh}' + q(x)y_{nh} \\
+			&= (v_1'y_1' + v_1y_1'' + v_2'y_2' + v_2y_2'') + p(x)(v_1y_1' + v_2y_2') + q(x)(v_1y_1 + v_2y_2) \\
+			&= v_1'y_1' + v_1\cancelto{0}{(y_1'' + p(x)y_1' + q(x)y_1)} + v_2'y_2' + v_2\cancelto{0}{(y_2'' + p(x)y_2' + q(x)y_2)} \\
+			&= v_1'y_1' + v_2'y_2'
+		}$
+	</div>
+	provides us with the second equation to the system. Note that unlike the method of undetermined coefficients or the annihilator method, variation of parameters is far more generalized since it could apply to any linear second order equation.
+</div>

@@ -1,0 +1,60 @@
+<div class="latex_section">
+	Definition and Properties
+</div>
+<div class="latex_body">
+	The Laplace transform of any given function is defined as:
+	<div class="latex_equation">
+		$\eqalign{
+			\mathcal{L}[f(x)] = \int_0^\infty f(x)e^{-sx} dx
+		}$
+	</div>
+	which satisfies being a linear operator:
+	<div class="latex_equation">
+		$\eqalign{
+			\mathcal{L}[k_1f_1(x) + k_2f_2(x)] &= \int_0^\infty (k_1f_1(x) + k_2f_2(x))e^{-sx} dx \\
+			&= k_1\int_0^\infty f_1(x)e^{-sx} dx + k_2\int_0^\infty f_2(x)e^{-sx} dx \\
+			&= k_1\mathcal{L}[f_1(x)] + k_2\mathcal{L}[f_2(x)]
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Application Towards Differential Equations
+</div>
+<div class="latex_body">
+	The Laplace transform provides a systematic way of changing a differential equation into an algebraic equation. First we need:
+	<div class="latex_equation">
+		$\eqalign{
+			\mathcal{L}[f'(x)] &= \int_0^\infty f'(x)e^{-sx} dx \\
+			&= f(x)e^{-sx} \Big|_0^\infty + s\int_0^\infty f(x)e^{-sx} dx \\
+			&= -f(0) + s\mathcal{L}[f(x)]
+		}$
+	</div>
+	which can be used to also define:
+	<div class="latex_equation">
+		$\eqalign{
+			\mathcal{L}[f''(x)] &= -f'(0) + s\mathcal{L}[f'(x)] \\
+			&= -f'(0) + s\Big( -f(0) + s\mathcal{L}[f(x)] \Big) \\
+			&= (-y'(0) - sy(0) + s^2\mathcal{L}[y]) + a()
+		}$
+	</div>
+	Now say we have a constant coefficient linear second order equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + ay' + by = g(x)
+		}$
+	</div>
+	Apply the transform to both sides and follow through:
+	<div class="latex_equation">
+		$\eqalign{
+			g(x) &= y'' + ay' + by \\
+			\mathcal{L}[g(x)] &= \mathcal{L}[y'' + ay' + by] \\
+			\mathcal{L}[g(x)] &= \mathcal{L}[y''] + a\mathcal{L}[y'] + b\mathcal{L}[y] \\
+			\mathcal{L}[g(x)] &= (-y'(0) - sy(0) + s^2\mathcal{L}[y]) + a(-y(0) + s\mathcal{L}[y]) + b\mathcal{L}[y] \\
+			\mathcal{L}[g(x)] + y'(0) + (s + a)y(0) &= (s^2 + as + b)\mathcal{L}[y] \\
+			\mathcal{L}[y] &= \frac{\mathcal{L}[g(x)] + y'(0) + (s + a)y(0)}{s^2 + as + b} \\
+			y &= \mathcal{L}^{-1}\Bigg[ \frac{\mathcal{L}[g(x)] + y'(0) + (s + a)y(0)}{s^2 + as + b} \Bigg]
+		}$
+	</div>
+	where in the last step the inverse transform is used in order to obtain the original solution. Notice that a consequence of this method is that it requires us to know ahead of time what $y(0)$ and $y'(0)$ are, so Laplace transforms can only be used if we have the initial conditions. At the same time I applied this to a constant coefficient equation, but it does not have to be restricted
+</div>
