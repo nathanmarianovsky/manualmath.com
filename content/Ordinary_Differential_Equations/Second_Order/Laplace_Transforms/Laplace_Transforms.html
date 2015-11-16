@@ -19,6 +19,21 @@
 </div>
 
 <div class="latex_section">
+	Inverse Transform
+</div>
+<div class="latex_body">
+	The inverse Laplace transform of any given function can be formally computed using a known formula. Unfortunately, the formula includes doing a line integral over the complex plane which is not something that most people want to spend their time doing. Instead the way we commonly use the inverse transform is by looking at a table and just simply work backwards. As a last remark, just like the original transform, the inverse is also a linear operator when using the known fact that the original transform is linear:
+	<div class="latex_equation">
+		$\eqalign{
+			\mathcal{L}^{-1}\Big[ k_1\mathcal{L}[f_1(x)] + k_2\mathcal{L}[f_2(x)] \Big] &= \mathcal{L}^{-1}\Big[ \mathcal{L}[k_1f_1(x) + k_2f_2(x)] \Big] \\
+			\mathcal{L}^{-1}\Big[ k_1\mathcal{L}[f_1(x)] + k_2\mathcal{L}[f_2(x)] \Big] &= k_1f_1(x) + k_2f_2(x) \\
+			\mathcal{L}^{-1}\Big[ k_1\mathcal{L}[f_1(x)] + k_2\mathcal{L}[f_2(x)] \Big] &= k_1\mathcal{L}^{-1}\Big[ \mathcal{L}[f_1(x)] \Big] + k_2\mathcal{L}^{-1}\Big[ \mathcal{L}[f_2(x)] \Big] \\
+		}$
+	</div>
+	Knowing the fact that the transform and its inverse are linear operators has nice results. The most important is that linear operators are injective, one-to-one, and thus guarantee that if we are going to be using either transform, the result is going to be unique. This is good to keep in mind when using specifically the inverse transform and the table of common transforms. 
+</div>
+
+<div class="latex_section">
 	Application Towards Differential Equations
 </div>
 <div class="latex_body">
@@ -30,12 +45,18 @@
 			&= -f(0) + s\mathcal{L}[f(x)]
 		}$
 	</div>
-	which can be used to also define:
+	where integration by parts was used with the assumption that at large values of $x$ the function is dominated by the exponential in order to converge. In other words we have the condition:
+	<div class="latex_equation">
+		$\eqalign{
+			\exists M \in \mathbb{R}, a \in \mathbb{C} \hspace{.5cm} \text{s.t.} \hspace{.5cm} f(x) \neq Me^{at}
+		}$
+	</div>
+	This can now be used to define:
 	<div class="latex_equation">
 		$\eqalign{
 			\mathcal{L}[f''(x)] &= -f'(0) + s\mathcal{L}[f'(x)] \\
 			&= -f'(0) + s\Big( -f(0) + s\mathcal{L}[f(x)] \Big) \\
-			&= (-y'(0) - sy(0) + s^2\mathcal{L}[y]) + a()
+			&= -f'(0) - sf(0) + s^2\mathcal{L}[f(x)]
 		}$
 	</div>
 	Now say we have a constant coefficient linear second order equation:
@@ -44,7 +65,7 @@
 			y'' + ay' + by = g(x)
 		}$
 	</div>
-	Apply the transform to both sides and follow through:
+	Apply the transform to both sides and isolate the transform of $y$:
 	<div class="latex_equation">
 		$\eqalign{
 			g(x) &= y'' + ay' + by \\
@@ -56,5 +77,5 @@
 			y &= \mathcal{L}^{-1}\Bigg[ \frac{\mathcal{L}[g(x)] + y'(0) + (s + a)y(0)}{s^2 + as + b} \Bigg]
 		}$
 	</div>
-	where in the last step the inverse transform is used in order to obtain the original solution. Notice that a consequence of this method is that it requires us to know ahead of time what $y(0)$ and $y'(0)$ are, so Laplace transforms can only be used if we have the initial conditions. At the same time I applied this to a constant coefficient equation, but it does not have to be restricted
+	where in the last step the inverse transform is used in order to obtain the original solution. Notice that a consequence of this method is that it requires us to know ahead of time what $y(0)$ and $y'(0)$ are, so Laplace transforms can only be used if we have the initial conditions. At the same time I applied this to a constant coefficient equation, but the transform can definitely be used for other scenarios. 
 </div>
