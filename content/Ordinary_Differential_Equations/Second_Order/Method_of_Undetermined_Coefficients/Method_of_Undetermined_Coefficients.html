@@ -56,11 +56,15 @@
 			</tr>
 			<tr>
 		    	<td>$p(x)(k_1\cos(\alpha x) + k_2\sin(\alpha x))e^{\beta x}$</td>
-			    <td>$(A_0 + \dots + A_nx^n)(B\cos(\alpha x) + C\sin(\alpha x))e^{\beta x}$</td>
+			    <td>
+			    	$\eqalign{
+			    		\Big( \Big( \sum_{i = 0}^n A_i x^i \Big) \cos(\alpha x) + \Big( \sum_{i = 0}^n B_i x^i \Big) \sin(\alpha x) \Big)e^{\beta x}
+					}$
+				</td>
 			</tr>
 		</table>
 	</div>
-	where $k,k_1,k_2,\dots,k_n,\alpha,\beta \in \mathbb{R}$ represent given constants, $p(x)$ is a $n$th degree polynomial, and $A,B,C,A_0,A_1,A_2,\dots,A_n \in \mathbb{R}$ represent the coefficients that have to be determined in order to write down the non-homogeneous solution. To find the coefficients, just plug into the non-homogeneous differential equation and determine their values. If it happens that $f(x)$ is actually a sum of different cases, just use the principal of non-homogeneous linear differential equations.
+	where $k,k_1,k_2,\dots,k_n,\alpha,\beta \in \mathbb{R}$ represent given constants, $p(x)$ is a $n$th degree polynomial, and $A,B,C,A_0,B_0,A_1,B_1,A_2,B_2,\dots,A_n,B_n \in \mathbb{R}$ represent the coefficients that have to be determined in order to write down the non-homogeneous solution. To find the coefficients, just plug into the non-homogeneous differential equation and determine their values. If it happens that $f(x)$ is actually a sum of different cases, just use the principal of non-homogeneous linear differential equations.
 </div>
 
 <div class="latex_section">

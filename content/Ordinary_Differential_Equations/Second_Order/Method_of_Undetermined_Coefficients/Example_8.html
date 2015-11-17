@@ -5,7 +5,7 @@
 	Given the differential equation:
 	<div class="latex_equation">
 		$\eqalign{
-			y'' + 4y' = 4xe^{2x}
+			y'' + 25y = 25x^4 - 25 + e^x 
 		}$
 	</div>
 	determine the general solution.
@@ -27,39 +27,45 @@
 			and plug in to solve the homogeneous portion:
 			<div class="latex_equation">
 				$\eqalign{
-					0 &= y'' + 4y' \\
-					0 &= m^2e^{mx} + 4me^{mx} \\
-					0 &= m^2 + 4m \\
-					0 &= m(m + 4) \\
-					m &= -4, 0
+					0 &= y'' + 25y \\
+					0 &= m^2e^{mx} + 25e^{mx} \\
+					0 &= m^2 + 25 \\
+					0 &= (m - 5i)(m + 5i) \\
+					m &= \pm 5i
 				}$
 			</div>
 			to get two real distinct values for $m$. With this the homogeneous solution is given by:
 			<div class="latex_equation">
 				$\eqalign{
-					y_h(x) = c_1e^{-4x} + c_2
+					y_h(x) = c_1\cos(5x) + c_2\sin(5x)
 				}$
 			</div>
 			Now for the non-homogeneous solution, using the method of undetermined coefficients we will guess that the solution takes on the form:
 			<div class="latex_equation">
 				$\eqalign{
-					y_{nh}(x) = (Ax + B)e^{2x}
+					y_{nh}(x) = Ax^4 + Bx^3 + Cx^2 + Dx + E + Fe^x
 				}$
 			</div>
 			Plugging into the differential equation gives:
 			<div class="latex_equation">
 				$\eqalign{
-					4xe^{2x} &= y_{nh}'' + 4y_{nh}'' \\
-					4xe^{2x} &= 4e^{2x}(Ax + A + B) + 4e^{2x}(2Ax + A + 2B) \\
-					4xe^{2x} &= (12A)xe^{2x} + (8A + 12B)e^{2x} \\
-					A &= \frac{1}{3} \\
-					B &= -\frac{2}{9}
+					25x^4 - 25 + e^x  &= y_{nh}'' + 25y_{nh} \\
+					25x^4 - 25 + e^x  &= (12Ax^2 + 6Bx + 2C + Fe^x) \\
+					& \hspace{.4cm} + 25(Ax^4 + Bx^3 + Cx^2 + Dx + E + Fe^x) \\
+					25x^4 - 25 + e^x  &= (25A)x^4 + (25B)x^3 + (12A + 25C)x^2 \\
+					& \hspace{.4cm} + (6B + 25D)x + (2C + 25E) + (26F)e^x \\
+					A &= 1 \\
+					B &= 0 \\
+					C &= -\frac{12}{25} \\
+					D &= 0 \\
+					E &= -\frac{601}{625} \\
+					F &= \frac{1}{26}
 				}$
 			</div>
 			With this the general solution is given by:
 			<div class="latex_equation">
 				$\eqalign{
-					y(x) = c_1e^{-4x} + c_2 + \frac{1}{9}(3x - 2)e^{2x}
+					y(x) = c_1\cos(5x) + c_2\sin(5x) + x^4 - \frac{12}{25}x^2 - \frac{601}{625} + \frac{1}{26}e^x
 				}$
 			</div>
 		</div>
