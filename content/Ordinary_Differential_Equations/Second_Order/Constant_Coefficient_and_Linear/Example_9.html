@@ -1,0 +1,77 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + 16y = 0
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			y\Big( \frac{\pi}{2} \Big) = -10 \hspace{.5cm} \text{and} \hspace{.5cm} y'\Big( \frac{\pi}{2} \Big) = 3
+		}$
+	</div>
+	determine the particular solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since this is a homogeneous linear constant coefficient equation the general solution will be given by the homogeneous solution. First we assume that:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = e^{mx}
+				}$
+			</div>
+			and plug in:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= y'' + 16y \\
+					0 &= m^2e^{mx} + 16e^{mx} \\
+					0 &= m^2 + 16 \\
+					0 &= (m + 4i)(m - 4i) \\
+					m &= \pm 4i
+				}$
+			</div>
+			to get two complex distinct values for $m$. With this the homogeneous solution is given by:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h(x) = c_1\cos(4x) + c_2\sin(4x)
+				}$
+			</div>
+			where the first derivative is:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h'(x) = -4c_1\sin(4x) + 4c_2\cos(4x)
+				}$
+			</div>
+			Now using the initial conditions:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h\Big( \frac{\pi}{2} \Big) &= c_1\cos\Big( 4 \cdot \frac{\pi}{2} \Big) + c_2\sin\Big( 4 \cdot \frac{\pi}{2} \Big) = -10 \\
+					y_h'\Big( \frac{\pi}{2} \Big) &= -4c_1\sin\Big( 4 \cdot \frac{\pi}{2} \Big) + 4c_2\cos\Big( 4 \cdot \frac{\pi}{2} \Big) = 3
+				}$
+			</div>
+			From these two equations:
+			<div class="latex_equation">
+				$\eqalign{
+					c_1 &= -10 \\
+					c_2 &= \frac{3}{4}
+				}$
+			</div>
+			With this the particular solution is written down as:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = -10\cos(4x) + \frac{3}{4}\sin(4x)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

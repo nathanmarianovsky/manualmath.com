@@ -39,15 +39,12 @@
 	is the differential equation operator. In this sense we can write that the differential equation is homogeneous iff the differential equation operator acting on our function equates to zero, otherwise it is non-homogeneous. As a last remark consider the behavior of the differential equation operator:
 	<div class="latex_equation">
 		$\eqalign{
-			L(D)(y_1 + y_2) &= D^2(y_1 + y_2) + p(x)D(y_1 + y_2) + q(x)(y_1 + y_2) \\
-			&= (D^2y_1 + p(x)Dy_1 + q(x)y_1) + (D^2y_2 + p(x)Dy_2 + q(x)y_2) \\
-			&= L(D)y_1 + L(D)y_2 \\
-			L(D)(\lambda y) &= D^2(\lambda y) + p(x)D(\lambda y) + q(x)(\lambda y) \\
-			&= \lambda(D^2y + p(x)Dy + q(x)y) \\
-			&= \lambda L(D)y
+			L(D)(c_1y_1 + c_2y_2) &= D^2(c_1y_1 + c_2y_2) + p(x)D(c_1y_1 + c_2y_2) + q(x)(c_1y_1 + c_2y_2) \\
+			&= c_1(D^2y_1 + p(x)Dy_1 + q(x)y_1) + c_2(D^2y_2 + p(x)Dy_2 + q(x)y_2) \\
+			&= c_1L(D)y_1 + c_2L(D)y_2 \\
 		}$
 	</div>
-	which make it a linear operator.
+	which makes it a linear operator.
 </div>
 
 <div class="latex_section">
@@ -97,7 +94,7 @@
 			f(x) &= c_3L(D)y_3 + c_4L(D)y_4 + \dots + c_nL(D)y_n
 		}$
 	</div>
-	where the differential equation operator is allowed to split under addition and pull out constants because it is a linear operator. Since I assumed that $y_1$ and $y_2$ are the solutions to the homogeneous differential equation, with the differential equation operator acting on them they will go to zero. Using the last line all of the coefficients have to be determined since the non-homogeneous solution cannot have undetermined constants.
+	where the differential equation operator is allowed to split under addition and pull out constants because it is a linear operator. Since I assumed that $y_1$ and $y_2$ are the solutions to the homogeneous differential equation, with the differential equation operator acting on them they will go to zero. Using the last line all of the coefficients except $c_1$ and $c_2$ have to be determined since the non-homogeneous solution cannot have undetermined constants.
 </div>
 
 <div class="latex_section">

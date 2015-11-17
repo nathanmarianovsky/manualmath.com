@@ -1,0 +1,99 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + 3y' - 10y = 0
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			y(0) = 4 \hspace{.5cm} \text{and} \hspace{.5cm} y'(0) = -2
+		}$
+	</div>
+	determine the particular solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since this is a homogeneous linear constant coefficient equation the general solution will be given by the homogeneous solution. First we assume that:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = e^{mx}
+				}$
+			</div>
+			and plug in:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= y'' + 3y' - 10y \\
+					0 &= m^2e^{mx} + 3me^{mx} - 10e^{mx} \\
+					0 &= m^2 + 3m - 10 \\
+					0 &= (m - 2)(m + 5) \\
+					m &= -5, 2
+				}$
+			</div>
+			to get two real distinct values for $m$. With this the homogeneous solution is given by:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h(x) = c_1e^{-5x} + c_2e^{2x}
+				}$
+			</div>
+			where the first derivative is:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h'(x) = -5c_1e^{-5x} + 2c_2e^{2x}
+				}$
+			</div>
+			Now using the initial conditions:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h(0) &= c_1e^{-5(0)} + c_2e^{2(0)} = 4 \\
+					y_h'(0) &= -5c_1e^{-5(0)} + 2c_2e^{2(0)} = -2
+				}$
+			</div>
+			This can be rewritten in matrix form and using the inverse a solution can be obtained:
+			<div class="latex_equation">
+				$\eqalign{
+					\begin{pmatrix}
+						1 & 1 \\
+						-5 & 2
+					\end{pmatrix} \begin{pmatrix}
+						c_1 \\
+						c_2
+					\end{pmatrix} &= \begin{pmatrix}
+						4 \\
+						-2
+					\end{pmatrix} \\
+					\begin{pmatrix}
+						c_1 \\
+						c_2
+					\end{pmatrix} &= \frac{1}{7} \begin{pmatrix}
+						2 & -1 \\
+						5 & 1
+					\end{pmatrix} \begin{pmatrix}
+						4 \\
+						-2
+					\end{pmatrix} \\
+					&= \begin{pmatrix}
+						\frac{10}{7} \\
+						\frac{18}{7}
+					\end{pmatrix}
+				}$
+			</div>
+			With this the particular solution is written down as:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = \frac{10}{7}e^{-5x} + \frac{18}{7}e^{2x}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

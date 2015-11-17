@@ -23,8 +23,16 @@
 			    <td>$\textbf{y}_{nh}$</td>
 			</tr>
 			<tr>
+		    	<td>$p(x)$</td>
+			    <td>$A_0 + A_1x + A_2x^2 + \dots + A_nx^n$</td>
+			</tr>
+			<tr>
 		    	<td>$ke^{\alpha x}$</td>
 			    <td>$Ae^{\alpha x}$</td>
+			</tr>
+			<tr>
+		    	<td>$p(x)e^{\alpha x}$</td>
+			    <td>$(A_0 + A_1x + A_2x^2 + \dots + A_nx^n)e^{\alpha x}$</td>
 			</tr>
 			<tr>
 		    	<td>$k\cos(\alpha x)$</td>
@@ -39,12 +47,20 @@
 			    <td>$A\cos(\alpha x) + B\sin(\alpha x)$</td>
 			</tr>
 			<tr>
-		    	<td>$k_0 + k_1x + k_2x^2 + \dots + k_nx^n$</td>
-			    <td>$A_0 + A_1x + A_2x^2 + \dots + A_nx^n$</td>
+		    	<td>$p(x)(\cos(\alpha x) + \sin(\alpha x))$</td>
+			    <td>$(A_0 + \dots + A_nx^n)(\cos(\alpha x) + \sin(\alpha x))$</td>
+			</tr>
+			<tr>
+		    	<td>$(k_1\cos(\alpha x) + k_2\sin(\alpha x))e^{\beta x}$</td>
+			    <td>$(A\cos(\alpha x) + B\sin(\alpha x))e^{\beta x}$</td>
+			</tr>
+			<tr>
+		    	<td>$p(x)(k_1\cos(\alpha x) + k_2\sin(\alpha x))e^{\beta x}$</td>
+			    <td>$(A_0 + \dots + A_nx^n)(B\cos(\alpha x) + C\sin(\alpha x))e^{\beta x}$</td>
 			</tr>
 		</table>
 	</div>
-	where $k,k_1,k_2,\dots,k_n,\alpha \in \mathbb{R}$ represent given constants and $A,B,A_0,A_1,A_2,\dots,A_n \in \mathbb{R}$ represent the coefficients that have to be determined in order to write down the non-homogeneous solution. To find the coefficients, just plug into the non-homogeneous differential equation and determine their values. If it happens that $f(x)$ is actually a sum of different cases, just use the principal of non-homogeneous linear differential equations.
+	where $k,k_1,k_2,\dots,k_n,\alpha,\beta \in \mathbb{R}$ represent given constants, $p(x)$ is a $n$th degree polynomial, and $A,B,C,A_0,A_1,A_2,\dots,A_n \in \mathbb{R}$ represent the coefficients that have to be determined in order to write down the non-homogeneous solution. To find the coefficients, just plug into the non-homogeneous differential equation and determine their values. If it happens that $f(x)$ is actually a sum of different cases, just use the principal of non-homogeneous linear differential equations.
 </div>
 
 <div class="latex_section">

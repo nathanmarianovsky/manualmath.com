@@ -1,0 +1,78 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' - 8y' + 17y = 0
+		}$
+	</div>
+	where:
+	<div class="latex_equation">
+		$\eqalign{
+			y(0) = -4 \hspace{.5cm} \text{and} \hspace{.5cm} y'(0) = -1
+		}$
+	</div>
+	determine the particular solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since this is a homogeneous linear constant coefficient equation the general solution will be given by the homogeneous solution. First we assume that:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = e^{mx}
+				}$
+			</div>
+			and plug in:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= y'' - 8y' + 17y \\
+					0 &= m^2e^{mx} - 8me^{mx} + 17e^{mx} \\
+					0 &= m^2 - 8m + 17 \\
+					m &= \frac{8 \pm \sqrt{64 - 68}}{2} \\
+					m &= 4 \pm i
+				}$
+			</div>
+			to get two complex distinct values for $m$. With this the homogeneous solution is given by:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h(x) = e^{4x}[c_1\cos(x) + c_2\sin(x)]
+				}$
+			</div>
+			where the first derivative is:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h'(x) = 4e^{4x}[c_1\cos(x) + c_2\sin(x)] + e^{4x}[-c_1\sin(x) + c_2\cos(x)]
+				}$
+			</div>
+			Now using the initial conditions:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h(0) &= e^{4(0)}[c_1\cos(0) + c_2\sin(0)] = -4 \\
+					y_h'(0) &= 4e^{4(0)}[c_1\cos(0) + c_2\sin(0)] \\
+					& \hspace{.4cm} + e^{4(0)}[-c_1\sin(0) + c_2\cos(0)] = -1
+				}$
+			</div>
+			From these two equations:
+			<div class="latex_equation">
+				$\eqalign{
+					c_1 &= -4 \\
+					c_2 &= 15
+				}$
+			</div>
+			With this the particular solution is written down as:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = e^{4x}[-4\cos(x) + 15\sin(x)]
+				}$
+			</div>
+		</div>
+	</div>
+</div>

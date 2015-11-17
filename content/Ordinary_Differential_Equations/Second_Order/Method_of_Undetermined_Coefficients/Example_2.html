@@ -1,0 +1,96 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' - 3y' - 10y = -4\cos(x) + 7\sin(x)
+		}$
+	</div>
+	determine the general solution.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			Since this is a non-homogeneous linear constant coefficient equation the general solution will be given by the addition of the homogeneous and non-homogeneous solutions. First we assume that:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = e^{mx}
+				}$
+			</div>
+			and plug in to solve the homogeneous portion:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= y'' - 3y' - 10y \\
+					0 &= m^2e^{mx} - 3me^{mx} - 10e^{mx} \\
+					0 &= m^2 - 3m - 10 \\
+					0 &= (m + 2)(m - 5) \\
+					m &= -2, 5
+				}$
+			</div>
+			to get two real distinct values for $m$. With this the homogeneous solution is given by:
+			<div class="latex_equation">
+				$\eqalign{
+					y_h(x) = c_1e^{-2x} + c_2e^{5x}
+				}$
+			</div>
+			Now for the non-homogeneous solution, using the method of undetermined coefficients we will guess that the solution takes on the form:
+			<div class="latex_equation">
+				$\eqalign{
+					y_{nh}(x) = A\cos(x) + B\sin(x)
+				}$
+			</div>
+			Plugging into the differential equation gives:
+			<div class="latex_equation">
+				$\eqalign{
+					-4\cos(x) + 7\sin(x) &= y_{nh}'' - 3y_{nh}' - 10y_{nh} \\
+					-4\cos(x) + 7\sin(x) &= (-A\cos(x) - B\sin(x)) \\
+					& \hspace{.4cm} - 3(-A\sin(x) + B\cos(x)) \\
+					& \hspace{.4cm} - 10(A\cos(x) + B\sin(x)) \\
+					-4\cos(x) + 7\sin(x) &= (-11A - 3B)\cos(x) + (3A - 11B)\sin(x) \\
+				}$
+			</div>
+			This can be rewritten in matrix form and using the inverse a solution can be obtained:
+			<div class="latex_equation">
+				$\eqalign{
+					\begin{pmatrix}
+						-11 & -3 \\
+						3 & -11
+					\end{pmatrix} \begin{pmatrix}
+						A \\
+						B
+					\end{pmatrix} &= \begin{pmatrix}
+						-4 \\
+						7
+					\end{pmatrix} \\
+					\begin{pmatrix}
+						A \\
+						B
+					\end{pmatrix} &= \frac{1}{130} \begin{pmatrix}
+						-11 & 3 \\
+						-3 & -11
+					\end{pmatrix} \begin{pmatrix}
+						-4 \\
+						7
+					\end{pmatrix} \\
+					&= \begin{pmatrix}
+						\frac{1}{2} \\
+						-\frac{1}{2}
+					\end{pmatrix}
+				}$
+			</div>
+			With this the general solution is given by:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = c_1e^{-2x} + c_2e^{5x} + \frac{1}{2}\cos(x) - \frac{1}{2}\sin(x)
+				}$
+			</div>
+		</div>
+	</div>
+</div>
