@@ -110,6 +110,13 @@ where "id" in both cases has to be replaced with the actual id of the section or
 
 # Version History
 
+### v.0.0.4
+* Logo Redesign
+* Hamburger Button Fix for Mobile
+* Official Documentation
+* Consolidated the Initial Development Process into a Single Command
+* Content++
+
 ### v.0.0.3
 * Logo Redesign
 * Math Formula Rendering Issue Fixed
