@@ -28,15 +28,9 @@
 </div>
 
 <div class="box_message">
-	<h2>Recent Changes</h2>
+	<h2>Source Code</h2>
 	<div class="box_text">
-		The current version is v.0.0.3. Changes since the last release include:
-		<li>Logo Redesign</li>
-		<li>Math Formula Rendering Issue Fixed</li>
-		<li>Images not Loading Fixed</li>
-		<li>No more about link on the landing page menu</li>
-		<li>Fixed some of the content</li>
-		If you would like to see the source code directly, everything is open-sourced <a href="http://www.github.com/nathanmarianovsky/manualmath.com" target="_blank">Here</a>.
+		The current version of the project is v.0.0.4 and if you would like to see the source code directly, everything is open-sourced <a href="http://www.github.com/nathanmarianovsky/manualmath.com" target="_blank">Here</a>
 		<br>
 		<br>
 		If you happen to find bugs or problems with the content either post an issue on the github repository or email me at nathanmarianovsky@gmail.com with your browser, browser version, device, and a description of the problem.

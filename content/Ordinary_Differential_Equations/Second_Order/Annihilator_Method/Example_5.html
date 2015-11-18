@@ -1,0 +1,72 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' + y' = 3
+		}$
+	</div>
+	determine the general solution using the annihilator method.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			We begin by noting that the annihilator operator from the table is going to be given by:
+			<div class="latex_equation">
+				$\eqalign{
+					A(D) = D
+				}$
+			</div>
+			Now rewriting the differential equation using operators and applying the annihilator to both sides gives:
+			<div class="latex_equation">
+				$\eqalign{
+					3 &= y'' + y' \\
+					3 &= (D^2 + D)y \\
+					D(3) &= (D)(D^2 + D)y \\
+					0 &= (D)(D^2 + D)y
+				}$
+			</div>
+			With this we are left with solving the characteristic polynomial:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= (\lambda)(\lambda^2 + \lambda) \\
+					0 &= (\lambda^2)(\lambda + 1) \\
+					\lambda &= -1, 0
+				}$
+			</div>
+			where one of the roots repeats twice. Knowing this we can write down the fundamental set of solutions as:
+			<div class="latex_equation">
+				$\eqalign{
+					\mathcal{S} = \{ e^{-x}, 1, x \}
+				}$
+			</div>
+			We now form our general solution as:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = c_1e^{-x} + c_2 + c_3x
+				}$
+			</div>
+			and plug into the differential equation to determine the constants for the non-homogeneous component:
+			<div class="latex_equation">
+				$\eqalign{
+					3 &= y'' + y' \\
+					3 &= (c_1e^{-x}) + (-c_1e^{-x} + c_3) \\
+					c_3 &= 3
+				}$
+			</div>
+			With this the general solution is given by:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = c_1e^{-x} + c_2 + 3x
+				}$
+			</div>
+		</div>
+	</div>
+</div>

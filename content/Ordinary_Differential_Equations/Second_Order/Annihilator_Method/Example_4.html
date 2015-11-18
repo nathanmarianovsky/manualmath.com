@@ -1,0 +1,103 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the differential equation:
+	<div class="latex_equation">
+		$\eqalign{
+			y'' - 3y' - 40y = \sin(2x)
+		}$
+	</div>
+	determine the general solution using the annihilator method.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			We begin by noting that the annihilator operator from the table is going to be given by:
+			<div class="latex_equation">
+				$\eqalign{
+					A(D) = D^2 + 4
+				}$
+			</div>
+			Now rewriting the differential equation using operators and applying the annihilator to both sides gives:
+			<div class="latex_equation">
+				$\eqalign{
+					\sin(2x) &= y'' - 3y' - 40y \\
+					\sin(2x) &= (D^2 - 3D - 40)y \\
+					(D^2 + 4)\sin(2x) &= (D^2 + 4)(D^2 - 3D - 40)y \\
+					0 &= (D^2 + 4)(D^2 - 3D - 40)y
+				}$
+			</div>
+			With this we are left with solving the characteristic polynomial:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= (\lambda^2 + 4)(\lambda^2 - 3\lambda - 40) \\
+					0 &= (\lambda + 2i)(\lambda - 2i)(\lambda + 5)(\lambda - 8) \\
+					\lambda &= -5, 8, \pm 2i
+				}$
+			</div>
+			Knowing this we can write down the fundamental set of solutions as:
+			<div class="latex_equation">
+				$\eqalign{
+					\mathcal{S} = \{ e^{-5x}, e^{8x}, \sin(2x), \cos(2x) \}
+				}$
+			</div>
+			We now form our general solution as:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = c_1e^{-5x} + c_2e^{8x} + c_3\sin(2x) + c_4\cos(2x)
+				}$
+			</div>
+			and plug into the differential equation to determine the constants for the non-homogeneous component:
+			<div class="latex_equation">
+				$\eqalign{
+					\sin(2x) &= y'' - 3y' - 40y \\
+					\sin(2x) &= (25c_1e^{-5x} + 64c_2e^{8x} - 4c_3\sin(2x) - 4c_4\cos(2x)) \\
+					& \hspace{.4cm} - 3(-5c_1e^{-5x} + 8c_2e^{8x} + 2c_3\cos(2x) - 2c_4\sin(2x)) \\
+					& \hspace{.4cm} - 40(c_1e^{-5x} + c_2e^{8x} + c_3\sin(2x) + c_4\cos(2x)) \\
+					\sin(2x) &= (-44c_3 + 6c_4)\sin(2x) + (-6c_3 - 44c_4)\cos(2x)
+				}$
+			</div>
+			which can be rewritten in matrix form and using the inverse a unique solution can be obtained:
+			<div class="latex_equation">
+				$\eqalign{
+					\begin{pmatrix}
+						-44 & 6 \\
+						-6 & -44 
+					\end{pmatrix} \begin{pmatrix}
+						c_3 \\
+						c_4
+					\end{pmatrix} &= \begin{pmatrix}
+						1 \\
+						0
+					\end{pmatrix} \\
+					\begin{pmatrix}
+						c_3 \\
+						c_4
+					\end{pmatrix} &= \frac{1}{1972} \begin{pmatrix}
+						-44 & -6 \\
+						6 & -44
+					\end{pmatrix} \begin{pmatrix}
+						1 \\
+						0
+					\end{pmatrix} \\
+					&= \begin{pmatrix}
+						-\frac{44}{1972} \\
+						\frac{6}{1972}
+					\end{pmatrix}
+				}$
+			</div>
+			With this the general solution is given by:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) = c_1e^{-5x} + c_2e^{8x} - \frac{11}{493}\sin(2x) + \frac{3}{986}\cos(2x)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

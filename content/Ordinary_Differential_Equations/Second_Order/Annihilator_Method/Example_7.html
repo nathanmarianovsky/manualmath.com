@@ -1,0 +1,37 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Prove that the annihilator operator for:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = k_1\cosh(\alpha x) + k_2\sinh(\alpha x) \hspace{.5cm} \text{where} \hspace{.5cm} k_1,k_2,\alpha \in \mathbb{R}
+		}$
+	</div>
+	is given by:
+	<div class="latex_equation">
+		$\eqalign{
+			A(D) = D^2 - \alpha^2
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type='button' value='Show Solution' class="show_solution">
+	<div style='display: none;' class="hidden_div">
+		<div class="latex_body">
+			The easiest way to prove is to simply plug in to show that it goes to zero:
+			<div class="latex_equation">
+				$\eqalign{
+					A(D)f(x) &= (D^2 - \alpha^2)(k_1\cosh(\alpha x) + k_2\sinh(\alpha x)) \\
+					&= D^2(k_1\cosh(\alpha x) + k_2\sinh(\alpha x)) - \alpha^2(k_1\cosh(\alpha x) + k_2\sinh(\alpha x)) \\
+					&= \alpha^2(k_1\cosh(\alpha x) + k_2\sinh(\alpha x)) - \alpha^2(k_1\cosh(\alpha x) + k_2\sinh(\alpha x)) \\
+					&= 0
+				}$
+			</div>
+		</div>
+	</div>
+</div>
