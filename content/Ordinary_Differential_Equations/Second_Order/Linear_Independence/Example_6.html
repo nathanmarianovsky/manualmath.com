@@ -27,10 +27,9 @@
 					\end{pmatrix} \\
 					&= \det \begin{pmatrix}
 						f(k_1x) & f(k_2x) \\
-						k_1f(k_1x) & k_2f(k_2x) 
+						k_1f'(k_1x) & k_2f'(k_2x) 
 					\end{pmatrix} \\
-					&= k_2f(k_1x)f(k_2x) - k_1f(k_1x)f(k_2x) \\
-					&= (k_2 - k_1)f(k_1x)f(k_2x)
+					&= k_2f(k_1x)f'(k_2x) - k_1f'(k_1x)f(k_2x)
 				}$
 			</div>
 			It seems that whenever $k_1 = k_2$ the two are linearly dependent, otherwise they are independent. This essentially states that given any function, a linearly independent function could be constructed from the one given by performing a horizontal stretch.
