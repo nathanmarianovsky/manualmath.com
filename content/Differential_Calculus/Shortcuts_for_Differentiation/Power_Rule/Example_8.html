@@ -1,0 +1,53 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given that $p \in \mathbb{N}$, prove:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{d^p}{dx^p} x^p = p!
+		}$
+	</div>
+	where $p! = p(p - 1)(p - 2)\dots(3)(2)(1)$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			Given the power rule, there are two ways to "prove". The formal way is to use induction since we are dealing with the natural numbers. In this scenario, the base case is going to occur when $p = 1$:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} x &= 1! \\
+					1 &= 1
+				}$
+			</div>
+			which holds true. Now assuming the given statement, we move on to prove that it holds true for $p + 1$:
+			<div class="latex_equation">
+				$\eqalign{
+					(p + 1)! &= \frac{d^{p + 1}}{dx^{p + 1}} x^{p + 1} \\
+					&= \frac{d^p}{dx^p} \cdot \frac{d}{dx} x^{p + 1} \\
+					&= \frac{d^p}{dx^p} (p + 1)x^p \\
+					&= (p + 1) \frac{d^p}{dx^p} x^p \\
+					&= (p + 1)p! \\
+					&= (p + 1)!
+				}$
+			</div>
+			The second method that I mentioned previously is more of a derivation rather than a proof. Assuming that we just want to determine the $p$th derivative of $f(x) = x^p$ we would calculate directly as:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d^p}{dx^p} x^p &= \frac{d^{p - 1}}{dx^{p - 1}} px^{p - 1} \\
+					&= \frac{d^{p - 2}}{dx^{p - 2}} p(p - 1)x^{p - 2} \\
+					&= \frac{d^{p - 3}}{dx^{p - 3}} p(p - 1)(p - 2)x^{p - 3} \\
+					&\vdots \\
+					&= \frac{d}{dx} p(p - 1)(p - 2)(p - 3)\dots(3)(2) x \\
+					&= p(p - 1)(p - 2)(p - 3)\dots(3)(2)(1) \\
+					&= p!
+				}$
+			</div>
+		</div>
+	</div>
+</div>
