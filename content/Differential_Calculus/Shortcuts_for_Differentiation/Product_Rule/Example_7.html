@@ -2,7 +2,7 @@
 	Problem
 </div>
 <div class="latex_body">
-	Find the derivative of $h(x) = 3x^2\sin(x)$.
+	Find the derivative of $h(x) = x\sin(x)\cos(x)$.
 </div>
 
 <div class="latex_section">
@@ -21,9 +21,10 @@
 			so:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} h(x) &= \frac{d}{dx} \Big( 3x^2\sin(x) \Big) \\
-					&= \frac{d}{dx} \Big( 3x^2 \Big) \cdot \sin(x) + 3x^2 \cdot \frac{d}{dx} \Big( \sin(x) \Big) \\
-					&= 6x + \cos(x)
+					\frac{d}{dx} h(x) &= \frac{d}{dx} \Big( x\sin(x)\cos(x) \Big) \\
+					&= \frac{d}{dx} \Big( x\sin(x) \Big) \cdot \cos(x) + x\sin(x) \cdot \frac{d}{dx} \Big( \cos(x) \Big) \\
+					&= \Big( \frac{d}{dx} \Big( x \Big) \cdot \sin(x) + x \cdot \frac{d}{dx} \Big( \sin(x) \Big) \Big) \cdot \cos(x) - x\sin^2(x) \\
+					&= (\sin(x) + x\cos(x))\cos(x) - x\sin^2(x)
 				}$
 			</div>
 		</div>

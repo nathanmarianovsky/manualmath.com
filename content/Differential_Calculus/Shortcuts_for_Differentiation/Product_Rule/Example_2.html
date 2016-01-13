@@ -21,20 +21,11 @@
 			so:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} h(x) = \frac{d}{dx} \Big( \sin(x)\tan(x) \Big) =
-					\frac{d}{dx} \Big( \sin(x) \Big) \cdot \tan(x) + 
-					\sin(x) \cdot \frac{d}{dx} \Big( \tan(x) \Big) 
-					= \cos(x)\tan(x) + \sin(x)\sec^2(x)
+					\frac{d}{dx} h(x) &= \frac{d}{dx} \Big( \sin(x)\tan(x) \Big) \\
+					&= \frac{d}{dx} \Big( \sin(x) \Big) \cdot \tan(x) + \sin(x) \cdot \frac{d}{dx} \Big( \tan(x) \Big) \\
+					&= \cos(x)\tan(x) + \sin(x)\sec^2(x)
 				}$
 			</div>
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	$("#show_solution").click(function() {
-        $("#hidden_div").show();
-        var solution = MathJax.Hub.getAllJax("hidden_div");
-        MathJax.Hub.Rerender("hidden_div");
-	    });
-</script>

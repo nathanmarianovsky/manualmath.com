@@ -2,7 +2,7 @@
 	Problem
 </div>
 <div class="latex_body">
-	Find the derivative of $h(x) = 3x^2\sin(x)$.
+	Find the derivative of $h(x) = (x^2 + 1)\sin(x)\cot(x)$.
 </div>
 
 <div class="latex_section">
@@ -21,9 +21,10 @@
 			so:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} h(x) &= \frac{d}{dx} \Big( 3x^2\sin(x) \Big) \\
-					&= \frac{d}{dx} \Big( 3x^2 \Big) \cdot \sin(x) + 3x^2 \cdot \frac{d}{dx} \Big( \sin(x) \Big) \\
-					&= 6x + \cos(x)
+					\frac{d}{dx} h(x) &= \frac{d}{dx} \Big( (x^2 + 1)\sin(x)\cot(x) \Big) \\
+					&= \frac{d}{dx} \Big( (x^2 + 1)\cos(x) \Big) \\
+					&= \frac{d}{dx} \Big( x^2 + 1 \Big) \cdot \cos(x) + (x^2 + 1) \cdot \frac{d}{dx} \Big( \cos(x) \Big) \\
+					&= 2x\cos(x) - (x^2 + 1)\sin(x)
 				}$
 			</div>
 		</div>
