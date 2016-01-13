@@ -2,7 +2,7 @@
 	Problem
 </div>
 <div class="latex_body">
-	Find the derivative of $h(x) = \frac{2x}{\sin(x)}$.
+	Find the derivative of $h(x) = \frac{\tan(x)}{\sin(x) + \cos(x)}$.
 </div>
 
 <div class="latex_section">
@@ -21,9 +21,9 @@
 			so:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} h(x) &= \frac{d}{dx} \Bigg( \frac{2x}{\sin(x)} \Bigg) \\
-					&= \frac{\frac{d}{dx} \Big( 2x \Big) \cdot \sin(x) - 2x \cdot \frac{d}{dx} \Big( \sin(x) \Big)}{\sin^2(x)} \\
-					&= \frac{2\sin(x) - 2x\cos(x)}{\sin^2(x)}
+					\frac{d}{dx} h(x) &= \frac{d}{dx} \Bigg( \frac{\tan(x)}{\sin(x) + \cos(x)} \Bigg) \\
+					&= \frac{\frac{d}{dx} \Big( \tan(x) \Big) \cdot (\sin(x) + \cos(x)) - \tan(x) \cdot \frac{d}{dx} \Big( \sin(x) + \cos(x) \Big)}{(\sin(x) + \cos(x))^2} \\
+					&= \frac{(\sin(x) + \cos(x))\sec^2(x) - (\cos(x) - \sin(x))\tan(x)}{(\sin(x) + \cos(x))^2}
 				}$
 			</div>
 		</div>

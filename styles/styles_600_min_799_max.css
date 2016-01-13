@@ -1,4 +1,4 @@
-/* Styles for screens with maximum width of 800px */
+/* Styles for screens with minimum and maximum widths of 600px and 799px respectively */
 @media only screen and (max-width : 799px) and (min-width : 600px) {
 	/* Pushes the main content from the left and top */
 	main {

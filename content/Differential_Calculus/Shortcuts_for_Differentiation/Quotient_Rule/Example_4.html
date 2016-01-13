@@ -2,7 +2,7 @@
 	Problem
 </div>
 <div class="latex_body">
-	Find the derivative of $h(x) = \frac{2x}{\sin(x)}$.
+	Find the derivative of $h(x) = \sec(x)$.
 </div>
 
 <div class="latex_section">
@@ -21,9 +21,12 @@
 			so:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} h(x) &= \frac{d}{dx} \Bigg( \frac{2x}{\sin(x)} \Bigg) \\
-					&= \frac{\frac{d}{dx} \Big( 2x \Big) \cdot \sin(x) - 2x \cdot \frac{d}{dx} \Big( \sin(x) \Big)}{\sin^2(x)} \\
-					&= \frac{2\sin(x) - 2x\cos(x)}{\sin^2(x)}
+					\frac{d}{dx} h(x) &= \frac{d}{dx} \Bigg( \sec(x) \Bigg) \\
+					&= \frac{d}{dx} \Bigg( \frac{1}{\cos(x)} \Bigg) \\
+					&= \frac{\frac{d}{dx} \Big( 1 \Big) \cdot \cos(x) - 1 \cdot \frac{d}{dx} \Big( \cos(x) \Big)}{\cos^2(x)} \\
+					&= \frac{\sin(x)}{\cos^2(x)} \\
+					&= \frac{\sin(x)}{\cos(x)} \cdot \frac{1}{\cos(x)} \\
+					&= \tan(x)\sec(x)
 				}$
 			</div>
 		</div>

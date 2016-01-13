@@ -1,4 +1,4 @@
-/* Styles for screens with minimum and maximum widths of 992px and 1200px respectively */
+/* Styles for screens with minimum width of 992px */
 @media only screen and (min-width : 992px) {
 	.drag-target {
 		display: none;

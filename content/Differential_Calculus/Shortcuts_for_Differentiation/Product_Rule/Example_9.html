@@ -5,7 +5,7 @@
 	Prove the following statement:
 	<div class="latex_equation">
 		$\eqalign{
-			\frac{d}{dx} \prod_{i = 1}^n f_i(x) = \sum_{i = 1}^n f_i'(x) \prod_{k \neq i} f_k(x)
+			\frac{d}{dx} \prod_{i = 1}^n f_i(x) = \sum_{i = 1}^n f_i'(x) \prod_{k \neq i} f_k(x) \hspace{.3cm} \text{where} \hspace{.3cm} k \in \{ 1, 2, 3, \dots, n \}
 		}$
 	</div>
 </div>
@@ -30,7 +30,7 @@
 				$\eqalign{
 					\sum_{i = 1}^{n + 1} f_i'(x) \prod_{k \neq i} f_k(x) &= \frac{d}{dx} \prod_{i = 1}^{n + 1} f_i(x) \\
 					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^n f_i(x) \cdot f_{n + 1}(x) \Bigg] \\
-					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^n f_i(x) \Bigg] \cdot f_{n + 1}(x) + \Bigg[ \prod_{i = 1}^n f_i(x) \Bigg] \cdot \frac{d}{dx} \Bigg[ f_{n + 1}(x) ] \\
+					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^n f_i(x) \Bigg] \cdot f_{n + 1}(x) + \Bigg[ \prod_{i = 1}^n f_i(x) \Bigg] \cdot \frac{d}{dx} \Bigg[ f_{n + 1}(x) \Bigg] \\
 					&= \sum_{i = 1}^n f_i'(x) \prod_{k \neq i} f_k(x) + \prod_{i = 1}^n f_i(x) \cdot f_{n + 1}'(x) \\
 					&= \sum_{i = 1}^{n + 1} f_i'(x) \prod_{k \neq i} f_k(x)
 				}$

@@ -1,0 +1,36 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Derive the following relationship:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{d}{dx} \Bigg[ \sum_{i = 1}^n f_i(x) \Bigg]^{-1} = -\sum_{i = 1}^n f_i'(x) \Bigg[ \sum_{j = 1}^n f_j(x) \Bigg]^{-2}
+		}$
+	</div>
+	assuming that for all values of $i$, each $f_i(x)$ is differentiable at $x$ and the total sum does not equate to zero.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			To tackle this it might be easier if we first set the denominator to be a single function so that the derivative is right away given by:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} \frac{1}{h(x)} = -\frac{h'(x)}{h(x)}
+				}$
+			</div>
+			when using the quotient rule. Now it is just a simple task of determining the derivative of the denominator, which is a rather trivial task since the derivative is a linear operator:
+			<div class="latex_equation">
+				$\eqalign{
+					-\frac{h'(x)}{h(x)} &= -\Bigg[ \frac{d}{dx} \sum_{i = 1}^n f_i(x) \Bigg] \Bigg[ \sum_{j = 1}^n f_i(x) \Bigg]^{-2} \\
+					&= -\sum_{i = 1}^n f_i'(x) \Bigg[ \sum_{j = 1}^n f_j(x) \Bigg]^{-2}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

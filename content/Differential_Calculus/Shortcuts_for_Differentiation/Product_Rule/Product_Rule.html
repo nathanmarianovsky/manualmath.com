@@ -2,8 +2,12 @@
 	Definition
 </div>
 <div class="latex_body">
-	Given $h(x) = f(x)g(x)$, the derivative is defined as:
-	<div class="latex_equation">$h'(x) = f'(x)g(x) + f(x)g'(x)$</div>
+	Given $k(x) = f(x)g(x)$, the derivative is defined as:
+	<div class="latex_equation">
+		$\eqalign{
+			k'(x) = f'(x)g(x) + f(x)g'(x)
+		}$
+	</div>
 	where $f(x)$ and $g(x)$ are differentiable at $x$.
 </div>
 
@@ -14,7 +18,7 @@
 	Using the limit definition of the derivative and some simple trickery:
 	<div class="latex_equation">
 		$\eqalign{
-			h'(x) &= \lim_{h \rightarrow 0} \frac{h(x+h) - h(x)}{h} \\
+			k'(x) &= \lim_{h \rightarrow 0} \frac{k(x+h) - k(x)}{h} \\
 			&= \lim_{h \rightarrow 0} \frac{f(x+h)g(x+h) - f(x)g(x)}{h} \\
 			&= \lim_{h \rightarrow 0} \frac{f(x+h)g(x+h) - f(x)g(x+h) + f(x)g(x+h) - f(x)g(x)}{h} \\
 			&= \lim_{h \rightarrow 0} \Big( \frac{f(x+h) - f(x)}{h} \cdot g(x+h) \Big) + \lim_{h \rightarrow 0} \Big( f(x+h) \cdot \frac{g(x+h) - g(x)}{h} \Big) \\
@@ -31,13 +35,13 @@
 	This proof essentially consists of taking the logarithm of both sides, differentiating both sides, and simplifying:
 	<div class="latex_equation">
 		$\eqalign{
-			h(x) &= f(x)g(x) \\
-			\ln(h(x)) &= \ln(f(x)g(x)) \\
-			\ln(h(x)) &= \ln(f(x)) + \ln(g(x)) \\
-			\frac{d}{dx} \ln(h(x)) &= \frac{d}{dx} \Big( \ln(f(x)) + \ln(g(x)) \Big) \\
-			\frac{h'(x)}{h(x)} &= \frac{f'(x)}{f(x)} + \frac{g'(x)}{g(x)} \\
-			h'(x) &= f(x)g(x) \Big( \frac{f'(x)}{f(x)} + \frac{g'(x)}{g(x)} \Big) \\
-			h'(x) &= f'(x)g(x) + f(x)g'(x)
+			k(x) &= f(x)g(x) \\
+			\ln(k(x)) &= \ln(f(x)g(x)) \\
+			\ln(k(x)) &= \ln(f(x)) + \ln(g(x)) \\
+			\frac{d}{dx} \ln(k(x)) &= \frac{d}{dx} \Big( \ln(f(x)) + \ln(g(x)) \Big) \\
+			\frac{k'(x)}{k(x)} &= \frac{f'(x)}{f(x)} + \frac{g'(x)}{g(x)} \\
+			k'(x) &= f(x)g(x) \Big( \frac{f'(x)}{f(x)} + \frac{g'(x)}{g(x)} \Big) \\
+			k'(x) &= f'(x)g(x) + f(x)g'(x)
 		}$
 	</div>
 </div>
