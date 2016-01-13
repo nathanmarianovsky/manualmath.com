@@ -1,0 +1,31 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Find the derivative of $h(x) = (x^9 - x^7 + 4x - 3)^{100}$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			According to the chain rule:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} f(g(x)) = \frac{df}{dg} \cdot \frac{dg}{dx}
+				}$
+			</div>
+			so:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} h(x) &= \frac{d}{dx} \Bigg( (x^9 - x^7 + 4x - 3)^{100} \Bigg) \\
+					&= \Big( 100(x^9 - x^7 + 4x - 3)^{99} \Big) \cdot \Big( 9x^8 - 7x^6 + 4 \Big) \\
+					&= 100(9x^8 - 7x^6 + 4)(x^9 - x^7 + 4x - 3)^{99}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

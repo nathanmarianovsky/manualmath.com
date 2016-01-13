@@ -2,10 +2,13 @@
 	Definition
 </div>
 <div class="latex_body">
-	Given $f(x) = g(h(x))$, the derivative is defined as:
-	<div class="latex_equation">$f'(x) = g'(h(x)) \cdot h'(x)$</div>
-	where a prime denotes the first derivative. For the above to work
-	$h(x)$ and $g(x)$ must be differentiable at $x$ and $h(x)$ respectively. 
+	Given $k(x) = g(f(x))$, the derivative is defined as:
+	<div class="latex_equation">
+		$\eqalign{
+			k'(x) = g'(f(x)) \cdot f'(x)
+		}$
+	</div>
+	where $f(x)$ and $g(x)$ must be differentiable at $x$ and $f(x)$ respectively. 
 </div>
 
 <div class="latex_section">
@@ -15,30 +18,50 @@
 	Using the limit definition of the derivative:
 	<div class="latex_equation">
 		$\eqalign{
-			f'(x) &= \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h} \\
-			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h} \\
-			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h} \cdot \frac{h(x+h) - h(x)}{h(x+h) - h(x)} \\
-			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h(x+h) - h(x)} \cdot \frac{h(x+h) - h(x)}{h} \\
-			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h(x+h) - h(x)} \cdot \lim_{h \rightarrow 0} \frac{h(x+h) - h(x)}{h} 
+			k'(x) &= \lim_{h \rightarrow 0} \frac{k(x + h) - k(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(f(x + h)) - g(h(x))}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(f(x + h)) - g(f(x))}{h} \cdot \frac{f(x + h) - f(x)}{f(x + h) - f(x)} \\
+			&= \lim_{h \rightarrow 0} \frac{g(f(x + h)) - g(f(x))}{h(x + h) - h(x)} \cdot \frac{f(x + h) - f(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(f(x + h)) - g(f(x))}{f(x + h) - f(x)} \cdot \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} 
 		}$
 	</div>
-	Now the trick is to let $\Delta = h(x+h) - h(x)$ so that:
+	Now the trick is to let $\Delta = h(x+h) - h(x)$ and note that as $h \rightarrow 0$ we have $\Delta \rightarrow 0$ so that:
 	<div class="latex_equation">
 		$\eqalign{
-			f'(x) &= \lim_{h \rightarrow 0} \frac{g(h(x) + \Delta) - g(h(x))}{\Delta} \cdot \lim_{h \rightarrow 0} \frac{h(x+h) - h(x)}{h} \\
-			&= g'(h(x)) \cdot h'(x)
+			k'(x) &= \lim_{\Delta \rightarrow 0} \frac{g(f(x) + \Delta) - g(f(x))}{\Delta} \cdot \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} \\
+			&= g'(f(x)) \cdot f'(x)
 		}$
 	</div>
-	Now to be a little formal consider the fact that during the evaluation an extra factor was brought into the denominator. Usually this does
-	not present a problem unless that factor is zero. So what happens if $\Delta = 0$? To figure this out go back to the beginning of the proof:
+	Now to be a little formal we should consider the fact that during the evaluation an extra factor was brought into the denominator. Usually this does not present a problem unless that factor is zero. So what happens if $\Delta = 0$? To figure this out go back to the beginning of the proof:
 	<div class="latex_equation">
 		$\eqalign{
-			f'(x) &= \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h} \\
-			&= \lim_{h \rightarrow 0} \frac{g(h(x+h)) - g(h(x))}{h} \\
-			&= \lim_{h \rightarrow 0} \frac{g(h(x + \Delta)) - g(h(x))}{h} \\
-			&= \lim_{h \rightarrow 0} \frac{g(h(x)) - g(h(x))}{h} \\
+			k'(x) &= \lim_{h \rightarrow 0} \frac{k(x+h) - k(x)}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(f(x + h)) - g(f(x))}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(f(x + \Delta)) - g(f(x))}{h} \\
+			&= \lim_{h \rightarrow 0} \frac{g(f(x)) - g(f(x))}{h} \\
 			&= 0
 		}$
 	</div>
 	So in the end if that extra factor happens to be zero, then the derivative is equivalently zero.
+</div>
+
+<div class="latex_section">
+	Determining the Derivative of the Inverse
+</div>
+<div class="latex_body">
+	A rather useful consequence of the chain rule is the following relationship:
+	<div class="latex_equation">
+		$\eqalign{
+			(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))}
+		}$
+	</div>
+	which provides a method of determining the derivative of the inverse function. Deriving this takes one step when starting from the fundamental relationship between a continuous function and its inverse:
+	<div class="latex_equation">
+		$\eqalign{
+			f(f^{-1}(x)) &= x \\
+			\frac{d}{dx} f(f^{-1}(x)) &= \frac{d}{dx} x \\
+			f'(f^{-1}(x)) \cdot (f^{-1})'(x) &= 1 \\
+			(f^{-1})'(x) &= \frac{1}{f'(f^{-1}(x))}
+		}$
+	</div>
 </div>
