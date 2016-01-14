@@ -1,0 +1,56 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Prove that the derivative of $h(x) = \arctan(x)$ is in fact $h'(x) = \frac{1}{1 + x^2}$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			Given a function, $f(x)$, we can determine the derivative of its inverse according to:
+			<div class="latex_equation">
+				$\eqalign{
+					(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))}
+				}$
+			</div>
+			so we have the setup:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) &= \tan(x) \\
+					f'(x) &= \sec^2(x) \\
+					f^{-1}(x) &= \arctan(x)
+				}$
+			</div>
+			which when plugged in provides:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} \arctan(x) = \frac{1}{\sec^2(\arctan(x))}
+				}$
+			</div>
+			To simplify the denominator, begin by setting:
+			<div class="latex_equation">
+				$\eqalign{
+					\theta = \arctan(x) \implies \tan(\theta) = x
+				}$
+			</div>
+			If you draw out a right triangle and label one of the angles as $\theta$, then opposite the angle is side with length $x$ and adjacent the angle is side with length 1. Using the $\textit{Pythagorean Theorem}$, the hypotenuse is $\sqrt{1 + x^2}$. Now to determine the rest:
+			<div class="latex_equation">
+				$\eqalign{
+					\sec(\theta) &= \frac{\text{hypotenuse}}{\text{adjacent}} \\
+					&= \frac{\sqrt{1 + x^2}}{1}
+				}$
+			</div>
+			which simplifies the derivative down to:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} \arctan(x) = \frac{1}{1 + x^2}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

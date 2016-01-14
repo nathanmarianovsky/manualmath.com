@@ -2,7 +2,7 @@
 	Problem
 </div>
 <div class="latex_body">
-	Find the derivative of $h(x) = (x^9 - x^7 + 4x - 3)^{100}$.
+	Find the derivative of $h(x) = f(g(k(x)))$.
 </div>
 
 <div class="latex_section">
@@ -18,19 +18,13 @@
 					\frac{d}{dx} f(g(x)) = \frac{df}{dg} \cdot \frac{dg}{dx}
 				}$
 			</div>
-			so we identify our components as:
+			so:
 			<div class="latex_equation">
 				$\eqalign{
-					f(g) &= g^{100} \\
-					g(x) &= x^9 - x^7 + 4x - 3
-				}$
-			</div>
-			and evaluate:
-			<div class="latex_equation">
-				$\eqalign{
-					\frac{d}{dx} h(x) &= \frac{d}{dx} \Bigg( (x^9 - x^7 + 4x - 3)^{100} \Bigg) \\
-					&= \Big( 100(x^9 - x^7 + 4x - 3)^{99} \Big) \cdot \Big( 9x^8 - 7x^6 + 4 \Big) \\
-					&= 100(9x^8 - 7x^6 + 4)(x^9 - x^7 + 4x - 3)^{99}
+					\frac{d}{dx} h(x) &= \frac{d}{dx} \Bigg( f(g(k(x))) \Bigg) \\
+					&= \Big( f'(g(k(x))) \Big) \cdot \frac{d}{dx} \Big( g(k(x)) \Big) \\
+					&= \Big( f'(g(k(x))) \Big) \cdot \Big( g'(k(x)) \Big) \cdot \frac{d}{dx} \Big( k(x) \Big) \\
+					&= f'(g(k(x)))g'(k(x))k'(x)
 				}$
 			</div>
 		</div>

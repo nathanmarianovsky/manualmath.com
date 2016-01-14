@@ -1,0 +1,64 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	You are given the following information:
+	<div class="latex_equation">
+		<table>
+	    	<tr>
+		    	<td>$x$</td>
+			    <td>$f(x)$</td>
+			    <td>$f'(x)$</td>
+			</tr>
+			<tr>
+		    	<td>$0$</td>
+			    <td>$7$</td>
+			    <td>$5$</td>
+			</tr>
+			<tr>
+		    	<td>$1$</td>
+			    <td>$-2$</td>
+			    <td>$-1$</td>
+			</tr>
+			<tr>
+		    	<td>$2$</td>
+			    <td>$3$</td>
+			    <td>$-4$</td>
+			</tr>
+		</table>
+	</div>
+	Determine the values of:
+	<div class="latex_equation">
+		$\eqalign{
+			(f^{-1})'(3) \hspace{.3cm} \text{and} \hspace{.3cm} (f^{-1})'(7)
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			Given a function, $f(x)$, we can determine the derivative of its inverse according to:
+			<div class="latex_equation">
+				$\eqalign{
+					(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))}
+				}$
+			</div>
+			so we have:
+			<div class="latex_equation">
+				$\eqalign{
+					(f^{-1})'(3) &= \frac{1}{f'(f^{-1}(3))} \\
+					&= \frac{1}{f'(2)} \\
+					&= -\frac{1}{4} \\
+					(f^{-1})'(7) &= \frac{1}{f'(f^{-1}(7))} \\
+					&= \frac{1}{f'(0)} \\
+					&= \frac{1}{5}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

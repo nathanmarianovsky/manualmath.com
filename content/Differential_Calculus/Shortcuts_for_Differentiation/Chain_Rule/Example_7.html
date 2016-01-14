@@ -1,0 +1,38 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine the derivative of $h(x) = \ln(x)$ without using the fact that $h'(x) = \frac{1}{x}$. This essentially means that the standard limit process will not work since it would require $\textit{L'Hospital's Rule}$ which uses the derivative. You are allowed to use the fact that $h^{-1}(x) = e^x$ and that $(h^{-1})'(x) = e^x$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			Given a function, $f(x)$, we can determine the derivative of its inverse according to:
+			<div class="latex_equation">
+				$\eqalign{
+					(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))}
+				}$
+			</div>
+			so we have the setup:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) &= e^x \\
+					f'(x) &= e^x \\
+					f^{-1}(x) &= \ln(x)
+				}$
+			</div>
+			which when plugged in provides:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} \ln(x) &= \frac{1}{e^{\ln(x)}} \\
+					&= \frac{1}{x}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

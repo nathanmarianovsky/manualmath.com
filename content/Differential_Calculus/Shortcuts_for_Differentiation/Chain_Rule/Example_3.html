@@ -2,7 +2,7 @@
 	Problem
 </div>
 <div class="latex_body">
-	Find the derivative of $h(x) = (x^9 - x^7 + 4x - 3)^{100}$.
+	Find the derivative of $h(x) = e^{x^7}e^{\sin(x)}$.
 </div>
 
 <div class="latex_section">
@@ -21,16 +21,17 @@
 			so we identify our components as:
 			<div class="latex_equation">
 				$\eqalign{
-					f(g) &= g^{100} \\
-					g(x) &= x^9 - x^7 + 4x - 3
+					f(g) &= e^g \\
+					g(x) &= x^7 + \sin(x)
 				}$
 			</div>
 			and evaluate:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} h(x) &= \frac{d}{dx} \Bigg( (x^9 - x^7 + 4x - 3)^{100} \Bigg) \\
-					&= \Big( 100(x^9 - x^7 + 4x - 3)^{99} \Big) \cdot \Big( 9x^8 - 7x^6 + 4 \Big) \\
-					&= 100(9x^8 - 7x^6 + 4)(x^9 - x^7 + 4x - 3)^{99}
+					\frac{d}{dx} h(x) &= \frac{d}{dx} \Bigg( e^{x^7}e^{\sin(x)} \Bigg) \\
+					&= \frac{d}{dx} \Bigg( e^{x^7 + \sin(x)} \Bigg) \\
+					&= \Big( e^{x^7 + \sin(x)} \Big) \cdot \Big( 7x^6 + \cos(x) \Big) \\
+					&= (7x^6 + \cos(x))e^{x^7 + \sin(x)}
 				}$
 			</div>
 		</div>
