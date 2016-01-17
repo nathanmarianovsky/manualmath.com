@@ -1,0 +1,42 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Evaluate both expressions:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{a \rightarrow 0} \lim_{b \rightarrow 0} a^b \hspace{.3cm} \text{and} \hspace{.3cm} \lim_{b \rightarrow 0} \lim_{a \rightarrow 0} a^b
+		}$
+	</div>
+	using an analytical approach where interchanging the limits is strictly prohibited. Do you get the same value for both limits? If not, discuss the numerical nature of $0^0$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			The first expression provides:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{a \rightarrow 0} \lim_{b \rightarrow 0} a^b &= \lim_{a \rightarrow 0} \Big( \lim_{b \rightarrow 0} a^b \Big) \\
+					&= \lim_{a \rightarrow 0} a^0 \\
+					&= \lim_{a \rightarrow 0} 1 \\
+					&= 1
+				}$
+			</div>
+			while the second expression gives:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{b \rightarrow 0} \lim_{a \rightarrow 0} a^b &= \lim_{b \rightarrow 0} \Big( \lim_{a \rightarrow 0} a^b \Big) \\
+					&= \lim_{b \rightarrow 0} 0^b \\
+					&= \lim_{b \rightarrow 0} 0 \\
+					&= 0
+				}$
+			</div>
+			After evaluation it becomes clear that these two expressions approach different values even though they both go to $0^0$. It is exactly because of this that $0^0$ is called an indeterminate form since it cannot take on one specific numerical value.
+		</div>
+	</div>
+</div>
