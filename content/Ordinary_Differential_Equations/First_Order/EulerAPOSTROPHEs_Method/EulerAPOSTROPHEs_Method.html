@@ -8,7 +8,13 @@
 			y' = f(x,y)
 		}$
 	</div>
-	where $y'$ denotes the first derivative and $y(x_0) = y_0$, a simple approach known as $\textit{Euler's Method}$ serves as a numerical approximation to the first order differential equation.
+	where $y'$ denotes the first derivative and $y(x_0) = y_0$, a simple approach known as $\textit{Euler's Method}$ serves as a numerical approximation to the first order differential equation with the recursive setup:
+	<div class="latex_equation">
+		$\eqalign{
+			x_{n + 1} &= x_n + h \\
+			y_{n + 1} &\approx y_n + hf(x_n,y_n)
+		}$
+	</div>
 </div>
 
 <div class="latex_section">
