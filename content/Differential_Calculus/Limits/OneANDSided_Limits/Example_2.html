@@ -2,18 +2,19 @@
 	Problem
 </div>
 <div class="latex_body">
-	Evaluate:
+	Given:
 	<div class="latex_equation">
 		$\eqalign{
-			\lim_{x \rightarrow 0} f(x) \hspace{.3cm} \text{where} \hspace{.3cm} 
-			f(x) = \begin{cases}
-				-x + 1 & x < 0 \\
-				10 & x = 0 \\
-				x + 1 & x > 0
-			\end{cases}
+			g(x) = \frac{\sin(x)}{x}
 		}$
 	</div>
-	using a numerical approach.
+	determine the following:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 0^-} g(x) \hspace{.3cm} \text{and} \hspace{.3cm} \lim_{x \rightarrow 0^+} g(x)
+		}$
+	</div>
+	using a numerical approach. After having found the results for the above, what can be said of the limit as $x \rightarrow 0$?
 </div>
 
 <div class="latex_section">
@@ -23,7 +24,7 @@
 	<input type="button" value="Show Solution" class="show_solution">
 	<div style="display: none;" class="hidden_div">
 		<div class="latex_body">
-			First the table of values:
+			From the table of values:
 			<div class="latex_equation">
 				<table>
 					<tr>
@@ -32,34 +33,40 @@
 					</tr>
 					<tr>
 					    <td>$-0.100$</td>
-					    <td>$1.100$</td>
+					    <td>$0.998$</td>
 					</tr>
 					<tr>
 					    <td>$-0.010$</td>
-					    <td>$1.010$</td>
+					    <td>$1.000$</td>
 					</tr>
 					<tr>
 					    <td>$-0.001$</td>
-					    <td>$1.001$</td>
+					    <td>$1.000$</td>
 					</tr>
 					<tr>
 					    <td>$0.001$</td>
-					    <td>$1.001$</td>
+					    <td>$1.000$</td>
 					</tr>
 					<tr>
 					    <td>$0.010$</td>
-					    <td>$1.010$</td>
+					    <td>$1.000$</td>
 					</tr>
 					<tr>
 					    <td>$0.100$</td>
-					    <td>$1.100$</td>
+					    <td>$0.998$</td>
 					</tr>
 				</table>
 			</div>
 			we have enough evidence to state that:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow 0} f(x) = 1
+					\lim_{x \rightarrow 0^-} g(x) = \lim_{x \rightarrow 0^+} g(x) = 1
+				}$
+			</div>
+			thus giving:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0} g(x) = 1
 				}$
 			</div>
 		</div>

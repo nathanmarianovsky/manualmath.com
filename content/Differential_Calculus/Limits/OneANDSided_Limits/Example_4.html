@@ -1,0 +1,46 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \begin{cases}
+				2x + 1 & x < 1 \\
+				5 & x = 1 \\
+				7x^2 - 4 & x > 1
+			\end{cases}
+		}$
+	</div>
+	determine the following:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 1^-} f(x) \hspace{.3cm} \text{and} \hspace{.3cm} \lim_{x \rightarrow 1^+} f(x)
+		}$
+	</div>
+	using an analytical approach. After having found the results for the above, what can be said of the limit as $x \rightarrow 1$?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			Since each component of the piecewise function is continuous, we can directly evaluate the limits using the correct components:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 1^-} f(x) &= 2(1) + 1 = 3 \\
+					\lim_{x \rightarrow 1^+} f(x) &= 7(1)^2 - 4 = 3
+				}$
+			</div>
+			Since the limits equate, the general limit is:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 1} f(x) = 3
+				}$
+			</div>
+		</div>
+	</div>
+</div>

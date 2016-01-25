@@ -2,13 +2,22 @@
 	Problem
 </div>
 <div class="latex_body">
-	Evaluate:
+	Given:
 	<div class="latex_equation">
 		$\eqalign{
-			\lim_{x \rightarrow 2} \frac{x^3 - 8}{x - 2}
+			g(x) = \begin{cases}
+				\frac{x^2 + 4x - 12}{x^2 - 2x} & x \neq 2 \\
+				6 & x = 2
+			\end{cases}
 		}$
 	</div>
-	using a numerical approach.
+	determine the following:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 2^-} g(x) \hspace{.3cm} \text{and} \hspace{.3cm} \lim_{x \rightarrow 2^+} g(x)
+		}$
+	</div>
+	using a numerical approach. After having found the results for the above, what can be said of the limit as $x \rightarrow 2$?
 </div>
 
 <div class="latex_section">
@@ -18,7 +27,7 @@
 	<input type="button" value="Show Solution" class="show_solution">
 	<div style="display: none;" class="hidden_div">
 		<div class="latex_body">
-			First the table of values:
+			From the table of values:
 			<div class="latex_equation">
 				<table>
 					<tr>
@@ -27,34 +36,40 @@
 					</tr>
 					<tr>
 					    <td>$1.900$</td>
-					    <td>$11.410$</td>
+					    <td>$4.158$</td>
 					</tr>
 					<tr>
 					    <td>$1.990$</td>
-					    <td>$11.940$</td>
+					    <td>$4.015$</td>
 					</tr>
 					<tr>
 					    <td>$1.999$</td>
-					    <td>$11.994$</td>
+					    <td>$4.002$</td>
 					</tr>
 					<tr>
 					    <td>$2.001$</td>
-					    <td>$12.006$</td>
+					    <td>$3.999$</td>
 					</tr>
 					<tr>
 					    <td>$2.010$</td>
-					    <td>$12.060$</td>
+					    <td>$3.985$</td>
 					</tr>
 					<tr>
 					    <td>$2.100$</td>
-					    <td>$12.610$</td>
+					    <td>$3.857$</td>
 					</tr>
 				</table>
 			</div>
 			we have enough evidence to state that:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow 2} \frac{x^3 - 8}{x - 2} = 12
+					\lim_{x \rightarrow 2^-} g(x) = \lim_{x \rightarrow 2^+} g(x) = 4
+				}$
+			</div>
+			thus giving:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 2} g(x) = 4
 				}$
 			</div>
 		</div>
