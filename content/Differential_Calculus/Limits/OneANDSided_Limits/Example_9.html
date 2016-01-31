@@ -1,0 +1,37 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Prove that:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 4^+} \frac{\sqrt{x} - 2}{x - 4} = \frac{1}{4}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			By using the conjugate of the numerator and simpliying:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 4} \frac{\sqrt{x} - 2}{x - 4} &= \lim_{x \rightarrow 4} \frac{\sqrt{x} - 2}{x - 4} \cdot \frac{\sqrt{x} + 2}{\sqrt{x} + 2} \\
+					&= \lim_{x \rightarrow 4} \frac{x - 4}{(x - 4)(\sqrt{x} + 2)} \\
+					&= \lim_{x \rightarrow 4} \frac{1}{\sqrt{x} + 2} \\
+					&= \frac{1}{4}
+				}$
+			</div>
+			Now if the general limit exists, then we know:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 4^+} \frac{\sqrt{x} - 2}{x - 4} = \frac{1}{4}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

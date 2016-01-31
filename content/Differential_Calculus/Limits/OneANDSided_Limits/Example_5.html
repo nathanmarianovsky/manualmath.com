@@ -1,0 +1,75 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \frac{x^4 - 13x^3 - 120x + 64}{x - 4}
+		}$
+	</div>
+	determine the following:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 1^-} f(x) \hspace{.3cm} \text{and} \hspace{.3cm} \lim_{x \rightarrow 1^+} f(x)
+		}$
+	</div>
+	using a numerical approach. After having found the results for the above, what can be said of the limit as $x \rightarrow 1$?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			First the table of values:
+			<div class="latex_equation">
+				<table>
+					<tr>
+					    <td>$\textbf{x}$</td>
+					    <td>$\textbf{f(x)}$</td>
+					</tr>
+					<tr>
+					    <td>$0.900$</td>
+					    <td>$0.839$</td>
+					</tr>
+					<tr>
+					    <td>$0.990$</td>
+					    <td>$1.889$</td>
+					</tr>
+					<tr>
+					    <td>$0.999$</td>
+					    <td>$1.989$</td>
+					</tr>
+					<tr>
+					    <td>$1.001$</td>
+					    <td>$2.011$</td>
+					</tr>
+					<tr>
+					    <td>$1.010$</td>
+					    <td>$2.109$</td>
+					</tr>
+					<tr>
+					    <td>$1.100$</td>
+					    <td>$3.041$</td>
+					</tr>
+				</table>
+			</div>
+			which provides evidence to state that:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 1^-} f(x) &= 2 \\
+					\lim_{x \rightarrow 1^+} f(x) &= 2
+				}$
+			</div>
+			Since the limits equate, the general limit is:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 1} f(x) = 2
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,68 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Prove that:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 0} \frac{1}{1 + 2^{-\frac{1}{x}}} = \text{DNE}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			First the table of values:
+			<div class="latex_equation">
+				<table>
+					<tr>
+					    <td>$\textbf{x}$</td>
+					    <td>$\textbf{f(x)}$</td>
+					</tr>
+					<tr>
+					    <td>$-0.100$</td>
+					    <td>$9.756 \times 10^{-4}$</td>
+					</tr>
+					<tr>
+					    <td>$-0.010$</td>
+					    <td>$7.889 \times 10^{-31}$</td>
+					</tr>
+					<tr>
+					    <td>$-0.001$</td>
+					    <td>$9.333 \times 10^{-302}$</td>
+					</tr>
+					<tr>
+					    <td>$0.001$</td>
+					    <td>$1.000$</td>
+					</tr>
+					<tr>
+					    <td>$0.010$</td>
+					    <td>$1.000$</td>
+					</tr>
+					<tr>
+					    <td>$0.100$</td>
+					    <td>$0.999$</td>
+					</tr>
+				</table>
+			</div>
+			which provides evidence to state that:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0^-} f(x) &= 0 \\
+					\lim_{x \rightarrow 0^+} f(x) &= 1
+				}$
+			</div>
+			Since the limits do not equate, the general limit is:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0} f(x) = \text{DNE}
+				}$
+			</div>
+		</div>
+	</div>
+</div>
