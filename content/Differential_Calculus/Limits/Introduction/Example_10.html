@@ -5,10 +5,10 @@
 	Evaluate:
 	<div class="latex_equation">
 		$\eqalign{
-			\lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ \prod_{k = 0}^m x^k \Bigg]^{-1}
+			\lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ \prod_{k = 0}^m x^{-k} \Bigg]^{-1}
 		}$
 	</div>
-	assuming that $n$ and $m$ are finite and no relationship exists between the two.
+	assuming that $n$ and $m$ are some positive integers.
 </div>
 
 <div class="latex_section">
@@ -21,28 +21,16 @@
 			This can be broken up into two different scenarios. Simplifying the expression provides:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ \prod_{k = 0}^m x^k \Bigg]^{-1} &= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ (1)(x)(x^2)\dots(x^m) \Bigg]^{-1} \\
-					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ x^{1 + 2 + \dots + m} \Bigg]^{-1} \\
-					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ x^{\sum_{k = 1}^m k} \Bigg]^{-1} \\
-					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^{i - \sum_{k = 1}^m k}
+					\lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ \prod_{k = 0}^m x^k \Bigg]^{-1} &= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ (1)(x)(x^2)\dots(x^m) \Bigg] \\
+					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ x^{1 + 2 + \dots + m} \Bigg] \\
+					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ x^{\sum_{k = 1}^m k} \Bigg] \\
+					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^{i + \sum_{k = 1}^m k}
 				}$
 			</div>
-			To evaluate the last line, we have to consider separate cases. First if there exists an $i$ s.t. one of the powers is negative, then:
+			It should be clear that all terms have strictly positive powers, thus:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow 0} \sum_{i = 0}^n x^{i - \sum_{k = 1}^m k} = \infty
-				}$
-			</div>
-			since one of the terms will have $x$ end up on the bottom, sending the limit to infinity which happens whenever you get infinitesimally close to dividing a positive number by zero. Second if there exists an $i$ s.t. one of the power is zero, then:
-			<div class="latex_equation">
-				$\eqalign{
-					\lim_{x \rightarrow 0} \sum_{i = 0}^n x^{i - \sum_{k = 1}^m k} = 1
-				}$
-			</div>
-			assuming that the rest of the terms have strictly positive powers. Lastly if the powers are all strictly positive, then:
-			<div class="latex_equation">
-				$\eqalign{
-					\lim_{x \rightarrow 0} \sum_{i = 0}^n x^{i - \sum_{k = 1}^m k} = 0
+					\lim_{x \rightarrow 0} \sum_{i = 0}^n x^{i + \sum_{k = 1}^m k} = 0
 				}$
 			</div>
 			since any positive power of zero is always zero.

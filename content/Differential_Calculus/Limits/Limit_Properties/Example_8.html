@@ -1,0 +1,53 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Evaluate:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 2} \frac{x^2 + 4x - 12}{|x - 2|}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			With the absolute value in play we have to be a little careful at $x = 2$. Formally:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{x^2 + 4x - 12}{|x - 2|} = \begin{cases}
+						\frac{x^2 + 4x - 12}{-(x - 2)} & x < 2 \\
+						\frac{x^2 + 4x - 12}{x - 2} & x > 2
+					\end{cases}
+				}$
+			</div>
+			Looking at the left side of the limit:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 2^-} \frac{x^2 + 4x - 12}{-(x - 2)} &= \lim_{x \rightarrow 2^-} \frac{(x + 6)(x - 2)}{-(x - 2)} \\
+					&= \lim_{x \rightarrow 2^-} -(x + 6) \\
+					&= -8
+				}$
+			</div>
+			and the right side:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 2^+} \frac{x^2 + 4x - 12}{x - 2} &= \lim_{x \rightarrow 2^+} \frac{(x + 6)(x - 2)}{x - 2} \\
+					&= \lim_{x \rightarrow 2^+} (x + 6) \\
+					&= 8
+				}$
+			</div>
+			This provides enough evidence to state:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 2} \frac{x^2 + 4x - 12}{|x - 2|} = \text{DNE}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

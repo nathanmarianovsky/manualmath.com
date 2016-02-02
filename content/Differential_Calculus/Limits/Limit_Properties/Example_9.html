@@ -1,0 +1,43 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Find numbers $a$ and $b$ s.t.:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 0} \frac{\sqrt{ax + b} - 2}{x} = 1
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			Begin by reorganizing the fraction:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{\sqrt{ax + b} - 2}{x} &= \frac{\sqrt{ax + b} - 2}{x} \cdot \frac{\sqrt{ax + b} + 2}{\sqrt{ax + b} + 2} \\
+					&= \frac{ax + b - 4}{x(\sqrt{ax + b} + 2)}
+				}$
+			</div>
+			Now notice that we ultimately want to get rid of the $x$ in the denominator because it causes issues for the limit. So let $b = 4$ to get:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{ax + b - 4}{x(\sqrt{ax + b} + 2)} &= \frac{ax}{x(\sqrt{ax + 4} + 2)} \\
+					&= \frac{a}{\sqrt{ax + 4} + 2}
+				}$
+			</div>
+			Now taking the limit gives:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0} \frac{a}{\sqrt{ax + 4} + 2} &= \frac{a}{4}
+				}$
+			</div>
+			To make this limit equate to one, we let $a = 1$.
+		</div>
+	</div>
+</div>
