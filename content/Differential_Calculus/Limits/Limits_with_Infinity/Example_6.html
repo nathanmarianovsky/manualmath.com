@@ -1,0 +1,31 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Evaluate:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow \infty} \frac{5^x}{3^x + 2^x}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			Divide throughout by the biggest exponential and conclude what happens to a fractional value when raised to higher powers:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow \infty} \frac{5^x}{3^x + 2^x} &= \lim_{x \rightarrow \infty} \frac{1}{\Big( \frac{3}{5} \Big)^x + \Big( \frac{2}{5} \Big)^x} \\
+					&= \frac{1}{0 + 0} \\
+					&= \infty
+				}$
+			</div>
+			Another way to arrive at infinity can be done by noting that the exponential in the numerator dominates both of the ones in the denominator at very large values of $x$.
+		</div>
+	</div>
+</div>
