@@ -1,0 +1,35 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given that:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \begin{cases}
+				x^2 + 2x & x < a \\
+				-1 & x \geq a
+			\end{cases}
+		}$
+	</div>
+	Find all values of $a$ s.t. the function is continuous everywhere.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			Independently, the components are already continuous. So we just have to make sure that at the splitting point the function is continuous. At $x = a$ we must have the components equate:
+			<div class="latex_equation">
+				$\eqalign{
+					(a)^2 + 2(a) &= -1 \\
+					a^2 + 2a + 1 &= 0 \\
+					(a + 1)^2 &= 0 \\
+					a &= -1
+				}$
+			</div>
+		</div>
+	</div>
+</div>

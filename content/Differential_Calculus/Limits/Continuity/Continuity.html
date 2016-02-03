@@ -1,0 +1,79 @@
+<div class="latex_section">
+	Continuity at a Point
+</div>
+<div class="latex_body">
+	A function, $f(x)$, is said to be $\textit{continuous at a point}$, $x = a$, if:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} f(x) \hspace{.2cm} \text{exists}, \hspace{.1cm} f(a) \hspace{.2cm} \text{is defined, and} \hspace{.2cm} f(a) = \lim_{x \rightarrow a} f(x)
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Continuous Functions
+</div>
+<div class="latex_body">
+	A function, $f(x)$, is said to be $\textit{continuous}$ on an interval, $S \subseteq \mathbb{R}$, if it continuous at every point.
+</div>
+
+<div class="latex_section">
+	Limits of Composition of Functions
+</div>
+<div class="latex_body">
+	Given that a function, $f(x)$, is continuous at $x = L$ where:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} g(x) = L
+		}$
+	</div>
+	then:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} f(g(x)) = f\Big( \lim_{x \rightarrow a} g(x) \Big)
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Squeeze Theorem
+</div>
+<div class="latex_body">
+	Limits are known to preserve inequalities, so given two functions s.t.:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) \leq g(x)
+		}$
+	</div>
+	then:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} f(x) \leq \lim_{x \rightarrow a} g(x)
+		}$
+	</div>
+	Using this information consider a scenario where we have three functions s.t.:
+	<div class="latex_equation">
+		$\eqalign{
+			h(x) \leq f(x) \leq g(x)
+		}$
+	</div>
+	and it is known that:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} h(x) = \lim_{x \rightarrow a} g(x) = L
+		}$
+	</div>
+	then:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} f(x) = L
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Intermediate Value Theorem
+</div>
+<div class="latex_body">
+	Let the setup be a set $[a,b] \subseteq \mathbb{R}$ attached to a continuous function $f(x)$. Given a number $\alpha$ that lies between $f(a)$ and $f(b)$, the $\textit{Intermediate Value Theorem}$ states that there exists a number $c$ s.t. $a \leq c \leq b$.
+</div>
