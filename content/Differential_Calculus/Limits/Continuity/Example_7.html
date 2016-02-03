@@ -1,0 +1,43 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Evaluate:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 0} x^2\sin\Big( \frac{1}{x} \Big)
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div style="display: none;" class="hidden_div">
+		<div class="latex_body">
+			We know that the range of the sine function is restricted as:
+			<div class="latex_equation">
+				$\eqalign{
+					-1 \leq \sin(u) \leq 1 \hspace{.3cm} \forall u \in \mathbb{R}
+				}$
+			</div>
+			This gives the perfect setup for the squeeze theorem:
+			<div class="latex_equation">
+				$\eqalign{
+					-1 \leq &\sin\Big( \frac{1}{x} \Big) \leq 1 \\
+					-x^2 \leq &x^2\sin\Big( \frac{1}{x} \Big) \leq x^2 \\
+					\lim_{x \rightarrow 0} -x^2 \leq \lim_{x \rightarrow 0} &x^2\sin\Big( \frac{1}{x} \Big) \leq \lim_{x \rightarrow 0} x^2 \\
+					0 \leq \lim_{x \rightarrow 0} &x^2\sin\Big( \frac{1}{x} \Big) \leq 0
+				}$
+			</div>
+			Since both sides approach zero, then so must the middle giving:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0} x^2\sin\Big( \frac{1}{x} \Big) = 0
+				}$
+			</div>
+		</div>
+	</div>
+</div>
