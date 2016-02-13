@@ -11,10 +11,10 @@
 	determine the following:
 	<div class="latex_equation">
 		$\eqalign{
-			\lim_{x \rightarrow 1^-} f(x) \hspace{.3cm} \text{and} \hspace{.3cm} \lim_{x \rightarrow 1^+} f(x)
+			\lim_{x \rightarrow 4^-} f(x) \hspace{.3cm} \text{and} \hspace{.3cm} \lim_{x \rightarrow 4^+} f(x)
 		}$
 	</div>
-	using a numerical approach. After having found the results for the above, what can be said of the limit as $x \rightarrow 1$?
+	using a numerical approach. After having found the results for the above, what can be said of the limit as $x \rightarrow 4$?
 </div>
 
 <div class="latex_section">
@@ -22,7 +22,7 @@
 </div>
 <div>
 	<input type="button" value="Show Solution" class="show_solution">
-	<div style="display: none;" class="hidden_div">
+	<div class="hidden_div">
 		<div class="latex_body">
 			First the table of values:
 			<div class="latex_equation">
@@ -32,42 +32,42 @@
 					    <td>$\textbf{f(x)}$</td>
 					</tr>
 					<tr>
-					    <td>$0.900$</td>
-					    <td>$0.839$</td>
+					    <td>$3.900$</td>
+					    <td>$9.438 \times 10^3$</td>
 					</tr>
 					<tr>
-					    <td>$0.990$</td>
-					    <td>$1.889$</td>
+					    <td>$3.990$</td>
+					    <td>$9.871 \times 10^4$</td>
 					</tr>
 					<tr>
-					    <td>$0.999$</td>
-					    <td>$1.989$</td>
+					    <td>$3.999$</td>
+					    <td>$9.915 \times 10^5$</td>
 					</tr>
 					<tr>
-					    <td>$1.001$</td>
-					    <td>$2.011$</td>
+					    <td>$4.001$</td>
+					    <td>$-9.925 \times 10^5$</td>
 					</tr>
 					<tr>
-					    <td>$1.010$</td>
-					    <td>$2.109$</td>
+					    <td>$4.010$</td>
+					    <td>$-9.969 \times 10^4$</td>
 					</tr>
 					<tr>
-					    <td>$1.100$</td>
-					    <td>$3.041$</td>
+					    <td>$4.100$</td>
+					    <td>$-1.041 \times 10^4$</td>
 					</tr>
 				</table>
 			</div>
 			which provides evidence to state that:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow 1^-} f(x) &= 2 \\
-					\lim_{x \rightarrow 1^+} f(x) &= 2
+					\lim_{x \rightarrow 4^-} f(x) &= \infty \\
+					\lim_{x \rightarrow 4^+} f(x) &= -\infty
 				}$
 			</div>
 			Since the limits equate, the general limit is:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow 1} f(x) = 2
+					\lim_{x \rightarrow 4} f(x) = \text{DNE}
 				}$
 			</div>
 		</div>
