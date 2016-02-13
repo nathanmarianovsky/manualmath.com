@@ -1,0 +1,46 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Prove the $\textit{Triangle Inequality}$:
+	<div class="latex_equation">
+		$\eqalign{
+			|x + y| \leq |x| + |y| \hspace{.3cm} \text{where} \hspace{.3cm} x,y \in \mathbb{R}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Begin by noting that:
+			<div class="latex_equation">
+				$\eqalign{
+					|x + y|^2 = (x + y)^2
+				}$
+			</div>
+			Now by expanding the right side and using properties of the absolute value:
+			<div class="latex_equation">
+				$\eqalign{
+					|x + y|^2 &= (x + y)^2 \\
+					&= x^2 + 2xy + y^2 \\
+					&= |x|^2 + 2xy + |y|^2 \\
+					&\leq |x|^2 + 2|xy| + |y|^2 \\
+					&= |x|^2 + 2|x||y| + |y|^2 \\
+					&= (|x| + |y|)^2
+				}$
+			</div>
+			We finally arrive at:
+			<div class="latex_equation">
+				$\eqalign{
+					|x + y|^2 &\leq (|x| + |y|)^2 \\
+					|x + y| &\leq |x| + |y|
+				}$
+			</div>
+		</div>
+	</div>
+</div>

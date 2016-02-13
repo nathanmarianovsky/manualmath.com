@@ -1,0 +1,60 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	You may assume that $g(y)$ is continuous and:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} f(x) &= L_1 \\
+			\lim_{y \rightarrow L_1} g(y) &= L_2 \\
+		}$
+	</div>
+	Use this to prove:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} g(f(x)) = L_2
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			The given information can be reformatted. We know $\forall \epsilon,\epsilon_1 > 0, \exists \delta, \delta_1 > 0$ s.t.:
+			<div class="latex_equation">
+				$\eqalign{
+					|g(y) - L_2| < \epsilon \hspace{.3cm} &\text{whenever} \hspace{.3cm} |y - L_1| < \delta \\
+					|f(x) - L_1| < \epsilon_1 \hspace{.3cm} &\text{whenever} \hspace{.3cm} |x - a| < \delta_1
+				}$
+			</div>
+			Using the first line and setting $\epsilon_1 = \delta$ we are allowed to rewrite the second line as:
+			<div class="latex_equation">
+				$\eqalign{
+					|f(x) - L_1| < \delta \hspace{.3cm} &\text{whenever} \hspace{.3cm} |x - a| < \delta_1
+				}$
+			</div>
+			So now if $|x - a| < \delta_1$, then:
+			<div class="latex_equation">
+				$\eqalign{
+					|g(f(x)) - L_2| < \epsilon \hspace{.3cm} &\text{whenever} \hspace{.3cm} |f(x) - L_1| < \delta
+				}$
+			</div>
+			which proves:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow a} g(f(x)) = L_2
+				}$
+			</div>
+			and is the same as saying:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow a} g(f(x)) = g\Big( \lim_{x \rightarrow a} f(x) \Big)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

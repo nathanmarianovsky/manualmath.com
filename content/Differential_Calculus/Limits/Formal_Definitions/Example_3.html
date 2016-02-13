@@ -1,0 +1,49 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Prove:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} cf(x) = c\lim_{x \rightarrow a} f(x) \hspace{.3cm} \text{where} \hspace{.3cm} c \in \mathbb{R}
+		}$
+	</div>
+	assuming that the limit on the right-hand side exists.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Assuming that the limit of the function exists:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow a} f(x) = L
+				}$
+			</div>
+			then we know $\forall \epsilon > 0, \exists \delta_1 > 0$ s.t.:
+			<div class="latex_equation">
+				$\eqalign{
+					|f(x) - L| < \frac{\epsilon}{|c|} \hspace{.3cm} \text{whenever} \hspace{.3cm} |x - a| < \delta_1
+				}$
+			</div>
+			We need to show:
+			<div class="latex_equation">
+				$\eqalign{
+					|cf(x) - cL| < \epsilon \hspace{.3cm} \text{whenever} \hspace{.3cm} |x - a| < \delta
+				}$
+			</div>
+			So we choose $\delta = \delta_1$ to use the inequality for $f(x)$ to obtain:
+			<div class="latex_equation">
+				$\eqalign{
+					|cf(x) - cL| &= |c||f(x) - L| \\
+					&< |c| \cdot \frac{\epsilon}{|c|} \\
+					&= \epsilon
+				}$
+			</div>
+		</div>
+	</div>
+</div>
