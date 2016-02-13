@@ -12,6 +12,10 @@
 			    <td>Such That</td>
 			</tr>
 			<tr>
+		    	<td>DNE</td>
+			    <td>Does Not Exist</td>
+			</tr>
+			<tr>
 		    	<td>$\in$</td>
 			    <td>Belongs To or Is an Element Of</td>
 			</tr>
