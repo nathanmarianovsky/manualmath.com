@@ -1,0 +1,33 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = x^2 + 5
+		}$
+	</div>
+	Determine $f'(3)$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			<div class="latex_equation">
+				$\eqalign{
+					f'(3) &= \lim_{h \rightarrow 0} \frac{f(3 + h) - f(3)}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{((3 + h)^2 + 5) - (9 + 5)}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{9 + 6h + h^2 + 5 - 14}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{6h + h^2}{h} \\
+					&= \lim_{h \rightarrow 0} (6 + h) \\
+					&= 6
+				}$
+			</div>
+		</div>
+	</div>
+</div>

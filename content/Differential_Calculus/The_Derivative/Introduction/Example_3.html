@@ -1,0 +1,47 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = |x|
+		}$
+	</div>
+	Determine $f'(0)$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			From the left side:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{h \rightarrow 0^-} \frac{f(0 + h) - f(0)}{h} &= \lim_{h \rightarrow 0^-} \frac{-(0 + h) - (-0)}{h} \\
+					&= \lim_{h \rightarrow 0^-} \frac{-h}{h} \\
+					&= \lim_{h \rightarrow 0^-} -1 \\
+					&= -1
+				}$
+			</div>
+			and from the right side:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{h \rightarrow 0^+} \frac{f(0 + h) - f(0)}{h} &= \lim_{h \rightarrow 0^+} \frac{(0 + h) - (0)}{h} \\
+					&= \lim_{h \rightarrow 0^+} \frac{h}{h} \\
+					&= \lim_{h \rightarrow 0^+} 1 \\
+					&= 1
+				}$
+			</div>
+			Since the limit does not exist, then neither does the derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(0) = \text{DNE}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

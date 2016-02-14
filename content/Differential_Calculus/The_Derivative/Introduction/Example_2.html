@@ -1,0 +1,32 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \frac{1}{x}
+		}$
+	</div>
+	Determine $f'(7)$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			<div class="latex_equation">
+				$\eqalign{
+					f'(7) &= \lim_{h \rightarrow 0} \frac{f(7 + h) - f(7)}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{\frac{1}{7 + h} - \frac{1}{7}}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{\frac{7 - (7 + h)}{7(7 + h)}}{h} \\
+					&= \lim_{h \rightarrow 0} -\frac{1}{7(7 + h)} \\
+					&= -\frac{1}{49}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

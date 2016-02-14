@@ -1,0 +1,48 @@
+<div class="latex_section">
+	Definition
+</div>
+<div class="latex_body">
+	Given some arbitrary function, $f(x)$, consider the following setup:
+	<div class="latex_equation">
+		<img src="/content/Differential_Calculus/The_Derivative/Introduction/Secant.png">
+	</div>
+	where the line that passes through the two points is known as the $\textit{secant}$ line. Formally we would write down the average rate of change as:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{f(x_1) - f(x_0)}{x_1 - x_0}
+		}$
+	</div>
+	Ideally say that we want to find the $\textit{instantaneous}$ rate of change at $x = x_0$, how would this be attained given the current setup? With an understanding of limits, we can develop a systematic way of approaching a point infinitesimally close. To do this just let $x_1 \rightarrow x_0$, giving:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{df}{dx} \Big|_{x = x_0} = f'(x_0) = \lim_{x_1 \rightarrow x_0} \frac{f(x_1) - f(x_0)}{x_1 - x_0}
+		}$
+	</div>
+	where the above is known as the derivative of $f(x)$ evaluated at $x = x_0$. Formally we state a function is $\textit{differentiable}$ at $x = x_0$ iff $f'(x_0)$ exists. The above can also be rewritten if the following substitutions are used:
+	<div class="latex_equation">
+		$\eqalign{
+			h &= x_1 - x_0 \\
+			x_1 \rightarrow x_0 &\implies h \rightarrow 0
+		}$
+	</div>
+	giving:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{df}{dx} \Big|_{x = x_0} = f'(x_0) = \lim_{h \rightarrow 0} \frac{f(x_0 + h) - f(x_0)}{h}
+		}$
+	</div>
+	Either definition is valid and can be generalized to determining the derivative function as whole and not just at a point. Formally:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{df}{dx} = f'(x) = \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h}
+		}$
+	</div>
+	the above is known as the derivative function and determines the instantaneous rate of change of the original function at any $x$. 
+</div>
+
+<div class="latex_section">
+	Consequence of Differentiability
+</div>
+<div class="latex_body">
+	I say consequence, but do not mean it in a bad way. Actually if a function is differentiable at a point, then it is also continuous at that point. Extending this we say that if a function is differentiable on some interval, then it is also continuous on that interval.
+</div>
