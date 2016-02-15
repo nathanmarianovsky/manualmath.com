@@ -1,0 +1,56 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine all points where the lines tangent to the graph of:
+	<div class="latex_equation">
+		$\eqalign{
+			x^{\frac{2}{3}} + y^{\frac{2}{3}} = 8
+		}$
+	</div>
+	have a slope of $-1$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To observe the slope at all points we need the derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} \Big[ x^{\frac{2}{3}} + y^{\frac{2}{3}} \Big] &= \frac{d}{dx} 8 \\
+					\frac{2}{3}x^{-\frac{1}{3}} + \frac{2}{3}y^{-\frac{1}{3}}y' &= 0 \\
+					y^{-\frac{1}{3}}y' &= -x^{-\frac{1}{3}} \\
+					y' &= -\Big( \frac{y}{x} \Big)^{\frac{1}{3}}
+				}$
+			</div>
+			Now if we want the slope to be $-1$:
+			<div class="latex_equation">
+				$\eqalign{
+					-1 &= -\Big( \frac{y}{x} \Big)^{\frac{1}{3}} \\
+					1 &= \Big( \frac{y}{x} \Big)^{\frac{1}{3}} \\
+					1 &= \frac{y}{x} \\
+					y &= x
+				}$
+			</div>
+			So we now have two equations that have to be satisfied: the original equation of the graph and the condition on the slope. Plugging in the latter into the equation of the graph:
+			<div class="latex_equation">
+				$\eqalign{
+					x^{\frac{2}{3}} + x^{\frac{2}{3}} &= 8 \\
+					2x^{\frac{2}{3}} &= 8 \\
+					x^{\frac{2}{3}} &= 4 \\
+					x &= -8, 8
+				}$
+			</div>
+			We now know the $x$-coordinates, and the $y$ counterparts are exactly the same due to the slope condition. Therefore, the points where the lines tangent to the graph have a slope of $-1$ are:
+			<div class="latex_equation">
+				$\eqalign{
+					(-8,-8) \hspace{.3cm} \text{and} \hspace{.3cm} (8,8)
+				}$
+			</div>
+		</div>
+	</div>
+</div>
