@@ -1,0 +1,34 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Find the derivative of:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = x^{\ln(x)}(\sec(x))^{3x}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution	
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Taking the logarithm of both sides and differentiate:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) &= x^{\ln(x)}(\sec(x))^{3x} \\
+					\ln(y(x)) &= \ln(x^{\ln(x)}(\sec(x))^{3x}) \\
+					\ln(y(x)) &= \ln(x)\ln(x) + 3x\ln(\sec(x)) \\
+					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} \Big[ (\ln(x))^2 + 3x\ln(\sec(x)) \Big] \\
+					\frac{y'(x)}{y(x)} &= \frac{2\ln(x)}{x} + 3\ln(\sec(x)) + 3x\tan(x) \\
+					y'(x) &= y(x) \Big[ \frac{2\ln(x)}{x} + 3\ln(\sec(x)) + 3x\tan(x) \Big] \\
+					&= x^{\ln(x)}(\sec(x))^{3x} \Big[ \frac{2\ln(x)}{x} + 3\ln(\sec(x)) + 3x\tan(x) \Big]
+				}$
+			</div>
+		</div>
+	</div>
+</div>

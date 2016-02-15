@@ -1,0 +1,34 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Find the derivative of:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = 7x(\cos(x))^{\frac{x}{2}}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution	
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Taking the logarithm of both sides and differentiate:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) &= 7x(\cos(x))^{\frac{x}{2}} \\
+					\ln(y(x)) &= \ln(7x(\cos(x))^{\frac{x}{2}}) \\
+					\ln(y(x)) &= \ln(7) + \ln(x) + \frac{x}{2}\ln(\cos(x)) \\
+					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} \Big[ \ln(7) + \ln(x) + \frac{x}{2}\ln(\cos(x)) \Big] \\
+					\frac{y'(x)}{y(x)} &= \frac{1}{x} + \frac{1}{2}\ln(\cos(x)) - \frac{x\sin(x)}{2\cos(x)} \\
+					y'(x) &= y(x) \Big[ \frac{1}{x} + \frac{1}{2}\ln(\cos(x)) - \frac{x\sin(x)}{2\cos(x)} \Big] \\
+					&= 7x(\cos(x))^{\frac{x}{2}} \Big[ \frac{1}{x} + \frac{1}{2}\ln(\cos(x)) - \frac{x\sin(x)}{2\cos(x)} \Big]
+				}$
+			</div>
+		</div>
+	</div>
+</div>

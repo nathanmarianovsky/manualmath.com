@@ -1,0 +1,34 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Find the derivative of:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = (1 - 3x)^{\cos(x)}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution	
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Taking the logarithm of both sides and differentiate:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) &= (1 - 3x)^{\cos(x)} \\
+					\ln(y(x)) &= \ln((1- 3x)^{\cos(x)}) \\
+					\ln(y(x)) &= \cos(x)\ln(1 - 3x) \\
+					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} \cos(x)\ln(1 - 3x) \\
+					\frac{y'(x)}{y(x)} &= -\sin(x)\ln(1 - 3x) - \frac{3\cos(x)}{1 - 3x} \\
+					y'(x) &= y(x) \Big[ -\sin(x)\ln(1 - 3x) - \frac{3\cos(x)}{1 - 3x} \Big] \\
+					&= -(1 - 3x)^{\cos(x)} \Big[ \sin(x)\ln(1 - 3x) + \frac{3\cos(x)}{1 - 3x} \Big]
+				}$
+			</div>
+		</div>
+	</div>
+</div>

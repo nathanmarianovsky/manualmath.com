@@ -1,0 +1,55 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Consider the function:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = \pi^2 + 2^x + x^2 + x^{\frac{1}{x}}
+		}$
+	</div>
+	Determine the slope of the line perpendicular to the graph at $x = 1$.
+</div>
+
+<div class="latex_section">
+	Solution	
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First we need to determine:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) &= x^{\frac{1}{x}} \\
+					\ln(y(x)) &= \ln(x^{\frac{1}{x}}) \\
+					\ln(y(x)) &= \frac{\ln(x)}{x} \\
+					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} \frac{\ln(x)}{x} \\
+					\frac{y'(x)}{y(x)} &= \frac{1 - \ln(x)}{x^2} \\
+					y'(x) &= y(x) \frac{1 - \ln(x)}{x^2} \\
+					&= x^{\frac{1}{x}} \frac{1 - \ln(x)}{x^2}
+				}$
+			</div>
+			Now to determine the slope we need the derivative of the function:
+			<div class="latex_equation">
+				$\eqalign{
+					y'(x) &= \frac{d}{dx} \Big[ \pi^2 + 2^x + x^2 + x^{\frac{1}{x}} \Big] \\
+					&= \ln(2)2^x + 2x + x^{\frac{1}{x}} \frac{1 - \ln(x)}{x^2}
+				}$
+			</div>
+			At $x = 1$:
+			<div class="latex_equation">
+				$\eqalign{
+					y'(1) &= \ln(2)2^{(1)} + 2(1) + (1)^{\frac{1}{(1)}} \frac{1 - \ln((1))}{(1)^2} \\
+					&= 2\ln(2) + 3
+				}$
+			</div>
+			Since we want the slope to the perpendicular line, we want the negative reciprocal:
+			<div class="latex_equation">
+				$\eqalign{
+					m = -\frac{1}{2\ln(2) + 3}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

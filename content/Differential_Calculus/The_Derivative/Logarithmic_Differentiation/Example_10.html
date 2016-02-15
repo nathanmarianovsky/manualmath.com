@@ -1,0 +1,42 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	You are given that:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{d}{dx} x^x = x^x (\ln(x) + 1)
+		}$
+	</div>
+	and tetration, the next hyperoperation after exponentiation, is defined as:
+	<div class="latex_equation">
+		$\eqalign{
+			{\ ^{n}x = \ \atop {\ }} {{\underbrace{x^{x^{\cdot^{\cdot^{x}}}}}} \atop n}
+		}$
+	</div>
+	Determine the first derivative of the general tetration function by developing an algorithm.
+</div>
+
+<div class="latex_section">
+	Solution	
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			We are given the base case, so all that is left is the general step:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) &= {\ ^{n}x \\
+					\ln(y(x)) &= \ln({\ ^{n}x) \\
+					\ln(y(x)) &= \ln(\ \atop {\ }} {{\underbrace{x^{x^{\cdot^{\cdot^{x}}}}}} \atop n}) \\
+					\ln(y(x)) &= {\ ^{n - 1}x \ln(x) \\
+					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} {\ ^{n - 1}x \ln(x) \\
+					\frac{y'(x)}{y(x)} &= \ln(x) \frac{d}{dx} {\ ^{n - 1}x + \frac{\frac{d}{dx} {\ ^{n - 1}x}{x} \\
+					y'(x) &= y(x) \Big[ \ln(x) \frac{d}{dx} {\ ^{n - 1}x + \frac{\frac{d}{dx} {\ ^{n - 1}x}{x} \Big] \\
+					&= {\ ^{n}x \Big[ \ln(x) \frac{d}{dx} {\ ^{n - 1}x + \frac{\frac{d}{dx} {\ ^{n - 1}x}{x} \Big]
+				}$
+			</div>
+		</div>
+	</div>
+</div>

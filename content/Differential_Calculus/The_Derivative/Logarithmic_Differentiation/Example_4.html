@@ -1,0 +1,34 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Find the derivative of:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = (\sin(x))^{x^3}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution	
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Taking the logarithm of both sides and differentiate:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) &= (\sin(x))^{x^3} \\
+					\ln(y(x)) &= \ln((\sin(x))^{x^3}) \\
+					\ln(y(x)) &= x^3\ln(\sin(x)) \\
+					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} x^3\ln(\sin(x)) \\
+					\frac{y'(x)}{y(x)} &= 3x^2\ln(\sin(x)) + \frac{\cos(x)x^3}{\sin(x)} \\
+					y'(x) &= y(x) \Big[ 3x^2\ln(\sin(x)) + \frac{\cos(x)x^3}{\sin(x)} \Big] \\
+					&= (\sin(x))^{x^3} \Big[ 3x^2\ln(\sin(x)) + \frac{\cos(x)x^3}{\sin(x)} \Big]
+				}$
+			</div>
+		</div>
+	</div>
+</div>

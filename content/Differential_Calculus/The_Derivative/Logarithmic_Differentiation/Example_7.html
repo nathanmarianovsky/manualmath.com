@@ -1,0 +1,34 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Find the derivative of:
+	<div class="latex_equation">
+		$\eqalign{
+			y(x) = \frac{(\ln(x))^x}{2^{3x + 1}}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution	
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Taking the logarithm of both sides and differentiate:
+			<div class="latex_equation">
+				$\eqalign{
+					y(x) &= \frac{(\ln(x))^x}{2^{3x + 1}} \\
+					\ln(y(x)) &= \ln\Big( \frac{(\ln(x))^x}{2^{3x + 1}} \Big) \\
+					\ln(y(x)) &= x\ln(\ln(x)) - (3x + 1)\ln(2) \\
+					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} \Big[ x\ln(\ln(x)) - (3x + 1)\ln(2) \Big] \\
+					\frac{y'(x)}{y(x)} &= \ln(\ln(x)) + \frac{1}{\ln(x)} - 3\ln(2) \\
+					y'(x) &= y(x) \Big[ \ln(\ln(x)) + \frac{1}{\ln(x)} - 3\ln(2) \Big] \\
+					&= \frac{(\ln(x))^x}{2^{3x + 1}} \Big[ \ln(\ln(x)) + \frac{1}{\ln(x)} - 3\ln(2) \Big]
+				}$
+			</div>
+		</div>
+	</div>
+</div>
