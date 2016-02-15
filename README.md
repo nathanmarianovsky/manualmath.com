@@ -30,10 +30,10 @@ In order to change the content of the website, there are two main folders to loo
 To begin with, the database is setup according to the following ERR diagram:
 
 <p align="center">
- <img width=500 height=500 src="/database_setup.png">
+ <img width=500 height=500 src="/client/database_setup.png">
 </p>
 
-So after setting up, add subjects, topics, sections, and examples into the database as needed. As far as names go inside the database, for any object they must match the file name and adhere to the rules:
+I provide a current build of mine that can be found in "/content/db". After setting up, add subjects, topics, sections, and examples into the database as needed. As far as names go inside the database, for any object they must match the file name and adhere to the rules:
 
 * All " " spaces must be replaced with "_"
 * All "-" characters must be replaced with "AND"
@@ -76,7 +76,7 @@ where:
   * topics
   * sections
   * examples
-* param2: This represents the object of whose data is going to be provided. Specifically this can be one of four things:
+* param2: This represents the object whose data is going to be provided. Specifically this can be one of four things:
   * subject
   * topic
   * section
