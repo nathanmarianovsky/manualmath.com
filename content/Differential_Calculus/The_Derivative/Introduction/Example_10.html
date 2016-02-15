@@ -1,0 +1,54 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Explain why a function that is differentiable at a point is also continuous at that point. Does the reverse hold true?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			A function, $f(x)$, that is differentiable at a point states that:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(a) = \lim_{x \rightarrow a} \frac{f(x) - f(a)}{x - a}
+				}$
+			</div>
+			and $f'(a)$ is guaranteed to exist. Now assuming that $x \neq a$ we have:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow a} (f(x) - f(a)) &= \lim_{x \rightarrow a} \Big[ \frac{f(x) - f(a)}{x - a} \cdot (x - a) \Big] \\
+					&= \lim_{x \rightarrow a} \frac{f(x) - f(a)}{x - a} \cdot \lim_{x \rightarrow a} (x - a) \\
+					&= f'(a) \cdot 0 \\
+					&= 0
+				}$
+			</div>
+			So we have proven:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow a} (f(x) - f(a)) = 0
+				}$
+			</div>
+			and by using properties of limits:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= \lim_{x \rightarrow a} (f(x) - f(a)) \\
+					0 &= \lim_{x \rightarrow a} f(x) - \lim_{x \rightarrow a} f(a) \\
+					\lim_{x \rightarrow a} f(x) &= \lim_{x \rightarrow a} f(a) \\
+					\lim_{x \rightarrow a} f(x) &= f(a)
+				}$
+			</div>
+			The above statement is the exact definition of continuity. As for the reverse order consider the function:
+			<div class="latex_equation">
+				$\eqalign{
+					k(x) = |x|
+				}$
+			</div>
+			which is known to be continuous at $x = 0$, but not differentiable. With a single counter example present, the statement does not hold true. 
+		</div>
+	</div>
+</div>

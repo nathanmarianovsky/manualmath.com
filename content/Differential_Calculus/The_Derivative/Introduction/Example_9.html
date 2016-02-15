@@ -1,0 +1,62 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine the equation of the tangent line to the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \frac{\pi}{\sqrt{x^2 + 1}}
+		}$
+	</div>
+	at $x = 1$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To accomplish this we are going to find the instantaneous rate of change and the point through which the line passes. For the point we just have to evaluate the function at $x = 1$:
+			<div class="latex_equation">
+				$\eqalign{
+					f(1) = \frac{\pi}{\sqrt{2}}
+				}$
+			</div>
+			As for the slope:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(1) &= \lim_{h \rightarrow 0} \frac{f(1 + h) - f(1)}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{\frac{\pi}{\sqrt{2 + 2h + h^2}} - \frac{\pi}{\sqrt{2}}}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{\frac{\pi\sqrt{2} - \pi\sqrt{2 + 2h + h^2}}{\sqrt{2}\sqrt{2 + 2h + h^2}}}{h} \\
+					&= \frac{\pi}{\sqrt{2}} \lim_{h \rightarrow 0} \frac{\sqrt{2} - \sqrt{2 + 2h + h^2}}{h\sqrt{2 + 2h + h^2}} \cdot \frac{\sqrt{2} + \sqrt{2 + 2h + h^2}}{\sqrt{2} + \sqrt{2 + 2h + h^2}} \\
+					&= \frac{\pi}{\sqrt{2}} \lim_{h \rightarrow 0} \frac{2 - 2 - 2h - h^2}{h\sqrt{2 + 2h + h^2}(\sqrt{2} + \sqrt{2 + 2h + h^2})} \\
+					&= -\frac{\pi}{\sqrt{2}} \lim_{h \rightarrow 0} \frac{2 + h}{\sqrt{2 + 2h + h^2}(\sqrt{2} + \sqrt{2 + 2h + h^2})} \\
+					&= -\frac{\pi}{\sqrt{2}} \cdot \frac{1}{2} \\
+					&= -\frac{\pi}{2^{\frac{3}{2}}}
+				}$
+			</div>
+			Now we form the line as:
+			<div class="latex_equation">
+				$\eqalign{
+					g(x) = -\frac{\pi}{2^{\frac{3}{2}}}x + b
+				}$
+			</div>
+			where we evaluate $b$ by using the point already known:
+			<div class="latex_equation">
+				$\eqalign{
+					g(1) &= -\frac{\pi}{2^{\frac{3}{2}}} + b \\
+					\frac{\pi}{\sqrt{2}} &= -\frac{\pi}{2^{\frac{3}{2}}} + b \\
+					b &= \frac{\pi}{\sqrt{2}} + \frac{\pi}{2^{\frac{3}{2}}}
+				}$
+			</div>
+			So the final solution is:
+			<div class="latex_equation">
+				$\eqalign{
+					g(x) = -\frac{\pi}{2^{\frac{3}{2}}}x + \frac{\pi}{\sqrt{2}} + \frac{\pi}{2^{\frac{3}{2}}}
+				}$
+			</div>
+		</div>
+	</div>
+</div>
