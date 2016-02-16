@@ -14,7 +14,7 @@
 			{\ ^{n}x = \ \atop {\ }} {{\underbrace{x^{x^{\cdot^{\cdot^{x}}}}}} \atop n}
 		}$
 	</div>
-	Determine the first derivative of the general tetration function by developing an algorithm.
+	Determine the first derivative of the general tetration function by developing a recursive algorithm.
 </div>
 
 <div class="latex_section">
@@ -27,15 +27,32 @@
 			We are given the base case, so all that is left is the general step:
 			<div class="latex_equation">
 				$\eqalign{
-					y(x) &= {\ ^{n}x \\
-					\ln(y(x)) &= \ln({\ ^{n}x) \\
-					\ln(y(x)) &= \ln(\ \atop {\ }} {{\underbrace{x^{x^{\cdot^{\cdot^{x}}}}}} \atop n}) \\
-					\ln(y(x)) &= {\ ^{n - 1}x \ln(x) \\
-					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} {\ ^{n - 1}x \ln(x) \\
-					\frac{y'(x)}{y(x)} &= \ln(x) \frac{d}{dx} {\ ^{n - 1}x + \frac{\frac{d}{dx} {\ ^{n - 1}x}{x} \\
-					y'(x) &= y(x) \Big[ \ln(x) \frac{d}{dx} {\ ^{n - 1}x + \frac{\frac{d}{dx} {\ ^{n - 1}x}{x} \Big] \\
-					&= {\ ^{n}x \Big[ \ln(x) \frac{d}{dx} {\ ^{n - 1}x + \frac{\frac{d}{dx} {\ ^{n - 1}x}{x} \Big]
+					y(x) &= {}^{n}x \\
+					\ln(y(x)) &= \ln({}^{n}x) \\
+					\ln(y(x)) &= \ln\Bigg( x^{x^{\cdot^{\cdot^{x}}}} \Bigg) \\
+					\ln(y(x)) &= {}^{n - 1}x \ln(x) \\
+					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} ({}^{n - 1}x \ln(x)) \\
+					\frac{y'(x)}{y(x)} &= \ln(x) \frac{d}{dx} ({}^{n - 1}x) + \frac{\frac{d}{dx} {}^{n - 1}x}{x} \\
+					y'(x) &= y(x) \Big[ \ln(x) \frac{d}{dx} ({}^{n - 1}x) + \frac{{}^{n - 1}x}{x} \Big] \\
+					&= {}^{n}x \Big[ \ln(x) \frac{d}{dx} ({}^{n - 1}x) + \frac{{}^{n - 1}x}{x} \Big]
 				}$
+			</div>
+			Now we have everything we need. The algorithm involves a function that performs the following:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>$\textbf{n}$</td>
+					    <td>$\textbf{Procedure}$</td>
+					</tr>
+					<tr>
+				    	<td>$> 2$</td>
+					    <td>Take the derivative of the function according to the general rule and have it call on itself inside</td>
+					</tr>
+					<tr>
+				    	<td>$= 2$</td>
+					    <td>Take the derivative of the function according to the base case</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
