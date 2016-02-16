@@ -44,6 +44,14 @@
 			    <td>The Set of Real Numbers</td>
 			</tr>
 			<tr>
+		    	<td>$\mathbb{R}_{> 0}$</td>
+			    <td>The Set of Positive Real Numbers</td>
+			</tr>
+			<tr>
+		    	<td>$\mathbb{R}_{\geq 0}$</td>
+			    <td>The Set of Nonnegative Real Numbers</td>
+			</tr>
+			<tr>
 		    	<td>$f:A \rightarrow B$</td>
 			    <td>The Mapping $f$ from $A$ to $B$</td>
 			</tr>
@@ -54,6 +62,10 @@
 			<tr>
 		    	<td>$\subseteq$</td>
 			    <td>Subset</td>
+			</tr>
+			<tr>
+		    	<td>$A \setminus B$</td>
+			    <td>Set Difference: All Objects in $A$ and not $B$</td>
 			</tr>
 		</table>
 	</div>
