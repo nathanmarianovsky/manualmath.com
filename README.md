@@ -97,15 +97,15 @@ localhost/api/examples/example/name/example_1
 Note that since example names are not unique, this will return all of the examples who have such a name. The only time when a name is going to be unique is for any subject, otherwise expect that you might get back more than one result.
 
 ### Getting File Contents
-The API also has calls to get back the html content associated to any given section or examples. To get the contents of a section call:
-```
-localhost/api/get_section_content/id
-```
-and for examples:
+The API also has calls to get back the html content associated to any given section or examples. To get the contents of a subject, topic, section, or example call:
 ```
 localhost/api/get_example_content/id
+localhost/api/get_section_content/id
+localhost/api/get_topic_content/id
+localhost/api/get_subject_content/id
+
 ```
-where "id" in both cases has to be replaced with the actual id of the section or example. Notice that unlike getting objects, I only allow you to use the id here as a parameter since the id guarantees a unique object.
+where "id" in all cases has to be replaced with the actual id of the object. Notice that unlike getting objects, I only allow you to use the id here as a parameter since the id guarantees a unique object.
 
 
 # Version History
