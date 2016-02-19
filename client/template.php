@@ -5,6 +5,7 @@
 		<meta name="author" content="Nathan Marianovsky">
 		<meta name="application-name" content="manual math">
 		<meta name="description" content="A Comprehensive Math Resource">
+		<meta name="theme-color" content="#1163A9">
 		<title></title>
 		<!-- Materialize CSS Library -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
