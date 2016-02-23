@@ -2,10 +2,16 @@
 	Problem
 </div>
 <div class="latex_body">
-	Evaluate:
+	Using $\textit{Euler's Formula}$ the following can be deduced:
 	<div class="latex_equation">
 		$\eqalign{
-			\frac{d}{dx} (\cos^2(\kappa x) + \sin^2(\kappa x)) \hspace{.3cm} \text{where} \hspace{.3cm} \kappa \in \mathbb{R}
+			\sin(x) = \frac{e^{ix} - e^{-ix}}{2i} \hspace{.3cm} \text{and} \hspace{.3cm} \cos(x) = \frac{e^{ix} + e^{-ix}}{2}
+		}$
+	</div>
+	where $i$ is the imaginary number. Using these definitions prove:
+	<div class="latex_equation">
+		$\eqalign{
+			\frac{d}{dx} \sin(x) = \cos(x)
 		}$
 	</div>
 </div>
@@ -19,8 +25,12 @@
 		<div class="latex_body">
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} (\cos^2(\kappa x) + \sin^2(\kappa x)) &= \frac{d}{dx} 1 \\
-					&= 0
+					\frac{d}{dx} \sin(x) &= \frac{d}{dx} \frac{e^{ix} - e^{-ix}}{2i} \\
+					&= \frac{1}{2i} \Big[ \frac{d}{dx} (e^i)^x - (e^{-i})^x \Big] \\
+					&= \frac{1}{2i} \Big[ \ln(e^i)e^{ix} - \ln(e^{-i})e^{-ix} \Big] \\
+					&= \frac{1}{2i} \Big[ ie^{ix} + ie^{-ix} \Big] \\
+					&= \frac{e^{ix} - e^{-ix}}{2} \\
+					&= \cos(x)
 				}$
 			</div>
 		</div>
