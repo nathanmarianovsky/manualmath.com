@@ -91,10 +91,10 @@
 
 	/* All CSS properties related to anything belonging to the latex page */
 	.latex_equation {
-		font-size: 12px;
+		font-size: 10px;
 	}
 
 	#latex {
-		font-size: 20px;
+		font-size: 15px;
 	}
 }

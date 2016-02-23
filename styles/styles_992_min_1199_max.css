@@ -1,0 +1,18 @@
+/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+@media only screen and (max-width : 1199px) and (min-width : 993px) {
+	.drag-target {
+		display: none;
+		visibility: hidden;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the latex page */
+	.latex_equation {
+		font-size: 12px;
+	}
+
+	#latex {
+		font-size: 15px;
+	}
+}

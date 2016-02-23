@@ -21,7 +21,8 @@
 		<link rel="stylesheet" type="text/css" href="/styles/styles_0_min_599_max.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_600_min_799_max.css">
 		<link rel="stylesheet" type="text/css" href="/styles/styles_800_min_991_max.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_992_min.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_992_min_1199_max.css">
+		<link rel="stylesheet" type="text/css" href="/styles/styles_1200_min.css">
 		<!-- Icon -->
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 		<!-- Require JS -->
