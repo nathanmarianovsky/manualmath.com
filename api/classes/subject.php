@@ -16,6 +16,7 @@ class Subject {
 		$tmp = str_replace("COLON", ": ", $_sname);
 		$tmp = str_replace("AND", "-", $tmp);
 		$tmp = str_replace("APOSTROPHE", "'", $tmp);
+		$tmp = str_replace("COMMA", ",", $tmp);
 		$this->clean_name = str_replace("_", " ", $tmp);
 		foreach($_topics as $tmp) {
 			$this->topics[] = $tmp;

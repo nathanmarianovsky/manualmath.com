@@ -15,6 +15,7 @@ class Example {
 		$tmp = str_replace("COLON", ": ", $_ename);
 		$tmp = str_replace("AND", "-", $tmp);
 		$tmp = str_replace("APOSTROPHE", "'", $tmp);
+		$tmp = str_replace("COMMA", ",", $tmp);
 		$this->clean_name = str_replace("_", " ", $tmp);
 	}
 

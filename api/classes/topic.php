@@ -18,6 +18,7 @@ class Topic {
 		$tmp = str_replace("COLON", ": ", $_tname);
 		$tmp = str_replace("AND", "-", $tmp);
 		$tmp = str_replace("APOSTROPHE", "'", $tmp);
+		$tmp = str_replace("COMMA", ",", $tmp);
 		$this->clean_name = str_replace("_", " ", $tmp);
 		$holder = NULL;
 		for($i = 0; $i < sizeof($_sections); $i++) {

@@ -39,6 +39,7 @@ I provide a current build of mine that can be found in "/content/db". After sett
 * All "-" characters must be replaced with "AND"
 * All "'" characters must be replaced with "APOSTROPHE"
 * All ":" characters must be replaced with "COLON"
+* All "," characters must be replaced with "COMMA"
 * Subject name, sname, is unique to a given subject
 
 The id given to any object is completely arbitrary so long as the id is unique to that object, which essentially means that when looking at sections there can only be a single section with an id of 7, but there may exist a subject, topic, and even example that have the same id. The order is what helps provide a "natural" ordering to the objects as needed. 
