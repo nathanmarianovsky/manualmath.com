@@ -1,0 +1,27 @@
+<div class="latex_section">
+	Derivation
+</div>
+<div class="latex_body">
+	By now it is known that a function can be approximated as:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) \approx f(x_0) + f'(x_0)(x - x_0)
+		}$
+	</div>
+	where $x_0$ is the point we choose to center ourselves at. Now what if we wanted to find the root of the function given some interval $[a,b]$? To accomplish this we set the function equal to zero and solve for $x$:
+	<div class="latex_equation">
+		$\eqalign{
+			0 &\approx f(x_0) + f'(x_0)(x - x_0) \\
+			0 &\approx f(x_0) + f'(x_0)x - f'(x_0)x_0 \\
+			f'(x_0)x &\approx f'(x_0)x_0 - f(x_0) \\
+			x &\approx x_0 - \frac{f(x_0)}{f'(x_0)}
+		}$
+	</div>
+	where the result is exactly what we want, but when working with machines we typically like to use recursive algorithms so by discretization:
+	<div class="latex_equation">
+		$\eqalign{
+			x_{n + 1} \approx x_n - \frac{f(x_n)}{f'(x_n)}
+		}$
+	</div>
+	The result is known as $\textit{Newton's Method}$, which is one of the most widely known numerical algorithms used to determine the roots of a function. 
+</div>
