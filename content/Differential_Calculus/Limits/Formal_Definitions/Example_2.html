@@ -2,12 +2,13 @@
 	Problem
 </div>
 <div class="latex_body">
-	Prove:
+	Prove that:
 	<div class="latex_equation">
 		$\eqalign{
-			\lim_{x \rightarrow a} c = c \hspace{.3cm} \text{where} \hspace{.3cm} c \in \mathbb{R}
+			\lim_{x \rightarrow 10} (3x + 5) = 35
 		}$
 	</div>
+	by using the $(\delta, \epsilon)$ definition of the limit.
 </div>
 
 <div class="latex_section">
@@ -29,16 +30,23 @@
 					|f(x) - L| < \epsilon \hspace{.3cm} \text{whenever} \hspace{.3cm} |x - a| < \delta
 				}$
 			</div>
-			In this scenario the function of interest is $f(x) = c$ giving:
+			So we want to find a $\delta$ in terms of $\epsilon$ s.t.:
+			<div class="latex_equation">
+				$\eqalign{
+					|x - 10| < \delta
+				}$
+			</div>
+			Using the other inequality we arrive at:
 			<div class="latex_equation">
 				$\eqalign{
 					|f(x) - L| &< \epsilon \\
-					|c - c| &< \epsilon \\
-					|0| &< \epsilon \\
-					0 &< \epsilon
+					|(3x + 5) - 35| &< \epsilon \\
+					|3x - 30| &< \epsilon \\
+					3|x - 10| &< \epsilon \\
+					|x - 10| &< \frac{\epsilon}{3}
 				}$
 			</div>
-			which holds true because it is initially assumed that $\epsilon > 0$. Now it does not matter what the value of $\epsilon$ is, and as for $\delta$ any positive value can be chosen because no matter the $\delta$ the initial condition is already satisfied.
+			So as long as we choose $\delta = \frac{\epsilon}{3}$, the inequalities will hold true, thus making the limit true.
 		</div>
 	</div>
 </div>

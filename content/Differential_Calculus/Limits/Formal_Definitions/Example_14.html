@@ -1,0 +1,45 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given that:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} f(x)g(x) = \lim_{x \rightarrow a} f(x) \cdot \lim_{x \rightarrow a} g(x)
+		}$
+	</div>
+	Use this to prove:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow a} (f(x))^n = \Big[ \lim_{x \rightarrow a} f(x) \Big]^n \hspace{.3cm} \text{where} \hspace{.3cm} n \in \mathbb{N}
+		}$
+	</div>
+	where you may assume the limit on the right-hand side exists.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			For the natural numbers, induction is a perfect method to prove the given statement. For the base case we can do $n = 1$, but a more interesting case is $n = 2$ which gives:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow a} (f(x))^2 &= \Big[ \lim_{x \rightarrow a} f(x) \Big]^2 \\
+					\lim_{x \rightarrow a} f(x)f(x) &= \lim_{x \rightarrow a} f(x) \cdot \lim_{x \rightarrow a} f(x)
+				}$
+			</div>
+			which holds true due to what we are given. Now we assume the original statement and try to see if it holds true for $n + 1$:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow a} (f(x))^{n + 1} &= \lim_{x \rightarrow a} (f(x))^n f(x) \\
+					&= \lim_{x \rightarrow a} (f(x))^n \cdot \lim_{x \rightarrow a} f(x) \\
+					&= \Big[ \lim_{x \rightarrow a} f(x) \Big]^n \cdot \lim_{x \rightarrow a} f(x) \\
+					&= \Big[ \lim_{x \rightarrow a} f(x) \Big]^{n + 1}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

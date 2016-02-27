@@ -2,20 +2,12 @@
 	Problem
 </div>
 <div class="latex_body">
-	Given that:
+	Prove the $\textit{Triangle Inequality}$:
 	<div class="latex_equation">
 		$\eqalign{
-			\lim_{x \rightarrow a} cf(x) &= c\lim_{x \rightarrow a} f(x) \\
-			\lim_{x \rightarrow a} f(g(x)) &= f\Big( \lim_{x \rightarrow a} g(x) \Big) 
+			|x + y| \leq |x| + |y| \hspace{.3cm} \text{where} \hspace{.3cm} x,y \in \mathbb{R}
 		}$
 	</div>
-	Use this to prove:
-	<div class="latex_equation">
-		$\eqalign{
-			\lim_{x \rightarrow a} (f(x))^n = \Big[ \lim_{x \rightarrow a} f(x) \Big]^n \hspace{.3cm} \text{where} \hspace{.3cm} n \in \mathbb{R}
-		}$
-	</div>
-	where you may assume the limit on the right-hand side exists.
 </div>
 
 <div class="latex_section">
@@ -25,17 +17,28 @@
 	<input type="button" value="Show Solution" class="show_solution">
 	<div class="hidden_div">
 		<div class="latex_body">
-			Begin by defining a new function for the one of interest, take the logarithm of both sides, apply the limit, and simplify:
+			Begin by noting that:
 			<div class="latex_equation">
 				$\eqalign{
-					y(x) &= (f(x))^n \\
-					\ln(y(x)) &= \ln((f(x))^n) \\
-					\lim_{x \rightarrow a} \ln(y(x)) &= \lim_{x \rightarrow a} n\ln(f(x)) \\
-					\ln\Big( \lim_{x \rightarrow a} y(x) \Big) &= n \lim_{x \rightarrow a} \ln(f(x)) \\
-					\ln\Big( \lim_{x \rightarrow a} y(x) \Big) &= n \ln\Big( \lim_{x \rightarrow a} f(x) \Big) \\
-					\ln\Big( \lim_{x \rightarrow a} y(x) \Big) &= \ln\Big( \Big( \lim_{x \rightarrow a} f(x) \Big)^n \Big) \\
-					\lim_{x \rightarrow a} y(x) &= \Big( \lim_{x \rightarrow a} f(x) \Big)^n \\
-					\lim_{x \rightarrow a} (f(x))^n &= \Big( \lim_{x \rightarrow a} f(x) \Big)^n
+					|x + y|^2 = (x + y)^2
+				}$
+			</div>
+			Now by expanding the right side and using properties of the absolute value:
+			<div class="latex_equation">
+				$\eqalign{
+					|x + y|^2 &= (x + y)^2 \\
+					&= x^2 + 2xy + y^2 \\
+					&= |x|^2 + 2xy + |y|^2 \\
+					&\leq |x|^2 + 2|xy| + |y|^2 \\
+					&= |x|^2 + 2|x||y| + |y|^2 \\
+					&= (|x| + |y|)^2
+				}$
+			</div>
+			We finally arrive at:
+			<div class="latex_equation">
+				$\eqalign{
+					|x + y|^2 &\leq (|x| + |y|)^2 \\
+					|x + y| &\leq |x| + |y|
 				}$
 			</div>
 		</div>

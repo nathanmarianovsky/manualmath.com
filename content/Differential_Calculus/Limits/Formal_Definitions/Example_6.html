@@ -2,19 +2,13 @@
 	Problem
 </div>
 <div class="latex_body">
-	You may assume that $g(y)$ is continuous and:
+	Prove that:
 	<div class="latex_equation">
 		$\eqalign{
-			\lim_{x \rightarrow a} f(x) &= L_1 \\
-			\lim_{y \rightarrow L_1} g(y) &= L_2 \\
+			\lim_{x \rightarrow 4} \sqrt{x + 5} = 3
 		}$
 	</div>
-	Use this to prove:
-	<div class="latex_equation">
-		$\eqalign{
-			\lim_{x \rightarrow a} g(f(x)) = L_2
-		}$
-	</div>
+	by using the $(\delta, \epsilon)$ definition of the limit.
 </div>
 
 <div class="latex_section">
@@ -24,37 +18,42 @@
 	<input type="button" value="Show Solution" class="show_solution">
 	<div class="hidden_div">
 		<div class="latex_body">
-			The given information can be reformatted. We know $\forall \epsilon,\epsilon_1 > 0, \exists \delta, \delta_1 > 0$ s.t.:
+			By the formal definition a limit:
 			<div class="latex_equation">
 				$\eqalign{
-					|g(y) - L_2| < \epsilon \hspace{.3cm} &\text{whenever} \hspace{.3cm} |y - L_1| < \delta \\
-					|f(x) - L_1| < \epsilon_1 \hspace{.3cm} &\text{whenever} \hspace{.3cm} |x - a| < \delta_1
+					\lim_{x \rightarrow a} f(x) = L
 				}$
 			</div>
-			Using the first line and setting $\epsilon_1 = \delta$ we are allowed to rewrite the second line as:
+			will exist if $\forall \epsilon > 0, \exists \delta > 0$ s.t.:
 			<div class="latex_equation">
 				$\eqalign{
-					|f(x) - L_1| < \delta \hspace{.3cm} &\text{whenever} \hspace{.3cm} |x - a| < \delta_1
+					|f(x) - L| < \epsilon \hspace{.3cm} \text{whenever} \hspace{.3cm} |x - a| < \delta
 				}$
 			</div>
-			So now if $|x - a| < \delta_1$, then:
+			So we want to find a $\delta$ in terms of $\epsilon$ s.t.:
 			<div class="latex_equation">
 				$\eqalign{
-					|g(f(x)) - L_2| < \epsilon \hspace{.3cm} &\text{whenever} \hspace{.3cm} |f(x) - L_1| < \delta
+					|x - 4| < \delta
 				}$
 			</div>
-			which proves:
+			Using the other inequality we arrive at:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow a} g(f(x)) = L_2
+					|f(x) - L| &< \epsilon \\
+					|\sqrt{x + 5} - 3| &< \epsilon \\
+					|\sqrt{x + 5} - 3||\sqrt{x + 5} + 3| &< |\sqrt{x + 5} + 3|\epsilon \\
+					|(x + 5) - 9| &< |\sqrt{x + 5} + 3|\epsilon \\
+					|x - 4| &< |\sqrt{x + 5} + 3|\epsilon
 				}$
 			</div>
-			and is the same as saying:
+			The only question remaining now is how do we get rid of the factor on the right side. You can choose an arbitrary value such as $\delta = 1$ which provides $|x - 4| < 1 \implies 3 < x < 5$. Using this we can deduce:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow a} g(f(x)) = g\Big( \lim_{x \rightarrow a} f(x) \Big)
+					|x - 4| &< |\sqrt{x + 5} + 3|\epsilon \\
+					&< (\sqrt{8} + 3)\epsilon
 				}$
 			</div>
+			which minimizes the right hand-side by letting $x = 8$. So now we have the issue that there are two possibilities for $\delta$. With two choices, we should choose the smaller one to be more accurate. So as long as we choose $\delta = \min\Big\{ 1, (\sqrt{8} + 3)\epsilon \Big\}$, the inequalities will hold true, thus making the limit true.
 		</div>
 	</div>
 </div>
