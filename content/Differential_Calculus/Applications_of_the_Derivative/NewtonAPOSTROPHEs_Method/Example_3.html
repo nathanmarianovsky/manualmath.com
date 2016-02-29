@@ -1,0 +1,68 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the equation:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \sin(x) - x^2
+		}$
+	</div>
+	approximate the critical point up to $5$ decimal places by using Newton's Method to determine $x_5$ on the interval $[0,1]$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First we differentiate the equation since we want to determine the critical point:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) = \cos(x) - 2x
+				}$
+			</div>
+			and in this scenario Newton's Method takes the form:
+			<div class="latex_equation">
+				$\eqalign{
+					x_{n + 1} = x_n - \frac{\cos(x_n) - 2x_n}{-\sin(x_n) - 2}
+				}$
+			</div>
+			We can choose the starting point to be $x = 0$ and the iterations takes on the values:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>$\textbf{n}$</td>
+					    <td>$\textbf{x}_n$</td>
+					</tr>
+					<tr>
+				    	<td>$0$</td>
+					    <td>$0.00000$</td>
+					</tr>
+					<tr>
+				    	<td>$1$</td>
+					    <td>$0.50000$</td>
+					</tr>
+					<tr>
+				    	<td>$2$</td>
+					    <td>$0.45063$</td>
+					</tr>
+					<tr>
+				    	<td>$3$</td>
+					    <td>$0.45018$</td>
+					</tr>
+					<tr>
+				    	<td>$4$</td>
+					    <td>$0.45018$</td>
+					</tr>
+					<tr>
+				    	<td>$5$</td>
+					    <td>$0.45018$</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

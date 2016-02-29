@@ -5,22 +5,22 @@
 	By now it is known that a function can be approximated as:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) \approx f(x_0) + f'(x_0)(x - x_0)
+			f(x) = f(x_0) + f'(x_0)(x - x_0)
 		}$
 	</div>
 	where $x_0$ is the point we choose to center ourselves at. Now what if we wanted to find the root of the function, $x = \alpha$, given some interval $[\alpha - r,\alpha + r]$ with $x = x_0$, where $x_0 \in [\alpha - r,\alpha + r]$, as the starting point? To accomplish this we set the function equal to zero and solve for $x$:
 	<div class="latex_equation">
 		$\eqalign{
-			0 &\approx f(x_0) + f'(x_0)(x - x_0) \\
-			0 &\approx f(x_0) + f'(x_0)x - f'(x_0)x_0 \\
-			f'(x_0)x &\approx f'(x_0)x_0 - f(x_0) \\
-			x &\approx x_0 - \frac{f(x_0)}{f'(x_0)}
+			0 &= f(x_0) + f'(x_0)(x - x_0) \\
+			0 &= f(x_0) + f'(x_0)x - f'(x_0)x_0 \\
+			f'(x_0)x &= f'(x_0)x_0 - f(x_0) \\
+			x &= x_0 - \frac{f(x_0)}{f'(x_0)}
 		}$
 	</div>
 	where the result is exactly what we want, but when working with machines we typically like to use recursive algorithms so by discretization:
 	<div class="latex_equation">
 		$\eqalign{
-			x_{n + 1} \approx x_n - \frac{f(x_n)}{f'(x_n)}
+			x_{n + 1} = x_n - \frac{f(x_n)}{f'(x_n)}
 		}$
 	</div>
 	The result is known as $\textit{Newton's Method}$, which is one of the most widely known numerical algorithms used to determine the roots of a function. 
@@ -57,7 +57,7 @@
 			a_2 &= \frac{f''(x_0)}{2}
 		}$
 	</div>
-	which is nothing more than extension of the linear approximation, specifically known as a $\textit{quadratic approximation}$. So we have:
+	which is nothing more than an extension of the linear approximation, specifically known as a $\textit{quadratic approximation}$. So we have:
 	<div class="latex_equation">
 		$\eqalign{
 			f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{f''(x_0)}{2}(x - x_0)^2
@@ -98,9 +98,9 @@
 	The last line is the one that shows the rate of convergence is quadratic due to the right side. Of course to say this we have to assume a couple of conditions:
 	<div class="latex_equation">
 		$\eqalign{
-			&1. f'(x) \neq 0 \hspace{.3cm} \forall x \in [\alpha - r,\alpha + r] \\
-			&2. f''(x) \hspace{.3cm} \text{is continuous} \hspace{.3cm} \forall x \in [\alpha - r,\alpha + r] \\
-			&3. x_0, \hspace{.1cm} \text{the starting point}, \text{is sufficiently close to the root} \hspace{.1cm} \alpha
+			&1. \hspace{.1cm} f'(x) \neq 0 \hspace{.3cm} \forall x \in [\alpha - r,\alpha + r] \\
+			&2. \hspace{.1cm} f''(x) \hspace{.1cm} \text{is continuous} \hspace{.1cm} \forall x \in [\alpha - r,\alpha + r] \\
+			&3. \hspace{.1cm} x_0, \hspace{.1cm} \text{the starting point}, \text{is sufficiently close to the root} \hspace{.1cm} \alpha
 		}$
 	</div>
 	We can even go on to show explicitly that the sequence of errors is decreasing by determining an upper bound, $\Omega \in \mathbb{R}$, s.t.:
@@ -112,7 +112,7 @@
 	To define the upper bound we can use our conclusion from above and choose the maximal value that the ratio of the two derivatives take:
 	<div class="latex_equation">
 		$\eqalign{
-			\Omega = \sup_x \frac{1}{2} \Bigg| \frac{f''(x_n)}{f'(x_n)} \Bigg|
+			\Omega = \sup_x \frac{1}{2} \Bigg| \frac{f''(x)}{f'(x)} \Bigg|
 		}$
 	</div>
 </div>
