@@ -1,0 +1,31 @@
+<div class="latex_section">
+	Derivation
+</div>
+<div class="latex_body">
+	Given a function, $f \in C^{1}$, we have:
+	<div class="latex_equation">
+		$\eqalign{
+			f'(a) = \lim_{h \rightarrow 0} \frac{f(a + h) - f(a)}{h}
+		}$
+	</div>
+	Now assuming that $h$ is very small we can approximate the derivative as:
+	<div class="latex_equation">
+		$\eqalign{
+			f'(a) \approx \frac{f(a + h) - f(a)}{h}
+		}$
+	</div>
+	and with a little reorganization:
+	<div class="latex_equation">
+		$\eqalign{
+			f'(a)h &\approx f(a + h) - f(a) \\
+			f(a + h) &\approx f(a) + f'(a)h
+		}$
+	</div>
+	we arrive at what is known as the linear approximation for a given function near $a$. By letting $h = x - a$ the above becomes:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) &\approx f(a) + f'(a)(x - a)
+		}$
+	</div>
+	which is equivalent to the first form.
+</div>

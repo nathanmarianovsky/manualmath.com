@@ -1,0 +1,55 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine a linear approximation to the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \sin(x) \hspace{.3cm} \text{near} \hspace{.3cm} x = 0
+		}$
+	</div>
+	and use it to evaluate:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 0} \frac{\sin(x)}{x}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To determine a linear approximation we need the first derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) = \cos(x)
+				}$
+			</div>
+			which evaluated at $x = 0$ produces:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(0) = 1
+				}$
+			</div>
+			Now we can write down the approximation as:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) &\approx f(0) + f'(0)(x - 0) \\
+					&= x
+				}$
+			</div>
+			So now by direct computation:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0} \frac{\sin(x)}{x} &= \lim_{x \rightarrow 0} \frac{x}{x} \\
+					&= \lim_{x \rightarrow 0} 1 \\
+					&= 1
+				}$
+			</div>
+		</div>
+	</div>
+</div>

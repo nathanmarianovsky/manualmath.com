@@ -1,0 +1,60 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine a linear approximation to the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \ln(1 + 3x) \hspace{.3cm} \text{near} \hspace{.3cm} x = 0
+		}$
+	</div>
+	and use it to approximate $\ln(0.7)$. What is the error up to $5$ decimal places?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To determine a linear approximation we need the first derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) = \frac{3}{1 + 3x}
+				}$
+			</div>
+			which evaluated at $x = 0$ produces:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(0) = 3
+				}$
+			</div>
+			Now we can write down the approximation as:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) &\approx f(0) + f'(0)(x - 0) \\
+					&= 3x
+				}$
+			</div>
+			So now by direct computation:
+			<div class="latex_equation">
+				$\eqalign{
+					\ln(0.7) &= -0.35667 \\
+					\ln(0.7) &= \ln(1 + 3(-0.1)) \\
+					&\approx 3(-0.10000) \\
+					&= -0.30000
+				}$
+			</div>
+			which gives the error:
+			<div class="latex_equation">
+				$\eqalign{
+					\Delta &= |f(x) - x| \\
+					&= |f(-0.1) + 0.1| \\
+					&= |-0.35667 + 0.30000| \\
+					&= 0.05667
+				}$
+			</div>
+		</div>
+	</div>
+</div>
