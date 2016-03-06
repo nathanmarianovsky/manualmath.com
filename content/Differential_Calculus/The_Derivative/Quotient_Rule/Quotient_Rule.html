@@ -14,55 +14,70 @@
 <div class="latex_section">
 	Proof by Formal Definition
 </div>
-<div class="latex_body">
-	Using the limit definition of the derivative and some simple trickery:
-	<div class="latex_equation">
-		$\eqalign{
-			k'(x) &= \lim_{h \rightarrow 0} \frac{k(x + h) - k(x)}{h} \\
-			&= \lim_{h \rightarrow 0} \frac{\frac{f(x + h)}{g(x + h)} - \frac{f(x)}{g(x)}}{h} \\
-			&= \lim_{h \rightarrow 0} \frac{1}{h} \cdot \frac{f(x + h)g(x) - f(x)g(x + h)}{g(x + h)g(x)} \\
-			&= \lim_{h \rightarrow 0} \frac{1}{h} \cdot \frac{f(x + h)g(x) - f(x)g(x) - f(x)g(x + h) + f(x)g(x)}{g(x + h)g(x)} \\
-			&= \lim_{h \rightarrow 0} \frac{1}{h} \Bigg[ \frac{f(x + h)g(x) - f(x)g(x)}{g(x + h)g(x)} - \frac{f(x)g(x + h) - f(x)g(x)}{g(x + h)g(x)} \Bigg] \\
-			&= \lim_{h \rightarrow 0} \frac{1}{g(x + h)} \cdot \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} - \lim_{h \rightarrow 0} \frac{f(x)}{g(x + h)g(x)} \cdot \lim_{h \rightarrow 0} \frac{g(x + h) - g(x)}{h} \\
-			&= \frac{1}{g(x)} \cdot f'(x) - \frac{f(x)}{(g(x))^2} \cdot g'(x) \\
-			&= \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}
-		}$
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_1">
+	<div class="hidden_div" id="hidden_div_1">
+		<div class="latex_body">
+			Using the limit definition of the derivative and some simple trickery:
+			<div class="latex_equation">
+				$\eqalign{
+					k'(x) &= \lim_{h \rightarrow 0} \frac{k(x + h) - k(x)}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{\frac{f(x + h)}{g(x + h)} - \frac{f(x)}{g(x)}}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{1}{h} \cdot \frac{f(x + h)g(x) - f(x)g(x + h)}{g(x + h)g(x)} \\
+					&= \lim_{h \rightarrow 0} \frac{1}{h} \cdot \frac{f(x + h)g(x) - f(x)g(x) - f(x)g(x + h) + f(x)g(x)}{g(x + h)g(x)} \\
+					&= \lim_{h \rightarrow 0} \frac{1}{h} \Bigg[ \frac{f(x + h)g(x) - f(x)g(x)}{g(x + h)g(x)} - \frac{f(x)g(x + h) - f(x)g(x)}{g(x + h)g(x)} \Bigg] \\
+					&= \lim_{h \rightarrow 0} \frac{1}{g(x + h)} \cdot \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} - \lim_{h \rightarrow 0} \frac{f(x)}{g(x + h)g(x)} \cdot \lim_{h \rightarrow 0} \frac{g(x + h) - g(x)}{h} \\
+					&= \frac{1}{g(x)} \cdot f'(x) - \frac{f(x)}{(g(x))^2} \cdot g'(x) \\
+					&= \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}
+				}$
+			</div>
+		</div>
 	</div>
 </div>
 
 <div class="latex_section">
 	Proof by Product Rule
 </div>
-<div class="latex_body">
-	By cross multiplying, differentiating using the product rule, and simplifying we arrive at the quotient rule:
-	<div class="latex_equation">
-		$\eqalign{
-			k(x) &= \frac{f(x)}{g(x)} \\
-			g(x)k(x) &= f(x) \\
-			\frac{d}{dx} \Big( g(x)k(x) \Big) &= \frac{d}{dx} f(x) \\
-			g'(x)k(x) + g(x)k'(x) &= f'(x) \\
-			g(x)k'(x) &= f'(x) - g'(x) \cdot \frac{f(x)}{g(x)} \\
-			k'(x) &= \frac{f'(x)}{g(x)} - \frac{f(x)g'(x)}{(g(x))^2} \\
-			k'(x) &= \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}
-		}$
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_2">
+	<div class="hidden_div" id="hidden_div_2">
+		<div class="latex_body">
+			By cross multiplying, differentiating using the product rule, and simplifying we arrive at the quotient rule:
+			<div class="latex_equation">
+				$\eqalign{
+					k(x) &= \frac{f(x)}{g(x)} \\
+					g(x)k(x) &= f(x) \\
+					\frac{d}{dx} \Big( g(x)k(x) \Big) &= \frac{d}{dx} f(x) \\
+					g'(x)k(x) + g(x)k'(x) &= f'(x) \\
+					g(x)k'(x) &= f'(x) - g'(x) \cdot \frac{f(x)}{g(x)} \\
+					k'(x) &= \frac{f'(x)}{g(x)} - \frac{f(x)g'(x)}{(g(x))^2} \\
+					k'(x) &= \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}
+				}$
+			</div>
+		</div>
 	</div>
 </div>
 
 <div class="latex_section">
 	Proof by Logarithmic Differentiation
 </div>
-<div class="latex_body">
-	This proof essentially consists of taking the logarithm of both sides, differentiating both sides, and simplifying:
-	<div class="latex_equation">
-		$\eqalign{
-			h(x) &= \frac{f(x)}{g(x)} \\
-			\ln(h(x)) &= \ln \Big( \frac{f(x)}{g(x)} \Big) \\
-			\ln(h(x)) &= \ln(f(x)) - \ln(g(x)) \\
-			\frac{d}{dx} \ln(h(x)) &= \frac{d}{dx} \Big( \ln(f(x)) - \ln(g(x)) \Big) \\
-			\frac{h'(x)}{h(x)} &= \frac{f'(x)}{f(x)} - \frac{g'(x)}{g(x)} \\
-			h'(x) &= \frac{f(x)}{g(x)} \Big( \frac{f'(x)}{f(x)} - \frac{g'(x)}{g(x)} \Big) \\
-			h'(x) &= \frac{f'(x)}{g(x)} - \frac{f(x)g'(x)}{(g(x))^2} \\
-			h'(x) &= \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}
-		}$
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_3">
+	<div class="hidden_div" id="hidden_div_3">
+		<div class="latex_body">
+			This proof essentially consists of taking the logarithm of both sides, differentiating both sides, and simplifying:
+			<div class="latex_equation">
+				$\eqalign{
+					h(x) &= \frac{f(x)}{g(x)} \\
+					\ln(h(x)) &= \ln \Big( \frac{f(x)}{g(x)} \Big) \\
+					\ln(h(x)) &= \ln(f(x)) - \ln(g(x)) \\
+					\frac{d}{dx} \ln(h(x)) &= \frac{d}{dx} \Big( \ln(f(x)) - \ln(g(x)) \Big) \\
+					\frac{h'(x)}{h(x)} &= \frac{f'(x)}{f(x)} - \frac{g'(x)}{g(x)} \\
+					h'(x) &= \frac{f(x)}{g(x)} \Big( \frac{f'(x)}{f(x)} - \frac{g'(x)}{g(x)} \Big) \\
+					h'(x) &= \frac{f'(x)}{g(x)} - \frac{f(x)g'(x)}{(g(x))^2} \\
+					h'(x) &= \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}
+				}$
+			</div>
+		</div>
 	</div>
 </div>

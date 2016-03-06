@@ -1,0 +1,43 @@
+<div class="latex_section">
+	Derivation
+</div>
+<div class="latex_body">
+	From the previous section we already know Newton's Method as:
+	<div class="latex_equation">
+		$\eqalign{
+			x_{n + 1} = x_n - \frac{f(x_n)}{f'(x_n)}
+		}$
+	</div>
+	In order to arrive at the $\textit{Secant Method}$ we approximate the derivative as:
+	<div class="latex_equation">
+		$\eqalign{
+			f'(x_n) \approx \frac{f(x_n) - f(x_{n - 1})}{x_n - x_{n - 1}}
+		}$
+	</div>
+	and plug into Newton's Method:
+	<div class="latex_equation">
+		$\eqalign{
+			x_{n + 1} = x_n - f(x_n) \cdot \frac{x_n - x_{n - 1}}{f(x_n) - f(x_{n - 1})}
+		}$
+	</div>
+	Unlike Newton's Method, the Secant Method does not require computing the derivative which is definitely an advantage. On the other hand the disadvantage is that two initial points are necessary now.
+</div>
+
+<div class="latex_section">
+	Convergence
+</div>
+<div class="latex_body">
+	Let us assume that we are trying to determine the root $x$ s.t. $f(x) = 0$, then the sequence of errors is defined as:
+	<div class="latex_equation">
+		$\eqalign{
+			\epsilon_n = x - x_n
+		}$
+	</div>
+	To prove the convergence of the algorithm we will show that this sequence approaches zero. Using the definition of the Secant Method:
+	<div class="latex_equation">
+		$\eqalign{
+			x - \epsilon_{n + 1} &= x - \epsilon_n - f(x - \epsilon_n) \cdot \frac{x - \epsilon_n - (x - \epsilon_{n - 1})}{f(x - \epsilon_n) - f(x - \epsilon_{n - 1})} \\
+			\epsilon_{n + 1} &= \epsilon_n - f(x - \epsilon_n) \cdot \frac{\epsilon_n - \epsilon_{n - 1}}{f(x - \epsilon_n) - f(x - \epsilon_{n - 1})} \\
+		}$
+	</div>
+</div>

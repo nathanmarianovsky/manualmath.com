@@ -51,22 +51,27 @@
 <div class="latex_section">
 	Proof of Implicit Differentiation
 </div>
-<div class="latex_body">
-	To understand why the derivative of $y$ with respect to $x$ can be determined when dealing with an implicit function, I must first show you the chain rule for a multivariable function:
-	<div class="latex_equation">
-		$\eqalign{
-			\frac{d}{dt} F(x(t), y(t)) = \frac{\partial F}{\partial x} \frac{dx}{dt} + \frac{\partial F}{\partial y} \frac{dy}{dt} 
-		}$
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_1">
+	<div class="hidden_div" id="hidden_div_1">
+		<div class="latex_body">
+			To understand why the derivative of $y$ with respect to $x$ can be determined when dealing with an implicit function, I must first show you the chain rule for a multivariable function:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dt} F(x(t), y(t)) = \frac{\partial F}{\partial x} \frac{dx}{dt} + \frac{\partial F}{\partial y} \frac{dy}{dt} 
+				}$
+			</div>
+			So applying this to our situation we arrive at:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} F(x(x), y(x)) &= \frac{d}{dx} C \\
+					\frac{\partial F}{\partial x} \frac{dx}{dx} + \frac{\partial F}{\partial y} \frac{dy}{dx} &= 0 \\
+					\frac{\partial F}{\partial x} + \frac{\partial F}{\partial y} \frac{dy}{dx} &= 0 \\
+					\frac{\partial F}{\partial y} \frac{dy}{dx} &= -\frac{\partial F}{\partial x} \\
+					\frac{dy}{dx} &= -\frac{\frac{\partial F}{\partial x}}{\frac{\partial F}{\partial y}} \\
+				}$
+			</div>
+			a consistent formula to determine the derivative of $y$ with respect to $x$ so long as the denominator is not equal to zero, which happens only if there are no $y$'s present.
+		</div>
 	</div>
-	So applying this to our situation we arrive at:
-	<div class="latex_equation">
-		$\eqalign{
-			\frac{d}{dx} F(x(x), y(x)) &= \frac{d}{dx} C \\
-			\frac{\partial F}{\partial x} \frac{dx}{dx} + \frac{\partial F}{\partial y} \frac{dy}{dx} &= 0 \\
-			\frac{\partial F}{\partial x} + \frac{\partial F}{\partial y} \frac{dy}{dx} &= 0 \\
-			\frac{\partial F}{\partial y} \frac{dy}{dx} &= -\frac{\partial F}{\partial x} \\
-			\frac{dy}{dx} &= -\frac{\frac{\partial F}{\partial x}}{\frac{\partial F}{\partial y}} \\
-		}$
-	</div>
-	a consistent formula to determine the derivative of $y$ with respect to $x$ so long as the denominator is not equal to zero, which happens only if there are no $y$'s present.
 </div>
