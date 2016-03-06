@@ -109,6 +109,12 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 									$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(function(content) {
 										$("#latex").append(content);
 										MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+										$("#latex .show_solution").click(function(defaultevent) {
+											defaultevent.preventDefault();
+											var id = $(this).attr("id").split("_")[2];
+											$(this).hide();
+											$("#hidden_div_" + id).show();
+										});
 									});
 									$("#section_name" + section.section_id).addClass("active");
 								}
@@ -152,6 +158,12 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 										$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(function(content) {
 											$("#latex").append(content);
 											MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+											$("#latex .show_solution").click(function(defaultevent) {
+												defaultevent.preventDefault();
+												var id = $(this).attr("id").split("_")[2];
+												$(this).hide();
+												$("#hidden_div_" + id).show();
+											});
 										});
 									}
 									else {
