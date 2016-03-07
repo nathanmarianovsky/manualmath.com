@@ -91,43 +91,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			links.handle_links(router, subjects, topics, sections, examples);
 		});
 
-		router.addRouteListener("subject.topic.section", function(toState, fromState) {
-			if(window.innerWidth < 992) {
-				$(".button-collapse").sideNav("hide");
-			}
-			subjects.forEach(function(subject) {
-				if(subject.sname == toState.params.sname) {
-					subject.topics.forEach(function(topic) {
-						if(topic.tname == toState.params.tname) {
-							topic.sections.forEach(function(section) {
-								if(section.section_name == toState.params.section_name) {
-									navs.example_side_nav(section, topic);
-									$("main").empty();
-									$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
-									$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
-									$("main").append($("<div>").attr("id", "latex"));
-									$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(function(content) {
-										$("#latex").append(content);
-										MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-										$("#latex .show_solution").click(function(defaultevent) {
-											defaultevent.preventDefault();
-											var id = $(this).attr("id").split("_")[2];
-											$(this).hide();
-											$("#hidden_div_" + id).show();
-										});
-									});
-									$("#section_name" + section.section_id).addClass("active");
-								}
-							});
-						}
-					});
-				}
-			});
-			functions.handle_logo_link("subject.topic.section");
-			functions.handle_li_coloring();
-			links.handle_links(router, subjects, topics, sections, examples);
-		});
-
 		router.addRouteListener("subject.topic.section.current_page", function(toState, fromState) {
 			if(window.innerWidth < 992) {
 				$(".button-collapse").sideNav("hide");
@@ -139,6 +102,13 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 							topic.sections.forEach(function(section) {
 								if(section.section_name == toState.params.section_name) {
 									$("main").empty();
+									$(".side-nav li").each(function() {
+										if(typeof $(this).attr("id") !== typeof undefined && $(this).attr("id") !== false) {
+											if($(this).attr("id").split("_")[0] == "topic") {
+												navs.example_side_nav(section, topic);
+											}  
+										}
+									});
 									if($(".side-nav").is(":empty")) {
 										navs.example_side_nav(section, topic);
 									}
@@ -158,12 +128,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 										$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(function(content) {
 											$("#latex").append(content);
 											MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-											$("#latex .show_solution").click(function(defaultevent) {
-												defaultevent.preventDefault();
-												var id = $(this).attr("id").split("_")[2];
-												$(this).hide();
-												$("#hidden_div_" + id).show();
-											});
+											functions.handle_button("notes");
 										});
 									}
 									else {
@@ -179,11 +144,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 												$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html").done(function(content) {
 													$("#latex").append(content);
 													MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-													$("#latex .show_solution").click(function(defaultevent) {
-														defaultevent.preventDefault();
-														$("#latex .show_solution").hide();
-														$("#latex .hidden_div").show();
-													});
+													functions.handle_button("examples");
 												});
 											}
 										});

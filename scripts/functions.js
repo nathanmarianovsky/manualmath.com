@@ -212,5 +212,29 @@ define(function() {
 		// });
 	};
 
+	/*
+
+	Purpose:
+	Handles the button functionality for "Show Proof" and "Show Solution".
+
+	*/
+	exports.handle_button = function(page) {
+		if(page == "notes") {
+			$("#latex .show_solution").click(function(defaultevent) {
+				defaultevent.preventDefault();
+				var id = $(this).attr("id").split("_")[2];
+				$(this).hide();
+				$("#hidden_div_" + id).show();
+			});
+		}
+		else if(page == "examples") {
+			$("#latex .show_solution").click(function(defaultevent) {
+				defaultevent.preventDefault();
+				$("#latex .show_solution").hide();
+				$("#latex .hidden_div").show();
+			});
+		}
+	};
+
 	return exports;
 });

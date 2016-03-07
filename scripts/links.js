@@ -80,7 +80,7 @@ define(function() {
 									if(topic.tid == section.tid) {
 										subjects.forEach(function(subject) {
 											if(subject.sid == topic.sid) {
-												router.navigate("subject.topic.section", {sname: subject.sname, tname: topic.tname, section_name: section.section_name});
+												router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
 											}
 										});
 									}
