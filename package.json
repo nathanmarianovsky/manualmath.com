@@ -11,9 +11,6 @@
     "gulp-install": "^0.6.0",
     "gulp-util": "^3.0.7"
   },
-  "scripts": {
-    "install_everything": "gulp"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nathanmarianovsky/manualmath.com.git"

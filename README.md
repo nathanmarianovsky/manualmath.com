@@ -4,9 +4,11 @@
 
 
 # Setting Up
-In order to get started first copy the repository over to your local machine. Now I have to assume that you have npm installed, and so inside the root directory of the project as administrator run:
+In order to get started first copy the repository over to your local machine. Now I have to assume that you have npm and git installed, and so inside the root directory of the project as administrator run:
 ```js
-npm run install_everything
+npm install -g bower gulp
+npm install gulp gulp-install
+gulp
 ```
 This will handle the installation of all node_modules, bower_components, and build the necessary gulp files. The next thing is to make sure that the database credentials are correct inside the file located at "/api/config.php":
 ```php
