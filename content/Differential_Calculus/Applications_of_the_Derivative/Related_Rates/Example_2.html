@@ -1,0 +1,38 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	A $25$ foot ladder is leaning against a vertical wall. The floor is slightly slippery and the foot of the ladder slips away from the wall at the rate of $0.2 \frac{\text{in}}{\text{sec}}$. How fast is the top of the ladder sliding down the wall when the top is $20$ feet above the floor?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			The situation can be modeled with the following image:
+			<div class="latex_equation">
+				<img src="/content/Differential_Calculus/Applications_of_the_Derivative/Related_Rates/Example_2.png">
+			</div>
+			where by the Pythagorean Theorem we have the setup:
+			<div class="latex_equation">
+				$\eqalign{
+					(x(t))^2 + (y(t))^2 &= (25 \hspace{.1cm} \text{ft})^2 \\
+					\frac{d}{dt} \Big[ (x(t))^2 + (y(t))^2 \Big] &= \frac{d}{dt} (25 \hspace{.1cm} \text{ft})^2 \\
+					2x\frac{dx}{dt} + 2y\frac{dy}{dt} &= 0 \\
+					\frac{dy}{dt} &= -\frac{x}{y} \frac{dx}{dt}
+				}$
+			</div>
+			and evaluation with the given parameters provides:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{dy}{dt} &= -\frac{x}{y} \frac{dx}{dt} \\
+					&= -\frac{\sqrt{(25 \hspace{.1cm} \text{ft})^2 - (20 \hspace{.1cm} \text{ft})^2}}{20 \hspace{.1cm} \text{ft}} \cdot \Big( 0.2 \frac{\text{in}}{\text{sec}} \Big) \\
+					&= -\frac{3}{20} \frac{\text{in}}{\text{sec}}
+				}$
+			</div>
+		</div>
+	</div>
+</div>
