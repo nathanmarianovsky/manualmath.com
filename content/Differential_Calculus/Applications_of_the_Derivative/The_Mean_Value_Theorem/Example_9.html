@@ -1,0 +1,53 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Show that the equation:
+	<div class="latex_equation">
+		$\eqalign{
+			2x^3 + 3x^2 + 6x + 1 = 0
+		}$
+	</div>
+	has exactly one real root.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Consider the two points:
+			<div class="latex_equation">
+				$\eqalign{
+					f(-1) &= -4 \\
+					f(0) &= 1
+				}$
+			</div>
+			and so by the Intermediate Value Theorem we know that:
+			<div class="latex_equation">
+				$\eqalign{
+					\exists \hspace{.1cm} \in [-1,0] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(c) = 0
+				}$
+			</div>
+			Now to prove that there is exactly one root, we assume that there exist two root s.t.:
+			<div class="latex_equation">
+				$\eqalign{
+					f(\alpha) = f(\beta) = 0
+				}$
+			</div>
+			If this holds true, then by Rolle's Theorem we have the setup:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= 0 \\
+					6x^2 + 6x + 6 &= 0 \\
+					x^2 + x + 1 &= 0 \\
+					x &= \frac{-1 \pm \sqrt{1 - 4}}{2} \\
+					x &= \frac{-1 \pm \sqrt{3}i}{2}
+				}$
+			</div>
+			Since the setup for Rolle's Theorem does not have an associated value, we have a contradiction to our original assumption. Thus there is exactly one root that is real.
+		</div>
+	</div>
+</div>

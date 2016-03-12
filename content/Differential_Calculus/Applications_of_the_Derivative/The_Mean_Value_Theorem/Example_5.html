@@ -1,0 +1,36 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine all values that satisfy the Mean Value Theorem for:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = 2\sin(x) + \sin(2x) \hspace{.3cm} \text{where} \hspace{.3cm} x \in [0,\pi]
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First we have to determine that all of the conditions are satisfied. We are dealing with trigonometric functions which are known to be continuous and differentiable. With all of the conditions satisfied by using the setup for the Mean Value Theorem:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= \frac{f(b) - f(a)}{b - a} \\
+					2\cos(x) + 2\cos(2x) &= \frac{(2\sin(\pi) + \sin(2\pi)) - (2\sin(0) + \sin(0))}{(\pi) - (0)} \\
+					2\cos(x) + 2\cos(2x) &= 0 \\
+					\cos(x) + (2\cos^2(x) - 1) &= 0 \\
+					2\cos^2(x) + \cos(x) - 1 &= 0 \\
+					\cos(x) &= \frac{-1 \pm \sqrt{9}}{4} \\
+					\cos(x) &= \frac{-1 \pm 3}{4} \\
+					\cos(x) &= -1, \frac{1}{2} \\
+					x &= \pi, \frac{\pi}{3}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

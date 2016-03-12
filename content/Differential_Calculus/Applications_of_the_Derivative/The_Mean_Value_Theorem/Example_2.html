@@ -1,0 +1,43 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine all values that satisfy Rolle's Theorem for:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = 2\sin(x)\cos(x) \hspace{.3cm} \text{where} \hspace{.3cm} x \in [0,\pi]
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First we have to determine that all of the conditions are satisfied. We are dealing with trigonometric functions which are known to be continuous and differentiable. As for the third condition:
+			<div class="latex_equation">
+				$\eqalign{
+					f(0) &= f(\pi) \\
+					2\sin(0)\cos(0) &= 2\sin(\pi)\cos(\pi) \\
+					2(0)(1) &= 2(0)(-1) \\
+					0 &= 0
+				}$
+			</div>
+			With all of the conditions satisfied by using the setup for Rolle's Theorem:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= 0 \\
+					\frac{d}{dx} (2\sin(x)\cos(x)) &= 0 \\
+					\frac{d}{dx} (\sin(2x)) &= 0 \\
+					2\cos(2x) &= 0 \\
+					\cos(2x) &= 0 \\
+					2x &= \frac{\pi}{2} \\
+					x &= \frac{\pi}{4}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

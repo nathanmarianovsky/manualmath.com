@@ -1,0 +1,335 @@
+<div class="latex_section">
+	Introduction
+</div>
+<div class="latex_body">
+	In this section I introduce a couple of theorems that pertain deeply to differential calculus starting with Fermat's Theorem, the Extreme Value Theorem, Rolle's Theorem, and finally the Mean Value Theorem.
+</div>
+
+<div class="latex_section">
+	Fermat's Theorem
+</div>
+<div class="latex_body">
+	A function has a local extremum at some point iff its derivative is exactly zero.
+</div>
+
+<div class="latex_section">
+	Proof of Fermat's Theorem
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_1">
+	<div class="hidden_div" id="hidden_div_1">
+		<div class="latex_body">
+			This proof requires showing implication in both directions. So to begin I will first assume that for our function:
+			<div class="latex_equation">
+				$\eqalign{
+					f: \hspace{.1cm} (a,b) \rightarrow \mathbb{R}
+				}$
+			</div>
+			we have:
+			<div class="latex_equation">
+				$\eqalign{
+					c \in (a,b) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(c) \geq f(c + h) \hspace{.3cm} \text{where} \hspace{.3cm} h \neq 0
+				}$
+			</div>
+			Using the inequality:
+			<div class="latex_equation">
+				$\eqalign{
+					f(c + h) - f(c) &\leq 0 \\
+					\frac{f(c + h) - f(c)}{h} &\leq 0 \\
+					\lim_{h \rightarrow 0^+} \frac{f(c + h) - f(c)}{h} &\leq \lim_{h \rightarrow 0^+} 0 \\
+					\lim_{h \rightarrow 0^+} \frac{f(c + h) - f(c)}{h} &\leq 0
+				}$
+			</div>
+			I assumed that $h$ is positive and determined the restriction for the right-hand limit. Now for the left-hand limit:
+			<div class="latex_equation">
+				$\eqalign{
+					f(c + h) - f(c) &\leq 0 \\
+					\frac{f(c + h) - f(c)}{h} &\geq 0 \\
+					\lim_{h \rightarrow 0^-} \frac{f(c + h) - f(c)}{h} &\geq \lim_{h \rightarrow 0^-} 0 \\
+					\lim_{h \rightarrow 0^-} \frac{f(c + h) - f(c)}{h} &\geq 0
+				}$
+			</div>
+			Now if the derivative exists at that point we must have:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(c) = \lim_{h \rightarrow 0^-} \frac{f(c + h) - f(c)}{h} = \lim_{h \rightarrow 0^+} \frac{f(c + h) - f(c)}{h} = 0
+				}$
+			</div>
+			To tackle the minimum we state that we have:
+			<div class="latex_equation">
+				$\eqalign{
+					d \in (a,b) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(d) \leq f(d + h) \hspace{.3cm} \text{where} \hspace{.3cm} h \neq 0
+				}$
+			</div>
+			Using the inequality:
+			<div class="latex_equation">
+				$\eqalign{
+					f(d + h) - f(d) &\geq 0 \\
+					\frac{f(d + h) - f(d)}{h} &\geq 0 \\
+					\lim_{h \rightarrow 0^+} \frac{f(d + h) - f(d)}{h} &\geq \lim_{h \rightarrow 0^+} 0 \\
+					\lim_{h \rightarrow 0^+} \frac{f(d + h) - f(d)}{h} &\geq 0
+				}$
+			</div>
+			I assumed that $h$ is positive and determined the restriction for the right-hand limit. Now for the left-hand limit:
+			<div class="latex_equation">
+				$\eqalign{
+					f(d + h) - f(d) &\geq 0 \\
+					\frac{f(d + h) - f(d)}{h} &\leq 0 \\
+					\lim_{h \rightarrow 0^-} \frac{f(d + h) - f(d)}{h} &\leq \lim_{h \rightarrow 0^-} 0 \\
+					\lim_{h \rightarrow 0^-} \frac{f(d + h) - f(d)}{h} &\leq 0
+				}$
+			</div>
+			Now if the derivative exists at that point we must have:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(d) = \lim_{h \rightarrow 0^-} \frac{f(d + h) - f(d)}{h} = \lim_{h \rightarrow 0^+} \frac{f(d + h) - f(d)}{h} = 0
+				}$
+			</div>
+			To prove the other direction I will pursue a proof that shows the behavior of non-vanishing derivatives. So by the definition of the derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x_0) = \lim_{h \rightarrow 0} \frac{f(x_0 + h) - f(x_0)}{h}
+				}$
+			</div>
+			Now we can go on to observe the behavior of the derivative in a close neighborhood. If $h$ is sufficiently small we can by the definition of the limit state that:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{f'(x_0)}{2} < \frac{f(x_0 + h) - f(x_0)}{h}
+				}$
+			</div>
+			Now if $h$ is positive:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{f'(x_0)}{2}h &< f(x_0 + h) - f(x_0) \\
+					f(x_0) < f(x_0) &+ \frac{f'(x_0)}{2}h < f(x_0 + h)
+				}$
+			</div>
+			and for negative $h$:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{f'(x_0)}{2}h &> f(x_0 + h) - f(x_0) \\
+					f(x_0) > f(x_0) &+ \frac{f'(x_0)}{2}h > f(x_0 + h)
+				}$
+			</div>
+			So in essense for behavior to the left of the point makes the point seem like a maximum, but to the left it seems like a minimum. Since an extrema cannot be both at the same time, a non-vanishing derivative implies that there is no extrema.
+		</div>
+	</div>
+</div>
+
+<div class="latex_section">
+	Extreme Value Theorem 
+</div>
+<div class="latex_body">
+	Given a continuous function, $f(x)$, on the interval $[a,b]$:
+	<div class="latex_equation">
+		$\eqalign{
+			\exists \hspace{.1cm} c,d \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(c) \leq f(x) \leq f(d) \hspace{.3cm} \forall x \in [a,b]
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Proof of Extreme Value Theorem
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_2">
+	<div class="hidden_div" id="hidden_div_2">
+		<div class="latex_body">
+			To approach a proof by contradiction we assume there is a least upper bound on the function:
+			<div class="latex_equation">
+				$\eqalign{
+					M = \sup_{x \in [a,b]} f(x)
+				}$
+			</div>
+			but no associated value in the domain that attains it:
+			<div class="latex_equation">
+				$\eqalign{
+					\nexists \hspace{.1cm} d \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(d) = M
+				}$
+			</div>
+			Next up we form a new function:
+			<div class="latex_equation">
+				$\eqalign{
+					g(x) = \frac{1}{M - f(x)}
+				}$
+			</div>
+			which is continuous on our interval since both the numerator and denominator are continuous functions. There is also the restriction that the botton never equates to zero on our interval from what we have assumed. Similar to our original function, we define a least upper bound:
+			<div class="latex_equation">
+				$\eqalign{
+					N = \sup_{x \in [a,b]} g(x)
+				}$
+			</div>
+			and use it:
+			<div class="latex_equation">
+				$\eqalign{
+					g(x) &\leq N \\
+					\frac{1}{M - f(x)} &\leq N \\
+					1 &\leq MN - Nf(x) \\
+					Nf(x) &\leq MN - 1 \\
+					f(x) &\leq M - \frac{1}{N}
+				}$
+			</div>
+			where the last line provides us with a contradiction since we assumed that $M$ was the least upper bound for our function. Therefore:
+			<div class="latex_equation">
+				$\eqalign{
+					\exists \hspace{.1cm} d \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(d) = M
+				}$
+			</div>
+			To prove the existance of the minimum, the approach is similar. We begin by defining the greatest lower bound for the function:
+			<div class="latex_equation">
+				$\eqalign{
+					P = \inf_{x \in [a,b]} f(x)
+				}$
+			</div>
+			but no associated value in the domain that attains it:
+			<div class="latex_equation">
+				$\eqalign{
+					\nexists \hspace{.1cm} c \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(c) = P
+				}$
+			</div>
+			Next up we form a new function:
+			<div class="latex_equation">
+				$\eqalign{
+					h(x) = \frac{1}{f(x) - P}
+				}$
+			</div>
+			which is continuous on our interval since both the numerator and denominator are continuous functions. There is also the restriction that the botton never equates to zero on our interval from what we have assumed. Now we define a least upper bound:
+			<div class="latex_equation">
+				$\eqalign{
+					Q = \sup_{x \in [a,b]} h(x)
+				}$
+			</div>
+			and use it:
+			<div class="latex_equation">
+				$\eqalign{
+					h(x) &\leq Q \\
+					\frac{1}{f(x) - P} &\leq Q \\
+					1 &\leq Qf(x) - PQ \\
+					PQ + 1 &\leq Qf(x) \\
+					P + \frac{1}{Q} &\leq f(x)
+				}$
+			</div>
+			where the last line provides us with a contradiction since we assumed that $P$ was the greatest lower bound for our function. Therefore:
+			<div class="latex_equation">
+				$\eqalign{
+					\exists \hspace{.1cm} c \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(c) = P
+				}$
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="latex_section">
+	Rolle's Theorem 
+</div>
+<div class="latex_body">
+	Given a function, $f(x)$, that satisfies all of the following:
+	<div class="latex_equation">
+		$\eqalign{
+			&1. \hspace{.3cm} \text{Continuous on the closed interval} \hspace{.1cm} [a,b] \\
+			&2. \hspace{.3cm} \text{Differentiable on the open interval} \hspace{.1cm} (a,b) \\
+			&3. \hspace{.3cm} f(a) = f(b)
+		}$
+	</div>
+	then:
+	<div class="latex_equation">
+		$\eqalign{
+			\exists \hspace{.1cm} c \in (a,b) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f'(c) = 0
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Proof of Rolle's Theorem
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_3">
+	<div class="hidden_div" id="hidden_div_3">
+		<div class="latex_body">
+			The proof can be split into three separate cases. The first case deals with constant functions, and Rolle's Theorem clearly holds true since $c$ can be chosen to be any value on the open interval. The next case deals with assuming:
+			<div class="latex_equation">
+				$\eqalign{
+					\exists \hspace{.1cm} d \in (a,b) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(d) > f(a)
+				}$
+			</div>
+			By the Extreme Value Theorem we know there must exist some value in the open interval where a maximum is achieved. Since this value is in the interior the function will actually attain a relative maximum there and by the second condition we know that the derivative exists at that point. By Fermat's Theorem we conclude that since this is a relative extrema and the derivative exists at the point, then it is a critical point s.t.:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(c) = 0 \hspace{.3cm} \text{where} \hspace{.3cm} c \in (a,b)
+				}$
+			</div>
+			The third case deals with assuming:
+			<div class="latex_equation">
+				$\eqalign{
+					\exists \hspace{.1cm} d \in (a,b) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(d) < f(a)
+				}$
+			</div>
+			By the Extreme Value Theorem we know there must exist some value in the open interval where a minimum is achieved. Since this value is in the interior the function will actually attain a relative minimum there and by the second condition we know that the derivative exists at that point. By Fermat's Theorem we conclude that since this is a relative extrema and the derivative exists at the point, then it is a critical point s.t.:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(c) = 0 \hspace{.3cm} \text{where} \hspace{.3cm} c \in (a,b)
+				}$
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="latex_section">
+	Mean Value Theorem
+</div>
+<div class="latex_body">
+	Given a function, $f(x)$, that satisfies all of the following:
+	<div class="latex_equation">
+		$\eqalign{
+			&1. \hspace{.3cm} \text{Continuous on the closed interval} \hspace{.1cm} [a,b] \\
+			&2. \hspace{.3cm} \text{Differentiable on the open interval} \hspace{.1cm} (a,b)
+		}$
+	</div>
+	then:
+	<div class="latex_equation">
+		$\eqalign{
+			\exists \hspace{.1cm} c \in (a,b) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f'(c)(b - a) = f(b) - f(a)
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Proof of Mean Value Theorem
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_4">
+	<div class="hidden_div" id="hidden_div_4">
+		<div class="latex_body">
+			To prove the mean value theorem we define a new function:
+			<div class="latex_equation">
+				$\eqalign{
+					g(x) = f(x) - \kappa x \hspace{.3cm} \text{where} \hspace{.3cm} \kappa \in \mathbb{R}
+				}$
+			</div>
+			that also satisfies the two conditions. We now want to determine a value for $\kappa$ s.t. the function satisfies Rolle's Theorem:
+			<div class="latex_equation">
+				$\eqalign{
+					f(a) - \kappa a &= f(b) - \kappa b \\
+					\kappa(b - a) &= f(b) - f(a) \\
+					\kappa &= \frac{f(b) - f(a)}{b - a}
+				}$
+			</div>
+			With our constant chosen, all of the conditions are met for Rolle's Theorem. Therefore:
+			<div class="latex_equation">
+				$\eqalign{
+					\exists \hspace{.1cm} c \in (a,b) \hspace{.3cm} \text{s.t.} \hspace{.3cm} g'(c) = 0
+				}$
+			</div>
+			and directly by our definition of $g$:
+			<div class="latex_equation">
+				$\eqalign{
+					g'(c) &= 0 \\
+					f'(c) - \kappa &= 0 \\
+					f'(c) &= \kappa \\
+					f'(c) &= \frac{f(b) - f(a)}{b - a} \\
+					f'(c)(b - a) &= f(b) - f(a)
+				}$
+			</div>
+		</div>
+	</div>
+</div>
