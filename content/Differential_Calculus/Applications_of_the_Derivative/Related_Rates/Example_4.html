@@ -1,0 +1,55 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	A particle is moving around the ellipse:
+	<div class="latex_equation">
+		$\eqalign{
+			4x^2 + 16y^2 = 64
+		}$
+	</div>
+	where at any time, $t$, the coordinates are given by:
+	<div class="latex_equation">
+		$\eqalign{
+			x(t) = 4\cos(t) \hspace{.3cm} \text{and} \hspace{.3cm} y(t) = 2\sin(t)
+		}$
+	</div>
+	At what rate is the particles distance to the origin changing at any time? At what rate is the distance changing when $t = \frac{\pi}{4}$?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			We can write away compute the derivatives since they will be needed:
+			<div class="latex_equation">
+				$\eqalign{
+					x'(t) = -4\sin(t) \hspace{.3cm} \text{and} \hspace{.3cm} y'(t) = 2\cos(t)
+				}$
+			</div>
+			Now using the Euclidean distance formula and differentiating:
+			<div class="latex_equation">
+				$\eqalign{
+					(d(t))^2 &= (x(t) - 0)^2 + (y(t) - 0)^2 \\
+					\frac{d}{dt} (d(t))^2 &= \frac{d}{dt} \Big( (x(t))^2 + (y(t))^2 \Big) \\
+					2dd' &= 2xx' + 2yy' \\
+					d'(t) &= \frac{xx' + yy'}{d} \\
+					&= \frac{xx' + yy'}{\sqrt{x^2 + y^2}} \\
+					&= \frac{-16\cos(t)\sin(t) + 4\cos(t)\sin(t)}{\sqrt{16\cos^2(t) + 4\sin^2(t)}} \\
+					&= -\frac{6\cos(t)\sin(t)}{\sqrt{4\cos^2(t) + \sin^2(t)}}
+				}$
+			</div>
+			The above formula produces the rate at which the distance changes for any time. When looking at $t = \frac{\pi}{4}$ specifically:
+			<div class="latex_equation">
+				$\eqalign{
+					d'\Big( \frac{\pi}{4} \Big) &= -\frac{6\cos\Big( \frac{\pi}{4} \Big) \sin\Big( \frac{\pi}{4} \Big)}{\sqrt{4\cos^2\Big( \frac{\pi}{4} \Big) + \sin^2\Big( \frac{\pi}{4} \Big)}} \\
+					&= -\frac{3}{\sqrt{\frac{5}{2}}} \\
+					&= -3\sqrt{\frac{2}{5}}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Two ships $A$ and $B$ are sailing away from the point $O$ along routes such that the angle $AOB = 120^\circ$. How fast is the distance between them changing if, at a certain instant $|OA| = 8 \hspace{.1cm} \text{mi}$, $|OB| = 6 \hspace{.1cm} \text{mi}$, ship $A$ is sailing at the rate of $20 \hspace{.1cm} \text{mph}$, and ship $B$ at the rate of $30 \hspace{.1cm} \text{mph}$?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			The situation can be modeled with the following image:
+			<div class="latex_equation">
+				<img src="/content/Differential_Calculus/Applications_of_the_Derivative/Related_Rates/Example_10.png">
+			</div>
+			Using the Law of Cosines and differentiation:
+			<div class="latex_equation">
+				$\eqalign{
+					(d(t))^2 &= (x(t))^2 + (y(t))^2 - 2x(t)y(t)\cos(\theta) \\
+					(d(t))^2 &= (x(t))^2 + (y(t))^2 - 2x(t)y(t)\cos(120^\circ) \\
+					\frac{d}{dt} (d(t))^2 &= \frac{d}{dt} \Big[ (x(t))^2 + (y(t))^2 + x(t)y(t) \Big] \\
+					2dd' &= 2xx' + 2yy' + x'y + xy' \\
+					d' &= \frac{(2x + y)x' + (2y + x)y'}{2\sqrt{x^2 + y^2 + xy}}
+				}$
+			</div>
+			At the one instant:
+			<div class="latex_equation">
+				$\eqalign{
+					d' &= \frac{(2x + y)x' + (2y + x)y'}{2\sqrt{x^2 + y^2 + xy}} \\
+					&= \frac{(2(6 \hspace{.1cm} \text{mi}) + (8 \hspace{.1cm} \text{mi}))(30 \hspace{.1cm} \text{mph}) + (2(8 \hspace{.1cm} \text{mi}) + (6 \hspace{.1cm} \text{mi}))((20 \hspace{.1cm} \text{mph}))}{2\sqrt{(6 \hspace{.1cm} \text{mi})^2 + (8 \hspace{.1cm} \text{mi})^2 + (6 \hspace{.1cm} \text{mi})(8 \hspace{.1cm} \text{mi})}} \\
+					&= \frac{260}{\sqrt{37}} \hspace{.1cm} \text{mph}
+				}$
+			</div>
+		</div>
+	</div>
+</div>
