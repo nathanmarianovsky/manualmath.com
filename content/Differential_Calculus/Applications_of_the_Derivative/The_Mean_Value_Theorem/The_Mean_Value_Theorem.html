@@ -9,7 +9,7 @@
 	Fermat's Theorem
 </div>
 <div class="latex_body">
-	A function has a local extremum at some point iff its derivative is exactly zero.
+	A function has a local extremum at some point if its derivative is exactly zero.
 </div>
 
 <div class="latex_section">
@@ -85,33 +85,6 @@
 					f'(d) = \lim_{h \rightarrow 0^-} \frac{f(d + h) - f(d)}{h} = \lim_{h \rightarrow 0^+} \frac{f(d + h) - f(d)}{h} = 0
 				}$
 			</div>
-			To prove the other direction I will pursue a proof that shows the behavior of non-vanishing derivatives. So by the definition of the derivative:
-			<div class="latex_equation">
-				$\eqalign{
-					f'(x_0) = \lim_{h \rightarrow 0} \frac{f(x_0 + h) - f(x_0)}{h}
-				}$
-			</div>
-			Now we can go on to observe the behavior of the derivative in a close neighborhood. If $h$ is sufficiently small we can by the definition of the limit state that:
-			<div class="latex_equation">
-				$\eqalign{
-					\frac{f'(x_0)}{2} < \frac{f(x_0 + h) - f(x_0)}{h}
-				}$
-			</div>
-			Now if $h$ is positive:
-			<div class="latex_equation">
-				$\eqalign{
-					\frac{f'(x_0)}{2}h &< f(x_0 + h) - f(x_0) \\
-					f(x_0) < f(x_0) &+ \frac{f'(x_0)}{2}h < f(x_0 + h)
-				}$
-			</div>
-			and for negative $h$:
-			<div class="latex_equation">
-				$\eqalign{
-					\frac{f'(x_0)}{2}h &> f(x_0 + h) - f(x_0) \\
-					f(x_0) > f(x_0) &+ \frac{f'(x_0)}{2}h > f(x_0 + h)
-				}$
-			</div>
-			So in essense for behavior to the left of the point makes the point seem like a maximum, but to the left it seems like a minimum. Since an extrema cannot be both at the same time, a non-vanishing derivative implies that there is no extrema.
 		</div>
 	</div>
 </div>
