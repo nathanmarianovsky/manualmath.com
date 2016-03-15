@@ -1,0 +1,70 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine two real numbers with difference $\kappa$ and minimum possible product. You can assume $\kappa \in \mathbb{R}_{> 0}$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			We setup our product function as:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x,y) = xy
+				}$
+			</div>
+			with the condition that:
+			<div class="latex_equation">
+				$\eqalign{
+					y = x + \kappa
+				}$
+			</div>
+			provides:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) = x(x + \kappa) = x^2 + \kappa x
+				}$
+			</div>
+			To find a minimum we need the first derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) = 2x + \kappa
+				}$
+			</div>
+			where the critical point is:
+			<div class="latex_equation">
+				$\eqalign{
+					x = -\frac{\kappa}{2}
+				}$
+			</div>
+			Now we observe the behavior of the derivative:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>Domain</td>
+					    <td>$f'(x)$ Behavior</td>
+					</tr>
+					<tr>
+				    	<td>$\Big( -\infty, -\frac{\kappa}{2} \Big)$</td>
+					    <td>$-$</td>
+					</tr>
+					<tr>
+				    	<td>$\Big( -\frac{\kappa}{2}, \infty \Big)$</td>
+					    <td>$+$</td>
+					</tr>
+				</table>
+			</div>
+			According to the First Derivative Test we can state that our critical point is a relative minimum. Therefore, the two real numbers we want are:
+			<div class="latex_equation">
+				$\eqalign{
+					x = -\frac{\kappa}{2} \hspace{.3cm} \text{and} \hspace{.3cm} y = \frac{\kappa}{2}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

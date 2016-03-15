@@ -1,0 +1,42 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Let:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = ax^2 + bx + c \hspace{.3cm} \text{where} \hspace{.3cm} a \neq 0
+		}$
+	</div>
+	Show that $f$ has exactly one critical point and give conditions on $a$ and $b$ which guarantee that the critical point will be a maximum.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First we need the derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) = 2ax + b
+				}$
+			</div>
+			where the critical point is:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= 2ax + b \\
+					x &= -\frac{b}{2a}
+				}$
+			</div>
+			Now we observe that the derivative is nothing but a straight line and if we want the critical point to be a relative maximum then by the First Derivative Test the derivative has to transition from positive to negative. This transition can only occur if the slope is negative and no matter the value for $b$. Therefore, to always attain a maximum we enforce:
+			<div class="latex_equation">
+				$\eqalign{
+					a < 0 \hspace{.3cm} \text{and} \hspace{.3cm} b \in \mathbb{R}
+				}$
+			</div>
+		</div>
+	</div>
+</div>
