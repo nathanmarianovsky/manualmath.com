@@ -38,28 +38,20 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 		});
 
 		router.addRouteListener("subject", function(toState, fromState) {
-			subjects.forEach(function(subject) {
-				if(subject.sname == toState.params.sname) {
-					if(fromState) {
-						if(fromState.name != "subject.notation") {
-							navs.topic_side_nav(subject);
-						}
-					}
-					if($(".side-nav").is(":empty")) {
-						navs.topic_side_nav(subject);
-					}
-					$("main").empty();
-					$(".page_title").text(subject.clean_name);
-					$("title").text(subject.clean_name);
-					$("main").append($("<div>").attr("id", "subject_page"));
-					$.get("/content/" + subject.sname + "/" + subject.sname + ".html").done(function(content) {
-						$("#subject_page").append(content)
-						$.get("/content/" + subject.sname + "/Notation.html").done(function(notation) {
-							$("#subject_page").append(notation);
-							MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-						});
-					});
-				}
+			var subject = subjects.filter(function(iter) {
+				return iter.sname == toState.params.sname;
+			})[0];
+			navs.topic_side_nav(subject);
+			$("main").empty();
+			$(".page_title").text(subject.clean_name);
+			$("title").text(subject.clean_name);
+			$("main").append($("<div>").attr("id", "subject_page"));
+			$.get("/content/" + subject.sname + "/" + subject.sname + ".html").done(function(content) {
+				$("#subject_page").append(content)
+				$.get("/content/" + subject.sname + "/Notation.html").done(function(notation) {
+					$("#subject_page").append(notation);
+					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+				});
 			});
 			$("#about_li").addClass("active");
 			functions.handle_logo_link("subject");
@@ -68,22 +60,20 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 		});
 
 		router.addRouteListener("subject.topic", function(toState, fromState) {
-			subjects.forEach(function(subject) {
-				if(subject.sname == toState.params.sname) {
-					subject.topics.forEach(function(topic) {
-						if(topic.tname == toState.params.tname) {
-							$("main").empty();
-							$(".page_title").text(subject.clean_name + " - " + topic.clean_name);
-							$("title").text(subject.clean_name + " - " + topic.clean_name);
-							$("main").append($("<div>").attr("id", "topic_page"));
-							$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(function(content) {
-								$("#topic_page").append(content);
-								MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-							});
-							navs.section_side_nav(topic, subject);
-						}
-					});
-				}
+			var subject = subjects.filter(function(iter) {
+				return iter.sname == toState.params.sname;
+			})[0],
+				topic = subject.topics.filter(function(iter) {
+				return iter.tname == toState.params.tname;
+			})[0];
+			navs.section_side_nav(topic, subject);
+			$("main").empty();
+			$(".page_title").text(subject.clean_name + " - " + topic.clean_name);
+			$("title").text(subject.clean_name + " - " + topic.clean_name);
+			$("main").append($("<div>").attr("id", "topic_page"));
+			$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(function(content) {
+				$("#topic_page").append(content);
+				MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			});
 			$("#about_li").addClass("active");
 			functions.handle_logo_link("subject.topic");
@@ -95,69 +85,79 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			if(window.innerWidth < 992) {
 				$(".button-collapse").sideNav("hide");
 			}
-			subjects.forEach(function(subject) {
-				if(subject.sname == toState.params.sname) {
-					subject.topics.forEach(function(topic) {
-						if(topic.tname == toState.params.tname) {
-							topic.sections.forEach(function(section) {
-								if(section.section_name == toState.params.section_name) {
-									$("main").empty();
-									$(".side-nav li").each(function() {
-										if(typeof $(this).attr("id") !== typeof undefined && $(this).attr("id") !== false) {
-											if($(this).attr("id").split("_")[0] == "topic") {
-												navs.example_side_nav(section, topic);
-											}  
-										}
-									});
-									if($(".side-nav").is(":empty")) {
-										navs.example_side_nav(section, topic);
-									}
-									if($("#section_name" + section.section_id).hasClass("active")) {
-										$("#section_name" + section.section_id).removeClass("active");
-									}
-									if(section.section_name == toState.params.current_page_name) {
-										$("#section_name" + section.section_id).addClass("active");
-										section.examples.forEach(function(example) {
-											if($("#examples_li" + example.eid).hasClass("active")) {
-												$("#examples_li" + example.eid).removeClass("active");
-											}
-										});
-										$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
-										$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
-										$("main").append($("<div>").attr("id", "latex"));
-										$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(function(content) {
-											$("#latex").append(content);
-											MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-											functions.handle_button("notes");
-										});
-									}
-									else {
-										section.examples.forEach(function(example) {
-											if($("#examples_li" + example.eid).hasClass("active")) {
-												$("#examples_li" + example.eid).removeClass("active");
-											}
-											if(example.ename == toState.params.current_page_name) {
-												$("#examples_li" + example.eid).addClass("active");
-												$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
-												$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
-												$("main").append($("<div>").attr("id", "latex"));
-												$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html").done(function(content) {
-													$("#latex").append(content);
-													MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-													functions.handle_button("examples");
-												});
-											}
-										});
-									}
-								}
-							});
-						}
-					});
+			var subject = subjects.filter(function(iter) {
+				return iter.sname == toState.params.sname;
+			})[0],
+				topic = subject.topics.filter(function(iter) {
+				return iter.tname == toState.params.tname;
+			})[0],
+				section = topic.sections.filter(function(iter) {
+				return iter.section_name == toState.params.section_name;
+			})[0];
+			$("main").empty();
+			$(".side-nav li").each(function() {
+				if(typeof $(this).attr("id") !== typeof undefined && $(this).attr("id") !== false) {
+					if($(this).attr("id").split("_")[0] == "topic") {
+						navs.example_side_nav(section, topic);
+					}  
 				}
 			});
+			if($(".side-nav").is(":empty")) {
+				navs.example_side_nav(section, topic);
+			}
+			if($("#section_name" + section.section_id).hasClass("active")) {
+				$("#section_name" + section.section_id).removeClass("active");
+			}
+
+			$("#nav-mobile").find("li").removeClass("active");
+			$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
+			$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
+			$("main").append($("<div>").attr("id", "latex"));
+
+			if(section.section_name == toState.params.current_page_name) {
+				$("#section_name" + section.section_id).addClass("active");
+				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(function(content) {
+					$("#latex").append(content);
+					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+					functions.handle_button("notes");
+				});
+			}
+			else {
+				var example = section.examples.filter(function(iter) {
+					return iter.ename == toState.params.current_page_name;
+				})[0];
+				$("#examples_li" + example.eid).addClass("active");
+				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html").done(function(content) {
+					$("#latex").append(content);
+					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+					functions.handle_button("examples");
+				});
+			}
 			functions.handle_logo_link("subject.topic.section.current_page");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
+
+			$(document).keydown(function(event) {
+				if(event.which == 37) {
+					event.preventDefault();
+					event.stopPropagation();
+					// console.log(example);
+
+					if(section.section_name != toState.params.current_page_name) {
+						console.log(example);
+						if(example.order == 1) {
+							router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
+						}
+						else {
+							var next_example = section.examples.filter(function(iter) {
+								return iter.order == example.order - 1;
+							})[0];
+							router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: next_example.ename});
+						}
+					}
+				}
+				// event.stopPropagation();
+			});
 		});
 	};
 
