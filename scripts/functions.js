@@ -61,30 +61,30 @@ define(function() {
 
 	*/
 	exports.organize = (subjects, topics, sections, examples) => {
-		for(i = 0; i < sections.length; i++) {
-			sections[i].examples = [];
-			for(j = 0; j < examples.length; j++) {
-				if(sections[i].section_id == examples[j].section_id) {
-					sections[i].examples.push(examples[j]);
+		sections.forEach(section => {
+			section.examples = [];
+			examples.forEach(example => {
+				if(section.section_id == example.section_id) {
+					section.examples.push(example);
 				}
-			}
-		}
-		for(i = 0; i < topics.length; i++) {
-			topics[i].sections = [];
-			for(j = 0; j < sections.length; j++) {
-				if(topics[i].tid == sections[j].tid) {
-					topics[i].sections.push(sections[j]);
+			});
+		});
+		topics.forEach(topic => {
+			topic.sections = [];
+			sections.forEach(section => {
+				if(topic.tid == section.tid) {
+					topic.sections.push(section);
 				}
-			}
-		}
-		for(i = 0; i < subjects.length; i++) {
-			subjects[i].topics = [];
-			for(j = 0; j < topics.length; j++) {
-				if(subjects[i].sid == topics[j].sid) {
-					subjects[i].topics.push(topics[j]);
+			});
+		});
+		subjects.forEach(subject => {
+			subject.topics = [];
+			topics.forEach(topic => {
+				if(subject.sid == topic.sid) {
+					subject.topics.push(topic);
 				}
-			}
-		}
+			});
+		});
 	};
 
 	/*
@@ -99,15 +99,15 @@ define(function() {
 
 	*/
 	exports.sort_subjects = subjects => {
-		for(i = 0; i < subjects.length; i++) {
-			subjects[i].topics.sort(exports.compare_object_order);
-			for(j = 0; j < subjects[i].topics.length; j++) {
-				subjects[i].topics[j].sections.sort(exports.compare_object_order);
-				for(k = 0; k < subjects[i].topics[j].sections.length; k++) {
-					subjects[i].topics[j].sections[k].examples.sort(exports.compare_object_order);
-				}
-			}
-		}
+		subjects.forEach(subject => {
+			subject.topics.sort(exports.compare_object_order);
+			subject.topics.forEach(topic => {
+				topic.sections.sort(exports.compare_object_order);
+				topic.sections.forEach(section => {
+					section.examples.sort(exports.compare_object_order);
+				});
+			});
+		});
 	};
 
 	/*
