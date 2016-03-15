@@ -1,4 +1,4 @@
-define(["jquery", "materialize", "router5", "mathjax", "app/functions", "app/routes"], function($, Materialize, router5, MathJax, functions, routes) {
+define(["jquery", "materialize", "router5", "mathjax", "app/functions", "app/routes"], ($, Materialize, router5, MathJax, functions, routes) => {
 	$(function() {
 
 		var router = new router5.Router5([
@@ -14,7 +14,7 @@ define(["jquery", "materialize", "router5", "mathjax", "app/functions", "app/rou
 			defaultRoute: "home"
 		});
 
-		functions.get_all("../api/subjects", "../api/topics", "../api/sections", "../api/examples").done(function(subjects, topics, sections, examples) {
+		functions.get_all("../api/subjects", "../api/topics", "../api/sections", "../api/examples").done((subjects, topics, sections, examples) => {
 			functions.organize(subjects, topics, sections, examples);
 			functions.sort_subjects(subjects);
 			routes.add_listeners(router, subjects, topics, sections, examples);

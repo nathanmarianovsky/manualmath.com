@@ -17,9 +17,8 @@ define(function() {
 	1 is returned.
 
 	*/
-	exports.compare_object_order = function(lhs, rhs) {
-		if(lhs.order < rhs.order) { return -1; }
-		else { return 1; }
+	exports.compare_object_order = (lhs, rhs) => {
+		return lhs.order < rhs.order ? -1 : 1;
 	};
 
 	/*
@@ -61,7 +60,7 @@ define(function() {
 			An array of all the examples
 
 	*/
-	exports.organize = function(subjects, topics, sections, examples) {
+	exports.organize = (subjects, topics, sections, examples) => {
 		for(i = 0; i < sections.length; i++) {
 			sections[i].examples = [];
 			for(j = 0; j < examples.length; j++) {
@@ -99,7 +98,7 @@ define(function() {
 			An array of all the subjects
 
 	*/
-	exports.sort_subjects = function(subjects) {
+	exports.sort_subjects = subjects => {
 		for(i = 0; i < subjects.length; i++) {
 			subjects[i].topics.sort(exports.compare_object_order);
 			for(j = 0; j < subjects[i].topics.length; j++) {
@@ -121,7 +120,7 @@ define(function() {
 			The rgb/rgba color code
 
 	*/
-	exports.rgba_to_hex = function(orig) {
+	exports.rgba_to_hex = orig => {
 		var rgb = orig.replace(/\s/g,"").match(/^rgba?\((\d+),(\d+),(\d+)/i);
 		return (rgb && rgb.length === 4) ? "#" +
 		  	("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
@@ -139,7 +138,7 @@ define(function() {
 			The name of the page currently set
 
 	*/
-	exports.handle_logo_link = function(page) {
+	exports.handle_logo_link = page => {
 		if(page == "about") {
 			$("#logo").css("pointer-events", "none");
 		}
@@ -222,7 +221,7 @@ define(function() {
 			The name of the page currently set
 
 	*/
-	exports.handle_button = function(page) {
+	exports.handle_button = page => {
 		if(page == "notes") {
 			$("#latex .show_solution").click(function(defaultevent) {
 				defaultevent.preventDefault();
