@@ -217,6 +217,10 @@ define(function() {
 	Purpose:
 	Handles the button functionality for "Show Proof" and "Show Solution".
 
+	Parameters:
+		page: 
+			The name of the page currently set
+
 	*/
 	exports.handle_button = function(page) {
 		if(page == "notes") {
