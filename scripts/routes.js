@@ -137,6 +137,10 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 
+
+
+
+
 			$(document).keydown(function(event) {
 				if(event.which == 37) {
 					event.preventDefault();
@@ -158,6 +162,15 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				}
 				// event.stopPropagation();
 			});
+
+
+
+
+
+
+
+
+			
 		});
 	};
 
