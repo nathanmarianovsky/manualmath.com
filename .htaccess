@@ -9,5 +9,5 @@
 	
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule client/(.*)$ client/template.php?p1=$1 [QSA,NC,L]
+	RewriteRule client/(.*)$ client/template.html?p1=$1 [QSA,NC,L]
 </IfModule>

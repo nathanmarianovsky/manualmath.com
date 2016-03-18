@@ -26,9 +26,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$("title").text("About");
 			$("main").empty();
 			$("main").append($("<div>").attr("id", "about_page"));
-			$.get("/client/about.php").done(content => {
+			$.get("/client/about.html").done(content => {
 				$("#about_page").append(content);
-				$.get("/client/notation.php").done(notation => {
+				$.get("/client/notation.html").done(notation => {
 					$("#notation_box").append(notation);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 				});
