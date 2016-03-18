@@ -9,7 +9,7 @@
 	Fermat's Theorem
 </div>
 <div class="latex_body">
-	A function has a local extremum at some point if its derivative is exactly zero.
+	A differentiable function has a local extremum at some point if its derivative is exactly zero at that point.
 </div>
 
 <div class="latex_section">
@@ -82,7 +82,7 @@
 			Now if the derivative exists at that point we must have:
 			<div class="latex_equation">
 				$\eqalign{
-					f'(d) = \lim_{h \rightarrow 0^-} \frac{f(d + h) - f(d)}{h} = \lim_{h \rightarrow 0^+} \frac{f(d + h) - f(d)}{h} = 0
+						f'(d) = \lim_{h \rightarrow 0^-} \frac{f(d + h) - f(d)}{h} = \lim_{h \rightarrow 0^+} \frac{f(d + h) - f(d)}{h} = 0 \tag*{$\blacksquare$}
 				}$
 			</div>
 		</div>
@@ -145,7 +145,7 @@
 			where the last line provides us with a contradiction since we assumed that $M$ was the least upper bound for our function. Therefore:
 			<div class="latex_equation">
 				$\eqalign{
-					\exists \hspace{.1cm} d \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(d) = M
+					\exists \hspace{.1cm} d \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(d) = M \tag*{$\blacksquare$}
 				}$
 			</div>
 			To prove the existance of the minimum, the approach is similar. We begin by defining the greatest lower bound for the function:
@@ -185,7 +185,7 @@
 			where the last line provides us with a contradiction since we assumed that $P$ was the greatest lower bound for our function. Therefore:
 			<div class="latex_equation">
 				$\eqalign{
-					\exists \hspace{.1cm} c \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(c) = P
+					\exists \hspace{.1cm} c \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(c) = P \tag*{$\blacksquare$}
 				}$
 			</div>
 		</div>
@@ -240,7 +240,7 @@
 			By the Extreme Value Theorem we know there must exist some value in the open interval where a minimum is achieved. Since this value is in the interior the function will actually attain a relative minimum there and by the second condition we know that the derivative exists at that point. By Fermat's Theorem we conclude that since this is a relative extrema and the derivative exists at the point, then it is a critical point s.t.:
 			<div class="latex_equation">
 				$\eqalign{
-					f'(c) = 0 \hspace{.3cm} \text{where} \hspace{.3cm} c \in (a,b)
+					f'(c) = 0 \hspace{.3cm} \text{where} \hspace{.3cm} c \in (a,b) \tag*{$\blacksquare$}
 				}$
 			</div>
 		</div>
@@ -303,6 +303,7 @@
 					f'(c)(b - a) &= f(b) - f(a)
 				}$
 			</div>
+			$\tag*{$\blacksquare$}$
 		</div>
 	</div>
 </div>
