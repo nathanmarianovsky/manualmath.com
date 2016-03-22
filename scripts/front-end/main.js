@@ -11,7 +11,7 @@ define(["jquery", "materialize", "router5", "mathjax", "app/functions", "app/rou
 				])
 			])
 		],{
-			defaultRoute: "home"
+			defaultRoute: "about"
 		});
 
 		functions.get_all("../api/subjects", "../api/topics", "../api/sections", "../api/examples").done((subjects, topics, sections, examples) => {

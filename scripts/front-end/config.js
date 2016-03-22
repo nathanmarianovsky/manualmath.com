@@ -1,7 +1,7 @@
 require.config({
     baseUrl: "",
     paths: {
-        app: "/scripts",
+        app: "/scripts/front-end",
         lib: "/node_modules",
         jquery: "/node_modules/jquery/dist/jquery",
         materialize: "/bower_components/materializecss-amd/dist/materialize.amd",
