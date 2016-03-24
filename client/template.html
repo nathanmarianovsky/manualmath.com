@@ -11,22 +11,46 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 		<title></title>
 		<!-- Materialize CSS Library -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css"> -->
 		<!-- Google Material Icons -->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
 		<!-- Roboto Mono -->
-		<link href='https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext' rel='stylesheet' type='text/css'>
+		<!-- <link href='https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext' rel='stylesheet' type='text/css'> -->
 		<!-- CSS Style Sheets -->
-		<link rel="stylesheet" type="text/css" href="/styles/styles.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_0_min_599_max.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_600_min_799_max.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_800_min_991_max.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_992_min_1199_max.css">
-		<link rel="stylesheet" type="text/css" href="/styles/styles_1200_min.css">
+		<script>
+			var container = [],
+				names = ["/styles/dist/styles-min.css", "/styles/dist/styles_0_min_599_max-min.css", "/styles/dist/styles_600_min_799_max-min.css", "/styles/dist/styles_800_min_991_max-min.css", "/styles/dist/styles_992_min_1199_max-min.css", "/styles/dist/styles_1200_min-min.css", "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css", "https://fonts.googleapis.com/icon?family=Material+Icons", "https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext"];
+			names.forEach(sheet => {
+		      	var cb = function() {
+			        var l = document.createElement("link"); l.rel = "stylesheet";
+			        l.href = sheet;
+			        var h = document.getElementsByTagName("head")[0]; h.parentNode.insertBefore(l, h);
+		      	};
+		      	container.push(cb);
+			});
+	      	var raf = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame;
+	      	if (raf) {
+	      		container.forEach(obj => {
+	      			raf(obj);
+	      		});
+	      	}
+	     	else {
+	     		container.forEach(obj => {
+	     			window.addEventListener("load", obj);
+	     		});
+	    	}
+	    </script>
+	    <!-- CSS Style Sheets -->
+		<!-- <link rel="stylesheet" type="text/css" href="/styles/dist/styles-min.css"> -->
+		<!-- <link rel="stylesheet" type="text/css" href="/styles/dist/styles_0_min_599_max-min.css"> -->
+		<!-- <link rel="stylesheet" type="text/css" href="/styles/dist/styles_600_min_799_max-min.css"> -->
+		<!-- <link rel="stylesheet" type="text/css" href="/styles/dist/styles_800_min_991_max-min.css"> -->
+		<!-- <link rel="stylesheet" type="text/css" href="/styles/dist/styles_992_min_1199_max-min.css"> -->
+		<!-- <link rel="stylesheet" type="text/css" href="/styles/dist/styles_1200_min-min.css"> -->
 		<!-- Icon -->
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 		<!-- Require JS -->
-		<script data-main="/scripts/front-end/config" type="text/javascript" src="/node_modules/requirejs/require.js"></script>
+		<script data-main="/scripts/front-end/config" type="text/javascript" async src="/scripts/dist/require-min.js"></script>
 		<!-- Google Analytics -->
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
