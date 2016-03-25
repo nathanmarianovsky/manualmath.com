@@ -10,7 +10,7 @@ exports.add_client_routes = app => {
 
 	// This will load the template file where the rest is handled by the front-end
 	app.get("/client/about", (request, response) => {
-		response.sendFile("../../client/template.html");
+		response.sendFile("./client/dist/template-min.html", { "root": "./" });
 	});
 
 

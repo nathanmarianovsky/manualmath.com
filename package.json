@@ -2,8 +2,10 @@
   "name": "manualmath.com",
   "version": "1.0.0",
   "dependencies": {
+    "compression": "^1.6.1",
     "express": "^4.13.4",
     "jquery": "^2.1.4",
+    "mkdirp": "^0.5.1",
     "mysql": "^2.10.2",
     "requirejs": "^2.1.20",
     "router5": "^0.6.4"
