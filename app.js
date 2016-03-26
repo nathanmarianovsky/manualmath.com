@@ -16,18 +16,20 @@ var express = require("express"),
 	app = express(),
 	pool = config.add_connections(mysql);
 
-// Tells the app to use the current directory as the default path
-app.use(express.static(__dirname, {"maxAge": 864000000 }));
+// Tells the app use to compress files whenever possible
+app.use(compression());
 
 // Tells the app where to locate the favicon
 app.use(favicon("./favicon.ico", {"maxAge": 2592000000 }));
 
-// Tells the app use to compress files whenever possible
-app.use(compression());
+// Tells the app to use the current directory as the default path
+app.use(express.static(__dirname, {"maxAge": 864000000 }));
+
+
 
 // Adds all of the routes
 client_routes.add_client_routes(app);
-api_routes.add_api_routes(app, pool);
+api_routes.add_api_routes(app, pool, fs);
 
 // Minifies all html files in /client, CSS filles in /styles/dev, and RequireJS
 minifier.minify_all_but_content(mkdirp, compressor, minify, fs);
