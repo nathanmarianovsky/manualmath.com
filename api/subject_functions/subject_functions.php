@@ -99,20 +99,12 @@ function get_subject_file($con, $args) {
 
 		if(isset($sname)) {
 			$file = $_SERVER["DOCUMENT_ROOT"] . "/content/" . $sname . "/" . $sname . ".html";
-			if(file_exists($file)) {
-				return file_get_contents($file);
-			}
-			else {
-				return "The subject seems to exists, but there is no file for it";
-			}
+			if(file_exists($file)) { return file_get_contents($file); }
+			else { return "The subject seems to exists, but there is no file for it!"; }
 		}
-		else {
-			return "There is no associated subject to this sid";
-		}
+		else { return "There is no associated subject to this id!"; }
 	}
-	else {
-		return "There was no sid passed in as a parameter";
-	}
+	else { return "There was no id passed in as a parameter!"; }
 }
 
 ?>
