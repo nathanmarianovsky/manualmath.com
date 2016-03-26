@@ -12,6 +12,34 @@ class MyAPI extends API {
         parent::__construct($request);
     }
 
+    protected function example() {
+        global $db;
+        $params = array();
+
+        if($this->method == "GET") {
+            if(sizeof($this->args) == 2) {
+                if($this->args[0] == "file") {
+                    $main_arg = $this->args[1];
+                    if(is_numeric($main_arg)) {
+                        $params["eid"] = $main_arg;
+                        return get_example_file($db, $params);
+                    }
+                    else { return "The id you passed in is not a number!"; }
+                }
+                else {
+                    $this->args[0] == "id" ? $type = "id" : $type = "name";
+                    $main_arg = $this->args[1];
+                    if($type == "id") { $params["eid"] = $main_arg; }
+                    else if($type == "name") { $params["ename"] = $main_arg; }
+                    else { return "The type of parameter you are passing in is not valid!"; }
+                    return get_examples($db, $params);
+                }
+            }
+            else { return "The number of parameters is not correct!"; }
+        }
+        else { return "This only accepts GET requests!"; }
+    }
+
     protected function examples() {
         global $db;
         $params = array();
@@ -20,81 +48,37 @@ class MyAPI extends API {
             if(sizeof($this->args) == 0) {
                 return get_examples($db, $params);
             }
-            else if(sizeof($this->args) == 3) {
-                $type = $this->args[0];
-                $id = $this->args[1] == "id";
-                $name = $this->args[1] == "name";
-                $main_arg = $this->args[2];
-                if($id) {
-                    if($type == "example") {
-                        $params["eid"] = $main_arg;
-                    }
-                    else if($type == "section") {
-                        $params["section_id"] = $main_arg;
-                    }
-                    else if($type == "topic") {
-                        $params["tid"] = $main_arg;
-                    }
-                    else if($type == "subject") {
-                        $params["sid"] = $main_arg;
-                    }
-                    else {
-                        return "No such type exists";
-                    }
-                    return get_examples($db, $params);
-                }
-                else if($name) {
-                    if($type == "example") {
-                        $params["ename"] = $main_arg;
-                    }
-                    else if($type == "section") {
-                        $params["section_name"] = $main_arg;
-                    }
-                    else if($type == "topic") {
-                        $params["tname"] = $main_arg;
-                    }
-                    else if($type == "subject") {
-                        $params["sname"] = $main_arg;
-                    }
-                    else {
-                        return "No such type exists";
-                    }
-                    return get_examples($db, $params);
-                }
-                else {
-                    return "This is not an accepted data type";
-                }
-            }
-            else {
-                return "The number of parameters is not correct";
-            }
+            else { return "This returns all sections, therefore no parameters are taken!"; }
         }
-        else {
-            return "This only accepts GET requests";
-        }
+        else { return "This only accepts GET requests!"; }
     }
 
-    protected function get_example_content() {
+    protected function section() {
         global $db;
+        $params = array();
+
         if($this->method == "GET") {
-            if(sizeof($this->args) == 1) {
-                $main_arg = $this->args[0];
-                $params = array();
-                if(is_numeric($main_arg)) {
-                    $params["eid"] = $main_arg;
-                    return get_example_file($db, $params);
+            if(sizeof($this->args) == 2) {
+                if($this->args[0] == "file") {
+                    $main_arg = $this->args[1];
+                    if(is_numeric($main_arg)) {
+                        $params["section_id"] = $main_arg;
+                        return get_section_file($db, $params);
+                    }
+                    else { return "The id you passed in is not a number!"; }
                 }
                 else {
-                    return "The eid has to be a numeric value";
+                    $this->args[0] == "id" ? $type = "id" : $type = "name";
+                    $main_arg = $this->args[1];
+                    if($type == "id") { $params["section_id"] = $main_arg; }
+                    else if($type == "name") { $params["section_name"] = $main_arg; }
+                    else { return "The type of parameter you are passing in is not valid!"; }
+                    return get_sections($db, $params);
                 }
             }
-            else {
-                return "The number of parameters is not correct";
-            }
+            else { return "The number of parameters is not correct!"; }
         }
-        else {
-            return "This only accepts GET requests";
-        }
+        else { return "This only accepts GET requests!"; }
     }
 
     protected function sections() {
@@ -105,75 +89,37 @@ class MyAPI extends API {
             if(sizeof($this->args) == 0) {
                 return get_sections($db, $params);
             }
-            else if(sizeof($this->args) == 3) {
-                $type = $this->args[0];
-                $id = $this->args[1] == "id";
-                $name = $this->args[1] == "name";
-                $main_arg = $this->args[2];
-                if($id) {
-                    if($type == "section") {
-                        $params["section_id"] = $main_arg;
-                    }
-                    else if($type == "topic") {
-                        $params["tid"] = $main_arg;
-                    }
-                    else if($type == "subject") {
-                        $params["sid"] = $main_arg;
-                    }
-                    else {
-                        return "No such type exists or is not accepted";
-                    }
-                    return get_sections($db, $params);
-                }
-                else if($name) {
-                    if($type == "section") {
-                        $params["section_name"] = $main_arg;
-                    }
-                    else if($type == "topic") {
-                        $params["tname"] = $main_arg;
-                    }
-                    else if($type == "subject") {
-                        $params["sname"] = $main_arg;
-                    }
-                    else {
-                        return "No such type exists or is not accepted";
-                    }
-                    return get_sections($db, $params);
-                }
-                else {
-                    return "This is not an accepted data type";
-                }
-            }
-            else {
-                return "The number of parameters is not correct";
-            }
+            else { return "This returns all sections, therefore no parameters are taken!"; }
         }
-        else {
-            return "This only accepts GET requests";
-        }
+        else { return "This only accepts GET requests!"; }
     }
 
-    protected function get_section_content() {
+    protected function topic() {
         global $db;
+        $params = array();
+
         if($this->method == "GET") {
-            if(sizeof($this->args) == 1) {
-                $main_arg = $this->args[0];
-                $params = array();
-                if(is_numeric($main_arg)) {
-                    $params["section_id"] = $main_arg;
-                    return get_section_file($db, $params);
+            if(sizeof($this->args) == 2) {
+                if($this->args[0] == "file") {
+                    $main_arg = $this->args[1];
+                    if(is_numeric($main_arg)) {
+                        $params["tid"] = $main_arg;
+                        return get_topic_file($db, $params);
+                    }
+                    else { return "The id you passed in is not a number!"; }
                 }
                 else {
-                    return "The section_id has to be a numeric value";
+                    $this->args[0] == "id" ? $type = "id" : $type = "name";
+                    $main_arg = $this->args[1];
+                    if($type == "id") { $params["tid"] = $main_arg; }
+                    else if($type == "name") { $params["tname"] = $main_arg; }
+                    else { return "The type of parameter you are passing in is not valid!"; }
+                    return get_topics($db, $params);
                 }
             }
-            else {
-                return "The number of parameters is not correct";
-            }
+            else { return "The number of parameters is not correct!"; }
         }
-        else {
-            return "This only accepts GET requests";
-        }
+        else { return "This only accepts GET requests!"; }
     }
 
     protected function topics() {
@@ -184,69 +130,37 @@ class MyAPI extends API {
             if(sizeof($this->args) == 0) {
                 return get_topics($db, $params);
             }
-            else if(sizeof($this->args) == 3) {
-                $type = $this->args[0];
-                $id = $this->args[1] == "id";
-                $name = $this->args[1] == "name";
-                $main_arg = $this->args[2];
-                if($id) {
-                    if($type == "topic") {
-                        $params["tid"] = $main_arg;
-                    }
-                    else if($type == "subject") {
-                        $params["sid"] = $main_arg;
-                    }
-                    else {
-                        return "No such type exists or is not accepted";
-                    }
-                    return get_topics($db, $params);
-                }
-                else if($name) {
-                    if($type == "topic") {
-                        $params["tname"] = $main_arg;
-                    }
-                    else if($type == "subject") {
-                        $params["sname"] = $main_arg;
-                    }
-                    else {
-                        return "No such type exists or is not accepted";
-                    }
-                    return get_topics($db, $params);
-                }
-                else {
-                    return "This is not an accepted data type";
-                }
-            }
-            else {
-                return "The number of parameters is not correct";
-            }
+            else { return "This returns all topics, therefore no parameters are taken!"; }
         }
-        else {
-            return "This only accepts GET requests";
-        }
+        else { return "This only accepts GET requests!"; }
     }
 
-    protected function get_topic_content() {
+    protected function subject() {
         global $db;
+        $params = array();
+
         if($this->method == "GET") {
-            if(sizeof($this->args) == 1) {
-                $main_arg = $this->args[0];
-                $params = array();
-                if(is_numeric($main_arg)) {
-                    $params["tid"] = $main_arg;
-                    return get_topic_file($db, $params);
+            if(sizeof($this->args) == 2) {
+                if($this->args[0] == "file") {
+                    $main_arg = $this->args[1];
+                    if(is_numeric($main_arg)) {
+                        $params["sid"] = $main_arg;
+                        return get_subject_file($db, $params);
+                    }
+                    else { return "The id you passed in is not a number!"; }
                 }
                 else {
-                    return "The tid has to be a numeric value";
+                    $this->args[0] == "id" ? $type = "id" : $type = "name";
+                    $main_arg = $this->args[1];
+                    if($type == "id") { $params["sid"] = $main_arg; }
+                    else if($type == "name") { $params["sname"] = $main_arg; }
+                    else { return "The type of parameter you are passing in is not valid!"; }
+                    return get_subjects($db, $params);
                 }
             }
-            else {
-                return "The number of parameters is not correct";
-            }
+            else { return "The number of parameters is not correct!"; }
         }
-        else {
-            return "This only accepts GET requests";
-        }
+        else { return "This only accepts GET requests!"; }
     }
 
     protected function subjects() {
@@ -257,63 +171,9 @@ class MyAPI extends API {
             if(sizeof($this->args) == 0) {
                 return get_subjects($db, $params);
             }
-            else if(sizeof($this->args) == 3) {
-                $type = $this->args[0];
-                $id = $this->args[1] == "id";
-                $name = $this->args[1] == "name";
-                $main_arg = $this->args[2];
-                if($id) {
-                    if($type == "subject") {
-                        $params["sid"] = $main_arg;
-                    }
-                    else {
-                        return "No such type exists or is not accepted";
-                    }
-                    return get_subjects($db, $params);
-                }
-                else if($name) {
-                    if($type == "subject") {
-                        $params["sname"] = $main_arg;
-                    }
-                    else {
-                        return "No such type exists or is not accepted";
-                    }
-                    return get_subjects($db, $params);
-                }
-                else {
-                    return "This is not an accepted data type";
-                }
-            }
-            else {
-                return "The number of parameters is not correct";
-            }
+            else { return "This returns all subjects, therefore no parameters are taken!"; }
         }
-        else {
-            return "This only accepts GET requests";
-        }
-    }
-
-    protected function get_subject_content() {
-        global $db;
-        if($this->method == "GET") {
-            if(sizeof($this->args) == 1) {
-                $main_arg = $this->args[0];
-                $params = array();
-                if(is_numeric($main_arg)) {
-                    $params["sid"] = $main_arg;
-                    return get_subject_file($db, $params);
-                }
-                else {
-                    return "The sid has to be a numeric value";
-                }
-            }
-            else {
-                return "The number of parameters is not correct";
-            }
-        }
-        else {
-            return "This only accepts GET requests";
-        }
+        else { return "This only accepts GET requests!"; }
     }
  }
 
