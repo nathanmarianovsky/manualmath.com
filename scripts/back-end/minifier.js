@@ -38,6 +38,7 @@ exports.minify_all_but_content = (mkdirp, compressor, minify) => {
 					"fileOut": "./scripts/dist/require-min.js",
 					"callback": (err, result) => {
 						if(err) { console.log("Minifying the requirejs file threw an error: " + err.stack); }
+						// Minifies the html files in /client
 						container = ["./client/template.html", "./client/about.html", "./client/notation.html"];
 						container.forEach(file => {
 							fs.readFile(file, "utf8", (err, data) => {

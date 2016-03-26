@@ -7,6 +7,7 @@ var express = require("express"),
 	mkdirp = require("mkdirp"),
 	compressor = require("node-minify"),
 	compression = require("compression"),
+	favicon = require("serve-favicon"),
 	minify = require("html-minifier").minify,
 	client_routes = require("./scripts/back-end/client_routes"),
 	api_routes = require("./scripts/back-end/api_routes"),
@@ -14,6 +15,12 @@ var express = require("express"),
 	minifier = require("./scripts/back-end/minifier"),
 	app = express(),
 	pool = config.add_connections(mysql);
+
+// Tells the app to use the current directory as the default path
+app.use(express.static(__dirname, {"maxAge": 864000000 }));
+
+// Tells the app where to locate the favicon
+app.use(favicon("./favicon.ico", {"maxAge": 2592000000 }));
 
 // Tells the app use to compress files whenever possible
 app.use(compression());
@@ -29,53 +36,3 @@ minifier.minify_all_but_content(mkdirp, compressor, minify, fs);
 app.listen(8080, () => {
 	console.log("The server is now listening!");
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// recursive("./content", ["current_dev.sql"], (err, files) => {
-// 	files.forEach(file => {
-// 		devpath = "./";
-// 		distpath = "./";
-// 		console.log(devpath + "\n");
-// 		os.platform() === "win32" ? container = file.split("\\") : container = file.split("/");
-// 		for(var i = 0; i < container.length - 1; i++) {
-// 			devpath += container[i] + "/";
-// 			container[i] == "content" ? distpath += "content-dist/" : distpath += container[i] + "/";
-// 			console.log(devpath + "\n");
-// 		};
-// 		fs.readFile(devpath + container[container.length - 1], "utf8", (err, data) => {
-// 			if(err) { console.log("Could not read the file " + devpath + container[container.length - 1] + ": " + err.stack); }
-// 			var data_min = minify(data, {
-// 				"removeComments": true,
-// 				"removeCommentsFromCDATA": true,
-// 				"collapseWhitespace": true,
-// 				"collapseInlineTagWhitespace": true,
-// 				"removeAttributeQuotes": true,
-// 				"removeRedundantAttributes": true,
-// 				"useShortDoctype": true,
-// 				"minifyJS": true,
-// 				"minifyCSS": true
-// 			});
-// 			fs.writeFile(distpath + container[container.length - 1].split(".")[0] + "-min.html", data_min, err => {
-// 				if(err) { console.log("Could not write the file " + distpath + container[container.length - 1].split(".")[0] + "-min.html: " + err.stack); }
-// 			});
-// 		});
-// 		// console.log(container);
-// 	});
-// });
-
-
-
-
