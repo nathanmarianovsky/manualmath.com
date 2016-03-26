@@ -91,7 +91,6 @@ Note that since example names are not unique, this will return all of the exampl
 The API also has calls to get back the html content associated to any given subject, topic, section, or example:
 ```
 localhost/api/want/file/id
-
 ```
 where "want" is one of the four objects and "id" references the actual id of the object. Notice that unlike getting objects, you only allowed to use the id here as a parameter since the id guarantees a unique object.
 
@@ -169,6 +168,7 @@ and put in your credentials for the database and at "/app.js":
 app.listen(8080, () => {
   console.log("The server is now listening!");
 });
+```
 change "8080" to whichever port you wish to use. Now to minify all of the necessary documents and start the server run:
 ```js
 node app.js
@@ -212,7 +212,6 @@ the server has officially been launched and is listening on the port you provide
 # Future Plans
 In the near future I see a couple of things that I want to change about the website:
 * Design a CMS, content management system, that will provide a user with the ability to control the contents of the website through a simple web interface rather than having to add content through a development environment
-* Rewrite the API in Node.js
 * Add the subjects (these represent the main ones of interest, over time the list may evolve):
  * Precalculus
  * Differential Calculus
