@@ -9,6 +9,7 @@ exports.add_api_routes = (app, pool, fs) => {
 			pool.query("SELECT sid,sname,`order` FROM subject ORDER BY `order` ASC", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(subject => {
+					subject.topics = [];
 					subject.clean_name = subject.sname.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
 				});
 				response.send(results);
@@ -18,6 +19,7 @@ exports.add_api_routes = (app, pool, fs) => {
 			pool.query("SELECT sid,tid,tname,`order` FROM topic", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(topic => {
+					topic.sections = [];
 					topic.clean_name = topic.tname.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
 				});
 				response.send(results);
@@ -27,6 +29,7 @@ exports.add_api_routes = (app, pool, fs) => {
 			pool.query("SELECT section_id,tid,section_name,`order` FROM section", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(section => {
+					section.examples = [];
 					section.clean_name = section.section_name.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
 				});
 				response.send(results);
@@ -41,9 +44,7 @@ exports.add_api_routes = (app, pool, fs) => {
 				response.send(results);
 			});
 		}
-		else {
-			response.send("No such object exists in the database!");
-		}
+		else { response.send("No such object exists in the database!"); }
 	});
 
 	// The API methods to get a file corresponding to any particular subject, topic, section, or example
@@ -59,9 +60,7 @@ exports.add_api_routes = (app, pool, fs) => {
 				if(results.length != 0) {
 					response.sendFile("./content/" + results[0].sname + "/" + results[0].sname + ".html", { "root": "./" });
 				}
-				else {
-					response.send("Cannot find such a file!");
-				}
+				else { response.send("Cannot find such a file!"); }
 			});
 		}
 		else if(want == "topic") {
@@ -75,14 +74,10 @@ exports.add_api_routes = (app, pool, fs) => {
 						if(final.length != 0) {
 							response.sendFile("./content/" + final[0].sname + "/" + results[0].tname + "/" + results[0].tname + ".html", { "root": "./" });
 						}
-						else {
-							response.send("Cannot find such a file!");
-						}
+						else { response.send("Cannot find such a file!"); }
 					});
 				}
-				else {
-					response.send("Cannot find such a file!");
-				}
+				else { response.send("Cannot find such a file!"); }
 			});
 		}
 		else if(want == "section") {
@@ -102,14 +97,10 @@ exports.add_api_routes = (app, pool, fs) => {
 								}
 							});
 						}
-						else {
-							response.send("Cannot find such a file!");
-						}
+						else { response.send("Cannot find such a file!"); }
 					});
 				}
-				else {
-					response.send("Cannot find such a file!");
-				}
+				else { response.send("Cannot find such a file!"); }
 			});
 		}
 		else if(want == "example") {
@@ -131,29 +122,19 @@ exports.add_api_routes = (app, pool, fs) => {
 										if(final.length != 0) {
 											response.sendFile("./content/" + final[0].sname + "/" + cur[0].tname + "/" + next[0].section_name + "/" + results[0].ename + ".html", { "root": "./" });
 										}
-										else {
-											response.send("Cannot find such a file!");
-										}
+										else { response.send("Cannot find such a file!"); }
 									});
 								}
-								else {
-									response.send("Cannot find such a file!");
-								}
+								else { response.send("Cannot find such a file!"); }
 							});
 						}
-						else {
-							response.send("Cannot find such a file!");
-						}
+						else { response.send("Cannot find such a file!"); }
 					});
 				}
-				else {
-					response.send("Cannot find such a file!");
-				}
+				else { response.send("Cannot find such a file!"); }
 			});
 		}
-		else {
-			response.send("This object whose file you want does not seem to exist in the database!");
-		}
+		else { response.send("This object whose file you want does not seem to exist in the database!"); }
 	});
 
 	// The API methods to get a specific object containing all of the information of the associated to a specific id or name
@@ -183,6 +164,7 @@ exports.add_api_routes = (app, pool, fs) => {
 						pool.query(statement, (err, results) => {
 							if(err) { console.error("Error Connecting: " + err.stack); return; }
 							results.forEach(subject => {
+								subject.topics = [];
 								subject.clean_name = subject.sname.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
 							});
 							response.send(results);
@@ -193,6 +175,7 @@ exports.add_api_routes = (app, pool, fs) => {
 						pool.query(statement, (err, results) => {
 							if(err) { console.error("Error Connecting: " + err.stack); return; }
 							results.forEach(topic => {
+								topic.sections = [];
 								topic.clean_name = topic.tname.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
 							});
 							response.send(results);
@@ -203,6 +186,7 @@ exports.add_api_routes = (app, pool, fs) => {
 						pool.query(statement, (err, results) => {
 							if(err) { console.error("Error Connecting: " + err.stack); return; }
 							results.forEach(section => {
+								section.examples = [];
 								section.clean_name = section.section_name.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
 							});
 							response.send(results);
@@ -218,18 +202,12 @@ exports.add_api_routes = (app, pool, fs) => {
 							response.send(results);
 						});
 					}
-					else {
-						response.send("The object providing the information does not seem to exist in the database!");
-					}
+					else { response.send("The object providing the information does not seem to exist in the database!"); }
 				}
-				else {
-					response.send("The object providing the information does not seem to have database entry with the same information!");
-				}
+				else { response.send("The object providing the information does not seem to have database entry with the same information!"); }
 			});
 		}
-		else {
-			response.send("The object providing the information does not seem to be a type that exists in the database!");
-		}
+		else { response.send("The object providing the information does not seem to be a type that exists in the database!"); }
 	});
 };
 
