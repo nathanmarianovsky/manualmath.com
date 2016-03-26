@@ -10,14 +10,7 @@ npm install -g bower gulp
 npm install gulp gulp-install
 gulp
 ```
-This will handle the installation of all node_modules, bower_components, and build the necessary gulp files. The next thing is to make sure that the database credentials are correct inside the file located at "/api/config.php":
-```php
-$mysql_hostname = "localhost";
-$mysql_user = "user";
-$mysql_password = "password";
-$mysql_database = "database";
-```
-With this the project is ready to go.
+This will handle the installation of all node_modules, bower_components, and build the necessary gulp files.
 
 
 # Changing the Content
@@ -48,67 +41,144 @@ The id given to any object is completely arbitrary so long as the id is unique t
 
 
 # Styling
-All styles associated to the website can be found inside the "/styles" folder. This site is mobile-friendly and to make it easier to read, there exist different files for different screen widths. 
+All styles associated to the website can be found inside the "/styles/dev" folder. This site is mobile-friendly and to make it easier to read, there exist different files for different screen widths. 
 
 
 # Front-End Functionality
-All of the functionality associated to the actual website can be found inside the "/scripts" folder. 
+All of the functionality associated to the actual website can be found inside the "/scripts/front-end" folder. 
 
 
 # Using the API
 ### Getting All Objects of a Certain Type
-The API used for this website has been written in PHP and can be found inside the "/api" folder. Now to use the actual API, there exist ways to extract the subjects, topics, sections, and examples from the database. So lets say that you want to get either all of the subjects, topics, sections, or examples that are available in the database. You would call on:
+To use the API, there exist ways to extract the subjects, topics, sections, and examples from the database. So lets say that you want to get either all of the subjects, topics, sections, or examples that are available in the database. You would call on:
 ```
-localhost/api/param
+localhost/api/want
 ```
-where "localhost" can remain if you are running a local build or replaced with the domain name and param represents what we want to get which can be one of four things:
+where "localhost" can remain if you are running a local build or replaced with the domain name and "want" represents what we want to get which can be one of four things:
 * subjects
 * topics
 * sections
 * examples
 
 ### Getting Specific Object(s)
-Now what if we want to get a specific object given that we know some information that can be used to identify it. Overall I can summarize all of the calls into a single generalization:
+Now what if we want to get a specific object given that we know some information that can be used to identify it? Overall I can summarize all of the calls into a single generalization:
 ```
-localhost/api/param1/param2/param3/param4
+localhost/api/want/param_type/param
 ```
 where:
 
-* param1: This represents the object we want. Specifically this can be one of four things:
-  * subjects
-  * topics
-  * sections
-  * examples
-* param2: This represents the object whose data is going to be provided. Specifically this can be one of four things:
+* want: This represents the object we want. Specifically this can be one of four things:
   * subject
   * topic
   * section
   * example
-* param3: This represents the type of data associated to the object in param2. Specifically this can be one of two things:
+* param_type: This represents the type of data associated to the object we want. Specifically this can be one of two things:
   * id
   * name
-* param4: This represents the actual data value that is either the id or the name.
+* param: This represents the actual data value that is either the id or the name.
 
-So for example, if I wanted to get the all the subjects associated with a topic whose id is 7 I would call:
+So for example, if I wanted to get the all the section(s) associated to the id 7 I would call:
 ```
-localhost/api/subjects/topic/id/7
+localhost/api/section/id/7
 ```
-Now if I wanted to get the example whose name is "example_1":
+Now if I wanted to get the example(s) whose name is "example_1":
 ```
-localhost/api/examples/example/name/example_1
+localhost/api/example/name/example_1
 ```
-Note that since example names are not unique, this will return all of the examples who have such a name. The only time when a name is going to be unique is for any subject, otherwise expect that you might get back more than one result.
+Note that since example names are not unique, this will return all of the examples who have such a name. The only time when a name is going to be unique is for any subject, otherwise expect that you might get back more than one result. On the other hand, if you provide an id you are guaranteed to get a unique result.
 
 ### Getting File Contents
-The API also has calls to get back the html content associated to any given section or examples. To get the contents of a subject, topic, section, or example call:
+The API also has calls to get back the html content associated to any given subject, topic, section, or example:
 ```
-localhost/api/get_example_content/id
-localhost/api/get_section_content/id
-localhost/api/get_topic_content/id
-localhost/api/get_subject_content/id
+localhost/api/want/file/id
 
 ```
-where "id" in all cases has to be replaced with the actual id of the object. Notice that unlike getting objects, I only allow you to use the id here as a parameter since the id guarantees a unique object.
+where "want" is one of the four objects and "id" references the actual id of the object. Notice that unlike getting objects, you only allowed to use the id here as a parameter since the id guarantees a unique object.
+
+
+# Running the Server
+
+### Apache Server
+Prior to running you need to modify the following code at "/api/config.php":
+```php
+$mysql_hostname = "";
+$mysql_user = "";
+$mysql_password = "";
+$mysql_database = "";
+```
+and put in your credentials for the database. To configure the port you need to find the following lines inside the Apache "httpd.conf" file:
+```sh
+Listen 0.0.0.0:80
+Listen [::0]:80
+```
+and change "80" to whichever port you wish to use. With Apache you may also have to change the default path so in the same configuration file find:
+```sh
+DocumentRoot "path"
+```
+and replace "path" with the project path. Lastly in the same file also change:
+```sh
+<Directory "path">
+```
+"path" once again to the desired path. While still on the topic of Apache configuration make sure that the following modules are turned on:
+```sh
+core_module
+so_module
+watchdog_module
+http_module
+log_config_module
+logio_module
+version_module
+unixd_module
+access_compat_module
+alias_module
+auth_basic_module
+authn_core_module
+authn_file_module
+authz_core_module
+authz_host_module
+authz_user_module
+autoindex_module
+dir_module
+env_module
+filter_module
+mime_module
+mpm_prefork_module
+negotiation_module
+php5_module
+rewrite_module
+setenvif_module
+status_module
+deflate_module
+```
+Now we need to minify the necessary files so in the root directory run:
+```sh
+node minify.js
+```
+Finally you can run the Apache service!
+
+### NodeJS Server
+Prior to running you need to modify the following code at "/scripts/back-end/config.js":
+```js
+"host": "",
+"user": "",
+"password": "",
+"database": ""
+```
+and put in your credentials for the database and at "/app.js":
+```js
+app.listen(8080, () => {
+  console.log("The server is now listening!");
+});
+change "8080" to whichever port you wish to use. Now to minify all of the necessary documents and start the server run:
+```js
+node app.js
+```
+at the root directory. If you see:
+```
+The serve is now listening!
+All html files in /client, CSS files in /styles/dev, and RequireJS have been minified!
+```
+the server has officially been launched and is listening on the port you provided.
 
 
 # Version History
