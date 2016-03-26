@@ -1,9 +1,7 @@
 var exports = {},
-	fs = require("fs");
 
 // Minifies all of the CSS files, RequireJS, and html files found inside of /client
-// Once finished it returns "true"
-exports.minify_all_but_content = (mkdirp, compressor, minify) => {
+exports.minify_all_but_content = (mkdirp, compressor, minify, fs) => {
 	var container = [],
 		splitting = [],
 		name = [],

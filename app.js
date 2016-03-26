@@ -25,8 +25,6 @@ app.use(favicon("./favicon.ico", {"maxAge": 2592000000 }));
 // Tells the app to use the current directory as the default path
 app.use(express.static(__dirname, {"maxAge": 864000000 }));
 
-
-
 // Adds all of the routes
 client_routes.add_client_routes(app);
 api_routes.add_api_routes(app, pool, fs);
