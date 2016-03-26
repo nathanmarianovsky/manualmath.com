@@ -175,7 +175,7 @@ node app.js
 ```
 at the root directory. If you see:
 ```
-The serve is now listening!
+The server is now listening!
 All html files in /client, CSS files in /styles/dev, and RequireJS have been minified!
 ```
 the server has officially been launched and is listening on the port you provided.

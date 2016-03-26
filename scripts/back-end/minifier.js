@@ -1,4 +1,4 @@
-var exports = {},
+var exports = {};
 
 // Minifies all of the CSS files, RequireJS, and html files found inside of /client
 exports.minify_all_but_content = (mkdirp, compressor, minify, fs) => {
