@@ -1,6 +1,9 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+<p align=center>
+ <img src="/client/logo_with_text.png">
+</p>
+
+
+# Table of Contents
 
 - [Setting Up](#setting-up)
 - [Changing the Content](#changing-the-content)
@@ -22,12 +25,6 @@
     - [v.0.0.1](#v001)
 - [Future Plans](#future-plans)
 - [License](#license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<p align=center>
- <img src="/client/logo_with_text.png">
-</p>
 
 
 # Setting Up
