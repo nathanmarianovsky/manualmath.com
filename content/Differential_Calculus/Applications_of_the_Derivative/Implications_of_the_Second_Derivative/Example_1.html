@@ -1,0 +1,66 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Describe the concavity of the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = 2x^3 - 3x^2 - 4
+		}$
+	</div>
+	and classify the critical points according to the Second Derivative Test.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To get everything we need, we have to determine both the first and second derivatives:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= 6x^2 - 6x \\
+					f''(x) &= 12x - 6
+				}$
+			</div>
+			Now to determine the critical points we equate the first derivative to zero:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= 6x^2 - 6x \\
+					0 &= 6x(x - 1) \\
+					x &= 0, 1
+				}$
+			</div>
+			and to classify the points we plug them into the second derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f''(0) &= -6 \\
+					f''(1) &= 6
+				}$
+			</div>
+			So we arrive at stating that:
+			<div class="latex_equation">
+				$\eqalign{
+					x &= 0 \hspace{.3cm} \text{is a relative maximum} \\
+					x &= 1 \hspace{.3cm} \text{is a relative minimum}
+				}$
+			</div>
+			To observe the concavity behavior we need to determine where the second derivative is zero:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= 12x - 6 \\
+					x &= \frac{1}{2}
+				}$
+			</div>
+			which allows us to state:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x)& \hspace{.3cm} \text{is concave downwards on} \hspace{.3cm} \Big( -\infty, \frac{1}{2} \Big) \\
+					f(x)& \hspace{.3cm} \text{is concave upwards on} \hspace{.3cm} \Big( \frac{1}{2}, \infty \Big)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,67 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Describe the concavity of the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \sin(2x)
+		}$
+	</div>
+	and classify the critical points according to the Second Derivative Test on the interval $(0, \pi)$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To get everything we need, we have to determine both the first and second derivatives:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= 2\cos(2x) \\
+					f''(x) &= -4\sin(2x)
+				}$
+			</div>
+			Now to determine the critical points we equate the first derivative to zero:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= 2\cos(2x) \\
+					2x &= \frac{\pi}{2} + \kappa \pi \hspace{.3cm} \text{where} \hspace{.3cm} \kappa \in \mathbb{Z} \\
+					x &= \frac{\pi(1 + 2\kappa)}{4}
+				}$
+			</div>
+			and to classify the points we plug the only ones in the region into the second derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f''\Big( \frac{\pi}{4} \Big) &= -4 \\
+					f''\Big( \frac{3\pi}{4} \Big) &= 4
+				}$
+			</div>
+			So we arrive at stating that:
+			<div class="latex_equation">
+				$\eqalign{
+					x &= \frac{\pi}{4} \hspace{.3cm} \text{is a relative maximum} \\
+					x &= \frac{3\pi}{4} \hspace{.3cm} \text{is a relative minimum}
+				}$
+			</div>
+			To observe the concavity behavior we need to determine where the second derivative is zero:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= -4\sin(2x) \\
+					2x &= \alpha \pi \hspace{.3cm} \text{where} \hspace{.3cm} \alpha \in \mathbb{Z} \\
+					x &= \frac{\alpha \pi}{2}
+				}$
+			</div>
+			which allows us to state:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x)& \hspace{.3cm} \text{is concave downwards on} \hspace{.3cm} \Big( 0, \frac{\pi}{2} \Big) \\
+					f(x)& \hspace{.3cm} \text{is concave upwards on} \hspace{.3cm} \Big( \frac{\pi}{2}, \pi \Big)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

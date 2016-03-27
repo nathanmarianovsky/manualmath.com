@@ -1,0 +1,43 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Describe the concavity along with the inflection points of the graph corresponding to:
+	<div class="latex_equation">
+		$\eqalign{
+			y = x^x \hspace{.3cm} \text{where} \hspace{.3cm} x \in \mathbb{R}_{> 0}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To get a feeling for the concavity we need the second derivative, but before that we determine the first derivative using logarithmic differentiation:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= x^x \\
+					\ln(y) &= \ln(x^x) \\
+					\ln(y) &= x\ln(x) \\
+					\frac{d}{dx} \Big[ \ln(y) \Big] &= \frac{d}{dx} \Big[ x\ln(x) \Big] \\
+					\frac{y'}{y} &= \ln(x) + 1 \\
+					y' &= y(\ln(x) + 1)
+				}$
+			</div>
+			Applying the differentiation operator again:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{d}{dx} \Big[ y' \Big] &= \frac{d}{dx} \Big[ y(\ln(x) + 1) \Big] \\
+					y'' &= y'(\ln(x) + 1) + y\Big( \frac{1}{x} \Big) \\
+					&= y(\ln(x) + 1)^2 + \frac{y}{x} \\
+					&= x^x \Big[ (\ln(x) + 1)^2 + \frac{1}{x} \Big]
+				}$
+			</div>
+			Now we observe the behavior of the above. Since we have already restricted ourselves to the non-negative real numbers, the term from the original function all the way on the left is strictly positive. Alongside this fact, the rest is also strictly positive because any positive number squared with the addition of another positive number is still positive. So overall we can state that the original function has no points of inflection and is strictly concave up on its entire domain.
+		</div>
+	</div>
+</div>

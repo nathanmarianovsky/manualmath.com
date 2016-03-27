@@ -1,0 +1,63 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Describe the concavity of the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = \ln(x) - x
+		}$
+	</div>
+	and classify the critical points according to the Second Derivative Test.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To get everything we need, we have to determine both the first and second derivatives:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= \frac{1}{x} - 1 \\
+					f''(x) &= -\frac{1}{x^2}
+				}$
+			</div>
+			Now to determine the critical points we equate the first derivative to zero:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= \frac{1}{x} - 1 \\
+					1 &= \frac{1}{x} \\
+					x &= 1
+				}$
+			</div>
+			and to classify the points we plug them into the second derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f''(0) &= \hspace{.1cm} \text{DNE} \\
+					f''(1) &= -1
+				}$
+			</div>
+			So we arrive at stating that:
+			<div class="latex_equation">
+				$\eqalign{
+					x = 1 \hspace{.3cm} \text{is a relative maximum}
+				}$
+			</div>
+			To observe the concavity behavior we need to determine where the second derivative is zero:
+			<div class="latex_equation">
+				$\eqalign{
+					0 = -\frac{1}{x^2}
+				}$
+			</div>
+			which allows us to state:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) \hspace{.3cm} \text{is concave negative on} \hspace{.3cm} ( 0, \infty )
+				}$
+			</div>
+		</div>
+	</div>
+</div>

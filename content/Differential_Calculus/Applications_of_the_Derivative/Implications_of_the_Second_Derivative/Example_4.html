@@ -1,0 +1,53 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Describe the concavity of the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = 6x + \sin(3x)
+		}$
+	</div>
+	and classify the critical points according to the Second Derivative Test on the interval $\Big( 0, \frac{\pi}{2} \Big)$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To get everything we need, we have to determine both the first and second derivatives:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= 6 + 3\cos(3x) \\
+					f''(x) &= -9\sin(3x)
+				}$
+			</div>
+			Now to determine the critical points we equate the first derivative to zero:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= 6 + 3\cos(3x) \\
+					0 &= 3 + \cos(3x)
+				}$
+			</div>
+			So we arrive at stating that there are no critical points. To observe the concavity behavior we need to determine where the second derivative is zero:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= -9\sin(3x) \\
+					0 &= \sin(3x) \\
+					3x &= \kappa \pi \hspace{.3cm} \text{where} \hspace{.3cm} \kappa \in \mathbb{Z} \\
+					x &= \frac{\kappa \pi}{3}
+				}$
+			</div>
+			which allows us to state:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x)& \hspace{.3cm} \text{is concave downwards on} \hspace{.3cm} \Big( 0, \frac{\pi}{3} \Big) \\
+					f(x)& \hspace{.3cm} \text{is concave wpwards on} \hspace{.3cm} \Big( \frac{\pi}{3}, \frac{\pi}{2} \Big)
+				}$
+			</div>
+		</div>
+	</div>
+</div>
