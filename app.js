@@ -33,6 +33,6 @@ api_routes.add_api_routes(app, pool, fs);
 minifier.minify_all_but_content(mkdirp, compressor, minify, fs);
 
 // Tells the server to listen now that everything has been taken care of
-app.listen(8080, () => {
+app.listen(80, () => {
 	console.log("The server is now listening!");
 });

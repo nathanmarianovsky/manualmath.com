@@ -1,0 +1,101 @@
+/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+@media only screen and (max-width : 991px) {
+	/* Pushes the main content from the left and top */
+	main {
+		padding-left: 0;
+		padding-top: 60px;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the top nav(s) */
+	#first_top_nav {
+		box-shadow: none;
+	}
+
+	#second_top_nav {
+		display: inline;
+		top:56px;
+	}
+
+	#desktop_title {
+		display: none;
+	}
+
+	#hamburger_button {
+		left: 20px;
+		display: inline;
+		visibility: visible;
+	}
+
+	#hamburger_button i {
+		line-height: 64px;
+		height: 64px;
+	}
+
+	.nav-wrapper {
+		text-align: center;
+	}
+
+	#logo {
+		display: inline;
+		position: relative;
+		right: 40px;
+	}
+
+	#logo img {
+		padding: 12px 0 0 0;
+		width: 30px;
+	}
+
+	#nav-mobile {
+		top: 113px;
+		left: 350px;
+		/*width: 75%;*/
+	}
+
+	.page_title {
+		font-size: 12px;
+		padding: 0 0 0 0;
+	}
+
+	#logo_title {
+		font-size: 16px;
+		bottom: 0px;
+		display: none;
+	}
+	
+
+
+	/* All CSS properties related to anything belonging to the menu */
+	.extra_li {
+		font-size: 25px;
+		line-height: 120px;
+	}
+
+	#nav-mobile .menu_items {
+		line-height: 80px;
+		font-size: 10px;
+	}
+
+	#nav-mobile li {
+		background-color: white;
+	}
+
+	#nav-mobile .collapsible-header i {
+		font-size: 30px;
+		width: 1rem;
+	}
+
+	#nav-mobile .divider {
+		height: 5px;
+		background-color: #e0e0e0;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the latex page */
+	#latex {
+		font-size: 10px;
+	}	
+}

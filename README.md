@@ -1,3 +1,30 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Setting Up](#setting-up)
+- [Changing the Content](#changing-the-content)
+    - [Physical Files](#physical-files)
+    - [Changing the Database](#changing-the-database)
+- [Styling](#styling)
+- [Front-End Functionality](#front-end-functionality)
+- [Using the API](#using-the-api)
+    - [Getting All Objects of a Certain Type](#getting-all-objects-of-a-certain-type)
+    - [Getting Specific Object(s)](#getting-specific-objects)
+    - [Getting File Contents](#getting-file-contents)
+- [Running the Server](#running-the-server)
+    - [Apache Server](#apache-server)
+    - [NodeJS Server](#nodejs-server)
+- [Version History](#version-history)
+    - [v.0.0.4](#v004)
+    - [v.0.0.3](#v003)
+    - [v.0.0.2](#v002)
+    - [v.0.0.1](#v001)
+- [Future Plans](#future-plans)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 <p align=center>
  <img src="/client/logo_with_text.png">
 </p>
