@@ -16,18 +16,21 @@ $
 	Derivative Properties
 </div>
 <div class="latex_body">
-	Since the derivative is defined through a limit, it is also a linear operator:
+	Since the derivative is defined through a limit, it is also a linear operator satisfying:
 	<div class="latex_equation">
 		$\eqalign{
-			\frac{d}{dx} (\alpha f(x) + \beta g(x)) = \alpha\frac{d}{dx} f(x) + \beta\frac{d}{dx} g(x) \hspace{.3cm} \text{where} \hspace{.3cm} \alpha, \beta \in \mathbb{R}
+			\frac{d}{dx} (\alpha f(x) + \beta g(x)) = \alpha\frac{d}{dx} f(x) + \beta\frac{d}{dx} g(x)
 		}$
 	</div>
-	which can be seen by direct evaluation:
+	for some constants $\alpha$ and $\beta$ which can be seen by direct evaluation:
 	<div class="latex_equation">
 		$\eqalign{
-			\frac{d}{dx} (\alpha f(x) + \beta g(x)) &= \lim_{h \rightarrow 0} \frac{(\alpha f(x + h) + \beta g(x + h)) - (\alpha f(x) + \beta g(x))}{h} \\
-			&= \lim_{h \rightarrow 0} \frac{\alpha(f(x + h) - f(x)) + \beta(g(x + h) - g(x))}{h} \\
-			&= \alpha \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} + \beta \lim_{h \rightarrow 0} \frac{g(x + h) - g(x)}{h} \\
+			\frac{d}{dx} (\alpha f(x) + \beta g(x)) &= \lim_{h \rightarrow 0} \frac{1}{h} \Bigg[ (\alpha f(x + h) + \beta g(x + h)) \\
+			& \hspace{.4cm} - (\alpha f(x) + \beta g(x)) \Bigg] \\
+			&= \lim_{h \rightarrow 0} \frac{1}{h} \Bigg[ \alpha(f(x + h) - f(x)) \\
+			& \hspace{.4cm} + \beta(g(x + h) - g(x)) \Bigg] \\
+			&= \alpha \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} \\
+			& \hspace{.4cm} + \beta \lim_{h \rightarrow 0} \frac{g(x + h) - g(x)}{h} \\
 			&= \alpha\frac{d}{dx} f(x) + \beta\frac{d}{dx} g(x)
 		}$
 	</div>

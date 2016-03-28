@@ -21,7 +21,7 @@
 	Use this information to determine the non-homogeneous solution to:
 	<div class="latex_equation">
 		$\eqalign{
-			w'' + k_1w' + k_2w = a_1f_1(x) + a_2f_2(x) + a_3f_3(x) + \dots + a_nf_n(x)
+			w'' + k_1w' + k_2w = a_1f_1(x) + a_2f_2(x) + \dots + a_nf_n(x)
 		}$
 	</div>
 	where:
@@ -48,7 +48,7 @@
 			and plugging in gives:
 			<div class="latex_equation">
 				$\eqalign{
-					a_1f_1(x) + a_2f_2(x) + a_3f_3(x) + \dots + a_nf_n(x) &= w_{nh}'' + k_1w_{nh}' + k_2w_{nh} \\
+					\sum_{i = 1}^n a_if_i(x) &= w_{nh}'' + k_1w_{nh}' + k_2w_{nh} \\
 					\sum_{i = 1}^n a_if_i(x) &= \sum_{l = 1}^n a_lj_l'' + k_1\sum_{l = 1}^n a_lj_l' + k_2\sum_{l = 1}^n a_lj_l \\
 					\sum_{i = 1}^n a_if_i(x) &= \sum_{l = 1}^n a_l(j_l'' + k_1j_l' + k_2j_l) \\
 					\sum_{i = 1}^n a_if_i(x) &= \sum_{l = 1}^n a_lf_l(x) \\

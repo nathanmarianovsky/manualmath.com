@@ -46,7 +46,7 @@
 	Given a non-homogeneous linear second order differential equation in the form:
 	<div class="latex_equation">
 		$\eqalign{
-			k_1(x) + k_2(x) + k_3(x) + \dots + k_n(x) = y'' + f(x)y' + g(x)y
+			k_1(x) + k_2(x) + \dots + k_n(x) = y'' + f(x)y' + g(x)y
 		}$
 	</div>
 	and the solutions that satisfy:
@@ -75,9 +75,10 @@
 	To distinguish from the homogeneous solution, $nh$ stands for the non-homogeneous solution. To prove that this works just plug into the original differential equation to confirm that it satisfies as a solution:
 	<div class="latex_equation">
 		$\eqalign{
-			k_1(x) + k_2(x) + k_3(x) + \dots + k_n(x) &= y'' + f(x)y' + g(x)y \\
+			\sum_{i = 1}^n k_i(x) &= y'' + f(x)y' + g(x)y \\
 			\sum_{i = 1}^n k_i(x) &= (y_h + y_{nh})'' + f(x)(y_h + y_{nh})' + g(x)(y_h + y_{nh}) \\
-			\sum_{i = 1}^n k_i(x) &= (y_h'' + f(x)y_h' + g(x)y_h) + (y_{nh}'' + f(x)y_{nh}' + g(x)y_{nh}) \\
+			\sum_{i = 1}^n k_i(x) &= (y_h'' + f(x)y_h' + g(x)y_h) \\
+			& \hspace{.4cm} + (y_{nh}'' + f(x)y_{nh}' + g(x)y_{nh}) \\
 			\sum_{i = 1}^n k_i(x) &= 0 + \sum_{l = 1}^n (j_l'' + f(x)j_l' + g(x)j_l) \\
 			\sum_{i = 1}^n k_i(x) &= \sum_{l = 1}^n k_l(x) \\
 			0 &= 0

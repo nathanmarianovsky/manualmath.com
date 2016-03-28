@@ -77,7 +77,8 @@
 	<div class="latex_equation">
 		$\eqalign{
 			0 &= y_2'' + ay_2' + by_2 \\
-			0 &= (v''e^{mx} + 2mv'e^{mx} + m^2ve^{mx}) + a(v'e^{mx} + mve^{mx}) + bve^{mx} \\
+			0 &= (v''e^{mx} + 2mv'e^{mx} + m^2ve^{mx}) \\
+			& \hspace{.4cm} + a(v'e^{mx} + mve^{mx}) + bve^{mx} \\
 			0 &= e^{mx}\Big[ v'' + v'(2m + a) + v(y_1'' + ay_1' + by_1) \Big] \\
 			0 &= v'' + v'(2m + a)
 		}$
@@ -160,7 +161,8 @@
 			y(x) &= c_1e^{m_1x} + c_2e^{m_2x} \\
 			&= c_1e^{(\alpha + \beta i)x} + c_2e^{(\alpha - \beta i)x} \\
 			&= e^{\alpha x} (c_1e^{i(\beta x)} + c_2e^{i(-\beta x)}) \\
-			&= e^{\alpha x} \Big[ c_1(\cos(\beta x) + i\sin(\beta x)) + c_2(\cos(-\beta x) + i\sin(-\beta x)) \Big] \\
+			&= e^{\alpha x} \Big[ c_1(\cos(\beta x) + i\sin(\beta x))\\
+			& \hspace{.4cm} + c_2(\cos(-\beta x) + i\sin(-\beta x)) \Big] \\
 			&= e^{\alpha x} \Big[ (c_1 + c_2)\cos(\beta x) + (c_1i - c_2i)\sin(\beta x) \Big] \\
 			&= e^{\alpha x} \Big[ k_1\cos(\beta x) + k_2\sin(\beta x) \Big] \\
 		}$

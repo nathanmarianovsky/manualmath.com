@@ -5,7 +5,7 @@
 	Prove that the annihilator operator for:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) = \sum_{i \in S} a_ie^{ix} \hspace{.5cm} \text{where} \hspace{.5cm} a_1,a_2,\dots,a_n \in \mathbb{R} \hspace{.5cm} \text{and} \hspace{.5cm} S \subset \mathbb{R}
+			f(x) = \sum_{i = 1}^n a_ie^{ix} \hspace{.5cm} \text{where} \hspace{.5cm} a_1,a_2,\dots,a_n \in \mathbb{R}
 		}$
 	</div>
 	is given by:
@@ -39,9 +39,10 @@
 			<div class="latex_equation">
 				$\eqalign{
 					A(D)f(x) &= \Bigg[ \prod_{i \in S} (D - i) \Bigg] \Bigg[ \sum_{i \in S} a_ie^{ix} \Bigg] \\
-					&= \Bigg[ \prod_{i \in S} (D - i) \Bigg] (a_{i_0}e^{i_0x} + a_{i_1}e^{i_1x} + a_{i_2}e^{i_2x} + \dots + a_{i_n}e^{i_nx}) \\
-					&= \Bigg[ \prod_{i \in S \setminus \{i_0\}} (D - i) \Bigg] (D - i_0)(a_{i_0}e^{i_0x}) + \Bigg[ \prod_{i \in S \setminus \{i_1\}} (D - i) \Bigg] (D - i_1)(a_{i_1}e^{i_1x}) \\
-					& + \dots + \Bigg[ \prod_{i \in S \setminus \{i_n\}} (D - i) \Bigg] (D - i_n)(a_{i_n}e^{i_nx}) \\
+					&= \Bigg[ \prod_{i \in S} (D - i) \Bigg] (a_{i_0}e^{i_0x} + a_{i_1}e^{i_1x} + \dots + a_{i_n}e^{i_nx}) \\
+					&= \Bigg[ \prod_{i \in S \setminus \{i_0\}} (D - i) \Bigg] (D - i_0)(a_{i_0}e^{i_0x}) \\
+					& \hspace{.4cm} + \Bigg[ \prod_{i \in S \setminus \{i_1\}} (D - i) \Bigg] (D - i_1)(a_{i_1}e^{i_1x}) \\
+					& \hspace{.4cm} + \dots + \Bigg[ \prod_{i \in S \setminus \{i_n\}} (D - i) \Bigg] (D - i_n)(a_{i_n}e^{i_nx}) \\
 					&= \sum_{k \in S} \Bigg[ \prod_{i \in S \setminus \{i_k\}} (D - i) \Bigg] (D - i_k)(a_{i_k}e^{i_kx}) \\
 					&= \sum_{k \in S} \Bigg[ \prod_{i \in S \setminus \{i_k\}} (D - i) \Bigg] (0) \\
 					&= 0

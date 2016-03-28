@@ -39,8 +39,11 @@
 	is the differential equation operator. In this sense we can write that the differential equation is homogeneous iff the differential equation operator acting on our function equates to zero, otherwise it is non-homogeneous. As a last remark consider the behavior of the differential equation operator:
 	<div class="latex_equation">
 		$\eqalign{
-			L(D)(c_1y_1 + c_2y_2) &= D^2(c_1y_1 + c_2y_2) + p(x)D(c_1y_1 + c_2y_2) + q(x)(c_1y_1 + c_2y_2) \\
-			&= c_1(D^2y_1 + p(x)Dy_1 + q(x)y_1) + c_2(D^2y_2 + p(x)Dy_2 + q(x)y_2) \\
+			L(D)(c_1y_1 + c_2y_2) &= D^2(c_1y_1 + c_2y_2) \\
+			& \hspace{.4cm} + p(x)D(c_1y_1 + c_2y_2) \\
+			& \hspace{.4cm} + q(x)(c_1y_1 + c_2y_2) \\
+			&= c_1(D^2y_1 + p(x)Dy_1 + q(x)y_1) \\
+			& \hspace{.4cm} + c_2(D^2y_2 + p(x)Dy_2 + q(x)y_2) \\
 			&= c_1L(D)y_1 + c_2L(D)y_2 \\
 		}$
 	</div>
@@ -89,8 +92,8 @@
 	and apply our differential equation operator to both sides:
 	<div class="latex_equation">
 		$\eqalign{
-			L(D)y &= L(D)(c_1y_1 + c_2y_2 + c_3y_3 + \dots + c_ny_n) \\
-			f(x) &= c_1L(D)y_1 + c_2L(D)y_2 + c_3L(D)y_3 + \dots + c_nL(D)y_n \\
+			L(D)y &= L(D)(c_1y_1 + c_2y_2 + \dots + c_ny_n) \\
+			f(x) &= c_1L(D)y_1 + c_2L(D)y_2 + \dots + c_nL(D)y_n \\
 			f(x) &= c_3L(D)y_3 + c_4L(D)y_4 + \dots + c_nL(D)y_n
 		}$
 	</div>
