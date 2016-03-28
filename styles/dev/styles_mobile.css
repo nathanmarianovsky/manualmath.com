@@ -15,7 +15,7 @@
 
 	#second_top_nav {
 		display: inline;
-		top:56px;
+		top:55px;
 	}
 
 	#desktop_title {
@@ -23,13 +23,14 @@
 	}
 
 	#hamburger_button {
-		left: 20px;
+		left: 5px;
 		display: inline;
 		visibility: visible;
+		bottom: 23px;
 	}
 
 	#hamburger_button i {
-		line-height: 64px;
+		line-height: 100px;
 		height: 64px;
 	}
 
@@ -40,7 +41,8 @@
 	#logo {
 		display: inline;
 		position: relative;
-		right: 40px;
+		/*left: 60px;*/
+		bottom: 2px;
 	}
 
 	#logo img {
@@ -49,7 +51,7 @@
 	}
 
 	#nav-mobile {
-		top: 113px;
+		top: 57px;
 		left: 350px;
 		/*width: 75%;*/
 	}
@@ -63,6 +65,18 @@
 		font-size: 16px;
 		bottom: 0px;
 		display: none;
+	}
+
+
+
+	#main_message {
+		margin: -110px auto -80px auto;
+		/*width: 80%;
+		font-size: 15px;*/
+	}
+
+	#open_source {
+		padding-left: 4px;
 	}
 	
 
@@ -97,5 +111,114 @@
 	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
 		font-size: 10px;
+		margin: -70px auto 50px auto;
 	}	
+}
+
+/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+@media only screen and (max-width: 399px) {
+	.page_title {
+		font-size: 14px;
+	}
+
+	#nav-mobile li a {
+		margin: 0px 0.1rem;
+	}
+
+	#nav-mobile .collapsible-header i {
+		font-size: 20px;
+		width: 0rem;
+	}
+
+	#nav-mobile .menu_items {
+		line-height: 60px;
+		font-size: 10px;
+	}
+
+	#latex {
+		font-size: 15px;
+	}
+
+	.latex_equation {
+		font-size: 9px;
+	}
+
+	.latex_equation table {
+		width: 30%;
+		font-size: 6px;
+	}
+}
+
+/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+@media only screen and (min-width : 400px) and (max-width: 549px) {
+	.page_title {
+		font-size: 13px;
+	}
+
+	#nav-mobile .collapsible-header i {
+		font-size: 20px;
+		width: 0rem;
+	}
+
+	#nav-mobile .menu_items {
+		line-height: 80px;
+		font-size: 12px;
+	}
+
+	#latex {
+		font-size: 20px;
+	}
+
+	.latex_equation {
+		font-size: 11px;
+	}
+
+	.latex_equation table {
+		font-size: 7px;
+	}
+}
+
+/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+@media only screen and (min-width : 550px) and (max-width: 749px) {
+	.page_title {
+		font-size: 18px;
+	}
+
+	#nav-mobile .collapsible-header i {
+		font-size: 30px;
+		width: 1rem;
+	}
+
+	#nav-mobile .menu_items {
+		line-height: 80px;
+		font-size: 15px;
+	}
+
+	#latex {
+		font-size: 20px;
+	}
+
+	.latex_equation {
+		font-size: 12px;
+	}
+}
+
+/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+@media only screen and (min-width : 750px) and (max-width: 991px) {
+	.page_title {
+		font-size: 20px;
+	}
+
+	#nav-mobile .menu_items {
+		line-height: 120px;
+		font-size: 25px;
+	}
+
+	#latex {
+		font-size: 25px;
+	}
+
+	.latex_equation {
+		font-size: 20px;
+	}
 }

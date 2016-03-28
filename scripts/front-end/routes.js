@@ -34,6 +34,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				});
 			});
 			functions.handle_logo_link("about");
+			functions.handle_logo();
 			links.handle_links(router, subjects, topics, sections, examples);
 		});
 
@@ -55,6 +56,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			});
 			$("#about_li").addClass("active");
 			functions.handle_logo_link("subject");
+			functions.handle_logo();
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 		});
@@ -68,7 +70,12 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			})[0];
 			navs.section_side_nav(topic, subject);
 			$("main").empty();
-			$(".page_title").text(subject.clean_name + " - " + topic.clean_name);
+			if(window.innerWidth < 992) {
+				$(".page_title").text(topic.clean_name);
+			}
+			else {
+				$(".page_title").text(subject.clean_name + " - " + topic.clean_name);
+			}
 			$("title").text(subject.clean_name + " - " + topic.clean_name);
 			$("main").append($("<div>").attr("id", "topic_page"));
 			$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(content => {
@@ -77,12 +84,13 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			});
 			$("#about_li").addClass("active");
 			functions.handle_logo_link("subject.topic");
+			functions.handle_logo();
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 		});
 
 		router.addRouteListener("subject.topic.section.current_page", (toState, fromState) => {
-			if(window.innerWidth < 992) {
+			if(functions.width_func() < 992) {
 				$(".button-collapse").sideNav("hide");
 			}
 			var subject = subjects.filter(iter => {
@@ -110,7 +118,12 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			}
 
 			$("#nav-mobile").find("li").removeClass("active");
-			$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
+			if(window.innerWidth < 992) {
+				$(".page_title").text(section.clean_name);
+			}
+			else {
+				$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
+			}
 			$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 			$("main").append($("<div>").attr("id", "latex"));
 
@@ -134,6 +147,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				});
 			}
 			functions.handle_logo_link("subject.topic.section.current_page");
+			functions.handle_logo();
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 
@@ -141,27 +155,27 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 
 
 
-			$(document).keydown(event => {
-				if(event.which == 37) {
-					event.preventDefault();
-					event.stopPropagation();
-					// console.log(example);
+			// $(document).keydown(event => {
+			// 	if(event.which == 37) {
+			// 		event.preventDefault();
+			// 		event.stopPropagation();
+			// 		// console.log(example);
 
-					if(section.section_name != toState.params.current_page_name) {
-						console.log(example);
-						if(example.order == 1) {
-							router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
-						}
-						else {
-							var next_example = section.examples.filter(iter => {
-								return iter.order == example.order - 1;
-							})[0];
-							router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: next_example.ename});
-						}
-					}
-				}
-				// event.stopPropagation();
-			});
+			// 		if(section.section_name != toState.params.current_page_name) {
+			// 			console.log(example);
+			// 			if(example.order == 1) {
+			// 				router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
+			// 			}
+			// 			else {
+			// 				var next_example = section.examples.filter(iter => {
+			// 					return iter.order == example.order - 1;
+			// 				})[0];
+			// 				router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: next_example.ename});
+			// 			}
+			// 		}
+			// 	}
+			// 	// event.stopPropagation();
+			// });
 
 
 

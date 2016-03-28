@@ -10,11 +10,12 @@ define(function() {
 	exports.extra = () => {
 		$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
 		if(window.innerWidth < 992) {
-			$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+			// $(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+			// $(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
 		}
-		if(window.innerWidth < 600) {
-			$(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
-		}
+		// if(window.innerWidth < 600) {
+			// $(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
+		// }
 		$(".extra_li").append($("<a>").text(""));
 	};
 

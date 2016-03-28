@@ -178,37 +178,40 @@ define(function() {
 	/*
 
 	Purpose:
+	Returns the screen width.
+
+	*/
+	exports.width_func = () => { return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0; }
+
+	/*
+
+	Purpose:
 	Handles the side nav for different screens.
 
 	*/
 	exports.handle_side_nav = function() {
-		var width = 0;
-		if(window.innerWidth >= 992) { width = 350; }
-		else if(window.innerWidth < 992 && window.innerWidth >= 600) { 
-			width = window.innerWidth * .75;
-		}
-		else {
-			width = window.innerWidth;
-		}
+		var width = 0,
+			screen_width = exports.width_func();
+
+		if(screen_width >= 992) { width = 350; }
+		else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
+		else { width = screen_width * .72; }
 		$(".button-collapse").sideNav({
 			menuWidth: width,
 			closeOnClick: true
 		});
-		if(window.innerWidth < 992) {
-			$(".button-collapse").sideNav("hide");
-		}
-		// $(window).resize(function() {
-		// 	if(window.innerWidth < 992) {
-		// 		var new_width = .75 * $(this).width();
-		// 		$(".button-collapse").sideNav({
-		// 			menuWidth: new_width
-		// 		});
-		// 		$(".drag-target").css({
-		// 			"display": "none",
-		// 			"visibility": "hidden"
-		// 		});
-		// 	}
-		// });
+		if(screen_width < 992) { $(".button-collapse").sideNav("hide"); }
+	};
+
+	/*
+
+	Purpose:
+	Moves the logo all the way to the right on a mobile view.
+
+	*/
+	exports.handle_logo = () => {
+		var width = exports.width_func();
+		$("#logo").css("left", (width/2) - ($("#mobile_title").width()/2) - 73);
 	};
 
 	/*
