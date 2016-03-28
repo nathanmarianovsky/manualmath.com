@@ -211,7 +211,7 @@ define(function() {
 	*/
 	exports.handle_logo = () => {
 		var width = exports.width_func();
-		$("#logo").css("left", (width/2) - ($("#mobile_title").width()/2) - 73);
+		$("#logo").css("left", (width / 2) - ($("#mobile_title").width() / 2) - 81);
 	};
 
 	/*
@@ -229,8 +229,9 @@ define(function() {
 			$("#latex .show_solution").click(function(defaultevent) {
 				defaultevent.preventDefault();
 				var id = $(this).attr("id").split("_")[2];
-				$(this).hide();
-				$("#hidden_div_" + id).show();
+				// $(this).hide();
+				$(this).val() == "Show Proof" ? $("#hidden_div_" + id).show() : $("#hidden_div_" + id).hide();
+				$(this).val() == "Show Proof" ? $(this).val("Hide Proof") : $(this).val("Show Proof");
 			});
 		}
 		else if(page == "examples") {
