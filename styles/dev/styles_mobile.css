@@ -32,6 +32,7 @@
 	#hamburger_button i {
 		line-height: 100px;
 		height: 64px;
+		font-size: 40px;
 	}
 
 	.nav-wrapper {
@@ -50,15 +51,11 @@
 		width: 30px;
 	}
 
-	#nav-mobile {
-		top: 57px;
-		left: 350px;
-		/*width: 75%;*/
-	}
-
 	.page_title {
 		font-size: 12px;
 		padding: 0 0 0 0;
+		line-height: inherit;
+		left: 50px;
 	}
 
 	#logo_title {
@@ -67,7 +64,9 @@
 		display: none;
 	}
 
-
+	#top_content {
+		/*padding: 0 40px 0 40px;*/
+	}
 
 	#main_message {
 		margin: -110px auto -80px auto;
@@ -75,9 +74,11 @@
 		font-size: 15px;*/
 	}
 
-	#open_source {
-		padding-left: 4px;
+	#mobile_title {
+		display: inline;
 	}
+
+	
 	
 
 
@@ -90,6 +91,7 @@
 	#nav-mobile .menu_items {
 		line-height: 80px;
 		font-size: 10px;
+		font-weight: 700;
 	}
 
 	#nav-mobile li {
@@ -112,13 +114,21 @@
 	#latex {
 		font-size: 10px;
 		margin: -70px auto 50px auto;
-	}	
+	}
+
+	.latex_section {
+		text-decoration: underline;
+	}
 }
 
 /* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
 @media only screen and (max-width: 399px) {
 	.page_title {
-		font-size: 14px;
+		font-size: 10px;
+	}
+
+	#nav-mobile {
+		top: 57px;
 	}
 
 	#nav-mobile li a {
@@ -132,11 +142,15 @@
 
 	#nav-mobile .menu_items {
 		line-height: 60px;
-		font-size: 10px;
+		font-size: 9px;
 	}
 
 	#latex {
 		font-size: 15px;
+	}
+
+	.latex_section {
+		font-size: 20px;
 	}
 
 	.latex_equation {
@@ -145,7 +159,7 @@
 
 	.latex_equation table {
 		width: 30%;
-		font-size: 6px;
+		font-size: 5px;
 	}
 }
 
@@ -153,6 +167,10 @@
 @media only screen and (min-width : 400px) and (max-width: 549px) {
 	.page_title {
 		font-size: 13px;
+	}
+
+	#nav-mobile {
+		top: 57px;
 	}
 
 	#nav-mobile .collapsible-header i {
@@ -166,6 +184,10 @@
 	}
 
 	#latex {
+		font-size: 20px;
+	}
+
+	.latex_section {
 		font-size: 20px;
 	}
 
@@ -184,6 +206,10 @@
 		font-size: 18px;
 	}
 
+	#nav-mobile {
+		top: 57px;
+	}
+
 	#nav-mobile .collapsible-header i {
 		font-size: 30px;
 		width: 1rem;
@@ -198,6 +224,10 @@
 		font-size: 20px;
 	}
 
+	.latex_section {
+		font-size: 20px;
+	}
+
 	.latex_equation {
 		font-size: 12px;
 	}
@@ -209,6 +239,10 @@
 		font-size: 20px;
 	}
 
+	#nav-mobile {
+		top: 64px;
+	}
+
 	#nav-mobile .menu_items {
 		line-height: 120px;
 		font-size: 25px;
@@ -218,7 +252,11 @@
 		font-size: 25px;
 	}
 
+	.latex_section {
+		font-size: 30px;
+	}
+
 	.latex_equation {
-		font-size: 20px;
+		font-size: 14px;
 	}
 }

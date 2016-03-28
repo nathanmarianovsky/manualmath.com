@@ -69,7 +69,8 @@ nav {
 }
 
 #mobile_title {
-	padding-left: 0;
+	padding-left: 40px;
+	display: none;
 }
 
 
@@ -88,6 +89,7 @@ nav {
 #nav-mobile .menu_items {
   	line-height: 64px;
   	font-size: 12px;
+  	font-weight: 700;
 }
 
 .extra_li {
@@ -126,6 +128,10 @@ nav {
 
 .box_text li {
 	margin: 0 0 0 30px;
+}
+
+#open_source {
+	padding-left: 4px;
 }
 
 
