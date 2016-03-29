@@ -64,6 +64,17 @@
 		display: none;
 	}
 
+	#mobile_logo_title {
+		font-size: 16px;
+		bottom: 0px;
+		color: #54FFA9;
+		font-family: "Roboto Mono";
+		position: relative;
+		margin-left: 10px;
+		padding-right: 70px;
+		display: inline;
+	}
+
 	#top_content {
 		/*padding: 0 40px 0 40px;*/
 	}
@@ -76,6 +87,26 @@
 
 	#mobile_title {
 		display: inline;
+	}
+
+	.breadcrumb.changed:before {
+	    content: "\E5CC";
+	    color: rgba(255,255,255,.7);
+	    vertical-align: top;
+	    display: inline-block;
+	    font-family: "Material Icons";
+	    font-weight: normal;
+	    font-style: normal;
+	    font-size: 25px;
+	    margin: 0 10px 0 8px;
+	    -webkit-font-smoothing: antialiased;
+	}
+
+	.default {
+	    top: 0;
+	}
+	.fixed {
+	    top: -200px;
 	}
 
 	

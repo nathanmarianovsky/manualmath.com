@@ -59,6 +59,10 @@ nav {
 	margin-left: 10px;
 }
 
+#mobile_logo_title {
+	display: none;
+}
+
 #hamburger_button {
 	display: none;
 	visibility: hidden;
@@ -173,6 +177,7 @@ nav {
 	border: 1px solid black;
 	margin: 0 auto 0 auto;
 	width: 50%;
+	font-size: 12px;
 }
 
 .latex_equation tr {
