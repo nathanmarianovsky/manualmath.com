@@ -22,7 +22,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 	exports.add_listeners = (router, subjects, topics, sections, examples) => {
 		router.addRouteListener("about", (toState, fromState) => {
 			navs.subject_side_nav(subjects);
-			$(".page_title").text("About");
+			$("#desktop_title").text("About");
 			$("title").text("About");
 			$("main").empty();
 			$("main").append($("<div>").attr("id", "about_page"));
@@ -44,7 +44,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			})[0];
 			navs.topic_side_nav(subject);
 			$("main").empty();
-			$(".page_title").text(subject.clean_name);
+			$("#desktop_title").text(subject.clean_name);
 			$("title").text(subject.clean_name);
 			$("main").append($("<div>").attr("id", "subject_page"));
 			$.get("/content/" + subject.sname + "/" + subject.sname + ".html").done(content => {
@@ -71,10 +71,10 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			navs.section_side_nav(topic, subject);
 			$("main").empty();
 			if(window.innerWidth < 992) {
-				$(".page_title").text(topic.clean_name);
+				$("#desktop_title").text(topic.clean_name);
 			}
 			else {
-				$(".page_title").text(subject.clean_name + " - " + topic.clean_name);
+				$("#desktop_title").text(subject.clean_name + " - " + topic.clean_name);
 			}
 			$("title").text(subject.clean_name + " - " + topic.clean_name);
 			$("main").append($("<div>").attr("id", "topic_page"));
@@ -119,10 +119,10 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 
 			$("#nav-mobile").find("li").removeClass("active");
 			if(window.innerWidth < 992) {
-				$(".page_title").text(section.clean_name);
+				$("#desktop_title").text(section.clean_name);
 			}
 			else {
-				$(".page_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
+				$("#desktop_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 			}
 			$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 			$("main").append($("<div>").attr("id", "latex"));
