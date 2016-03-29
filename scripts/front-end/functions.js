@@ -250,9 +250,26 @@ define(function() {
 
 	*/
 	exports.handle_orientation = () => {
-		console.log("orientation");
-		$(window).on("deviceorientation", event => {
-			exports.handle_logo();
+		$(window).on("deviceorientation", event => { exports.handle_logo(); });
+	};
+
+	exports.handle_scroll = () => {
+		$(window).scroll({ previousTop: 0 }, () => {
+		    var currentTop = $(window).scrollTop();
+		    // if(currentTop < this.previousTop) {
+		    //     // $(".sidebar em").text("Up"); /* optional for demo */
+		    //     // $(".header").show();
+		    //     // $(".navbar-fixed").show();
+		    //     $("#first_top_nav").addClass("fixed").removeClass("default");
+		    // } 
+		    // else {
+		    //     // $(".navbar-fixed").hide();
+		    //     $("#first_top_nav").removeClass("fixed").addClass("default");
+		    //     // $(".sidebar em").text("Down");
+		    //     // $(".header").hide();
+		    // }
+		    currentTop < this.previousTop ? $("#first_top_nav").addClass("fixed").removeClass("default") : $("#first_top_nav").removeClass("fixed").addClass("default");
+		    this.previousTop = currentTop;
 		});
 	};
 
