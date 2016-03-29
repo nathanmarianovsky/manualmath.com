@@ -211,7 +211,7 @@ define(function() {
 	*/
 	exports.handle_logo = () => {
 		var width = exports.width_func();
-		$("#logo").css("left", (width / 2) - ($("#mobile_title").width() / 2) - 81);
+		$("#logo").css("left", (width / 2) - ($("#mobile_title").width() / 2) - 154);
 	};
 
 	/*
@@ -241,6 +241,19 @@ define(function() {
 				$("#latex .hidden_div").show();
 			});
 		}
+	};
+
+	/*
+
+	Purpose:
+	Handles the mobile logo placement on an orientation change.
+
+	*/
+	exports.handle_orientation = () => {
+		console.log("orientation");
+		$(window).on("deviceorientation", event => {
+			exports.handle_logo();
+		});
 	};
 
 	return exports;
