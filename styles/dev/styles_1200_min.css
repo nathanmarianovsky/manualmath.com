@@ -1,7 +1,0 @@
-/* Styles for screens with minimum width of 992px */
-@media only screen and (min-width : 1200px) {
-	.drag-target {
-		display: none;
-		visibility: hidden;
-	}
-}
