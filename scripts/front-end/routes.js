@@ -21,7 +21,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 	*/
 	exports.add_listeners = (router, subjects, topics, sections, examples) => {
 		router.addRouteListener("about", (toState, fromState) => {
-			navs.subject_side_nav(subjects);
+			navs.driver("about", subjects);
 			$("#desktop_title").text("About");
 			$("title").text("About");
 			$("main").empty();
@@ -36,13 +36,15 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo_link("about");
 			functions.handle_logo();
 			links.handle_links(router, subjects, topics, sections, examples);
+			functions.handle_orientation("about", navs, subjects);
+			functions.handle_breadcrumbs("about");
 		});
 
 		router.addRouteListener("subject", (toState, fromState) => {
 			var subject = subjects.filter(iter => {
 				return iter.sname == toState.params.sname;
 			})[0];
-			navs.topic_side_nav(subject);
+			navs.driver("subject", subject);
 			$("main").empty();
 			$("#desktop_title").text(subject.clean_name);
 			$("title").text(subject.clean_name);
@@ -59,6 +61,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo();
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
+			functions.handle_scroll();
+			functions.handle_orientation("subject", navs, subject);
+			functions.handle_breadcrumbs("subject", subject);
 		});
 
 		router.addRouteListener("subject.topic", (toState, fromState) => {
@@ -68,14 +73,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				topic = subject.topics.filter(iter => {
 				return iter.tname == toState.params.tname;
 			})[0];
-			navs.section_side_nav(topic, subject);
+			navs.driver("topic", topic, subject);
 			$("main").empty();
-			if(window.innerWidth < 992) {
-				$("#desktop_title").text(topic.clean_name);
-			}
-			else {
-				$("#desktop_title").text(subject.clean_name + " - " + topic.clean_name);
-			}
+			$("#desktop_title").text(subject.clean_name + " - " + topic.clean_name);
 			$("title").text(subject.clean_name + " - " + topic.clean_name);
 			$("main").append($("<div>").attr("id", "topic_page"));
 			$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(content => {
@@ -87,6 +87,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo();
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
+			functions.handle_scroll();
+			functions.handle_orientation("topic", navs, topic, subject);
+			functions.handle_breadcrumbs("topic", subject, topic);
 		});
 
 		router.addRouteListener("subject.topic.section.current_page", (toState, fromState) => {
@@ -103,30 +106,11 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				return iter.section_name == toState.params.section_name;
 			})[0];
 			$("main").empty();
-			$(".side-nav li").each(function() {
-				if(typeof $(this).attr("id") !== typeof undefined && $(this).attr("id") !== false) {
-					if($(this).attr("id").split("_")[0] == "topic") {
-						navs.example_side_nav(section, topic);
-					}  
-				}
-			});
-			if($(".side-nav").is(":empty")) {
-				navs.example_side_nav(section, topic);
-			}
-			if($("#section_name" + section.section_id).hasClass("active")) {
-				$("#section_name" + section.section_id).removeClass("active");
-			}
-
+			navs.driver("section", section, topic);
 			$("#nav-mobile").find("li").removeClass("active");
-			if(window.innerWidth < 992) {
-				$("#desktop_title").text(section.clean_name);
-			}
-			else {
-				$("#desktop_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
-			}
+			$("#desktop_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 			$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 			$("main").append($("<div>").attr("id", "latex"));
-
 			if(section.section_name == toState.params.current_page_name) {
 				$("#section_name" + section.section_id).addClass("active");
 				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(content => {
@@ -150,41 +134,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo();
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
-
-
-
-
-
-			// $(document).keydown(event => {
-			// 	if(event.which == 37) {
-			// 		event.preventDefault();
-			// 		event.stopPropagation();
-			// 		// console.log(example);
-
-			// 		if(section.section_name != toState.params.current_page_name) {
-			// 			console.log(example);
-			// 			if(example.order == 1) {
-			// 				router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
-			// 			}
-			// 			else {
-			// 				var next_example = section.examples.filter(iter => {
-			// 					return iter.order == example.order - 1;
-			// 				})[0];
-			// 				router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: next_example.ename});
-			// 			}
-			// 		}
-			// 	}
-			// 	// event.stopPropagation();
-			// });
-
-
-
-
-
-
-
-
-			
+			functions.handle_scroll();
+			functions.handle_orientation("section", navs, section, topic);
+			functions.handle_breadcrumbs("section", subject, topic, section);
 		});
 	};
 

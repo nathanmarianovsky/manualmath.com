@@ -20,8 +20,6 @@ define(["jquery", "materialize", "router5", "mathjax", "app/functions", "app/rou
 			routes.add_listeners(router, subjects, topics, sections, examples);
 			functions.handle_side_nav();
 			router.start();
-
-			// $(".drag-target").attr("id", "menu_drag").removeClass("drag-target");
 		});
 	});
 });
