@@ -1,4 +1,4 @@
-/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+/* Styles for all mobile screens */
 @media only screen and (max-width : 991px) {
 	/* Pushes the main content from the left and top */
 	main {
@@ -14,41 +14,10 @@
 	}
 
 	#second_top_nav {
-		display: inline;
 		top:55px;
-	}
-
-	#desktop_title {
-		display: none;
-	}
-
-	#hamburger_button {
-		left: 5px;
-		display: inline;
-		visibility: visible;
-		bottom: 23px;
-	}
-
-	#hamburger_button i {
-		line-height: 100px;
-		height: 64px;
-		font-size: 40px;
-	}
-
-	.nav-wrapper {
-		text-align: center;
-	}
-
-	#logo {
-		display: inline;
+		display: inline-block;
 		position: relative;
-		/*left: 60px;*/
-		bottom: 2px;
-	}
-
-	#logo img {
-		padding: 12px 0 0 0;
-		width: 30px;
+		margin-bottom: 40px;
 	}
 
 	.page_title {
@@ -58,6 +27,21 @@
 		left: 50px;
 	}
 
+	#desktop_title {
+		display: none;
+	}
+
+	#logo {
+		display: inline;
+		position: relative;
+		bottom: 2px;
+	}
+
+	#logo img {
+		width: 30px;
+		padding: 12px 0 0 0;
+	}
+
 	#logo_title {
 		font-size: 16px;
 		bottom: 0px;
@@ -65,6 +49,7 @@
 	}
 
 	#mobile_logo_title {
+		display: inline;
 		font-size: 16px;
 		bottom: 0px;
 		color: #54FFA9;
@@ -72,17 +57,19 @@
 		position: relative;
 		margin-left: 10px;
 		padding-right: 70px;
+	}
+
+	#hamburger_button {
 		display: inline;
+		visibility: visible;
+		left: 5px;
+		bottom: 23px;
 	}
 
-	#top_content {
-		/*padding: 0 40px 0 40px;*/
-	}
-
-	#main_message {
-		margin: -110px auto -80px auto;
-		/*width: 80%;
-		font-size: 15px;*/
+	#hamburger_button i {
+		font-size: 40px;
+		line-height: 100px;
+		height: 64px;
 	}
 
 	#mobile_title {
@@ -97,32 +84,20 @@
 	    font-family: "Material Icons";
 	    font-weight: normal;
 	    font-style: normal;
-	    font-size: 25px;
 	    margin: 0 10px 0 8px;
 	    -webkit-font-smoothing: antialiased;
 	}
 
-	.default {
-	    top: 0;
-	}
-	.fixed {
-	    top: -200px;
-	}
-
 	
-	
-
 
 	/* All CSS properties related to anything belonging to the menu */
-	.extra_li {
-		font-size: 25px;
-		line-height: 120px;
+	.nav-wrapper {
+		text-align: center;
 	}
 
 	#nav-mobile .menu_items {
 		line-height: 80px;
 		font-size: 10px;
-		font-weight: 700;
 	}
 
 	#nav-mobile li {
@@ -139,11 +114,30 @@
 		background-color: #e0e0e0;
 	}
 
+	.extra_li {
+		font-size: 25px;
+		line-height: 120px;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
+	.box_message {
+		margin: -20px auto 50px auto;
+	}
+
+	#about_page, #subject_page, #topic_page {
+		margin-top: 30px;
+	}
+
+	#main_message {
+		margin: -70px auto -80px auto;
+	}
+
 
 
 	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
-		font-size: 10px;
 		margin: -70px auto 50px auto;
 	}
 
@@ -152,32 +146,82 @@
 	}
 }
 
+
+
 /* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
-@media only screen and (max-width: 399px) {
+@media only screen and (min-width : 750px) and (max-width: 991px) {
+	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
-		font-size: 10px;
-	}
-
-	#nav-mobile {
-		top: 57px;
-	}
-
-	#nav-mobile li a {
-		margin: 0px 0.1rem;
-	}
-
-	#nav-mobile .collapsible-header i {
 		font-size: 20px;
-		width: 0rem;
+	}
+
+	#second_top_nav {
+	    font-size: 18px;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the menu */
+	#nav-mobile {
+		top: 119px;
 	}
 
 	#nav-mobile .menu_items {
-		line-height: 60px;
-		font-size: 9px;
+		line-height: 120px;
+		font-size: 25px;
 	}
 
+
+
+	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
+		font-size: 25px;
+	}
+
+	.latex_section {
+		font-size: 30px;
+	}
+
+	.latex_equation {
+		font-size: 14px;
+	}
+}
+
+
+
+/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+@media only screen and (min-width : 550px) and (max-width: 749px) {
+	/* All CSS properties related to anything belonging to the top nav(s) */
+	.page_title {
+		font-size: 18px;
+	}
+
+	#second_top_nav {
+	    font-size: 12px;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the menu */
+	#nav-mobile {
+		top: 112px;
+	}
+
+	#nav-mobile .collapsible-header i {
+		font-size: 30px;
+		width: 1rem;
+	}
+
+	#nav-mobile .menu_items {
+		line-height: 80px;
 		font-size: 15px;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the latex page */
+	#latex {
+		font-size: 20px;
 	}
 
 	.latex_section {
@@ -185,23 +229,28 @@
 	}
 
 	.latex_equation {
-		font-size: 9px;
-	}
-
-	.latex_equation table {
-		width: 30%;
-		font-size: 5px;
+		font-size: 12px;
 	}
 }
 
+
+
 /* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
 @media only screen and (min-width : 400px) and (max-width: 549px) {
+	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
 		font-size: 13px;
 	}
 
+	#second_top_nav {
+	    font-size: 12px;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the menu */
 	#nav-mobile {
-		top: 57px;
+		top: 112px;
 	}
 
 	#nav-mobile .collapsible-header i {
@@ -214,6 +263,9 @@
 		font-size: 12px;
 	}
 
+
+
+	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
 		font-size: 20px;
 	}
@@ -231,63 +283,56 @@
 	}
 }
 
+
+
 /* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
-@media only screen and (min-width : 550px) and (max-width: 749px) {
+@media only screen and (max-width: 399px) {
+	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
-		font-size: 18px;
+		font-size: 10px;
 	}
 
+	#second_top_nav {
+	    font-size: 12px;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the menu */
 	#nav-mobile {
-		top: 57px;
+		top: 112px;
+	}
+
+	#nav-mobile li a {
+		margin: 0px 0.1rem;
 	}
 
 	#nav-mobile .collapsible-header i {
-		font-size: 30px;
-		width: 1rem;
+		font-size: 20px;
+		width: 0rem;
 	}
 
 	#nav-mobile .menu_items {
-		line-height: 80px;
+		line-height: 60px;
+		font-size: 9px;
+	}
+
+
+
+	/* All CSS properties related to anything belonging to the latex page */
+	#latex {
 		font-size: 15px;
 	}
 
-	#latex {
-		font-size: 20px;
-	}
-
 	.latex_section {
 		font-size: 20px;
 	}
 
 	.latex_equation {
-		font-size: 12px;
-	}
-}
-
-/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
-@media only screen and (min-width : 750px) and (max-width: 991px) {
-	.page_title {
-		font-size: 20px;
+		font-size: 9px;
 	}
 
-	#nav-mobile {
-		top: 64px;
-	}
-
-	#nav-mobile .menu_items {
-		line-height: 120px;
-		font-size: 25px;
-	}
-
-	#latex {
-		font-size: 25px;
-	}
-
-	.latex_section {
-		font-size: 30px;
-	}
-
-	.latex_equation {
-		font-size: 14px;
+	.latex_equation table {
+		font-size: 5px;
 	}
 }

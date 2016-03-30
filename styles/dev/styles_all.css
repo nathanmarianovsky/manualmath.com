@@ -1,0 +1,217 @@
+/* Styles for all screens */
+body * {
+	max-height: 1000000em;
+}
+
+
+
+/* Pushes the main content from the left to give space to the menu */
+main {
+  	padding-left: 350px;
+}
+
+
+
+/* All CSS properties related to anything belonging to the top nav(s) */
+nav {
+	height: 64px;
+	line-height: 64px;
+}
+
+.top-nav {
+	background-color: #1163A9;
+}
+
+#first_top_nav {
+	top: 0px;
+	position: fixed;
+	z-index: 2;
+}
+
+#second_top_nav {
+	top: 60px;
+	display: none;
+	z-index: 1;
+}
+
+.page_title {
+	font-size: 16px;
+	padding-left: 140px;
+	line-height: 64px;
+	vertical-align: top;
+}
+
+#logo {
+	display: inline-block;
+	padding: 0 0 0 40px;
+	height: 70px;
+}
+
+#logo img {
+	width: 40px;
+	padding: 13px 0 0 10px;
+}
+
+#logo_title {
+	font-size: 25px;
+	bottom: 8px;
+	color: #54FFA9;
+	font-family: "Roboto Mono";
+	position: relative;
+	margin-left: 10px;
+}
+
+#mobile_logo_title {
+	display: none;
+}
+
+#hamburger_button {
+	display: none;
+	visibility: hidden;
+}
+
+#hamburger_button i {
+	font-size: 60px;
+}
+
+#mobile_title {
+	display: none;
+	padding-left: 40px;
+}
+
+
+
+/* All CSS properties related to anything belonging to the menu */
+#nav-mobile {
+	overflow-x: hidden;
+	top: 64px;
+	width: 350px;
+}
+
+
+#nav-mobile .menu_items {
+  	line-height: 64px;
+  	font-size: 12px;
+  	font-weight: 700;
+}
+
+.extra_li {
+	font-size: 12px;
+	line-height: 64px;
+	background-color: white;
+	pointer-events: none;
+}
+
+.drag-target {
+	width: 15px;
+}
+
+
+
+/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
+.box_message {
+	margin: 20px auto 50px auto;
+	width: 80%;
+	font-size: 15px;
+}
+
+.box_message h1 {
+	margin: 100px auto 150px auto;
+	font-size: 40px;
+}
+
+.box_message h2 {
+	font-size: 25px;
+}
+
+.box_text {
+	margin: 10px;
+}
+
+.box_text a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.box_text li {
+	margin: 0 0 0 30px;
+}
+
+#open_source {
+	padding-left: 4px;
+}
+
+#about_page, #subject_page, #topic_page {
+	margin-top: 100px;
+}
+
+#main_message {
+	margin-top: 150px;
+}
+
+
+
+/* All CSS properties related to anything belonging to the latex page */
+#latex {
+	color: black;
+	font-family: "Computer Modern Serif, sans-serif";
+	margin: 80px auto 50px auto;
+	font-size: 20px;
+	width: 70%;
+}
+
+#latex img {
+	width: 80%;
+	max-height: 650px;
+	max-width: 650px;
+}
+
+.latex_section {
+	position: relative;
+	text-align: center;
+	font-family: "Georgia";
+	font-size: 30px;
+	padding: 15px 0 15px 0;
+	margin-top: 30px;
+}
+
+.latex_equation {
+	position: relative;
+	text-align: center;
+	font-family: "Georgia";
+	padding: 20px 0 20px 0;
+	font-size: 15px;
+}
+
+.latex_equation table {
+	position: relative;
+	border: 1px solid black;
+	margin: 0 auto 0 auto;
+	width: 50%;
+	font-size: 12px;
+}
+
+.latex_equation tr {
+	position: relative;
+	border: 1px solid black;
+	margin: 0 auto 0 auto;
+}
+
+.latex_equation td {
+	position: relative;
+	border: 1px solid black;
+	margin: 0 auto 0 auto;
+	text-align: center;
+}
+
+.show_solution {
+	display: block;
+	position: relative;
+	text-align: center;
+	margin: 10px auto 20px auto;
+	font-size: 20px;
+}
+
+.hidden_div {
+	display: none;
+}
