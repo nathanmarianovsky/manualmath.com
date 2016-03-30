@@ -148,7 +148,7 @@
 
 
 
-/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+/* Styles for screens with minimum and maximum widths of 750px and 991px respectively */
 @media only screen and (min-width : 750px) and (max-width: 991px) {
 	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
@@ -189,7 +189,7 @@
 
 
 
-/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+/* Styles for screens with minimum and maximum widths of 550px and 749px respectively */
 @media only screen and (min-width : 550px) and (max-width: 749px) {
 	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
@@ -235,7 +235,7 @@
 
 
 
-/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+/* Styles for screens with minimum and maximum widths of 400px and 549px respectively */
 @media only screen and (min-width : 400px) and (max-width: 549px) {
 	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
@@ -285,7 +285,7 @@
 
 
 
-/* Styles for screens with minimum and maximum widths of 800px and 991px respectively */
+/* Styles for screens with a maximum widths of 399px */
 @media only screen and (max-width: 399px) {
 	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
