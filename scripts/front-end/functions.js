@@ -12,14 +12,8 @@ define(function() {
 		rhs: 
 			The right hand side object
 
-	Note:
-	If the left object has a smaller order, -1 is returned. Otherwise
-	1 is returned.
-
 	*/
-	exports.compare_object_order = (lhs, rhs) => {
-		return lhs.order < rhs.order ? -1 : 1;
-	};
+	exports.compare_object_order = (lhs, rhs) => { return lhs.order < rhs.order ? -1 : 1; };
 
 	/*
 
@@ -32,14 +26,12 @@ define(function() {
 
 	*/
 	exports.get_all = function() {
-		var urls = Array.prototype.slice.call(arguments);
-		var promises = urls.map(function(url) {
-			return $.get(url);
-		});
-		var def = $.Deferred();
+		var urls = Array.prototype.slice.call(arguments),
+			promises = urls.map(url => { return $.get(url); }),
+			def = $.Deferred();
 		$.when.apply($, promises).done(function() {
 			var responses = Array.prototype.slice.call(arguments);
-			def.resolve.apply(def, responses.map(function(res) { return res[0]; }));
+			def.resolve.apply(def, responses.map(res => { return res[0]; }));
 		});
 		return def.promise();
 	};
@@ -138,14 +130,7 @@ define(function() {
 			The name of the page currently set
 
 	*/
-	exports.handle_logo_link = page => {
-		if(page == "about") {
-			$("#logo").css("pointer-events", "none");
-		}
-		else {
-			$("#logo").css("pointer-events", "");
-		}
-	};
+	exports.handle_logo_link = page => { page == "about" ? $("#logo").css("pointer-events", "none") : $("#logo").css("pointer-events", ""); };
 
 	/*
 
@@ -162,12 +147,7 @@ define(function() {
 			else {
 				if($(this).css("background-color")) {
 					if(exports.rgba_to_hex($(this).css("background-color")) == "#4693ec") {
-						if(window.innerWidth < 992) {
-							$(this).css("background-color", "white");	
-						}
-						else {
-							$(this).css("background-color", "");
-						}
+						window.innerWidth < 992 ? $(this).css("background-color", "white") : $(this).css("background-color", "");
 						$(this).find("a").css("color", "#444");
 					}
 				}
@@ -181,7 +161,9 @@ define(function() {
 	Returns the screen width.
 
 	*/
-	exports.width_func = () => { return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0; }
+	exports.width_func = () => {
+		return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0;
+	}
 
 	/*
 
@@ -192,13 +174,12 @@ define(function() {
 	exports.handle_side_nav = function() {
 		var width = 0,
 			screen_width = exports.width_func();
-
 		if(screen_width >= 992) { width = 350; }
 		else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
 		else { width = screen_width * .72; }
 		$(".button-collapse").sideNav({
-			menuWidth: width,
-			closeOnClick: true
+			"menuWidth": width,
+			"closeOnClick": true
 		});
 		if(screen_width < 992) { $(".button-collapse").sideNav("hide"); }
 	};
@@ -210,8 +191,8 @@ define(function() {
 
 	*/
 	exports.handle_logo = () => {
-		var width = exports.width_func();
-		$("#logo").css("left", (width / 2) - ($("#mobile_title").width() / 2) - 154);
+		// var width = exports.width_func();
+		$("#logo").css("left", (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 154);
 	};
 
 	/*
@@ -249,28 +230,76 @@ define(function() {
 	Handles the mobile logo placement on an orientation change.
 
 	*/
-	exports.handle_orientation = () => {
-		$(window).on("deviceorientation", event => { exports.handle_logo(); });
+	exports.handle_orientation = (page, navs, param1, param2) => {
+		$(window).on("deviceorientation", event => { 
+			exports.handle_logo();
+		});
 	};
 
+	/*
+
+	Purpose:
+	Handles the side nav vertical placement for mobile views due to the presence of breadcrumbs.
+
+	*/
 	exports.handle_scroll = () => {
-		$(window).scroll({ previousTop: 0 }, () => {
-		    var currentTop = $(window).scrollTop();
-		    // if(currentTop < this.previousTop) {
-		    //     // $(".sidebar em").text("Up"); /* optional for demo */
-		    //     // $(".header").show();
-		    //     // $(".navbar-fixed").show();
-		    //     $("#first_top_nav").addClass("fixed").removeClass("default");
-		    // } 
-		    // else {
-		    //     // $(".navbar-fixed").hide();
-		    //     $("#first_top_nav").removeClass("fixed").addClass("default");
-		    //     // $(".sidebar em").text("Down");
-		    //     // $(".header").hide();
-		    // }
-		    currentTop < this.previousTop ? $("#first_top_nav").addClass("fixed").removeClass("default") : $("#first_top_nav").removeClass("fixed").addClass("default");
-		    this.previousTop = currentTop;
+		$(document).scroll(() => {
+			if(exports.width_func() < 992) {
+				if($(this).scrollTop() > $('#second_top_nav').position().top - 54) {
+					if(exports.width_func() >= 750) { $("#nav-mobile").css("top", "64px"); }
+					else { $("#nav-mobile").css("top", "56px");}
+				}
+				else {
+		    		if(exports.width_func() >= 750) { $("#nav-mobile").css("top", "119px"); }
+					else { $("#nav-mobile").css("top", "112px"); }
+				}
+			}
 		});
+	};
+
+	/*
+
+	Purpose:
+	Handles the generation of breadcrumbs.
+
+	Parameters:
+		page: 
+			The name of the page currently set
+		subject: 
+			An object representing the current subject
+		topic: 
+			An object representing the current topic
+		section: 
+			An object representing the current section
+
+	*/
+	exports.handle_breadcrumbs = (page, subject, topic, section) => {
+		if(exports.width_func() < 992) {
+			$("#second_top_nav .s1").empty();
+			$("#second_top_nav").show();
+			exports.width_func() >= 700 ? $("#nav-mobile").css("top", "119px") : $("#nav-mobile").css("top", "112px");
+			if(page == "about") {
+				$("#second_top_nav").hide();
+				exports.width_func() >= 700 ? $("#nav-mobile").css("top", "64px") : $("#nav-mobile").css("top", "56px");
+			}
+			else if(page == "subject") {
+				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+			}
+			else if(page == "topic") {
+				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
+				$(".breadcrumb:not(:first)").toggleClass("changed");
+			}
+			else if(page == "section") {
+				if(exports.width_func() >= 550) {
+					$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+				}
+				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
+				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(section.clean_name));
+				$(".breadcrumb:not(:first)").toggleClass("changed");
+			}
+			else { console.log("No such page exists: " + page); }
+		}
 	};
 
 	return exports;
