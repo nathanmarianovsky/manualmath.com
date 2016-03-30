@@ -14,8 +14,7 @@
 		<!-- CSS Style Sheets -->
 		<script>
 			var container = [],
-				// names = ["/styles/dist/styles-min.css", "/styles/dist/styles_0_min_599_max-min.css", "/styles/dist/styles_600_min_799_max-min.css", "/styles/dist/styles_800_min_991_max-min.css", "/styles/dist/styles_992_min_1199_max-min.css", "/styles/dist/styles_1200_min-min.css", "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css", "https://fonts.googleapis.com/icon?family=Material+Icons", "https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext"];
-				names = ["/styles/dist/styles-min.css", "/styles/dist/styles_mobile-min.css", "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css", "https://fonts.googleapis.com/icon?family=Material+Icons", "https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext"];
+				names = ["/styles/dist/styles_all-min.css", "/styles/dist/styles_mobile-min.css", "/styles/dist/styles_desktop-min.css", "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css", "https://fonts.googleapis.com/icon?family=Material+Icons", "https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext"];
 			names.forEach(sheet => {
 		      	var cb = function() {
 			        var l = document.createElement("link"); l.rel = "stylesheet";
@@ -53,28 +52,26 @@
 	<body>
 		<header>
 			<!-- Top Bar -->
-			<div class="navbar-fixed">
-				<nav class="top-nav" id="first_top_nav">
-				    <div class="nav-wrapper">
-					    <a href="#" id="hamburger_button" data-activates="nav-mobile" class="button-collapse">
-					      	<i class="mdi-navigation-menu"></i>
+			<nav class="top-nav" id="first_top_nav">
+			    <div class="nav-wrapper">
+				    <a href="#" id="hamburger_button" data-activates="nav-mobile" class="button-collapse">
+				      	<i class="mdi-navigation-menu"></i>
+				    </a>
+				    <div id="top_content">
+				    	<span class="page_title" id="mobile_logo_title">manual math</span>
+					    <a href="about.php" id="logo">
+					    	<img src="/client/logo.svg">
+					    	<span id="logo_title">manual math</span>
 					    </a>
-					    <div id="top_content">
-					    	<a class="page_title" id="mobile_title"></a>
-						    <a href="about.php" id="logo">
-						    	<img src="/client/logo.svg">
-						    	<span id="logo_title">manual math</span>
-						    </a>
-					   		<a class="page_title" id="desktop_title"></a>
-				    	</div>
-				    </div>
-				</nav>
-				<!-- <nav class="top-nav" id="second_top_nav">
-				    <div class="nav-wrapper">
-		    			<a class="page_title" id="mobile_title"></a>
-				    </div>
-				</nav> -->
-			</div>
+				   		<a class="page_title" id="desktop_title"></a>
+			    	</div>
+			    </div>
+			</nav>
+			<nav id="second_top_nav" class="top-nav">
+			    <div class="nav-wrapper">
+			      	<div class="col s1"></div>
+			    </div>
+			 </nav>
 			<!-- Side Menu -->
 			<ul id="nav-mobile" class="side-nav fixed"></ul>
 		</header>
