@@ -9,11 +9,11 @@ define(function() {
 	*/
 	exports.extra = () => {
 		$(".side-nav").append($("<li>").addClass("no-padding extra_li"));
-		// $(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
-		if(window.innerWidth < 992) {
+		$(".side-nav").append($("<li>").addClass("no-padding extra_li"));
+		// if(window.innerWidth < 992) {
 			// $(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
 			// $(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
-		}
+		// }
 		// if(window.innerWidth < 600) {
 			// $(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
 		// }
@@ -119,6 +119,38 @@ define(function() {
 			$("#examples_li" + example.eid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name));
 		});
 		exports.extra();
+	};
+
+	/*
+
+	Purpose:
+	Driver function to handle loading all side navs given the correct parameters.
+
+	Parameters:
+		param1:
+			An object representing "subjects", "subject", "topic", or "section"
+		param2: 
+			An object representing "subject" or "topic"
+
+	*/
+	exports.driver = (page, param1, param2) => {
+		if(page == "about") { exports.subject_side_nav(param1); }
+		else if(page == "subject") { exports.topic_side_nav(param1); }
+		else {
+			if(typeof param2 !== "undefined" && param2 !== null) {
+				if(page == "topic") { exports.section_side_nav(param1, param2); }
+				else if(page == "section") {
+					$(".side-nav li").each(function() {
+						if(typeof $(this).attr("id") !== typeof undefined && $(this).attr("id") !== false) {
+							if($(this).attr("id").split("_")[0] == "topic") {
+								exports.example_side_nav(param1, param2);
+							}
+						}
+					});
+					if($(".side-nav").is(":empty")) { exports.example_side_nav(param1, param2); }
+				}
+			}
+		}
 	};
 
 	return exports;
