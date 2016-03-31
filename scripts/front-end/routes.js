@@ -20,6 +20,26 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 
 	*/
 	exports.add_listeners = (router, subjects, topics, sections, examples) => {
+		router.addRouteListener("def", (toState, fromState) => {
+			navs.driver("about", subjects);
+			$("#desktop_title").text("About");
+			$("title").text("About");
+			$("main").empty();
+			$("main").append($("<div>").attr("id", "about_page"));
+			$.get("/client/dist/about-min.html").done(content => {
+				$("#about_page").append(content);
+				$.get("/client/dist/notation-min.html").done(notation => {
+					$("#notation_box").append(notation);
+					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+				});
+			});
+			functions.handle_logo_link("about");
+			functions.handle_logo();
+			links.handle_links(router, subjects, topics, sections, examples);
+			functions.handle_orientation("about", navs, subjects);
+			functions.handle_breadcrumbs("about");
+		});
+
 		router.addRouteListener("about", (toState, fromState) => {
 			navs.driver("about", subjects);
 			$("#desktop_title").text("About");

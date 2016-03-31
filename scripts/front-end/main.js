@@ -2,6 +2,7 @@ define(["jquery", "materialize", "router5", "mathjax", "app/functions", "app/rou
 	$(function() {
 
 		var router = new router5.Router5([
+			new router5.RouteNode("def", "/"),
 			new router5.RouteNode("about", "/client/about"),
 			new router5.RouteNode("subject", "/client/:sname", [
 				new router5.RouteNode("topic", "/:tname", [
