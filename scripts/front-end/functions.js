@@ -206,22 +206,27 @@ define(function() {
 
 	*/
 	exports.handle_button = page => {
-		if(page == "notes") {
+		// if(page == "notes") {
 			$("#latex .show_solution").click(function(defaultevent) {
 				defaultevent.preventDefault();
-				var id = $(this).attr("id").split("_")[2];
-				// $(this).hide();
-				$(this).val() == "Show Proof" ? $("#hidden_div_" + id).show() : $("#hidden_div_" + id).hide();
-				$(this).val() == "Show Proof" ? $(this).val("Hide Proof") : $(this).val("Show Proof");
+				if(page == "notes") {
+					var id = $(this).attr("id").split("_")[2];
+					$(this).val() == "Show Proof" ? $("#hidden_div_" + id).show() : $("#hidden_div_" + id).hide();
+					$(this).val() == "Show Proof" ? $(this).val("Hide Proof") : $(this).val("Show Proof");
+				}
+				else { 
+					$(this).val() == "Show Solution" ? $(".hidden_div").show() : $(".hidden_div").hide();
+					$(this).val() == "Show Solution" ? $(this).val("Hide Solution") : $(this).val("Show Solution");
+				}
 			});
-		}
-		else if(page == "examples") {
-			$("#latex .show_solution").click(function(defaultevent) {
-				defaultevent.preventDefault();
-				$("#latex .show_solution").hide();
-				$("#latex .hidden_div").show();
-			});
-		}
+		// }
+		// else if(page == "examples") {
+		// 	$("#latex .show_solution").click(function(defaultevent) {
+		// 		defaultevent.preventDefault();
+		// 		$("#latex .show_solution").hide();
+		// 		$("#latex .hidden_div").show();
+		// 	});
+		// }
 	};
 
 	/*
@@ -288,7 +293,6 @@ define(function() {
 			else if(page == "topic") {
 				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
 				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
-				$(".breadcrumb:not(:first)").toggleClass("changed");
 			}
 			else if(page == "section") {
 				if(exports.width_func() >= 550) {
@@ -296,9 +300,48 @@ define(function() {
 				}
 				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
 				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(section.clean_name));
-				$(".breadcrumb:not(:first)").toggleClass("changed");
 			}
 			else { console.log("No such page exists: " + page); }
+			$(".breadcrumb:not(:first)").toggleClass("changed");
+		}
+	};
+
+	/*
+
+	Purpose:
+	Handles the generation of breadcrumbs for the desktop title.
+
+	Parameters:
+		page: 
+			The name of the page currently set
+		subject: 
+			An object representing the current subject
+		topic: 
+			An object representing the current topic
+		section: 
+			An object representing the current section
+
+	*/
+	exports.handle_desktop_title = (page, subject, topic, section) => {
+		if(exports.width_func() >= 992) {
+			$("#desktop_title").empty();
+			if(page == "about") {
+				$("#desktop_title").append($("<a>").addClass("breadcrumb").text("About"));
+			}
+			else if(page == "subject") {
+				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+			}
+			else if(page == "topic") {
+				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
+			}
+			else if(page == "section") {
+				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(section.clean_name));
+			}
+			else { console.log("No such page exists: " + page); }
+			$(".breadcrumb:not(:first)").toggleClass("changed");	
 		}
 	};
 

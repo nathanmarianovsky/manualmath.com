@@ -28,6 +28,10 @@ nav {
 	z-index: 2;
 }
 
+#desktop_title {
+	display: inline-block;
+}
+
 #second_top_nav {
 	top: 60px;
 	display: none;
@@ -77,6 +81,18 @@ nav {
 #mobile_title {
 	display: none;
 	padding-left: 40px;
+}
+
+.breadcrumb.changed:before {
+    content: "\E5CC";
+    color: rgba(255,255,255,.7);
+    vertical-align: top;
+    display: inline-block;
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    margin: 0 10px 0 8px;
+    -webkit-font-smoothing: antialiased;
 }
 
 
@@ -214,4 +230,7 @@ nav {
 
 .hidden_div {
 	display: none;
+	background-color: #9CC2E8;
+    box-sizing: content-box;
+    padding: 30px;
 }

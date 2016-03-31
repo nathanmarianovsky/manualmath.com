@@ -22,7 +22,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 	exports.add_listeners = (router, subjects, topics, sections, examples) => {
 		router.addRouteListener("def", (toState, fromState) => {
 			navs.driver("about", subjects);
-			$("#desktop_title").text("About");
 			$("title").text("About");
 			$("main").empty();
 			$("main").append($("<div>").attr("id", "about_page"));
@@ -38,11 +37,11 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_orientation("about", navs, subjects);
 			functions.handle_breadcrumbs("about");
+			functions.handle_desktop_title("about");
 		});
 
 		router.addRouteListener("about", (toState, fromState) => {
 			navs.driver("about", subjects);
-			$("#desktop_title").text("About");
 			$("title").text("About");
 			$("main").empty();
 			$("main").append($("<div>").attr("id", "about_page"));
@@ -58,6 +57,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_orientation("about", navs, subjects);
 			functions.handle_breadcrumbs("about");
+			functions.handle_desktop_title("about");
 		});
 
 		router.addRouteListener("subject", (toState, fromState) => {
@@ -66,7 +66,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			})[0];
 			navs.driver("subject", subject);
 			$("main").empty();
-			$("#desktop_title").text(subject.clean_name);
 			$("title").text(subject.clean_name);
 			$("main").append($("<div>").attr("id", "subject_page"));
 			$.get("/content/" + subject.sname + "/" + subject.sname + ".html").done(content => {
@@ -84,6 +83,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_scroll();
 			functions.handle_orientation("subject", navs, subject);
 			functions.handle_breadcrumbs("subject", subject);
+			functions.handle_desktop_title("subject", subject);
 		});
 
 		router.addRouteListener("subject.topic", (toState, fromState) => {
@@ -95,7 +95,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			})[0];
 			navs.driver("topic", topic, subject);
 			$("main").empty();
-			$("#desktop_title").text(subject.clean_name + " - " + topic.clean_name);
 			$("title").text(subject.clean_name + " - " + topic.clean_name);
 			$("main").append($("<div>").attr("id", "topic_page"));
 			$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(content => {
@@ -110,6 +109,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_scroll();
 			functions.handle_orientation("topic", navs, topic, subject);
 			functions.handle_breadcrumbs("topic", subject, topic);
+			functions.handle_desktop_title("topic", subject, topic);
 		});
 
 		router.addRouteListener("subject.topic.section.current_page", (toState, fromState) => {
@@ -128,7 +128,6 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$("main").empty();
 			navs.driver("section", section, topic);
 			$("#nav-mobile").find("li").removeClass("active");
-			$("#desktop_title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 			$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 			$("main").append($("<div>").attr("id", "latex"));
 			if(section.section_name == toState.params.current_page_name) {
@@ -147,7 +146,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html").done(content => {
 					$("#latex").append(content);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
-					functions.handle_button("examples");
+					functions.handle_button("example");
 				});
 			}
 			functions.handle_logo_link("subject.topic.section.current_page");
@@ -157,6 +156,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_scroll();
 			functions.handle_orientation("section", navs, section, topic);
 			functions.handle_breadcrumbs("section", subject, topic, section);
+			functions.handle_desktop_title("section", subject, topic, section);
 		});
 	};
 
