@@ -22,7 +22,7 @@ define(function() {
 	exports.handle_links = (router, subjects, topics, sections, examples) => {
 		$("a").click(function(e) {
 			e.preventDefault();
-			if($(this).attr("id") == "about") {
+			if($(this).attr("id") == "about" || $(this).attr("href") == "about.html") {
 				router.navigate("about");
 			}
 			else {

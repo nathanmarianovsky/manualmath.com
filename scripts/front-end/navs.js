@@ -32,13 +32,19 @@ define(["app/functions"], function(functions) {
 
 	*/
 	exports.subject_side_nav = subjects => {
-		$(".side-nav").empty();
-		subjects.forEach(subject => {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid));
-			$("#subjects_li" + subject.sid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid).text(subject.clean_name));
-			$("#subjects_" + subject.sid).append($("<i>").addClass("material-icons right").text("arrow_forward"));
-			if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
+		var sidenav = $(".side-nav");
+
+		sidenav.empty();
+
+		var results = subjects.map(subject => {
+			var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid),
+				link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid).text(subject.clean_name);
+			link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+			return subjectli.append(link);
 		});
+
+		results.forEach(subject => { functions.is_mobile() ? sidenav.append(subject, $("<li>").addClass("divider")) : sidenav.append(subject); });
+
 		exports.extra();
 	};
 
@@ -54,15 +60,14 @@ define(["app/functions"], function(functions) {
 
 	*/
 	exports.topic_side_nav = subject => {
-		var subjectLi = $("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid),
-			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjectnav").text("All Subjects"),
-			arrow = $("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"),
-			sidenav = $(".side-nav");
+		var	sidenav = $(".side-nav"),
+			subjectLi = $("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid),
+			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjectnav").text("All Subjects");
 		
 		sidenav.empty();
 		sidenav.append(subjectLi);
 		subjectLi.append(link);
-		link.append(arrow);
+		link.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
 		sidenav.append($("<li>").addClass("divider"));
 
 		var results = subject.topics.map(topic => {
@@ -91,25 +96,33 @@ define(["app/functions"], function(functions) {
 
 	*/
 	exports.section_side_nav = (topic, subject) => {
-		$(".side-nav").empty();
+		var sidenav = $(".side-nav"),
+			aboutli = $("<li>").addClass("no-padding").attr("id", "about_li"),
+			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "about").text("About"),
+			topicli = $("<li>").addClass("no-padding").attr("id", "topic_li" + topic.tid),
+			topicnav = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topicnav_" + topic.tid).text(subject.clean_name);
+
+		sidenav.empty();
 
 		if(functions.is_mobile()) {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "about_li"));
-			$("#about_li").append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "about").text("About"));
-			$("#about").append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
-			$(".side-nav").append($("<li>").addClass("divider"));
+			link.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
+			aboutli.append(link);
+			sidenav.append(aboutli, $("<li>").addClass("divider"));
 		}
 
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topic_li" + topic.tid));
-		$("#topic_li" + topic.tid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "topicnav_" + topic.tid).text(subject.clean_name));
-		$("#topicnav_" + topic.tid).append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
-		$(".side-nav").append($("<li>").addClass("divider"));
-		topic.sections.forEach(section => {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id));
-			var sections_li = $("#sections_li" + section.section_id).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id).text(section.clean_name));
-			$("#sections_" + section.section_id).append($("<i>").addClass("material-icons right").text("arrow_forward"));
-			if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
+		topicnav.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
+		topicli.append(topicnav);
+		sidenav.append(topicli, $("<li>").addClass("divider"));
+
+		var results = topic.sections.map(section => {
+			var sectionli = $("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id);
+			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id).text(section.clean_name);
+			link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+			return sectionli.append(link);
 		});
+
+		results.forEach(section => { functions.is_mobile() ? sidenav.append(section, $("<li>").addClass("divider")) : sidenav.append(section); })
+
 		exports.extra();
 	};
 
@@ -127,27 +140,36 @@ define(["app/functions"], function(functions) {
 
 	*/
 	exports.example_side_nav = (section, topic) => {
-		$(".side-nav").empty();
-		
+		var sidenav = $(".side-nav"),
+			aboutli = $("<li>").addClass("no-padding").attr("id", "about_li"),
+			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "about").text("About"),
+			sectionli = $("<li>").addClass("no-padding").attr("id", "section_li" + section.section_id),
+			sectionnav = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionnav_" + section.section_id).text(topic.clean_name),
+			sectionname = $("<li>").addClass("no-padding").attr("id", "section_name" + section.section_id);
+
+		sidenav.empty();
+
 		if(functions.is_mobile()) {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "about_li"));
-			$("#about_li").append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "about").text("About"));
-			$("#about").append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
-			$(".side-nav").append($("<li>").addClass("divider"));
+			link.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
+			aboutli.append(link);
+			sidenav.append(aboutli, $("<li>").addClass("divider"));
 		}
 
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_li" + section.section_id));
-		$("#section_li" + section.section_id).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionnav_" + section.section_id).text(topic.clean_name));
-		$("#sectionnav_" + section.section_id).append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
-		$(".side-nav").append($("<li>").addClass("divider"));
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_name" + section.section_id));
-		$("#section_name" + section.section_id).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionname_" + section.section_id).text("Notes"));
-		if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
-		section.examples.forEach(example => {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid));
-			$("#examples_li" + example.eid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name));
-			if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
+		sectionnav.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
+		sectionli.append(sectionnav);
+		sidenav.append(sectionli, $("<li>").addClass("divider"));
+		link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionname_" + section.section_id).text("Notes");
+		sectionname.append(link);
+		functions.is_mobile() ? sidenav.append(sectionname, $("<li>").addClass("divider")) : sidenav.append(sectionname);
+		
+		var results = section.examples.map(example => {
+			var exampleli = $("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid);
+			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name);
+			return exampleli.append(link);
 		});
+
+		results.forEach(example => { functions.is_mobile() ? sidenav.append(example, $("<li>").addClass("divider")) : sidenav.append(example); })
+
 		exports.extra();
 	};
 
