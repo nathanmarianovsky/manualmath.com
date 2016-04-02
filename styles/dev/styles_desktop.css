@@ -6,3 +6,10 @@
 		visibility: hidden;
 	}
 }
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+	/* All CSS properties related to anything belonging to the top nav(s) */
+	.page_title {
+		font-size: 13px;
+	}
+}

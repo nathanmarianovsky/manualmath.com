@@ -111,6 +111,11 @@ nav {
   	font-weight: 700;
 }
 
+#nav-mobile .divider {
+	height: 5px;
+	background-color: #e0e0e0;
+}
+
 .extra_li {
 	font-size: 12px;
 	line-height: 64px;

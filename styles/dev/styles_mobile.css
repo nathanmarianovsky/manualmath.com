@@ -98,8 +98,7 @@
 	}
 
 	#nav-mobile .divider {
-		height: 5px;
-		background-color: #e0e0e0;
+		height: 2px;
 	}
 
 	.extra_li {
@@ -111,7 +110,7 @@
 
 	/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
 	.box_message {
-		margin: -20px auto 50px auto;
+		margin: 0px auto 50px auto;
 	}
 
 	#about_page, #subject_page, #topic_page {
@@ -126,7 +125,7 @@
 
 	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
-		margin: -70px auto 50px auto;
+		margin: 0px auto 50px auto;
 	}
 
 	.latex_section {
@@ -151,7 +150,7 @@
 
 	/* All CSS properties related to anything belonging to the menu */
 	#nav-mobile {
-		top: 119px;
+		top: 64px;
 	}
 
 	#nav-mobile .menu_items {
@@ -184,7 +183,7 @@
 		font-size: 18px;
 	}
 
-	#second_top_nav {
+	#top_content .s1 {
 	    font-size: 12px;
 	}
 
@@ -192,7 +191,7 @@
 
 	/* All CSS properties related to anything belonging to the menu */
 	#nav-mobile {
-		top: 112px;
+		top: 56px;
 	}
 
 	#nav-mobile .collapsible-header i {
@@ -230,15 +229,15 @@
 		font-size: 13px;
 	}
 
-	#second_top_nav {
-	    font-size: 12px;
+	#top_content .s1 {
+	    font-size: 10px;
 	}
 
 
 
 	/* All CSS properties related to anything belonging to the menu */
 	#nav-mobile {
-		top: 112px;
+		top: 56px;
 	}
 
 	#nav-mobile .collapsible-header i {
@@ -280,15 +279,15 @@
 		font-size: 10px;
 	}
 
-	#second_top_nav {
-	    font-size: 12px;
+	#top_content .s1 {
+	    font-size: 9px;
 	}
 
 
 
 	/* All CSS properties related to anything belonging to the menu */
 	#nav-mobile {
-		top: 112px;
+		top: 56px;
 	}
 
 	#nav-mobile li a {
