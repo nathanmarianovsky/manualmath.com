@@ -5,4 +5,4 @@ var fs = require("fs"),
 	minifier = require("./scripts/back-end/minifier");
 
 // Minifies all html files in /client, CSS filles in /styles/dev, and RequireJS
-minifier.minify_all_but_content(mkdirp, compressor, minify, fs);
+minifier.driver(mkdirp, compressor, minify, fs, {}, () => {});
