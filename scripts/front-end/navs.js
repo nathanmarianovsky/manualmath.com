@@ -54,17 +54,26 @@ define(["app/functions"], function(functions) {
 
 	*/
 	exports.topic_side_nav = subject => {
-		$(".side-nav").empty();
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid));
-		$("#subject_li" + subject.sid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjectnav").text("All Subjects"));
-		$("#subjectnav").append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
-		$(".side-nav").append($("<li>").addClass("divider"));
-		subject.topics.forEach(topic => {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid));
-			$("#topics_li" + topic.tid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid).text(topic.clean_name));
-			$("#topics_" + topic.tid).append($("<i>").addClass("material-icons right").text("arrow_forward"));
-			if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
+		var subjectLi = $("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid),
+			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjectnav").text("All Subjects"),
+			arrow = $("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"),
+			sidenav = $(".side-nav");
+		
+		sidenav.empty();
+		sidenav.append(subjectLi);
+		subjectLi.append(link);
+		link.append(arrow);
+		sidenav.append($("<li>").addClass("divider"));
+
+		var results = subject.topics.map(topic => {
+			var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid)
+			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid).text(topic.clean_name);
+			link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+			return topicli.append(link);
 		});
+
+		results.forEach(topic => { functions.is_mobile() ? sidenav.append(topic, $("<li>").addClass("divider")) : sidenav.append(topic); });
+
 		exports.extra();
 	};
 
@@ -133,6 +142,7 @@ define(["app/functions"], function(functions) {
 		$(".side-nav").append($("<li>").addClass("divider"));
 		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_name" + section.section_id));
 		$("#section_name" + section.section_id).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionname_" + section.section_id).text("Notes"));
+		if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
 		section.examples.forEach(example => {
 			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid));
 			$("#examples_li" + example.eid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name));

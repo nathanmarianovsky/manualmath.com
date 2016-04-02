@@ -39,7 +39,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo("about");
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_orientation("about", navs, subjects);
-			functions.handle_breadcrumbs("about");
+			// functions.handle_breadcrumbs("about");
 			functions.handle_desktop_title("about");
 		});
 
@@ -62,7 +62,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_logo("about");
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_orientation("about", navs, subjects);
-			functions.handle_breadcrumbs("about");
+			// functions.handle_breadcrumbs("about");
 			functions.handle_desktop_title("about");
 		});
 
