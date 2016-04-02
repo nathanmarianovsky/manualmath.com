@@ -196,6 +196,24 @@ nav {
 	margin-top: 30px;
 }
 
+.show_solution {
+	display: block;
+	position: relative;
+	text-align: center;
+	margin: 10px auto 20px auto;
+	font-size: 20px;
+}
+
+.hidden_div {
+	display: none;
+	background-color: #9CC2E8;
+    box-sizing: content-box;
+    padding: 30px;
+}
+
+
+
+/* All CSS properties belonging to all pages */
 .latex_equation {
 	position: relative;
 	text-align: center;
@@ -223,19 +241,4 @@ nav {
 	border: 1px solid black;
 	margin: 0 auto 0 auto;
 	text-align: center;
-}
-
-.show_solution {
-	display: block;
-	position: relative;
-	text-align: center;
-	margin: 10px auto 20px auto;
-	font-size: 20px;
-}
-
-.hidden_div {
-	display: none;
-	background-color: #9CC2E8;
-    box-sizing: content-box;
-    padding: 30px;
 }
