@@ -191,7 +191,6 @@ define(function() {
 
 	*/
 	exports.handle_logo = page => {
-		console.log(exports.is_mobile());
 		if(exports.is_mobile()) {
 			if(page == "about") {
 				$("#top_content .s1").css("display", "none");
@@ -296,12 +295,7 @@ define(function() {
 		if(exports.width_func() < 992) {
 			$("#top_content .s1").empty();
 			$("#top_content").show();
-			// exports.width_func() >= 700 ? $("#nav-mobile").css("top", "119px") : $("#nav-mobile").css("top", "112px");
-			if(page == "about") {
-				// $("#top_content").hide();
-				// exports.width_func() >= 700 ? $("#nav-mobile").css("top", "64px") : $("#nav-mobile").css("top", "56px");
-			}
-			else if(page == "subject") {
+			if(page == "subject") {
 				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
 			}
 			else if(page == "topic") {
@@ -366,20 +360,30 @@ define(function() {
 
 	*/
 	exports.is_mobile = () => {
-		if(/Mobi/.test(navigator.userAgent)) {
-		    // mobile!
-		    console.log("first");
-		    if(navigator.userAgent.match(/iPad/i) != null) {
-		    	// console.log("ipad -> not mobile");
-		    	console.log("second");
-		    	return true;
-		    }
-		    else {
-		    	// console.log("mobile");
-		    	console.log("third");
-		    	return true;
-			}
-		}
+	    if(
+	    	/Mobi/.test(navigator.userAgent) ||
+			navigator.userAgent.match(/Phone/i) ||
+			navigator.userAgent.match(/DROID/i) ||
+			navigator.userAgent.match(/Android/i) ||
+		    navigator.userAgent.match(/webOS/i) ||
+		    navigator.userAgent.match(/iPhone/i) ||
+		    navigator.userAgent.match(/iPod/i) ||
+		    navigator.userAgent.match(/BlackBerry/) || 
+		    navigator.userAgent.match(/Windows Phone/i) || 
+		    navigator.userAgent.match(/ZuneWP7/i) || 
+		    navigator.userAgent.match(/IEMobile/i) ||
+		    navigator.userAgent.match(/Tablet/i) ||
+		    navigator.userAgent.match(/iPad/i) ||
+		    navigator.userAgent.match(/Kindle/i) ||
+		    navigator.userAgent.match(/Playbook/i) ||
+		    navigator.userAgent.match(/Nexus/i) ||
+		    navigator.userAgent.match(/Xoom/i) ||
+		    navigator.userAgent.match(/SM-N900T/i) ||
+		    navigator.userAgent.match(/GT-N7100/i) ||
+		    navigator.userAgent.match(/SAMSUNG-SGH-I717/i) ||
+		    navigator.userAgent.match(/SM-T330NU/i)
+		) { return true; }
+	    else { return false; }
 	};
 
 	return exports;
