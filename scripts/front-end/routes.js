@@ -21,6 +21,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 	*/
 	exports.add_listeners = (router, subjects, topics, sections, examples) => {
 		router.addRouteListener("def", (toState, fromState) => {
+			if(functions.width_func() < 992) {
+				$(".button-collapse").sideNav("hide");
+			}
 			navs.driver("about", subjects);
 			$("title").text("About");
 			$("main").empty();
@@ -33,7 +36,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				});
 			});
 			functions.handle_logo_link("about");
-			functions.handle_logo();
+			functions.handle_logo("about");
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_orientation("about", navs, subjects);
 			functions.handle_breadcrumbs("about");
@@ -41,6 +44,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 		});
 
 		router.addRouteListener("about", (toState, fromState) => {
+			if(functions.width_func() < 992) {
+				$(".button-collapse").sideNav("hide");
+			}
 			navs.driver("about", subjects);
 			$("title").text("About");
 			$("main").empty();
@@ -53,7 +59,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				});
 			});
 			functions.handle_logo_link("about");
-			functions.handle_logo();
+			functions.handle_logo("about");
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_orientation("about", navs, subjects);
 			functions.handle_breadcrumbs("about");
@@ -61,6 +67,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 		});
 
 		router.addRouteListener("subject", (toState, fromState) => {
+			if(functions.is_mobile()) {
+				$(".button-collapse").sideNav("hide");
+			}
 			var subject = subjects.filter(iter => {
 				return iter.sname == toState.params.sname;
 			})[0];
@@ -75,9 +84,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 				});
 			});
-			$("#about_li").addClass("active");
+			// $("#about_li").addClass("active");
 			functions.handle_logo_link("subject");
-			functions.handle_logo();
+			functions.handle_logo("subject");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_scroll();
@@ -87,6 +96,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 		});
 
 		router.addRouteListener("subject.topic", (toState, fromState) => {
+			if(functions.is_mobile()) {
+				$(".button-collapse").sideNav("hide");
+			}
 			var subject = subjects.filter(iter => {
 				return iter.sname == toState.params.sname;
 			})[0],
@@ -101,9 +113,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				$("#topic_page").append(content);
 				MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			});
-			$("#about_li").addClass("active");
+			// $("#about_li").addClass("active");
 			functions.handle_logo_link("subject.topic");
-			functions.handle_logo();
+			functions.handle_logo("topic");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_scroll();
@@ -150,7 +162,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				});
 			}
 			functions.handle_logo_link("subject.topic.section.current_page");
-			functions.handle_logo();
+			functions.handle_logo("section");
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_scroll();

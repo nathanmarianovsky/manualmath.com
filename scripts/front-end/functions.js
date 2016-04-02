@@ -190,9 +190,23 @@ define(function() {
 	Moves the logo all the way to the right on a mobile view.
 
 	*/
-	exports.handle_logo = () => {
-		// var width = exports.width_func();
-		$("#logo").css("left", (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 154);
+	exports.handle_logo = page => {
+		console.log(exports.is_mobile());
+		if(exports.is_mobile()) {
+			if(page == "about") {
+				$("#top_content .s1").css("display", "none");
+				$("#mobile_logo_title").show();
+				$("#logo").css({
+					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 154,
+					"display": "inline-block"
+				});
+			}
+			else {
+				$("#top_content .s1").css("display", "block");
+				$("#mobile_logo_title").hide();
+				$("#logo").css("display", "none");
+			}
+		}
 	};
 
 	/*
@@ -237,7 +251,7 @@ define(function() {
 	*/
 	exports.handle_orientation = (page, navs, param1, param2) => {
 		$(window).on("deviceorientation", event => { 
-			exports.handle_logo();
+			// exports.handle_logo();
 		});
 	};
 
@@ -248,18 +262,18 @@ define(function() {
 
 	*/
 	exports.handle_scroll = () => {
-		$(document).scroll(() => {
-			if(exports.width_func() < 992) {
-				if($(this).scrollTop() > $('#second_top_nav').position().top - 54) {
-					if(exports.width_func() >= 750) { $("#nav-mobile").css("top", "64px"); }
-					else { $("#nav-mobile").css("top", "56px");}
-				}
-				else {
-		    		if(exports.width_func() >= 750) { $("#nav-mobile").css("top", "119px"); }
-					else { $("#nav-mobile").css("top", "112px"); }
-				}
-			}
-		});
+		// $(document).scroll(() => {
+		// 	if(exports.width_func() < 992) {
+		// 		if($(this).scrollTop() > $('#second_top_nav').position().top - 54) {
+		// 			if(exports.width_func() >= 750) { $("#nav-mobile").css("top", "64px"); }
+		// 			else { $("#nav-mobile").css("top", "56px");}
+		// 		}
+		// 		else {
+		//     		if(exports.width_func() >= 750) { $("#nav-mobile").css("top", "119px"); }
+		// 			else { $("#nav-mobile").css("top", "112px"); }
+		// 		}
+		// 	}
+		// });
 	};
 
 	/*
@@ -280,26 +294,26 @@ define(function() {
 	*/
 	exports.handle_breadcrumbs = (page, subject, topic, section) => {
 		if(exports.width_func() < 992) {
-			$("#second_top_nav .s1").empty();
-			$("#second_top_nav").show();
-			exports.width_func() >= 700 ? $("#nav-mobile").css("top", "119px") : $("#nav-mobile").css("top", "112px");
+			$("#top_content .s1").empty();
+			$("#top_content").show();
+			// exports.width_func() >= 700 ? $("#nav-mobile").css("top", "119px") : $("#nav-mobile").css("top", "112px");
 			if(page == "about") {
-				$("#second_top_nav").hide();
-				exports.width_func() >= 700 ? $("#nav-mobile").css("top", "64px") : $("#nav-mobile").css("top", "56px");
+				// $("#top_content").hide();
+				// exports.width_func() >= 700 ? $("#nav-mobile").css("top", "64px") : $("#nav-mobile").css("top", "56px");
 			}
 			else if(page == "subject") {
-				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
 			}
 			else if(page == "topic") {
-				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
-				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
+				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
 			}
 			else if(page == "section") {
 				if(exports.width_func() >= 550) {
-					$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+					$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
 				}
-				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
-				$("#second_top_nav .s1").append($("<a>").addClass("breadcrumb").text(section.clean_name));
+				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
+				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(section.clean_name));
 			}
 			else { console.log("No such page exists: " + page); }
 			$(".breadcrumb:not(:first)").toggleClass("changed");
@@ -342,6 +356,29 @@ define(function() {
 			}
 			else { console.log("No such page exists: " + page); }
 			$(".breadcrumb:not(:first)").toggleClass("changed");	
+		}
+	};
+
+	/*
+
+	Purpose:
+	Determines whether the current device is mobile or not.
+
+	*/
+	exports.is_mobile = () => {
+		if(/Mobi/.test(navigator.userAgent)) {
+		    // mobile!
+		    console.log("first");
+		    if(navigator.userAgent.match(/iPad/i) != null) {
+		    	// console.log("ipad -> not mobile");
+		    	console.log("second");
+		    	return true;
+		    }
+		    else {
+		    	// console.log("mobile");
+		    	console.log("third");
+		    	return true;
+			}
 		}
 	};
 

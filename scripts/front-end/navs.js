@@ -1,4 +1,4 @@
-define(function() {
+define(["app/functions"], function(functions) {
 	var exports = {};
 
 	/*
@@ -9,7 +9,7 @@ define(function() {
 	*/
 	exports.extra = () => {
 		$(".side-nav").append($("<li>").addClass("no-padding extra_li"));
-		$(".side-nav").append($("<li>").addClass("no-padding extra_li"));
+		// $(".side-nav").append($("<li>").addClass("no-padding extra_li"));
 		// if(window.innerWidth < 992) {
 			// $(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
 			// $(".side-nav").append($("<li>").addClass("no-padding extra_li").fadeIn("slow"));
@@ -34,9 +34,10 @@ define(function() {
 	exports.subject_side_nav = subjects => {
 		$(".side-nav").empty();
 		subjects.forEach(subject => {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid).fadeIn("slow"));
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid));
 			$("#subjects_li" + subject.sid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid).text(subject.clean_name));
 			$("#subjects_" + subject.sid).append($("<i>").addClass("material-icons right").text("arrow_forward"));
+			if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
 		});
 		exports.extra();
 	};
@@ -54,14 +55,15 @@ define(function() {
 	*/
 	exports.topic_side_nav = subject => {
 		$(".side-nav").empty();
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid).fadeIn("slow"));
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid));
 		$("#subject_li" + subject.sid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjectnav").text("All Subjects"));
-		$("#subjectnav").append($("<i>").addClass("material-icons right").text("arrow_backward"));
+		$("#subjectnav").append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
 		$(".side-nav").append($("<li>").addClass("divider"));
 		subject.topics.forEach(topic => {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid).fadeIn("slow"));
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid));
 			$("#topics_li" + topic.tid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid).text(topic.clean_name));
 			$("#topics_" + topic.tid).append($("<i>").addClass("material-icons right").text("arrow_forward"));
+			if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
 		});
 		exports.extra();
 	};
@@ -81,14 +83,23 @@ define(function() {
 	*/
 	exports.section_side_nav = (topic, subject) => {
 		$(".side-nav").empty();
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topic_li" + topic.tid).fadeIn("slow"));
+
+		if(functions.is_mobile()) {
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "about_li"));
+			$("#about_li").append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "about").text("About"));
+			$("#about").append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
+			$(".side-nav").append($("<li>").addClass("divider"));
+		}
+
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "topic_li" + topic.tid));
 		$("#topic_li" + topic.tid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "topicnav_" + topic.tid).text(subject.clean_name));
-		$("#topicnav_" + topic.tid).append($("<i>").addClass("material-icons right").text("arrow_backward"));
+		$("#topicnav_" + topic.tid).append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
 		$(".side-nav").append($("<li>").addClass("divider"));
 		topic.sections.forEach(section => {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id).fadeIn("slow"));
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id));
 			var sections_li = $("#sections_li" + section.section_id).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id).text(section.clean_name));
 			$("#sections_" + section.section_id).append($("<i>").addClass("material-icons right").text("arrow_forward"));
+			if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
 		});
 		exports.extra();
 	};
@@ -108,15 +119,24 @@ define(function() {
 	*/
 	exports.example_side_nav = (section, topic) => {
 		$(".side-nav").empty();
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_li" + section.section_id).fadeIn("slow"));
+		
+		if(functions.is_mobile()) {
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "about_li"));
+			$("#about_li").append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "about").text("About"));
+			$("#about").append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
+			$(".side-nav").append($("<li>").addClass("divider"));
+		}
+
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_li" + section.section_id));
 		$("#section_li" + section.section_id).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionnav_" + section.section_id).text(topic.clean_name));
-		$("#sectionnav_" + section.section_id).append($("<i>").addClass("material-icons right").text("arrow_backward"));
+		$("#sectionnav_" + section.section_id).append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
 		$(".side-nav").append($("<li>").addClass("divider"));
-		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_name" + section.section_id).fadeIn("slow"));
+		$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "section_name" + section.section_id));
 		$("#section_name" + section.section_id).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionname_" + section.section_id).text("Notes"));
 		section.examples.forEach(example => {
-			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid).fadeIn("slow"));
+			$(".side-nav").append($("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid));
 			$("#examples_li" + example.eid).append($("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name));
+			if(functions.is_mobile()) { $(".side-nav").append($("<li>").addClass("divider")); }
 		});
 		exports.extra();
 	};
