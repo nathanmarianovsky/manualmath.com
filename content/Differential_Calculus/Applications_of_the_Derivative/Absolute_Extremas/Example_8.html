@@ -1,0 +1,62 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Show that the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = xe^x
+		}$
+	</div>
+	attains the same critical point as:
+	<div class="latex_equation">
+		$\eqalign{
+			g(x) = \ln(x) + x
+		}$
+	</div>
+	and that at the critical point $x = c$:
+	<div class="latex_equation">
+		$\eqalign{
+			f(c) = \lim_{x \rightarrow c} e^{g(x)}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Differentiating both functions gives:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= e^x + xe^x \\
+					g'(x) &= \frac{1}{x} + 1
+				}$
+			</div>
+			where the critical points are:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= e^x + xe^x \\
+					0 &= (1 + x)e^x \\
+					x &= -1 \\
+					&\vdots \\
+					0 &= \frac{1}{x} + 1 \\
+					-1 &= \frac{1}{x} \\
+					x &= -1
+				}$
+			</div>
+			The critical point is exactly the same and:
+			<div class="latex_equation">
+				$\eqalign{
+					f(-1) &= \lim_{x \rightarrow -1} e^{g(x)} \\
+					-e^{-1} &= \lim_{x \rightarrow -1} e^{\ln(x) + x} \\
+					&= \lim_{x \rightarrow -1} xe^x \\
+					&= -e^{-1}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

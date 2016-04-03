@@ -1,0 +1,59 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Show that the function:
+	<div class="latex_equation">
+		$\eqalign{
+			g(x) = \ln(f(x))
+		}$
+	</div>
+	attains the same critical point(s) as $f(x)$ and that at the critical point(s) $x = c$:
+	<div class="latex_equation">
+		$\eqalign{
+			f(c) = \lim_{x \rightarrow c} e^{g(x)}
+		}$
+	</div>
+	Also show how on a bounded interval, $[a,b]$, the absolute extremas for $f(x)$ can be obtained through $g(x)$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Differentiating the function gives:
+			<div class="latex_equation">
+				$\eqalign{
+					g'(x) = \frac{f'(x)}{f(x)}
+				}$
+			</div>
+			where the critical points are:
+			<div class="latex_equation">
+				$\eqalign{
+					g'(x) &= 0 \hspace{.3cm} \text{whenever} \hspace{.3cm} f(x) \neq 0, f'(x) = 0 \\
+					g'(x) &= \text{DNE} \hspace{.3cm} \text{whenever} \hspace{.3cm} f(x) = 0
+				}$
+			</div>
+			Since we care about $f'(x)$ equating to zero typically we only care about the first scenario. Next we can use the original relationship:
+			<div class="latex_equation">
+				$\eqalign{
+					\ln(f(x)) &= g(x) \\
+					f(x) &= e^{g(x)} \\
+					\lim_{x \rightarrow c} f(x) &= \lim_{x \rightarrow c} e^{g(x)} \\
+					f(c) &= \lim_{x \rightarrow c} e^{g(x)}
+				}$
+			</div>
+			and so if we wanted to determine the absolute extremas we would compare the values:
+			<div class="latex_equation">
+				$\eqalign{
+					f(a) &= \lim_{x \rightarrow a^+} e^{g(x)} \\
+					f(c) &= \lim_{x \rightarrow c} e^{g(x)} \\
+					f(b) &= \lim_{x \rightarrow b^-} e^{g(x)}
+				}$
+			</div>
+		</div>
+	</div>
+</div>
