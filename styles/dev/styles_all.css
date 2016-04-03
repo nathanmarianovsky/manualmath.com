@@ -142,7 +142,7 @@ nav {
 }
 
 .box_message h2 {
-	font-size: 25px;
+	font-size: 20px;
 }
 
 .box_text {
@@ -174,11 +174,13 @@ nav {
 
 /* All CSS properties related to anything belonging to the latex page */
 #latex {
-	color: black;
-	font-family: "Computer Modern Serif, sans-serif";
-	margin: 80px auto 50px auto;
-	font-size: 20px;
-	width: 70%;
+	margin: 100px auto 50px auto;
+	width: 80%;
+	font-size: 15px;
+}
+
+.latex_body {
+	margin: 10px;
 }
 
 #latex img {
@@ -188,12 +190,17 @@ nav {
 }
 
 .latex_section {
-	position: relative;
-	text-align: center;
-	font-family: "Georgia";
-	font-size: 30px;
-	padding: 15px 0 15px 0;
+	margin-top: 50px;
+	width: 80%;
+	font-size: 20px;
+}
+
+#breadcrumbs li {
+	font-size: 25px;
+	display: table;
+	margin-bottom: 0px;
 	margin-top: 30px;
+	line-height: 25px;
 }
 
 .show_solution {
@@ -226,7 +233,7 @@ nav {
 	position: relative;
 	border: 1px solid black;
 	margin: 0 auto 0 auto;
-	width: 50%;
+	width: 80%;
 	font-size: 12px;
 }
 

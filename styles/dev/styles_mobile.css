@@ -50,7 +50,7 @@
 
 	#mobile_logo_title {
 		display: inline;
-		font-size: 16px;
+		/*font-size: 16px;*/
 		bottom: 0px;
 		color: #54FFA9;
 		font-family: "Roboto Mono";
@@ -126,12 +126,12 @@
 
 	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
-		margin: -30px auto 50px auto;
+		margin: 30px auto 50px auto;
 		width: 90%;
 	}
 
-	.latex_section {
-		text-decoration: underline;
+	.hidden_div {
+		background-color: #C4DBF3;
 	}
 
 
@@ -139,6 +139,18 @@
 	/* All CSS properties belonging to all pages */
 	.latex_equation table {
 		width: 100%;
+	}
+
+	.breadcrumb.changed:before {
+	    content: "\E5CC";
+	    color: rgba(0,0,0,0.87);
+	    vertical-align: top;
+	    display: inline-block;
+	    font-family: "Material Icons";
+	    font-weight: normal;
+	    font-style: normal;
+	    margin: 0 10px 0 8px;
+	    -webkit-font-smoothing: antialiased;
 	}
 }
 
@@ -153,6 +165,10 @@
 
 	#top_content .s1 {
 	    font-size: 15px;
+	}
+
+	#mobile_logo_title {
+		font-size: 25px;
 	}
 
 
@@ -180,14 +196,26 @@
 		font-size: 20px;
 	}
 
+	.box_message h2 {
+		font-size: 25px;
+	}
+
 
 
 	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
-		font-size: 25px;
+		font-size: 20px;
 	}
 
 	.latex_section {
+		font-size: 25px;
+	}
+
+	.box_tex {
+		font-size: 20px;
+	}
+
+	#breadcrumbs li {
 		font-size: 30px;
 	}
 
@@ -199,7 +227,7 @@
 	}
 
 	.latex_equation table {
-		font-size: 18px;
+		font-size: 17px;
 	}
 }
 
@@ -209,7 +237,7 @@
 @media only screen and (min-width : 550px) and (max-width: 749px) {
 	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
-		font-size: 18px;
+		font-size: 25px;
 	}
 
 	#top_content .s1 {
@@ -250,11 +278,11 @@
 
 	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
-		font-size: 20px;
+		font-size: 15px;
 	}
 
-	.latex_section {
-		font-size: 20px;
+	.box_tex {
+		font-size: 15px;
 	}
 
 
@@ -275,7 +303,7 @@
 @media only screen and (min-width : 400px) and (max-width: 549px) {
 	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
-		font-size: 13px;
+		font-size: 20px;
 	}
 
 	#top_content .s1 {
@@ -315,12 +343,8 @@
 		font-size: 20px;
 	}
 
-	.latex_section {
-		font-size: 20px;
-	}
-
-	.hidden_div {
-		background-color: #C4DBF3;
+	.latex_body {
+		font-size: 16px;
 	}
 
 
@@ -331,7 +355,7 @@
 	}
 
 	.latex_equation table {
-		font-size: 8px;
+		font-size: 8.5px;
 	}
 }
 
@@ -341,7 +365,7 @@
 @media only screen and (max-width: 399px) {
 	/* All CSS properties related to anything belonging to the top nav(s) */
 	.page_title {
-		font-size: 10px;
+		font-size: 15px;
 	}
 
 	#top_content .s1 {
@@ -383,10 +407,6 @@
 	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
 		font-size: 18px;
-	}
-
-	.latex_section {
-		font-size: 20px;
 	}
 
 
