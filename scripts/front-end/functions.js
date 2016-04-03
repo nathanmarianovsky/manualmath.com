@@ -190,20 +190,31 @@ define(function() {
 	Moves the logo all the way to the right on a mobile view.
 
 	*/
-	exports.handle_logo = page => {
-		if(exports.is_mobile()) {
-			if(page == "about") {
-				$("#top_content .s1").css("display", "none");
-				$("#mobile_logo_title").show();
+	exports.handle_logo = () => {
+		if(exports.width_func() < 992) {
+			if(exports.width_func() >= 750) {
 				$("#logo").css({
-					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 154,
+					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 183,
+					"display": "inline-block"
+				});
+			}
+			else if(exports.width_func() < 750 && exports.width_func() >= 550) {
+				$("#logo").css({
+					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 165,
+					"display": "inline-block"
+				});
+			}
+			else if(exports.width_func() < 550 && exports.width_func() >= 400) {
+				$("#logo").css({
+					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 164,
 					"display": "inline-block"
 				});
 			}
 			else {
-				$("#top_content .s1").css("display", "block");
-				$("#mobile_logo_title").hide();
-				$("#logo").css("display", "none");
+				$("#logo").css({
+					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 150,
+					"display": "inline-block"
+				});
 			}
 		}
 	};
@@ -219,27 +230,18 @@ define(function() {
 
 	*/
 	exports.handle_button = page => {
-		// if(page == "notes") {
-			$("#latex .show_solution").click(function(defaultevent) {
-				defaultevent.preventDefault();
-				if(page == "notes") {
-					var id = $(this).attr("id").split("_")[2];
-					$(this).val() == "Show Proof" ? $("#hidden_div_" + id).show() : $("#hidden_div_" + id).hide();
-					$(this).val() == "Show Proof" ? $(this).val("Hide Proof") : $(this).val("Show Proof");
-				}
-				else { 
-					$(this).val() == "Show Solution" ? $(".hidden_div").show() : $(".hidden_div").hide();
-					$(this).val() == "Show Solution" ? $(this).val("Hide Solution") : $(this).val("Show Solution");
-				}
-			});
-		// }
-		// else if(page == "examples") {
-		// 	$("#latex .show_solution").click(function(defaultevent) {
-		// 		defaultevent.preventDefault();
-		// 		$("#latex .show_solution").hide();
-		// 		$("#latex .hidden_div").show();
-		// 	});
-		// }
+		$("#latex .show_solution").click(function(defaultevent) {
+			defaultevent.preventDefault();
+			if(page == "notes") {
+				var id = $(this).attr("id").split("_")[2];
+				$(this).val() == "Show Proof" ? $("#hidden_div_" + id).show() : $("#hidden_div_" + id).hide();
+				$(this).val() == "Show Proof" ? $(this).val("Hide Proof") : $(this).val("Show Proof");
+			}
+			else { 
+				$(this).val() == "Show Solution" ? $(".hidden_div").show() : $(".hidden_div").hide();
+				$(this).val() == "Show Solution" ? $(this).val("Hide Solution") : $(this).val("Show Solution");
+			}
+		});
 	};
 
 	/*
@@ -252,27 +254,6 @@ define(function() {
 		$(window).on("deviceorientation", event => { 
 			// exports.handle_logo();
 		});
-	};
-
-	/*
-
-	Purpose:
-	Handles the side nav vertical placement for mobile views due to the presence of breadcrumbs.
-
-	*/
-	exports.handle_scroll = () => {
-		// $(document).scroll(() => {
-		// 	if(exports.width_func() < 992) {
-		// 		if($(this).scrollTop() > $('#second_top_nav').position().top - 54) {
-		// 			if(exports.width_func() >= 750) { $("#nav-mobile").css("top", "64px"); }
-		// 			else { $("#nav-mobile").css("top", "56px");}
-		// 		}
-		// 		else {
-		//     		if(exports.width_func() >= 750) { $("#nav-mobile").css("top", "119px"); }
-		// 			else { $("#nav-mobile").css("top", "112px"); }
-		// 		}
-		// 	}
-		// });
 	};
 
 	/*
@@ -291,25 +272,55 @@ define(function() {
 			An object representing the current section
 
 	*/
-	exports.handle_breadcrumbs = (page, subject, topic, section) => {
+	exports.handle_breadcrumbs = (page, obj, subject, topic, section, example) => {
 		if(exports.width_func() < 992) {
-			$("#top_content .s1").empty();
-			$("#top_content").show();
-			if(page == "subject") {
-				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
-			}
-			else if(page == "topic") {
-				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
-				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
-			}
-			else if(page == "section") {
-				if(exports.width_func() >= 550) {
-					$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+			if(page == "about" || page == "subject" || page == "topic") {
+				if(obj.text() == "About") {
+					obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
+					if(page == "subject") {
+						$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
+					}
+					else if(page == "topic") {
+						$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
+						$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(topic.clean_name));
+					}
+					else { console.log("No such page exists with the corresponding object"); }
 				}
-				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
-				$("#top_content .s1").append($("<a>").addClass("breadcrumb").text(section.clean_name));
 			}
-			else { console.log("No such page exists: " + page); }
+			else if(page == "example") {
+				if(obj.hasClass("latex_section")) {
+					obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
+					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
+					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name).css({
+						"position": "absolute",
+						"display": "inline"
+					})));
+					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(section.clean_name).css({
+						"position": "absolute",
+						"display": "inline"
+					})));
+					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(example.clean_name).css({
+						"position": "absolute",
+						"display": "inline"
+					})));
+				}
+				else { console.log("The object does not have the necessary class!"); }
+			}
+			else {
+				if(obj.hasClass("latex_section")) {
+					obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
+					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
+					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name).css({
+						"position": "absolute",
+						"display": "inline"
+					})));
+					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(section.clean_name).css({
+						"position": "absolute",
+						"display": "inline"
+					})));
+				}
+				else { console.log("The object does not have the necessary class!"); }
+			}
 			$(".breadcrumb:not(:first)").toggleClass("changed");
 		}
 	};

@@ -36,10 +36,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				});
 			});
 			functions.handle_logo_link("about");
-			functions.handle_logo("about");
+			functions.handle_logo();
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_orientation("about", navs, subjects);
-			// functions.handle_breadcrumbs("about");
 			functions.handle_desktop_title("about");
 		});
 
@@ -59,10 +58,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				});
 			});
 			functions.handle_logo_link("about");
-			functions.handle_logo("about");
+			functions.handle_logo();
 			links.handle_links(router, subjects, topics, sections, examples);
 			functions.handle_orientation("about", navs, subjects);
-			// functions.handle_breadcrumbs("about");
 			functions.handle_desktop_title("about");
 		});
 
@@ -78,20 +76,18 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$("title").text(subject.clean_name);
 			$("main").append($("<div>").attr("id", "subject_page"));
 			$.get("/content/" + subject.sname + "/" + subject.sname + ".html").done(content => {
-				$("#subject_page").append(content)
+				$("#subject_page").append(content);
+				functions.handle_breadcrumbs("subject", $("h2").first(), subject);
 				$.get("/content/" + subject.sname + "/Notation.html").done(notation => {
 					$("#subject_page").append(notation);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 				});
 			});
-			// $("#about_li").addClass("active");
 			functions.handle_logo_link("subject");
-			functions.handle_logo("subject");
+			functions.handle_logo();
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
-			functions.handle_scroll();
 			functions.handle_orientation("subject", navs, subject);
-			functions.handle_breadcrumbs("subject", subject);
 			functions.handle_desktop_title("subject", subject);
 		});
 
@@ -111,16 +107,14 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$("main").append($("<div>").attr("id", "topic_page"));
 			$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(content => {
 				$("#topic_page").append(content);
+				functions.handle_breadcrumbs("topic", $("h2").first(), subject, topic);
 				MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 			});
-			// $("#about_li").addClass("active");
 			functions.handle_logo_link("subject.topic");
-			functions.handle_logo("topic");
+			functions.handle_logo();
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
-			functions.handle_scroll();
 			functions.handle_orientation("topic", navs, topic, subject);
-			functions.handle_breadcrumbs("topic", subject, topic);
 			functions.handle_desktop_title("topic", subject, topic);
 		});
 
@@ -146,6 +140,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				$("#section_name" + section.section_id).addClass("active");
 				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(content => {
 					$("#latex").append(content);
+					functions.handle_breadcrumbs("section", $(".latex_section").first(), subject, topic, section);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 					functions.handle_button("notes");
 				});
@@ -157,17 +152,16 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				$("#examples_li" + example.eid).addClass("active");
 				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html").done(content => {
 					$("#latex").append(content);
+					functions.handle_breadcrumbs("example", $(".latex_section").first(), subject, topic, section, example);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 					functions.handle_button("example");
 				});
 			}
 			functions.handle_logo_link("subject.topic.section.current_page");
-			functions.handle_logo("section");
+			functions.handle_logo();
 			functions.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
-			functions.handle_scroll();
 			functions.handle_orientation("section", navs, section, topic);
-			functions.handle_breadcrumbs("section", subject, topic, section);
 			functions.handle_desktop_title("section", subject, topic, section);
 		});
 	};
