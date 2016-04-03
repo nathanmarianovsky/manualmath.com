@@ -65,13 +65,13 @@ define(["app/functions"], function(functions) {
 			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjectnav").text("All Subjects");
 		
 		sidenav.empty();
-		sidenav.append(subjectLi);
-		subjectLi.append(link);
 		link.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
+		subjectLi.append(link);
+		sidenav.append(subjectLi);
 		sidenav.append($("<li>").addClass("divider"));
 
 		var results = subject.topics.map(topic => {
-			var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid)
+			var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid);
 			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid).text(topic.clean_name);
 			link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 			return topicli.append(link);
@@ -97,26 +97,17 @@ define(["app/functions"], function(functions) {
 	*/
 	exports.section_side_nav = (topic, subject) => {
 		var sidenav = $(".side-nav"),
-			aboutli = $("<li>").addClass("no-padding").attr("id", "about_li"),
-			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "about").text("About"),
 			topicli = $("<li>").addClass("no-padding").attr("id", "topic_li" + topic.tid),
 			topicnav = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topicnav_" + topic.tid).text(subject.clean_name);
 
 		sidenav.empty();
-
-		if(functions.is_mobile()) {
-			link.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
-			aboutli.append(link);
-			sidenav.append(aboutli, $("<li>").addClass("divider"));
-		}
-
 		topicnav.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
 		topicli.append(topicnav);
 		sidenav.append(topicli, $("<li>").addClass("divider"));
 
 		var results = topic.sections.map(section => {
-			var sectionli = $("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id);
-			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id).text(section.clean_name);
+			var sectionli = $("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id),
+				link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id).text(section.clean_name);
 			link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 			return sectionli.append(link);
 		});
@@ -141,24 +132,16 @@ define(["app/functions"], function(functions) {
 	*/
 	exports.example_side_nav = (section, topic) => {
 		var sidenav = $(".side-nav"),
-			aboutli = $("<li>").addClass("no-padding").attr("id", "about_li"),
-			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "about").text("About"),
+			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionname_" + section.section_id).text("Notes"),
 			sectionli = $("<li>").addClass("no-padding").attr("id", "section_li" + section.section_id),
 			sectionnav = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionnav_" + section.section_id).text(topic.clean_name),
 			sectionname = $("<li>").addClass("no-padding").attr("id", "section_name" + section.section_id);
 
 		sidenav.empty();
-
-		if(functions.is_mobile()) {
-			link.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
-			aboutli.append(link);
-			sidenav.append(aboutli, $("<li>").addClass("divider"));
-		}
-
 		sectionnav.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
 		sectionli.append(sectionnav);
 		sidenav.append(sectionli, $("<li>").addClass("divider"));
-		link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionname_" + section.section_id).text("Notes");
+		
 		sectionname.append(link);
 		functions.is_mobile() ? sidenav.append(sectionname, $("<li>").addClass("divider")) : sidenav.append(sectionname);
 		
