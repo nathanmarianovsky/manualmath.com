@@ -45,12 +45,6 @@ exports.minify_js = (compressor, fs) => {
 		"fileOut": "./scripts/dist/router5-min.js",
 		"callback": (err, result) => { if(err) { console.log("Minifying the router5 file threw an error: " + err.stack); } }
 	});
-	new compressor.minify({
-		"type": "yui-js",
-		"fileIn": "./bower_components/materializecss-amd/dist/materialize.amd.js",
-		"fileOut": "./scripts/dist/materialize.amd-min.js",
-		"callback": (err, result) => { if(err) { console.log("Minifying the materialize.amd file threw an error: " + err.stack); } }
-	});
 };
 
 // Minifies the html files in /client
