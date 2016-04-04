@@ -1,0 +1,181 @@
+<div class="latex_section">
+	Statement
+</div>
+<div class="latex_body">
+	Given two differentiable functions $f(x)$ and $g(x)$ s.t.:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow c} f(x) = \lim_{x \rightarrow c} g(x) = 0 \hspace{.3cm} \text{or} \hspace{.3cm} \lim_{x \rightarrow c} f(x) = \lim_{x \rightarrow c} g(x) = \pm \infty \hspace{.3cm} \text{where} \hspace{.3cm} c \in \mathbb{R}
+		}$
+	</div>
+	then $\textit{L'Hospital's Rule}$ states that:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow c} \frac{f(x)}{g(x)} = \lim_{x \rightarrow c} \frac{f'(x)}{g'(x)}
+		}$
+	</div>
+	In essense this provides a systematic approach to determining limits that involve indeterminate forms, but note that if the limit does not approach either $\frac{0}{0}$ or $\pm \frac{\infty}{\infty}$, then the rule cannot be used. In some cases the new limit may also approach an indeterminate form which gives reason to use the rule again, except using the second derivatives. In general if you keep getting the indeterminate forms you keep taking derivatives until it approaches something either finite or non-existant.
+</div>
+
+<div class="latex_section">
+	Proof of $\frac{0}{0}$
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_1">
+	<div class="hidden_div" id="hidden_div_1">
+		<div class="latex_body">
+			Given two differentiable functions $k(x)$ and $j(x)$ s.t.:
+			<div class="latex_equation">
+				$\eqalign{
+					k(c) = j(c) = 0 \hspace{.3cm} \text{and} \hspace{.3cm} j'(c) \neq 0
+				}$
+			</div>
+			then assuming that $x \neq c$ we do the following:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow c} \frac{f(x)}{g(x)} &= \lim_{x \rightarrow c} \frac{f(x) - 0}{g(x) - 0} \\
+					&= \lim_{x \rightarrow c} \frac{f(x) - f(c)}{g(x) - g(c)} \\
+					&= \lim_{x \rightarrow c} \frac{\frac{f(x) - f(c)}{x - c}}{\frac{g(x) - g(c)}{x - c}} \\
+					&= \Bigg[ \lim_{x \rightarrow c} \frac{f(x) - f(c)}{x - c} \Bigg]\Bigg[ \lim_{x \rightarrow c} \frac{g(x) - g(c)}{x - c} \Bigg]^{-1} \\
+					&= \frac{f'(c)}{g'(c)} \\
+					&= \Bigg[ \lim_{x \rightarrow c} f'(x) \Bigg]\Bigg[ \lim_{x \rightarrow c} g'(x) \Bigg]^{-1} \\
+					&= \lim_{x \rightarrow c} \frac{f'(x)}{g'(x)}
+				}$
+			</div>
+			$\tag*{$\blacksquare$}$
+		</div>
+	</div>
+</div>
+
+<div class="latex_section">
+	Proof of $\frac{0}{0}$ Using Cauchy's Mean Value Theorem
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_2">
+	<div class="hidden_div" id="hidden_div_2">
+		<div class="latex_body">
+			Given two differentiable functions $k(x)$ and $j(x)$ s.t.:
+			<div class="latex_equation">
+				$\eqalign{
+					k(a) = j(a) = 0 \hspace{.3cm} \text{and} \hspace{.3cm} j'(a) \neq 0
+				}$
+			</div>
+			then by Cachy's Mean Value Theorem on the interval $[a,b]$:
+			<div class="latex_equation">
+				$\eqalign{
+					\exists \hspace{.1cm} c \in (a,b) \hspace{.3cm} \text{s.t.} \hspace{.3cm} k'(c)(j(b) - j(a)) = j'(c)(k(b) - k(a))
+				}$
+			</div>
+			Now we can take any pair of domains $[a,x]$ and $(a,x)$ s.t. both functions are continuous and differentiable on them respectively where $x \leq b$. Using the Mean Value Theorem and our given situation:
+			<div class="latex_equation">
+				$\eqalign{
+					k'(c)j(x) &= j'(c)k(x) \\
+					\frac{k'(c)}{j'(c)} &= \frac{k(x)}{j(x)}
+				}$
+			</div>
+			To finish up we carefully apply limits that will push the variables to the same spot:
+			<div class="latex_equation">
+				$\eqalign{
+					\frac{k'(c)}{j'(c)} &= \frac{k(x)}{j(x)} \\
+					\lim_{c \rightarrow a^+} \frac{k'(c)}{j'(c)} &= \lim_{x \rightarrow a^+} \frac{k(x)}{j(x)} \\
+					\lim_{x \rightarrow a^+} \frac{k'(x)}{j'(x)} &= \lim_{x \rightarrow a^+} \frac{k(x)}{j(x)}
+				}$
+			</div>
+			Since $a$ was chosen randomly this applies to any real number, and not just from the right side. $\tag*{$\blacksquare$}$
+		</div>
+	</div>
+</div>
+
+<div class="latex_section">
+	Proof of $\pm \frac{\infty}{\infty}$
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_3">
+	<div class="hidden_div" id="hidden_div_3">
+		<div class="latex_body">
+			Given two differentiable functions $k(x)$ and $j(x)$ s.t.:
+			<div class="latex_equation">
+				$\eqalign{
+					k, j \rightarrow \pm \infty \hspace{.3cm} \text{as} \hspace{.3cm} x \rightarrow c
+				}$
+			</div>
+			Now suppose that we define the limit:
+			<div class="latex_equation">
+				$\eqalign{
+					L = \lim_{x \rightarrow c} \frac{k(x)}{j(x)} \hspace{.3cm} \text{where} \hspace{.3cm} L \in \mathbb{R} \setminus \{0\}
+				}$
+			</div>
+			If we accept L'Hospital's Rule for the case of $\frac{0}{0}$, then we can state:
+			<div class="latex_equation">
+				$\eqalign{
+					L &= \lim_{x \rightarrow c} \frac{k(x)}{j(x)} \\
+					&= \lim_{x \rightarrow c} \frac{\frac{1}{j(x)}}{\frac{1}{k(x)}} \\
+					&= \lim_{x \rightarrow c} \frac{-\frac{j'(x)}{(j(x))^2}}{-\frac{k'(x)}{(k(x))^2}} \\
+					&= \lim_{x \rightarrow c} \frac{(k(x))^2j'(x)}{(j(x))^2k'(x)} \\
+					&= \lim_{x \rightarrow c} \Big( \frac{k(x)}{j(x)} \Big)^2 \cdot \lim_{x \rightarrow c} \frac{j'(x)}{k'(x)} \\
+					&= L^2 \cdot \lim_{x \rightarrow c} \frac{j'(x)}{k'(x)} \\
+					0 &= L\Big( L \cdot \lim_{x \rightarrow c} \frac{j'(x)}{k'(x)} - 1 \Big) \\
+					L &= \lim_{x \rightarrow c} \frac{k'(x)}{j'(x)}
+				}$
+			</div>
+			where $L$ cannot be zero at the last line due to our initial assumption. To handle the zero case let us assume:
+			<div class="latex_equation">
+				$\eqalign{
+					0 = \lim_{x \rightarrow c} \frac{k(x)}{j(x)}
+				}$
+			</div>
+			Observe how the above can be used with some trickery:
+			<div class="latex_equation">
+				$\eqalign{
+					1 + \lim_{x \rightarrow c} \frac{k(x)}{j(x)} &= \lim_{x \rightarrow c} \frac{j(x) + k(x)}{j(x)} \\
+					&= \lim_{x \rightarrow c} \frac{j'(x) + k'(x)}{j'(x)} \\
+					&= 1 + \lim_{x \rightarrow c} \frac{k'(x)}{j'(x)} \\
+					\lim_{x \rightarrow c} \frac{k(x)}{j(x)} &= \lim_{x \rightarrow c} \frac{k'(x)}{j'(x)}
+				}$
+			</div>
+			$\tag*{$\blacksquare$}$
+		</div>
+	</div>
+</div>
+
+<div class="latex_section">
+	Proof of Limits at Infinity
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_4">
+	<div class="hidden_div" id="hidden_div_4">
+		<div class="latex_body">
+			Say we have the following scenario:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow \infty} \frac{k(x)}{j(x)}
+				}$
+			</div>
+			Now we define a new variable:
+			<div class="latex_equation">
+				$\eqalign{
+					t = \frac{1}{x}
+				}$
+			</div>
+			so as to rewrite the limit and use L'Hospital's Rule for a case we have already proven:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow \infty} \frac{k(x)}{j(x)} &= \lim_{t \rightarrow 0^+} \frac{k\Big( \frac{1}{t} \Big)}{j\Big( \frac{1}{t} \Big)} \\
+					&= \lim_{t \rightarrow 0^+} \frac{-\frac{k'\Big( \frac{1}{t} \Big)}{t^2}}{-\frac{j'\Big( \frac{1}{t} \Big)}{t^2}} \\
+					&= \lim_{t \rightarrow 0^+} \frac{k'\Big( \frac{1}{t} \Big)}{j'\Big( \frac{1}{t} \Big)} \\
+					&= \lim_{x \rightarrow \infty} \frac{k'(x)}{j'(x)}
+				}$
+			</div>
+			The remaining case can be accomplished in a similar fashion:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow -\infty} \frac{k(x)}{j(x)} &= \lim_{t \rightarrow 0^-} \frac{k\Big( \frac{1}{t} \Big)}{j\Big( \frac{1}{t} \Big)} \\
+					&= \lim_{t \rightarrow 0^-} \frac{-\frac{k'\Big( \frac{1}{t} \Big)}{t^2}}{-\frac{j'\Big( \frac{1}{t} \Big)}{t^2}} \\
+					&= \lim_{t \rightarrow 0^-} \frac{k'\Big( \frac{1}{t} \Big)}{j'\Big( \frac{1}{t} \Big)} \\
+					&= \lim_{x \rightarrow -\infty} \frac{k'(x)}{j'(x)}
+				}$
+			</div>
+			$\tag*{$\blacksquare$}$
+		</div>
+	</div>
+</div>

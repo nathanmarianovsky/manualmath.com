@@ -1,0 +1,35 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Evaluate the following using L'Hospital's Rule:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow \infty} xe^{-3x}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			The initial limit will approach:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow \infty} \frac{x}{e^{3x}} = \frac{\infty}{\infty}
+				}$
+			</div>
+			This provides reasoning to use L'Hospital's Rule:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow \infty} \frac{x}{e^{3x}} &= \lim_{x \rightarrow \infty} \frac{1}{3e^{3x}} \\
+					&= 0
+				}$
+			</div>
+		</div>
+	</div>
+</div>

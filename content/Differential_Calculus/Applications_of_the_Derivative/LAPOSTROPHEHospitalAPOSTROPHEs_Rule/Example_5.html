@@ -1,0 +1,42 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Evaluate the following using L'Hospital's Rule:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow \infty} \frac{x^2 + 4}{8^x}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			The initial limit will approach:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow \infty} \frac{x^2 + 4}{8^x} = \frac{\infty}{\infty}
+				}$
+			</div>
+			This provides reasoning to use L'Hospital's Rule:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow \infty} \frac{x^2 + 4}{8^x} &= \lim_{x \rightarrow \infty} \frac{2x}{\ln(8)8^x} \\
+					&= \frac{\infty}{\infty}
+				}$
+			</div>
+			Since the result is still an indeterminate form, we use the rule once more:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow \infty} \frac{2x}{\ln(8)8^x} &= \lim_{x \rightarrow \infty} \frac{2}{(\ln(8))^2 8^x} \\
+					&= 0
+				}$
+			</div>
+		</div>
+	</div>
+</div>

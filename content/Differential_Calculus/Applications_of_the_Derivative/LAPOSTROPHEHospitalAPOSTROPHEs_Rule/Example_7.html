@@ -1,0 +1,67 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Evaluate the following using L'Hospital's Rule:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{x \rightarrow 0^+} x^{\sin(x)}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			The initial limit will approach:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0^+} x^{\sin(x)} = 0^0
+				}$
+			</div>
+			The result is an indeterminate form, and so using the logarithm:
+			<div class="latex_equation">
+				$\eqalign{
+					y &= x^{\sin(x)} \\
+					\ln(y) &= \sin(x) \ln(x) \\
+					\lim_{x \rightarrow 0^+} \ln(y) &= \lim_{x \rightarrow 0^+} \sin(x) \ln(x) \\
+					\ln\Big( \lim_{x \rightarrow 0^+} y \Big) &= \lim_{x \rightarrow 0^+} \sin(x) \ln(x) 
+				}$
+			</div>
+			Now the limit approaches:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0^+} \frac{\ln(x)}{\csc(x)} = \frac{\infty}{\infty}
+				}$
+			</div>
+			This provides reasoning to use L'Hospital's Rule:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0^+} \frac{\ln(x)}{\csc(x)} &= \lim_{x \rightarrow 0^+} -\frac{\frac{1}{x}}{\csc(x)\cot(x)} \\
+					&= -\lim_{x \rightarrow 0^+} \frac{\sin(x)\tan(x)}{x} \\
+					&= \frac{0}{0}
+				}$
+			</div>
+			Since the result is still an indeterminate form, we use the rule once more:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{x \rightarrow 0^+} -\frac{\sin(x)\tan(x)}{x} &= \lim_{x \rightarrow 0^+} -(\sin(x) + \sec(x)\tan(x)) \\
+					&= 0
+				}$
+			</div>
+			This allows us to state:
+			<div class="latex_equation">
+				$\eqalign{
+					\ln\Big( \lim_{x \rightarrow 0^+} y \Big) &= \lim_{x \rightarrow 0^+} \sin(x) \ln(x) \\
+					\ln\Big( \lim_{x \rightarrow 0^+} y \Big) &= 0 \\
+					\lim_{x \rightarrow 0^+} y &= 1 \\
+					\lim_{x \rightarrow 0^+} x^{\sin(x)} &= 1
+				}$
+			</div>
+		</div>
+	</div>
+</div>
