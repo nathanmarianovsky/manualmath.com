@@ -1,0 +1,60 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	An open rectangular box with square base is to be made from $48$ $\text{ft}^2$ of material. What dimensions will result in a box with the largest possible volume?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First identify the objective function:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x,y) = x^2y
+				}$
+			</div>
+			and the constraint function:
+			<div class="latex_equation">
+				$\eqalign{
+					x^2 + 4xy = 48 \hspace{.3cm} \text{where} \hspace{.3cm} 0 \leq x \leq \sqrt{48}
+				}$
+			</div>
+			Now the objective function can be rewritten as:
+			<div class="latex_equation">
+				$\eqalign{
+					k(x) &= f\Big( x, \frac{48 - x^2}{4x} \Big) \\
+					&= 12x - \frac{1}{4}x^3
+				}$
+			</div>
+			Differentiation gives:
+			<div class="latex_equation">
+				$\eqalign{
+					k'(x) &= 12 - \frac{3}{4}x^2
+				}$
+			</div>
+			where the critical points are:
+			<div class="latex_equation">
+				$\eqalign{
+					\require{cancel}
+					0 &= 12 - \frac{3}{4}x^2 \\
+					0 &= 16 - x^2 \\
+					x &= \cancel{-4}, 4
+				}$
+			</div>
+			and the negative value is ignored due to restrictions on the problem. Now the necessary evaluations are:
+			<div class="latex_equation">
+				$\eqalign{
+					k(0) &= 0 \\
+					k(4) &= 32 \\
+					k(\sqrt{48}) &= 0
+				}$
+			</div>
+			With this we can state the maximum possible volume achieved is $32$ $\text{ft}^3$ given a height of $2$ $\text{ft}$ and square side length of $4$ $\text{ft}$.
+		</div>
+	</div>
+</div>

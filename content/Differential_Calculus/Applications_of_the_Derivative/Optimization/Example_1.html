@@ -1,0 +1,60 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Find two non-negative numbers whose sum is $9$ and so that the product of one number and the square of the other number is a maximum.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First identify the objective function:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x,y) = xy^2
+				}$
+			</div>
+			and the constraint function:
+			<div class="latex_equation">
+				$\eqalign{
+					x + y = 9 \hspace{.3cm} \text{where} \hspace{.3cm} 0 \leq x,y \leq 9
+				}$
+			</div>
+			Now the objective function can be rewritten as:
+			<div class="latex_equation">
+				$\eqalign{
+					k(y) &= f(9 - y, y) \\
+					&= (9 - y)y^2
+				}$
+			</div>
+			Differentiation gives:
+			<div class="latex_equation">
+				$\eqalign{
+					k'(y) &= -y^2 + 2y(9 - y)
+				}$
+			</div>
+			where the critical points are:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= -y^2 + 2y(9 - y) \\
+					0 &= y(-y + 2(9 - y)) \\
+					0 &= y(18 - 3y) \\
+					y &= 0, 6
+				}$
+			</div>
+			Now the necessary evaluations are:
+			<div class="latex_equation">
+				$\eqalign{
+					k(0) &= 0 \\
+					k(6) &= 108 \\
+					k(9) &= 0
+				}$
+			</div>
+			With this we can state the maximum product achieved is $108$ given the two numbers $3$ amd $6$ where $6$ is the number being squared.
+		</div>
+	</div>
+</div>
