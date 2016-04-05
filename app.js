@@ -32,12 +32,13 @@ app.use(favicon("./favicon.ico", {"maxAge": 2592000000 }));
 
 // Tells the app to use the current directory as the default path
 app.use(express.static(__dirname, {"maxAge": 864000000 }));
+// app.use(express.static(__dirname));
 
 // Adds all of the routes
 client_routes.add_client_routes(app);
 api_routes.add_api_routes(app, pool, fs);
 
-minifier.driver(app, mkdirp, compressor, minify, fs, () => {
+minifier.driver(mkdirp, compressor, minify, fs, app, () => {
 	// Tells the server to listen
 	app.listen(80, () => {
 		console.log("The server is now listening!");

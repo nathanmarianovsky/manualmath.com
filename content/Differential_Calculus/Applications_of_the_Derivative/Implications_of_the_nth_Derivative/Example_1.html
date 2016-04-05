@@ -1,0 +1,40 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine all critical points of the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = -x^3 + 3x^2 - 3x
+		}$
+	</div>
+	and identify each one's behavior according to the Higher-Order Derivative Test.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To determine the critical points:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= -3x^2 + 6x - 3 \\
+					0 &= x^2 - 2x + 1 \\
+					0 &= (x - 1)^2 \\
+					x &= 1
+				}$
+			</div>
+			Now we keep taking derivatives at the critical point until it evaluates to something other than zero:
+			<div class="latex_equation">
+				$\eqalign{
+					f''(x) = -6x + 6 &\implies f''(1) = 0 \\
+					f'''(x) = -6 &\implies f'''(1) = -6
+				}$
+			</div>
+			So our case $n = 3$ and $f^{(n)}(0) < 0$. According to the Higher-Order Derivative Test the critical point $x = 1$ is a strictly decreasing point of inflection for the original function.
+		</div>
+	</div>
+</div>
