@@ -1,0 +1,45 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	There are $50$ apple trees in an orchard. Each tree produces $800$ apples and for each additional tree planted in the orchard, the output per tree drops by $10$ apples. How many trees should be added to the existing orchard in order to maximize the total output of trees?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First identify the objective function:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) = (50 + x)(800 - 10x)
+				}$
+			</div>
+			where $x$ is the number of additional trees. Now to identify the optimal number of trees we take the derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) = (800 - 10x) - 10(50 + x)
+				}$
+			</div>
+			and determine the critical point:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= 300 - 20x \\
+					x &= 15
+				}$
+			</div>
+			Now the necessary evaluations are:
+			<div class="latex_equation">
+				$\eqalign{
+					f(0) &= 40,000 \\
+					f(15) &= 42,250 \\
+					f(\infty) &= -\infty
+				}$
+			</div>
+			With this we can state the maximum possible output achieved is $42,250$ $\text{apples}$ given $15$ additional trees.
+		</div>
+	</div>
+</div>

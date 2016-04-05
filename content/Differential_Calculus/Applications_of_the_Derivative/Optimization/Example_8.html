@@ -1,0 +1,63 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Of all lines tangent to the graph of:
+	<div class="latex_equation">
+		$\eqalign{
+			y = \frac{6}{x^2 + 3}
+		}$
+	</div>
+	Find the tangent lines of minimum and maximum slope.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First identify that the function of interest is really the first derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) &= y' \\
+					&= \frac{-12x}{(x^2 + 3)^2}
+				}$
+			</div>
+			whose extremas we want to determine. To accomplish this we look at the second derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					y'' &= \frac{d}{dx} \frac{-12x}{(x^2 + 3)^2} \\
+					&= \frac{-12(x^2 + 3)^2 + 48x^2(x^2 + 3)}{(x^2 + 3)^4}
+				}$
+			</div>
+			which gives the critical points of the first derivative:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= \frac{-12(x^2 + 3)^2 + 48x^2(x^2 + 3)}{(x^2 + 3)^4} \\
+					0 &= -12(x^2 + 3)^2 + 48x^2(x^2 + 3) \\
+					0 &= 12(x^2 + 3)(-(x^2 + 3) + 4x^2) \\
+					0 &= 12(x^2 + 3)(3x^2 - 3) \\
+					x &= \pm 1
+				}$
+			</div>
+			Now the neccesary evaluations are:
+			<div class="latex_equation">
+				$\eqalign{
+					f(-\infty) &= 0 \\
+					f(-1) &= \frac{3}{4} \\
+					f(1) &= -\frac{3}{4} \\
+					f(\infty) &= 0
+				}$
+			</div>
+			Thus we can state that the maximum and minimum slopes occur at $x = -1$ and $x = 1$ respectively. To determine the tangent lines we use the point-slope form:
+			<div class="latex_equation">
+				$\eqalign{
+					y - \frac{3}{2} &= \frac{3}{4}(x + 1) \\
+					y - \frac{3}{2} &= -\frac{3}{4}(x - 1)
+				}$
+			</div>
+		</div>
+	</div>
+</div>

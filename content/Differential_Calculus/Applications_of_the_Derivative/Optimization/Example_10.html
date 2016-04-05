@@ -1,0 +1,51 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	A cylindrical can is to hold $20\pi$ $\text{m}^3$ of liquid. The material for the top and bottom costs $\frac{\$ 10}{\text{m}^2}$ and $\frac{\$ 8}{\text{m}^2}$ for the side. Find the radius, $r$, and height, $h$ of the most economical can.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First identify the objective function:
+			<div class="latex_equation">
+				$\eqalign{
+					f(r,h) = 20\pi r^2 + 16\pi rh
+				}$
+			</div>
+			and the constraint function:
+			<div class="latex_equation">
+				$\eqalign{
+					\pi r^2h = 20\pi \hspace{.3cm} \text{where} \hspace{.3cm} 0 \leq r \leq \infty
+				}$
+			</div>
+			Now the objective function can be rewritten as:
+			<div class="latex_equation">
+				$\eqalign{
+					k(r) &= f\Big( r, \frac{28}{r^2} \Big) \\
+					&= 20\pi r^2 + \frac{320\pi}{r}
+				}$
+			</div>
+			Differentiation gives:
+			<div class="latex_equation">
+				$\eqalign{
+					k'(r) &= 40\pi r - \frac{320\pi}{r^2}
+				}$
+			</div>
+			where the critical points are:
+			<div class="latex_equation">
+				$\eqalign{
+					0 &= 40\pi r - \frac{320\pi}{r^2} \\
+					0 &= 40r^3 - 320 \\
+					r &= 2
+				}$
+			</div>
+			Notice that to the left of the point the derivative is negative and positive afterwards. Therefore, by the First Derivative Test we can state this is a relative minimum and since the boundaries are not included in this case, this is the only minimum, thus it is also the absolute minimum. With this we can state the minimum cost that can be achieved is $\$240\pi$ given a height of $7$ $\text{m}$ and base radius of $2$ $\text{m}$.
+		</div>
+	</div>
+</div>
