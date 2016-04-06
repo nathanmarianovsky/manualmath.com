@@ -5,7 +5,7 @@
 	Determine all critical points of the function:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) = x^6 + \ln(2)
+			f(x) = \frac{x^2 + 1}{e^x}
 		}$
 	</div>
 	and identify each one's behavior according to the Higher-Order Derivative Test.
@@ -21,22 +21,23 @@
 			To determine the critical points:
 			<div class="latex_equation">
 				$\eqalign{
-					f'(x) &= 6x^5 \\
-					0 &= 6x^5 \\
-					x &= 0
+					f'(x) &= -(x - 1)^2 e^{-x} \\
+					0 &= -(x - 1)^2 e^{-x} \\
+					x &= 1
 				}$
 			</div>
 			Now we keep taking derivatives at the critical point until it evaluates to something other than zero:
 			<div class="latex_equation">
 				$\eqalign{
-					f''(x) = 30x^4 &\implies f''(0) = 0 \\
-					f'''(x) = 120x^3 &\implies f'''(0) = 0 \\
-					f^{(4)}(x) = 360x^2 &\implies f^{(4)}(0) = 0 \\
-					f^{(5)}(x) = 720x &\implies f^{(5)}(0) = 0 \\
-					f^{(6)}(x) = 720x &\implies f^{(6)}(0) = 720
+					f''(x) &= (x^2 - 4x + 3)e^{-x} \\
+					&\implies f''(1) = 0 \\
+					f'''(x) &= x(x^2 - 6x + 7)e^{-x} \\
+					&\implies f'''(1) = 0 \\
+					f^{(4)}(x) &= (x^2 - 8x + 13)e^{-x} \\
+					&\implies f^{(4)}(1) = 6e^{-1}
 				}$
 			</div>
-			So in our case $n = 6$ and $f^{(n)}(0) > 0$. According to the Higher-Order Derivative Test the critical point $x = 0$ is a relative minimum for the original function.
+			So in our case $n = 4$ and $f^{(n)}(0) > 0$. According to the Higher-Order Derivative Test the critical point $x = 1$ is a relative minimum for the original function.
 		</div>
 	</div>
 </div>

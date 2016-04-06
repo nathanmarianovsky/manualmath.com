@@ -1,0 +1,85 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine all critical points of the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = g(x)(x - a)^n \hspace{.3cm} \text{where} \hspace{.3cm} n \in \mathbb{N} \hspace{.3cm} \text{and} \hspace{.3cm} a \in \mathbb{R} 
+		}$
+	</div>
+	given the conditions:
+	<div class="latex_equation">
+		$\eqalign{
+			g(a) \neq 0 \hspace{.3cm} \text{and} \hspace{.3cm} \frac{a - x}{n} \neq \frac{g(x)}{g'(x)} \hspace{.3cm} \forall x
+		}$
+	</div>
+	and identify each one's behavior according to the Higher-Order Derivative Test.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			To determine the critical points:
+			<div class="latex_equation">
+				$\eqalign{
+					f'(x) &= g'(x)(x - a)^n + ng(x)(x - a)^{n - 1} \\
+					0 &= g'(x)(x - a)^n + ng(x)(x - a)^{n - 1} \\
+					0 &= (x - a)^{n - 1}(g'(x)(x - a) + ng(x)) \\
+					x &= a
+				}$
+			</div>
+			Now we keep taking derivatives at the critical point until it evaluates to something other than zero:
+			<div class="latex_equation">
+				$\eqalign{
+					f''(x) &= g''(x)(x - a)^n + 2ng'(x)(x - a)^{n - 1} \\
+					& \hspace{.4cm} + n(n - 1)g(x)(x - a)^{n - 2} \\
+					&\implies f''(a) = 0 \\
+					f'''(x) &= g'''(x)(x - a)^n + 3ng''(x)(x - a)^{n - 1} \\
+					& \hspace{.4cm} + 3n(n - 1)g'(x)(x - a)^{n - 2} \\
+					& \hspace{.4cm} + n(n - 1)(n - 2)g(x)(x - a)^{n - 3} \\
+					&\implies f'''(a) = 0 \\
+					&\vdots \\
+					f^{(k)}(x) &= \sum_{i = 0}^k {k \choose i} \frac{n!}{(n - i)!} g^{(k - i)}(x) (x - a)^{n - i} \\
+					&\implies f^{(k)}(a) = 0 \hspace{.3cm} \text{if} \hspace{.3cm} k \leq n \\
+					f^{(n)}(x) &= \sum_{i = 0}^n {n \choose i} \frac{n!}{(n - i)!} g^{(n - i)}(x) (x - a)^{n - i} \\
+					&\implies f^{(a)} = {n \choose n} \frac{n!}{0!} g(a) = n!g(a)
+				}$
+			</div>
+			Now depending on the specific parameters the result is different:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>$n$</td>
+					    <td>Sign of $g(a)$</td>
+					    <td>Implication</td>
+					</tr>
+					<tr>
+				    	<td>Even</td>
+					    <td>$-$</td>
+					    <td>$x = c$ is a relative maximum of $f$</td>
+					</tr>
+					<tr>
+				    	<td>Even</td>
+					    <td>$+$</td>
+					    <td>$x = c$ is a relative minimum of $f$</td>
+					</tr>
+					<tr>
+				    	<td>Odd</td>
+					    <td>$-$</td>
+					    <td>$x = c$ is a strictly decreasing point of inflection of $f$</td>
+					</tr>
+					<tr>
+				    	<td>Odd</td>
+					    <td>$+$</td>
+					    <td>$x = c$ is a strictly increasing point of inflection of $f$</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
