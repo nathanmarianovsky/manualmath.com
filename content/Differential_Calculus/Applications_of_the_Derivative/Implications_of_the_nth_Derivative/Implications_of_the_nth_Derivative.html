@@ -125,3 +125,20 @@
 		</div>
 	</div>
 </div>
+
+<div class="latex_section">
+	Proof by Recursive Use of The First Derivative Test
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_2">
+	<div class="hidden_div" id="hidden_div_2">
+		<div class="latex_body">
+			First lets assume that $n$ is odd and $f^{(n)}(c) < 0$. If the slope of $f^{(n - 1)}$ is strictly negative and $f^{(n - 1)}(c) = 0$, we must have $f^{(n - 1)}$ transition from positive to negative and by the First Derivative Test $x = c$ is a relative maximum for $f^{(n - 2)}$. Next we consider that we have a relative maximum and $f^{(n - 2)}(c) = 0$, then $f^{(n - 2)} < 0$ in a neighborhood around the critical point. So now we apply the process just used for $f^{(n)} < 0$ on $f^{(n - 2)} < 0$. If you keep doing this eventually you will arrive at $f''' < 0$ in a neighborhood around the critical point. Since $f''(c) = 0$ and the slope is strictly negative we must have $f''$ transition from positive to negative and by the First Derivative Test $x = c$ is a relative maximum for $f'$. The important part here is that $f''$ transitions from positive to negative, thus $x = c$ is a strictly decreasing point of inflection.
+			<br><br>
+			Now lets assume that $n$ is odd and $f^{(n)}(c) > 0$. If the slope of $f^{(n - 1)}$ is strictly positive and $f^{(n - 1)}(c) = 0$, we must have $f^{(n - 1)}$ transition from negative to positive and by the First Derivative Test $x = c$ is a relative minimum for $f^{(n - 2)}$. Next we consider that we have a relative minimum and $f^{(n - 2)}(c) = 0$, then $f^{(n - 2)} > 0$ in a neighborhood around the critical point. So now we apply the process just used for $f^{(n)} > 0$ on $f^{(n - 2)} > 0$. If you keep doing this eventually you will arrive at $f''' > 0$ in a neighborhood around the critical point. Since $f''(c) = 0$ and the slope is strictly positive we must have $f''$ transition from negative to positive and by the First Derivative Test $x = c$ is a relative minimum for $f'$. The important part here is that $f''$ transitions from negative to positive, thus $x = c$ is a strictly increasing point of inflection.
+			<br><br>
+			Switch it up and now consider the scenario with even $n$ and $f^{(n)}(c) < 0$. If the slope of $f^{(n - 1)}$ is strictly negative and $f^{(n - 1)}(c) = 0$, we must have $f^{(n - 1)}$ transition from positive to negative and by the First Derivative Test $x = c$ is a relative maximum for $f^{(n - 2)}$. Next we consider that we have a relative maximum and $f^{(n - 2)}(c) = 0$, then $f^{(n - 2)} < 0$ in a neighborhood around the critical point. So now we apply the process just used for $f^{(n)} < 0$ on $f^{(n - 2)} < 0$. If you keep doing this eventually you will arrive at $f'' < 0$ in a neighborhood around the critical point. Since $f''(c) = 0$ and the slope is strictly negative we must have $f'$ transition from positive to negative and by the First Derivative Test $x = c$ is a relative maximum for $f$.
+			<br><br>
+			Finally consider even $n$ and $f^{(n)}(c) > 0$. If the slope of $f^{(n - 1)}$ is strictly positive and $f^{(n - 1)}(c) = 0$, we must have $f^{(n - 1)}$ transition from negative to positive and by the First Derivative Test $x = c$ is a relative minimum for $f^{(n - 2)}$. Next we consider that we have a relative minimum and $f^{(n - 2)}(c) = 0$, then $f^{(n - 2)} > 0$ in a neighborhood around the critical point. So now we apply the process just used for $f^{(n)} > 0$ on $f^{(n - 2)} > 0$. If you keep doing this eventually you will arrive at $f'' > 0$ in a neighborhood around the critical point. Since $f'(c) = 0$ and the slope is strictly positive we must have $f'$ transition from negative to positive and by the First Derivative Test $x = c$ is a relative minimum for $f$.
+	</div>
+</div>
