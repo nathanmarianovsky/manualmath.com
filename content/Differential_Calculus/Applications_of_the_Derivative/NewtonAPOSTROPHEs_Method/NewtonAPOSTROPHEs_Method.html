@@ -92,7 +92,7 @@
 			&= x - \Big( x_n - \frac{f(x_n)}{f'(x_n)} \Big) \\
 			&= x - \Big( x_n + \epsilon_n + \frac{f''(x_n)}{2f'(x_n)}\epsilon_n^2 \Big) \\
 			&= -\frac{f''(x_n)}{2f'(x_n)}\epsilon_n^2 \\
-			|\epsilon_{n + 1}| &= \frac{1}{2} \Bigg| \frac{f''(x_n)}{f'(x_n)} \Bigg| \epsilon_n^2
+			|\epsilon_{n + 1}| &= \frac{1}{2} \Bigg| \frac{f''(x_n)}{f'(x_n)} \Bigg| |\epsilon_n|^2
 		}$
 	</div>
 	The last line is the one that shows the rate of convergence is quadratic due to the right side. Of course to say this we have to assume a couple of conditions:
@@ -106,7 +106,7 @@
 	We can even go on to show explicitly that the sequence of errors is decreasing by determining an upper bound, $\Omega \in \mathbb{R}$, s.t.:
 	<div class="latex_equation">
 		$\eqalign{
-			|\epsilon_{n + 1}| \leq \Omega \epsilon_n^2
+			|\epsilon_{n + 1}| \leq \Omega |\epsilon_n|^2
 		}$
 	</div>
 	To define the upper bound we can use our conclusion from above and choose the maximal value that the ratio of the two derivatives take:
