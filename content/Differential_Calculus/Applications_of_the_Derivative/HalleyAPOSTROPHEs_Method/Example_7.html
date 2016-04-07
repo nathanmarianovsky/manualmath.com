@@ -1,0 +1,36 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the function:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x) = x^2 - c \hspace{.3cm} \text{where} \hspace{.3cm} c \in \mathbb{R}
+		}$
+	</div>
+	show that the sequence $x_0, x_1, x_2, \dots$ of Halley's Method satisfies the difference equation:
+	<div class="latex_equation">
+		$\eqalign{
+			x_{n + 1} = \frac{x_n^3 + 3cx_n}{3x_n^2 + c}
+		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			For the given function Halley's Method takes the form:
+			<div class="latex_equation">
+				$\eqalign{
+					x_{n + 1} &= x_n - \frac{2(x_n^2 - c)(2x_n)}{2(2x_n)^2 - (x_n^2 - c)(2)} \\
+					&= x_n - \frac{2x_n^3 - 2cx_n}{3x_n^2 + c} \\
+					&= \frac{x_n^3 + 3cx_n}{3x_n^2 + c}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

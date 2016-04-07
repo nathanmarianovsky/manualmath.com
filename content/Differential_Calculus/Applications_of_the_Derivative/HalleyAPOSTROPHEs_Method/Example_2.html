@@ -1,0 +1,68 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\sin(x) = x^2
+		}$
+	</div>
+	approximate the solution up to $5$ decimal places by using Halley's Method to determine $x_5$ on the interval $\Big[ \frac{1}{2}, 1 \Big]$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First we rewrite the equation as:
+			<div class="latex_equation">
+				$\eqalign{
+					0 = \sin(x) - x^2
+				}$
+			</div>
+			and in this scenario Halley's Method takes the form:
+			<div class="latex_equation">
+				$\eqalign{
+					x_{n + 1} = x_n - \frac{2(\sin(x_n) - x_n^2)(\cos(x_n) - 2x_n)}{2(\cos(x_n) - 2x_n)^2 + (\sin(x_n) - x_n^2)(\sin(x_n) + 2)}
+				}$
+			</div>
+			We can choose the starting point to be $x = 1$ and the iterations take on the values:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>$\textbf{n}$</td>
+					    <td>$\textbf{x}_n$</td>
+					</tr>
+					<tr>
+				    	<td>$0$</td>
+					    <td>$1.00000$</td>
+					</tr>
+					<tr>
+				    	<td>$1$</td>
+					    <td>$0.87856$</td>
+					</tr>
+					<tr>
+				    	<td>$2$</td>
+					    <td>$0.87673$</td>
+					</tr>
+					<tr>
+				    	<td>$3$</td>
+					    <td>$0.87673$</td>
+					</tr>
+					<tr>
+				    	<td>$4$</td>
+					    <td>$0.87673$</td>
+					</tr>
+					<tr>
+				    	<td>$5$</td>
+					    <td>$0.87673$</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
