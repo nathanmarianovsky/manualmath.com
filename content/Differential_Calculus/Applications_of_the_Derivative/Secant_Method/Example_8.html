@@ -1,0 +1,47 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the recurrence relation:
+	<div class="latex_equation">
+		$\eqalign{
+			x_{n + 1} = \frac{x_nx_{n - 1} + c}{x_n + x_{n - 1}}
+		}$
+	</div>
+	Assume that:
+	<div class="latex_equation">
+		$\eqalign{
+			\lim_{n \rightarrow \infty} x_n = L
+		}$
+	</div>
+	and prove that $L = \pm\sqrt{c}$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Given the limit we can also state:
+			<div class="latex_equation">
+				$\eqalign{
+					\lim_{n \rightarrow \infty} x_{n + 1} = \lim_{n \rightarrow \infty} x_{n - 1} = L
+				}$
+			</div>
+			Plugging all of this into the recurrence relation provides:
+			<div class="latex_equation">
+				$\eqalign{
+					x_{n + 1} &= \frac{x_nx_{n - 1} + c}{x_n + x_{n - 1}} \\
+					\lim_{n \rightarrow \infty} x_{n + 1} &= \lim_{n \rightarrow \infty} \frac{x_nx_{n - 1} + c}{x_n + x_{n - 1}} \\
+					L &= \Big[ \lim_{n \rightarrow \infty} (x_nx_{n - 1} + c) \Big]\Big[ \lim_{n \rightarrow \infty} (x_n + x_{n - 1}) \Big]^{-1} \\
+					L &= \frac{L^2 + c}{2L} \\
+					2L^2 &= L^2 + c \\
+					L^2 &= c \\
+					L &= \pm \sqrt{c}
+				}$
+			</div>
+		</div>
+	</div>
+</div>

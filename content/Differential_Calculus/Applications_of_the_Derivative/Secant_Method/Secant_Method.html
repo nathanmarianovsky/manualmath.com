@@ -33,11 +33,75 @@
 			\epsilon_n = x - x_n
 		}$
 	</div>
-	To prove the convergence of the algorithm we will show that this sequence approaches zero. Using the definition of the Secant Method:
+	To prove the convergence of the algorithm we will show that this sequence approaches zero. Using a quadratic approximation:
 	<div class="latex_equation">
 		$\eqalign{
-			x - \epsilon_{n + 1} &= x - \epsilon_n - f(x - \epsilon_n) \cdot \frac{x - \epsilon_n - (x - \epsilon_{n - 1})}{f(x - \epsilon_n) - f(x - \epsilon_{n - 1})} \\
-			\epsilon_{n + 1} &= \epsilon_n - f(x - \epsilon_n) \cdot \frac{\epsilon_n - \epsilon_{n - 1}}{f(x - \epsilon_n) - f(x - \epsilon_{n - 1})} \\
+			f(x_n) &= f(x) + f'(x)(x_n - x) + \frac{f''(x)}{2}(x_n - x)^2 \\
+		}$
+	</div>
+	our situation turns into the following:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x_n) &= f'(x)(x_n - x) + \frac{f''(x)}{2}(x_n - x)^2 \\
+			f(x - \epsilon_n) &= -f'(x)\epsilon_n + \frac{f''(x)}{2}\epsilon_n^2 \\
+			&= \epsilon_n f'(x) \Big[ M\epsilon_n - 1 \Big] \hspace{.3cm} \text{where} \hspace{.3cm} M = \frac{f''(x)}{2f'(x)}
+		}$
+	</div>
+	which provides:
+	<div class="latex_equation">
+		$\eqalign{
+			f(x - \epsilon_n) - f(x - \epsilon_{n - 1}) &= \epsilon_n f'(x) \Big[ M\epsilon_n - 1 \Big] - \epsilon_{n - 1} f'(x) \Big[ M\epsilon_{n - 1} - 1 \Big] \\
+			&= f'(x) \Big[ M(\epsilon_n^2 - \epsilon_{n - 1}^2) - (\epsilon_n - \epsilon_{n - 1}) \Big] \\
+			&= (\epsilon_n - \epsilon_{n - 1})f'(x)\Big[ M(\epsilon_n - \epsilon_{n - 1}) - 1 \Big]
+		}$
+	</div>
+	Now we have the necessary tools the see the convergence:
+	<div class="latex_equation">
+		$\eqalign{
+			x_{n + 1} &= x_n - f(x_n) \cdot \frac{x_n - x_{n - 1}}{f(x_n) - f(x_{n - 1})} \\
+			x - \epsilon_{n + 1} &= (x - \epsilon_n) - f(x - \epsilon_n) \cdot \frac{(x - \epsilon_n) - (x - \epsilon_{n - 1})}{f(x - \epsilon_n) - f(x - \epsilon_{n - 1})} \\
+			\epsilon_{n + 1} &= \epsilon_n - \epsilon_n f'(x) \Big[ M\epsilon_n - 1 \Big] \cdot \frac{\epsilon_n - \epsilon_{n - 1}}{(\epsilon_n - \epsilon_{n - 1})f'(x)\Big[ M(\epsilon_n - \epsilon_{n - 1}) - 1 \Big]} \\
+			&= \epsilon_n - \frac{\epsilon_n\Big[ M\epsilon_n - 1 \Big]}{M(\epsilon_n - \epsilon_{n - 1}) - 1} \\
+			&= \frac{M\epsilon_n\epsilon_{n - 1}}{M(\epsilon_n - \epsilon_{n - 1}) - 1} \\
+			&\approx M\epsilon_n\epsilon_{n - 1}
+		}$
+	</div>
+	and unlike Newton's Method which has quadratic convergence, the Secant Method converges a bit slower. From the above it is hard to tell the degree of convergence without using a bit of algebraic manipulation. Formally an algorithm is said to be convergent with convergence rate $p$ if:
+	<div class="latex_equation">
+		$\eqalign{
+			\exists \hspace{.1cm} C \in \mathbb{R} \hspace{.3cm} \text{s.t.} \hspace{.3cm} |\epsilon_{n + 1}| \approx C|\epsilon_n|^p
+		}$
+	</div>
+	which allows us to state:
+	<div class="latex_equation">
+		$\eqalign{
+			|\epsilon_n| \approx C|\epsilon_{n - 1}|^p
+		}$
+	</div>
+	Using the error defined for $n + 1$:
+	<div class="latex_equation">
+		$\eqalign{
+			C|\epsilon_n|^p &= |M||\epsilon_n||\epsilon_{n - 1}| \\
+			|\epsilon_n|^{p - 1} &= \frac{|M|}{c}|\epsilon_{n - 1}| \\
+			|\epsilon_n| &= \Big( \frac{|M|}{C} \Big)^{\frac{1}{p - 1}}|\epsilon_{n - 1}|^{\frac{1}{p - 1}}
+		}$
+	</div>
+	and now comparing this to the error defined for $n$ we arrive at:
+	<div class="latex_equation">
+		$\eqalign{
+			\require{cancel}
+			p &= \frac{1}{p - 1} \\
+			0 &= p^2 - p - 1 \\
+			p &= \cancel{\frac{1 - \sqrt{5}}{2}}, \frac{1 + \sqrt{5}}{2}
+		}$
+	</div>
+	where the negative value is ignored due the fact that $p$ by definition must be positive and in this scenario it comes out to be exactly the $\textit{Golden Ratio}$. With this we can also determine the constant:
+	<div class="latex_equation">
+		$\eqalign{
+			C &= \Big( \frac{|M|}{C} \Big)^{\frac{1}{p - 1}} \\
+			C^p &= |M| \\
+			C &= |M|^{\frac{1}{p}} \\
+			&= \Bigg| \frac{f''(x)}{2f'(x)} \Bigg|^{p - 1}
 		}$
 	</div>
 </div>
