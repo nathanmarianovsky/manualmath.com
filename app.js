@@ -14,15 +14,7 @@ var express = require("express"),
 	config = require("./scripts/back-end/config"),
 	minifier = require("./scripts/back-end/minifier"),
 	app = express(),
-	pool = config.add_connections(mysql),
-	container = [],
-	splitting = [],
-	name = [],
-	tmp = [],
-	devpath = "./",
-	distpath = "./",
-	newpath = "./",
-	wait = 0;
+	pool = config.add_connections(mysql);
 
 // Tells the app use to compress files whenever possible
 app.use(compression());
@@ -32,7 +24,6 @@ app.use(favicon("./favicon.ico", {"maxAge": 2592000000 }));
 
 // Tells the app to use the current directory as the default path
 app.use(express.static(__dirname, {"maxAge": 864000000 }));
-// app.use(express.static(__dirname));
 
 // Adds all of the routes
 client_routes.add_client_routes(app);
