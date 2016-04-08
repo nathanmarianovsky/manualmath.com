@@ -23,7 +23,7 @@
 
 
 # Setting Up
-In order to get started first copy the repository over to your local machine. Now I have to assume that you have npm and git installed, and so inside the root directory of the project as administrator run:
+I have to assume that you have npm, git, and java installed and so in order to get started first copy the repository over to your local machine. Inside the root directory of the project as administrator run:
 ```js
 npm install -g bower gulp
 npm install gulp gulp-install
