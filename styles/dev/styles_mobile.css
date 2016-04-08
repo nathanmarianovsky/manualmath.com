@@ -83,6 +83,10 @@
 		text-align: center;
 	}
 
+	#nav-mobile {
+		left: 0%;
+	}
+
 	#nav-mobile .menu_items {
 		line-height: 80px;
 		font-size: 10px;
