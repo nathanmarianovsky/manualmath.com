@@ -18,11 +18,6 @@
 - [Running the Server](#running-the-server)
     - [Apache Server](#apache-server)
     - [NodeJS Server](#nodejs-server)
-- [Version History](#version-history)
-    - [v.0.0.4](#v004)
-    - [v.0.0.3](#v003)
-    - [v.0.0.2](#v002)
-    - [v.0.0.1](#v001)
 - [Future Plans](#future-plans)
 - [License](#license)
 
@@ -203,34 +198,6 @@ The server is now listening!
 All html files in /client, CSS files in /styles/dev, and RequireJS have been minified!
 ```
 the server has officially been launched and is listening on the port you provided.
-
-
-# Version History
-
-### v.0.0.4
-* Logo Redesign
-* Hamburger Button Fix for Mobile
-* Official Documentation
-* Consolidated the Initial Development Process into a Single Command
-* Content++
-
-### v.0.0.3
-* Logo Redesign
-* Math Formula Rendering Issue Fixed
-* Images not Loading Fixed
-* No More About Link on the Landing Page Menu
-* Fixed Some of the Content
-
-### v.0.0.2
-* Mobile Support
-* About Page - Nore More Home Page
-* Subject Page - Gives a Brief Overview on a Subject and its Notation
-* Topic Page - Gives a Brief Overview on a Topic
-* Menu Selection Coloring
-* Logo and Favicon
-
-### v.0.0.1
-* Initial Release
 
 
 # Future Plans
