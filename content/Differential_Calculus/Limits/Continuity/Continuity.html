@@ -21,7 +21,7 @@
 	Continuity on an Interval
 </div>
 <div class="latex_body">
-	A function, $f(x)$, is said to be $\textit{continuous}$ on an interval, $S \subseteq \mathbb{R}$, if it continuous at every point.
+	A function, $f(x)$, is said to be $\textit{continuous}$ on an interval, $S \subseteq \mathbb{R}$, if it continuous at every point in $S$.
 </div>
 
 <div class="latex_section">
@@ -97,5 +97,16 @@
 	Intermediate Value Theorem
 </div>
 <div class="latex_body">
-	Let the setup be a set $[a,b] \subseteq \mathbb{R}$ attached to a continuous function $f(x)$ with the assumptions that $a < b$ and $f(a) < f(b)$. Given a number $\alpha \in [f(a),f(b)]$, the $\textit{Intermediate Value Theorem}$ states that there exists a number $c$ s.t. $a \leq c \leq b$ and $f(c) = \alpha$.
+	Given a continuous function on the closed interval $[a,b]$, according to the $\textit{Intermediate Value Theorem}$ the function is guaranteed to attain:
+	<div class="latex_equation">
+		$\eqalign{
+			\mathcal{R}(f) = \Big[ \min\{f(a),f(b)\}, \max\{f(a),f(b)\} \Big]
+		}$
+	</div>
+	In other words:
+	<div class="latex_equation">
+		$\eqalign{
+			\forall \alpha \in \mathcal{R}(f) \hspace{.1cm} \exists \hspace{.1cm} c \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(c) = \alpha
+		}$
+	</div>
 </div>
