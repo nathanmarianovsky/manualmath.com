@@ -17,46 +17,31 @@ var express = require("express"),
 	pool = config.add_connections(mysql),
 	cluster = require("cluster"),
 	numCPUs = require("os").cpus().length,
-	port = parseInt(process.argv[2]);
+	// morgan = require("morgan");
+
+// app.use(morgan("dev"));
 
 // Tells the app use to compress files whenever possible
 app.use(compression());
 
-// Tells the app where to locate the favicon
+// // Tells the app where to locate the favicon
 app.use(favicon("./favicon.ico", {"maxAge": 2592000000 }));
 
 // Tells the app to use the current directory as the default path
-// app.use(express.static(__dirname, {"maxAge": 864000000 }));
-app.use(express.static(__dirname));
+app.use(express.static(__dirname, {"maxAge": 864000000 }));
+// app.use(express.static(__dirname));
 
 // Adds all of the routes
 client_routes.add_client_routes(app);
 api_routes.add_api_routes(app, pool, fs);
 
-minifier.driver(mkdirp, compressor, minify, fs, app, () => {
-	
-	if (cluster.isMaster) {
-		for (var i = 0; i < numCPUs; i++) {
-		    cluster.fork();
-		}
-		cluster.on("exit", function(worker, code, signal) {
-		    cluster.fork();
-		});
-	} 
-	else {
-	  // http.createServer(function(request, response) {
-	  //   console.log("Request for:  " + request.url);
-	  //   response.writeHead(200);
-	  //   response.end("hello world\n");
-	  // }).listen(port);
-	  	app.listen(80, () => {
-			console.log("The server is now listening!");
-		});
-	}
-
-
-	// Tells the server to listen
-	// app.listen(80, () => {
-	// 	console.log("The server is now listening!");
-	// });
-});
+if (cluster.isMaster) {
+	minifier.driver(mkdirp, compressor, minify, fs, app, () => {});
+	for(var i = 0; i < numCPUs; i++) { cluster.fork(); }
+	cluster.on("exit", (worker, code, signal) => { cluster.fork(); });
+} 
+else {
+  	app.listen(80, () => {
+		console.log("The server is now listening!");
+	});
+}
