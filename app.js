@@ -16,7 +16,7 @@ var express = require("express"),
 	app = express(),
 	pool = config.add_connections(mysql),
 	cluster = require("cluster"),
-	numCPUs = require("os").cpus().length,
+	numCPUs = require("os").cpus().length;
 	// morgan = require("morgan");
 
 // app.use(morgan("dev"));
