@@ -12,10 +12,21 @@
 		<meta name=viewport content="initial-scale=1, width=device-width">
 		<title></title>
 		<!-- CSS Style Sheets -->
-		<script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext">
+		<!-- <link rel="stylesheet" type="text/css" href="/styles/dist/styles_all-min.css"> -->
+		<!-- <link rel="stylesheet" type="text/css" href="/styles/dist/styles_mobile-min.css"> -->
+		<!-- <link rel="stylesheet" type="text/css" href="/styles/dist/styles_desktop-min.css"> -->
+		<script async>
 			var container = [],
-				names = ["/styles/dist/styles_all-min.css", "/styles/dist/styles_mobile-min.css", "/styles/dist/styles_desktop-min.css", "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css", "https://fonts.googleapis.com/icon?family=Material+Icons", "https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext"];
-			names.forEach(sheet => {
+				raf = false,
+				// names = ["/styles/dist/styles_all-min.css", "/styles/dist/styles_mobile-min.css", "/styles/dist/styles_desktop-min.css", "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css", "https://fonts.googleapis.com/icon?family=Material+Icons", "https://fonts.googleapis.com/css?family=Roboto+Mono&subset=latin,greek,greek-ext"];
+				names = ["/styles/dist/styles_all-min.css", "/styles/dist/styles_mobile-min.css", "/styles/dist/styles_desktop-min.css"];
+			var isSafari5 = function() {
+			    return !!navigator.userAgent.match(' Safari/') && !navigator.userAgent.match(' Chrom') && !!navigator.userAgent.match(' Version/5.');
+			};
+			names.forEach(function(sheet) {
 		      	var cb = function() {
 			        var l = document.createElement("link"); l.rel = "stylesheet";
 			        l.href = sheet;
@@ -23,14 +34,16 @@
 		      	};
 		      	container.push(cb);
 			});
-	      	var raf = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame;
-	      	if (raf) {
-	      		container.forEach(obj => {
+			if(isSafari5() != true) { raf = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame; }
+	      	// var raf = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame;
+	      	// var raf = false;
+	      	if(raf) {
+	      		container.forEach(function(obj) {
 	      			raf(obj);
 	      		});
 	      	}
 	     	else {
-	     		container.forEach(obj => {
+	     		container.forEach(function(obj) {
 	     			window.addEventListener("load", obj);
 	     		});
 	    	}
@@ -38,9 +51,9 @@
 		<!-- Icon -->
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 		<!-- Require JS -->
-		<script data-main="/scripts/front-end/config" type="text/javascript" async src="/scripts/dist/require-min.js"></script>
+		<script data-main="/scripts/dist/config-min" type="text/javascript" defer src="/scripts/dist/require-min.js"></script>
 		<!-- Google Analytics -->
-		<script>
+		<script async>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
