@@ -83,6 +83,10 @@ nav {
 	padding-left: 40px;
 }
 
+#desktop_title .breadcrumb {
+	color: white;
+}
+
 .breadcrumb.changed:before {
     content: "\E5CC";
     color: rgba(255,255,255,.7);
@@ -208,6 +212,7 @@ nav {
 	position: relative;
 	text-align: center;
 	margin: 10px auto 20px auto;
+	width: 150px;
 	font-size: 20px;
 }
 
