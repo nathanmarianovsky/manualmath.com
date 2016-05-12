@@ -19,7 +19,7 @@ define(function() {
 			An array containing all of the examples
 
 	*/
-	exports.handle_links = (router, subjects, topics, sections, examples) => {
+	exports.handle_links = function(router, subjects, topics, sections, examples) {
 		$("a").click(function(e) {
 			e.preventDefault();
 			if($(this).attr("id") == "about" || $(this).attr("href") == "about.html") {
@@ -34,7 +34,7 @@ define(function() {
 						var id_num = holder[1];
 					}
 					if(id_string == "subjects" || id_string == "aboutsubject") {
-						var subject = subjects.filter(iter => {
+						var subject = subjects.filter(function(iter) {
 							return iter.sid == id_num;
 						})[0];
 						router.navigate("subject", {sname: subject.sname});
@@ -43,70 +43,70 @@ define(function() {
 						router.navigate("about");
 					}
 					else if(id_string == "topics" || id_string == "abouttopic") {
-						var topic = topics.filter(iter => {
+						var topic = topics.filter(function(iter) {
 							return iter.tid == id_num;
 						})[0],
-							subject = subjects.filter(iter => {
+							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
 						router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});
 					}
 					else if(id_string == "topicnav") {
-						var topic = topics.filter(iter => {
+						var topic = topics.filter(function(iter) {
 							return iter.tid == id_num;
 						})[0],
-							subject = subjects.filter(iter => {
+							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
 						router.navigate("subject", {sname: subject.sname});
 					}
 					else if(id_string == "sections") {
-						var section = sections.filter(iter => {
+						var section = sections.filter(function(iter) {
 							return iter.section_id == id_num;
 						})[0],
-							topic = topics.filter(iter => {
+							topic = topics.filter(function(iter) {
 							return iter.tid == section.tid;
 						})[0],
-							subject = subjects.filter(iter => {
+							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
 						router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
 					}
 					else if(id_string == "sectionnav") {
-						var section = sections.filter(iter => {
+						var section = sections.filter(function(iter) {
 							return iter.section_id == id_num;
 						})[0],
-							topic = topics.filter(iter => {
+							topic = topics.filter(function(iter) {
 							return iter.tid == section.tid;
 						})[0],
-							subject = subjects.filter(iter => {
+							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
 						router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});
 					}
 					else if(id_string == "sectionname") {
-						var section = sections.filter(iter => {
+						var section = sections.filter(function(iter) {
 							return iter.section_id == id_num;
 						})[0],
-							topic = topics.filter(iter => {
+							topic = topics.filter(function(iter) {
 							return iter.tid == section.tid;
 						})[0],
-							subject = subjects.filter(iter => {
+							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
 						router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
 					}
 					else if(id_string == "examples") {
-						var example = examples.filter(iter => {
+						var example = examples.filter(function(iter) {
 							return iter.eid == id_num;
 						})[0],
-							section = sections.filter(iter => {
+							section = sections.filter(function(iter) {
 							return iter.section_id == example.section_id;
 						})[0],
-							topic = topics.filter(iter => {
+							topic = topics.filter(function(iter) {
 							return iter.tid == section.tid;
 						})[0],
-							subject = subjects.filter(iter => {
+							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
 						router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: example.ename});
