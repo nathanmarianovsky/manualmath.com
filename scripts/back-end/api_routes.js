@@ -5,6 +5,7 @@ exports.add_api_routes = (app, pool, fs) => {
 	// The API methods to get all subjects, topics, sections, or examples
 	app.get("/api/:objects", (request, response) => {
 		var objects = request.params.objects;
+		response.set('Cache-Control', 'public, max-age=864000000');
 		if(objects == "subjects") {
 			pool.query("SELECT sid,sname,`order` FROM subject ORDER BY `order` ASC", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
@@ -53,6 +54,7 @@ exports.add_api_routes = (app, pool, fs) => {
 			param = request.params.param,
 			statement = "";
 
+		response.set('Cache-Control', 'public, max-age=864000000');
 		if(want == "subject") {
 			statement = "SELECT sname FROM subject WHERE sid=" + param;
 			pool.query(statement, (err, results) => {
@@ -147,7 +149,8 @@ exports.add_api_routes = (app, pool, fs) => {
 			statement = "",
 			check = false,
 			existence = false;
-
+		
+		response.set('Cache-Control', 'public, max-age=864000000');
 		want != "section" ? holder_name = want.slice(0,1) + "name" : holder_name = "section_name";
 		want != "section" ? holder_id = want.slice(0,1) + "id" : holder_id = "section_id";
 		param_type == "name" ? statement = "SELECT " + holder_id + " FROM " + want + " WHERE " + holder_name + "='" + param + "'" : statement = "SELECT " + holder_id + " FROM " + want + " WHERE " + holder_id + "=" + param;
