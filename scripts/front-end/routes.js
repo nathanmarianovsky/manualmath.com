@@ -1,4 +1,4 @@
-define(["app/functions", "app/navs", "app/links"], function(functions, navs, links) {
+define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(functions, navs, links) {
 	var exports = {};
 
 	/*
@@ -19,8 +19,8 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			An array containing all of the examples
 
 	*/
-	exports.add_listeners = (router, subjects, topics, sections, examples) => {
-		router.addRouteListener("def", (toState, fromState) => {
+	exports.add_listeners = function(router, subjects, topics, sections, examples) {
+		router.addRouteListener("def", function(toState, fromState) {
 			if(functions.width_func() < 992) {
 				$(".button-collapse").sideNav("hide");
 			}
@@ -28,9 +28,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$("title").text("About");
 			$("main").empty();
 			$("main").append($("<div>").attr("id", "about_page"));
-			$.get("/client/dist/about-min.html").done(content => {
+			$.get("/client/dist/about-min.html").done(function(content) {
 				$("#about_page").append(content);
-				$.get("/client/dist/notation-min.html").done(notation => {
+				$.get("/client/dist/notation-min.html").done(function(notation) {
 					$("#notation_box").append(notation);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 				});
@@ -42,7 +42,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_desktop_title("about");
 		});
 
-		router.addRouteListener("about", (toState, fromState) => {
+		router.addRouteListener("about", function(toState, fromState) {
 			if(functions.width_func() < 992) {
 				$(".button-collapse").sideNav("hide");
 			}
@@ -50,9 +50,9 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$("title").text("About");
 			$("main").empty();
 			$("main").append($("<div>").attr("id", "about_page"));
-			$.get("/client/dist/about-min.html").done(content => {
+			$.get("/client/dist/about-min.html").done(function(content) {
 				$("#about_page").append(content);
-				$.get("/client/dist/notation-min.html").done(notation => {
+				$.get("/client/dist/notation-min.html").done(function(notation) {
 					$("#notation_box").append(notation);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 				});
@@ -64,21 +64,21 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_desktop_title("about");
 		});
 
-		router.addRouteListener("subject", (toState, fromState) => {
+		router.addRouteListener("subject", function(toState, fromState) {
 			if(functions.is_mobile()) {
 				$(".button-collapse").sideNav("hide");
 			}
-			var subject = subjects.filter(iter => {
+			var subject = subjects.filter(function(iter) {
 				return iter.sname == toState.params.sname;
 			})[0];
 			navs.driver("subject", subject);
 			$("main").empty();
 			$("title").text(subject.clean_name);
 			$("main").append($("<div>").attr("id", "subject_page"));
-			$.get("/content/" + subject.sname + "/" + subject.sname + ".html").done(content => {
+			$.get("/content/" + subject.sname + "/" + subject.sname + ".html").done(function(content) {
 				$("#subject_page").append(content);
 				functions.handle_breadcrumbs("subject", $("h2").first(), subject);
-				$.get("/content/" + subject.sname + "/Notation.html").done(notation => {
+				$.get("/content/" + subject.sname + "/Notation.html").done(function(notation) {
 					$("#subject_page").append(notation);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
 				});
@@ -91,21 +91,21 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_desktop_title("subject", subject);
 		});
 
-		router.addRouteListener("subject.topic", (toState, fromState) => {
+		router.addRouteListener("subject.topic", function(toState, fromState) {
 			if(functions.is_mobile()) {
 				$(".button-collapse").sideNav("hide");
 			}
-			var subject = subjects.filter(iter => {
+			var subject = subjects.filter(function(iter) {
 				return iter.sname == toState.params.sname;
 			})[0],
-				topic = subject.topics.filter(iter => {
+				topic = subject.topics.filter(function(iter) {
 				return iter.tname == toState.params.tname;
 			})[0];
 			navs.driver("topic", topic, subject);
 			$("main").empty();
 			$("title").text(subject.clean_name + " - " + topic.clean_name);
 			$("main").append($("<div>").attr("id", "topic_page"));
-			$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(content => {
+			$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(function(content) {
 				$("#topic_page").append(content);
 				functions.handle_breadcrumbs("topic", $("h2").first(), subject, topic);
 				MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
@@ -118,17 +118,17 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			functions.handle_desktop_title("topic", subject, topic);
 		});
 
-		router.addRouteListener("subject.topic.section.current_page", (toState, fromState) => {
+		router.addRouteListener("subject.topic.section.current_page", function(toState, fromState) {
 			if(functions.width_func() < 992) {
 				$(".button-collapse").sideNav("hide");
 			}
-			var subject = subjects.filter(iter => {
+			var subject = subjects.filter(function(iter) {
 				return iter.sname == toState.params.sname;
 			})[0],
-				topic = subject.topics.filter(iter => {
+				topic = subject.topics.filter(function(iter) {
 				return iter.tname == toState.params.tname;
 			})[0],
-				section = topic.sections.filter(iter => {
+				section = topic.sections.filter(function(iter) {
 				return iter.section_name == toState.params.section_name;
 			})[0];
 			$("main").empty();
@@ -138,7 +138,7 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 			$("main").append($("<div>").attr("id", "latex"));
 			if(section.section_name == toState.params.current_page_name) {
 				$("#section_name" + section.section_id).addClass("active");
-				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(content => {
+				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(function(content) {
 					$("#latex").append(content);
 					functions.handle_breadcrumbs("section", $(".latex_section").first(), subject, topic, section);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
@@ -146,11 +146,11 @@ define(["app/functions", "app/navs", "app/links"], function(functions, navs, lin
 				});
 			}
 			else {
-				var example = section.examples.filter(iter => {
+				var example = section.examples.filter(function(iter) {
 					return iter.ename == toState.params.current_page_name;
 				})[0];
 				$("#examples_li" + example.eid).addClass("active");
-				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html").done(content => {
+				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html").done(function(content) {
 					$("#latex").append(content);
 					functions.handle_breadcrumbs("example", $(".latex_section").first(), subject, topic, section, example);
 					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
