@@ -13,7 +13,7 @@ define(function() {
 			The right hand side object
 
 	*/
-	exports.compare_object_order = (lhs, rhs) => { return lhs.order < rhs.order ? -1 : 1; };
+	exports.compare_object_order = function(lhs, rhs) { return lhs.order < rhs.order ? -1 : 1; };
 
 	/*
 
@@ -27,11 +27,11 @@ define(function() {
 	*/
 	exports.get_all = function() {
 		var urls = Array.prototype.slice.call(arguments),
-			promises = urls.map(url => { return $.get(url); }),
+			promises = urls.map(function(url) { return $.get(url); }),
 			def = $.Deferred();
 		$.when.apply($, promises).done(function() {
 			var responses = Array.prototype.slice.call(arguments);
-			def.resolve.apply(def, responses.map(res => { return res[0]; }));
+			def.resolve.apply(def, responses.map(function(res) { return res[0]; }));
 		});
 		return def.promise();
 	};
@@ -52,26 +52,26 @@ define(function() {
 			An array of all the examples
 
 	*/
-	exports.organize = (subjects, topics, sections, examples) => {
-		sections.forEach(section => {
+	exports.organize = function(subjects, topics, sections, examples) {
+		sections.forEach(function(section) {
 			section.examples = [];
-			examples.forEach(example => {
+			examples.forEach(function(example) {
 				if(section.section_id == example.section_id) {
 					section.examples.push(example);
 				}
 			});
 		});
-		topics.forEach(topic => {
+		topics.forEach(function(topic) {
 			topic.sections = [];
-			sections.forEach(section => {
+			sections.forEach(function(section) {
 				if(topic.tid == section.tid) {
 					topic.sections.push(section);
 				}
 			});
 		});
-		subjects.forEach(subject => {
+		subjects.forEach(function(subject) {
 			subject.topics = [];
-			topics.forEach(topic => {
+			topics.forEach(function(topic) {
 				if(subject.sid == topic.sid) {
 					subject.topics.push(topic);
 				}
@@ -90,12 +90,12 @@ define(function() {
 			An array of all the subjects
 
 	*/
-	exports.sort_subjects = subjects => {
-		subjects.forEach(subject => {
+	exports.sort_subjects = function(subjects) {
+		subjects.forEach(function(subject) {
 			subject.topics.sort(exports.compare_object_order);
-			subject.topics.forEach(topic => {
+			subject.topics.forEach(function(topic) {
 				topic.sections.sort(exports.compare_object_order);
-				topic.sections.forEach(section => {
+				topic.sections.forEach(function(section) {
 					section.examples.sort(exports.compare_object_order);
 				});
 			});
@@ -112,7 +112,7 @@ define(function() {
 			The rgb/rgba color code
 
 	*/
-	exports.rgba_to_hex = orig => {
+	exports.rgba_to_hex = function(orig) {
 		var rgb = orig.replace(/\s/g,"").match(/^rgba?\((\d+),(\d+),(\d+)/i);
 		return (rgb && rgb.length === 4) ? "#" +
 		  	("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
@@ -130,7 +130,7 @@ define(function() {
 			The name of the page currently set
 
 	*/
-	exports.handle_logo_link = page => { page == "about" ? $("#logo").css("pointer-events", "none") : $("#logo").css("pointer-events", ""); };
+	exports.handle_logo_link = function(page) { page == "about" ? $("#logo").css("pointer-events", "none") : $("#logo").css("pointer-events", ""); };
 
 	/*
 
@@ -161,7 +161,7 @@ define(function() {
 	Returns the screen width.
 
 	*/
-	exports.width_func = () => {
+	exports.width_func = function() {
 		return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0;
 	}
 
@@ -190,7 +190,7 @@ define(function() {
 	Moves the logo all the way to the right on a mobile view.
 
 	*/
-	exports.handle_logo = () => {
+	exports.handle_logo = function() {
 		if(exports.width_func() < 992) {
 			if(exports.width_func() >= 750) {
 				$("#logo").css({
@@ -229,7 +229,7 @@ define(function() {
 			The name of the page currently set
 
 	*/
-	exports.handle_button = page => {
+	exports.handle_button = function(page) {
 		$("#latex .show_solution").click(function(defaultevent) {
 			defaultevent.preventDefault();
 			if(page == "notes") {
@@ -250,8 +250,8 @@ define(function() {
 	Handles the mobile logo placement on an orientation change.
 
 	*/
-	exports.handle_orientation = (page, navs, param1, param2) => {
-		$(window).on("deviceorientation", event => { 
+	exports.handle_orientation = function(page, navs, param1, param2) {
+		$(window).on("deviceorientation", function(event) { 
 			// exports.handle_logo();
 		});
 	};
@@ -272,7 +272,7 @@ define(function() {
 			An object representing the current section
 
 	*/
-	exports.handle_breadcrumbs = (page, obj, subject, topic, section, example) => {
+	exports.handle_breadcrumbs = function(page, obj, subject, topic, section, example) {
 		if(exports.width_func() < 992) {
 			if(page == "about" || page == "subject" || page == "topic") {
 				if(obj.text() == "About") {
@@ -341,7 +341,7 @@ define(function() {
 			An object representing the current section
 
 	*/
-	exports.handle_desktop_title = (page, subject, topic, section) => {
+	exports.handle_desktop_title = function(page, subject, topic, section) {
 		if(exports.width_func() >= 992) {
 			$("#desktop_title").empty();
 			if(page == "about") {
@@ -370,7 +370,7 @@ define(function() {
 	Determines whether the current device is mobile or not.
 
 	*/
-	exports.is_mobile = () => {
+	exports.is_mobile = function() {
 	    if(
 	    	/Mobi/.test(navigator.userAgent) ||
 			navigator.userAgent.match(/Phone/i) ||
