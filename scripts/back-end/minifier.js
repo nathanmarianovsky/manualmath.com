@@ -45,6 +45,42 @@ exports.minify_js = (compressor, fs) => {
 		"fileOut": "./scripts/dist/router5-min.js",
 		"callback": (err, result) => { if(err) { console.log("Minifying the router5 file threw an error: " + err.stack); } }
 	});
+	new compressor.minify({
+		"type": "yui-js",
+		"fileIn": "./scripts/front-end/functions.js",
+		"fileOut": "./scripts/dist/functions-min.js",
+		"callback": (err, result) => { if(err) { console.log("Minifying the functions file threw an error: " + err.stack); } }
+	});
+	new compressor.minify({
+		"type": "yui-js",
+		"fileIn": "./scripts/front-end/main.js",
+		"fileOut": "./scripts/dist/main-min.js",
+		"callback": (err, result) => { if(err) { console.log("Minifying the functions file threw an error: " + err.stack); } }
+	});
+	new compressor.minify({
+		"type": "yui-js",
+		"fileIn": "./scripts/front-end/config.js",
+		"fileOut": "./scripts/dist/config-min.js",
+		"callback": (err, result) => { if(err) { console.log("Minifying the functions file threw an error: " + err.stack); } }
+	});
+	new compressor.minify({
+		"type": "yui-js",
+		"fileIn": "./scripts/front-end/navs.js",
+		"fileOut": "./scripts/dist/navs-min.js",
+		"callback": (err, result) => { if(err) { console.log("Minifying the functions file threw an error: " + err.stack); } }
+	});
+	new compressor.minify({
+		"type": "yui-js",
+		"fileIn": "./scripts/front-end/routes.js",
+		"fileOut": "./scripts/dist/routes-min.js",
+		"callback": (err, result) => { if(err) { console.log("Minifying the functions file threw an error: " + err.stack); } }
+	});
+	new compressor.minify({
+		"type": "yui-js",
+		"fileIn": "./scripts/front-end/links.js",
+		"fileOut": "./scripts/dist/links-min.js",
+		"callback": (err, result) => { if(err) { console.log("Minifying the functions file threw an error: " + err.stack); } }
+	});
 };
 
 // Minifies the html files in /client
