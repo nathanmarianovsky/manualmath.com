@@ -2,8 +2,9 @@ require.config({
     baseUrl: "",
     paths: {
         app: "/scripts/front-end",
+        dist: "/scripts/dist",
         lib: "/node_modules",
-        jquery: "/node_modules/jquery/dist/jquery",
+        jquery: "/node_modules/jquery/dist/jquery.min",
         materialize: "/bower_components/materializecss-amd/dist/materialize.amd.min",
         router5: "/scripts/dist/router5-min",
         mathjax: "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
@@ -16,14 +17,14 @@ require.config({
         mathjax: {
             exports: "MathJax",
             init: function () {
-            MathJax.Hub.Config({
-                tex2jax: {inlineMath: [["$","$"], ["\\(","\\)"]]}
-            });
-            MathJax.Hub.Startup.onload();
+                MathJax.Hub.Config({
+                    tex2jax: {inlineMath: [["$","$"], ["\\(","\\)"]]}
+                });
+                MathJax.Hub.Startup.onload();
                 return MathJax;
             }
         }
     }
 });
 
-require(["app/main"]);
+require(["dist/main-min"]);
