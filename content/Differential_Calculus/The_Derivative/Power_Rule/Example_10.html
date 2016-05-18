@@ -27,14 +27,15 @@
 			Given the power rule we compute $r$ derivatives directly and simplify:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d^r}{dx^r} x^p &= \frac{d^{r - 1}}{dx^{r - 1}} px^{p - 1} \\
+					&\frac{d^r}{dx^r} x^p \\
+					&= \frac{d^{r - 1}}{dx^{r - 1}} px^{p - 1} \\
 					&= \frac{d^{r - 2}}{dx^{r - 2}} p(p - 1)x^{p - 2} \\
 					&= \frac{d^{r - 3}}{dx^{r - 3}} p(p - 1)(p - 2)x^{p - 3} \\
 					&\vdots \\
-					&= \frac{d^2}{dx^2} p(p - 1)(p - 2)(p - (r - 3))x^{p - (r - 2)} \\
-					&= \frac{d}{dx} p(p - 1)(p - 2)\dots(p - (r - 3))(p - (r - 2))x^{p - (r - 1)} \\
-					&= p(p - 1)(p - 2)\dots(p - (r - 3))(p - (r - 2))(p - (r - 1))x^{p - r} \\
-					&= p(p - 1)\dots(p - (r - 2))(p - (r - 1)) \cdot \frac{(p - r)\dots(2)(1)}{(p - r)\dots(2)(1)} x^{p - r} \\
+					&= \frac{d^2}{dx^2} p(p - 1)\dots(p - (r - 3))x^{p - (r - 2)} \\
+					&= \frac{d}{dx} p(p - 1)\dots(p - (r - 2))x^{p - (r - 1)} \\
+					&= p\dots(p - (r - 2))(p - (r - 1))x^{p - r} \\
+					&= p\dots(p - (r - 1)) \cdot \frac{(p - r)\dots(1)}{(p - r)\dots(1)} x^{p - r} \\
 					&= \frac{p!}{(p - r)!} x^{p - r} \\
 					&= \mathcal{P}(p, r) x^{p - r}
 				}$
