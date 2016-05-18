@@ -21,16 +21,18 @@
 			To accomplish this we are going to find the instantaneous rate of change at the point of interest. First the derivative:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} (x^2 + y^2)^3 &= \frac{d}{dx} 8x^2y^2 \\
-					3(x^2 + y^2)^2 \cdot (2x + 2yy') &= 16xy^2 + 16x^2yy' \\
-					y'(6y(x^2 + y^2)^2 - 16x^2y) &= 16xy^2 - 6x(x^2 + y^2)^2 \\
+					0 &= (x^2 + y^2)^3 - 8x^2y^2 \\
+					\frac{d}{dx} 0 &= \frac{d}{dx} \Big[ (x^2 + y^2)^3 - 8x^2y^2 \Big] \\
+					0 &= 3(x^2 + y^2)^2 \cdot (2x + 2yy') \\
+					& \hspace{.4cm} - 16xy^2 - 16x^2yy' \\
 					y' &= \frac{16xy^2 - 6x(x^2 + y^2)^2}{6y(x^2 + y^2)^2 - 16x^2y}
 				}$
 			</div>
 			Now to determine the slope:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{dy}{dx} \Bigg|_{(-1,1)} &= \frac{16(-1)(1)^2 - 6(-1)((-1)^2 + (1)^2)^2}{6(1)((-1)^2 + (1)^2)^2 - 16(-1)^2(1)} \\
+					&\frac{dy}{dx} \Bigg|_{(-1,1)} \\
+					&= \frac{16(-1)(1)^2 - 6(-1)((-1)^2 + (1)^2)^2}{6(1)((-1)^2 + (1)^2)^2 - 16(-1)^2(1)} \\
 					&= \frac{8}{8} \\
 					&= 1
 				}$
