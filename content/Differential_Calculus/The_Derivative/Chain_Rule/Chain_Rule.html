@@ -21,17 +21,23 @@
 			Using the limit definition of the derivative:
 			<div class="latex_equation">
 				$\eqalign{
-					k'(x) &= \lim_{h \rightarrow 0} \frac{k(x + h) - k(x)}{h} \\
+					&k'(x) \\
+					&= \lim_{h \rightarrow 0} \frac{k(x + h) - k(x)}{h} \\
 					&= \lim_{h \rightarrow 0} \frac{g(f(x + h)) - g(h(x))}{h} \\
-					&= \lim_{h \rightarrow 0} \frac{g(f(x + h)) - g(f(x))}{h} \cdot \frac{f(x + h) - f(x)}{f(x + h) - f(x)} \\
-					&= \lim_{h \rightarrow 0} \frac{g(f(x + h)) - g(f(x))}{h(x + h) - h(x)} \cdot \frac{f(x + h) - f(x)}{h} \\
-					&= \lim_{h \rightarrow 0} \frac{g(f(x + h)) - g(f(x))}{f(x + h) - f(x)} \cdot \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} 
+					&= \lim_{h \rightarrow 0} \Bigg[ \frac{g(f(x + h)) - g(f(x))}{h} \\
+					& \hspace{.4cm} \cdot \frac{f(x + h) - f(x)}{f(x + h) - f(x)} \Bigg] \\
+					&= \lim_{h \rightarrow 0} \Bigg[ \frac{g(f(x + h)) - g(f(x))}{h(x + h) - h(x)} \\
+					& \hspace{.4cm} \cdot \frac{f(x + h) - f(x)}{h} \Bigg] \\
+					&= \lim_{h \rightarrow 0} \Bigg[ \frac{g(f(x + h)) - g(f(x))}{f(x + h) - f(x)} \\
+					& \hspace{.4cm} \cdot \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} \Bigg]
 				}$
 			</div>
 			Now the trick is to let $\Delta = h(x+h) - h(x)$ and note that as $h \rightarrow 0$ we have $\Delta \rightarrow 0$ so that:
 			<div class="latex_equation">
 				$\eqalign{
-					k'(x) &= \lim_{\Delta \rightarrow 0} \frac{g(f(x) + \Delta) - g(f(x))}{\Delta} \cdot \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} \\
+					&k'(x) \\
+					&= \lim_{\Delta \rightarrow 0} \frac{g(f(x) + \Delta) - g(f(x))}{\Delta} \\
+					& \hspace{.4cm} \cdot \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h} \\
 					&= g'(f(x)) \cdot f'(x)
 				}$
 			</div>

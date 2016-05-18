@@ -28,16 +28,18 @@
 			which holds true since we accept the standard chain rule. Now we assume that given statement and try to show that it holds true for $n + 1$:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{df_{n + 2}} f_1(f_2(f_3(\dots f_{n + 1}(f_{n + 2})))) &= \prod_{i = 1}^{n + 1} \frac{df_i}{df_{i + 1}} \\
+					&\frac{d}{df_{n + 2}} f_1(f_2(f_3(\dots f_{n + 1}(f_{n + 2})))) \\
+					&= \prod_{i = 1}^{n + 1} \frac{df_i}{df_{i + 1}} \\
 					&= \prod_{i = 1}^n \frac{df_i}{df_{i + 1}} \cdot \frac{df_{n + 1}}{df_{n + 2}} \\
-					&= \frac{d}{df_{n + 1}} f_1(f_2(f_3(\dots f_{n - 1}(f_n(f_{n + 1})))) \cdot \frac{df_{n + 1}}{df_{n + 2}} \\
+					&= \frac{d}{df_{n + 1}} f_1(\dots f_{n - 1}(f_n(f_{n + 1}))) \cdot \frac{df_{n + 1}}{df_{n + 2}} \\
 					&= \frac{d}{df_{n + 2}} f_1(f_2(f_3(\dots f_{n + 1}(f_{n + 2}))))
 				}$
 			</div>
 			where the last step involves reversing the standard chain rule. While a formal proof is always important, it just as important to understand how the statement is derived. In this scenario we can derive the derivative of a composition of $n + 1$ functions by recursively using the standard chain rule:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{df_{n + 1}} f_1(f_2(f_3(\dots f_{n - 1}(f_n(f_{n + 1})))) &= \frac{df_1}{df_2} \cdot \frac{d}{df_{n + 1}} f_2(f_3(\dots f_n(f_{n + 1}))) \\
+					&\frac{d}{df_{n + 1}} f_1(f_2(f_3(\dots f_{n - 1}(f_n(f_{n + 1})))) \\
+					&= \frac{df_1}{df_2} \cdot \frac{d}{df_{n + 1}} f_2(f_3(\dots f_n(f_{n + 1}))) \\
 					&= \frac{df_1}{df_2} \cdot \frac{df_2}{df_3} \cdot \frac{d}{df_{n + 1}} f_3(\dots f_n(f_{n + 1})) \\
 					&= \frac{df_1}{df_2} \cdot \frac{df_2}{df_3} \cdot \frac{df_3}{df_4} \cdot \frac{d}{df_{n + 1}} f_4(\dots f_n(f_{n + 1})) \\
 					&\vdots \\

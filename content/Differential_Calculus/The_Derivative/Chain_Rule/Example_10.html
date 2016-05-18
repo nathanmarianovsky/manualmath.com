@@ -21,10 +21,11 @@
 			which can now be used to determine a formula for the second derivative:
 			<div class="latex_equation">
 				$\eqalign{
-					(f^{-1})''(x) &= \frac{d}{dx} \frac{1}{f'(f^{-1}(x))} \\
+					&(f^{-1})''(x) \\
+					&= \frac{d}{dx} \frac{1}{f'(f^{-1}(x))} \\
 					&= \frac{d}{dx} (f'(f^{-1}(x)))^{-1} \\
 					&= -(f'(f^{-1}(x)))^{-2} \cdot \frac{d}{dx} f'(f^{-1}(x)) \\
-					&= -(f'(f^{-1}(x)))^{-2} \cdot f''(f^{-1}(x)) \cdot (f^{-1})'(x) \\
+					&= -(f'(f^{-1}(x)))^{-2} f''(f^{-1}(x)) (f^{-1})'(x) \\
 					&= -\frac{f''(f^{-1}(x))(f^{-1})'(x)}{(f'(f^{-1}(x)))^2}
 				}$
 			</div>
