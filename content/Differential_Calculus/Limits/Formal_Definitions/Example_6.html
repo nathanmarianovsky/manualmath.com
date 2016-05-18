@@ -46,14 +46,20 @@
 					|x - 4| &< |\sqrt{x + 5} + 3|\epsilon
 				}$
 			</div>
-			The only question remaining now is how do we get rid of the factor on the right side. You can choose an arbitrary value such as $\delta = 1$ which provides $|x - 4| < 1 \implies 3 < x < 5$. Using this we can deduce:
+			The only question remaining now is how do we get rid of the factor on the right side. You can choose an arbitrary value such as $\delta = 1$ which provides:
+			<div class="latex_equation">
+				$\eqalign{
+					|x - 4| < 1 \implies 3 < x < 5
+				}$
+			</div>
+			Using this we can deduce:
 			<div class="latex_equation">
 				$\eqalign{
 					|x - 4| &< |\sqrt{x + 5} + 3|\epsilon \\
 					&< (\sqrt{8} + 3)\epsilon
 				}$
 			</div>
-			which minimizes the right hand-side by letting $x = 8$. So now we have the issue that there are two possibilities for $\delta$. With two choices, we should choose the smaller one to be more accurate. So as long as we choose $\delta = \min\Big\{ 1, (\sqrt{8} + 3)\epsilon \Big\}$, the inequalities will hold true, thus making the limit true.
+			which minimizes the right hand-side by letting $x = 8$. So now we have the issue that there are two possibilities for $\delta$. With two choices, we should choose the smaller one to be more accurate. So as long as we choose $\delta = \min\Big\{ 1, (\sqrt{8} + 3)\epsilon \Big\}$ the inequalities will hold true, thus making the limit true.
 		</div>
 	</div>
 </div>

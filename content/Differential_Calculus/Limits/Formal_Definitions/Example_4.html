@@ -48,14 +48,20 @@
 					|x - 3| &< 3|x + 3|\epsilon
 				}$
 			</div>
-			The only question remaining now is how do we get rid of the linear factor on the right side. You can choose an arbitrary value such as $\delta = 1$ which provides $|x - 3| < 1 \implies 2 < x < 4$. Using this we can deduce:
+			The only question remaining now is how do we get rid of the linear factor on the right side. You can choose an arbitrary value such as $\delta = 1$ which provides:
+			<div class="latex_equation">
+				$\eqalign{
+					|x - 3| < 1 \implies 2 < x < 4
+				}$
+			</div>
+			Using this we can deduce:
 			<div class="latex_equation">
 				$\eqalign{
 					|x - 3| &< 3|x + 3|\epsilon \\
 					&< 15\epsilon
 				}$
 			</div>
-			which minimizes the right hand-side by letting $x = 2$. So now we have the issue that there are two possibilities for $\delta$. With two choices, we should choose the smaller one to be more accurate. So as long as we choose $\delta = \min\Big\{ 1, 15\epsilon \Big\}$, the inequalities will hold true, thus making the limit true.
+			which minimizes the right hand-side by letting $x = 2$. So now we have the issue that there are two possibilities for $\delta$. With two choices, we should choose the smaller one to be more accurate. So as long as we choose $\delta = \min\Big\{ 1, 15\epsilon \Big\}$ the inequalities will hold true, thus making the limit true.
 		</div>
 	</div>
 </div>

@@ -5,8 +5,9 @@
 	You may assume the following properties:
 	<div class="latex_equation">
 		$\eqalign{
-			\lim_{x \rightarrow a} c &= c \hspace{.3cm} \text{where} \hspace{.3cm} c \in \mathbb{R} \\
-			\lim_{x \rightarrow a} (\alpha f(x) + \beta g(x)) &= \lim_{x \rightarrow a} f(x) + \lim_{x \rightarrow a} g(x) \hspace{.3cm} \text{where} \hspace{.3cm} \alpha, \beta \in \mathbb{R}
+			&\lim_{x \rightarrow a} c = c \hspace{.3cm} \text{where} \hspace{.3cm} c \in \mathbb{R} \\
+			&\lim_{x \rightarrow a} (\alpha f(x) + \beta g(x)) \\
+			& \hspace{.4cm} = \lim_{x \rightarrow a} f(x) + \lim_{x \rightarrow a} g(x) \hspace{.3cm} \text{where} \hspace{.3cm} \alpha, \beta \in \mathbb{R}
 		}$
 	</div>
 	to prove that:
@@ -42,8 +43,10 @@
 			If these new limits exist, then we know $\forall \epsilon > 0, \exists \delta_1, \delta_2 > 0$ s.t.:
 			<div class="latex_equation">
 				$\eqalign{
-					|(f(x) - L_1) - 0| < \sqrt{\epsilon} \hspace{.3cm} &\text{whenever} \hspace{.3cm} |x - a| < \delta_1 \\
-					|(g(x) - L_2) - 0| < \sqrt{\epsilon} \hspace{.3cm} &\text{whenever} \hspace{.3cm} |x - a| < \delta_2
+					|(f(x) - L_1) &- 0| < \sqrt{\epsilon} \\
+					&\text{whenever} \hspace{.3cm} |x - a| < \delta_1 \\
+					|(g(x) - L_2) &- 0| < \sqrt{\epsilon} \\
+					&\text{whenever} \hspace{.3cm} |x - a| < \delta_2
 				}$
 			</div>
 			Now observe what happens to the multiplication of the two:
@@ -58,7 +61,7 @@
 			which proves that:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow a} (f(x) - L_1)(g(x) - L_2) &= 0
+					\lim_{x \rightarrow a} (f(x) - L_1)(g(x) - L_2) = 0
 				}$
 			</div>
 			Of course this is not the limit we want, but it is going to be useful in what comes next. Notice what happens when we multiply out of the product:
@@ -72,7 +75,8 @@
 			<div class="latex_equation">
 				$\eqalign{
 					&f(x)g(x) \\ 
-					&= (f(x) - L_1)(g(x) - L_2) + L_1g(x) + L_2f(x) - L_1L_2
+					&= (f(x) - L_1)(g(x) - L_2) \\
+					& \hspace{.4cm} + L_1g(x) + L_2f(x) - L_1L_2
 				}$
 			</div>
 			which provides a way to write out the multiplication of the two original functions. Applying the limit to both sides and using the allowed properties:
@@ -81,8 +85,8 @@
 					&\lim_{x \rightarrow a} f(x)g(x) \\
 					&= \lim_{x \rightarrow a} \Big[ (f(x) - L_1)(g(x) - L_2) \\
 					& \hspace{.4cm} + L_1g(x) + L_2f(x) - L_1L_2 \Big] \\
-					&= \lim_{x \rightarrow a} (f(x) - L_1)(g(x) - L_2) + L_1\lim_{x \rightarrow a} g(x) \\
-					& \hspace{.4cm} + L_2\lim_{x \rightarrow a} f(x) - \lim_{x \rightarrow a} L_1L_2 \\
+					&= \lim_{x \rightarrow a} (f(x) - L_1)(g(x) - L_2) \\
+					& \hspace{.4cm} + L_1\lim_{x \rightarrow a} g(x) + L_2\lim_{x \rightarrow a} f(x) - \lim_{x \rightarrow a} L_1L_2 \\
 					&= 0 + L_1L_2 + L_2L_1 - L_1L_2 \\
 					&= L_1L_2
 				}$
