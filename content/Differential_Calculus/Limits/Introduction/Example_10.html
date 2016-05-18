@@ -21,7 +21,8 @@
 			Simplifying the expression provides:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ \prod_{k = 0}^m x^k \Bigg]^{-1} &= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ (1)(x)(x^2)\dots(x^m) \Bigg] \\
+					&\lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ \prod_{k = 0}^m x^{-k} \Bigg]^{-1} \\
+					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ (1)(x)(x^2)\dots(x^m) \Bigg] \\
 					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ x^{1 + 2 + \dots + m} \Bigg] \\
 					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^i \Bigg[ x^{\sum_{k = 1}^m k} \Bigg] \\
 					&= \lim_{x \rightarrow 0} \sum_{i = 0}^n x^{i + \sum_{k = 1}^m k}
