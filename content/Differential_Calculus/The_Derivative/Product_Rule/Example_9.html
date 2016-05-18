@@ -5,7 +5,8 @@
 	Prove the following statement:
 	<div class="latex_equation">
 		$\eqalign{
-			\frac{d}{dx} \prod_{i = 1}^n f_i(x) = \sum_{i = 1}^n f_i'(x) \prod_{k \neq i} f_k(x) \hspace{.3cm} \text{where} \hspace{.3cm} k \in \{ 1, 2, 3, \dots, n \}
+			\frac{d}{dx} &\prod_{i = 1}^n f_i(x) = \sum_{i = 1}^n f_i'(x) \prod_{k \neq i} f_k(x) \\
+			&\text{where} \hspace{.3cm} k \in \{ 1, 2, 3, \dots, n \}
 		}$
 	</div>
 </div>
@@ -20,17 +21,17 @@
 			This is nothing more than an extension to the product rule, one that handles the product of not just two functions, but rather $n$ of them. For a formal proof, consider using induction. For the base case let $n = 2$:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} \prod_{i = 1}^2 f_i(x) &= \sum_{i = 1}^2 f_i'(x) \prod_{k \neq i} f_k(x) \\
-					\frac{d}{dx} (f_1(x)f_2(x)) &= f_1'(x)f_2(x) + f_2'(x)f_1(x) \\
-					f_1'(x)f_2(x) + f_1(x)f_2'(x) &= f_1'(x)f_2(x) + f_1(x)f_2'(x)
+					\frac{d}{dx} \prod_{i = 1}^2 f_i(x) = \sum_{i = 1}^2 f_i'(x) \prod_{k \neq i} f_k(x)
 				}$
 			</div>
 			which holds true since we accept the standard product rule. Now we assume that given statement and try to show that it holds true for $n + 1$:
 			<div class="latex_equation">
 				$\eqalign{
-					\sum_{i = 1}^{n + 1} f_i'(x) \prod_{k \neq i} f_k(x) &= \frac{d}{dx} \prod_{i = 1}^{n + 1} f_i(x) \\
+					&\sum_{i = 1}^{n + 1} f_i'(x) \prod_{k \neq i} f_k(x) \\
+					&= \frac{d}{dx} \prod_{i = 1}^{n + 1} f_i(x) \\
 					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^n f_i(x) \cdot f_{n + 1}(x) \Bigg] \\
-					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^n f_i(x) \Bigg] \cdot f_{n + 1}(x) + \Bigg[ \prod_{i = 1}^n f_i(x) \Bigg] \cdot \frac{d}{dx} \Bigg[ f_{n + 1}(x) \Bigg] \\
+					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^n f_i(x) \Bigg] \cdot f_{n + 1}(x) \\
+					& \hspace{.4cm} + \Bigg[ \prod_{i = 1}^n f_i(x) \Bigg] \cdot \frac{d}{dx} \Bigg[ f_{n + 1}(x) \Bigg] \\
 					&= \sum_{i = 1}^n f_i'(x) \prod_{k \neq i} f_k(x) + \prod_{i = 1}^n f_i(x) \cdot f_{n + 1}'(x) \\
 					&= \sum_{i = 1}^{n + 1} f_i'(x) \prod_{k \neq i} f_k(x)
 				}$
@@ -38,14 +39,21 @@
 			While a formal proof is always important, it just as important to understand how the statement is derived. In this scenario we can derive the derivative of a product of $n$ functions by recursively using the standard product rule:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} \prod_{i = 1}^n f_i(x) &= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 1} f_i(x) \cdot f_n(x) \Bigg] \\
-					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 1} f_i(x) \Bigg] \cdot f_n(x) + \prod_{i = 1}^{n - 1} f_i(x) \cdot \frac{d}{dx} \Bigg[ f_n(x) \Bigg] \\
-					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 1} f_i(x) \Bigg] \cdot f_n(x) + f_n'(x) \prod_{k \neq n} f_i(x) \\
-					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 2} f_i(x) \cdot f_{n - 1}(x) \Bigg] \cdot f_n(x) + f_n'(x) \prod_{k \neq n} f_i(x) \\
-					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 2} f_i(x) \Bigg] \cdot f_{n - 1}(x)f_n(x) + f_{n - 1}'(x) \prod_{k \neq n - 1} f_i(x) + f_n'(x) \prod_{k \neq n} f_i(x) \\
+					&\frac{d}{dx} \prod_{i = 1}^n f_i(x) \\
+					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 1} f_i(x) \cdot f_n(x) \Bigg] \\
+					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 1} f_i(x) \Bigg] \cdot f_n(x) \\
+					& \hspace{.4cm} + \prod_{i = 1}^{n - 1} f_i(x) \cdot \frac{d}{dx} \Bigg[ f_n(x) \Bigg] \\
+					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 1} f_i(x) \Bigg] \cdot f_n(x) \\
+					& \hspace{.4cm} + f_n'(x) \prod_{k \neq n} f_i(x) \\
+					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 2} f_i(x) \cdot f_{n - 1}(x) \Bigg] \cdot f_n(x) \\
+					& \hspace{.4cm} + f_n'(x) \prod_{k \neq n} f_i(x) \\
+					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{n - 2} f_i(x) \Bigg] \cdot f_{n - 1}(x)f_n(x) \\
+					& \hspace{.4cm} + f_{n - 1}'(x) \prod_{k \neq n - 1} f_i(x) + f_n'(x) \prod_{k \neq n} f_i(x) \\
 					&\vdots \\
-					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{2} f_i(x) \Bigg] \cdot \prod_{k \neq 1,2} f_k + \sum_{i = 3}^n f_i'(x) \prod_{k \neq i} f_k(x) \\
-					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{1} f_i(x) \Bigg] \cdot \prod_{k \neq 1} f_k + \sum_{i = 2}^n f_i'(x) \prod_{k \neq i} f_k(x) \\
+					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{2} f_i(x) \Bigg] \cdot \prod_{k \neq 1,2} f_k \\
+					& \hspace{.4cm} + \sum_{i = 3}^n f_i'(x) \prod_{k \neq i} f_k(x) \\
+					&= \frac{d}{dx} \Bigg[ \prod_{i = 1}^{1} f_i(x) \Bigg] \cdot \prod_{k \neq 1} f_k \\
+					& \hspace{.4cm} + \sum_{i = 2}^n f_i'(x) \prod_{k \neq i} f_k(x) \\
 					&= \sum_{i = 1}^n f_i'(x) \prod_{k \neq i} f_k(x)
 				}$
 			</div>

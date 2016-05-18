@@ -17,18 +17,14 @@
 	<input type="button" value="Show Solution" class="show_solution">
 	<div class="hidden_div">
 		<div class="latex_body">
-			According to the product rule:
 			<div class="latex_equation">
 				$\eqalign{
-					\frac{d}{dx} f(x)g(x) = \frac{d}{dx} \Big( f(x) \Big) \cdot g(x) + f(x) \cdot \frac{d}{dx} \Big( g(x) \Big)
-				}$
-			</div>
-			so:
-			<div class="latex_equation">
-				$\eqalign{
-					\frac{d}{dx} h(x) &= \frac{d}{dx} \Big( x\sin(x)\cos(x) \Big) \\
-					&= \frac{d}{dx} \Big( x\sin(x) \Big) \cdot \cos(x) + x\sin(x) \cdot \frac{d}{dx} \Big( \cos(x) \Big) \\
-					&= \Big( \frac{d}{dx} \Big( x \Big) \cdot \sin(x) + x \cdot \frac{d}{dx} \Big( \sin(x) \Big) \Big) \cdot \cos(x) - x\sin^2(x) \\
+					&\frac{d}{dx} h(x) \\
+					&= \frac{d}{dx} \Big( x\sin(x)\cos(x) \Big) \\
+					&= \frac{d}{dx} \Big( x\sin(x) \Big) \cdot \cos(x) \\
+					& \hspace{.4cm} + x\sin(x) \cdot \frac{d}{dx} \Big( \cos(x) \Big) \\
+					&= \frac{d}{dx} \Big( x \Big) \cdot \sin(x)\cos(x) \\
+					& \hspace{.4cm} + x\cos(x) \cdot \frac{d}{dx} \Big( \sin(x) \Big) - x\sin^2(x) \\
 					&= (\sin(x) + x\cos(x))\cos(x) - x\sin^2(x)
 				}$
 			</div>

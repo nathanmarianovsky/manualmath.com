@@ -21,11 +21,15 @@
 			Using the limit definition of the derivative and some simple trickery:
 			<div class="latex_equation">
 				$\eqalign{
-					k'(x) &= \lim_{h \rightarrow 0} \frac{k(x+h) - k(x)}{h} \\
+					&k'(x) \\
+					&= \lim_{h \rightarrow 0} \frac{k(x+h) - k(x)}{h} \\
 					&= \lim_{h \rightarrow 0} \frac{f(x+h)g(x+h) - f(x)g(x)}{h} \\
-					&= \lim_{h \rightarrow 0} \frac{f(x+h)g(x+h) - f(x)g(x+h) + f(x)g(x+h) - f(x)g(x)}{h} \\
-					&= \lim_{h \rightarrow 0} \Big( \frac{f(x+h) - f(x)}{h} \cdot g(x+h) \Big) + \lim_{h \rightarrow 0} \Big( f(x+h) \cdot \frac{g(x+h) - g(x)}{h} \Big) \\
-					&= \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h} \cdot \lim_{h \rightarrow 0} g(x+h) + \lim_{h \rightarrow 0} f(x+h) \cdot \lim_{h \rightarrow 0} \frac{g(x+h) - g(x)}{h} \\
+					&= \lim_{h \rightarrow 0} \frac{f(x+h)g(x+h) - f(x)g(x)}{h} \\
+					& \hspace{.4cm} + \lim_{h \rightarrow 0} \frac{f(x)g(x+h) - f(x)g(x+h)}{h} \\
+					&= \lim_{h \rightarrow 0} \Big( \frac{f(x+h) - f(x)}{h} \cdot g(x+h) \Big) \\
+					& \hspace{.4cm} + \lim_{h \rightarrow 0} \Big( f(x+h) \cdot \frac{g(x+h) - g(x)}{h} \Big) \\
+					&= \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h} \cdot \lim_{h \rightarrow 0} g(x+h) \\
+					& \hspace{.4cm} + \lim_{h \rightarrow 0} f(x+h) \cdot \lim_{h \rightarrow 0} \frac{g(x+h) - g(x)}{h} \\
 					&= f'(x)g(x) + f(x)g'(x)
 				}$
 			</div>
