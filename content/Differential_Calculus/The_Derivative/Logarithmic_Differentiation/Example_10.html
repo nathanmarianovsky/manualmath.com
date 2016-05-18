@@ -33,8 +33,10 @@
 					\ln(y(x)) &= {}^{n - 1}x \ln(x) \\
 					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} ({}^{n - 1}x \ln(x)) \\
 					\frac{y'(x)}{y(x)} &= \ln(x) \frac{d}{dx} ({}^{n - 1}x) + \frac{{}^{n - 1}x}{x} \\
-					y'(x) &= y(x) \Big[ \ln(x) \frac{d}{dx} ({}^{n - 1}x) + \frac{{}^{n - 1}x}{x} \Big] \\
-					&= {}^{n}x \Big[ \ln(x) \frac{d}{dx} ({}^{n - 1}x) + \frac{{}^{n - 1}x}{x} \Big]
+					y'(x) &= y(x)\ln(x) \frac{d}{dx} ({}^{n - 1}x) \\
+					& \hspace{.4cm} + \frac{{}^{n - 1}x}{x}y(x) \\
+					&= {}^{n}x \ln(x) \frac{d}{dx} ({}^{n - 1}x) \\
+					& \hspace{.4cm} + \frac{{}^{n - 1}x \cdot {}^{n}x}{x}
 				}$
 			</div>
 			Now we have everything we need. The algorithm involves a function that performs the following:

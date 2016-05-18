@@ -23,10 +23,15 @@
 					y(x) &= x^{\ln(x)}(\sec(x))^{3x} \\
 					\ln(y(x)) &= \ln(x^{\ln(x)}(\sec(x))^{3x}) \\
 					\ln(y(x)) &= \ln(x)\ln(x) + 3x\ln(\sec(x)) \\
-					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} \Big[ (\ln(x))^2 + 3x\ln(\sec(x)) \Big] \\
-					\frac{y'(x)}{y(x)} &= \frac{2\ln(x)}{x} + 3\ln(\sec(x)) + 3x\tan(x) \\
-					y'(x) &= y(x) \Big[ \frac{2\ln(x)}{x} + 3\ln(\sec(x)) + 3x\tan(x) \Big] \\
-					&= x^{\ln(x)}(\sec(x))^{3x} \Big[ \frac{2\ln(x)}{x} + 3\ln(\sec(x)) + 3x\tan(x) \Big]
+					(\ln(y(x)))' &= \Big[ (\ln(x))^2 + 3x\ln(\sec(x)) \Big]' \\
+					\frac{y'(x)}{y(x)} &= \frac{2\ln(x)}{x} + 3\ln(\sec(x)) \\
+					& \hspace{.4cm} + 3x\tan(x) \\
+					y'(x) &= \frac{2\ln(x)}{x}y(x) \\
+					& \hspace{.4cm} + 3\ln(\sec(x))y(x) \\
+					& \hspace{.4cm} + 3x\tan(x)y(x) \\
+					&= 2\ln(x)x^{\ln(x) - 1}(\sec(x))^{3x} \\
+					& \hspace{.4cm} + 3\ln(\sec(x))x^{\ln(x)}(\sec(x))^{3x} \\
+					& \hspace{.4cm} + 3x^{\ln(x) + 1}(\sec(x))^{3x}\tan(x)
 				}$
 			</div>
 		</div>

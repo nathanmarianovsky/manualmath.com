@@ -25,8 +25,10 @@
 					\ln(y(x)) &= x^3\ln(\sin(x)) \\
 					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} x^3\ln(\sin(x)) \\
 					\frac{y'(x)}{y(x)} &= 3x^2\ln(\sin(x)) + \frac{\cos(x)x^3}{\sin(x)} \\
-					y'(x) &= y(x) \Big[ 3x^2\ln(\sin(x)) + \frac{\cos(x)x^3}{\sin(x)} \Big] \\
-					&= (\sin(x))^{x^3} \Big[ 3x^2\ln(\sin(x)) + \frac{\cos(x)x^3}{\sin(x)} \Big]
+					y'(x) &= 3x^2\ln(\sin(x))y(x) \\
+					& \hspace{.4cm} + \frac{\cos(x)x^3}{\sin(x)}y(x) \\
+					&= 3x^2(\sin(x))^{x^3}\ln(\sin(x)) \\
+					& \hspace{.4cm} + \cos(x)x^3(\sin(x))^{x^3 - 1}
 				}$
 			</div>
 		</div>

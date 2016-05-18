@@ -23,10 +23,13 @@
 					y(x) &= (1 - 3x)^{\cos(x)} \\
 					\ln(y(x)) &= \ln((1- 3x)^{\cos(x)}) \\
 					\ln(y(x)) &= \cos(x)\ln(1 - 3x) \\
-					\frac{d}{dx} \ln(y(x)) &= \frac{d}{dx} \cos(x)\ln(1 - 3x) \\
-					\frac{y'(x)}{y(x)} &= -\sin(x)\ln(1 - 3x) - \frac{3\cos(x)}{1 - 3x} \\
-					y'(x) &= y(x) \Big[ -\sin(x)\ln(1 - 3x) - \frac{3\cos(x)}{1 - 3x} \Big] \\
-					&= -(1 - 3x)^{\cos(x)} \Big[ \sin(x)\ln(1 - 3x) + \frac{3\cos(x)}{1 - 3x} \Big]
+					(\ln(y(x)))' &= \Big[ \cos(x)\ln(1 - 3x) \Big]' \\
+					\frac{y'(x)}{y(x)} &= -\sin(x)\ln(1 - 3x) \\
+					& \hspace{.4cm} - \frac{3\cos(x)}{1 - 3x} \\
+					y'(x) &= -\sin(x)\ln(1 - 3x)y(x) \\
+					& \hspace{.4cm} - \frac{3\cos(x)y(x)}{1 - 3x} \\
+					&= \ln\Bigg( \Big( \frac{1}{1 - 3x} \Big)^{\sin(x)(1 - 3x)^{\cos(x)}} \Bigg) \\
+					& \hspace{.4cm} - 3\cos(x)(1 - 3x)^{\cos(x) - 1}
 				}$
 			</div>
 		</div>
