@@ -5,7 +5,7 @@
 	Determine the equation of the tangent line to the function:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) = \frac{\pi}{\sqrt{x^2 + 1}}
+			f(x) = \pi\sqrt{x^2 + 1}
 		}$
 	</div>
 	at $x = 1$.
@@ -27,34 +27,33 @@
 			As for the slope:
 			<div class="latex_equation">
 				$\eqalign{
-					f'(1) &= \lim_{h \rightarrow 0} \frac{f(1 + h) - f(1)}{h} \\
-					&= \lim_{h \rightarrow 0} \frac{\frac{\pi}{\sqrt{2 + 2h + h^2}} - \frac{\pi}{\sqrt{2}}}{h} \\
-					&= \lim_{h \rightarrow 0} \frac{\frac{\pi\sqrt{2} - \pi\sqrt{2 + 2h + h^2}}{\sqrt{2}\sqrt{2 + 2h + h^2}}}{h} \\
-					&= \frac{\pi}{\sqrt{2}} \lim_{h \rightarrow 0} \frac{\sqrt{2} - \sqrt{2 + 2h + h^2}}{h\sqrt{2 + 2h + h^2}} \cdot \frac{\sqrt{2} + \sqrt{2 + 2h + h^2}}{\sqrt{2} + \sqrt{2 + 2h + h^2}} \\
-					&= \frac{\pi}{\sqrt{2}} \lim_{h \rightarrow 0} \frac{2 - 2 - 2h - h^2}{h\sqrt{2 + 2h + h^2}(\sqrt{2} + \sqrt{2 + 2h + h^2})} \\
-					&= -\frac{\pi}{\sqrt{2}} \lim_{h \rightarrow 0} \frac{2 + h}{\sqrt{2 + 2h + h^2}(\sqrt{2} + \sqrt{2 + 2h + h^2})} \\
-					&= -\frac{\pi}{\sqrt{2}} \cdot \frac{1}{2} \\
-					&= -\frac{\pi}{2^{\frac{3}{2}}}
+					&f'(1) \\
+					&= \lim_{h \rightarrow 0} \frac{f(1 + h) - f(1)}{h} \\
+					&= \pi \lim_{h \rightarrow 0} \frac{\sqrt{(1 + h)^2 + 1} - \sqrt{2}}{h} \\
+					&= \pi \lim_{h \rightarrow 0} \frac{((1 + h)^2 + 1) - 2}{h(\sqrt{(1 + h)^2 + 1} + \sqrt{2})} \\
+					&= \pi \lim_{h \rightarrow 0} \frac{h^2 + 2h}{h(\sqrt{(1 + h)^2 + 1} + \sqrt{2})} \\
+					&= \pi \lim_{h \rightarrow 0} \frac{h + 2}{(\sqrt{(1 + h)^2 + 1} + \sqrt{2})} \\
+					&= \frac{\pi}{\sqrt{2}}
 				}$
 			</div>
 			Now we form the line as:
 			<div class="latex_equation">
 				$\eqalign{
-					g(x) = -\frac{\pi}{2^{\frac{3}{2}}}x + b
+					g(x) = \frac{\pi}{\sqrt{2}}x + b
 				}$
 			</div>
 			where we evaluate $b$ by using the point already known:
 			<div class="latex_equation">
 				$\eqalign{
-					g(1) &= -\frac{\pi}{2^{\frac{3}{2}}} + b \\
-					\frac{\pi}{\sqrt{2}} &= -\frac{\pi}{2^{\frac{3}{2}}} + b \\
-					b &= \frac{\pi}{\sqrt{2}} + \frac{\pi}{2^{\frac{3}{2}}}
+					g(1) &= \frac{\pi}{\sqrt{2}} + b \\
+					\pi\sqrt{2} &= \frac{\pi}{\sqrt{2}} + b \\
+					b &= \pi\Big( \sqrt{2} - \frac{1}{\sqrt{2}} \Big)
 				}$
 			</div>
 			So the final solution is:
 			<div class="latex_equation">
 				$\eqalign{
-					g(x) = -\frac{\pi}{2^{\frac{3}{2}}}x + \frac{\pi}{\sqrt{2}} + \frac{\pi}{2^{\frac{3}{2}}}
+					g(x) = \frac{\pi}{\sqrt{2}}x + \pi\Big( \sqrt{2} - \frac{1}{\sqrt{2}} \Big)
 				}$
 			</div>
 		</div>
