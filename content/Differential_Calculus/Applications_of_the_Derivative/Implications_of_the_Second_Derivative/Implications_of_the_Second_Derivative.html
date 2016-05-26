@@ -18,13 +18,15 @@
 	Any function that satisfies the condition
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) > f(a) + f'(a)(x - a) \hspace{.3cm} \forall x \in I \hspace{.3cm} \text{where} \hspace{.3cm} a \in I \subseteq \mathbb{R}
+			f(x) > f(a) &+ f'(a)(x - a) \hspace{.3cm} \forall x \in I \\
+			&\text{where} \hspace{.3cm} a \in I \subseteq \mathbb{R}
 		}$
 	</div>
 	is a $\textit{strictly concave upwards}$ function. In other terms a continuously differentiable function is $\textit{convex}$ iff the function lies above all of its tangents. The behavior is attained exactly when the second derivative is positive, but on the other hand any function with a negative second derivative will satisfy:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) < f(a) + f'(a)(x - a) \hspace{.3cm} \forall x \in I \hspace{.3cm} \text{where} \hspace{.3cm} a \in I \subseteq \mathbb{R}
+			f(x) < f(a) &+ f'(a)(x - a) \hspace{.3cm} \forall x \in I \\
+			&\text{where} \hspace{.3cm} a \in I \subseteq \mathbb{R}
 		}$
 	</div>
 	which is to say that the function is $\textit{strictly concave downwards}$. In other terms a continuously differentiable function is $\textit{concave}$ iff the function lies below all of its tangents. Lastly if the second derivative is exactly zero, then the function must be a line since it is exactly the shape with no bending anywhere.
@@ -40,7 +42,8 @@
 			By the Mean Value Theorem we have the setup:
 			<div class="latex_equation">
 				$\eqalign{
-					\exists \hspace{.1cm} c \in (a,x) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(x) - f(a) = f'(c)(x - a)
+					\exists \hspace{.1cm} c &\in (a,x) \hspace{.3cm} \text{s.t.} \\
+					&f(x) - f(a) = f'(c)(x - a)
 				}$
 			</div>
 			If we now assume that the second derivative is positive, then the first derivative must be increasing:
@@ -64,7 +67,8 @@
 			where the last line states that our function will lie strictly below its tangents. $\tag*{$\blacksquare$}$ For the final case where the second derivative is zero, we begin by noting that with the Mean Value Theorem:
 			<div class="latex_equation">
 				$\eqalign{
-					\exists \hspace{.1cm} c \in (a,x) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f'(x) - f'(a) = f''(c)(x - a)
+					\exists \hspace{.1cm} c &\in (a,x) \hspace{.3cm} \text{s.t.} \\
+					&f'(x) - f'(a) = f''(c)(x - a)
 				}$
 			</div>
 			which provides that:
@@ -76,7 +80,8 @@
 			since the second derivative is zero, and holds true for all points in the interval since $a$ and $x$ are arbitrary. Using this setup again:
 			<div class="latex_equation">
 				$\eqalign{
-					\exists \hspace{.1cm} c \in (a,x) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(x) - f(a) = f'(c)(x - a)
+					\exists \hspace{.1cm} c &\in (a,x) \hspace{.3cm} \text{s.t.} \\
+					&f(x) - f(a) = f'(c)(x - a)
 				}$
 			</div>
 			which provides us with:
@@ -128,13 +133,15 @@
 			By the Mean Value Theorem we have the setup:
 			<div class="latex_equation">
 				$\eqalign{
-					\exists \hspace{.1cm} c \in (a,x) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f'(x) - f'(a) = f''(c)(x - a)
+					\exists \hspace{.1cm} c &\in (a,x) \hspace{.3cm} \text{s.t.} \\
+					&f'(x) - f'(a) = f''(c)(x - a)
 				}$
 			</div>
 			If the point we center ourselves at $x = a$ is the critical point then we reduce the above down to:
 			<div class="latex_equation">
 				$\eqalign{
-					\exists \hspace{.1cm} c \in (a,x) \hspace{.3cm} \text{s.t.} \hspace{.3cm} f'(x) = f''(c)(x - a)
+					\exists \hspace{.1cm} c &\in (a,x) \hspace{.3cm} \text{s.t.} \\
+					&f'(x) = f''(c)(x - a)
 				}$
 			</div>
 			So now if the second derivative is positive, then we must have the first derivative be positive as we approach from the right side and negative from the left side. With this behavior we can classify this critical point as a minimum due to the First Derivative Test. $\tag*{$\blacksquare$}$ On the other hand if the second derivative is negative the exact opposite behavior occurs giving a maximum due to the First Derivative Test. $\tag*{$\blacksquare$}$ Lastly to see why the second derivative equating to zero is useless information, observe the three following functions:
