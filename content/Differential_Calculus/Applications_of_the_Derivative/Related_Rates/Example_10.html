@@ -19,9 +19,12 @@
 			Using the Law of Cosines and differentiation:
 			<div class="latex_equation">
 				$\eqalign{
-					(d(t))^2 &= (x(t))^2 + (y(t))^2 - 2x(t)y(t)\cos(\theta) \\
-					(d(t))^2 &= (x(t))^2 + (y(t))^2 - 2x(t)y(t)\cos(120^\circ) \\
-					\frac{d}{dt} (d(t))^2 &= \frac{d}{dt} \Big[ (x(t))^2 + (y(t))^2 + x(t)y(t) \Big] \\
+					(d(t))^2 &= (x(t))^2 + (y(t))^2 \\
+					& \hspace{.4cm} - 2x(t)y(t)\cos(\theta) \\
+					(d(t))^2 &= (x(t))^2 + (y(t))^2 \\
+					& \hspace{.4cm} - 2x(t)y(t)\cos(120^\circ) \\
+					\frac{d}{dt} (d(t))^2 &= \frac{d}{dt} \Big[ (x(t))^2 + (y(t))^2 \Big] \\
+					& \hspace{.4cm} + \frac{d}{dt} x(t)y(t) \\
 					2dd' &= 2xx' + 2yy' + x'y + xy' \\
 					d' &= \frac{(2x + y)x' + (2y + x)y'}{2\sqrt{x^2 + y^2 + xy}}
 				}$
@@ -30,7 +33,7 @@
 			<div class="latex_equation">
 				$\eqalign{
 					d' &= \frac{(2x + y)x' + (2y + x)y'}{2\sqrt{x^2 + y^2 + xy}} \\
-					&= \frac{(2(6 \hspace{.1cm} \text{mi}) + (8 \hspace{.1cm} \text{mi}))(30 \hspace{.1cm} \text{mph}) + (2(8 \hspace{.1cm} \text{mi}) + (6 \hspace{.1cm} \text{mi}))((20 \hspace{.1cm} \text{mph}))}{2\sqrt{(6 \hspace{.1cm} \text{mi})^2 + (8 \hspace{.1cm} \text{mi})^2 + (6 \hspace{.1cm} \text{mi})(8 \hspace{.1cm} \text{mi})}} \\
+					&= \frac{(20)(30) + (22)((20))}{2\sqrt{(6)^2 + (8)^2 + (48)}} \hspace{.1cm} \text{mph} \\
 					&= \frac{260}{\sqrt{37}} \hspace{.1cm} \text{mph}
 				}$
 			</div>
