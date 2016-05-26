@@ -328,6 +328,32 @@ define(function() {
 	/*
 
 	Purpose:
+	Makes sure that the breadcrumbs on the topic page allign correctly.
+
+	Parameters:
+		page: 
+			The name of the page currently set
+
+	*/
+	exports.mobile_breadcrumbs = function(page) {
+		if(page == "topic") {
+			$(".breadcrumb.changed").css("display", "inline-flex");
+		}
+	};
+
+	/*
+
+	Purpose:
+	Removes the extra spacing created by an invisible MathJax span.
+	
+	*/
+	exports.hide_mathjax_span = function() {
+		$("#latex .MathJax").first().css("display", "none");
+	};
+
+	/*
+
+	Purpose:
 	Handles the generation of breadcrumbs for the desktop title.
 
 	Parameters:
