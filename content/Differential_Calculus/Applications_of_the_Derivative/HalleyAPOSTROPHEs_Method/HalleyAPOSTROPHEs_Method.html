@@ -69,37 +69,44 @@
 	which is nothing more than an extension of the quadratic approximation, specifically known as a $\textit{cubic approximation}$. So we have:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{f''(x_0)}{2}(x - x_0)^2 + \frac{f'''(x_0)}{6}(x - x_0)^3
+			f(x) &= f(x_0) + f'(x_0)(x - x_0) + \frac{f''(x_0)}{2}(x - x_0)^2 \\
+			& \hspace{.4cm} + \frac{f'''(x_0)}{6}(x - x_0)^3
 		}$
 	</div>
 	where we assume that the first, second, and third derivatives are continuous. So at $x_n$:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) = f(x_n) + f'(x_n)(x - x_n) + \frac{f''(x_n)}{2}(x - x_n)^2 + \frac{f'''(x_n)}{6}(x - x_n)^3
+			f(x) &= f(x_n) + f'(x_n)(x - x_n) + \frac{f''(x_n)}{2}(x - x_n)^2 \\
+			& \hspace{.4cm} + \frac{f'''(x_n)}{6}(x - x_n)^3
 		}$
 	</div>
 	Now multiplying the cubic approximation by $2f'(x_n)$:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) = 2f(x_n)f'(x_n) + 2[f'(x_n)]^2(x - x_n) + f'(x_n)f''(x_n)(x - x_n)^2 + \frac{f'(x_n)f'''(x_n)}{3}(x - x_n)^3
+			f(x) &= 2f(x_n)f'(x_n) + 2[f'(x_n)]^2(x - x_n) \\
+			& \hspace{.4cm} + f'(x_n)f''(x_n)(x - x_n)^2 \\
+			& \hspace{.4cm} + \frac{f'(x_n)f'''(x_n)}{3}(x - x_n)^3
 		}$
 	</div>
 	and the quadratic approximation by $f''(x_n)(x - x_n)$:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x) = f(x_n)f''(x_n)(x - x_n) + f'(x_n)f''(x_n)(x - x_n)^2 + \frac{(f''(x_n))^2}{2}(x - x_n)^3
+			f(x) &= f(x_n)f''(x_n)(x - x_n) + f'(x_n)f''(x_n)(x - x_n)^2 \\
+			& \hspace{.4cm} + \frac{(f''(x_n))^2}{2}(x - x_n)^3
 		}$
 	</div>
 	gives us the tools needed. Subtracting the first equation from the second one right above results in:
 	<div class="latex_equation">
 		$\eqalign{
-			0 &= -2f(x_n)f'(x_n) + \Big[ f(x_n)f''(x_n) - 2(f'(x_n))^2 \Big](x - x_n) \\
+			0 &= -2f(x_n)f'(x_n) + \Big[ f(x_n)f''(x_n) \\
+			& \hspace{.4cm} - 2(f'(x_n))^2 \Big](x - x_n) \\
 			& \hspace{.4cm} + \Big[ \frac{(f''(x_n))^2}{2} - \frac{f'(x_n)f'''(x_n)}{3} \Big](x - x_n)^3 \\
 			0 &= -\frac{2f(x_n)f'(x_n)}{f(x_n)f''(x_n) - 2(f'(x_n))^2} + (x - x_n) \\
 			& \hspace{.4cm} + \frac{3(f''(x_n))^2 - 2f'(x_n)f'''(x_n)}{6(f(x_n)f''(x_n) - 2(f'(x_n))^2)}(x - x_n)^3 \\
 			x - x_n &= -\frac{2f(x_n)f'(x_n)}{2(f'(x_n))^2 - f(x_n)f''(x_n)} \\
 			& \hspace{.4cm} - \frac{2f'(x_n)f'''(x_n) - 3(f''(x_n))^2}{6(2(f'(x_n))^2 - f(x_n)f''(x_n))}(x - x_n)^3 \\
-			x - x_n &= (x_{n + 1} - x_{n}) - \frac{2f'(x_n)f'''(x_n) - 3(f''(x_n))^2}{12(f'(x_n))^2 - 6f(x_n)f''(x_n)}(x - x_n)^3 \\
+			x - x_n &= (x_{n + 1} - x_{n}) \\
+			& \hspace{.4cm} - \frac{2f'(x_n)f'''(x_n) - 3(f''(x_n))^2}{12(f'(x_n))^2 - 6f(x_n)f''(x_n)}(x - x_n)^3 \\
 			x - x_{n + 1} &= -\frac{2f'(x_n)f'''(x_n) - 3(f''(x_n))^2}{12(f'(x_n))^2 - 6f(x_n)f''(x_n)}(x - x_n)^3 \\
 			\epsilon_{n + 1} &= -\frac{2f'(x_n)f'''(x_n) - 3(f''(x_n))^2}{12(f'(x_n))^2 - 6f(x_n)f''(x_n)}\epsilon_n^3 \\
 			|\epsilon_{n + 1}| &= \Bigg| \frac{2f'(x_n)f'''(x_n) - 3(f''(x_n))^2}{12(f'(x_n))^2 - 6f(x_n)f''(x_n)} \Bigg| |\epsilon_n|^3 \\
