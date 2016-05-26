@@ -5,7 +5,9 @@
 	Given two differentiable functions $f(x)$ and $g(x)$ s.t.:
 	<div class="latex_equation">
 		$\eqalign{
-			\lim_{x \rightarrow c} f(x) = \lim_{x \rightarrow c} g(x) = 0 \hspace{.3cm} \text{or} \hspace{.3cm} \lim_{x \rightarrow c} f(x) = \lim_{x \rightarrow c} g(x) = \pm \infty \hspace{.3cm} \text{where} \hspace{.3cm} c \in \mathbb{R}
+			&\lim_{x \rightarrow c} f(x) = \lim_{x \rightarrow c} g(x) = 0 \\
+			&\text{or} \hspace{.3cm} \lim_{x \rightarrow c} f(x) = \lim_{x \rightarrow c} g(x) = \pm \infty \hspace{.3cm} \\
+			&\text{where} \hspace{.3cm} c \in \mathbb{R}
 		}$
 	</div>
 	then $\textit{L'Hospital's Rule}$ states that:
@@ -33,7 +35,8 @@
 			then assuming that $x \neq c$ we do the following:
 			<div class="latex_equation">
 				$\eqalign{
-					\lim_{x \rightarrow c} \frac{f(x)}{g(x)} &= \lim_{x \rightarrow c} \frac{f(x) - 0}{g(x) - 0} \\
+					&\lim_{x \rightarrow c} \frac{f(x)}{g(x)} \\
+					&= \lim_{x \rightarrow c} \frac{f(x) - 0}{g(x) - 0} \\
 					&= \lim_{x \rightarrow c} \frac{f(x) - f(c)}{g(x) - g(c)} \\
 					&= \lim_{x \rightarrow c} \frac{\frac{f(x) - f(c)}{x - c}}{\frac{g(x) - g(c)}{x - c}} \\
 					&= \Bigg[ \lim_{x \rightarrow c} \frac{f(x) - f(c)}{x - c} \Bigg]\Bigg[ \lim_{x \rightarrow c} \frac{g(x) - g(c)}{x - c} \Bigg]^{-1} \\
@@ -63,7 +66,8 @@
 			then by Cachy's Mean Value Theorem on the interval $[a,b]$:
 			<div class="latex_equation">
 				$\eqalign{
-					\exists \hspace{.1cm} c \in (a,b) \hspace{.3cm} \text{s.t.} \hspace{.3cm} k'(c)(j(b) - j(a)) = j'(c)(k(b) - k(a))
+					\exists \hspace{.1cm} c &\in (a,b) \hspace{.3cm} \text{s.t.} \\
+					k'(c)(j(b) - j(a)) &= j'(c)(k(b) - k(a))
 				}$
 			</div>
 			Now we can take any pair of domains $[a,x]$ and $(a,x)$ s.t. both functions are continuous and differentiable on them respectively where $x \leq b$. Using the Mean Value Theorem and our given situation:
