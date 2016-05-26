@@ -149,7 +149,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					functions.handle_breadcrumbs("section", $(".latex_section").first(), subject, topic, section);
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 					functions.handle_button("notes");
-					if(functions.is_mobile()) {
+					if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
 						MathJax.Hub.Queue(function() {
 							functions.hide_mathjax_span();
 						});
