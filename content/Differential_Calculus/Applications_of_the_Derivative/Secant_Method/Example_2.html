@@ -27,7 +27,9 @@
 			and in this scenario the Secant Method takes the form:
 			<div class="latex_equation">
 				$\eqalign{
-					x_{n + 1} = x_n - \frac{(\sin(x_n) - x_n^2)(x_n - x_{n - 1})}{(\sin(x_n) - \sin(x_{n - 1})) - (x_n^2 - x_{n - 1}^2)}
+					&x_{n + 1} \\ 
+					&= x_n - \Big[ (\sin(x_n) - x_n^2)(x_n - x_{n - 1}) \Big] \\
+					& \hspace{.2cm} \cdot \Big[ \sin(x_n) - \sin(x_{n - 1}) - x_n^2 + x_{n - 1}^2 \Big]^{-1}
 				}$
 			</div>
 			We can choose the starting points to be $x_0 = \frac{1}{2}$ and $x_1 = 1$. Now the iterations take on the values:

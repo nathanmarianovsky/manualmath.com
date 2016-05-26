@@ -50,7 +50,8 @@
 	which provides:
 	<div class="latex_equation">
 		$\eqalign{
-			f(x - \epsilon_n) - f(x - \epsilon_{n - 1}) &= \epsilon_n f'(x) \Big[ M\epsilon_n - 1 \Big] - \epsilon_{n - 1} f'(x) \Big[ M\epsilon_{n - 1} - 1 \Big] \\
+			&f(x - \epsilon_n) - f(x - \epsilon_{n - 1}) \\
+			&= \epsilon_n f'(x) \Big[ M\epsilon_n - 1 \Big] - \epsilon_{n - 1} f'(x) \Big[ M\epsilon_{n - 1} - 1 \Big] \\
 			&= f'(x) \Big[ M(\epsilon_n^2 - \epsilon_{n - 1}^2) - (\epsilon_n - \epsilon_{n - 1}) \Big] \\
 			&= (\epsilon_n - \epsilon_{n - 1})f'(x)\Big[ M(\epsilon_n - \epsilon_{n - 1}) - 1 \Big]
 		}$
@@ -59,8 +60,10 @@
 	<div class="latex_equation">
 		$\eqalign{
 			x_{n + 1} &= x_n - f(x_n) \cdot \frac{x_n - x_{n - 1}}{f(x_n) - f(x_{n - 1})} \\
-			x - \epsilon_{n + 1} &= (x - \epsilon_n) - f(x - \epsilon_n) \cdot \frac{(x - \epsilon_n) - (x - \epsilon_{n - 1})}{f(x - \epsilon_n) - f(x - \epsilon_{n - 1})} \\
-			\epsilon_{n + 1} &= \epsilon_n - \epsilon_n f'(x) \Big[ M\epsilon_n - 1 \Big] \cdot \frac{\epsilon_n - \epsilon_{n - 1}}{(\epsilon_n - \epsilon_{n - 1})f'(x)\Big[ M(\epsilon_n - \epsilon_{n - 1}) - 1 \Big]} \\
+			x - \epsilon_{n + 1} &= (x - \epsilon_n) - f(x - \epsilon_n) \\
+			& \hspace{.4cm} \cdot \hspace{.1cm} \frac{(x - \epsilon_n) - (x - \epsilon_{n - 1})}{f(x - \epsilon_n) - f(x - \epsilon_{n - 1})} \\
+			\epsilon_{n + 1} &= \epsilon_n - \epsilon_n f'(x) \Big[ M\epsilon_n - 1 \Big] \\
+			& \hspace{.4cm} \cdot \hspace{.1cm} \frac{\epsilon_n - \epsilon_{n - 1}}{(\epsilon_n - \epsilon_{n - 1})f'(x)\Big[ M(\epsilon_n - \epsilon_{n - 1}) - 1 \Big]} \\
 			&= \epsilon_n - \frac{\epsilon_n\Big[ M\epsilon_n - 1 \Big]}{M(\epsilon_n - \epsilon_{n - 1}) - 1} \\
 			&= \frac{M\epsilon_n\epsilon_{n - 1}}{M(\epsilon_n - \epsilon_{n - 1}) - 1} \\
 			&\approx M\epsilon_n\epsilon_{n - 1}

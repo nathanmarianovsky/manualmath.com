@@ -27,7 +27,9 @@
 			and in this scenario the Secant Method takes the form:
 			<div class="latex_equation">
 				$\eqalign{
-					x_{n + 1} = x_n - \frac{(e^{\sin(x_n)} + x_n)(x_n - x_{n - 1})}{(e^{\sin(x_n)} - e^{\sin(x_{n - 2})}) + (x_n - x_{n - 1})}
+					&x_{n + 1} \\
+					&= x_n - \Big[ (e^{\sin(x_n)} + x_n)(x_n - x_{n - 1}) \Big] \\
+					& \hspace{.2cm} \cdot \Big[ (e^{\sin(x_n)} - e^{\sin(x_{n - 2})}) + (x_n - x_{n - 1}) \Big]^{-1}
 				}$
 			</div>
 			We can choose the starting points to be $x_0 = -1$ and $x_1 = 0$. Now the iterations take on the values:
