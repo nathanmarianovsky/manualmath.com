@@ -11,7 +11,7 @@
 	given the conditions:
 	<div class="latex_equation">
 		$\eqalign{
-			g(a) \neq 0 \hspace{.3cm} \text{and} \hspace{.3cm} \frac{a - x}{n} \neq \frac{g(x)}{g'(x)} \hspace{.3cm} \forall x
+			g(a) \neq 0 \hspace{.3cm} \text{and} \hspace{.3cm} g'(x)(x - a) + ng(x) \neq 0 \hspace{.3cm} \forall x
 		}$
 	</div>
 	and identify each one's behavior according to the Higher-Order Derivative Test.
@@ -36,18 +36,22 @@
 			Now we keep taking derivatives at the critical point until it evaluates to something other than zero:
 			<div class="latex_equation">
 				$\eqalign{
-					f''(x) &= g''(x)(x - a)^n + 2ng'(x)(x - a)^{n - 1} \\
+					f''(x) &= g''(x)(x - a)^n \\
+					& \hspace{.4cm} + 2ng'(x)(x - a)^{n - 1} \\
 					& \hspace{.4cm} + n(n - 1)g(x)(x - a)^{n - 2} \\
 					&\implies f''(a) = 0 \\
-					f'''(x) &= g'''(x)(x - a)^n + 3ng''(x)(x - a)^{n - 1} \\
+					f'''(x) &= g'''(x)(x - a)^n \\
+					& \hspace{.4cm} + 3ng''(x)(x - a)^{n - 1} \\
 					& \hspace{.4cm} + 3n(n - 1)g'(x)(x - a)^{n - 2} \\
 					& \hspace{.4cm} + n(n - 1)(n - 2)g(x)(x - a)^{n - 3} \\
 					&\implies f'''(a) = 0 \\
 					&\vdots \\
-					f^{(k)}(x) &= \sum_{i = 0}^k {k \choose i} \frac{n!}{(n - i)!} g^{(k - i)}(x) (x - a)^{n - i} \\
+					f^{(k)}(x) &= \\
+					&\sum_{i = 0}^k {k \choose i} \frac{n!}{(n - i)!} g^{(k - i)}(x) (x - a)^{n - i} \\
 					&\implies f^{(k)}(a) = 0 \hspace{.3cm} \text{if} \hspace{.3cm} k \leq n \\
-					f^{(n)}(x) &= \sum_{i = 0}^n {n \choose i} \frac{n!}{(n - i)!} g^{(n - i)}(x) (x - a)^{n - i} \\
-					&\implies f^{(n)}(a) = {n \choose n} \frac{n!}{0!} g(a) = n!g(a)
+					f^{(n)}(x) &= \\
+					&\sum_{i = 0}^n {n \choose i} \frac{n!}{(n - i)!} g^{(n - i)}(x) (x - a)^{n - i} \\
+					&\implies f^{(n)}(a) = n!g(a)
 				}$
 			</div>
 			Now depending on the specific parameters the result is different:

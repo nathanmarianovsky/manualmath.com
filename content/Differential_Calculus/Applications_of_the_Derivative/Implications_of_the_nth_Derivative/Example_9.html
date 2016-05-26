@@ -29,11 +29,15 @@
 			Now we keep taking derivatives at the critical point until it evaluates to something other than zero:
 			<div class="latex_equation">
 				$\eqalign{
-					f''(x) = n(n - 1)x^{n - 2} &\implies f''(0) = 0 \\
-					f'''(x) = n(n - 1)(n - 2)x^{n - 3} &\implies f'''(0) = 0 \\
+					f''(x) &= n(n - 1)x^{n - 2} \\
+					&\implies f''(0) = 0 \\
+					f'''(x) &= n(n - 1)(n - 2)x^{n - 3} \\
+					&\implies f'''(0) = 0 \\
 					&\vdots \\
-					f^{(n - 1)}(x) = n!x &\implies f^{(n - 1)}(0) = 0 \\
-					f^{(n)}(x) = n! &\implies f^{(n)}(0) = n!
+					f^{(n - 1)}(x) &= n!x \\
+					&\implies f^{(n - 1)}(0) = 0 \\
+					f^{(n)}(x) &= n! \\
+					&\implies f^{(n)}(0) = n!
 				}$
 			</div>
 			We know that $n!$ is strictly positive so now depending upon the nature of $n$ the behavior changes:
