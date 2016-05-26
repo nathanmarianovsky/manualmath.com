@@ -32,7 +32,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				$("#about_page").append(content);
 				$.get("/client/dist/notation-min.html").done(function(notation) {
 					$("#notation_box").append(notation);
-					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 				});
 			});
 			functions.handle_logo_link("about");
@@ -54,7 +54,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				$("#about_page").append(content);
 				$.get("/client/dist/notation-min.html").done(function(notation) {
 					$("#notation_box").append(notation);
-					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 				});
 			});
 			functions.handle_logo_link("about");
@@ -80,7 +80,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				functions.handle_breadcrumbs("subject", $("h2").first(), subject);
 				$.get("/content/" + subject.sname + "/Notation.html").done(function(notation) {
 					$("#subject_page").append(notation);
-					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 				});
 			});
 			functions.handle_logo_link("subject");
@@ -108,7 +108,13 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(function(content) {
 				$("#topic_page").append(content);
 				functions.handle_breadcrumbs("topic", $("h2").first(), subject, topic);
-				MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+				if(functions.is_mobile()) {
+					MathJax.Hub.Queue(function() {
+						functions.mobile_breadcrumbs("topic"); 
+						functions.hide_mathjax_span();
+					});
+				}
 			});
 			functions.handle_logo_link("subject.topic");
 			functions.handle_logo();
@@ -141,8 +147,13 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(function(content) {
 					$("#latex").append(content);
 					functions.handle_breadcrumbs("section", $(".latex_section").first(), subject, topic, section);
-					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 					functions.handle_button("notes");
+					if(functions.is_mobile()) {
+						MathJax.Hub.Queue(function() {
+							functions.hide_mathjax_span();
+						});
+					}
 				});
 			}
 			else {
@@ -153,7 +164,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html").done(function(content) {
 					$("#latex").append(content);
 					functions.handle_breadcrumbs("example", $(".latex_section").first(), subject, topic, section, example);
-					MathJax.Hub.Queue(["Typeset",MathJax.Hub,"main"]);
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 					functions.handle_button("example");
 				});
 			}
