@@ -31,7 +31,7 @@
 			and in this scenario Halley's Method takes the form:
 			<div class="latex_equation">
 				$\eqalign{
-					x_{n + 1} = x_n - \frac{2(6x_n - \sqrt{1 - x_n^2})\Big( 6 + \frac{2x_n}{\sqrt{1 - x_n^2}} \Big)}{2\Big( 6 + \frac{2x_n}{\sqrt{1 - x_n^2}} \Big)^2 + (6x_n - \sqrt{1 - x_n^2})\Bigg( \frac{2x_n^2 + 2}{(1 - x_n^2)^{\frac{3}{2}}} \Bigg)}
+					x_{n + 1} = x_n - \frac{2\Big( 6 + \frac{2x_n}{\sqrt{1 - x_n^2}} \Big)}{\frac{2\Big( 6 + \frac{2x_n}{\sqrt{1 - x_n^2}} \Big)^2}{6x_n - \sqrt{1 - x_n^2}} + \frac{2x_n^2 + 2}{(1 - x_n^2)^{\frac{3}{2}}}}
 				}$
 			</div>
 			We can choose the starting point to be $x = 0$ and the iterations take on the values:

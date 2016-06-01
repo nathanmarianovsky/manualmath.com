@@ -21,9 +21,7 @@
 			In this scenario Halley's Method takes the form:
 			<div class="latex_equation">
 				$\eqalign{
-					&x_{n + 1} \\
-					&= x_n - \Big[ 2(x_n^3 - x_n + 1)(3x_n^2 - 1)\Big] \\
-					& \hspace{.2cm} \cdot \Big[ 2(3x_n^2 - 1)^2 - (x_n^3 - x_n + 1)(6x_n) \Big]^{-1}
+					x_{n + 1} = x_n - \frac{3x_n^2 - 1}{\frac{(3x_n^2 - 1)^2}{x_n^3 - x_n + 1} - 3x_n}
 				}$
 			</div>
 			We can choose the starting point to be $x = -1$ and the iterations take on the values:

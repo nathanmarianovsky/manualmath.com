@@ -27,7 +27,8 @@
 			and in this scenario Halley's Method takes the form:
 			<div class="latex_equation">
 				$\eqalign{
-					x_{n + 1} = x_n - \frac{2(e^{\sin(x_n)} + x_n)(\cos(x_n)e^{\sin(x_n)} + 1)}{2(\cos(x_n)e^{\sin(x_n)} + 1)^2 - (e^{\sin(x_n)} + x_n)(\cos^2(x_n) - \sin(x_n))e^{\sin(x_n)}}
+					&x_{n + 1} = x_n \\
+					& \hspace{.4cm} - \frac{ \frac{2(\cos(x_n)e^{\sin(x_n)} + 1)}{\cos^2(x_n) - \sin(x_n)}} {\frac{2(\cos(x_n)e^{\sin(x_n)} + 1)^2}{\Big( e^{\sin(x_n)} + x_n \Big)(\cos^2(x_n) - \sin(x_n))} - e^{\sin(x_n)}}
 				}$
 			</div>
 			We can choose the starting point to be $x = -1$ and the iterations take on the values:
