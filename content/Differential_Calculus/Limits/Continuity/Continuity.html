@@ -22,7 +22,7 @@
 	Continuity on an Interval
 </div>
 <div class="latex_body">
-	A function, $f(x)$, is said to be $\textit{continuous}$ on an interval, $S \subseteq \mathbb{R}$, if it continuous at every point in $S$.
+	A function, $f(x)$, is said to be $\textit{continuous}$ on an interval, $S \subseteq \mathbb{R}$, if it is continuous at every point in $S$.
 </div>
 
 <div class="latex_section">
@@ -95,10 +95,75 @@
 </div>
 
 <div class="latex_section">
+	Bolzano's Theorem
+</div>
+<div class="latex_body">
+	Given a continuous function on the closed interval $[a,b]$ where $f(a)$ and $f(b)$ have opposite signs, then:
+	<div class="latex_equation">
+		$\eqalign{
+			\exists \hspace{.2cm} c \in (a,b) \hspace{.5cm} \text{s.t.} f(c) = 0
+		}$
+	</div>
+	In other words Bolzano's Theorem guarantees that a continuous function attains a zero on the interval.
+</div>
+
+<div class="latex_section">
+	Proof of Bolzano's Theorem
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_1">
+	<div class="hidden_div" id="hidden_div_1">
+		<div class="latex_body">
+			While the theorem is very straight forward, the proof requires a bit more insight. First lets assume that we have a continuous function on the compact interval $[a,b]$ s.t. $f(a) < 0$ and $f(b) > 0$. Now define a new point:
+			<div class="latex_equation">
+				$\eqalign{
+					a_1 = \frac{a + b}{2}
+				}$
+			</div>
+			to be the average of the two endpoints where three cases can occurs:
+			<div class="latex_equation">
+				$\eqalign{
+					f(a_1) = 0 \implies &\text{the theorem is proved} \\
+					f(a_1) > 0 \implies &\text{define a new interval} \\
+					& I_1 = (a, a_1) \\
+					f(a_1) < 0 \implies &\text{define a new interval} \\
+					& I_1 = (a_1, b) \\
+				}$
+			</div>
+			Ignoring the trivial case we now have the original interval $I_0 = (a,b)$ and $I_1 \subset I_0$ where the length of the new interval is $|I_1| = \frac{|I_0|}{2}$. Repeating the above procedure will define a succession of open intervals $I_n = (a_n, b_n)$ s.t. $I_{n + 1} \subset I_n$, $|I_n| = 2^{-n} |I_0|$, and $f(a_n) < 0 < f(b_n)$. The succession $c_n = a_n$ and $c_{n + 1} = b_n$ is Cauchy by construction since:
+			<div class="latex_equation">
+				$\eqalign{
+					\forall m > n \hspace{.5cm} |c_m - c_n| < 2^{-\frac{n}{2}} |I_0|
+				}$
+			</div>
+			which implies that $c_n$ is convergent, $c_n \rightarrow c \in (a,b)$. Since $a_n$ and $b_n$ are sub-successions they also tend to the same limit. So by construction:
+			<div class="latex_equation">
+				$\eqalign{
+					f(a_n) &< 0 \\
+					\lim_{n \rightarrow \infty} f(a_n) &< 0 \\
+					f\Big( \lim_{n \rightarrow \infty} a_n \Big) &\leq 0 \\
+					f(c) &\leq 0
+				}$
+			</div>
+			and:
+			<div class="latex_equation">
+				$\eqalign{
+					f(b_n) &> 0 \\
+					\lim_{n \rightarrow \infty} f(b_n) &> 0 \\
+					f\Big( \lim_{n \rightarrow \infty} b_n \Big) &\geq 0 \\
+					f(c) &\geq 0
+				}$
+			</div>
+			With both of the restrictions in mind we must have it s.t. $f(c) = 0$. To finish up we state that $c \in (a,b)$ because $f(a) < 0$ and $f(b) > 0$. Of course it is the same process for proving the case where $f(a) > 0$ and $f(b) < 0$ if you consider the scenario for $-f(x)$.
+		</div>
+	</div>
+</div>
+
+<div class="latex_section">
 	Intermediate Value Theorem
 </div>
 <div class="latex_body">
-	Given a continuous function on the closed interval $[a,b]$, according to the $\textit{Intermediate Value Theorem}$ the function is guaranteed to attain:
+	Given a continuous function on the closed interval $[a,b]$, according to the $\textit{Intermediate Value Theorem}$ the function is guaranteed to attain the range:
 	<div class="latex_equation">
 		$\eqalign{
 			\mathcal{R}(f) = \Big[ \min\{f(a),f(b)\}, \max\{f(a),f(b)\} \Big]
@@ -109,5 +174,29 @@
 		$\eqalign{
 			\forall \alpha \in \mathcal{R}(f) \hspace{.1cm} \exists \hspace{.1cm} c \in [a,b] \hspace{.3cm} \text{s.t.} \hspace{.3cm} f(c) = \alpha
 		}$
+	</div>
+</div>
+
+<div class="latex_section">
+	Proof of Intermediate Value Theorem
+</div>
+<div>
+	<input type="button" value="Show Proof" class="show_solution" id="show_solution_2">
+	<div class="hidden_div" id="hidden_div_2">
+		<div class="latex_body">
+			Begin by assuming we have a continuous function, $f(x)$, on the compact interval $[a,b]$ and want to know whether a $c \in (a,b)$ exists s.t. $f(c) = L$ where $L$ is a real number between $f(a)$ and $f(b)$. Define a new function:
+			<div class="latex_equation">
+				$\eqalign{
+					g(x) = f(x) - L
+				}$
+			</div>
+			and now we know that $g(a)$ and $g(b)$ will have opposite signs. Therefore, by Bolzano's Theorem there will exist a $c \in (a,b)$ s.t. $g(c) = 0$ which implies:
+			<div class="latex_equation">
+				$\eqalign{
+					f(c) = L
+				}$
+			</div>
+			Since $L$ is any arbitrary number in between $f(a)$ and $f(b)$, we know that must attain every value in between including the boundaries.
+		</div>
 	</div>
 </div>
