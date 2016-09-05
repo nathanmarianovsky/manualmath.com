@@ -3,11 +3,16 @@ body * {
 	max-height: 1000000em;
 }
 
+body {
+	background: #e0e0e0;
+}
+
 
 
 /* Pushes the main content from the left to give space to the menu */
 main {
   	padding-left: 350px;
+  	background: #e0e0e0;
 }
 
 
@@ -133,7 +138,7 @@ nav {
 
 
 
-/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
+/* All CSS properties related to anything belonging to the about page */
 .box_message {
 	margin: 20px auto 50px auto;
 	width: 80%;
@@ -166,7 +171,7 @@ nav {
 	padding-left: 4px;
 }
 
-#about_page, #subject_page, #topic_page {
+#about_page {
 	margin-top: 100px;
 }
 
@@ -176,10 +181,10 @@ nav {
 
 
 
-/* All CSS properties related to anything belonging to the latex page */
+/* All CSS properties related to anything belonging to any subject, topic, section, and example page */
 #latex {
-	margin: 100px auto 50px auto;
-	width: 80%;
+	margin-top: 64px;
+	width: 100%;
 	font-size: 15px;
 }
 
@@ -207,25 +212,6 @@ nav {
 	line-height: 25px;
 }
 
-.show_solution {
-	display: block;
-	position: relative;
-	text-align: center;
-	margin: 10px auto 20px auto;
-	width: 150px;
-	font-size: 20px;
-}
-
-.hidden_div {
-	display: none;
-	background-color: #9CC2E8;
-    box-sizing: content-box;
-    padding: 30px;
-}
-
-
-
-/* All CSS properties belonging to all pages */
 .latex_equation {
 	position: relative;
 	text-align: center;
@@ -253,4 +239,41 @@ nav {
 	border: 1px solid black;
 	margin: 0 auto 0 auto;
 	text-align: center;
+}
+
+.show_solution {
+	display: block;
+	position: relative;
+	text-align: center;
+	margin: 0 auto 0 auto;
+    width: 100%;
+    font-size: 16px;
+    text-align: left;
+    background-color: #4693ec;
+    color: white;
+    padding: 9px;
+    border-bottom: none
+}
+
+.cont_div {
+    background-color: #e0e0e0;
+    box-sizing: content-box;
+    padding: 30px;
+    border-top: none;
+}
+
+.hidden_div {
+	display: none;
+}
+
+.accordion {
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+.solution_display {
+	position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 40px;
 }

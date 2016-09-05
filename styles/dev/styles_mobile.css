@@ -50,7 +50,6 @@
 
 	#mobile_logo_title {
 		display: inline;
-		/*font-size: 16px;*/
 		bottom: 0px;
 		color: #54FFA9;
 		font-family: "Roboto Mono";
@@ -130,12 +129,12 @@
 
 	/* All CSS properties related to anything belonging to the latex page */
 	#latex {
-		margin: 30px auto 50px auto;
-		width: 90%;
+		margin-top: -4px;
+		width: 100%;
 	}
 
 	.hidden_div {
-		background-color: #C4DBF3;
+		background-color: #e0e0e0;
 	}
 
 
@@ -154,6 +153,10 @@
 	    font-style: normal;
 	    margin: 0 10px 0 8px;
 	    -webkit-font-smoothing: antialiased;
+	}
+
+	.cont_div {
+		padding: 15px;
 	}
 }
 
@@ -188,10 +191,8 @@
 
 
 
-	/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
-	#about_page .latex_equation table,
-	#subject_page .latex_equation table,
-	#topic_page .latex_equation table {
+	/* All CSS properties related to anything belonging to the about page */
+	#about_page .latex_equation table {
 		font-size: 15px;
 	}
 
@@ -203,9 +204,12 @@
 		font-size: 25px;
 	}
 
+	.box_text {
+		font-size: 20px;
+	}
 
 
-	/* All CSS properties related to anything belonging to the latex page */
+	/* All CSS properties related to anything belonging to any subject, topic, section, and example page */
 	#latex {
 		font-size: 20px;
 	}
@@ -214,17 +218,11 @@
 		font-size: 25px;
 	}
 
-	.box_tex {
-		font-size: 20px;
-	}
 
 	#breadcrumbs li {
 		font-size: 30px;
 	}
 
-
-
-	/* All CSS properties belonging to all pages */
 	.latex_equation {
 		font-size: 18px;
 	}
@@ -267,14 +265,16 @@
 
 
 	/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
-	#about_page .latex_equation table,
-	#subject_page .latex_equation table,
-	#topic_page .latex_equation table {
+	#about_page .latex_equation table{
 		font-size: 14px;
 	}
 
 	.box_message {
 		font-size: 18px;
+	}
+
+	.box_text {
+		font-size: 15px;
 	}
 
 
@@ -284,13 +284,6 @@
 		font-size: 15px;
 	}
 
-	.box_tex {
-		font-size: 15px;
-	}
-
-
-
-	/* All CSS properties belonging to all pages */
 	.latex_equation {
 		font-size: 14px;
 	}
@@ -332,16 +325,14 @@
 
 
 
-	/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
-	#about_page .latex_equation table,
-	#subject_page .latex_equation table,
-	#topic_page .latex_equation table {
+	/* All CSS properties related to anything belonging to the about page */
+	#about_page .latex_equation table {
 		font-size: 12px;
 	}
 
 
 
-	/* All CSS properties related to anything belonging to the latex page */
+	/* All CSS properties related to anything belonging to any subject, topic, section, and example page */
 	#latex {
 		font-size: 20px;
 	}
@@ -350,9 +341,6 @@
 		font-size: 16px;
 	}
 
-
-
-	/* All CSS properties belonging to all pages */
 	.latex_equation {
 		font-size: 11px;
 	}
@@ -398,23 +386,18 @@
 
 
 
-	/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
-	#about_page .latex_equation table,
-	#subject_page .latex_equation table,
-	#topic_page .latex_equation table {
+	/* All CSS properties related to anything belonging to the about page */
+	#about_page .latex_equation table{
 		font-size: 10px;
 	}
 
 
 
-	/* All CSS properties related to anything belonging to the latex page */
+	/* All CSS properties related to anything belonging to any subject, topic, section, and example page */
 	#latex {
 		font-size: 18px;
 	}
 
-
-
-	/* All CSS properties belonging to all pages */
 	.latex_equation {
 		font-size: 11px;
 	}
