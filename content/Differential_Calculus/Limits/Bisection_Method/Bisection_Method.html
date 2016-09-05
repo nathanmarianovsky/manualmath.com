@@ -1,0 +1,59 @@
+<div class="latex_section">
+	Introduction
+</div>
+<div class="latex_body">
+	Having Bolzano's Theorem in your arsenal actually provides the foundation necessary for a fundamental root-finding algorithm. Known as the $\textit{Bisection Method}$, the process provides a systematic approach to determine the root of a function given that the function evaluation at the endpoints is of opposite signs.
+</div>
+
+<div class="latex_section">
+	Algorithm
+</div>
+<div class="latex_body">
+	Given a continuous function on the closed interval $[a,b]$ where $f(a)$ and $f(b)$ have opposite signs, then $\exists c \in (a,b)$ s.t. $f(c) = 0$ according to Bolzano's Theorem. To determine the value of $c$ follow the steps:
+	<div class="latex_equation">
+		$\eqalign{
+			1. &\text{Calculate the midpoint of the interval:} \hspace{.2cm} c = \frac{a + b}{2} \\
+			2. &\text{Evaluate} \hspace{.2cm} f(c) \\
+			3. &\text{If the evaluation is close enough to zero} \\
+			&\text{return the value of} \hspace{.2cm} c \\
+			4. &\text{If the evaluation is not close enough then begin by} \\
+			&\text{checking the sign of} \hspace{.2cm} f(c). \hspace{.2cm} \text{If} \hspace{.2cm} f(a) \hspace{.2cm} \text{and} \hspace{.2cm} f(c) \\
+			&\text{have the same sign then:} \hspace{.2cm} b = c, \hspace{.2cm} \text{otherwise} \hspace{.2cm} a = c \\
+			&\text{and you repeat the steps starting from number one.}
+		}$
+	</div>
+	At the end of the day the Bisection Method is nothing more than a process of determining the root by guessing the middle value of subintervals.
+</div>
+
+<div class="latex_section">
+	Convergence
+</div>
+<div>
+	<div class="latex_body">
+		While the algorithm is very straight forward, the proof requires a bit more insight. First assume that we have a continuous function on the compact interval $[a,b]$ s.t. $f(a) < 0$ and $f(b) > 0$. Now define the middle point:
+		<div class="latex_equation">
+			$\eqalign{
+				a_1 = \frac{a + b}{2}
+			}$
+		</div>
+		where the evaluation can result in three cases:
+		<div class="latex_equation">
+			$\eqalign{
+				f(a_1) = 0 \implies &\text{the value is found} \\
+				f(a_1) > 0 \implies &\text{define a new interval} \\
+				& I_1 = (a, a_1) \\
+				f(a_1) < 0 \implies &\text{define a new interval} \\
+				& I_1 = (a_1, b) \\
+			}$
+		</div>
+		Ignoring the trivial case we now have the original interval $I_0 = (a,b)$ and $I_1 \subset I_0$ where the length of the new interval is $|I_1| = \frac{|I_0|}{2}$. Repeating the above procedure will define a succession of open intervals $I_n = (a_n, b_n)$ s.t. $I_{n + 1} \subset I_n$, and $|I_n| = 2^{-n} |I_0|$. Using the restriction:
+		<div class="latex_equation">
+			$\eqalign{
+				|I_n| &= 2^{-n} |I_0| \\
+				\lim_{n \rightarrow \infty} |I_n| &= \lim_{n \rightarrow \infty} 2^{-n} |I_0| \\
+				\lim_{n \rightarrow \infty} |I_n| &= 0
+			}$
+		</div>
+		states that the interval eventually becomes just a single point, specifically the point we are looking for. By Bolzano's Theorem we also know that this point will always exist.
+	</div>
+</div>

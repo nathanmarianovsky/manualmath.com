@@ -1,0 +1,43 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Determine the number of steps needed for the Bisection Method on the interval $[a,b]$ given we want the error to be $\epsilon$ at most?
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			From the notes we know that the subintervals satisfy the relation:
+			<div class="latex_equation">
+				$\eqalign{
+					|I_n| = \frac{|I_0|}{2^n}
+				}$
+			</div>
+			and so we can rewrite this as:
+			<div class="latex_equation">
+				$\eqalign{
+					|c_n - c| = \frac{|b - a|}{2^n}
+				}$
+			</div>
+			where $c_n$ is the $n$th approximation and $c$ is the desired value. The left side represents the error and can be used to solve for the number of steps:
+			<div class="latex_equation">
+				$\eqalign{
+					\epsilon &= \frac{\epsilon_0}{2^n} \\
+					2^n &= \frac{\epsilon_0}{\epsilon} \\
+					n &= \log_2\Big( \frac{\epsilon_0}{\epsilon} \Big)
+				}$
+			</div>
+			Obviously we should account for the fact that $n$ is strictly a natural number in real life, and thus to guarantee a whole number we round up:
+			<div class="latex_equation">
+				$\eqalign{
+					\text{# of steps} \hspace{.2cm} = \Bigg\lceil \log_2\Big( \frac{\epsilon_0}{\epsilon} \Big) \Bigg\rceil
+				}$
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,79 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the equation:
+	<div class="latex_equation">
+		$\eqalign{
+			\ln(x) = x^2 - 4
+		}$
+	</div>
+	approximate the rightmost solution up to $5$ decimal places by using the Bisection Method to determine $x_5$, the fifth iteration.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			Before anything else we need to determine a suitable interval to search. This can be accomplished by graphing the left and right hand sides independently:
+			<div class="latex_equation">
+				<img src="/content/Differential_Calculus/Limits/Bisection_Method/Example_5.png">
+			</div>
+			Looking at the graph shows that $[1,3]$ is a proper interval. Now we rewrite the equation as:
+			<div class="latex_equation">
+				$\eqalign{
+					0 = \ln(x) - x^2 + 4
+				}$
+			</div>
+			and identify the function of interest to be:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) = \ln(x) - x^2 + 4
+				}$
+			</div>
+			The iterations take on the values:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>$\textbf{n}$</td>
+					    <td>$\textbf{x}_n$</td>
+					    <td>$f(\textbf{x}_n)$</td>
+					</tr>
+					<tr>
+				    	<td>$0$</td>
+					    <td>$2.00000$</td>
+					    <td>$0.69315$</td>
+					</tr>
+					<tr>
+				    	<td>$1$</td>
+					    <td>$2.50000$</td>
+					    <td>$-1.33371$</td>
+					</tr>
+					<tr>
+				    	<td>$2$</td>
+					    <td>$2.25000$</td>
+					    <td>$-0.25157$</td>
+					</tr>
+					<tr>
+				    	<td>$3$</td>
+					    <td>$2.12500$</td>
+					    <td>$0.23815$</td>
+					</tr>
+					<tr>
+				    	<td>$4$</td>
+					    <td>$2.18750$</td>
+					    <td>$-0.00240$</td>
+					</tr>
+					<tr>
+				    	<td>$5$</td>
+					    <td>$2.15625$</td>
+					    <td>$0.11896$</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

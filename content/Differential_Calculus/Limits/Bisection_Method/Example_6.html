@@ -1,0 +1,75 @@
+<div class="latex_section">
+	Problem
+</div>
+<div class="latex_body">
+	Given the equation:
+	<div class="latex_equation">
+		$\eqalign{
+			e^{\sin(x)} = -x
+		}$
+	</div>
+	approximate the solution up to $5$ decimal places by using the Bisection Method to determine $x_5$, the fifth iteration, on the interval $[-1,0]$.
+</div>
+
+<div class="latex_section">
+	Solution
+</div>
+<div>
+	<input type="button" value="Show Solution" class="show_solution">
+	<div class="hidden_div">
+		<div class="latex_body">
+			First we rewrite the equation as:
+			<div class="latex_equation">
+				$\eqalign{
+					0 = e^{\sin(x)} + x
+				}$
+			</div>
+			and identify the function of interest to be:
+			<div class="latex_equation">
+				$\eqalign{
+					f(x) = e^{\sin(x)} + x
+				}$
+			</div>
+			The iterations take on the values:
+			<div class="latex_equation">
+				<table>
+			    	<tr>
+				    	<td>$\textbf{n}$</td>
+					    <td>$\textbf{x}_n$</td>
+					    <td>$f(\textbf{x}_n)$</td>
+					</tr>
+					<tr>
+				    	<td>$0$</td>
+					    <td>$-0.50000$</td>
+					    <td>$0.11914$</td>
+					</tr>
+					<tr>
+				    	<td>$1$</td>
+					    <td>$-0.75000$</td>
+					    <td>$-0.24421$</td>
+					</tr>
+					<tr>
+				    	<td>$2$</td>
+					    <td>$-0.62500$</td>
+					    <td>$-0.06795$</td>
+					</tr>
+					<tr>
+				    	<td>$3$</td>
+					    <td>$-0.56250$</td>
+					    <td>$0.02416$</td>
+					</tr>
+					<tr>
+				    	<td>$4$</td>
+					    <td>$-0.59375$</td>
+					    <td>$-0.02224$</td>
+					</tr>
+					<tr>
+				    	<td>$5$</td>
+					    <td>$-0.57813$</td>
+					    <td>$0.00087$</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
