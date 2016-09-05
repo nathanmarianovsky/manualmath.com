@@ -33,13 +33,6 @@ This will handle the installation of all node_modules, bower_components, and bui
 
 
 # Changing the Content
-### Physical Files
-In order to change the content of the website, there are two main folders to look at:
-
-1. At "/client/" we have "about.php" and "notation.php". The first one houses the content for the site's landing page and the second is the notation that is mentioned on this site. 
-
-2. At "/content/" we have the rest. Inside there will be folders for each different subject. When looking at each subject there will be two html files associated that load the content of the subject alongside folders that represent the topics. Then looking inside any of the topics associated to the subject will have a single html file associated to the topic alongside folders that represent the sections. Finally looking inside any of the sections associated to the topic will have a single html file associated to the section alongside html files that represent the examples associated to the section. Sometimes there may also be image files inside the section folders, but these are just images used inside either the notes or examples.
-
 ### Changing the Database
 To begin with, the database is setup according to the following ERR diagram:
 
@@ -47,7 +40,7 @@ To begin with, the database is setup according to the following ERR diagram:
  <img width=500 height=500 src="/client/database_setup.png">
 </p>
 
-I provide a current build of mine that can be found in "/content/db". After setting up, add subjects, topics, sections, and examples into the database as needed. As far as names go inside the database, for any object they must match the file name and adhere to the rules:
+I provide a current build of mine that can be found in "/content/db". After setting up, add subjects, topics, sections, and examples into the database as needed. As far as names go inside the database, for any object they must adhere to the rules<sup>1</sup>:
 
 * All " " spaces must be replaced with "_"
 * All "-" characters must be replaced with "AND"
@@ -56,7 +49,14 @@ I provide a current build of mine that can be found in "/content/db". After sett
 * All "," characters must be replaced with "COMMA"
 * Subject name, sname, is unique to a given subject
 
-The id given to any object is completely arbitrary so long as the id is unique to that object, which essentially means that when looking at sections there can only be a single section with an id of 7, but there may exist a subject, topic, and even example that have the same id. The order is what helps provide a "natural" ordering to the objects as needed. 
+The id given to any object is completely arbitrary so long as the id is unique to that object, which essentially means that when looking at sections there can only be a single section with an id of 7, but there may exist a subject, topic, and even example that have the same id. Each subject will have some content and notation to describe itself, each topic will have just some content, each section will contain a total of ten paragraph styled subsections that make up the total content, and each example will have a problem with a solution associated to it. For all of these objects the order is what helps provide a "natural" ordering as needed.
+
+### Physical Files
+In order to change the content of the website, there are two main folders to look at:
+
+1. At "/content/" you can find the "db" folder which houses my setup alongside folders that contain local files that I reference in my material. The manner in which I choose to keep my local files is arbitrary so long as the data is correctly referenced in the html code inside the database.
+
+2. At "/client/" we have "about.html" and "notation.html". The first one houses the content for the site's landing page and the second is the notation that is mentioned on this site. 
 
 
 # Styling
@@ -71,7 +71,7 @@ All of the functionality associated to the actual website can be found inside th
 ### Getting All Objects of a Certain Type
 To use the API, there exist ways to extract the subjects, topics, sections, and examples from the database. So lets say that you want to get either all of the subjects, topics, sections, or examples that are available in the database. You would call on:
 ```
-localhost/api/want
+localhost/api/:want
 ```
 where "localhost" can remain if you are running a local build or replaced with the domain name and "want" represents what we want to get which can be one of four things:
 * subjects
@@ -82,7 +82,7 @@ where "localhost" can remain if you are running a local build or replaced with t
 ### Getting Specific Object(s)
 Now what if we want to get a specific object given that we know some information that can be used to identify it? Overall I can summarize all of the calls into a single generalization:
 ```
-localhost/api/want/param_type/param
+localhost/api/:want/:param_type/:param
 ```
 where:
 
@@ -109,9 +109,9 @@ Note that since example names are not unique, this will return all of the exampl
 ### Getting File Contents
 The API also has calls to get back the html content associated to any given subject, topic, section, or example:
 ```
-localhost/api/want/file/id
+localhost/api/:want/data/:id
 ```
-where "want" is one of the four objects and "id" references the actual id of the object. Notice that unlike getting objects, you only allowed to use the id here as a parameter since the id guarantees a unique object.
+where "want" is one of the four objects and "id" references the actual id of the object. Notice that unlike getting objects, you only allowed to use the id here as a parameter since the id guarantees a unique object and depending upon the object you want the return type is also different. A subject, section, or example will return an object containing the html information because there are multiple parameters associated to the object. On the other hand a topic object will only return text because a topic only has a "about" parameter.
 
 
 # Running the Server
@@ -205,7 +205,6 @@ In the near future I see a couple of things that I want to change about the webs
 * Design a CMS, content management system, that will provide a user with the ability to control the contents of the website through a simple web interface rather than having to add content through a development environment
 * Add the subjects (these represent the main ones of interest, over time the list may evolve):
  * Precalculus
- * Differential Calculus
  * Integral Calculus
  * Linear Algebra
  * Vector Calculus
@@ -214,3 +213,5 @@ In the near future I see a couple of things that I want to change about the webs
 
 # License
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">manualmath.com</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/nathanmarianovsky/manualmath.com" property="cc:attributionName" rel="cc:attributionURL">nathanmarianovsky</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+<sup>1</sup>If you are wondering why I enforce these rules it is because I use the names in the URL routes and there already exist restrictions on characters that I have to account for.
