@@ -18,13 +18,13 @@ class MyAPI extends API {
 
         if($this->method == "GET") {
             if(sizeof($this->args) == 2) {
-                if($this->args[0] == "file") {
+                if($this->args[0] == "data") {
                     $main_arg = $this->args[1];
                     if(is_numeric($main_arg)) {
                         $params["eid"] = $main_arg;
-                        return get_example_file($db, $params);
+                        return get_example_data($db, $params);
                     }
-                    else { return "The id you passed in is not a number!"; }
+                    else { return "The eid you passed in is not a number!"; }
                 }
                 else {
                     $this->args[0] == "id" ? $type = "id" : $type = "name";
@@ -59,11 +59,11 @@ class MyAPI extends API {
 
         if($this->method == "GET") {
             if(sizeof($this->args) == 2) {
-                if($this->args[0] == "file") {
+                if($this->args[0] == "data") {
                     $main_arg = $this->args[1];
                     if(is_numeric($main_arg)) {
                         $params["section_id"] = $main_arg;
-                        return get_section_file($db, $params);
+                        return get_section_data($db, $params);
                     }
                     else { return "The id you passed in is not a number!"; }
                 }
@@ -100,11 +100,11 @@ class MyAPI extends API {
 
         if($this->method == "GET") {
             if(sizeof($this->args) == 2) {
-                if($this->args[0] == "file") {
+                if($this->args[0] == "data") {
                     $main_arg = $this->args[1];
                     if(is_numeric($main_arg)) {
                         $params["tid"] = $main_arg;
-                        return get_topic_file($db, $params);
+                        return get_topic_data($db, $params);
                     }
                     else { return "The id you passed in is not a number!"; }
                 }
@@ -141,11 +141,11 @@ class MyAPI extends API {
 
         if($this->method == "GET") {
             if(sizeof($this->args) == 2) {
-                if($this->args[0] == "file") {
+                if($this->args[0] == "data") {
                     $main_arg = $this->args[1];
                     if(is_numeric($main_arg)) {
                         $params["sid"] = $main_arg;
-                        return get_subject_file($db, $params);
+                        return get_subject_data($db, $params);
                     }
                     else { return "The id you passed in is not a number!"; }
                 }

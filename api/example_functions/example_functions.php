@@ -86,64 +86,35 @@ function get_examples($con, $args) {
 /*
 
 Purpose:
-Returns the contents of the file associated to the example
+Returns the contents associated to the example
 
 Parameters:
 	eid: 
 		Gives the contents of the unique example
 
-Note:
-If there is no such example found, an appropriate response is returned.
-
 */
-function get_example_file($con, $args) {
+function get_example_data($con, $args) {
 	if(isset($args["eid"])) {
 		$eid = $args["eid"];
-		$sql = $con->prepare("SELECT section_id,ename FROM example WHERE eid=?");
+		$sql = $con->prepare("SELECT problem,solution FROM example WHERE eid=?");
 		$sql->bind_param("i", $eid);
-		$sql->bind_result($section_id, $ename);
+		$sql->bind_result($problem, $solution);
 		$sql->execute();
 		$sql->fetch();
 		$sql->close();
+		class Info {
+			public $problem;
+			public $solution;
 
-		if(isset($section_id) && isset($ename)) {
-			$sql = $con->prepare("SELECT tid,section_name FROM section WHERE section_id=?");
-			$sql->bind_param("i", $section_id);
-			$sql->bind_result($tid, $section_name);
-			$sql->execute();
-			$sql->fetch();
-			$sql->close();
-
-			if(isset($tid) && isset($section_name)) {
-				$sql = $con->prepare("SELECT sid,tname FROM topic WHERE tid=?");
-				$sql->bind_param("i", $tid);
-				$sql->bind_result($sid, $tname);
-				$sql->execute();
-				$sql->fetch();
-				$sql->close();
-
-				if(isset($sid) && isset($tname)) {
-					$sql = $con->prepare("SELECT sname FROM subject WHERE sid=?");
-					$sql->bind_param("i", $sid);
-					$sql->bind_result($sname);
-					$sql->execute();
-					$sql->fetch();
-					$sql->close();
-
-					if(isset($sname)) {
-						$file = $_SERVER["DOCUMENT_ROOT"] . "/content/" . $sname . "/" . $tname . "/" . $section_name . "/" . $ename . ".html";
-						if(file_exists($file)) { return file_get_contents($file); }
-						else { return "The example seems to exists, but there is no file for it!"; }
-					}
-					else { return "There is no associated subject to this id!"; }
-				}
-				else { return "There is no associated topic to this id!"; }
+			function __construct($_problem, $_solution) {
+				$this->problem = $_problem;
+				$this->solution = $_solution;
 			}
-			else { return "There is no associated section to this id!"; }
 		}
-		else { return "There is no associated example to this id!"; }
+		$obj = new Info($problem, $solution);
+		return $obj;
 	}
-	else { return "There was no id passed in as a parameter!"; }
+	else { return "There was no eid passed in as a parameter!"; }
 }
 
 ?>

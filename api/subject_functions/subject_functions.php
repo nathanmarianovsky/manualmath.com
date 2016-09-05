@@ -77,34 +77,35 @@ function get_subjects($con, $args) {
 /*
 
 Purpose:
-Returns the contents of the file associated to the subject
+Returns the contents associated to the subject
 
 Parameters:
 	tid: 
 		Gives the contents of the unique subject
 
-Note:
-If there is no such subject found, an appropriate response is returned.
-
 */
-function get_subject_file($con, $args) {
+function get_subject_data($con, $args) {
 	if(isset($args["sid"])) {
 		$sid = $args["sid"];
-		$sql = $con->prepare("SELECT sname FROM subject WHERE sid=?");
+		$sql = $con->prepare("SELECT about,notation FROM subject WHERE sid=?");
 		$sql->bind_param("i", $sid);
-		$sql->bind_result($sname);
+		$sql->bind_result($about, $notation);
 		$sql->execute();
 		$sql->fetch();
 		$sql->close();
+		class Info {
+			public $about;
+			public $notation;
 
-		if(isset($sname)) {
-			$file = $_SERVER["DOCUMENT_ROOT"] . "/content/" . $sname . "/" . $sname . ".html";
-			if(file_exists($file)) { return file_get_contents($file); }
-			else { return "The subject seems to exists, but there is no file for it!"; }
+			function __construct($_about, $_notation) {
+				$this->about = $_about;
+				$this->notation = $_notation;
+			}
 		}
-		else { return "There is no associated subject to this id!"; }
+		$obj = new Info($about, $notation);
+		return $obj;
 	}
-	else { return "There was no id passed in as a parameter!"; }
+	else { return "There was no sid passed in as a parameter!"; }
 }
 
 ?>
