@@ -74,14 +74,35 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			navs.driver("subject", subject);
 			$("main").empty();
 			$("title").text(subject.clean_name);
-			$("main").append($("<div>").attr("id", "subject_page"));
-			$.get("/content/" + subject.sname + "/" + subject.sname + ".html").done(function(content) {
-				$("#subject_page").append(content);
-				functions.handle_breadcrumbs("subject", $("h2").first(), subject);
-				$.get("/content/" + subject.sname + "/Notation.html").done(function(notation) {
-					$("#subject_page").append(notation);
-					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-				});
+			$("main").append($("<div>").attr("id", "latex"));
+			$.get("/api/subject/data/" + subject.sid).done(function(content) {
+				var accordion1 = $("<div>").addClass("accordion"),
+					show_solution1 = $("<div>").addClass("show_solution").text("About"),
+					span1 = $("<span>").addClass("solution_display").text("-"),
+					cont_div1 = $("<div>").addClass("cont_div"),
+					latex_body1 = $("<div>").addClass("latex_body"),
+					accordion2 = $("<div>").addClass("accordion"),
+					show_solution2 = $("<div>").addClass("show_solution").text("Notation"),
+					span2 = $("<span>").addClass("solution_display").text("-"),
+					cont_div2 = $("<div>").addClass("cont_div"),
+					latex_body2 = $("<div>").addClass("latex_body");
+				if(content.about == null || content.about == "") { show_solution1.text("NO CONTENT HERE!"); span1.text(""); }
+				if(content.notation == null || content.notation == "") { show_solution2.text("NO NOTATION HERE!"); span2.text(""); }
+				latex_body1.append(content.about);
+				cont_div1.append(latex_body1);
+				show_solution1.append(span1);
+				accordion1.append(show_solution1);
+				accordion1.append(cont_div1);
+				latex_body2.append(content.notation);
+				cont_div2.append(latex_body2);
+				show_solution2.append(span2);
+				accordion2.append(show_solution2);
+				accordion2.append(cont_div2);
+				$("#latex").append(accordion1);
+				$("#latex").append(accordion2);
+				functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
+				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+				functions.handle_button();
 			});
 			functions.handle_logo_link("subject");
 			functions.handle_logo();
@@ -104,17 +125,23 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			navs.driver("topic", topic, subject);
 			$("main").empty();
 			$("title").text(subject.clean_name + " - " + topic.clean_name);
-			$("main").append($("<div>").attr("id", "topic_page"));
-			$.get("/content/" + subject.sname + "/" + topic.tname + "/" + topic.tname + ".html").done(function(content) {
-				$("#topic_page").append(content);
-				functions.handle_breadcrumbs("topic", $("h2").first(), subject, topic);
+			$("main").append($("<div>").attr("id", "latex"));
+			$.get("/api/topic/data/" + topic.tid).done(function(content) {
+				var accordion = $("<div>").addClass("accordion"),
+					show_solution = $("<div>").addClass("show_solution").text("About"),
+					span = $("<span>").addClass("solution_display").text("-"),
+					cont_div = $("<div>").addClass("cont_div"),
+					latex_body = $("<div>").addClass("latex_body");
+				if(content == null || content == "") { show_solution.text("NO CONTENT HERE!"); span.text(""); }
+				latex_body.append(content);
+				cont_div.append(latex_body);
+				show_solution.append(span);
+				accordion.append(show_solution);
+				accordion.append(cont_div);
+				$("#latex").append(accordion);
+				functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-				if(functions.is_mobile()) {
-					MathJax.Hub.Queue(function() {
-						functions.mobile_breadcrumbs("topic"); 
-						functions.hide_mathjax_span();
-					});
-				}
+				functions.handle_button();
 			});
 			functions.handle_logo_link("subject.topic");
 			functions.handle_logo();
@@ -144,11 +171,37 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			$("main").append($("<div>").attr("id", "latex"));
 			if(section.section_name == toState.params.current_page_name) {
 				$("#section_name" + section.section_id).addClass("active");
-				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + section.section_name + ".html").done(function(content) {
-					$("#latex").append(content);
-					functions.handle_breadcrumbs("section", $(".latex_section").first(), subject, topic, section);
+				$.get("/api/section/data/" + section.section_id).done(function(content) {
+					var i = 1;
+					for(; i <= 10; i++) {
+						if(content["title" + i] == null || content["title" + i] == "") { break; }
+						var cont_div = "",
+							title = content["title" + i].split("_")[0],
+							accordion = $("<div>").addClass("accordion"),
+							show_solution = $("<div>").addClass("show_solution").text(title),
+							span = $("<span>").addClass("solution_display"),
+							latex_body = $("<div>").addClass("latex_body");
+						if(content["title" + i].split("_").length == 1) {
+							cont_div = $("<div>").addClass("cont_div");
+							span.text("-");
+						}
+						else {
+							cont_div = $("<div>").addClass("cont_div hidden_div");
+							span.text("+");
+						}	
+						latex_body.append(content["content" + i]);
+						cont_div.append(latex_body);
+						show_solution.append(span);
+						accordion.append(show_solution);
+						accordion.append(cont_div);
+						$("#latex").append(accordion);
+					}
+					if(i == 1) {
+						$("#latex").append($("<div>").addClass("accordion").append($("<div>").addClass("show_solution").text("NO CONTENT HERE!")));
+					}
+					functions.handle_breadcrumbs("section", $(".accordion").first(), subject, topic, section);
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-					functions.handle_button("notes");
+					functions.handle_button();
 					if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
 						MathJax.Hub.Queue(function() {
 							functions.hide_mathjax_span();
@@ -161,11 +214,33 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					return iter.ename == toState.params.current_page_name;
 				})[0];
 				$("#examples_li" + example.eid).addClass("active");
-				$.get("/content/" + subject.sname + "/" + topic.tname + "/" + section.section_name + "/" + example.ename + ".html").done(function(content) {
-					$("#latex").append(content);
-					functions.handle_breadcrumbs("example", $(".latex_section").first(), subject, topic, section, example);
+				$.get("/api/example/data/" + example.eid).done(function(content) {
+					var accordion1 = $("<div>").addClass("accordion"),
+						show_solution1 = $("<div>").addClass("show_solution").text("Problem"),
+						problem_span = $("<span>").addClass("solution_display").attr("id", "problem_span").text("-"),
+						cont_div1 = $("<div>").addClass("cont_div"),
+						latex_body1 = $("<div>").addClass("latex_body"),
+						accordion2 = $("<div>").addClass("accordion"),
+						show_solution2 = $("<div>").addClass("show_solution").text("Solution"),
+						solution_span = $("<span>").addClass("solution_display").attr("id", "solution_span").text("+"),
+						cont_div2 = $("<div>").addClass("cont_div hidden_div"),
+						latex_body2 = $("<div>").addClass("latex_body");
+					if(content.problem == null || content.problem == "") { show_solution1.text("NO PROBLEM HERE!"); problem_span.text(""); }
+					if(content.solution == null || content.solution == "") { show_solution2.text("NO SOLUTION HERE!"); solution_span.text(""); }
+					latex_body1.append(content.problem);
+					cont_div1.append(latex_body1);
+					show_solution1.append(problem_span);
+					accordion1.append(show_solution1);
+					accordion1.append(cont_div1);
+					latex_body2.append(content.solution);
+					cont_div2.append(latex_body2);
+					show_solution2.append(solution_span);
+					accordion2.append(show_solution2);
+					accordion2.append(cont_div2);
+					$("#latex").append(accordion1).append(accordion2);
+					functions.handle_breadcrumbs("example", $(".accordion").first(), subject, topic, section);
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-					functions.handle_button("example");
+					functions.handle_button();
 				});
 			}
 			functions.handle_logo_link("subject.topic.section.current_page");

@@ -162,7 +162,7 @@ define(function() {
 
 	*/
 	exports.width_func = function() {
-		return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0;
+		return (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0);
 	}
 
 	/*
@@ -229,18 +229,11 @@ define(function() {
 			The name of the page currently set
 
 	*/
-	exports.handle_button = function(page) {
+	exports.handle_button = function() {
 		$("#latex .show_solution").click(function(defaultevent) {
 			defaultevent.preventDefault();
-			if(page == "notes") {
-				var id = $(this).attr("id").split("_")[2];
-				$(this).val() == "Show Proof" ? $("#hidden_div_" + id).show() : $("#hidden_div_" + id).hide();
-				$(this).val() == "Show Proof" ? $(this).val("Hide Proof") : $(this).val("Show Proof");
-			}
-			else { 
-				$(this).val() == "Show Solution" ? $(".hidden_div").show() : $(".hidden_div").hide();
-				$(this).val() == "Show Solution" ? $(this).val("Hide Solution") : $(this).val("Show Solution");
-			}
+			$(this).find(".solution_display").text() == "+" ? $(this).parent().find(".cont_div").fadeIn(300) : $(this).parent().find(".cont_div").fadeOut(300);
+			$(this).find(".solution_display").text() == "+" ? $(this).find(".solution_display").text("-") : $(this).find(".solution_display").text("+");
 		});
 	};
 
@@ -288,7 +281,7 @@ define(function() {
 				}
 			}
 			else if(page == "example") {
-				if(obj.hasClass("latex_section")) {
+				if(obj.hasClass("accordion")) {
 					obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
 					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
 					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name).css({
@@ -307,7 +300,7 @@ define(function() {
 				else { console.log("The object does not have the necessary class!"); }
 			}
 			else {
-				if(obj.hasClass("latex_section")) {
+				if(obj.hasClass("accordion")) {
 					obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
 					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
 					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name).css({
