@@ -5,4 +5,4 @@ scripts/dist/*
 client/dist/*
 api/config.php
 scripts/back-end/config.js
-.DS-Store
+*.DS-Store
