@@ -146,7 +146,7 @@ nav {
 }
 
 .box_message h1 {
-	margin: 100px auto 150px auto;
+	margin: 100px auto 80px auto;
 	font-size: 40px;
 }
 
@@ -169,6 +169,7 @@ nav {
 
 #open_source {
 	padding-left: 4px;
+	color: inherit;
 }
 
 #about_page {

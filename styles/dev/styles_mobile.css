@@ -145,7 +145,8 @@
 	}
 
 	.breadcrumb.changed:before {
-	    content: "\E5CC";
+	    /*content: "\E5CC";*/
+	    content: none;
 	    color: rgba(0,0,0,0.87);
 	    vertical-align: top;
 	    font-family: "Material Icons";
@@ -153,6 +154,16 @@
 	    font-style: normal;
 	    margin: 0 10px 0 8px;
 	    -webkit-font-smoothing: antialiased;
+	}
+
+	#breadcrumbs li {
+		display: list-item;
+		font-size: 18px;
+	} 
+
+	#breadcrumbs {
+		margin-bottom: 30px;
+		margin-left: 20px;
 	}
 
 	.cont_div {
