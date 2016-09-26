@@ -267,52 +267,27 @@ define(function() {
 	*/
 	exports.handle_breadcrumbs = function(page, obj, subject, topic, section, example) {
 		if(exports.width_func() < 992) {
-			if(page == "about" || page == "subject" || page == "topic") {
-				if(obj.text() == "About") {
-					obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-					if(page == "subject") {
-						$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
-					}
-					else if(page == "topic") {
-						$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
-						$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(topic.clean_name));
-					}
-					else { console.log("No such page exists with the corresponding object"); }
-				}
+			if(page == "subject") {
+				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
+			}
+			else if(page == "topic") {
+				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(topic.clean_name));
+			}
+			else if(page == "section") {
+				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name)));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(section.clean_name)));
 			}
 			else if(page == "example") {
-				if(obj.hasClass("accordion")) {
-					obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
-					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name).css({
-						"position": "absolute",
-						"display": "inline"
-					})));
-					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(section.clean_name).css({
-						"position": "absolute",
-						"display": "inline"
-					})));
-					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(example.clean_name).css({
-						"position": "absolute",
-						"display": "inline"
-					})));
-				}
-				else { console.log("The object does not have the necessary class!"); }
-			}
-			else {
-				if(obj.hasClass("accordion")) {
-					obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
-					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name).css({
-						"position": "absolute",
-						"display": "inline"
-					})));
-					$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(section.clean_name).css({
-						"position": "absolute",
-						"display": "inline"
-					})));
-				}
-				else { console.log("The object does not have the necessary class!"); }
+				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name)));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(section.clean_name)));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(example.clean_name)));
 			}
 			$(".breadcrumb:not(:first)").toggleClass("changed");
 		}

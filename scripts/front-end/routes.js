@@ -27,9 +27,9 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			navs.driver("about", subjects);
 			$("title").text("About");
 			$("main").empty();
-			$("main").append($("<div>").attr("id", "about_page"));
+			$("main").append($("<div>").attr("id", "latex"));
 			$.get("/client/dist/about-min.html").done(function(content) {
-				$("#about_page").append(content);
+				$("#latex").append(content);
 				$.get("/client/dist/notation-min.html").done(function(notation) {
 					$("#notation_box").append(notation);
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
@@ -49,12 +49,13 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			navs.driver("about", subjects);
 			$("title").text("About");
 			$("main").empty();
-			$("main").append($("<div>").attr("id", "about_page"));
+			$("main").append($("<div>").attr("id", "latex"));
 			$.get("/client/dist/about-min.html").done(function(content) {
-				$("#about_page").append(content);
+				$("#latex").append(content);
 				$.get("/client/dist/notation-min.html").done(function(notation) {
 					$("#notation_box").append(notation);
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+					functions.handle_button();
 				});
 			});
 			functions.handle_logo_link("about");
@@ -139,7 +140,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				accordion.append(show_solution);
 				accordion.append(cont_div);
 				$("#latex").append(accordion);
-				functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
+				functions.handle_breadcrumbs("topic", $(".accordion").first(), subject, topic);
 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 				functions.handle_button();
 			});
@@ -238,7 +239,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					accordion2.append(show_solution2);
 					accordion2.append(cont_div2);
 					$("#latex").append(accordion1).append(accordion2);
-					functions.handle_breadcrumbs("example", $(".accordion").first(), subject, topic, section);
+					functions.handle_breadcrumbs("example", $(".accordion").first(), subject, topic, section, example);
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 					functions.handle_button();
 				});
