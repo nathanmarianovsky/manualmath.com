@@ -51,6 +51,8 @@ I provide a current build of mine that can be found in "/content/db". After sett
 
 The id given to any object is completely arbitrary so long as the id is unique to that object, which essentially means that when looking at sections there can only be a single section with an id of 7, but there may exist a subject, topic, and even example that have the same id. Each subject will have some content and notation to describe itself, each topic will have just some content, each section will contain a total of ten paragraph styled subsections that make up the total content, and each example will have a problem with a solution associated to it. For all of these objects the order is what helps provide a "natural" ordering as needed.
 
+One last feature in the database setup is the ability to hide part of a section's data by default. For example take the "Power Rule" in "Differential Calculus" and notice that when initially loaded the statement revealing the actual Power Rule is shown, but associated proofs are hidden by default. To achieve this behavior, make sure that a title you provide fits the format "mytitle_hidden". Putting an underscore followed by the word "hidden" lets the app know to hide that data by default unless the user clicks to access it. I use this as a method of pointing out what is essential on a given page and what is extra for the dedicated reader.
+
 ### Physical Files
 In order to change the content of the website, there are two main folders to look at:
 
