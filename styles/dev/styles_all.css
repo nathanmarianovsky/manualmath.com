@@ -141,13 +141,13 @@ nav {
 /* All CSS properties related to anything belonging to the about page */
 .box_message {
 	margin: 20px auto 50px auto;
-	width: 80%;
 	font-size: 15px;
 }
 
 .box_message h1 {
 	margin: 100px auto 80px auto;
 	font-size: 40px;
+	width: 90%;
 }
 
 .box_message h2 {

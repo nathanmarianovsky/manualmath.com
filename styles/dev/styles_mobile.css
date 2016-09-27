@@ -117,6 +117,10 @@
 		width: 90%;
 	}
 
+	.box_message h1 {
+		margin-bottom: 110px;
+	}
+
 	#about_page, #subject_page, #topic_page {
 		margin-top: 30px;
 	}
