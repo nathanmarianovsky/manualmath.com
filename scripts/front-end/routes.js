@@ -33,6 +33,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				$.get("/client/dist/notation-min.html").done(function(notation) {
 					$("#notation_box").append(notation);
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+					functions.handle_button();
 				});
 			});
 			functions.handle_logo_link("about");
