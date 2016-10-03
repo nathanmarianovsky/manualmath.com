@@ -174,8 +174,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			if(section.section_name == toState.params.current_page_name) {
 				$("#section_name" + section.section_id).addClass("active");
 				$.get("/api/section/data/" + section.section_id).done(function(content) {
-					var i = 1;
-					for(; i <= 10; i++) {
+					var i = 0;
+					for(; i >= 0; i++) {
 						if(content["title" + i] == null || content["title" + i] == "") { break; }
 						var cont_div = "",
 							title = content["title" + i].split("_")[0],
@@ -198,7 +198,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						accordion.append(cont_div);
 						$("#latex").append(accordion);
 					}
-					if(i == 1) {
+					if(i == 0) {
 						$("#latex").append($("<div>").addClass("accordion").append($("<div>").addClass("show_solution").text("NO CONTENT HERE!")));
 					}
 					functions.handle_breadcrumbs("section", $(".accordion").first(), subject, topic, section);
