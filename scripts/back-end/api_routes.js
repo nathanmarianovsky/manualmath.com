@@ -48,98 +48,7 @@ exports.add_api_routes = (app, pool, fs) => {
 		else { response.send("No such object exists in the database!"); }
 	});
 
-	// // The API methods to get a file corresponding to any particular subject, topic, section, or example
-	// app.get("/api/:want/file/:param", (request, response) => {
-	// 	var want = request.params.want,
-	// 		param = request.params.param,
-	// 		statement = "";
-
-	// 	response.set('Cache-Control', 'public, max-age=864000000');
-	// 	if(want == "subject") {
-	// 		statement = "SELECT sname FROM subject WHERE sid=" + param;
-	// 		pool.query(statement, (err, results) => {
-	// 			if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 			if(results.length != 0) {
-	// 				response.sendFile("./content/" + results[0].sname + "/" + results[0].sname + ".html", { "root": "./" });
-	// 			}
-	// 			else { response.send("Cannot find such a file!"); }
-	// 		});
-	// 	}
-	// 	else if(want == "topic") {
-	// 		statement = "SELECT sid,tname FROM topic WHERE tid=" + param;
-	// 		pool.query(statement, (err, results) => {
-	// 			if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 			if(results.length != 0) {
-	// 				statement = "SELECT sname FROM subject WHERE sid=" + results[0].sid;
-	// 				pool.query(statement, (err, final) => {
-	// 					if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 					if(final.length != 0) {
-	// 						response.sendFile("./content/" + final[0].sname + "/" + results[0].tname + "/" + results[0].tname + ".html", { "root": "./" });
-	// 					}
-	// 					else { response.send("Cannot find such a file!"); }
-	// 				});
-	// 			}
-	// 			else { response.send("Cannot find such a file!"); }
-	// 		});
-	// 	}
-	// 	else if(want == "section") {
-	// 		statement = "SELECT tid,section_name FROM section WHERE section_id=" + param;
-	// 		pool.query(statement, (err, results) => {
-	// 			if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 			if(results.length != 0) {
-	// 				statement = "SELECT sid,tname FROM topic WHERE tid=" + results[0].tid;
-	// 				pool.query(statement, (err, next) => {
-	// 					if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 					if(next.length != 0) {
-	// 						statement = "SELECT sname FROM subject WHERE sid=" + next[0].sid;
-	// 						pool.query(statement, (err, final) => {
-	// 							if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 							if(final.length != 0) {
-	// 								response.sendFile("./content/" + final[0].sname + "/" + next[0].tname + "/" + results[0].section_name + "/" + results[0].section_name + ".html", { "root": "./" });
-	// 							}
-	// 						});
-	// 					}
-	// 					else { response.send("Cannot find such a file!"); }
-	// 				});
-	// 			}
-	// 			else { response.send("Cannot find such a file!"); }
-	// 		});
-	// 	}
-	// 	else if(want == "example") {
-	// 		statement = "SELECT section_id,ename FROM example WHERE eid=" + param;
-	// 		pool.query(statement, (err, results) => {
-	// 			if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 			if(results.length != 0) {
-	// 				statement = "SELECT tid,section_name FROM section WHERE section_id=" + results[0].section_id;
-	// 				pool.query(statement, (err, next) => {
-	// 					if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 					if(next.length != 0) {
-	// 						statement = "SELECT sid,tname FROM topic WHERE tid=" + next[0].tid;
-	// 						pool.query(statement, (err, cur) => {
-	// 							if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 							if(cur.length != 0) {
-	// 								statement = "SELECT sname FROM subject WHERE sid=" + cur[0].sid;
-	// 								pool.query(statement, (err, final) => {
-	// 									if(err) { console.error("Error Connecting: " + err.stack); return; }
-	// 									if(final.length != 0) {
-	// 										response.sendFile("./content/" + final[0].sname + "/" + cur[0].tname + "/" + next[0].section_name + "/" + results[0].ename + ".html", { "root": "./" });
-	// 									}
-	// 									else { response.send("Cannot find such a file!"); }
-	// 								});
-	// 							}
-	// 							else { response.send("Cannot find such a file!"); }
-	// 						});
-	// 					}
-	// 					else { response.send("Cannot find such a file!"); }
-	// 				});
-	// 			}
-	// 			else { response.send("Cannot find such a file!"); }
-	// 		});
-	// 	}
-	// 	else { response.send("This object whose file you want does not seem to exist in the database!"); }
-	// });
-
-	// The API methods to get a file corresponding to any particular subject, topic, section, or example
+	// The API methods to get the data corresponding to any particular subject, topic, section, or example
 	app.get("/api/:want/data/:param", (request, response) => {
 		var want = request.params.want,
 			param = request.params.param,
@@ -166,17 +75,22 @@ exports.add_api_routes = (app, pool, fs) => {
 			});
 		}
 		else if(want == "section") {
-			statement = "SELECT ";
-			for(var i = 1; i < 10; i++) {
-				statement += "title" + i + ",content" + i + ",";
-			}
-			statement += "title10,content10 FROM section WHERE section_id=" + param;
+			statement = "SELECT title,content FROM section WHERE section_id=" + param;
 			pool.query(statement, (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				if(results.length != 0) {
-					response.send(results[0]);
+					var title_str = results[0].title,
+						content_str = results[0].content,
+						title_arr = title_str.split("-----"),
+						content_arr = content_str.split("-----");
+					var obj = {};
+					for(var k = 0; k < title_arr.length; k++) {
+						obj["title" + k] = title_arr[k];
+						obj["content" + k] = content_arr[k];
+					}
+					response.send(obj);
 				}
-				else { response.send("Cannot find such a file!"); }
+				else { response.send("Cannot find an object with the given section_id!"); }
 			});
 		}
 		else if(want == "example") {
