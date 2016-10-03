@@ -77,7 +77,7 @@ function get_subjects($con, $args) {
 /*
 
 Purpose:
-Returns the contents associated to the subject
+Returns the content associated to the subject
 
 Parameters:
 	tid: 

@@ -80,7 +80,7 @@ function get_topics($con, $args) {
 /*
 
 Purpose:
-Returns the contents associated to the topic
+Returns the content associated to the topic
 
 Parameters:
 	tid: 

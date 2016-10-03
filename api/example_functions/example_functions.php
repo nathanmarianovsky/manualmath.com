@@ -86,7 +86,7 @@ function get_examples($con, $args) {
 /*
 
 Purpose:
-Returns the contents associated to the example
+Returns the content associated to the example
 
 Parameters:
 	eid: 
