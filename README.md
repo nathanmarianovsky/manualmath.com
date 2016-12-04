@@ -98,7 +98,7 @@ where:
   * name
 * param: This represents the actual data value that is either the id or the name.
 
-So for example, if I wanted to get the all the section(s) associated to the id 7 I would call:
+So for example, if I wanted to get the the section associated to the id 7 I would call:
 ```
 localhost/api/section/id/7
 ```
@@ -113,7 +113,7 @@ The API also has calls to get back the html content associated to any given subj
 ```
 localhost/api/:want/data/:id
 ```
-where "want" is one of the four objects and "id" references the actual id of the object. Notice that unlike getting objects, you only allowed to use the id here as a parameter since the id guarantees a unique object and depending upon the object you want the return type is also different. A subject, section, or example will return an object containing the html information because there are multiple parameters associated to the object. On the other hand a topic object will only return text because a topic only has a "about" parameter.
+where "want" is one of the four objects and "id" references the actual id of the object. Notice that unlike getting objects, you are only allowed to use the id here as a parameter since the id guarantees a unique object and depending upon the object you want, the return type is also different. A subject, section, or example will return an object containing the html information because there are multiple parameters associated to the object. On the other hand a topic object will only return text because a topic only has a "about" parameter.
 
 
 # Running the Server
