@@ -4,7 +4,6 @@ var exports = {};
 exports.add_client_routes = app => {
 	// Default url will redirect to /client/about
 	app.get("/", (request, response) => {
-		// response.redirect("/client/about");
 		response.sendFile("./client/dist/template-min.html", { "root": "./" });
 	});
 

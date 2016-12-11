@@ -33,7 +33,7 @@ app.use(express.static(__dirname, {"maxAge": 864000000 }));
 
 // Adds all of the routes
 client_routes.add_client_routes(app);
-api_routes.add_api_routes(app, pool, fs);
+api_routes.add_api_routes(app, pool);
 
 if (cluster.isMaster) {
 	minifier.driver(mkdirp, compressor, minify, fs, app, () => {});
