@@ -17,14 +17,25 @@ main {
 
 
 
+/* Pertains to all pages */
+#content_preloader {
+	top: 150px;
+	left: 50%;
+}
+#title_preloader {
+	top: 12px;
+}
+#nav_preloader {
+	top: 86px;
+	left: 40%;
+}
+
+
+
 /* All CSS properties related to anything belonging to the top nav(s) */
 nav {
 	height: 64px;
 	line-height: 64px;
-}
-
-.top-nav {
-	background-color: #1163A9;
 }
 
 #first_top_nav {
