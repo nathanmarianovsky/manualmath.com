@@ -1,7 +1,7 @@
 var exports = {};
 
 // Adds all of the API routes
-exports.add_api_routes = (app, pool, fs) => {
+exports.add_api_routes = (app, pool) => {
 	// The API methods to get all subjects, topics, sections, or examples
 	app.get("/api/:objects", (request, response) => {
 		var objects = request.params.objects;
@@ -178,6 +178,153 @@ exports.add_api_routes = (app, pool, fs) => {
 			});
 		}
 		else { response.send("The object providing the information does not seem to be a type that exists in the database!"); }
+	});
+
+	// The API method to change the data corresponding to any particular subject
+	app.post("/api/change/subject/:param/:name/:order/:about/:notation", (request, response) => {
+		var param = request.params.param,
+			name = request.params.name,
+			order = request.params.order,
+			about = request.params.about,
+			notation = request.params.notation,
+			statement = "";
+		if(!isNaN(param)) {
+			statement = "UPDATE subject SET ";
+			if(name !== "undefined") {
+				statement += "sname='" + name + "'";
+			}
+			if(order !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "`order`='" + order + "'";
+			}
+			if(about !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "about='" + about + "'";
+			}
+			if(notation !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "notation='" + notation + "'";
+			}
+			statement += " WHERE sid=" + param;
+		}
+		else { response.send("The sid provided is invalid!"); }
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
+	// The API method to change the data corresponding to any particular topic
+	app.post("/api/change/topic/:param/:name/:order/:sid/:about", (request, response) => {
+		var param = request.params.param,
+			name = request.params.name,
+			order = request.params.order,
+			sid = request.params.sid,
+			about = request.params.about,
+			statement = "";
+		if(!isNaN(param)) {
+			statement = "UPDATE topic SET ";
+			if(name !== "undefined") {
+				statement += "tname='" + name + "'";
+			}
+			if(order !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "`order`='" + order + "'";
+			}
+			if(sid !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "sid='" + sid + "'";
+			}
+			if(about !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "about='" + about + "'";
+			}
+			statement += " WHERE tid=" + param;
+		}
+		else { response.send("The tid provided is invalid!"); }
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1");
+			}
+		});
+	});
+
+	// The API method to change the data corresponding to any particular section
+	app.post("/api/change/section/:param/:name/:order/:tid/:title/:content", (request, response) => {
+		var param = request.params.param,
+			name = request.params.name,
+			order = request.params.order,
+			tid = request.params.tid,
+			title = request.params.title,
+			content = request.params.content,
+			statement = "";
+		if(!isNaN(param)) {
+			statement = "UPDATE section SET ";
+			if(name !== "undefined") {
+				statement += "section_name='" + name + "'";
+			}
+			if(order !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "`order`='" + order + "'";
+			}
+			if(tid !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "tid='" + tid + "'";
+			}
+			if(title !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "title='" + title + "'";
+			}
+			if(content !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "content='" + content + "'";
+			}
+			statement += " WHERE section_id=" + param;
+		}
+		else { response.send("The section_id provided is invalid!"); }
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
+	// The API method to change the data corresponding to any particular example
+	app.post("/api/change/example/:param/:name/:order/:section_id/:problem/:solution", (request, response) => {
+		var param = request.params.param,
+			name = request.params.name,
+			order = request.params.order,
+			section_id = request.params.section_id,
+			problem = request.params.problem,
+			solution = request.params.solution,
+			statement = "";
+		if(!isNaN(param)) {
+			statement = "UPDATE example SET ";
+			if(name !== "undefined") {
+				statement += "ename='" + name + "'";
+			}
+			if(order !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "`order`='" + order + "'";
+			}
+			if(section_id !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "section_id='" + section_id + "'";
+			}
+			if(problem !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "problem='" + problem + "'";
+			}
+			if(solution !== "undefined") {
+				if(statement[statement.length-1] != " ") { statement += ","; }
+				statement += "solution='" + solution + "'";
+			}
+			statement += " WHERE eid=" + param;
+		}
+		else { response.send("The eid provided is invalid!"); }
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
 	});
 };
 
