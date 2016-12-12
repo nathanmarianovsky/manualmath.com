@@ -182,7 +182,7 @@ define(["dist/functions-min"], function(functions) {
 							}
 						}
 					});
-					if($(".side-nav").is(":empty")) { exports.example_side_nav(param1, param2); }
+					if($(".side-nav").is(":empty") || $(".side-nav").children().length == 1) { exports.example_side_nav(param1, param2); }
 				}
 			}
 		}

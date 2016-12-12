@@ -8,6 +8,16 @@
 
 
 
+	/* Pertains to all pages */
+	#content_preloader {
+		display: none;
+	}
+	#title_preloader {
+		display: none;
+	}
+
+
+
 	/* All CSS properties related to anything belonging to the top nav(s) */
 	#first_top_nav {
 		box-shadow: none;
