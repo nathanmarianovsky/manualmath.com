@@ -214,6 +214,30 @@ exports.add_api_routes = (app, pool) => {
 		});
 	});
 
+	// The API method to add the data corresponding to a new subject
+	app.post("/api/add/subject/:param/:name/:order/:about/:notation", (request, response) => {
+		var param = request.params.param,
+			name = request.params.name,
+			order = request.params.order,
+			about = request.params.about,
+			notation = request.params.notation,
+			statement = "";
+		pool.query("SELECT sid,sname FROM subject", (err, results) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			if(results.some(elem => elem.sid == param || elem.sname == name)) { response.send("0"); }
+			else {
+				statement = "INSERT INTO subject (sid,sname,`order`,about,notation) VALUES ('";
+				if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && about.length > 0 && notation.length > 0) {
+					statement += param + "','" + name + "','" + order + "','" + about + "','" + notation + "')";
+				}
+				pool.query(statement, err => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					else { response.send("1"); }
+				});
+			}
+		});
+	});
+
 	// The API method to change the data corresponding to any particular topic
 	app.post("/api/change/topic/:param/:name/:order/:sid/:about", (request, response) => {
 		var param = request.params.param,
@@ -245,6 +269,30 @@ exports.add_api_routes = (app, pool) => {
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1");
+			}
+		});
+	});
+
+	// The API method to add the data corresponding to a new topic
+	app.post("/api/add/topic/:param/:name/:order/:sid/:about", (request, response) => {
+		var param = request.params.param,
+			name = request.params.name,
+			order = request.params.order,
+			sid = request.params.sid,
+			about = request.params.about,
+			statement = "";
+		pool.query("SELECT tid FROM topic", (err, results) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			if(results.some(elem => elem.tid == param)) { response.send("0"); }
+			else {
+				statement = "INSERT INTO topic (tid,tname,`order`,sid,about) VALUES ('";
+				if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(sid) && about.length > 0) {
+					statement += param + "','" + name + "','" + order + "','" + sid + "','" + about + "')";
+				}
+				pool.query(statement, err => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					else { response.send("1"); }
+				});
 			}
 		});
 	});
@@ -288,6 +336,31 @@ exports.add_api_routes = (app, pool) => {
 		});
 	});
 
+	// The API method to add the data corresponding to a new section
+	app.post("/api/add/section/:param/:name/:order/:tid/:title/:content", (request, response) => {
+		var param = request.params.param,
+			name = request.params.name,
+			order = request.params.order,
+			tid = request.params.tid,
+			title = request.params.title,
+			content = request.params.content,
+			statement = "";
+		pool.query("SELECT section_id FROM section", (err, results) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			if(results.some(elem => elem.section_id == param)) { response.send("0"); }
+			else {
+				statement = "INSERT INTO section (section_id,section_name,`order`,tid,title,content) VALUES ('";
+				if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(tid) && about.length > 0) {
+					statement += param + "','" + name + "','" + order + "','" + tid + "','" + title + "','" + content + "')";
+				}
+				pool.query(statement, err => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					else { response.send("1"); }
+				});
+			}
+		});
+	});
+
 	// The API method to change the data corresponding to any particular example
 	app.post("/api/change/example/:param/:name/:order/:section_id/:problem/:solution", (request, response) => {
 		var param = request.params.param,
@@ -324,6 +397,31 @@ exports.add_api_routes = (app, pool) => {
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
+		});
+	});
+
+	// The API method to add the data corresponding to a new example
+	app.post("/api/add/example/:param/:name/:order/:section_id/:problem/:solution", (request, response) => {
+		var param = request.params.param,
+			name = request.params.name,
+			order = request.params.order,
+			section_id = request.params.section_id,
+			problem = request.params.problem,
+			solution = request.params.solution,
+			statement = "";
+		pool.query("SELECT eid FROM example", (err, results) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			if(results.some(elem => elem.eid == param)) { response.send("0"); }
+			else {
+				statement = "INSERT INTO example (eid,ename,`order`,section_id,problem,solution) VALUES ('";
+				if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(section_id) && problem.length > 0 && solution.length > 0) {
+					statement += param + "','" + name + "','" + order + "','" + section_id + "','" + problem + "','" + solution + "')";
+				}
+				pool.query(statement, err => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					else { response.send("1"); }
+				});
+			}
 		});
 	});
 };
