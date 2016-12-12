@@ -424,6 +424,75 @@ exports.add_api_routes = (app, pool) => {
 			}
 		});
 	});
+
+	// The API method to delete the data corresponding to a particular subject, topic, section, or example
+	app.post("/api/delete/:obj/:param", (request, response) => {
+		var	obj = request.params.obj,
+			param = request.params.param,
+			statement = "";
+		if(!isNaN(param)) {
+			if(obj == "subject") {
+				pool.query("SELECT sid FROM subject", (err, results) => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					if(results.some(elem => elem.sid == param)) { 
+						statement += "DELETE FROM subject WHERE sid=" + param;
+						pool.query(statement, err => {
+							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							else { response.send("1"); }
+						});
+					}
+					else {
+						response.send("There does not exist a subject in the database with the given sid.");
+					}
+				});
+			}
+			else if(obj == "topic") {
+				pool.query("SELECT tid FROM topic", (err, results) => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					if(results.some(elem => elem.tid == param)) { 
+						statement += "DELETE FROM topic WHERE tid=" + param;
+						pool.query(statement, err => {
+							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							else { response.send("1"); }
+						});
+					}
+					else {
+						response.send("There does not exist a topic in the database with the given tid.");
+					}
+				});
+			}
+			else if(obj == "section") {
+				pool.query("SELECT tid FROM section", (err, results) => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					if(results.some(elem => elem.tid == param)) { 
+						statement += "DELETE FROM section WHERE section_id=" + param;
+						pool.query(statement, err => {
+							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							else { response.send("1"); }
+						});
+					}
+					else {
+						response.send("There does not exist a section in the database with the given section_id.");
+					}
+				});
+			}
+			else if(obj == "example") {
+				pool.query("SELECT eid FROM example", (err, results) => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					if(results.some(elem => elem.tid == param)) { 
+						statement += "DELETE FROM example WHERE eid=" + param;
+						pool.query(statement, err => {
+							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							else { response.send("1"); }
+						});
+					}
+					else {
+						response.send("There does not exist an example in the database with the given eid.");
+					}
+				});
+			}
+		}
+	});
 };
 
 module.exports = exports;
