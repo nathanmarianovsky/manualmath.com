@@ -80,7 +80,7 @@ Purpose:
 Returns the content associated to the subject
 
 Parameters:
-	tid: 
+	sid: 
 		Gives the contents of the unique subject
 
 */
@@ -104,6 +104,41 @@ function get_subject_data($con, $args) {
 		}
 		$obj = new Info($about, $notation);
 		return $obj;
+	}
+	else { return "There was no sid passed in as a parameter!"; }
+}
+
+/*
+
+Purpose:
+Deletes the subject in the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Deletes the unique subject and all of its associated attributes
+
+*/
+function delete_subject($con, $args) {
+	if(isset($args["sid"])) {
+		$sid = $args["sid"];
+		$sql = $con->prepare("SELECT sid FROM subject");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $sid) {
+					$sql->close();
+					$sql = $con->prepare("DELETE FROM subject WHERE sid=?");
+					$sql->bind_param("i", $sid);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
 	}
 	else { return "There was no sid passed in as a parameter!"; }
 }

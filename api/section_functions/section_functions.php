@@ -114,4 +114,39 @@ function get_section_data($con, $args) {
 	else { return "There was no section_id passed in as a parameter!"; }
 }
 
+/*
+
+Purpose:
+Deletes the section in the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Deletes the unique section and all of its associated attributes
+
+*/
+function delete_section($con, $args) {
+	if(isset($args["section_id"])) {
+		$section_id = $args["section_id"];
+		$sql = $con->prepare("SELECT section_id FROM section");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $section_id) {
+					$sql->close();
+					$sql = $con->prepare("DELETE FROM section WHERE section_id=?");
+					$sql->bind_param("i", $section_id);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "There was no section_id passed in as a parameter!"; }
+}
+
 ?>

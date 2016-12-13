@@ -175,6 +175,40 @@ class MyAPI extends API {
         }
         else { return "This only accepts GET requests!"; }
     }
+
+    protected function delete() {
+        global $db;
+        $params = array();
+
+        if($this->method == "POST") {
+            if(sizeof($this->args) == 2) {
+                $type = $this->args[0];
+                $main_arg = $this->args[1];
+                if(is_numeric($main_arg)) {
+                    if($type == "subject") {
+                        $params["sid"] = $main_arg;
+                        return delete_subject($db, $params);
+                    }
+                    else if($type == "topic") {
+                        $params["tid"] = $main_arg;
+                        return delete_topic($db, $params);
+                    }
+                    else if($type == "section") {
+                        $params["section_id"] = $main_arg;
+                        return delete_section($db, $params);
+                    }
+                    else if($type == "example") {
+                        $params["eid"] = $main_arg;
+                        return delete_example($db, $params);
+                    }
+                    else { return "No such object exists in the database!"; }
+                }
+                else { return "The associated id needs to be a numerical value!"; }
+            }
+            else { return "This requires two parameters: the object type and associated id!"; }
+        }
+        else { return "This only accepts POST requests!"; }
+    }
  }
 
  ?>

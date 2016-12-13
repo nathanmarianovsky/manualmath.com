@@ -117,4 +117,39 @@ function get_example_data($con, $args) {
 	else { return "There was no eid passed in as a parameter!"; }
 }
 
+/*
+
+Purpose:
+Deletes the example in the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Deletes the unique example and all of its associated attributes
+
+*/
+function delete_example($con, $args) {
+	if(isset($args["eid"])) {
+		$eid = $args["eid"];
+		$sql = $con->prepare("SELECT eid FROM example");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $eid) {
+					$sql->close();
+					$sql = $con->prepare("DELETE FROM example WHERE eid=?");
+					$sql->bind_param("i", $eid);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "There was no eid passed in as a parameter!"; }
+}
+
 ?>

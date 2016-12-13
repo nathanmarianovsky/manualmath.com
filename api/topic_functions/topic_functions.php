@@ -101,4 +101,39 @@ function get_topic_data($con, $args) {
 	else { return "There was no tid passed in as a parameter!"; }
 }
 
+/*
+
+Purpose:
+Deletes the topic in the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Deletes the unique topic and all of its associated attributes
+
+*/
+function delete_topic($con, $args) {
+	if(isset($args["tid"])) {
+		$tid = $args["tid"];
+		$sql = $con->prepare("SELECT tid FROM topic");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $tid) {
+					$sql->close();
+					$sql = $con->prepare("DELETE FROM topic WHERE tid=?");
+					$sql->bind_param("i", $tid);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "There was no tid passed in as a parameter!"; }
+}
+
 ?>
