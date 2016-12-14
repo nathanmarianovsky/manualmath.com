@@ -84,7 +84,7 @@ function get_sections($con, $args) {
 /*
 
 Purpose:
-Returns the content associated to the section
+Returns the content associated to a section
 
 Parameters:
 	section_id: 
@@ -117,7 +117,7 @@ function get_section_data($con, $args) {
 /*
 
 Purpose:
-Deletes the section in the database. Return 1 for success and 0 for failure.
+Deletes a section in the database. Return 1 for success and 0 for failure.
 
 Parameters:
 	sid: 
@@ -198,6 +198,61 @@ function add_section($con, $args) {
 		return "0";
 	}
 	else { return "Some parameters are missing!"; }
+}
+
+/*
+
+Purpose:
+Changes a section in the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Changes the unique section and all of its associated attributes
+
+*/
+function change_section($con, $args) {
+	if(isset($args["section_id"])) {
+		$section_id = $args["section_id"];
+		$statement = "UPDATE section SET ";
+		$sql = $con->prepare("SELECT section_id FROM section");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $section_id) {
+					$sql->close();
+					if(isset($args["section_name"]) && $args["section_name"] != "undefined") {
+						$statement .= "section_name='" . $args["section_name"] . "'";
+					}
+					if(isset($args["order"]) && $args["order"] != "undefined" && is_numeric($args["order"])) {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "`order`='" . $args["order"] . "'";
+					}
+					if(isset($args["tid"]) && $args["tid"] != "undefined" && is_numeric($args["tid"])) {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "tid='" . $args["tid"] . "'";
+					}
+					if(isset($args["title"]) && $args["title"] != "undefined") {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "title='" . $args["title"] . "'";
+					}
+					if(isset($args["content"]) && $args["content"] != "undefined") {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "content='" . $args["content"] . "'";
+					}
+					$statement .= " WHERE section_id=" . $section_id;
+					$sql = $con->prepare($statement);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "You have provided an invalid section_id!"; }
 }
 
 ?>

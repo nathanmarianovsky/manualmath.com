@@ -80,7 +80,7 @@ function get_topics($con, $args) {
 /*
 
 Purpose:
-Returns the content associated to the topic
+Returns the content associated to a topic
 
 Parameters:
 	tid: 
@@ -184,6 +184,57 @@ function add_topic($con, $args) {
 		return "0";
 	}
 	else { return "Some parameters are missing!"; }
+}
+
+/*
+
+Purpose:
+Changes a topic in the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Changes the unique topic and all of its associated attributes
+
+*/
+function change_topic($con, $args) {
+	if(isset($args["tid"])) {
+		$tid = $args["tid"];
+		$statement = "UPDATE topic SET ";
+		$sql = $con->prepare("SELECT tid FROM topic");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $tid) {
+					$sql->close();
+					if(isset($args["tname"]) && $args["tname"] != "undefined") {
+						$statement .= "tname='" . $args["tname"] . "'";
+					}
+					if(isset($args["order"]) && $args["order"] != "undefined" && is_numeric($args["order"])) {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "`order`='" . $args["order"] . "'";
+					}
+					if(isset($args["sid"]) && $args["sid"] != "undefined" && is_numeric($args["sid"])) {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "sid='" . $args["sid"] . "'";
+					}
+					if(isset($args["about"]) && $args["about"] != "undefined") {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "about='" . $args["about"] . "'";
+					}
+					$statement .= " WHERE tid=" . $tid;
+					$sql = $con->prepare($statement);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "You have provided an invalid tid!"; }
 }
 
 ?>

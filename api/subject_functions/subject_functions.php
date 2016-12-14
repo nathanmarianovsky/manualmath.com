@@ -77,7 +77,7 @@ function get_subjects($con, $args) {
 /*
 
 Purpose:
-Returns the content associated to the subject
+Returns the content associated to a subject
 
 Parameters:
 	sid: 
@@ -180,6 +180,57 @@ function add_subject($con, $args) {
 		return "1";
 	}
 	else { return "Some parameters are missing!"; }
+}
+
+/*
+
+Purpose:
+Changes a subject in the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Changes the unique subject and all of its associated attributes
+
+*/
+function change_subject($con, $args) {
+	if(isset($args["sid"])) {
+		$sid = $args["sid"];
+		$statement = "UPDATE subject SET ";
+		$sql = $con->prepare("SELECT sid FROM subject");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $sid) {
+					$sql->close();
+					if(isset($args["sname"]) && $args["sname"] != "undefined") {
+						$statement .= "sname='" . $args["sname"] . "'";
+					}
+					if(isset($args["order"]) && $args["order"] != "undefined" && is_numeric($args["order"])) {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "`order`='" . $args["order"] . "'";
+					}
+					if(isset($args["about"]) && $args["about"] != "undefined") {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "about='" . $args["about"] . "'";
+					}
+					if(isset($args["notation"]) && $args["notation"] != "undefined") {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "notation='" . $args["notation"] . "'";
+					}
+					$statement .= " WHERE sid=" . $sid;
+					$sql = $con->prepare($statement);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "You have provided an invalid sid!"; }
 }
 
 ?>

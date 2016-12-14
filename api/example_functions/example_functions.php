@@ -86,7 +86,7 @@ function get_examples($con, $args) {
 /*
 
 Purpose:
-Returns the content associated to the example
+Returns the content associated to an example
 
 Parameters:
 	eid: 
@@ -120,7 +120,7 @@ function get_example_data($con, $args) {
 /*
 
 Purpose:
-Deletes the example in the database. Return 1 for success and 0 for failure.
+Deletes an example in the database. Return 1 for success and 0 for failure.
 
 Parameters:
 	sid: 
@@ -201,6 +201,61 @@ function add_example($con, $args) {
 		return "0";
 	}
 	else { return "Some parameters are missing!"; }
+}
+
+/*
+
+Purpose:
+Changes an example in the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Changes the unique example and all of its associated attributes
+
+*/
+function change_example($con, $args) {
+	if(isset($args["eid"])) {
+		$eid = $args["eid"];
+		$statement = "UPDATE example SET ";
+		$sql = $con->prepare("SELECT eid FROM example");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $eid) {
+					$sql->close();
+					if(isset($args["ename"]) && $args["ename"] != "undefined") {
+						$statement .= "ename='" . $args["ename"] . "'";
+					}
+					if(isset($args["order"]) && $args["order"] != "undefined" && is_numeric($args["order"])) {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "`order`='" . $args["order"] . "'";
+					}
+					if(isset($args["section_id"]) && $args["section_id"] != "undefined" && is_numeric($args["section_id"])) {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "section_id='" . $args["section_id"] . "'";
+					}
+					if(isset($args["problem"]) && $args["problem"] != "undefined") {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "problem='" . $args["problem"] . "'";
+					}
+					if(isset($args["solution"]) && $args["solution"] != "undefined") {
+						if($statement[strlen($statement)-1] != " ") { $statement .= ","; }
+						$statement .= "solution='" . $args["solution"] . "'";
+					}
+					$statement .= " WHERE eid=" . $eid;
+					$sql = $con->prepare($statement);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "You have provided an invalid eid!"; }
 }
 
 ?>
