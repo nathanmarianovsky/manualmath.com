@@ -152,4 +152,55 @@ function delete_example($con, $args) {
 	else { return "There was no eid passed in as a parameter!"; }
 }
 
+/*
+
+Purpose:
+Adds an example to the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Adds the unique example and all of its associated attributes
+
+*/
+function add_example($con, $args) {
+	if(isset($args["eid"]) && isset($args["ename"]) && isset($args["order"]) && isset($args["section_id"]) && isset($args["problem"]) && isset($args["solution"])) {
+		$eid = $args["eid"];
+		$ename = $args["ename"];
+		$order = $args["order"];
+		$section_id = $args["section_id"];
+		$problem = $args["problem"];
+		$solution = $args["solution"];
+		$sql = $con->prepare("SELECT eid FROM example");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $eid) {
+					$sql->close();
+					return "0";
+				}
+			}
+		}
+		$sql = $con->prepare("SELECT section_id FROM section");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $section_id) {
+					$sql->close();
+					$sql = $con->prepare("INSERT INTO example (eid,ename,`order`,section_id,problem,solution) VALUES (?,?,?,?,?,?)");
+					$sql->bind_param("isiiss", $eid, $ename, $order, $section_id, $problem, $solution);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "Some parameters are missing!"; }
+}
+
 ?>

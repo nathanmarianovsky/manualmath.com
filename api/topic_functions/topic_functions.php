@@ -104,7 +104,7 @@ function get_topic_data($con, $args) {
 /*
 
 Purpose:
-Deletes the topic in the database. Return 1 for success and 0 for failure.
+Deletes a topic in the database. Return 1 for success and 0 for failure.
 
 Parameters:
 	sid: 
@@ -134,6 +134,56 @@ function delete_topic($con, $args) {
 		return "0";
 	}
 	else { return "There was no tid passed in as a parameter!"; }
+}
+
+/*
+
+Purpose:
+Adds a topic to the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Adds the unique topic and all of its associated attributes
+
+*/
+function add_topic($con, $args) {
+	if(isset($args["tid"]) && isset($args["tname"]) && isset($args["order"]) && isset($args["sid"]) && isset($args["about"])) {
+		$tid = $args["tid"];
+		$tname = $args["tname"];
+		$order = $args["order"];
+		$sid = $args["sid"];
+		$about = $args["about"];
+		$sql = $con->prepare("SELECT tid FROM topic");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $tid) {
+					$sql->close();
+					return "0";
+				}
+			}
+		}
+		$sql = $con->prepare("SELECT sid FROM subject");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $sid) {
+					$sql->close();
+					$sql = $con->prepare("INSERT INTO topic (tid,tname,`order`,sid,about) VALUES (?,?,?,?,?)");
+					$sql->bind_param("isiis", $tid, $tname, $order, $sid, $about);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "Some parameters are missing!"; }
 }
 
 ?>

@@ -111,7 +111,7 @@ function get_subject_data($con, $args) {
 /*
 
 Purpose:
-Deletes the subject in the database. Return 1 for success and 0 for failure.
+Deletes a subject in the database. Return 1 for success and 0 for failure.
 
 Parameters:
 	sid: 
@@ -141,6 +141,45 @@ function delete_subject($con, $args) {
 		return "0";
 	}
 	else { return "There was no sid passed in as a parameter!"; }
+}
+
+/*
+
+Purpose:
+Adds a subject to the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Adds the unique subject and all of its associated attributes
+
+*/
+function add_subject($con, $args) {
+	if(isset($args["sid"]) && isset($args["sname"]) && isset($args["order"]) && isset($args["about"]) && isset($args["notation"])) {
+		$sid = $args["sid"];
+		$sname = $args["sname"];
+		$order = $args["order"];
+		$about = $args["about"];
+		$notation = $args["notation"];
+		$sql = $con->prepare("SELECT sid FROM subject");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $sid) {
+					$sql->close();
+					return "0";
+				}
+			}
+		}
+		$sql->close();
+		$sql = $con->prepare("INSERT INTO subject (sid,sname,`order`,about,notation) VALUES (?,?,?,?,?)");
+		$sql->bind_param("isiss", $sid, $sname, $order, $about, $notation);
+		$sql->execute();
+		$sql->fetch();
+		$sql->close();
+		return "1";
+	}
+	else { return "Some parameters are missing!"; }
 }
 
 ?>

@@ -149,4 +149,55 @@ function delete_section($con, $args) {
 	else { return "There was no section_id passed in as a parameter!"; }
 }
 
+/*
+
+Purpose:
+Adds a section to the database. Return 1 for success and 0 for failure.
+
+Parameters:
+	sid: 
+		Adds the unique section and all of its associated attributes
+
+*/
+function add_section($con, $args) {
+	if(isset($args["section_id"]) && isset($args["section_name"]) && isset($args["order"]) && isset($args["tid"]) && isset($args["title"]) && isset($args["content"])) {
+		$section_id = $args["section_id"];
+		$section_name = $args["section_name"];
+		$order = $args["order"];
+		$tid = $args["tid"];
+		$title = $args["title"];
+		$content = $args["content"];
+		$sql = $con->prepare("SELECT section_id FROM section");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $section_id) {
+					$sql->close();
+					return "0";
+				}
+			}
+		}
+		$sql = $con->prepare("SELECT tid FROM topic");
+		$sql->bind_result($id);
+		$sql->execute();
+		while($sql->fetch()) {
+			if(isset($id)) {
+				if($id == $tid) {
+					$sql->close();
+					$sql = $con->prepare("INSERT INTO section (section_id,section_name,`order`,tid,title,content) VALUES (?,?,?,?,?,?)");
+					$sql->bind_param("isiiss", $section_id, $section_name, $order, $tid, $title, $content);
+					$sql->execute();
+					$sql->fetch();
+					$sql->close();
+					return "1";
+				}
+			}
+		}
+		$sql->close();
+		return "0";
+	}
+	else { return "Some parameters are missing!"; }
+}
+
 ?>
