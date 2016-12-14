@@ -160,12 +160,12 @@ function add_subject($con, $args) {
 		$order = $args["order"];
 		$about = $args["about"];
 		$notation = $args["notation"];
-		$sql = $con->prepare("SELECT sid FROM subject");
-		$sql->bind_result($id);
+		$sql = $con->prepare("SELECT sid,sname FROM subject");
+		$sql->bind_result($id, $name);
 		$sql->execute();
 		while($sql->fetch()) {
-			if(isset($id)) {
-				if($id == $sid) {
+			if(isset($id) && isset($name)) {
+				if($id == $sid || $name == $sname) {
 					$sql->close();
 					return "0";
 				}
