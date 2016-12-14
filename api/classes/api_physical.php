@@ -210,6 +210,66 @@ class MyAPI extends API {
         else { return "This only accepts POST requests!"; }
     }
 
+    protected function change() {
+        global $db;
+        $params = array();
+
+        if($this->method == "POST") {
+            if(sizeof($this->args) > 0) {
+                $type = $this->args[0];
+                if($type == "subject") {
+                    if(sizeof($this->args) == 6) {
+                        $params["sid"] = $this->args[1];
+                        $params["sname"] = $this->args[2];
+                        $params["order"] = $this->args[3];
+                        $params["about"] = $this->args[4];
+                        $params["notation"] = $this->args[5];
+                        return change_subject($db, $params);
+                    }
+                    else { return "It seems you want to change a subject, but have passed in the wrong number of parameters!"; }
+                }
+                else if($type == "topic") {
+                    if(sizeof($this->args) == 6) {
+                        $params["tid"] = $this->args[1];
+                        $params["tname"] = $this->args[2];
+                        $params["order"] = $this->args[3];
+                        $params["sid"] = $this->args[4];
+                        $params["about"] = $this->args[5];
+                        return change_topic($db, $params);
+                    }
+                    else { return "It seems you want to change a topic, but have passed in the wrong number of parameters!"; }
+                }
+                else if($type == "section") {
+                    if(sizeof($this->args) == 7) {
+                        $params["section_id"] = $this->args[1];
+                        $params["section_name"] = $this->args[2];
+                        $params["order"] = $this->args[3];
+                        $params["tid"] = $this->args[4];
+                        $params["title"] = $this->args[5];
+                        $params["content"] = $this->args[5];
+                        return change_section($db, $params);
+                    }
+                    else { return "It seems you want to change a section, but have passed in the wrong number of parameters!"; }
+                }
+                else if($type == "example") {
+                    if(sizeof($this->args) == 7) {
+                        $params["eid"] = $this->args[1];
+                        $params["ename"] = $this->args[2];
+                        $params["order"] = $this->args[3];
+                        $params["section_id"] = $this->args[4];
+                        $params["problem"] = $this->args[5];
+                        $params["solution"] = $this->args[5];
+                        return change_example($db, $params);
+                    }
+                    else { return "It seems you want to change an example, but have passed in the wrong number of parameters!"; }
+                }
+                else { return "No such object exists in the database!"; }
+            }
+            else { return "No parameters were provided!"; }
+        }
+        else { return "This only accepts POST requests!"; }
+    }
+
     protected function add() {
         global $db;
         $params = array();
@@ -261,7 +321,7 @@ class MyAPI extends API {
                         $params["solution"] = $this->args[5];
                         return add_example($db, $params);
                     }
-                    else { return "It seems you want to add a section, but have passed in the wrong number of parameters!"; }
+                    else { return "It seems you want to add an example, but have passed in the wrong number of parameters!"; }
                 }
                 else { return "No such object exists in the database!"; }
             }
