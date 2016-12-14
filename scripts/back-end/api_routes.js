@@ -285,13 +285,19 @@ exports.add_api_routes = (app, pool) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			if(results.some(elem => elem.tid == param)) { response.send("0"); }
 			else {
-				statement = "INSERT INTO topic (tid,tname,`order`,sid,about) VALUES ('";
-				if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(sid) && about.length > 0) {
-					statement += param + "','" + name + "','" + order + "','" + sid + "','" + about + "')";
-				}
-				pool.query(statement, err => {
+				pool.query("SELECT sid FROM subject", (err, container) => {
 					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-					else { response.send("1"); }
+					if(!results.some(elem => elem.sid == sid)) { response.send("0"); }
+					else {
+						statement = "INSERT INTO topic (tid,tname,`order`,sid,about) VALUES ('";
+						if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(sid) && about.length > 0) {
+							statement += param + "','" + name + "','" + order + "','" + sid + "','" + about + "')";
+						}
+						pool.query(statement, err => {
+							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							else { response.send("1"); }
+						});
+					}
 				});
 			}
 		});
@@ -349,13 +355,19 @@ exports.add_api_routes = (app, pool) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			if(results.some(elem => elem.section_id == param)) { response.send("0"); }
 			else {
-				statement = "INSERT INTO section (section_id,section_name,`order`,tid,title,content) VALUES ('";
-				if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(tid) && about.length > 0) {
-					statement += param + "','" + name + "','" + order + "','" + tid + "','" + title + "','" + content + "')";
-				}
-				pool.query(statement, err => {
+				pool.query("SELECT tid FROM topic", (err, container) => {
 					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-					else { response.send("1"); }
+					if(!results.some(elem => elem.tid == tid)) { response.send("0"); }
+					else {
+						statement = "INSERT INTO section (section_id,section_name,`order`,tid,title,content) VALUES ('";
+						if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(tid) && about.length > 0) {
+							statement += param + "','" + name + "','" + order + "','" + tid + "','" + title + "','" + content + "')";
+						}
+						pool.query(statement, err => {
+							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							else { response.send("1"); }
+						});
+					}
 				});
 			}
 		});
@@ -413,13 +425,19 @@ exports.add_api_routes = (app, pool) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			if(results.some(elem => elem.eid == param)) { response.send("0"); }
 			else {
-				statement = "INSERT INTO example (eid,ename,`order`,section_id,problem,solution) VALUES ('";
-				if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(section_id) && problem.length > 0 && solution.length > 0) {
-					statement += param + "','" + name + "','" + order + "','" + section_id + "','" + problem + "','" + solution + "')";
-				}
-				pool.query(statement, err => {
+				pool.query("SELECT section_id FROM section", (err, container) => {
 					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-					else { response.send("1"); }
+					if(!results.some(elem => elem.section_id == section_id)) { response.send("0"); }
+					else {
+						statement = "INSERT INTO example (eid,ename,`order`,section_id,problem,solution) VALUES ('";
+						if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(section_id) && problem.length > 0 && solution.length > 0) {
+							statement += param + "','" + name + "','" + order + "','" + section_id + "','" + problem + "','" + solution + "')";
+						}
+						pool.query(statement, err => {
+							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							else { response.send("1"); }
+						});
+					}
 				});
 			}
 		});
