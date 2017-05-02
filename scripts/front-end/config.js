@@ -7,7 +7,7 @@ require.config({
         jquery: "/node_modules/jquery/dist/jquery.min",
         materialize: "/bower_components/materializecss-amd/dist/materialize.amd.min",
         router5: "/scripts/dist/router5-min",
-        mathjax: "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+        mathjax: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?..."
     },
     shim: {
         materialize: {
