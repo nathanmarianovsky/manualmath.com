@@ -85,7 +85,7 @@ exports.minify_js = (compressor, fs) => {
 
 // Minifies the html files in /client
 exports.minify_html = (minify, mkdirp, fs) => {
-	var container = ["./client/template.html", "./client/about.html", "./client/notation.html"],
+	var container = ["./client/template.html", "./client/about.html", "./client/notation.html", "./client/main.html", "./cms/login.html"],
 		tmp = [];
 	container.forEach(file => {
 		fs.readFile(file, "utf8", (err, data) => {
@@ -103,7 +103,6 @@ exports.minify_html = (minify, mkdirp, fs) => {
 				"collapseWhitespace": true,
 				"collapseInlineTagWhitespace": true,
 				"removeAttributeQuotes": true,
-				"removeRedundantAttributes": true,
 				"useShortDoctype": true,
 				"minifyJS": true,
 				"minifyCSS": true
@@ -112,17 +111,18 @@ exports.minify_html = (minify, mkdirp, fs) => {
 				"data_min": data_min,
 				"file_name": newpath + name[0] + "-min." + name[1],
 			};
-			tmp.push(obj);
-			if(tmp.length == container.length) {
+			// tmp.push(obj);
+			// console.log(newpath);
+			// if(tmp.length == container.length) {
 				mkdirp(newpath, err => {
 					if(err) { console.log("Could not make the directory" + newpath + ": " + err.stack); }
-					tmp.forEach(result => {
-						fs.writeFile(result.file_name, result.data_min, err => {
-							if(err) { console.log("Could not write the file " + result.file_name + ": " + err.stack); }
+					// tmp.forEach(result => {
+						fs.writeFile(obj.file_name, obj.data_min, err => {
+							if(err) { console.log("Could not write the file " + obj.file_name + ": " + err.stack); }
 						});
-					});
+					// });
 				});
-			}
+			// }
 		});
 	});
 };

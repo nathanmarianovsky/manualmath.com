@@ -354,7 +354,7 @@ define(function() {
 				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(section.clean_name));
 			}
 			else { console.log("No such page exists: " + page); }
-			$(".breadcrumb:not(:first)").toggleClass("changed");	
+			$(".breadcrumb:not(:first)").toggleClass("changed");
 		}
 	};
 
