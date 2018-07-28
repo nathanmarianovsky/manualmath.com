@@ -1,7 +1,7 @@
 var exports = {};
 
 // Adds all of the client routes
-exports.add_client_routes = app => {
+exports.add_gui_routes = app => {
 	// 
 	app.get("/login", (request, response) => {
 		response.sendFile("./client/dist/template-min.html", { "root": "./" });

@@ -11,7 +11,9 @@ exports.add_api_routes = (app, pool) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(subject => {
 					subject.topics = [];
-					subject.clean_name = subject.sname.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
+					subject.clean_name = subject.sname.replace(/_/g, " ")
+						.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
+						.replace(/COLON/g, ":").replace(/COMMA/g, ",");
 				});
 				response.send(results);
 			});
@@ -21,7 +23,9 @@ exports.add_api_routes = (app, pool) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(topic => {
 					topic.sections = [];
-					topic.clean_name = topic.tname.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
+					topic.clean_name = topic.tname.replace(/_/g, " ")
+						.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
+						.replace(/COLON/g, ":").replace(/COMMA/g, ",");
 				});
 				response.send(results);
 			});
@@ -31,7 +35,9 @@ exports.add_api_routes = (app, pool) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(section => {
 					section.examples = [];
-					section.clean_name = section.section_name.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
+					section.clean_name = section.section_name.replace(/_/g, " ")
+						.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
+						.replace(/COLON/g, ":").replace(/COMMA/g, ",");
 				});
 				response.send(results);
 			});
@@ -40,7 +46,9 @@ exports.add_api_routes = (app, pool) => {
 			pool.query("SELECT eid,ename,section_id,`order` FROM example", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(example => {
-					example.clean_name = example.ename.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
+					example.clean_name = example.ename.replace(/_/g, " ")
+						.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
+						.replace(/COLON/g, ":").replace(/COMMA/g, ",");
 				});
 				response.send(results);
 			});
@@ -106,7 +114,7 @@ exports.add_api_routes = (app, pool) => {
 		else { response.send("This object whose file you want does not seem to exist in the database!"); }
 	});
 
-	// The API methods to get a specific object containing all of the information of the associated to a specific id or name
+	// The API methods to get a specific object containing all of the information of the associated id or name
 	app.get("/api/:want/:param_type/:param", (request, response) => {
 		var want = request.params.want,
 			param_type = request.params.param_type,
@@ -120,7 +128,8 @@ exports.add_api_routes = (app, pool) => {
 		response.set('Cache-Control', 'public, max-age=864000000');
 		want != "section" ? holder_name = want.slice(0,1) + "name" : holder_name = "section_name";
 		want != "section" ? holder_id = want.slice(0,1) + "id" : holder_id = "section_id";
-		param_type == "name" ? statement = "SELECT " + holder_id + " FROM " + want + " WHERE " + holder_name + "='" + param + "'" : statement = "SELECT " + holder_id + " FROM " + want + " WHERE " + holder_id + "=" + param;
+		param_type == "name" ? statement = "SELECT " + holder_id + " FROM " + want + " WHERE " + holder_name + "='" + param + "'" 
+			: statement = "SELECT " + holder_id + " FROM " + want + " WHERE " + holder_id + "=" + param;
 
 		container = ["subject", "topic", "section", "example"];
 		check = container.some(elem => elem == want);
@@ -130,44 +139,56 @@ exports.add_api_routes = (app, pool) => {
 				if(initial.length != 0) { existence = true; }
 				if(existence) {
 					if(want == "subject") {
-						param_type == "name" ? statement = "SELECT sid,sname,`order` FROM subject WHERE " + holder_name + "='" + param + "'" : statement = "SELECT sid,sname,`order` FROM subject WHERE " + holder_id + "=" + param;
+						param_type == "name" ? statement = "SELECT sid,sname,`order` FROM subject WHERE " + holder_name + "='" + param + "'" 
+							: statement = "SELECT sid,sname,`order` FROM subject WHERE " + holder_id + "=" + param;
 						pool.query(statement, (err, results) => {
 							if(err) { console.error("Error Connecting: " + err.stack); return; }
 							results.forEach(subject => {
 								subject.topics = [];
-								subject.clean_name = subject.sname.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
+								subject.clean_name = subject.sname.replace(/_/g, " ")
+									.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
+									.replace(/COLON/g, ":").replace(/COMMA/g, ",");
 							});
 							response.send(results);
 						});
 					}
 					else if(want == "topic") {
-						param_type == "name" ? statement = "SELECT tid,sid,tname,`order` FROM topic WHERE " + holder_name + "='" + param + "'" : statement = "SELECT tid,sid,tname,`order` FROM topic WHERE " + holder_id + "=" + param;
+						param_type == "name" ? statement = "SELECT tid,sid,tname,`order` FROM topic WHERE " + holder_name + "='" + param + "'" 
+							: statement = "SELECT tid,sid,tname,`order` FROM topic WHERE " + holder_id + "=" + param;
 						pool.query(statement, (err, results) => {
 							if(err) { console.error("Error Connecting: " + err.stack); return; }
 							results.forEach(topic => {
 								topic.sections = [];
-								topic.clean_name = topic.tname.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
+								topic.clean_name = topic.tname.replace(/_/g, " ")
+									.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
+									.replace(/COLON/g, ":").replace(/COMMA/g, ",");
 							});
 							response.send(results);
 						});
 					}
 					else if(want == "section") {
-						param_type == "name" ? statement = "SELECT section_id,tid,section_name,`order` FROM section WHERE " + holder_name + "='" + param + "'" : statement = "SELECT section_id,tid,section_name,`order` FROM section WHERE " + holder_id + "=" + param;
+						param_type == "name" ? statement = "SELECT section_id,tid,section_name,`order` FROM section WHERE " + holder_name + "='" + param + "'" 
+							: statement = "SELECT section_id,tid,section_name,`order` FROM section WHERE " + holder_id + "=" + param;
 						pool.query(statement, (err, results) => {
 							if(err) { console.error("Error Connecting: " + err.stack); return; }
 							results.forEach(section => {
 								section.examples = [];
-								section.clean_name = section.section_name.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
+								section.clean_name = section.section_name.replace(/_/g, " ")
+									.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
+									.replace(/COLON/g, ":").replace(/COMMA/g, ",");
 							});
 							response.send(results);
 						});
 					}
 					else if(want == "example") {
-						param_type == "name" ? statement = "SELECT eid,section_id,ename,`order` FROM example WHERE " + holder_name + "='" + param + "'" : statement = "SELECT eid,section_id,ename,`order` FROM example WHERE " + holder_id + "=" + param;
+						param_type == "name" ? statement = "SELECT eid,section_id,ename,`order` FROM example WHERE " + holder_name + "='" + param + "'" 
+							: statement = "SELECT eid,section_id,ename,`order` FROM example WHERE " + holder_id + "=" + param;
 						pool.query(statement, (err, results) => {
 							if(err) { console.error("Error Connecting: " + err.stack); return; }
 							results.forEach(example => {
-								example.clean_name = example.ename.replace(/_/g, " ").replace(/AND/g, "-").replace(/APOSTROPHE/g, "'").replace(/COLON/g, ":").replace(/COMMA/g, ",");
+								example.clean_name = example.ename.replace(/_/g, " ")
+									.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
+									.replace(/COLON/g, ":").replace(/COMMA/g, ",");
 							});
 							response.send(results);
 						});
@@ -510,6 +531,35 @@ exports.add_api_routes = (app, pool) => {
 				});
 			}
 		}
+	});
+
+	// The API method to add a new contributor
+	app.post("/api/cms/:fname/:lname/:email/:passwd", (request, response) => {
+	// app.post("/api/add/subject/:param/:name/:order/:about/:notation", (request, response) => {
+		var fname = request.params.fname,
+			lname = request.params.lname,
+			email = request.params.email,
+			passwd = request.params.passwd,
+			statement = "INSERT INTO contributors (email, first_name, last_name, password, status) VALUES ('" 
+				+ email + "','" + fname + "','" + lname + "','" + passwd + "'," + 0 + ")";
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+		// pool.query("SELECT sid,sname FROM subject", (err, results) => {
+		// 	if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+		// 	if(results.some(elem => elem.sid == param || elem.sname == name)) { response.send("0"); }
+		// 	else {
+		// 		statement = "INSERT INTO subject (sid,sname,`order`,about,notation) VALUES ('";
+		// 		if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && about.length > 0 && notation.length > 0) {
+		// 			statement += param + "','" + name + "','" + order + "','" + about + "','" + notation + "')";
+		// 		}
+		// 		pool.query(statement, err => {
+		// 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+		// 			else { response.send("1"); }
+		// 		});
+		// 	}
+		// });
 	});
 };
 

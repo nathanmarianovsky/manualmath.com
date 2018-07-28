@@ -4,6 +4,21 @@ define(function() {
 	/*
 
 	Purpose:
+	Validates a given email
+
+	Parameters:
+		email: 
+			A user's email
+
+	*/
+	exports.validate = function(email) {
+    	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    	return re.test(String(email).toLowerCase());
+	};
+
+	/*
+
+	Purpose:
 	Compares two objects based on their order property.
 
 	Parameters:

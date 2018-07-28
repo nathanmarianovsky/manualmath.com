@@ -22,9 +22,14 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 	exports.add_listeners = function(router, subjects, topics, sections, examples) {
 		router.addRouteListener("cms_login", function(toState, fromState) {
 			$.get("/cms/dist/login-min.html").done(function(content) {
-				$(document.body).empty();
-				$(document.body).append(content);
-				$(document.body).css("background", "#1163A9");
+				$(document.body).empty().append(content).css("background", "#1163A9");
+				$("title").text("Content Management System: Login");
+				$(".modal-trigger").leanModal({
+					dismissible: false,
+					opacity: 2,
+					inDuration: 1000,
+					outDuration: 1000
+				});
 				links.handle_links(router, subjects, topics, sections, examples);
 			});
 		});

@@ -9,7 +9,7 @@ var express = require("express"),
 	compression = require("compression"),
 	favicon = require("serve-favicon"),
 	minify = require("html-minifier").minify,
-	client_routes = require("./scripts/back-end/client_routes"),
+	client_routes = require("./scripts/back-end/gui_routes"),
 	api_routes = require("./scripts/back-end/api_routes"),
 	config = require("./scripts/back-end/config"),
 	minifier = require("./scripts/back-end/minifier"),
@@ -32,7 +32,7 @@ app.use(express.static(__dirname, {"maxAge": 864000000 }));
 // app.use(express.static(__dirname));
 
 // Adds all of the routes
-client_routes.add_client_routes(app);
+client_routes.add_gui_routes(app);
 api_routes.add_api_routes(app, pool);
 
 if (cluster.isMaster) {
