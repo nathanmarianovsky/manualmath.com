@@ -534,32 +534,34 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to add a new contributor
-	app.post("/api/cms/:fname/:lname/:email/:passwd", (request, response) => {
-	// app.post("/api/add/subject/:param/:name/:order/:about/:notation", (request, response) => {
+	app.post("/api/cms/add/:fname/:lname/:email/:passwd", (request, response) => {
 		var fname = request.params.fname,
 			lname = request.params.lname,
 			email = request.params.email,
 			passwd = request.params.passwd,
-			statement = "INSERT INTO contributors (email, first_name, last_name, password, status) VALUES ('" 
+			statement = "INSERT INTO contributors (email,first_name,last_name,password,status) VALUES ('" 
 				+ email + "','" + fname + "','" + lname + "','" + passwd + "'," + 0 + ")";
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
 		});
-		// pool.query("SELECT sid,sname FROM subject", (err, results) => {
-		// 	if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-		// 	if(results.some(elem => elem.sid == param || elem.sname == name)) { response.send("0"); }
-		// 	else {
-		// 		statement = "INSERT INTO subject (sid,sname,`order`,about,notation) VALUES ('";
-		// 		if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && about.length > 0 && notation.length > 0) {
-		// 			statement += param + "','" + name + "','" + order + "','" + about + "','" + notation + "')";
-		// 		}
-		// 		pool.query(statement, err => {
-		// 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-		// 			else { response.send("1"); }
-		// 		});
-		// 	}
-		// });
+	});
+
+	// The API method to get the administrator information
+	app.post("/api/cms/get/admin", (request, response) => {
+		var statement = "SELECT email FROM committee WHERE status='admin'";
+		pool.query(statement, (err, results) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				statement = "SELECT first_name,last_name FROM contributors WHERE email='" + results[0].email + "'";
+				pool.query(statement, (err, container) => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					else {
+						response.send({first_name: container[0].first_name, last_name: container[0].last_name, email: results[0].email});
+					}
+				});
+			}
+		});
 	});
 };
 

@@ -394,7 +394,7 @@ nav {
 
 /* All CSS properties related to the modals */
 #template_issue {
-	height: 300px;
+	height: 500px;
 	border-radius: 0.5cm;
 }
 
@@ -405,12 +405,4 @@ nav {
 
 #template_issue {
 	background-color: #e0e0e0;
-}
-
-/*#register_modal h4 {
-	text-align: center;
-}*/
-
-#signature {
-	text-align: right;
 }

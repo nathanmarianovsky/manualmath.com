@@ -26,25 +26,33 @@ define(["dist/functions-min"], function(functions) {
 
 			}
 			else if($(this).attr("id") == "register_button") {
-				// console.log($("#email").val());
-				// console.log(functions.validate($("#email").val()));
 				if(functions.validate($("#email").val())) {
 					if($("#password").val().length > 0 && $("#password").val() == $("#password-confirm").val()) {
 						if($("#first_name").val().length > 0) {
 							if($("#last_name").val().length > 0) {
-								var statement = "Thanks for submitting an application to become a " 
-								+ "contributor on manualmath! The design of the content management " 
-								+ "system requires a majority approval from a committee of five top " 
-								+ "ranking members including the administrator to become a contributor. " 
-								+ "Deliberations can take a while, but you can definitely expect a " 
-								+ "response within a week.<br><br><div id='signature'>- Current Administrator</div>";
-								$("#template_title").text("Contributor Submission").css("text-align", "center");
-								$("#template_body").text(statement);
-								$("#template_issue_control").click();
-								// $("#register_control").click();
-								$("#template_submit").click(function() {
-									router.navigate("cms_login", {reload: true});
-									$(window).scrollTop(0);
+								var call = "/api/cms/add/" + $("#first_name").val() + "/" + $("#last_name").val() 
+									+ "/" + $("#email").val() + "/" + $("#password").val();
+								$.post(call).done(function() {
+									var statement = "Thanks for submitting an application to become a " 
+									+ "contributor on manualmath! The design of the content management " 
+									+ "system requires a majority approval from a committee of five top " 
+									+ "ranking members including the administrator to become a contributor. " 
+									+ "Deliberations can take a while, but you can definitely expect a " 
+									+ "response within a week.";
+									$("#template_title").text("Contributor Submission").css("text-align", "center");
+									$.post("/api/cms/get/admin").done(function(obj) {
+										$("#template_body").text(statement).append($("<br><br>")).append($("<div>")
+											.text("- " + obj.first_name + " " + obj.last_name).css("text-align", "right"));
+										$("#template_issue_control").click();
+										$("#template_submit").click(function() {
+											router.navigate("cms_login", {reload: true});
+											$(window).scrollTop(0);
+										});
+									});
+								}).fail(function() {
+									$("#template_title").text("Contributor Submission Issue");
+									$("#template_body").text("There was an issue processing the submission to the database!");
+									$("#template_issue_control").click();
 								});
 							}
 							else {

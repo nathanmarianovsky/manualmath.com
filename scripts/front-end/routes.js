@@ -31,6 +31,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					outDuration: 1000
 				});
 				links.handle_links(router, subjects, topics, sections, examples);
+				$.post("/api/cms/get/admin").done(function(obj) {
+					$("#admin_name").text("Name: " + obj.first_name + " " + obj.last_name);
+					$("#admin_email").text("Email: " + obj.email);
+				});
 			});
 		});
 
