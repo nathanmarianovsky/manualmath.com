@@ -1,4 +1,5 @@
-var exports = {};
+var exports = {},
+	bcrypt = require("bcryptjs");
 
 // Adds all of the API routes
 exports.add_api_routes = (app, pool) => {
@@ -540,10 +541,22 @@ exports.add_api_routes = (app, pool) => {
 			email = request.params.email,
 			passwd = request.params.passwd,
 			statement = "INSERT INTO contributors (email,first_name,last_name,password,status) VALUES ('" 
-				+ email + "','" + fname + "','" + lname + "','" + passwd + "'," + 0 + ")";
+				+ email + "','" + fname + "','" + lname + "','" + bcrypt.hashSync(passwd, 10) + "'," + 0 + ")";
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
+		});
+	});
+
+	// The API method to check the existence of a given email
+	app.post("/api/cms/check/:email", (request, response) => {
+		var email = request.params.email,
+			statement = "SELECT email,status FROM contributors WHERE email='" + email + "'";
+		pool.query(statement, (err, content) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { 
+				content.length > 0 ? response.send({email: content[0].email, status: content[0].status}) : response.send([]);
+			}
 		});
 	});
 

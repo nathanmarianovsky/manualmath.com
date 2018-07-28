@@ -27,72 +27,71 @@ define(["dist/functions-min"], function(functions) {
 			}
 			else if($(this).attr("id") == "register_button") {
 				if(functions.validate($("#email").val())) {
-					if($("#password").val().length > 0 && $("#password").val() == $("#password-confirm").val()) {
-						if($("#first_name").val().length > 0) {
-							if($("#last_name").val().length > 0) {
-								var call = "/api/cms/add/" + $("#first_name").val() + "/" + $("#last_name").val() 
-									+ "/" + $("#email").val() + "/" + $("#password").val();
-								$.post(call).done(function() {
-									var statement = "Thanks for submitting an application to become a " 
-									+ "contributor on manualmath! The design of the content management " 
-									+ "system requires a majority approval from a committee of five top " 
-									+ "ranking members including the administrator to become a contributor. " 
-									+ "Deliberations can take a while, but you can definitely expect a " 
-									+ "response within a week.";
-									$("#template_title").text("Contributor Submission").css("text-align", "center");
-									$.post("/api/cms/get/admin").done(function(obj) {
-										$("#template_body").text(statement).append($("<br><br>")).append($("<div>")
-											.text("- " + obj.first_name + " " + obj.last_name).css("text-align", "right"));
-										$("#template_issue_control").click();
-										$("#template_submit").click(function() {
-											router.navigate("cms_login", {reload: true});
-											$(window).scrollTop(0);
+					$.post("/api/cms/check/" + $("#email").val()).done(function(result) {
+						if(result.length == 0) {
+							if($("#password").val().length > 0 && $("#password").val() == $("#password-confirm").val()) {
+								if($("#first_name").val().length > 0) {
+									if($("#last_name").val().length > 0) {
+										var call = "/api/cms/add/" + $("#first_name").val() + "/" + $("#last_name").val() 
+											+ "/" + $("#email").val() + "/" + $("#password").val();
+										$.post(call).done(function() {
+											var statement = "Thanks for submitting an application to become a " 
+											+ "contributor on manualmath! The design of the content management " 
+											+ "system requires a majority approval from a committee of five top " 
+											+ "ranking members including the administrator to become a contributor. " 
+											+ "Deliberations can take a while, but you can definitely expect a " 
+											+ "response within a week.";
+											$("#template_title").text("Contributor Submission").css("text-align", "center");
+											$.post("/api/cms/get/admin").done(function(obj) {
+												$("#template_body").text(statement).append($("<br><br>")).append($("<div>")
+													.text("- " + obj.first_name + " " + obj.last_name).css("text-align", "right"));
+												$("#template_issue_control").click();
+												$("#template_submit").click(function() {
+													router.navigate("cms_login", {reload: true});
+													$(window).scrollTop(0);
+												});
+											});
+										}).fail(function() {
+											$("#template_title").text("Contributor Submission Issue");
+											$("#template_body").text("There was an issue processing the submission to the database!");
+											$("#template_issue_control").click();
 										});
-									});
-								}).fail(function() {
-									$("#template_title").text("Contributor Submission Issue");
-									$("#template_body").text("There was an issue processing the submission to the database!");
+									}
+									else {
+										$("#template_title").text("Name Issue");
+										$("#template_body").text("The last name cannot be left empty. Please try again!");
+										$("#template_issue_control").click();
+									}
+								}
+								else {
+									$("#template_title").text("Name Issue");
+									$("#template_body").text("The first name cannot be left empty. Please try again!");
 									$("#template_issue_control").click();
-								});
+								}
+							}
+							else if($("#password").val().length == 0 && $("#password").val() == $("#password-confirm").val()) {
+								$("#template_title").text("Password Issue");
+								$("#template_body").text("The password cannot be left empty. Please try again!");
+								$("#template_issue_control").click();
 							}
 							else {
-								$("#template_title").text("Name Issue");
-								$("#template_body").text("The last name cannot be left empty. Please try again!");
+								$("#template_title").text("Password Issue");
+								$("#template_body").text("The passwords you provided did not match. Please try again!");
 								$("#template_issue_control").click();
 							}
 						}
 						else {
-							$("#template_title").text("Name Issue");
-							$("#template_body").text("The first name cannot be left empty. Please try again!");
+							$("#template_title").text("Registration Issue");
+							$("#template_body").text("The email you provided already exists in the database. Please provide another email!");
 							$("#template_issue_control").click();
 						}
-					}
-					else if($("#password").val().length == 0 && $("#password").val() == $("#password-confirm").val()) {
-						$("#template_title").text("Password Issue");
-						$("#template_body").text("The password cannot be left empty. Please try again!");
-						$("#template_issue_control").click();
-					}
-					else {
-						$("#template_title").text("Password Issue");
-						$("#template_body").text("The passwords you provided did not match. Please try again!");
-						$("#template_issue_control").click();
-					}
-
-					// if($("#register_modal").css("display") != "none") {
-					// 	$(document).click(function() {
-					// 		console.log($("#register_modal").css("display"));
-					// 		if($("#register_modal").css("display") == "none") {
-					// 			router.navigate("cms_login");
-					// 		}
-					// 	});
-					// }
+					});
 				}
 				else {
 					$("#template_title").text("Email Issue");
 					$("#template_body").text("There was an issue parsing the email you provided. Please try again!");
 					$("#template_issue_control").click();
 				}
-				// console.log($("#email").val());
 			}
 		});
 
