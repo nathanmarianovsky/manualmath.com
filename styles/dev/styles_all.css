@@ -390,6 +390,31 @@ nav {
 	cursor: pointer;
 }
 
+.input-field input[type=text]:focus,
+.input-field input[type=password]:focus,
+.input-field input[type=email]:focus {
+	border-bottom: 1px solid #4693ec !important;
+	box-shadow: 0 1px 0 0 #4693ec !important;
+}
+
+.input-field input[type=text].valid,
+.input-field input[type=password].valid,
+.input-field input[type=email].valid {
+	border-bottom: 1px solid #4693ec !important;
+	box-shadow: 0 1px 0 0 #4693ec !important;
+}
+
+.input-field input[type=text].invalid,
+.input-field input[type=password].invalid,
+.input-field input[type=email].invalid {
+	border-bottom: 1px solid #4693ec !important;
+	box-shadow: 0 1px 0 0 #4693ec !important;
+}
+
+.input-field .prefix.active {
+	color: #4693ec !important;
+}
+
 
 
 /* All CSS properties related to the modals */

@@ -1,4 +1,4 @@
-define(["dist/functions-min"], function(functions) {
+define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 	var exports = {};
 
 	/*
@@ -23,7 +23,64 @@ define(["dist/functions-min"], function(functions) {
 		$("button").click(function(e) {
 			e.preventDefault();
 			if($(this).attr("id") == "login_button") {
-
+				if(functions.validate($("#login_email").val())) {
+					$.post("/api/cms/check/" + $("#login_email").val()).done(function(result) {
+						if(result.length == 1) {
+							if($("#login_password").val().length > 0) {
+								$.post("api/cms/check/" + $("#login_email").val() + "/" + $("#login_password").val()).done(function(obj) {
+									if(typeof(obj[0]) == "object") {
+										var statement = "By continuing you are agreeing to manualmath's use of cookies to store session information.";
+										$("#template_title").text("Login Confirmation").css("text-align", "center");
+										$("#template_body").text(statement);
+										$("#template_submit").text("Continue");
+										$("#template_modal_footer").append($("<a>").attr("id", "template_exit")
+											.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+										$("#template_issue_control").click();
+										$("#template_exit").click(function() {
+											router.navigate("cms_login", {reload: true});
+											$(window).scrollTop(0);
+										});
+										$("#template_submit").click(function() {
+										// MOVING FORWARD HERE!!!!!!
+										});
+									}
+									else if(typeof(obj[0]) == "string") {
+										if(obj[0] == "Wrong Password") {
+											$("#template_title").text("Password Issue");
+											$("#template_body").text("The password you provided does not match the one in the database. Please try again!");
+											$("#template_issue_control").click();
+										}
+										else {
+											$("#template_title").text("Email Issue");
+											$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
+											$("#template_issue_control").click();
+										}
+									}
+									else {
+										$("#template_title").text("Database Issue");
+										$("#template_body").text("There was a problem connecting to the database!");
+										$("#template_issue_control").click();
+									}
+								});
+							}
+							else {
+								$("#template_title").text("Password Issue");
+								$("#template_body").text("The password cannot be left empty. Please try again!");
+								$("#template_issue_control").click();
+							}
+						}
+						else {
+							$("#template_title").text("Registration Issue");
+							$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
+							$("#template_issue_control").click();
+						}
+					});
+				}
+				else {
+					$("#template_title").text("Email Issue");
+					$("#template_body").text("There was an issue parsing the email you provided. Please try again!");
+					$("#template_issue_control").click();
+				}
 			}
 			else if($(this).attr("id") == "register_button") {
 				if(functions.validate($("#email").val())) {
@@ -106,6 +163,8 @@ define(["dist/functions-min"], function(functions) {
 				$("#container").css("height", "400px");
 				$("#login_heading").css("background", "linear-gradient(to right, #4693ec 50%, #e0e0e0 50%)");
 				$("html").css("height", "850px");
+				$("#register_input input").each(function() { $(this).val(""); });
+				Materialize.updateTextFields();
 			}
 			else if($(this).attr("id") == "register_click") {
 				$("#login_input").hide(450);
@@ -113,6 +172,8 @@ define(["dist/functions-min"], function(functions) {
 				$("#container").css("height", "620px");
 				$("#login_heading").css("background", "linear-gradient(to left, #4693ec 50%, #e0e0e0 50%)");
 				$("html").css("height", "1100px");
+				$("#login_input input").each(function() { $(this).val(""); });
+				Materialize.updateTextFields();
 			}
 			else {
 				var id = $(this).attr("id");

@@ -35,7 +35,7 @@ app.use(express.static(__dirname, {"maxAge": 864000000 }));
 client_routes.add_gui_routes(app);
 api_routes.add_api_routes(app, pool);
 
-if (cluster.isMaster) {
+if(cluster.isMaster) {
 	minifier.driver(mkdirp, compressor, minify, fs, app, () => {});
 	for(var i = 0; i < numCPUs; i++) { cluster.fork(); }
 	cluster.on("exit", (worker, code, signal) => { cluster.fork(); });
