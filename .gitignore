@@ -3,6 +3,7 @@ bower_components/*
 styles/dist/*
 scripts/dist/*
 client/dist/*
+cms/dist/*
 api/config.php
 scripts/back-end/config.js
 *.DS-Store
