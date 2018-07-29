@@ -4,6 +4,183 @@ define(function() {
 	/*
 
 	Purpose:
+	Changes the modal content as needed and displays it.
+
+	Parameters:
+		type: 
+			Referencing which modal is to be used
+		issue:
+			A number referencing the necessary case
+		obj:
+			An object obtained from a get/post request
+
+	*/
+	exports.modal = function(type, issue, obj) {
+		if(type == "template") {
+			if(issue == 0) {
+				$("#template_title").text("Email Issue");
+				$("#template_body").text("There was an issue parsing the email you provided. Please try again!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 1) {
+				$("#template_title").text("Registration Issue");
+				$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 2) {
+				$("#template_title").text("Password Issue");
+				$("#template_body").text("The password cannot be left empty. Please try again!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 3) {
+				$("#template_title").text("Database Issue");
+				$("#template_body").text("There was a problem connecting to the database!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 4) {
+				$("#template_title").text("Email Issue");
+				$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 5) {
+				$("#template_title").text("Password Issue");
+				$("#template_body").text("The password you provided does not match the one in the database. Please try again!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 6) {
+				var statement = "By continuing you are agreeing to manualmath's use of cookies to store session information.";
+				$("#template_title").text("Login Confirmation").css("text-align", "center");
+				$("#template_body").text(statement);
+				$("#template_submit").text("Continue");
+				$("#template_modal_footer").append($("<a>").attr("id", "template_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+				$("#template_issue_control").click();
+			}
+			else if(issue == 7) {
+				$("#template_title").text("Registration Issue");
+				$("#template_body").text("The email you provided already exists in the database. Please provide another email!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 8) {
+				$("#template_title").text("Password Issue");
+				$("#template_body").text("The passwords you provided did not match. Please try again!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 9) {
+				$("#template_title").text("Name Issue");
+				$("#template_body").text("The first name cannot be left empty. Please try again!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 10) {
+				$("#template_title").text("Name Issue");
+				$("#template_body").text("The last name cannot be left empty. Please try again!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 11) {
+				$("#template_title").text("Security Question Issue");
+				$("#template_body").text("The answer to the chosen security question cannot be left empty. Please try again!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 12) {
+				$("#template_title").text("Contributor Submission Issue");
+				$("#template_body").text("There was an issue processing the submission to the database!");
+				$("#template_issue_control").click();
+			}
+			else if(issue == 13) {
+				var statement = "Thanks for submitting an application to become a " 
+					+ "contributor on manualmath! The design of the content management " 
+					+ "system requires a majority approval from a committee of five top " 
+					+ "ranking members including the administrator to become a contributor. " 
+					+ "Deliberations can take a while, but you can definitely expect a " 
+					+ "response within a week.";
+				$("#template_title").text("Contributor Submission").css("text-align", "center");
+				$("#template_body").text(statement).append($("<br><br>")).append($("<div>")
+					.text("- " + obj.first_name + " " + obj.last_name).css("text-align", "right"));
+				$("#template_issue_control").click();
+			}
+			else if(issue == 14) {
+				var first = $("<div>").addClass("col s12"),
+					second = $("<form>").addClass("col s12"),
+					third = $("<div>").addClass("form-container"),
+					fourth1 = $("<div>").addClass("row"),
+					fifth1 = $("<div>").addClass("input-field col s12"),
+					sixth1 = $("<i>").addClass("material-icons prefix").text("lock"),
+					seventh1 = $("<input>").attr("type", "text").val($("#question option:selected").text()),
+					fourth2 = $("<div>").addClass("row"),
+					fifth2 = $("<div>").addClass("input-field col s12"),
+					sixth2 = $("<i>").addClass("material-icons prefix").text("mode_edit"),
+					seventh2 = $("<input>").attr("id", "forgotten").attr("type", "text"),
+					eighth = $("<label>").attr("for", "forgotten").addClass("black-text").text("Answer");
+				fifth2.append(sixth2).append(seventh2).append(eighth);
+				fourth2.append(fifth2);
+				fifth1.append(sixth1).append(seventh1);
+				fourth1.append(fifth1);
+				third.append(fourth1).append(fourth2);
+				second.append(third);
+				first.append(second);
+				$("#template_title").text("Password Recovery");
+				$("#template_body").text("Please answer the security question associated to the account:").append(first);
+				$("#template_modal_footer").append($("<a>").attr("id", "template_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+				$("#template_issue_control").click();
+				$("#template_submit").css("pointer-events", "none");
+				$("#forgotten").on("input", function() {
+					if($("#forgotten").val().length == 0) {
+						$("#template_submit").css("pointer-events", "none");
+					}
+					else {
+						$("#template_submit").css("pointer-events", "auto");
+					}
+				});
+			}
+			else if(issue == 15) {
+				$("#template_title").text("Password Changed");
+				$("#template_body").text("You may now login with the new password!");
+				$("#template_exit").remove();
+				$("#template_issue_control").click();
+			}
+		}
+		else if(type == "status") {
+			if(issue == 0) {
+				var first = $("<div>").addClass("col s12");
+					second = $("<form>").addClass("col s12");
+					third = $("<div>").addClass("form-container");
+					fourth = $("<div>").addClass("row");
+					fifth = $("<div>").addClass("input-field col s12");
+					sixth = $("<i>").addClass("material-icons prefix").text("lock");
+					seventh = $("<input>").attr("id", "newpass").attr("type", "password");
+					eighth = $("<label>").attr("for", "newpass").addClass("black-text").text("New Password");
+				fifth.append(sixth).append(seventh).append(eighth);
+				fourth.append(fifth);
+				third.append(fourth);
+				second.append(third);
+				first.append(second);
+				$("#status_title").text("Password Reset");
+				$("#status_body").text("Please provide a new password:").append(first);
+				$("#status_modal_footer").append($("<a>").attr("id", "status_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+				$("#status_issue_control").click();
+				$("#status_submit").css("pointer-events", "none");
+				$("#newpass").on("input", function() {
+					if($("#newpass").val().length == 0) {
+						$("#status_submit").css("pointer-events", "none");
+					}
+					else {
+						$("#status_submit").css("pointer-events", "auto");
+					}
+				});
+			}
+			else if(issue == 1) {
+				$("#status_title").text("Password Recovery").css("text-align", "left");
+				$("#status_body").text("You provided the wrong answer to the security question!");
+				$("#status_issue_control").click();
+			}
+		}
+	};
+
+	/*
+
+	Purpose:
 	Validates a given email.
 
 	Parameters:
