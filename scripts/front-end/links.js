@@ -34,7 +34,6 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 											event.stopImmediatePropagation();
 											return false;
 										});
-										// $("html").one("keydown", false);
 										$("#template_exit").click(function() {
 											location.reload();
 											$(window).scrollTop(0);
@@ -87,9 +86,11 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 								if($("#first_name").val().length > 0) {
 									if($("#last_name").val().length > 0) {
 										if($("#answer").val().length > 0) {
-											var call = "/api/cms/add/" + $("#first_name").val() + "/" + $("#last_name").val() 
-												+ "/" + $("#email").val() + "/" + $("#password").val() + "/" 
-												+ $("#question")[0].options.selectedIndex + "/" + $("#answer").val();
+											var first = $("#first_name").val()[0].toUpperCase() + $("#first_name").val().slice(1).toLowerCase(),
+												last =  $("#last_name").val()[0].toUpperCase() + $("#last_name").val().slice(1).toLowerCase(),
+												call = "/api/cms/add/" + first + "/" + last + "/" + $("#email").val() 
+												+ "/" + $("#password").val() + "/" + $("#question")[0].options.selectedIndex 
+												+ "/" + $("#answer").val();
 											$.post(call).done(function() {
 												$.post("/api/cms/get/admin").done(function(obj) {
 													functions.modal("template", 13, obj);
