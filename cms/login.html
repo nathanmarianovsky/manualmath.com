@@ -81,6 +81,31 @@
 								<label for="password-confirm" class="black-text">Password Confirmation</label>
 							</div>
 						</div>
+						<div class="row">
+							<div class="input-field col s12">
+							    <i class="material-icons prefix">lock</i>
+							    <select id="question">
+							      	<option value="1">In what city were you born?</option>
+							      	<option value="2">What high school did you attend?</option>
+							      	<option value="3">What is the name of your first school?</option>
+							      	<option value="4">What was the make of your first car?</option>
+							      	<option value="5">When is your anniversary?</option>
+							      	<option value="6">What is your favorite color?</option>
+							      	<option value="7">Which is your favorite web browser?</option>
+							      	<option value="8">Who is your favorite actor, musician, or artist?</option>
+							      	<option value="9">What was your favorite place to visit as a child?</option>
+							      	<option value="10">What is the name of your favorite pet?</option>
+							    </select>
+							    <label>Security Question</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">lock</i>
+								<input id="answer" type="text">
+								<label for="answer" class="black-text">Security Question Answer</label>
+							</div>
+						</div>
 						<center>
 							<button id="register_button" class="btn waves-effect waves-light">Submit</button>
 						</center>
@@ -97,6 +122,16 @@
     	</div>
     	<div id="template_modal_footer" class="modal-footer">
       		<a id="template_submit" class="modal-close waves-effect waves-blue btn-flat">Ok</a>
+    	</div>
+  	</div>
+  	<button data-target="status_issue" id="status_issue_control" class="btn modal-trigger"></button>
+	<div id="status_issue" class="modal modal-fixed-footer">
+    	<div class="modal-content">
+      		<h4 id="status_title">Contributor Status</h4>
+      		<p id="status_body">Your account has not been approved by manualmath's committee yet!</p>
+    	</div>
+    	<div id="status_modal_footer" class="modal-footer">
+      		<a id="status_submit" class="modal-close waves-effect waves-blue btn-flat">Ok</a>
     	</div>
   	</div>
 </body>

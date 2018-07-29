@@ -4,7 +4,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Validates a given email
+	Validates a given email.
 
 	Parameters:
 		email: 

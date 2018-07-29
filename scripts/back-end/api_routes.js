@@ -535,13 +535,16 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to add a new contributor
-	app.post("/api/cms/add/:fname/:lname/:email/:passwd", (request, response) => {
+	app.post("/api/cms/add/:fname/:lname/:email/:passwd/:question/:answer", (request, response) => {
 		var fname = request.params.fname,
 			lname = request.params.lname,
 			email = request.params.email,
 			passwd = request.params.passwd,
-			statement = "INSERT INTO contributors (email,first_name,last_name,password,status) VALUES ('" 
-				+ email + "','" + fname + "','" + lname + "','" + bcrypt.hashSync(passwd, 10) + "'," + 0 + ")";
+			question = request.params.question,
+			answer = request.params.answer,
+			statement = "INSERT INTO contributors (email,first_name,last_name,password,status,question,answer) VALUES ('" 
+				+ email + "','" + fname + "','" + lname + "','" + bcrypt.hashSync(passwd, 10) + "'," + 0 + "," + question 
+				+ ",'" + bcrypt.hashSync(answer, 10) + "')";
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
@@ -552,8 +555,6 @@ exports.add_api_routes = (app, pool) => {
 	app.post("/api/cms/check/:email/:passwd", (request, response) => {
 		var email = request.params.email,
 			passwd = request.params.passwd,
-			// statement = "INSERT INTO contributors (email,first_name,last_name,password,status) VALUES ('" 
-			// 	+ email + "','" + fname + "','" + lname + "','" + bcrypt.hashSync(passwd, 10) + "'," + 0 + ")";
 			statement = "SELECT status,password FROM contributors WHERE email='" + email + "'";
 		pool.query(statement, (err, result) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
@@ -569,8 +570,6 @@ exports.add_api_routes = (app, pool) => {
 				else {
 					response.send(["Wrong Email"]);
 				}
-				// result.length == 0 ? response.send([]) : response.send([{email: email, password: passwd, status: result[0].status}]);
-				// response.send("1");
 			}
 		});
 	});
@@ -583,6 +582,23 @@ exports.add_api_routes = (app, pool) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { 
 				content.length > 0 ? response.send([{email: content[0].email, status: content[0].status}]) : response.send([]);
+			}
+		});
+	});
+
+	// The API method to check the answer of a security question
+	app.post("/api/cms/check/security/:email/:answer", (request, response) => {
+		var email = request.params.email,
+			answer = request.params.answer,
+			statement = "SELECT answer FROM contributors WHERE email='" + email + "'";
+		pool.query(statement, (err, content) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("ERROR"); }
+			else { 
+				bcrypt.compareSync(answer, content[0].answer) ? response.send("1") : response.send("0");
+				// if(bcrypt.compareSync(answer, content[0].answer)) {
+				// 	response.send("1")
+				// }
+				// content.length > 0 ? response.send([{email: content[0].email, status: content[0].status}]) : response.send([]);
 			}
 		});
 	});
@@ -601,6 +617,29 @@ exports.add_api_routes = (app, pool) => {
 					}
 				});
 			}
+		});
+	});
+
+	// The API method to get the security question for a contributor
+	app.post("/api/cms/get/:email", (request, response) => {
+		var email = request.params.email,
+			statement = "SELECT question FROM contributors WHERE email='" + email + "'";
+		pool.query(statement, (err, results) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("ERROR"); }
+			else {
+				response.send(results[0].question.toString());
+			}
+		});
+	});
+
+	// The API method to change a contributor's password
+	app.post("/api/cms/change/password/:email/:password", (request, response) => {
+		var email = request.params.email,
+			password = request.params.password,
+			statement = "UPDATE contributors SET password='" + bcrypt.hashSync(password, 10) + "' WHERE email='" + email + "'";
+		pool.query(statement, (err, results) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
 		});
 	});
 };
