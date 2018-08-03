@@ -20,7 +20,35 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 
 	*/
 	exports.add_listeners = function(router, subjects, topics, sections, examples) {
-		router.addRouteListener("cms_login", function(toState, fromState) {
+		router.addRouteListener("contributor", function(toState, fromState) {
+			console.log("here!!");
+			// $.get("/client/dist/main-min.html").done(function(content) {
+			// 	console.log(document);
+			// 	$(document.body).empty().append(content);
+			// 	if(functions.width_func() < 992) {
+			// 		$(".button-collapse").sideNav("hide");
+			// 	}
+			// 	navs.driver("about", subjects);
+			// 	$("title").text("Content Management System");
+			// 	$("main").empty();
+			// 	$("main").append($("<div>").attr("id", "latex"));
+			// 	$.get("/client/dist/about-min.html").done(function(content) {
+			// 		$("#latex").append(content);
+			// 		$.get("/client/dist/notation-min.html").done(function(notation) {
+			// 			$("#notation_box").append(notation);
+			// 			MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+			// 			functions.handle_button();
+			// 			functions.handle_logo_link("about");
+			// 			functions.handle_logo();
+			// 			links.handle_links(router, subjects, topics, sections, examples);
+			// 			// functions.handle_orientation("about", navs, subjects);
+			// 			functions.handle_desktop_title("about");
+			// 		});
+			// 	});
+			// });
+		});
+
+		router.addRouteListener("login-contributor", function(toState, fromState) {
 			$.get("/cms/dist/login-min.html").done(function(content) {
 				$(document.body).empty().append(content).css("background", "#1163A9");
 				$("title").text("Content Management System: Login");
@@ -30,7 +58,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					inDuration: 1000,
 					outDuration: 1000
 				});
-				$('select').material_select();
+				$("select").material_select();
 				links.handle_links(router, subjects, topics, sections, examples);
 				$.post("/api/cms/get/admin").done(function(obj) {
 					$("#admin_name").text("Name: " + obj.first_name + " " + obj.last_name);
@@ -41,8 +69,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 
 		router.addRouteListener("def", function(toState, fromState) {
 			$.get("/client/dist/main-min.html").done(function(content) {
-				$(document.body).empty();
-				$(document.body).append(content);
+				$(document.body).empty().append(content);
 				if(functions.width_func() < 992) {
 					$(".button-collapse").sideNav("hide");
 				}
@@ -56,8 +83,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						$("#notation_box").append(notation);
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						functions.handle_button();
-						
-
 						functions.handle_logo_link("about");
 						functions.handle_logo();
 						links.handle_links(router, subjects, topics, sections, examples);
@@ -70,8 +95,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 
 		router.addRouteListener("about", function(toState, fromState) {
 			$.get("/client/dist/main-min.html").done(function(content) {
-				$(document.body).empty();
-				$(document.body).append(content);
+				$(document.body).empty().append(content);
 				if(functions.width_func() < 992) {
 					$(".button-collapse").sideNav("hide");
 				}
@@ -85,8 +109,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						$("#notation_box").append(notation);
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						functions.handle_button();
-						
-
 						functions.handle_logo_link("about");
 						functions.handle_logo();
 						links.handle_links(router, subjects, topics, sections, examples);
@@ -99,8 +121,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 
 		router.addRouteListener("subject", function(toState, fromState) {
 			$.get("/client/dist/main-min.html").done(function(content) {
-				$(document.body).empty();
-				$(document.body).append(content);
+				$(document.body).empty().append(content);
 				if(functions.is_mobile()) {
 					$(".button-collapse").sideNav("hide");
 				}
@@ -139,8 +160,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 					functions.handle_button();
-				
-
 					functions.handle_logo_link("subject");
 					functions.handle_logo();
 					functions.handle_li_coloring();
@@ -153,8 +172,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 
 		router.addRouteListener("subject.topic", function(toState, fromState) {
 			$.get("/client/dist/main-min.html").done(function(content) {
-				$(document.body).empty();
-				$(document.body).append(content);
+				$(document.body).empty().append(content);
 				if(functions.is_mobile()) {
 					$(".button-collapse").sideNav("hide");
 				}
@@ -184,8 +202,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					functions.handle_breadcrumbs("topic", $(".accordion").first(), subject, topic);
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 					functions.handle_button();
-					
-
 					functions.handle_logo_link("subject.topic");
 					functions.handle_logo();
 					functions.handle_li_coloring();
@@ -198,8 +214,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 
 		router.addRouteListener("subject.topic.section.current_page", function(toState, fromState) {
 			$.get("/client/dist/main-min.html").done(function(content) {
-				$(document.body).empty();
-				$(document.body).append(content);
+				$(document.body).empty().append(content);
 				if(functions.width_func() < 992) {
 					$(".button-collapse").sideNav("hide");
 				}

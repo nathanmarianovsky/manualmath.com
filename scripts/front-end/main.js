@@ -2,7 +2,8 @@ define(["jquery", "materialize", "router5", "mathjax", "dist/functions-min", "di
 	$(function() {
 
 		var router = new router5.Router5([
-			new router5.RouteNode("cms_login", "/login"),
+			new router5.RouteNode("contributor", "/contributor"),
+			new router5.RouteNode("login-contributor", "/login"),
 			new router5.RouteNode("def", "/"),
 			new router5.RouteNode("about", "/client/about"),
 			new router5.RouteNode("subject", "/client/:sname", [

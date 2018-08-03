@@ -39,16 +39,24 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 											$(window).scrollTop(0);
 										});
 										$("#template_submit").click(function() {
-											if(obj[0].status == 0) {
+											if(obj[0].status == 1) {
+												functions.writeCookie("name", 107, .5);
+												console.log(functions.readCookie("name"));
+												functions.listenCookieChange("name", function() {
+													console.log("detected a change:");
+													// console.log(document.cookie);
+													console.log(functions.readCookie("name"));
+												});
+												router.navigate("cms", {reload: true});
+												// MOVING FORWARD HERE!!!!!!
+											}
+											else {
 												$("#status_issue_control").click();
 												$("#status_submit").click(function() {
 													$(document).unbind("keydown");
 													location.reload();
 													$(window).scrollTop(0);
 												});
-											}
-											else {
-												// MOVING FORWARD HERE!!!!!!
 											}
 										});
 									}

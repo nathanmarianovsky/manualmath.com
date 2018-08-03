@@ -111,18 +111,12 @@ exports.minify_html = (minify, mkdirp, fs) => {
 				"data_min": data_min,
 				"file_name": newpath + name[0] + "-min." + name[1],
 			};
-			// tmp.push(obj);
-			// console.log(newpath);
-			// if(tmp.length == container.length) {
-				mkdirp(newpath, err => {
-					if(err) { console.log("Could not make the directory" + newpath + ": " + err.stack); }
-					// tmp.forEach(result => {
-						fs.writeFile(obj.file_name, obj.data_min, err => {
-							if(err) { console.log("Could not write the file " + obj.file_name + ": " + err.stack); }
-						});
-					// });
+			mkdirp(newpath, err => {
+				if(err) { console.log("Could not make the directory" + newpath + ": " + err.stack); }
+				fs.writeFile(obj.file_name, obj.data_min, err => {
+					if(err) { console.log("Could not write the file " + obj.file_name + ": " + err.stack); }
 				});
-			// }
+			});
 		});
 	});
 };
