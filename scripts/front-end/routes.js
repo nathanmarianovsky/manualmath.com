@@ -49,7 +49,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("login-contributor", function(toState, fromState) {
-			$.get("/cms/dist/login-min.html").done(function(content) {
+			$.get("/pages/dist/login-min.html").done(function(content) {
 				$(document.body).empty().append(content).css("background", "#1163A9");
 				$("title").text("Content Management System: Login");
 				$(".modal-trigger").leanModal({
@@ -68,7 +68,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("def", function(toState, fromState) {
-			$.get("/client/dist/main-min.html").done(function(content) {
+			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
 				if(functions.width_func() < 992) {
 					$(".button-collapse").sideNav("hide");
@@ -77,9 +77,9 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				$("title").text("About");
 				$("main").empty();
 				$("main").append($("<div>").attr("id", "latex"));
-				$.get("/client/dist/about-min.html").done(function(content) {
+				$.get("/pages/dist/about-min.html").done(function(content) {
 					$("#latex").append(content);
-					$.get("/client/dist/notation-min.html").done(function(notation) {
+					$.get("/pages/dist/notation-min.html").done(function(notation) {
 						$("#notation_box").append(notation);
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						functions.handle_button();
@@ -94,7 +94,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("about", function(toState, fromState) {
-			$.get("/client/dist/main-min.html").done(function(content) {
+			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
 				if(functions.width_func() < 992) {
 					$(".button-collapse").sideNav("hide");
@@ -103,9 +103,9 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				$("title").text("About");
 				$("main").empty();
 				$("main").append($("<div>").attr("id", "latex"));
-				$.get("/client/dist/about-min.html").done(function(content) {
+				$.get("/pages/dist/about-min.html").done(function(content) {
 					$("#latex").append(content);
-					$.get("/client/dist/notation-min.html").done(function(notation) {
+					$.get("/pages/dist/notation-min.html").done(function(notation) {
 						$("#notation_box").append(notation);
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						functions.handle_button();
@@ -120,7 +120,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subject", function(toState, fromState) {
-			$.get("/client/dist/main-min.html").done(function(content) {
+			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
 				if(functions.is_mobile()) {
 					$(".button-collapse").sideNav("hide");
@@ -171,7 +171,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subject.topic", function(toState, fromState) {
-			$.get("/client/dist/main-min.html").done(function(content) {
+			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
 				if(functions.is_mobile()) {
 					$(".button-collapse").sideNav("hide");
@@ -213,7 +213,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subject.topic.section.current_page", function(toState, fromState) {
-			$.get("/client/dist/main-min.html").done(function(content) {
+			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
 				if(functions.width_func() < 992) {
 					$(".button-collapse").sideNav("hide");
