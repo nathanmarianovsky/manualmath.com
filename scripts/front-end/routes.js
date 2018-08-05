@@ -21,61 +21,66 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 	*/
 	exports.add_listeners = function(router, subjects, topics, sections, examples) {
 		router.addRouteListener("cms", function(toState, fromState) {
-			// console.log("here!!");
+			console.log("here!!");
 			$("title").text("Content Management System");
 			if(functions.read_cookie("contributor") == "") {
-				// console.log("CHECK!!!!");
-				var button = $("<button>").attr("data-target", "template_issue").attr("id", "template_issue_control")
-					.addClass("btn modal-trigger"),
-					outer_div = $("<div>").attr("id", "template_issue").addClass("modal modal-fixed-footer"),
-					content = $("<div>").addClass("modal-content"),
-					content_title = $("<h4>").attr("id", "template_title").text("Login Issue"),
-					content_body = $("<p>").attr("id", "template_body")
-						.text("It seems you are not currently signed into the content management system. Please login first!"),
-					footer = $("<div>").attr("id", "template_modal_footer").addClass("modal-footer"),
-					footer_link = $("<a>").attr("id", "template_submit").addClass("modal-close waves-effect waves-blue btn-flat")
-						.text("Ok");
-				content.append(content_title).append(content_body);
-				footer.append(footer_link);
-				outer_div.append(content).append(footer);
-				// $("title").text("Content Management System");
-				$("body").empty().append(button).append(outer_div);
-				$(".modal-trigger").leanModal({
-					dismissible: false,
-					opacity: 2,
-					inDuration: 1000,
-					outDuration: 1000
-				});
-				$("#template_issue_control").click();
-				$(document).bind("keydown", function(event) {
-					event.stopImmediatePropagation();
-					return false;
-				});
-				$("#template_submit").click(function() {
-					// if(obj[0].status == 1) {
-						// functions.write_cookie("contributor", $("#login_email").val(), 30);
-						$(document).unbind("keydown");
-						router.navigate("login", {reload: true});
-						// MOVING FORWARD HERE!!!!!!
-					// }
-					// else {
-					// 	$("#status_issue_control").click();
-					// 	$("#status_submit").click(function() {
-					// 		$(document).unbind("keydown");
-					// 		location.reload();
-					// 		$(window).scrollTop(0);
-					// 	});
-					// }
-				});
+				console.log("CHECK!!!!");
+				// var button = $("<button>").attr("data-target", "template_issue").attr("id", "template_issue_control")
+				// 	.addClass("btn modal-trigger"),
+				// 	outer_div = $("<div>").attr("id", "template_issue").addClass("modal modal-fixed-footer"),
+				// 	content = $("<div>").addClass("modal-content"),
+				// 	content_title = $("<h4>").attr("id", "template_title").text("Login Issue"),
+				// 	content_body = $("<p>").attr("id", "template_body")
+				// 		.text("It seems you are not currently signed into the content management system. Please login first!"),
+				// 	footer = $("<div>").attr("id", "template_modal_footer").addClass("modal-footer"),
+				// 	footer_link = $("<a>").attr("id", "template_submit").addClass("modal-close waves-effect waves-blue btn-flat")
+				// 		.text("Ok");
+				// content.append(content_title).append(content_body);
+				// footer.append(footer_link);
+				// outer_div.append(content).append(footer);
+				// // $("title").text("Content Management System");
+				// $("body").empty().append(button).append(outer_div);
+				// $(".modal-trigger").leanModal({
+				// 	dismissible: false,
+				// 	opacity: 2,
+				// 	inDuration: 1000,
+				// 	outDuration: 1000
+				// });
+				// $("#template_issue_control").click();
+				// $(document).bind("keydown", function(event) {
+				// 	event.stopImmediatePropagation();
+				// 	return false;
+				// });
+				// $("#template_submit").click(function() {
+				// 	// if(obj[0].status == 1) {
+				// 		// functions.write_cookie("contributor", $("#login_email").val(), 30);
+				// 		$(document).unbind("keydown");
+				// 		router.navigate("login", {reload: true});
+				// 		// MOVING FORWARD HERE!!!!!!
+				// 	// }
+				// 	// else {
+				// 	// 	$("#status_issue_control").click();
+				// 	// 	$("#status_submit").click(function() {
+				// 	// 		$(document).unbind("keydown");
+				// 	// 		location.reload();
+				// 	// 		$(window).scrollTop(0);
+				// 	// 	});
+				// 	// }
+				// });
+				functions.session_modal(router, 0);
 			}
 			else {
-
-				console.log(functions.read_cookie("contributor"));
-				functions.listen_cookie_change("name", function() {
-					console.log("detected a change:");
-					console.log(functions.read_cookie("name"));
+				var cookie = functions.read_cookie("contributor");
+				functions.listen_cookie_change("contributor", function() {
+					if(functions.read_cookie("contributor") == "") {
+						$.post("/api/cms/remove/live/" + cookie).done(function(result) {
+							if(result == 1) {
+								functions.session_modal(router, 1);
+							}
+							else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
+						});
+					}
 				});
-
 				$.get("/pages/dist/main-min.html").done(function(content) {
 					$(document.body).empty().append(content);
 					if(functions.width_func() < 992) {

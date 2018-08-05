@@ -42,7 +42,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 											if(obj[0].status == 1) {
 												$.post("/api/cms/add/live/" + $("#login_email").val()).done(function(result) {
 													if(result == 1) {
-														functions.write_cookie("contributor", $("#login_email").val(), 30);
+														functions.write_cookie("contributor", $("#login_email").val(), 60);
 														$(document).unbind("keydown");
 														router.navigate("cms", {reload: true});
 													}

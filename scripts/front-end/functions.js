@@ -93,6 +93,43 @@ define(function() {
 	    }, 100);
 	};
 
+	exports.session_modal = function(router, issue) {
+		var button = $("<button>").attr("data-target", "template_issue").attr("id", "template_issue_control")
+			.addClass("btn modal-trigger"),
+			outer_div = $("<div>").attr("id", "template_issue").addClass("modal modal-fixed-footer"),
+			content = $("<div>").addClass("modal-content"),
+			content_title = $("<h4>").attr("id", "template_title").text("Login Issue"),
+			content_body = $("<p>").attr("id", "template_body"),
+			footer = $("<div>").attr("id", "template_modal_footer").addClass("modal-footer"),
+			footer_link = $("<a>").attr("id", "template_submit").addClass("modal-close waves-effect waves-blue btn-flat")
+				.text("Ok");
+		if(issue == 0) {
+			content_body.text("It seems you are not currently signed into the content management system. Please login first!");
+		}
+		else if(issue == 1) {
+			content_body.text("Your current session has expired. To continue using the system please login again!");
+		}
+		content.append(content_title).append(content_body);
+		footer.append(footer_link);
+		outer_div.append(content).append(footer);
+		$("body").empty().append(button).append(outer_div);
+		$(".modal-trigger").leanModal({
+			dismissible: false,
+			opacity: 2,
+			inDuration: 1000,
+			outDuration: 1000
+		});
+		$("#template_issue_control").click();
+		$(document).bind("keydown", function(event) {
+			event.stopImmediatePropagation();
+			return false;
+		});
+		$("#template_submit").click(function() {
+			$(document).unbind("keydown");
+			router.navigate("login", {reload: true});
+		});
+	};
+
 	/*
 
 	Purpose:
