@@ -26,7 +26,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				if(functions.validate($("#login_email").val())) {
 					$.post("/api/cms/check/" + $("#login_email").val()).done(function(result) {
 						if(result.length == 1) {
-							if($("#login_password").val().length > 0) {
+							if(functions.password_check($("#login_password").val())) {
 								$.post("api/cms/check/" + $("#login_email").val() + "/" + $("#login_password").val()).done(function(obj) {
 									if(typeof(obj[0]) == "object") {
 										functions.modal("template", 6);
@@ -40,14 +40,14 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 										});
 										$("#template_submit").click(function() {
 											if(obj[0].status == 1) {
-												functions.writeCookie("name", 107, .5);
-												console.log(functions.readCookie("name"));
-												functions.listenCookieChange("name", function() {
-													console.log("detected a change:");
-													// console.log(document.cookie);
-													console.log(functions.readCookie("name"));
+												$.post("/api/cms/add/live/" + $("#login_email").val()).done(function(result) {
+													if(result == 1) {
+														functions.write_cookie("contributor", $("#login_email").val(), 30);
+														$(document).unbind("keydown");
+														router.navigate("cms", {reload: true});
+													}
+													else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
 												});
-												router.navigate("cms", {reload: true});
 												// MOVING FORWARD HERE!!!!!!
 											}
 											else {

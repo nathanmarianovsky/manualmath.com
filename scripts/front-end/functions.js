@@ -1,46 +1,94 @@
 define(function() {
 	var exports = {};
 
-	exports.writeCookie = function(name,value,minutes) {
+	/*
+
+	Purpose:
+	Checks if a string meets the requirements to be a password.
+
+	Parameters:
+		str: 
+			Password candidate
+
+	*/
+	exports.password_check = function(str) {
+	    var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+    	return re.test(str);
+	};
+
+	/*
+
+	Purpose:
+	Creates a cookie.
+
+	Parameters:
+		name: 
+			Cookie name
+		value:
+			Cookie value
+		minutes:
+			Number of minutes til cookie expiration
+
+	*/
+	exports.write_cookie = function(name, value, minutes) {
 	    var date, expires;
 	    if(minutes) {
 	        date = new Date();
-	        date.setTime(date.getTime()+(minutes*60*1000));
+	        date.setTime(date.getTime() + (minutes * 60 * 1000));
 	        expires = "; expires=" + date.toGMTString();
 	    }
-	    else {
-	        expires = "";
-	    }
+	    else { expires = ""; }
 	    document.cookie = name + "=" + value + expires + "; path=/";
 	};
 
-	exports.readCookie = function(name) {
+	/*
+
+	Purpose:
+	Reads a cookie's value with the given name
+
+	Parameters:
+		name: 
+			Cookie name
+
+	*/
+	exports.read_cookie = function(name) {
 	    var i, c, ca, nameEQ = name + "=";
-	    ca = document.cookie.split(';');
-	    for(i=0;i < ca.length;i++) {
+	    ca = document.cookie.split(";");
+	    for(i = 0; i < ca.length; i++) {
 	        c = ca[i];
-	        while (c.charAt(0)==' ') {
-	            c = c.substring(1,c.length);
+	        while(c.charAt(0)==" ") {
+	            c = c.substring(1, c.length);
 	        }
-	        if (c.indexOf(nameEQ) == 0) {
-	            return c.substring(nameEQ.length,c.length);
+	        if(c.indexOf(nameEQ) == 0) {
+	            return c.substring(nameEQ.length, c.length);
 	        }
 	    }
-	    return '';
+	    return "";
 	};
 
+	/*
 
-	exports.listenCookieChange = function(cookieName, callback) {
+	Purpose:
+	Listens for a change in the cookie with the given name.
+
+	Parameters:
+		name: 
+			Cookie name
+		callback:
+			Callback function to execute afterwards
+
+	*/
+	exports.listen_cookie_change = function(name, callback) {
 		var cookieRegistry = [];
 	    setInterval(function() {
-	        if (cookieRegistry[cookieName]) {
-	            if (exports.readCookie(cookieName) != cookieRegistry[cookieName]) {
-	                // update registry so we dont get triggered again
-	                cookieRegistry[cookieName] = exports.readCookie(cookieName);
+	        if(cookieRegistry[name]) {
+	            if(exports.read_cookie(name) != cookieRegistry[name]) {
+	                cookieRegistry[name] = exports.read_cookie(name);
 	                return callback();
 	            }
-	        } else {
-	            cookieRegistry[cookieName] = exports.readCookie(cookieName);
+	        } 
+	        else {
+	            cookieRegistry[name] = exports.read_cookie(name);
 	        }
 	    }, 100);
 	};
@@ -73,7 +121,7 @@ define(function() {
 			}
 			else if(issue == 2) {
 				$("#template_title").text("Password Issue");
-				$("#template_body").text("The password cannot be left empty. Please try again!");
+				$("#template_body").text("The password must be at least eight characters long while containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
 				$("#template_issue_control").click();
 			}
 			else if(issue == 3) {

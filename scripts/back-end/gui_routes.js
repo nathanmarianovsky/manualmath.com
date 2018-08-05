@@ -7,7 +7,7 @@ exports.add_gui_routes = app => {
 		response.sendFile("./pages/dist/template-min.html", { "root": "./" });
 	});
 
-	app.get("/contributor", (request, response) => {
+	app.get("/cms", (request, response) => {
 		response.sendFile("./pages/dist/template-min.html", { "root": "./" });
 	});
 

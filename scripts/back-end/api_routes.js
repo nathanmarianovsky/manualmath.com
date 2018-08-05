@@ -595,10 +595,6 @@ exports.add_api_routes = (app, pool) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("ERROR"); }
 			else { 
 				bcrypt.compareSync(answer, content[0].answer) ? response.send("1") : response.send("0");
-				// if(bcrypt.compareSync(answer, content[0].answer)) {
-				// 	response.send("1")
-				// }
-				// content.length > 0 ? response.send([{email: content[0].email, status: content[0].status}]) : response.send([]);
 			}
 		});
 	});
@@ -637,7 +633,27 @@ exports.add_api_routes = (app, pool) => {
 		var email = request.params.email,
 			password = request.params.password,
 			statement = "UPDATE contributors SET password='" + bcrypt.hashSync(password, 10) + "' WHERE email='" + email + "'";
-		pool.query(statement, (err, results) => {
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
+	// The API method to record a contributor's live session
+	app.post("/api/cms/add/live/:email", (request, response) => {
+		var email = request.params.email,
+			statement = "INSERT INTO `contributor-sessions` (email) VALUES ('" + email + "')";
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
+	// The API method to remove a contributor's live session
+	app.post("/api/cms/remove/live/:email", (request, response) => {
+		var email = request.params.email,
+			statement = "DELETE FROM `contributor-sessions` WHERE email='" + email + "'";
+		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
 		});
