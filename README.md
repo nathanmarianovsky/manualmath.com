@@ -37,7 +37,7 @@ This will handle the installation of all node_modules, bower_components, and bui
 To begin with, the database is setup according to the following ERR diagram:
 
 <p align="center">
- <img width=500 height=500 src="/client/database_setup.png">
+ <img width=500 height=500 src="/pages/database_setup.png">
 </p>
 
 I provide a current build of mine that can be found in "/content/db". After setting up, add subjects, topics, sections, and examples into the database as needed. As far as names go inside the database, for any object they must adhere to the rules<sup>1</sup>:
