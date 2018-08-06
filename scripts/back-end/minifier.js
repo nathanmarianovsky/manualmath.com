@@ -85,7 +85,9 @@ exports.minify_js = (compressor, fs) => {
 
 // Minifies the html files in /client
 exports.minify_html = (minify, mkdirp, fs) => {
-	var container = ["./pages/template.html", "./pages/about.html", "./pages/notation.html", "./pages/main.html", "./pages/login.html"],
+	var container = ["./pages/template.html", "./pages/about.html", 
+		"./pages/notation.html", "./pages/main.html", "./pages/login.html", 
+		"./pages/button.html"],
 		tmp = [];
 	container.forEach(file => {
 		fs.readFile(file, "utf8", (err, data) => {
