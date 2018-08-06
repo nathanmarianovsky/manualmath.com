@@ -44,7 +44,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Reads a cookie's value with the given name
+	Reads a cookie's value with the given name.
 
 	Parameters:
 		name: 
@@ -64,6 +64,20 @@ define(function() {
 	        }
 	    }
 	    return "";
+	};
+
+	/*
+
+	Purpose:
+	Deletes a cookie by changing the max-age.
+
+	Parameters:
+		name: 
+			Cookie name
+
+	*/
+	exports.delete_cookie = function(name) {   
+	    document.cookie = name + "=; Max-Age=-99999999;";  
 	};
 
 	/*

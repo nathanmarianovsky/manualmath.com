@@ -221,7 +221,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					if(holder.length > 1) {
 						var id_num = holder[1];
 					}
-					if(id_string == "subjects" || id_string == "aboutsubject") {
+					if((id_string == "subjects" || id_string == "aboutsubject") && holder[2] != "cms") {
 						var subject = subjects.filter(function(iter) {
 							return iter.sid == id_num;
 						})[0];
