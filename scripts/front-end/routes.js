@@ -23,22 +23,32 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		router.addRouteListener("cms", function(toState, fromState) {
 			$("title").text("Content Management System");
 			if(functions.read_cookie("contributor") == "") {
-				functions.session_modal(router, 0);
+				functions.session_modal(router, "login", 0);
 			}
 			else {
 				var cookie = functions.read_cookie("contributor");
+				$.post("/api/cms/live/check/" + cookie).done(function(result) {
+					if(result == "") {
+						$.post("/api/cms/add/live/" + cookie).done(function(result) {
+							if(result == 1) {
+								functions.write_cookie("contributor", cookie, 60);
+							}
+							else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
+						});
+					}
+				});
 				functions.listen_cookie_change("contributor", function() {
 					if(functions.read_cookie("contributor") == "") {
 						$.post("/api/cms/remove/live/" + cookie).done(function(result) {
 							if(result == 1) {
-								functions.session_modal(router, 1);
+								functions.session_modal(router, "login", 1);
 							}
 							else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
 						});
 					}
 				});
 				$(window).on("unload", function() {
-				 	functions.delete_cookie("contributor");
+				 	// functions.delete_cookie("contributor");
 					$.ajax({
 					    type: "POST",
 					    async: false,
@@ -72,22 +82,56 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("login", function(toState, fromState) {
-			$.get("/pages/dist/login-min.html").done(function(content) {
-				$(document.body).empty().append(content).css("background", "#1163A9");
-				$("title").text("Content Management System: Login");
-				$(".modal-trigger").leanModal({
-					dismissible: false,
-					opacity: 2,
-					inDuration: 1000,
-					outDuration: 1000
+			var cookie = functions.read_cookie("contributor");
+			$("title").text("Content Management System: Login");
+			if(cookie == "") {
+				$.get("/pages/dist/login-min.html").done(function(content) {
+					$(document.body).empty().append(content).css("background", "#1163A9");
+					$(".modal-trigger").leanModal({
+						dismissible: false,
+						opacity: 2,
+						inDuration: 1000,
+						outDuration: 1000
+					});
+					$("select").material_select();
+					links.handle_links(router, subjects, topics, sections, examples);
+					$.post("/api/cms/get/admin").done(function(obj) {
+						$("#admin_name").text("Name: " + obj.first_name + " " + obj.last_name);
+						$("#admin_email").text("Email: " + obj.email);
+					});
 				});
-				$("select").material_select();
-				links.handle_links(router, subjects, topics, sections, examples);
-				$.post("/api/cms/get/admin").done(function(obj) {
-					$("#admin_name").text("Name: " + obj.first_name + " " + obj.last_name);
-					$("#admin_email").text("Email: " + obj.email);
+			}
+			else {
+				$.post("/api/cms/live/check/" + cookie).done(function(result) {
+					if(result == "") {
+						$.post("/api/cms/add/live/" + cookie).done(function(result) {
+							if(result == 1) {
+								functions.write_cookie("contributor", cookie, 60);
+							}
+							else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
+						});
+					}
+					functions.session_modal(router, "cms", 2);
+					// router.navigate("cms", {reload: true});
+					// else { router.navigate("cms", {reload: true}); }
 				});
-			});
+			}
+			// $.get("/pages/dist/login-min.html").done(function(content) {
+			// 	$(document.body).empty().append(content).css("background", "#1163A9");
+			// 	$("title").text("Content Management System: Login");
+			// 	$(".modal-trigger").leanModal({
+			// 		dismissible: false,
+			// 		opacity: 2,
+			// 		inDuration: 1000,
+			// 		outDuration: 1000
+			// 	});
+			// 	$("select").material_select();
+			// 	links.handle_links(router, subjects, topics, sections, examples);
+			// 	$.post("/api/cms/get/admin").done(function(obj) {
+			// 		$("#admin_name").text("Name: " + obj.first_name + " " + obj.last_name);
+			// 		$("#admin_email").text("Email: " + obj.email);
+			// 	});
+			// });
 		});
 
 		router.addRouteListener("def", function(toState, fromState) {

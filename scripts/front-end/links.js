@@ -74,7 +74,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 								});
 							}
 							else {
-								functions.modal("template", 2);
+								functions.modal("template", 16);
 							}
 						}
 						else {
@@ -221,11 +221,16 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					if(holder.length > 1) {
 						var id_num = holder[1];
 					}
-					if((id_string == "subjects" || id_string == "aboutsubject") && holder[2] != "cms") {
-						var subject = subjects.filter(function(iter) {
-							return iter.sid == id_num;
-						})[0];
-						router.navigate("subject", {sname: subject.sname});
+					if(id_string == "subjects" || id_string == "aboutsubject") {
+						if(holder[2] != "cms") {
+							var subject = subjects.filter(function(iter) {
+								return iter.sid == id_num;
+							})[0];
+							router.navigate("subject", {sname: subject.sname});
+						}
+						else {
+
+						}
 					}
 					else if(id_string == "subjectnav") {
 						router.navigate("about");

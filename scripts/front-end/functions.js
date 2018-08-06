@@ -107,7 +107,7 @@ define(function() {
 	    }, 100);
 	};
 
-	exports.session_modal = function(router, issue) {
+	exports.session_modal = function(router, page, issue) {
 		var button = $("<button>").attr("data-target", "template_issue").attr("id", "template_issue_control")
 			.addClass("btn modal-trigger"),
 			outer_div = $("<div>").attr("id", "template_issue").addClass("modal modal-fixed-footer"),
@@ -122,6 +122,9 @@ define(function() {
 		}
 		else if(issue == 1) {
 			content_body.text("Your current session has expired. To continue using the system please login again!");
+		}
+		else if(issue == 2) {
+			content_body.text("You are already logged in! Click the button below to redirect to the content management system.");
 		}
 		content.append(content_title).append(content_body);
 		footer.append(footer_link);
@@ -140,7 +143,7 @@ define(function() {
 		});
 		$("#template_submit").click(function() {
 			$(document).unbind("keydown");
-			router.navigate("login", {reload: true});
+			router.navigate(page, {reload: true});
 		});
 	};
 
@@ -280,6 +283,11 @@ define(function() {
 				$("#template_title").text("Password Changed");
 				$("#template_body").text("You may now login with the new password!");
 				$("#template_exit").remove();
+				$("#template_issue_control").click();
+			}
+			else if(issue == 16) {
+				$("#template_title").text("Password Issue");
+				$("#template_body").text("The password provided does not match the one in the database. Please try again!");
 				$("#template_issue_control").click();
 			}
 		}

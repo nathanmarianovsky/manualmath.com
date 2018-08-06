@@ -36,12 +36,12 @@ define(["dist/functions-min"], function(functions) {
 			results = [];
 		sidenav.empty();
 		if(typeof cms !== "undefined" && cms !== null) {
-			// results = subjects.map(function(subject) {
-			// 	var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid + "_cms"),
-			// 		link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid + "_cms").text(subject.clean_name);
-			// 	link.append($("<i>").addClass("material-icons right").text("arrow_forward").attr("id", "arrow_" + subject.sid + "_cms"));
-			// 	return subjectli.append(link);
-			// });
+			results = subjects.map(function(subject) {
+				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid + "_cms"),
+					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid + "_cms").text(subject.clean_name);
+				link.append($("<i>").addClass("material-icons right").text("arrow_forward").attr("id", "arrow_" + subject.sid + "_cms"));
+				return subjectli.append(link);
+			});
 		}
 		else {
 			results = subjects.map(function(subject) {

@@ -658,6 +658,16 @@ exports.add_api_routes = (app, pool) => {
 			else { response.send("1"); }
 		});
 	});
+
+	// The API method to check if a contributor is live
+	app.post("/api/cms/live/check/:email", (request, response) => {
+		var email = request.params.email,
+			statement = "SELECT email FROM `contributor-sessions` WHERE email='" + email + "'";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { result.length == 1 ? response.send(result[0].email) : response.send(""); }
+		});
+	});
 };
 
 module.exports = exports;
