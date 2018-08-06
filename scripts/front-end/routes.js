@@ -48,7 +48,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					}
 				});
 				$(window).on("unload", function() {
-				 	// functions.delete_cookie("contributor");
 					$.ajax({
 					    type: "POST",
 					    async: false,
@@ -68,13 +67,16 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						$("#latex").append(content);
 						$.get("/pages/dist/notation-min.html").done(function(notation) {
 							$("#notation_box").append(notation);
-							MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-							functions.handle_button();
-							functions.handle_logo_link("about");
-							functions.handle_logo();
-							links.handle_links(router, subjects, topics, sections, examples);
-							functions.handle_orientation("about", navs, subjects);
-							functions.handle_desktop_title("about");
+							$.get("/pages/dist/button-min.html").done(function(button) {
+								$("body").append(button);
+								MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+								functions.handle_button();
+								functions.handle_logo_link("about");
+								functions.handle_logo();
+								links.handle_links(router, subjects, topics, sections, examples);
+								functions.handle_orientation("about", navs, subjects);
+								functions.handle_desktop_title("about");
+							});
 						});
 					});
 				});
@@ -112,26 +114,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						});
 					}
 					functions.session_modal(router, "cms", 2);
-					// router.navigate("cms", {reload: true});
-					// else { router.navigate("cms", {reload: true}); }
 				});
 			}
-			// $.get("/pages/dist/login-min.html").done(function(content) {
-			// 	$(document.body).empty().append(content).css("background", "#1163A9");
-			// 	$("title").text("Content Management System: Login");
-			// 	$(".modal-trigger").leanModal({
-			// 		dismissible: false,
-			// 		opacity: 2,
-			// 		inDuration: 1000,
-			// 		outDuration: 1000
-			// 	});
-			// 	$("select").material_select();
-			// 	links.handle_links(router, subjects, topics, sections, examples);
-			// 	$.post("/api/cms/get/admin").done(function(obj) {
-			// 		$("#admin_name").text("Name: " + obj.first_name + " " + obj.last_name);
-			// 		$("#admin_email").text("Email: " + obj.email);
-			// 	});
-			// });
 		});
 
 		router.addRouteListener("def", function(toState, fromState) {

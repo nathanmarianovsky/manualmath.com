@@ -165,6 +165,17 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				$("#login_input input").each(function() { $(this).val(""); });
 				Materialize.updateTextFields();
 			}
+			else if($(this).attr("id") == "logout") {
+				var cookie = functions.read_cookie("contributor");
+				$.post("/api/cms/remove/live/" + cookie).done(function(result) {
+					if(result == 1) {
+						// router.navigate("login", {reload: true}, function() {
+						functions.delete_cookie("contributor");
+						// });
+					}
+					else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
+				});
+			}
 			else if($(this).attr("id") == "forgot") {
 				if(functions.validate($("#login_email").val())) {
 					$.post("/api/cms/get/" + $("#login_email").val()).done(function(content) {

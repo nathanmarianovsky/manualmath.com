@@ -443,3 +443,14 @@ nav {
 #status_title {
 	text-align: center;
 }
+
+
+
+/* All CSS properties related to the cms fixed action button */
+#drop_up {
+	background: #1163a9;
+}
+
+#profile, #logout {
+	background: #00b8ff;
+}
