@@ -639,6 +639,40 @@ exports.add_api_routes = (app, pool) => {
 		});
 	});
 
+	// The API method to change a contributor's profile information
+	app.post("/api/cms/change/profile/:email/:fname/:lname/:question", (request, response) => {
+		var email = request.params.email,
+			fname = request.params.fname,
+			lname = request.params.lname,
+			question = request.params.question,
+			answer = request.params.answer,
+			statement = "UPDATE contributors SET first_name='" + fname + "', last_name='" + 
+			lname + "', question=" + question + " WHERE email='" + email + "'";
+		// if(answer.length > 0) { statement += ", answer='" + bcrypt.hashSync(answer, 10) + "'"; }
+			// statement += " WHERE email='" + email + "'";
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
+	// The API method to change a contributor's profile information
+	app.post("/api/cms/change/profile/:email/:fname/:lname/:question/:answer", (request, response) => {
+		var email = request.params.email,
+			fname = request.params.fname,
+			lname = request.params.lname,
+			question = request.params.question,
+			answer = request.params.answer,
+			statement = "UPDATE contributors SET first_name='" + fname + "', last_name='" + lname + "', question=" + question + 
+			", answer='" + bcrypt.hashSync(answer, 10) + "' WHERE email='" + email + "'";
+		// if(answer.length > 0) { statement += ", answer='" + bcrypt.hashSync(answer, 10) + "'"; }
+			// statement += " WHERE email='" + email + "'";
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
 	// The API method to record a contributor's live session
 	app.post("/api/cms/add/live/:email", (request, response) => {
 		var email = request.params.email,
@@ -666,6 +700,16 @@ exports.add_api_routes = (app, pool) => {
 		pool.query(statement, (err, result) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { result.length == 1 ? response.send(result[0].email) : response.send(""); }
+		});
+	});
+
+	// The API method to grab a contributor's profile information
+	app.post("/api/cms/profile/:email", (request, response) => {
+		var email = request.params.email,
+			statement = "SELECT first_name,last_name,question FROM contributors WHERE email='" + email + "'";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send({first_name: result[0].first_name, last_name: result[0].last_name, question: result[0].question}); }
 		});
 	});
 };

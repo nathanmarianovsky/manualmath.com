@@ -383,7 +383,7 @@ nav {
 }
 
 #register_input, #template_issue_control,
-#status_issue_control {
+#status_issue_control, #popup_control {
 	display: none;
 }
 
@@ -429,13 +429,13 @@ nav {
 
 
 /* All CSS properties related to the modals */
-#template_issue, #status_issue {
+#template_issue, #status_issue, #popup {
 	height: 500px;
 	border-radius: 0.5cm;
 	background-color: #e0e0e0;
 }
 
-#template_modal_footer, #status_modal_footer {
+#template_modal_footer, #status_modal_footer, #popup_modal_footer {
 	background-color: #4693ec;
 	border-top: solid #000000 1px;
 }

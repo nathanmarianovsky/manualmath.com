@@ -107,6 +107,405 @@ define(function() {
 	    }, 100);
 	};
 
+	// exports.profile_modal = function(email) {
+	// 	$.get("/pages/dist/contributor-profile-min.html").done(function(content) {
+	// 		$("#popup1_title").text("Profile").css("text-align", "center");
+	// 		$("#popup1_submit").text("Save Changes");
+	// 		$("#popup1_body").append(content);
+	// 		$("#popup1_modal_footer").append($("<a>").attr("id", "popup1_exit")
+	// 			.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+	// 		$.post("/api/cms/profile/" + email).done(function(information) {
+	// 			$("#first_name_cms").val(information.first_name);
+	// 			$("#last_name_cms").val(information.last_name);
+	// 			$("#question_cms").val(information.question);
+	// 			Materialize.updateTextFields();
+	// 			$("#popup1_control").click();
+	// 			$(".modal-trigger").leanModal({
+	// 				dismissible: false,
+	// 				opacity: 2,
+	// 				inDuration: 1000,
+	// 				outDuration: 1000
+	// 			});
+	// 			$("select").material_select();
+	// 			$("#popup1_control").click();
+	// 			$('#popup1').keypress(function(event) {
+	// 			    if(event.keyCode === 10 || event.keyCode === 13) {
+	// 			        event.preventDefault();
+	// 			    }
+	// 			});
+	// 			$("#popup1_exit").click(function(event) {
+	// 				event.preventDefault();
+	// 				$("#popup1").remove();
+	// 				$("#popup1_control").remove();
+	// 				$("#popup2").remove();
+	// 				$("#popup2_control").remove();
+	// 				$("#popup3").remove();
+	// 				$("#popup3_control").remove();
+	// 			});
+	// 			$("#popup1_submit").click(function(event) {
+	// 				event.preventDefault();
+	// 				$.get("/pages/dist/change-confirmation-min.html").done(function(material) {
+	// 					if($("#password_cms").val().length == 0) {
+	// 						$("#popup2_title").text("Profile Changes").css("text-align", "center");
+	// 						$("#popup2_body").text("Please confirm the changes provided by providing your password:").append(material);
+	// 						$("#popup2_submit").text("Confirm");
+	// 						$("#new_password_confirm").closest(".row").remove();
+	// 						$("#old_password_label").text("Password");
+	// 						$("#popup2_modal_footer").append($("<a>").attr("id", "popup2_exit")
+	// 							.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+	// 						$("#popup2_submit").css("pointer-events", "none");
+	// 						$("#popup2_control").click();
+	// 						$("#old_password_confirm").on("input", function() {
+	// 							if($("#old_password_confirm").val().length > 0) {
+	// 								$("#popup2_submit").css("pointer-events", "auto");
+	// 							}
+	// 							else {
+	// 								$("#popup2_submit").css("pointer-events", "none");
+	// 							}
+	// 						});
+	// 						$("#popup2_exit").click(function(e) {
+	// 							e.preventDefault();
+	// 							$("#popup1").remove();
+	// 							$("#popup1_control").remove();
+	// 							$("#popup2").remove();
+	// 							$("#popup2_control").remove();
+	// 							$("#popup3").remove();
+	// 							$("#popup3_control").remove();
+	// 						});
+	// 						$("#popup2_submit").click(function(e) {
+	// 							e.preventDefault();
+	// 							$.post("/api/cms/check/" + email + "/" + $("#old_password_confirm").val()).done(function(result) {
+	// 								if(result[0] == "Wrong Password") {
+	// 									$("#popup3_title").text("Password Issue");
+	// 									$("#popup3_exit").remove();
+	// 									$("#popup3_submit").text("Exit");
+	// 									$("#popup3_body").text("The password you provided did not match the one in the database!");
+	// 									$("#popup3_control").click();
+	// 									$("#popup3_submit").click(function(e) {
+	// 										e.preventDefault();
+	// 										$("#popup1").remove();
+	// 										$("#popup1_control").remove();
+	// 										$("#popup2").remove();
+	// 										$("#popup2_control").remove();
+	// 										$("#popup3").remove();
+	// 										$("#popup3_control").remove();
+	// 									});
+	// 								}
+	// 								else if($("#first_name_cms").val().length == 0 || /[^a-zA-Z]/.test($("#first_name_cms").val())) {
+	// 									$("#popup3_title").text("First Name Issue");
+	// 									$("#popup3_exit").remove();
+	// 									$("#popup3_submit").text("Exit");
+	// 									$("#popup3_body").text("The first name cannot be left empty or contain an invalid character!");
+	// 									$("#popup3_control").click();
+	// 									$("#popup3_submit").click(function(e) {
+	// 										e.preventDefault();
+	// 										$("#popup1").remove();
+	// 										$("#popup1_control").remove();
+	// 										$("#popup2").remove();
+	// 										$("#popup2_control").remove();
+	// 										$("#popup3").remove();
+	// 										$("#popup3_control").remove();
+	// 									});
+	// 								}
+	// 								else if($("#last_name_cms").val().length == 0 || /[^a-zA-Z]/.test($("#last_name_cms").val())) {
+	// 									$("#popup3_title").text("Last Name Issue");
+	// 									$("#popup3_exit").remove();
+	// 									$("#popup3_submit").text("Exit");
+	// 									$("#popup3_body").text("The last name cannot be left empty or contain an invalid character!");
+	// 									$("#popup3_control").click();
+	// 									$("#popup3_submit").click(function(e) {
+	// 										e.preventDefault();
+	// 										$("#popup1").remove();
+	// 										$("#popup1_control").remove();
+	// 										$("#popup2").remove();
+	// 										$("#popup2_control").remove();
+	// 										$("#popup3").remove();
+	// 										$("#popup3_control").remove();
+	// 									});
+	// 								}
+	// 								else {
+	// 									var statement = "/api/cms/change/profile/" + email + "/" + 
+	// 										$("#first_name_cms").val()[0].toUpperCase() + $("#first_name_cms").val().slice(1).toLowerCase() + "/" +
+	// 										$("#last_name_cms").val()[0].toUpperCase() + $("#last_name_cms").val().slice(1).toLowerCase() + "/" +
+	// 										(parseInt($("#question_cms")[0].options.selectedIndex) + 1) + "/" + $("#answer_cms").val();
+	// 									$.post(statement).done(function(result) {
+	// 									 	if(result == "1") {
+	// 											$("#popup3_title").text("Confirmation");
+	// 											$("#popup3_exit").remove();
+	// 											$("#popup3_submit").text("Exit");
+	// 											$("#popup3_body").text("The changes you provided have been implemented!");
+	// 											$("#popup3_control").click();
+	// 											$("#popup3_submit").click(function(e) {
+	// 												e.preventDefault();
+	// 												$("#popup1").remove();
+	// 												$("#popup1_control").remove();
+	// 												$("#popup2").remove();
+	// 												$("#popup2_control").remove();
+	// 												$("#popup3").remove();
+	// 												$("#popup3_control").remove();
+	// 											});
+	// 										}
+	// 										else {
+	// 											$("#popup3_title").text("Database Issue");
+	// 											$("#popup3_exit").remove();
+	// 											$("#popup3_submit").text("Exit");
+	// 											$("#popup3_body").text("The changes you provided had trouble being uploaded to the database!");
+	// 											$("#popup3_control").click();
+	// 											$("#popup3_submit").click(function(e) {
+	// 												e.preventDefault();
+	// 												$("#popup1").remove();
+	// 												$("#popup1_control").remove();
+	// 												$("#popup2").remove();
+	// 												$("#popup2_control").remove();
+	// 												$("#popup3").remove();
+	// 												$("#popup3_control").remove();
+	// 											});
+	// 										}
+	// 									});
+	// 								}
+	// 							});
+	// 						});
+	// 					}
+	// 					else if(exports.password_check($("#password_cms").val())) {
+	// 						$("#popup2_title").text("Profile Changes").css("text-align", "center");
+	// 						$("#popup2_body").text("Please confirm the changes provided by providing both the old and new passwords:").append(material);
+	// 						$("#popup2_body").append(material);
+	// 						$("#popup2_submit").text("Confirm");
+	// 						$("#popup2_modal_footer").append($("<a>").attr("id", "popup2_exit")
+	// 							.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+	// 						$("#popup2_control").click();
+	// 						$("#old_password_confirm").on("input", function() {
+	// 							if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
+	// 								$("#popup2_submit").css("pointer-events", "auto");
+	// 							}
+	// 							else {
+	// 								$("#popup2_submit").css("pointer-events", "none");
+	// 							}
+	// 						});
+	// 						$("#new_password_confirm").on("input", function() {
+	// 							if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
+	// 								$("#popup2_submit").css("pointer-events", "auto");
+	// 							}
+	// 							else {
+	// 								$("#popup2_submit").css("pointer-events", "none");
+	// 							}
+	// 						});
+	// 						$("#popup2_exit").click(function(event) {
+	// 							event.preventDefault();
+	// 							$("#popup1").remove();
+	// 							$("#popup1_control").remove();
+	// 							$("#popup2").remove();
+	// 							$("#popup2_control").remove();
+	// 						});
+	// 					}
+	// 					else {
+	// 						$("#popup2_title").text("Password Issue");
+	// 						$("#popup2_body").text("The password provided just now does not meet the minimum requirements of being a secure password").append(material);
+	// 						// $("#popup2_body").append(material);
+	// 						$("#popup2_submit").text("Back");
+	// 						$("#popup2_control").click();
+	// 						$("#popup2_submit").click(function(event) {
+	// 							event.preventDefault();
+	// 							$("#popup1_control").click();
+	// 						});
+	// 					}
+	// 				});
+	// 			});
+	// 		});
+	// 	});
+	// };
+
+	exports.profile_modal = function(email) {
+		$.get("/pages/dist/contributor-profile-min.html").done(function(content) {
+			$("#popup_title").text("Profile").css("text-align", "center");
+			$("#popup_submit").text("Save Changes");
+			$("#popup_body").append(content);
+			$("#popup_submit").removeClass("modal-close");
+			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
+				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			$.post("/api/cms/profile/" + email).done(function(information) {
+				$("#first_name_cms").val(information.first_name);
+				$("#last_name_cms").val(information.last_name);
+				$("#question_cms").val(information.question);
+				Materialize.updateTextFields();
+				$("#popup_control").click();
+				$(".modal-trigger").leanModal({
+					dismissible: false,
+					opacity: 2,
+					inDuration: 1000,
+					outDuration: 1000
+				});
+				$("select").material_select();
+				$("#popup_control").click();
+				$("#popup").keypress(function(event) {
+				    if(event.keyCode === 10 || event.keyCode === 13) {
+				        event.preventDefault();
+				    }
+				});
+				$("#popup_exit").click(function(event) {
+					event.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
+				$("#popup_submit").click(function(event) {
+					event.preventDefault();
+					var fname = $("#first_name_cms").val()[0].toUpperCase() + $("#first_name_cms").val().slice(1).toLowerCase(),
+						lname = $("#last_name_cms").val()[0].toUpperCase() + $("#last_name_cms").val().slice(1).toLowerCase(),
+						question = (parseInt($("#question_cms")[0].options.selectedIndex) + 1),
+						answer = $("#answer_cms").val();
+					$.get("/pages/dist/change-confirmation-min.html").done(function(material) {
+						if($("#password_cms").val().length == 0) {
+							$("#popup_title").text("Profile Changes").css("text-align", "center");
+							$("#popup_body").text("Please confirm the changes provided by providing your password:").append(material);
+							$("#popup_submit").remove();
+							$("#popup_exit").remove();
+							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Confirm"))
+								.append($("<a>").attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+							$("#new_password_confirm").closest(".row").remove();
+							$("#old_password_label").text("Password");
+							$("#popup_submit").css("pointer-events", "none");
+							$("#old_password_confirm").on("input", function() {
+								if($("#old_password_confirm").val().length > 0) {
+									$("#popup_submit").css("pointer-events", "auto");
+								}
+								else {
+									$("#popup_submit").css("pointer-events", "none");
+								}
+							});
+							$("#popup_exit").click(function(e) {
+								e.preventDefault();
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+							});
+							$("#popup_submit").click(function(e) {
+								e.preventDefault();
+								$.post("/api/cms/check/" + email + "/" + $("#old_password_confirm").val()).done(function(result) {
+									$("#popup_submit").addClass("modal-close");
+									$("#popup_exit").remove();
+									if(result[0] == "Wrong Password") {
+										$("#popup_title").text("Password Issue");
+										$("#popup_submit").remove();
+										$("#popup_exit").remove();
+										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+										$("#popup_body").text("The password you provided did not match the one in the database!");
+										$("#popup_submit").click(function(e) {
+											e.preventDefault();
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+										});
+									}
+									else if(fname.length == 0 || /[^a-zA-Z]/.test(fname)) {
+										$("#popup_title").text("First Name Issue");
+										$("#popup_submit").remove();
+										$("#popup_exit").remove();
+										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+										$("#popup_body").text("The first name cannot be left empty or contain an invalid character!");
+										$("#popup_submit").click(function(e) {
+											e.preventDefault();
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+										});
+									}
+									else if(lname.length == 0 || /[^a-zA-Z]/.test(lname)) {
+										$("#popup_title").text("Last Name Issue");
+										$("#popup_submit").remove();
+										$("#popup_exit").remove();
+										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+										$("#popup_body").text("The last name cannot be left empty or contain an invalid character!");
+										$("#popup_submit").click(function(e) {
+											e.preventDefault();
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+										});
+									}
+									else {
+										var statement = "/api/cms/change/profile/" + email + "/" + fname + "/" + lname + "/" + question + "/" + answer;
+										$.post(statement).done(function(result) {
+										 	if(result == "1") {
+												$("#popup_title").text("Confirmation");
+												$("#popup_submit").remove();
+												$("#popup_exit").remove();
+												$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+												$("#popup_body").text("The changes you provided have been implemented!");
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+												});
+											}
+											else {
+												$("#popup_title").text("Database Issue");
+												$("#popup_submit").remove();
+												$("#popup_exit").remove();
+												$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+												$("#popup_body").text("The changes you provided had trouble being uploaded to the database!");
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+												});
+											}
+										});
+									}
+								});
+							});
+						}
+						else if(exports.password_check($("#password_cms").val())) {
+							$("#popup2_title").text("Profile Changes").css("text-align", "center");
+							$("#popup2_body").text("Please confirm the changes provided by providing both the old and new passwords:").append(material);
+							$("#popup2_body").append(material);
+							$("#popup2_submit").text("Confirm");
+							$("#popup2_modal_footer").append($("<a>").attr("id", "popup2_exit")
+								.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+							$("#popup2_control").click();
+							$("#old_password_confirm").on("input", function() {
+								if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
+									$("#popup2_submit").css("pointer-events", "auto");
+								}
+								else {
+									$("#popup2_submit").css("pointer-events", "none");
+								}
+							});
+							$("#new_password_confirm").on("input", function() {
+								if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
+									$("#popup2_submit").css("pointer-events", "auto");
+								}
+								else {
+									$("#popup2_submit").css("pointer-events", "none");
+								}
+							});
+							$("#popup2_exit").click(function(event) {
+								event.preventDefault();
+								$("#popup1").remove();
+								$("#popup1_control").remove();
+								$("#popup2").remove();
+								$("#popup2_control").remove();
+							});
+						}
+						else {
+							$("#popup2_title").text("Password Issue");
+							$("#popup2_body").text("The password provided just now does not meet the minimum requirements of being a secure password").append(material);
+							// $("#popup2_body").append(material);
+							$("#popup2_submit").text("Back");
+							$("#popup2_control").click();
+							$("#popup2_submit").click(function(event) {
+								event.preventDefault();
+								$("#popup1_control").click();
+							});
+						}
+					});
+				});
+			});
+		});
+	};
+
 	exports.session_modal = function(router, page, issue) {
 		var button = $("<button>").attr("data-target", "template_issue").attr("id", "template_issue_control")
 			.addClass("btn modal-trigger"),

@@ -48,7 +48,6 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 													}
 													else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
 												});
-												// MOVING FORWARD HERE!!!!!!
 											}
 											else {
 												$("#status_issue_control").click();
@@ -169,9 +168,17 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				var cookie = functions.read_cookie("contributor");
 				$.post("/api/cms/remove/live/" + cookie).done(function(result) {
 					if(result == 1) {
-						// router.navigate("login", {reload: true}, function() {
 						functions.delete_cookie("contributor");
-						// });
+					}
+					else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
+				});
+			}
+			else if($(this).attr("id") == "profile") {
+				var cookie = functions.read_cookie("contributor");
+				$.get("/pages/dist/modal-min.html").done(function(result) {
+					if(result != "0") {
+						$("body").append(result);
+						functions.profile_modal(cookie);
 					}
 					else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
 				});
