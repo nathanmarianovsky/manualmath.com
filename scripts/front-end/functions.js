@@ -590,42 +590,34 @@ define(function() {
 	};
 
 	exports.session_modal = function(router, page, issue) {
-		var button = $("<button>").attr("data-target", "template_issue").attr("id", "template_issue_control")
-			.addClass("btn modal-trigger"),
-			outer_div = $("<div>").attr("id", "template_issue").addClass("modal modal-fixed-footer"),
-			content = $("<div>").addClass("modal-content"),
-			content_title = $("<h4>").attr("id", "template_title").text("Login Issue"),
-			content_body = $("<p>").attr("id", "template_body"),
-			footer = $("<div>").attr("id", "template_modal_footer").addClass("modal-footer"),
-			footer_link = $("<a>").attr("id", "template_submit").addClass("modal-close waves-effect waves-blue btn-flat")
-				.text("Ok");
-		if(issue == 0) {
-			content_body.text("It seems you are not currently signed into the content management system. Please login first!");
-		}
-		else if(issue == 1) {
-			content_body.text("Your current session has expired. To continue using the system please login again!");
-		}
-		else if(issue == 2) {
-			content_body.text("You are already logged in! Click the button below to redirect to the content management system.");
-		}
-		content.append(content_title).append(content_body);
-		footer.append(footer_link);
-		outer_div.append(content).append(footer);
-		$("body").empty().append(button).append(outer_div);
-		$(".modal-trigger").leanModal({
-			dismissible: false,
-			opacity: 2,
-			inDuration: 1000,
-			outDuration: 1000
-		});
-		$("#template_issue_control").click();
-		$(document).bind("keydown", function(event) {
-			event.stopImmediatePropagation();
-			return false;
-		});
-		$("#template_submit").click(function() {
-			$(document).unbind("keydown");
-			router.navigate(page, {reload: true});
+		$.get("/pages/dist/modal-min.html").done(function(content) {
+			$("body").append(content);
+			$("#popup_title").text("Login Issue");
+			if(issue == 0) {
+				$("#popup_body").text("It seems you are not currently signed into the content management system. Please login first!");
+			}
+			else if(issue == 1) {
+				$("#popup_body").text("Your current session has expired. To continue using the system please login again!");
+			}
+			else if(issue == 2) {
+				$("#popup_body").text("You are already logged in! Click the button below to redirect to the content management system.");
+			}
+			$(".modal-trigger").leanModal({
+				dismissible: false,
+				opacity: 2,
+				inDuration: 1000,
+				outDuration: 1000
+			});
+			$("#popup_control").click();
+			$("#popup").keypress(function(event) {
+			    if(event.keyCode === 10 || event.keyCode === 13) {
+			        event.preventDefault();
+			    }
+			});
+			$("#popup_submit").click(function(e) {
+				e.preventDefault();
+				router.navigate(page, {reload: true});
+			});
 		});
 	};
 
