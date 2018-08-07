@@ -30,34 +30,6 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 								$.post("api/cms/check/" + $("#login_email").val() + "/" + $("#login_password").val()).done(function(obj) {
 									if(typeof(obj[0]) == "object") {
 										functions.modal(13, router, obj);
-										// $(document).bind("keydown", function(event) {
-										// 	event.stopImmediatePropagation();
-										// 	return false;
-										// });
-										// $("#template_exit").click(function() {
-										// 	location.reload();
-										// 	$(window).scrollTop(0);
-										// });
-										// $("#template_submit").click(function() {
-										// 	if(obj[0].status == 1) {
-										// 		$.post("/api/cms/add/live/" + $("#login_email").val()).done(function(result) {
-										// 			if(result == 1) {
-										// 				functions.write_cookie("contributor", $("#login_email").val(), 60);
-										// 				$(document).unbind("keydown");
-										// 				router.navigate("cms", {reload: true});
-										// 			}
-										// 			else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
-										// 		});
-										// 	}
-										// 	else {
-										// 		$("#status_issue_control").click();
-										// 		$("#status_submit").click(function() {
-										// 			$(document).unbind("keydown");
-										// 			location.reload();
-										// 			$(window).scrollTop(0);
-										// 		});
-										// 	}
-										// });
 									}
 									else if(typeof(obj[0]) == "string") {
 										if(obj[0] == "Wrong Password") {
@@ -101,10 +73,6 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 											$.post(call).done(function() {
 												$.post("/api/cms/get/admin").done(function(obj) {
 													functions.modal(12, router, obj);
-													// $("#template_submit").click(function() {
-													// 	location.reload();
-													// 	$(window).scrollTop(0);
-													// });
 												});
 											}).fail(function() {
 												functions.modal(11);
@@ -189,43 +157,6 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					$.post("/api/cms/get/" + $("#login_email").val()).done(function(content) {
 						$("#question")[0].options.selectedIndex = parseInt(content);
 						functions.modal(14);
-						// $("#template_submit").click(function(e) {
-						// 	e.preventDefault();
-						// 	$.post("/api/cms/check/security/" + $("#login_email").val() + "/" + $("#forgotten").val()).done(function(result) {
-						// 		if(result == 1) {
-						// 			functions.modal("status", 0);
-						// 			$("#status_exit").click(function() {
-						// 				e.preventDefault();
-						// 				location.reload();
-						// 				$(window).scrollTop(0);
-						// 			});
-						// 			$("#status_submit").click(function(e) {
-						// 				e.preventDefault();
-						// 				$.post("/api/cms/change/password/" + $("#login_email").val() + "/" + $("#newpass").val()).done(function() {
-						// 					functions.modal(12);
-						// 					$("#template_submit").click(function(e) {
-						// 						e.preventDefault();
-						// 						location.reload();
-						// 						$(window).scrollTop(0);
-						// 					});
-						// 				});
-						// 			});
-						// 		}
-						// 		else {
-						// 			functions.modal("status", 1);
-						// 			$("#status_submit").click(function(e) {
-						// 				e.preventDefault();
-						// 				location.reload();
-						// 				$(window).scrollTop(0);
-						// 			});
-						// 		}
-						// 	});
-						// });
-						// $("#template_exit").click(function() {
-						// 	e.preventDefault();
-						// 	location.reload();
-						// 	$(window).scrollTop(0);
-						// });
 					});
 				}
 				else {
