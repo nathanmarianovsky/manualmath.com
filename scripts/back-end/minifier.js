@@ -88,7 +88,8 @@ exports.minify_html = (minify, mkdirp, fs) => {
 	var container = ["./pages/template.html", "./pages/about.html", 
 		"./pages/notation.html", "./pages/main.html", "./pages/login.html", 
 		"./pages/button.html", "./pages/modal.html", "./pages/contributor-profile.html",
-		"./pages/change-confirmation.html"],
+		"./pages/change-confirmation.html", "./pages/password-recovery.html",
+		"./pages/password-change.html"],
 		tmp = [];
 	container.forEach(file => {
 		fs.readFile(file, "utf8", (err, data) => {

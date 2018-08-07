@@ -107,213 +107,6 @@ define(function() {
 	    }, 100);
 	};
 
-	// exports.profile_modal = function(email) {
-	// 	$.get("/pages/dist/contributor-profile-min.html").done(function(content) {
-	// 		$("#popup1_title").text("Profile").css("text-align", "center");
-	// 		$("#popup1_submit").text("Save Changes");
-	// 		$("#popup1_body").append(content);
-	// 		$("#popup1_modal_footer").append($("<a>").attr("id", "popup1_exit")
-	// 			.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-	// 		$.post("/api/cms/profile/" + email).done(function(information) {
-	// 			$("#first_name_cms").val(information.first_name);
-	// 			$("#last_name_cms").val(information.last_name);
-	// 			$("#question_cms").val(information.question);
-	// 			Materialize.updateTextFields();
-	// 			$("#popup1_control").click();
-	// 			$(".modal-trigger").leanModal({
-	// 				dismissible: false,
-	// 				opacity: 2,
-	// 				inDuration: 1000,
-	// 				outDuration: 1000
-	// 			});
-	// 			$("select").material_select();
-	// 			$("#popup1_control").click();
-	// 			$('#popup1').keypress(function(event) {
-	// 			    if(event.keyCode === 10 || event.keyCode === 13) {
-	// 			        event.preventDefault();
-	// 			    }
-	// 			});
-	// 			$("#popup1_exit").click(function(event) {
-	// 				event.preventDefault();
-	// 				$("#popup1").remove();
-	// 				$("#popup1_control").remove();
-	// 				$("#popup2").remove();
-	// 				$("#popup2_control").remove();
-	// 				$("#popup3").remove();
-	// 				$("#popup3_control").remove();
-	// 			});
-	// 			$("#popup1_submit").click(function(event) {
-	// 				event.preventDefault();
-	// 				$.get("/pages/dist/change-confirmation-min.html").done(function(material) {
-	// 					if($("#password_cms").val().length == 0) {
-	// 						$("#popup2_title").text("Profile Changes").css("text-align", "center");
-	// 						$("#popup2_body").text("Please confirm the changes provided by providing your password:").append(material);
-	// 						$("#popup2_submit").text("Confirm");
-	// 						$("#new_password_confirm").closest(".row").remove();
-	// 						$("#old_password_label").text("Password");
-	// 						$("#popup2_modal_footer").append($("<a>").attr("id", "popup2_exit")
-	// 							.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-	// 						$("#popup2_submit").css("pointer-events", "none");
-	// 						$("#popup2_control").click();
-	// 						$("#old_password_confirm").on("input", function() {
-	// 							if($("#old_password_confirm").val().length > 0) {
-	// 								$("#popup2_submit").css("pointer-events", "auto");
-	// 							}
-	// 							else {
-	// 								$("#popup2_submit").css("pointer-events", "none");
-	// 							}
-	// 						});
-	// 						$("#popup2_exit").click(function(e) {
-	// 							e.preventDefault();
-	// 							$("#popup1").remove();
-	// 							$("#popup1_control").remove();
-	// 							$("#popup2").remove();
-	// 							$("#popup2_control").remove();
-	// 							$("#popup3").remove();
-	// 							$("#popup3_control").remove();
-	// 						});
-	// 						$("#popup2_submit").click(function(e) {
-	// 							e.preventDefault();
-	// 							$.post("/api/cms/check/" + email + "/" + $("#old_password_confirm").val()).done(function(result) {
-	// 								if(result[0] == "Wrong Password") {
-	// 									$("#popup3_title").text("Password Issue");
-	// 									$("#popup3_exit").remove();
-	// 									$("#popup3_submit").text("Exit");
-	// 									$("#popup3_body").text("The password you provided did not match the one in the database!");
-	// 									$("#popup3_control").click();
-	// 									$("#popup3_submit").click(function(e) {
-	// 										e.preventDefault();
-	// 										$("#popup1").remove();
-	// 										$("#popup1_control").remove();
-	// 										$("#popup2").remove();
-	// 										$("#popup2_control").remove();
-	// 										$("#popup3").remove();
-	// 										$("#popup3_control").remove();
-	// 									});
-	// 								}
-	// 								else if($("#first_name_cms").val().length == 0 || /[^a-zA-Z]/.test($("#first_name_cms").val())) {
-	// 									$("#popup3_title").text("First Name Issue");
-	// 									$("#popup3_exit").remove();
-	// 									$("#popup3_submit").text("Exit");
-	// 									$("#popup3_body").text("The first name cannot be left empty or contain an invalid character!");
-	// 									$("#popup3_control").click();
-	// 									$("#popup3_submit").click(function(e) {
-	// 										e.preventDefault();
-	// 										$("#popup1").remove();
-	// 										$("#popup1_control").remove();
-	// 										$("#popup2").remove();
-	// 										$("#popup2_control").remove();
-	// 										$("#popup3").remove();
-	// 										$("#popup3_control").remove();
-	// 									});
-	// 								}
-	// 								else if($("#last_name_cms").val().length == 0 || /[^a-zA-Z]/.test($("#last_name_cms").val())) {
-	// 									$("#popup3_title").text("Last Name Issue");
-	// 									$("#popup3_exit").remove();
-	// 									$("#popup3_submit").text("Exit");
-	// 									$("#popup3_body").text("The last name cannot be left empty or contain an invalid character!");
-	// 									$("#popup3_control").click();
-	// 									$("#popup3_submit").click(function(e) {
-	// 										e.preventDefault();
-	// 										$("#popup1").remove();
-	// 										$("#popup1_control").remove();
-	// 										$("#popup2").remove();
-	// 										$("#popup2_control").remove();
-	// 										$("#popup3").remove();
-	// 										$("#popup3_control").remove();
-	// 									});
-	// 								}
-	// 								else {
-	// 									var statement = "/api/cms/change/profile/" + email + "/" + 
-	// 										$("#first_name_cms").val()[0].toUpperCase() + $("#first_name_cms").val().slice(1).toLowerCase() + "/" +
-	// 										$("#last_name_cms").val()[0].toUpperCase() + $("#last_name_cms").val().slice(1).toLowerCase() + "/" +
-	// 										(parseInt($("#question_cms")[0].options.selectedIndex) + 1) + "/" + $("#answer_cms").val();
-	// 									$.post(statement).done(function(result) {
-	// 									 	if(result == "1") {
-	// 											$("#popup3_title").text("Confirmation");
-	// 											$("#popup3_exit").remove();
-	// 											$("#popup3_submit").text("Exit");
-	// 											$("#popup3_body").text("The changes you provided have been implemented!");
-	// 											$("#popup3_control").click();
-	// 											$("#popup3_submit").click(function(e) {
-	// 												e.preventDefault();
-	// 												$("#popup1").remove();
-	// 												$("#popup1_control").remove();
-	// 												$("#popup2").remove();
-	// 												$("#popup2_control").remove();
-	// 												$("#popup3").remove();
-	// 												$("#popup3_control").remove();
-	// 											});
-	// 										}
-	// 										else {
-	// 											$("#popup3_title").text("Database Issue");
-	// 											$("#popup3_exit").remove();
-	// 											$("#popup3_submit").text("Exit");
-	// 											$("#popup3_body").text("The changes you provided had trouble being uploaded to the database!");
-	// 											$("#popup3_control").click();
-	// 											$("#popup3_submit").click(function(e) {
-	// 												e.preventDefault();
-	// 												$("#popup1").remove();
-	// 												$("#popup1_control").remove();
-	// 												$("#popup2").remove();
-	// 												$("#popup2_control").remove();
-	// 												$("#popup3").remove();
-	// 												$("#popup3_control").remove();
-	// 											});
-	// 										}
-	// 									});
-	// 								}
-	// 							});
-	// 						});
-	// 					}
-	// 					else if(exports.password_check($("#password_cms").val())) {
-	// 						$("#popup2_title").text("Profile Changes").css("text-align", "center");
-	// 						$("#popup2_body").text("Please confirm the changes provided by providing both the old and new passwords:").append(material);
-	// 						$("#popup2_body").append(material);
-	// 						$("#popup2_submit").text("Confirm");
-	// 						$("#popup2_modal_footer").append($("<a>").attr("id", "popup2_exit")
-	// 							.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-	// 						$("#popup2_control").click();
-	// 						$("#old_password_confirm").on("input", function() {
-	// 							if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
-	// 								$("#popup2_submit").css("pointer-events", "auto");
-	// 							}
-	// 							else {
-	// 								$("#popup2_submit").css("pointer-events", "none");
-	// 							}
-	// 						});
-	// 						$("#new_password_confirm").on("input", function() {
-	// 							if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
-	// 								$("#popup2_submit").css("pointer-events", "auto");
-	// 							}
-	// 							else {
-	// 								$("#popup2_submit").css("pointer-events", "none");
-	// 							}
-	// 						});
-	// 						$("#popup2_exit").click(function(event) {
-	// 							event.preventDefault();
-	// 							$("#popup1").remove();
-	// 							$("#popup1_control").remove();
-	// 							$("#popup2").remove();
-	// 							$("#popup2_control").remove();
-	// 						});
-	// 					}
-	// 					else {
-	// 						$("#popup2_title").text("Password Issue");
-	// 						$("#popup2_body").text("The password provided just now does not meet the minimum requirements of being a secure password").append(material);
-	// 						// $("#popup2_body").append(material);
-	// 						$("#popup2_submit").text("Back");
-	// 						$("#popup2_control").click();
-	// 						$("#popup2_submit").click(function(event) {
-	// 							event.preventDefault();
-	// 							$("#popup1_control").click();
-	// 						});
-	// 					}
-	// 				});
-	// 			});
-	// 		});
-	// 	});
-	// };
 
 	exports.profile_modal = function(email) {
 		$.get("/pages/dist/contributor-profile-min.html").done(function(content) {
@@ -635,173 +428,818 @@ define(function() {
 			An object obtained from a get/post request
 
 	*/
-	exports.modal = function(type, issue, obj) {
-		if(type == "template") {
+	exports.modal = function(issue, router, obj) {
+		$.get("/pages/dist/modal-min.html").done(function(content) {
+			$("body").append(content);
+			$(".modal-trigger").leanModal({
+				dismissible: false,
+				opacity: 2,
+				inDuration: 1000,
+				outDuration: 1000
+			});
+			$("#popup").keypress(function(event) {
+			    if(event.keyCode === 10 || event.keyCode === 13) {
+			        event.preventDefault();
+			    }
+			});
 			if(issue == 0) {
-				$("#template_title").text("Email Issue");
-				$("#template_body").text("There was an issue parsing the email you provided. Please try again!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Email Issue");
+				$("#popup_body").text("There was an issue parsing the email you provided. Please try again!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 1) {
-				$("#template_title").text("Registration Issue");
-				$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Registration Issue");
+				$("#popup_body").text("The email you provided does not exist in the database. Please provide another email!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 2) {
-				$("#template_title").text("Password Issue");
-				$("#template_body").text("The password must be at least eight characters long while containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Password Issue");
+				$("#popup_body").text("The password must be at least eight characters long while containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 3) {
-				$("#template_title").text("Database Issue");
-				$("#template_body").text("There was a problem connecting to the database!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Database Issue");
+				$("#popup_body").text("There was a problem connecting to the database!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 4) {
-				$("#template_title").text("Email Issue");
-				$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Email Issue");
+				$("#popup_body").text("The email you provided does not exist in the database. Please provide another email!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 5) {
-				$("#template_title").text("Password Issue");
-				$("#template_body").text("The password you provided does not match the one in the database. Please try again!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Password Issue");
+				$("#popup_body").text("The password you provided does not match the one in the database. Please try again!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 6) {
-				var statement = "By continuing you are agreeing to manualmath's use of cookies to store session information.";
-				$("#template_title").text("Login Confirmation").css("text-align", "center");
-				$("#template_body").text(statement);
-				$("#template_submit").text("Continue");
-				$("#template_modal_footer").append($("<a>").attr("id", "template_exit")
-					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-				$("#template_issue_control").click();
+				$("#popup_title").text("Registration Issue");
+				$("#popup_body").text("The email you provided already exists in the database. Please provide another email!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 7) {
-				$("#template_title").text("Registration Issue");
-				$("#template_body").text("The email you provided already exists in the database. Please provide another email!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Password Issue");
+				$("#popup_body").text("The passwords you provided did not match. Please try again!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 8) {
-				$("#template_title").text("Password Issue");
-				$("#template_body").text("The passwords you provided did not match. Please try again!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Name Issue");
+				$("#popup_body").text("The first name cannot be left empty and must contain strictly letters. Please try again!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 9) {
-				$("#template_title").text("Name Issue");
-				$("#template_body").text("The first name cannot be left empty. Please try again!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Name Issue");
+				$("#popup_body").text("The last name cannot be left empty and must contain strictly letters. Please try again!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 10) {
-				$("#template_title").text("Name Issue");
-				$("#template_body").text("The last name cannot be left empty. Please try again!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Security Question Issue");
+				$("#popup_body").text("The answer to the chosen security question cannot be left empty. Please try again!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
 			else if(issue == 11) {
-				$("#template_title").text("Security Question Issue");
-				$("#template_body").text("The answer to the chosen security question cannot be left empty. Please try again!");
-				$("#template_issue_control").click();
+				$("#popup_title").text("Contributor Submission Issue");
+				$("#popup_body").text("There was an issue processing the submission to the database!");
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
 			}
+			// else if(issue == 12) {
+			// 	$("#popup_title").text("Password Changed");
+			// 	$("#popup_body").text("You may now login with the new password!");
+			// 	$("#popup_control").click();
+			// 	$("#popup_submit").click(function(e) {
+			// 		e.preventDefault();
+			// 		$(".lean-overlay").remove();
+			// 		$("#popup").remove();
+			// 		$("#popup_control").remove();
+			// 	});
+			// }
+			// else if(issue == 12) {
+			// 	$("#popup_title").text("Password Recovery").css("text-align", "left");
+			// 	$("#popup_body").text("You provided the wrong answer to the security question!");
+			// 	$("#popup_control").click();
+			// 	$("#popup_submit").click(function(e) {
+			// 		e.preventDefault();
+			// 		$(".lean-overlay").remove();
+			// 		$("#popup").remove();
+			// 		$("#popup_control").remove();
+			// 	});
+			// }
 			else if(issue == 12) {
-				$("#template_title").text("Contributor Submission Issue");
-				$("#template_body").text("There was an issue processing the submission to the database!");
-				$("#template_issue_control").click();
-			}
-			else if(issue == 13) {
 				var statement = "Thanks for submitting an application to become a " 
 					+ "contributor on manualmath! The design of the content management " 
 					+ "system requires a majority approval from a committee of five top " 
 					+ "ranking members including the administrator to become a contributor. " 
 					+ "Deliberations can take a while, but you can definitely expect a " 
 					+ "response within a week.";
-				$("#template_title").text("Contributor Submission").css("text-align", "center");
-				$("#template_body").text(statement).append($("<br><br>")).append($("<div>")
+				$("#popup_title").text("Contributor Submission").css("text-align", "center");
+				$("#popup_body").text(statement).append($("<br><br>")).append($("<div>")
 					.text("- " + obj.first_name + " " + obj.last_name).css("text-align", "right"));
-				$("#template_issue_control").click();
+				$("#popup_control").click();
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+					$("#login_click").click();
+				});
+			}
+			else if(issue == 13) {
+				var statement = "By continuing you are agreeing to manualmath's use of cookies to store session information.";
+				$("#popup_submit").removeClass("modal-close");
+				$("#popup_title").text("Login Confirmation").css("text-align", "center");
+				$("#popup_body").text(statement);
+				$("#popup_submit").text("Continue");
+				$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+				$("#popup_control").click();
+				$("#popup_exit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+					$("#login_click").click();
+				});
+				$("#popup_submit").click(function() {
+					if(obj[0].status == 1) {
+						$("#popup_control").click();
+						$.post("/api/cms/add/live/" + $("#login_email").val()).done(function(result) {
+							if(result == 1) {
+								exports.write_cookie("contributor", $("#login_email").val(), 60);
+								router.navigate("cms", {reload: true});
+							}
+							else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
+						});
+					}
+					else {
+						$("#popup_title").text("Contributor Status").css("text-align", "center");
+						$("#popup_body").text("Your account has not been approved by manualmath's committee yet!");
+						$("#popup_submit").remove();
+						$("#popup_exit").remove();
+						$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+							.addClass("modal-close waves-effect waves-blue btn-flat").text("Ok"));
+						
+						$("#login_input input").each(function() { $(this).val(""); });
+						Materialize.updateTextFields();
+						$("body").css("overflow", "inherit").css("width", "auto");
+						$("#popup_submit").click(function(e) {
+							e.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							$(window).scrollTop(0);
+						});
+					}
+				});
 			}
 			else if(issue == 14) {
-				var first = $("<div>").addClass("col s12"),
-					second = $("<form>").addClass("col s12"),
-					third = $("<div>").addClass("form-container"),
-					fourth1 = $("<div>").addClass("row"),
-					fifth1 = $("<div>").addClass("input-field col s12"),
-					sixth1 = $("<i>").addClass("material-icons prefix").text("lock"),
-					seventh1 = $("<input>").attr("type", "text").val($("#question option:selected").text()),
-					fourth2 = $("<div>").addClass("row"),
-					fifth2 = $("<div>").addClass("input-field col s12"),
-					sixth2 = $("<i>").addClass("material-icons prefix").text("mode_edit"),
-					seventh2 = $("<input>").attr("id", "forgotten").attr("type", "text"),
-					eighth = $("<label>").attr("for", "forgotten").addClass("black-text").text("Answer");
-				fifth2.append(sixth2).append(seventh2).append(eighth);
-				fourth2.append(fifth2);
-				fifth1.append(sixth1).append(seventh1);
-				fourth1.append(fifth1);
-				third.append(fourth1).append(fourth2);
-				second.append(third);
-				first.append(second);
-				$("#template_title").text("Password Recovery");
-				$("#template_body").text("Please answer the security question associated to the account:").append(first);
-				$("#template_modal_footer").append($("<a>").attr("id", "template_exit")
-					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-				$("#template_issue_control").click();
-				$("#template_submit").css("pointer-events", "none");
-				$("#forgotten").on("input", function() {
-					if($("#forgotten").val().length == 0) {
-						$("#template_submit").css("pointer-events", "none");
-					}
-					else {
-						$("#template_submit").css("pointer-events", "auto");
-					}
+				// var first = $("<div>").addClass("col s12"),
+				// 	second = $("<form>").addClass("col s12"),
+				// 	third = $("<div>").addClass("form-container"),
+				// 	fourth1 = $("<div>").addClass("row"),
+				// 	fifth1 = $("<div>").addClass("input-field col s12"),
+				// 	sixth1 = $("<i>").addClass("material-icons prefix").text("lock"),
+				// 	seventh1 = $("<input>").attr("type", "text").val($("#question option:selected").text()),
+				// 	fourth2 = $("<div>").addClass("row"),
+				// 	fifth2 = $("<div>").addClass("input-field col s12"),
+				// 	sixth2 = $("<i>").addClass("material-icons prefix").text("mode_edit"),
+				// 	seventh2 = $("<input>").attr("id", "forgotten").attr("type", "text"),
+				// 	eighth = $("<label>").attr("for", "forgotten").addClass("black-text").text("Answer");
+				// fifth2.append(sixth2).append(seventh2).append(eighth);
+				// fourth2.append(fifth2);
+				// fifth1.append(sixth1).append(seventh1);
+				// fourth1.append(fifth1);
+				// third.append(fourth1).append(fourth2);
+				// second.append(third);
+				// first.append(second);
+				$.get("/pages/dist/password-recovery-min.html").done(function(material) {
+					$("#popup_title").text("Password Recovery");
+					$("#popup_body").text("Please answer the security question associated to the account:").append(material);
+					$("#ques").val($("#question option:selected").text());
+					$("#popup_submit").text("Continue").removeClass("modal-close");
+					$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
+						.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+					$("#popup_control").click();
+					$("#popup_submit").css("pointer-events", "none");
+					$("#forgotten").on("input", function() {
+						if($("#forgotten").val().length == 0) {
+							$("#popup_submit").css("pointer-events", "none");
+						}
+						else {
+							$("#popup_submit").css("pointer-events", "auto");
+						}
+					});
+					$("#popup_exit").click(function(e) {
+						e.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						$("#login_click").click();
+						$(window).scrollTop(0);
+					});
+					$("#popup_submit").click(function(e) {
+						e.preventDefault();
+						$.post("/api/cms/check/security/" + $("#login_email").val() + "/" + $("#forgotten").val()).done(function(result) {
+							if(result == 1) {
+								// var first = $("<div>").addClass("col s12");
+								// 	second = $("<form>").addClass("col s12");
+								// 	third = $("<div>").addClass("form-container");
+								// 	fourth = $("<div>").addClass("row");
+								// 	fifth = $("<div>").addClass("input-field col s12");
+								// 	sixth = $("<i>").addClass("material-icons prefix").text("lock");
+								// 	seventh = $("<input>").attr("id", "newpass").attr("type", "password");
+								// 	eighth = $("<label>").attr("for", "newpass").addClass("black-text").text("New Password");
+								// fifth.append(sixth).append(seventh).append(eighth);
+								// fourth.append(fifth);
+								// third.append(fourth);
+								// second.append(third);
+								// first.append(second);
+								$.get("/pages/dist/password-change-min.html").done(function(result) {
+									$("#popup_title").text("Password Reset");
+									$("#popup_body").text("Please provide a new password:").append(result);
+									$("#popup_exit").remove();
+									$("#popup_submit").remove();
+									$("#popup_modal_footer")
+										.append($("<a>").attr("id", "popup_submit")
+											.addClass("modal-close waves-effect waves-blue btn-flat").text("Continue"))
+										.append($("<a>").attr("id", "popup_exit")
+											.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+									// $("#status_issue_control").click();
+									$("#popup_submit").css("pointer-events", "none");
+									$("#newpass").on("input", function() {
+										if($("#newpass").val().length == 0) {
+											$("#popup_submit").css("pointer-events", "none");
+										}
+										else {
+											$("#popup_submit").css("pointer-events", "auto");
+										}
+									});
+									$("#popup_exit").click(function() {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("#login_click").click();
+										$(window).scrollTop(0);
+									});
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										if(exports.password_check($("#newpass").val())) {
+											$.post("/api/cms/change/password/" + $("#login_email").val() + "/" + $("#newpass").val()).done(function() {
+												$("#popup_title").text("Password Changed");
+												$("#popup_body").text("You may now login with the new password!");
+												$("#popup_exit").remove();
+												$("#popup_submit").remove();
+												$("#popup_modal_footer")
+													.append($("<a>").attr("id", "popup_submit")
+														.addClass("modal-close waves-effect waves-blue btn-flat").text("Continue"));
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("#login_click").click();
+													$(window).scrollTop(0);
+												});
+											});
+										}
+										else {
+											$("#popup_title").text("Password Issue");
+											$("#popup_body").text("The password must be at least eight characters long while containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
+											$("#popup_exit").remove();
+											$("#popup_submit").remove();
+											$("#popup_modal_footer")
+												.append($("<a>").attr("id", "popup_submit")
+													.addClass("modal-close waves-effect waves-blue btn-flat").text("Ok"));
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("#login_click").click();
+												$(window).scrollTop(0);
+											});
+										}
+									});
+								});
+							}
+							else {
+								$("#popup_title").text("Password Recovery").css("text-align", "left");
+								$("#popup_body").text("You provided the wrong answer to the security question!");
+								$("#popup_exit").remove();
+								$("#popup_submit").text("Ok").click(function(e) {
+									e.preventDefault();
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									$("#login_click").click();
+									$(window).scrollTop(0);
+								});
+							}
+						});
+					});
 				});
 			}
-			else if(issue == 15) {
-				$("#template_title").text("Password Changed");
-				$("#template_body").text("You may now login with the new password!");
-				$("#template_exit").remove();
-				$("#template_issue_control").click();
-			}
-			else if(issue == 16) {
-				$("#template_title").text("Password Issue");
-				$("#template_body").text("The password provided does not match the one in the database. Please try again!");
-				$("#template_issue_control").click();
-			}
-		}
-		else if(type == "status") {
-			if(issue == 0) {
-				var first = $("<div>").addClass("col s12");
-					second = $("<form>").addClass("col s12");
-					third = $("<div>").addClass("form-container");
-					fourth = $("<div>").addClass("row");
-					fifth = $("<div>").addClass("input-field col s12");
-					sixth = $("<i>").addClass("material-icons prefix").text("lock");
-					seventh = $("<input>").attr("id", "newpass").attr("type", "password");
-					eighth = $("<label>").attr("for", "newpass").addClass("black-text").text("New Password");
-				fifth.append(sixth).append(seventh).append(eighth);
-				fourth.append(fifth);
-				third.append(fourth);
-				second.append(third);
-				first.append(second);
-				$("#status_title").text("Password Reset");
-				$("#status_body").text("Please provide a new password:").append(first);
-				$("#status_modal_footer").append($("<a>").attr("id", "status_exit")
-					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-				$("#status_issue_control").click();
-				$("#status_submit").css("pointer-events", "none");
-				$("#newpass").on("input", function() {
-					if($("#newpass").val().length == 0) {
-						$("#status_submit").css("pointer-events", "none");
-					}
-					else {
-						$("#status_submit").css("pointer-events", "auto");
-					}
-				});
-			}
-			else if(issue == 1) {
-				$("#status_title").text("Password Recovery").css("text-align", "left");
-				$("#status_body").text("You provided the wrong answer to the security question!");
-				$("#status_issue_control").click();
-			}
-		}
+		});
+		// if(type == "template") {
+			// if(issue == 0) {
+			// 	$("#template_title").text("Email Issue");
+			// 	$("#template_body").text("There was an issue parsing the email you provided. Please try again!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 1) {
+			// 	$("#template_title").text("Registration Issue");
+			// 	$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 2) {
+			// 	$("#template_title").text("Password Issue");
+			// 	$("#template_body").text("The password must be at least eight characters long while containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 3) {
+			// 	$("#template_title").text("Database Issue");
+			// 	$("#template_body").text("There was a problem connecting to the database!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 4) {
+			// 	$("#template_title").text("Email Issue");
+			// 	$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 5) {
+			// 	$("#template_title").text("Password Issue");
+			// 	$("#template_body").text("The password you provided does not match the one in the database. Please try again!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 30) {
+			// 	var statement = "By continuing you are agreeing to manualmath's use of cookies to store session information.";
+			// 	$("#template_title").text("Login Confirmation").css("text-align", "center");
+			// 	$("#template_body").text(statement);
+			// 	$("#template_submit").text("Continue");
+			// 	$("#template_modal_footer").append($("<a>").attr("id", "template_exit")
+			// 		.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			// 	$("#template_issue_control").click();
+			// 	$("#template_exit").click(function() {
+			// 		location.reload();
+			// 		$(window).scrollTop(0);
+			// 	});
+			// 	$("#template_submit").click(function() {
+			// 		if(obj[0].status == 1) {
+			// 			$.post("/api/cms/add/live/" + $("#login_email").val()).done(function(result) {
+			// 				if(result == 1) {
+			// 					functions.write_cookie("contributor", $("#login_email").val(), 60);
+			// 					$(document).unbind("keydown");
+			// 					router.navigate("cms", {reload: true});
+			// 				}
+			// 				else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
+			// 			});
+			// 		}
+			// 		else {
+			// 			$("#status_issue_control").click();
+			// 			$("#status_submit").click(function() {
+			// 				$(document).unbind("keydown");
+			// 				location.reload();
+			// 				$(window).scrollTop(0);
+			// 			});
+			// 		}
+			// 	});
+			// }
+			// else if(issue == 7) {
+			// 	$("#template_title").text("Registration Issue");
+			// 	$("#template_body").text("The email you provided already exists in the database. Please provide another email!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 8) {
+			// 	$("#template_title").text("Password Issue");
+			// 	$("#template_body").text("The passwords you provided did not match. Please try again!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 9) {
+			// 	$("#template_title").text("Name Issue");
+			// 	$("#template_body").text("The first name cannot be left empty. Please try again!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 10) {
+			// 	$("#template_title").text("Name Issue");
+			// 	$("#template_body").text("The last name cannot be left empty. Please try again!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 11) {
+			// 	$("#template_title").text("Security Question Issue");
+			// 	$("#template_body").text("The answer to the chosen security question cannot be left empty. Please try again!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 12) {
+			// 	$("#template_title").text("Contributor Submission Issue");
+			// 	$("#template_body").text("There was an issue processing the submission to the database!");
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 31) {
+			// 	var statement = "Thanks for submitting an application to become a " 
+			// 		+ "contributor on manualmath! The design of the content management " 
+			// 		+ "system requires a majority approval from a committee of five top " 
+			// 		+ "ranking members including the administrator to become a contributor. " 
+			// 		+ "Deliberations can take a while, but you can definitely expect a " 
+			// 		+ "response within a week.";
+			// 	$("#template_title").text("Contributor Submission").css("text-align", "center");
+			// 	$("#template_body").text(statement).append($("<br><br>")).append($("<div>")
+			// 		.text("- " + obj.first_name + " " + obj.last_name).css("text-align", "right"));
+			// 	$("#template_issue_control").click();
+			// 	$("#template_submit").click(function() {
+			// 		location.reload();
+			// 		$(window).scrollTop(0);
+			// 	});
+			// }
+			// else if(issue == 32) {
+			// 	var first = $("<div>").addClass("col s12"),
+			// 		second = $("<form>").addClass("col s12"),
+			// 		third = $("<div>").addClass("form-container"),
+			// 		fourth1 = $("<div>").addClass("row"),
+			// 		fifth1 = $("<div>").addClass("input-field col s12"),
+			// 		sixth1 = $("<i>").addClass("material-icons prefix").text("lock"),
+			// 		seventh1 = $("<input>").attr("type", "text").val($("#question option:selected").text()),
+			// 		fourth2 = $("<div>").addClass("row"),
+			// 		fifth2 = $("<div>").addClass("input-field col s12"),
+			// 		sixth2 = $("<i>").addClass("material-icons prefix").text("mode_edit"),
+			// 		seventh2 = $("<input>").attr("id", "forgotten").attr("type", "text"),
+			// 		eighth = $("<label>").attr("for", "forgotten").addClass("black-text").text("Answer");
+			// 	fifth2.append(sixth2).append(seventh2).append(eighth);
+			// 	fourth2.append(fifth2);
+			// 	fifth1.append(sixth1).append(seventh1);
+			// 	fourth1.append(fifth1);
+			// 	third.append(fourth1).append(fourth2);
+			// 	second.append(third);
+			// 	first.append(second);
+			// 	$("#template_title").text("Password Recovery");
+			// 	$("#template_body").text("Please answer the security question associated to the account:").append(first);
+			// 	$("#template_modal_footer").append($("<a>").attr("id", "template_exit")
+			// 		.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			// 	$("#template_issue_control").click();
+			// 	$("#template_submit").css("pointer-events", "none");
+			// 	$("#forgotten").on("input", function() {
+			// 		if($("#forgotten").val().length == 0) {
+			// 			$("#template_submit").css("pointer-events", "none");
+			// 		}
+			// 		else {
+			// 			$("#template_submit").css("pointer-events", "auto");
+			// 		}
+			// 	});
+			// 	$("#template_submit").click(function(e) {
+			// 		e.preventDefault();
+			// 		$.post("/api/cms/check/security/" + $("#login_email").val() + "/" + $("#forgotten").val()).done(function(result) {
+			// 			if(result == 1) {
+			// 				var first = $("<div>").addClass("col s12");
+			// 					second = $("<form>").addClass("col s12");
+			// 					third = $("<div>").addClass("form-container");
+			// 					fourth = $("<div>").addClass("row");
+			// 					fifth = $("<div>").addClass("input-field col s12");
+			// 					sixth = $("<i>").addClass("material-icons prefix").text("lock");
+			// 					seventh = $("<input>").attr("id", "newpass").attr("type", "password");
+			// 					eighth = $("<label>").attr("for", "newpass").addClass("black-text").text("New Password");
+			// 				fifth.append(sixth).append(seventh).append(eighth);
+			// 				fourth.append(fifth);
+			// 				third.append(fourth);
+			// 				second.append(third);
+			// 				first.append(second);
+			// 				$("#status_title").text("Password Reset");
+			// 				$("#status_body").text("Please provide a new password:").append(first);
+			// 				$("#status_modal_footer").append($("<a>").attr("id", "status_exit")
+			// 					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			// 				$("#status_issue_control").click();
+			// 				$("#status_submit").css("pointer-events", "none");
+			// 				$("#newpass").on("input", function() {
+			// 					if($("#newpass").val().length == 0) {
+			// 						$("#status_submit").css("pointer-events", "none");
+			// 					}
+			// 					else {
+			// 						$("#status_submit").css("pointer-events", "auto");
+			// 					}
+			// 				});
+			// 				$("#status_exit").click(function() {
+			// 					e.preventDefault();
+			// 					location.reload();
+			// 					$(window).scrollTop(0);
+			// 				});
+			// 				$("#status_submit").click(function(e) {
+			// 					e.preventDefault();
+			// 					$.post("/api/cms/change/password/" + $("#login_email").val() + "/" + $("#newpass").val()).done(function() {
+			// 						functions.modal(12);
+			// 						$("#template_submit").click(function(e) {
+			// 							e.preventDefault();
+			// 							location.reload();
+			// 							$(window).scrollTop(0);
+			// 						});
+			// 					});
+			// 				});
+			// 			}
+			// 			else {
+			// 				$("#popup_title").text("Password Recovery").css("text-align", "left");
+			// 				$("#popup_body").text("You provided the wrong answer to the security question!");
+			// 				$("#popup_control").click();
+			// 				$("#popup_submit").click(function(e) {
+			// 					e.preventDefault();
+			// 					$(".lean-overlay").remove();
+			// 					$("#popup").remove();
+			// 					$("#popup_control").remove();
+			// 				});
+			// 			}
+			// 		});
+			// 	});
+			// 	$("#template_exit").click(function() {
+			// 		e.preventDefault();
+			// 		location.reload();
+			// 		$(window).scrollTop(0);
+			// 	});
+			// }
+			// else if(issue == 15) {
+			// 	$("#template_title").text("Password Changed");
+			// 	$("#template_body").text("You may now login with the new password!");
+			// 	$("#template_exit").remove();
+			// 	$("#template_issue_control").click();
+			// }
+			// else if(issue == 16) {
+			// 	$("#template_title").text("Password Issue");
+			// 	$("#template_body").text("The password provided does not match the one in the database. Please try again!");
+			// 	$("#template_issue_control").click();
+			// }
+		// }
+		// else if(type == "status") {
+			// if(issue == 0) {
+			// 	var first = $("<div>").addClass("col s12");
+			// 		second = $("<form>").addClass("col s12");
+			// 		third = $("<div>").addClass("form-container");
+			// 		fourth = $("<div>").addClass("row");
+			// 		fifth = $("<div>").addClass("input-field col s12");
+			// 		sixth = $("<i>").addClass("material-icons prefix").text("lock");
+			// 		seventh = $("<input>").attr("id", "newpass").attr("type", "password");
+			// 		eighth = $("<label>").attr("for", "newpass").addClass("black-text").text("New Password");
+			// 	fifth.append(sixth).append(seventh).append(eighth);
+			// 	fourth.append(fifth);
+			// 	third.append(fourth);
+			// 	second.append(third);
+			// 	first.append(second);
+			// 	$("#status_title").text("Password Reset");
+			// 	$("#status_body").text("Please provide a new password:").append(first);
+			// 	$("#status_modal_footer").append($("<a>").attr("id", "status_exit")
+			// 		.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			// 	$("#status_issue_control").click();
+			// 	$("#status_submit").css("pointer-events", "none");
+			// 	$("#newpass").on("input", function() {
+			// 		if($("#newpass").val().length == 0) {
+			// 			$("#status_submit").css("pointer-events", "none");
+			// 		}
+			// 		else {
+			// 			$("#status_submit").css("pointer-events", "auto");
+			// 		}
+			// 	});
+			// }
+			// else if(issue == 1) {
+			// 	$("#status_title").text("Password Recovery").css("text-align", "left");
+			// 	$("#status_body").text("You provided the wrong answer to the security question!");
+			// 	$("#status_issue_control").click();
+			// }
+		// }
 	};
+
+	// exports.modal = function(type, issue, obj) {
+	// 	if(type == "template") {
+	// 		if(issue == 0) {
+	// 			$("#template_title").text("Email Issue");
+	// 			$("#template_body").text("There was an issue parsing the email you provided. Please try again!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 1) {
+	// 			$("#template_title").text("Registration Issue");
+	// 			$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 2) {
+	// 			$("#template_title").text("Password Issue");
+	// 			$("#template_body").text("The password must be at least eight characters long while containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 3) {
+	// 			$("#template_title").text("Database Issue");
+	// 			$("#template_body").text("There was a problem connecting to the database!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 4) {
+	// 			$("#template_title").text("Email Issue");
+	// 			$("#template_body").text("The email you provided does not exist in the database. Please provide another email!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 5) {
+	// 			$("#template_title").text("Password Issue");
+	// 			$("#template_body").text("The password you provided does not match the one in the database. Please try again!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 6) {
+	// 			var statement = "By continuing you are agreeing to manualmath's use of cookies to store session information.";
+	// 			$("#template_title").text("Login Confirmation").css("text-align", "center");
+	// 			$("#template_body").text(statement);
+	// 			$("#template_submit").text("Continue");
+	// 			$("#template_modal_footer").append($("<a>").attr("id", "template_exit")
+	// 				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 7) {
+	// 			$("#template_title").text("Registration Issue");
+	// 			$("#template_body").text("The email you provided already exists in the database. Please provide another email!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 8) {
+	// 			$("#template_title").text("Password Issue");
+	// 			$("#template_body").text("The passwords you provided did not match. Please try again!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 9) {
+	// 			$("#template_title").text("Name Issue");
+	// 			$("#template_body").text("The first name cannot be left empty. Please try again!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 10) {
+	// 			$("#template_title").text("Name Issue");
+	// 			$("#template_body").text("The last name cannot be left empty. Please try again!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 11) {
+	// 			$("#template_title").text("Security Question Issue");
+	// 			$("#template_body").text("The answer to the chosen security question cannot be left empty. Please try again!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 12) {
+	// 			$("#template_title").text("Contributor Submission Issue");
+	// 			$("#template_body").text("There was an issue processing the submission to the database!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 13) {
+	// 			var statement = "Thanks for submitting an application to become a " 
+	// 				+ "contributor on manualmath! The design of the content management " 
+	// 				+ "system requires a majority approval from a committee of five top " 
+	// 				+ "ranking members including the administrator to become a contributor. " 
+	// 				+ "Deliberations can take a while, but you can definitely expect a " 
+	// 				+ "response within a week.";
+	// 			$("#template_title").text("Contributor Submission").css("text-align", "center");
+	// 			$("#template_body").text(statement).append($("<br><br>")).append($("<div>")
+	// 				.text("- " + obj.first_name + " " + obj.last_name).css("text-align", "right"));
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 14) {
+	// 			var first = $("<div>").addClass("col s12"),
+	// 				second = $("<form>").addClass("col s12"),
+	// 				third = $("<div>").addClass("form-container"),
+	// 				fourth1 = $("<div>").addClass("row"),
+	// 				fifth1 = $("<div>").addClass("input-field col s12"),
+	// 				sixth1 = $("<i>").addClass("material-icons prefix").text("lock"),
+	// 				seventh1 = $("<input>").attr("type", "text").val($("#question option:selected").text()),
+	// 				fourth2 = $("<div>").addClass("row"),
+	// 				fifth2 = $("<div>").addClass("input-field col s12"),
+	// 				sixth2 = $("<i>").addClass("material-icons prefix").text("mode_edit"),
+	// 				seventh2 = $("<input>").attr("id", "forgotten").attr("type", "text"),
+	// 				eighth = $("<label>").attr("for", "forgotten").addClass("black-text").text("Answer");
+	// 			fifth2.append(sixth2).append(seventh2).append(eighth);
+	// 			fourth2.append(fifth2);
+	// 			fifth1.append(sixth1).append(seventh1);
+	// 			fourth1.append(fifth1);
+	// 			third.append(fourth1).append(fourth2);
+	// 			second.append(third);
+	// 			first.append(second);
+	// 			$("#template_title").text("Password Recovery");
+	// 			$("#template_body").text("Please answer the security question associated to the account:").append(first);
+	// 			$("#template_modal_footer").append($("<a>").attr("id", "template_exit")
+	// 				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+	// 			$("#template_issue_control").click();
+	// 			$("#template_submit").css("pointer-events", "none");
+	// 			$("#forgotten").on("input", function() {
+	// 				if($("#forgotten").val().length == 0) {
+	// 					$("#template_submit").css("pointer-events", "none");
+	// 				}
+	// 				else {
+	// 					$("#template_submit").css("pointer-events", "auto");
+	// 				}
+	// 			});
+	// 		}
+	// 		else if(issue == 15) {
+	// 			$("#template_title").text("Password Changed");
+	// 			$("#template_body").text("You may now login with the new password!");
+	// 			$("#template_exit").remove();
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 		else if(issue == 16) {
+	// 			$("#template_title").text("Password Issue");
+	// 			$("#template_body").text("The password provided does not match the one in the database. Please try again!");
+	// 			$("#template_issue_control").click();
+	// 		}
+	// 	}
+	// 	else if(type == "status") {
+	// 		if(issue == 0) {
+	// 			var first = $("<div>").addClass("col s12");
+	// 				second = $("<form>").addClass("col s12");
+	// 				third = $("<div>").addClass("form-container");
+	// 				fourth = $("<div>").addClass("row");
+	// 				fifth = $("<div>").addClass("input-field col s12");
+	// 				sixth = $("<i>").addClass("material-icons prefix").text("lock");
+	// 				seventh = $("<input>").attr("id", "newpass").attr("type", "password");
+	// 				eighth = $("<label>").attr("for", "newpass").addClass("black-text").text("New Password");
+	// 			fifth.append(sixth).append(seventh).append(eighth);
+	// 			fourth.append(fifth);
+	// 			third.append(fourth);
+	// 			second.append(third);
+	// 			first.append(second);
+	// 			$("#status_title").text("Password Reset");
+	// 			$("#status_body").text("Please provide a new password:").append(first);
+	// 			$("#status_modal_footer").append($("<a>").attr("id", "status_exit")
+	// 				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+	// 			$("#status_issue_control").click();
+	// 			$("#status_submit").css("pointer-events", "none");
+	// 			$("#newpass").on("input", function() {
+	// 				if($("#newpass").val().length == 0) {
+	// 					$("#status_submit").css("pointer-events", "none");
+	// 				}
+	// 				else {
+	// 					$("#status_submit").css("pointer-events", "auto");
+	// 				}
+	// 			});
+	// 		}
+	// 		else if(issue == 1) {
+	// 			$("#status_title").text("Password Recovery").css("text-align", "left");
+	// 			$("#status_body").text("You provided the wrong answer to the security question!");
+	// 			$("#status_issue_control").click();
+	// 		}
+	// 	}
+	// };
 
 	/*
 

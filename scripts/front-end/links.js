@@ -29,70 +29,70 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							if(functions.password_check($("#login_password").val())) {
 								$.post("api/cms/check/" + $("#login_email").val() + "/" + $("#login_password").val()).done(function(obj) {
 									if(typeof(obj[0]) == "object") {
-										functions.modal("template", 6);
-										$(document).bind("keydown", function(event) {
-											event.stopImmediatePropagation();
-											return false;
-										});
-										$("#template_exit").click(function() {
-											location.reload();
-											$(window).scrollTop(0);
-										});
-										$("#template_submit").click(function() {
-											if(obj[0].status == 1) {
-												$.post("/api/cms/add/live/" + $("#login_email").val()).done(function(result) {
-													if(result == 1) {
-														functions.write_cookie("contributor", $("#login_email").val(), 60);
-														$(document).unbind("keydown");
-														router.navigate("cms", {reload: true});
-													}
-													else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
-												});
-											}
-											else {
-												$("#status_issue_control").click();
-												$("#status_submit").click(function() {
-													$(document).unbind("keydown");
-													location.reload();
-													$(window).scrollTop(0);
-												});
-											}
-										});
+										functions.modal(13, router, obj);
+										// $(document).bind("keydown", function(event) {
+										// 	event.stopImmediatePropagation();
+										// 	return false;
+										// });
+										// $("#template_exit").click(function() {
+										// 	location.reload();
+										// 	$(window).scrollTop(0);
+										// });
+										// $("#template_submit").click(function() {
+										// 	if(obj[0].status == 1) {
+										// 		$.post("/api/cms/add/live/" + $("#login_email").val()).done(function(result) {
+										// 			if(result == 1) {
+										// 				functions.write_cookie("contributor", $("#login_email").val(), 60);
+										// 				$(document).unbind("keydown");
+										// 				router.navigate("cms", {reload: true});
+										// 			}
+										// 			else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
+										// 		});
+										// 	}
+										// 	else {
+										// 		$("#status_issue_control").click();
+										// 		$("#status_submit").click(function() {
+										// 			$(document).unbind("keydown");
+										// 			location.reload();
+										// 			$(window).scrollTop(0);
+										// 		});
+										// 	}
+										// });
 									}
 									else if(typeof(obj[0]) == "string") {
 										if(obj[0] == "Wrong Password") {
-											functions.modal("template", 5);
+											functions.modal(5);
 										}
 										else {
-											functions.modal("template", 4);
+											functions.modal(4);
 										}
 									}
 									else {
-										functions.modal("template", 3);
+										functions.modal(3);
 									}
 								});
 							}
 							else {
-								functions.modal("template", 16);
+								functions.modal(5);
 							}
 						}
 						else {
-							functions.modal("template", 1);
+							functions.modal(1);
 						}
 					});
 				}
 				else {
-					functions.modal("template", 0);
+					functions.modal(0);
 				}
 			}
 			else if($(this).attr("id") == "register_button") {
 				if(functions.validate($("#email").val())) {
 					$.post("/api/cms/check/" + $("#email").val()).done(function(result) {
 						if(result.length == 0) {
-							if($("#password").val().length > 0 && $("#password").val() == $("#password-confirm").val()) {
-								if($("#first_name").val().length > 0) {
-									if($("#last_name").val().length > 0) {
-										if($("#answer").val().length > 0) {
+							if(functions.password_check($("#password").val()) && $("#password").val() == $("#password-confirm").val()) {
+								if($("#first_name").val().trim().length > 0 && !/[^a-zA-Z]/.test($("#first_name").val())) {
+									if($("#last_name").val().trim().length > 0 && !/[^a-zA-Z]/.test($("#last_name").val())) {
+										if($("#answer").val().trim().length > 0) {
 											var first = $("#first_name").val()[0].toUpperCase() + $("#first_name").val().slice(1).toLowerCase(),
 												last =  $("#last_name").val()[0].toUpperCase() + $("#last_name").val().slice(1).toLowerCase(),
 												call = "/api/cms/add/" + first + "/" + last + "/" + $("#email").val() 
@@ -100,42 +100,42 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 												+ "/" + $("#answer").val();
 											$.post(call).done(function() {
 												$.post("/api/cms/get/admin").done(function(obj) {
-													functions.modal("template", 13, obj);
-													$("#template_submit").click(function() {
-														location.reload();
-														$(window).scrollTop(0);
-													});
+													functions.modal(12, router, obj);
+													// $("#template_submit").click(function() {
+													// 	location.reload();
+													// 	$(window).scrollTop(0);
+													// });
 												});
 											}).fail(function() {
-												functions.modal("template", 12);
+												functions.modal(11);
 											});
 										}
 										else {
-											functions.modal("template", 11);
+											functions.modal(10);
 										}
 									}
 									else {
-										functions.modal("template", 10);
+										functions.modal(9);
 									}
 								}
 								else {
-									functions.modal("template", 9);
+									functions.modal(8);
 								}
 							}
-							else if($("#password").val().length == 0 && $("#password").val() == $("#password-confirm").val()) {
-								functions.modal("template", 2);
+							else if(!functions.password_check($("#password").val())) {
+								functions.modal(2);
 							}
 							else {
-								functions.modal("template", 8);
+								functions.modal(7);
 							}
 						}
 						else {
-							functions.modal("template", 7);
+							functions.modal(6);
 						}
 					});
 				}
 				else {
-					functions.modal("template", 0);
+					functions.modal(0);
 				}
 			}
 		});
@@ -152,7 +152,8 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				$("#login_heading").css("background", "linear-gradient(to right, #4693ec 50%, #e0e0e0 50%)");
 				$("html").css("height", "850px");
 				$("#register_input input").each(function() { $(this).val(""); });
-				$('select').material_select();
+				$("#question").val(1);
+				$("select").material_select();
 				Materialize.updateTextFields();
 			}
 			else if($(this).attr("id") == "register_click") {
@@ -187,48 +188,48 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				if(functions.validate($("#login_email").val())) {
 					$.post("/api/cms/get/" + $("#login_email").val()).done(function(content) {
 						$("#question")[0].options.selectedIndex = parseInt(content);
-						functions.modal("template", 14);
-						$("#template_submit").click(function(e) {
-							e.preventDefault();
-							$.post("/api/cms/check/security/" + $("#login_email").val() + "/" + $("#forgotten").val()).done(function(result) {
-								if(result == 1) {
-									functions.modal("status", 0);
-									$("#status_exit").click(function() {
-										e.preventDefault();
-										location.reload();
-										$(window).scrollTop(0);
-									});
-									$("#status_submit").click(function(e) {
-										e.preventDefault();
-										$.post("/api/cms/change/password/" + $("#login_email").val() + "/" + $("#newpass").val()).done(function() {
-											functions.modal("template", 15);
-											$("#template_submit").click(function(e) {
-												e.preventDefault();
-												location.reload();
-												$(window).scrollTop(0);
-											});
-										});
-									});
-								}
-								else {
-									functions.modal("status", 1);
-									$("#status_submit").click(function(e) {
-										e.preventDefault();
-										location.reload();
-										$(window).scrollTop(0);
-									});
-								}
-							});
-						});
-						$("#template_exit").click(function() {
-							e.preventDefault();
-							location.reload();
-							$(window).scrollTop(0);
-						});
+						functions.modal(14);
+						// $("#template_submit").click(function(e) {
+						// 	e.preventDefault();
+						// 	$.post("/api/cms/check/security/" + $("#login_email").val() + "/" + $("#forgotten").val()).done(function(result) {
+						// 		if(result == 1) {
+						// 			functions.modal("status", 0);
+						// 			$("#status_exit").click(function() {
+						// 				e.preventDefault();
+						// 				location.reload();
+						// 				$(window).scrollTop(0);
+						// 			});
+						// 			$("#status_submit").click(function(e) {
+						// 				e.preventDefault();
+						// 				$.post("/api/cms/change/password/" + $("#login_email").val() + "/" + $("#newpass").val()).done(function() {
+						// 					functions.modal(12);
+						// 					$("#template_submit").click(function(e) {
+						// 						e.preventDefault();
+						// 						location.reload();
+						// 						$(window).scrollTop(0);
+						// 					});
+						// 				});
+						// 			});
+						// 		}
+						// 		else {
+						// 			functions.modal("status", 1);
+						// 			$("#status_submit").click(function(e) {
+						// 				e.preventDefault();
+						// 				location.reload();
+						// 				$(window).scrollTop(0);
+						// 			});
+						// 		}
+						// 	});
+						// });
+						// $("#template_exit").click(function() {
+						// 	e.preventDefault();
+						// 	location.reload();
+						// 	$(window).scrollTop(0);
+						// });
 					});
 				}
 				else {
-					functions.modal("template", 0);
+					functions.modal(0);
 				}
 			}
 			else {

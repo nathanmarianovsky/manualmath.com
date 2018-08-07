@@ -89,12 +89,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			if(cookie == "") {
 				$.get("/pages/dist/login-min.html").done(function(content) {
 					$(document.body).empty().append(content).css("background", "#1163A9");
-					$(".modal-trigger").leanModal({
-						dismissible: false,
-						opacity: 2,
-						inDuration: 1000,
-						outDuration: 1000
-					});
 					$("select").material_select();
 					links.handle_links(router, subjects, topics, sections, examples);
 					$.post("/api/cms/get/admin").done(function(obj) {
