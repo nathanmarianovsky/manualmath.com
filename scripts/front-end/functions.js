@@ -353,7 +353,8 @@ define(function() {
 					var fname = $("#first_name_cms").val()[0].toUpperCase() + $("#first_name_cms").val().slice(1).toLowerCase(),
 						lname = $("#last_name_cms").val()[0].toUpperCase() + $("#last_name_cms").val().slice(1).toLowerCase(),
 						question = (parseInt($("#question_cms")[0].options.selectedIndex) + 1),
-						answer = $("#answer_cms").val();
+						answer = $("#answer_cms").val(),
+						new_password = $("#password_cms").val();
 					$.get("/pages/dist/change-confirmation-min.html").done(function(material) {
 						if($("#password_cms").val().length == 0) {
 							$("#popup_title").text("Profile Changes").css("text-align", "center");
@@ -458,46 +459,128 @@ define(function() {
 							});
 						}
 						else if(exports.password_check($("#password_cms").val())) {
-							$("#popup2_title").text("Profile Changes").css("text-align", "center");
-							$("#popup2_body").text("Please confirm the changes provided by providing both the old and new passwords:").append(material);
-							$("#popup2_body").append(material);
-							$("#popup2_submit").text("Confirm");
-							$("#popup2_modal_footer").append($("<a>").attr("id", "popup2_exit")
-								.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-							$("#popup2_control").click();
+							$("#popup_title").text("Profile Changes").css("text-align", "center");
+							$("#popup_body").text("Please confirm the changes provided by providing both the old and new passwords:").append(material);
+							$("#popup_submit").remove();
+							$("#popup_exit").remove();
+							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Confirm"))
+								.append($("<a>").attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+							$("#popup_submit").css("pointer-events", "none");
 							$("#old_password_confirm").on("input", function() {
 								if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
-									$("#popup2_submit").css("pointer-events", "auto");
+									$("#popup_submit").css("pointer-events", "auto");
 								}
 								else {
-									$("#popup2_submit").css("pointer-events", "none");
+									$("#popup_submit").css("pointer-events", "none");
 								}
 							});
 							$("#new_password_confirm").on("input", function() {
 								if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
-									$("#popup2_submit").css("pointer-events", "auto");
+									$("#popup_submit").css("pointer-events", "auto");
 								}
 								else {
-									$("#popup2_submit").css("pointer-events", "none");
+									$("#popup_submit").css("pointer-events", "none");
 								}
 							});
-							$("#popup2_exit").click(function(event) {
-								event.preventDefault();
-								$("#popup1").remove();
-								$("#popup1_control").remove();
-								$("#popup2").remove();
-								$("#popup2_control").remove();
+							$("#popup_exit").click(function(e) {
+								e.preventDefault();
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+							});
+							$("#popup_submit").click(function(e) {
+								e.preventDefault();
+								if(new_password != $("#new_password_confirm").val()) {
+									$("#popup_title").text("Password Issue");
+									$("#popup_submit").remove();
+									$("#popup_exit").remove();
+									$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+									$("#popup_body").text("The new password provided for confirmation does not match the previous password change!");
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+									});
+								}
+								else {
+									$.post("/api/cms/check/" + email + "/" + $("#old_password_confirm").val()).done(function(result) {
+										if(result[0] == "Wrong Password") {
+											$("#popup_title").text("Password Issue");
+											$("#popup_submit").remove();
+											$("#popup_exit").remove();
+											$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+											$("#popup_body").text("The old password provided for confirmation does not match the one in the database!");
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+											});
+										}
+										else {
+											var statement = "/api/cms/change/profile/" + email + "/" + fname + "/" + lname + "/" + question + "/" + answer;
+											$.post(statement).done(function(result) {
+											 	if(result == "1") {
+													$.post("/api/cms/change/password/" + email + "/" + new_password).done(function(result) {
+													 	if(result == "1") {
+															$("#popup_title").text("Confirmation");
+															$("#popup_submit").remove();
+															$("#popup_exit").remove();
+															$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+															$("#popup_body").text("The changes you provided have been implemented!");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+															});
+														}
+														else {
+															$("#popup_title").text("Database Issue");
+															$("#popup_submit").remove();
+															$("#popup_exit").remove();
+															$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+															$("#popup_body").text("The changes you provided had trouble being uploaded to the database!");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+															});
+														}
+													});
+												}
+												else {
+													$("#popup_title").text("Database Issue");
+													$("#popup_submit").remove();
+													$("#popup_exit").remove();
+													$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+													$("#popup_body").text("The changes you provided had trouble being uploaded to the database!");
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+													});
+												}
+											});
+										}
+									});
+								}
 							});
 						}
 						else {
-							$("#popup2_title").text("Password Issue");
-							$("#popup2_body").text("The password provided just now does not meet the minimum requirements of being a secure password").append(material);
-							// $("#popup2_body").append(material);
-							$("#popup2_submit").text("Back");
-							$("#popup2_control").click();
-							$("#popup2_submit").click(function(event) {
-								event.preventDefault();
-								$("#popup1_control").click();
+							$("#popup_title").text("Password Issue");
+							$("#popup_submit").remove();
+							$("#popup_exit").remove();
+							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+							$("#popup_body").text("The new password does not meet the minimum security requirements!");
+							$("#popup_submit").click(function(e) {
+								e.preventDefault();
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
 							});
 						}
 					});

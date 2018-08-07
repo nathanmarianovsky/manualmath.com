@@ -648,8 +648,6 @@ exports.add_api_routes = (app, pool) => {
 			answer = request.params.answer,
 			statement = "UPDATE contributors SET first_name='" + fname + "', last_name='" + 
 			lname + "', question=" + question + " WHERE email='" + email + "'";
-		// if(answer.length > 0) { statement += ", answer='" + bcrypt.hashSync(answer, 10) + "'"; }
-			// statement += " WHERE email='" + email + "'";
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
@@ -665,8 +663,6 @@ exports.add_api_routes = (app, pool) => {
 			answer = request.params.answer,
 			statement = "UPDATE contributors SET first_name='" + fname + "', last_name='" + lname + "', question=" + question + 
 			", answer='" + bcrypt.hashSync(answer, 10) + "' WHERE email='" + email + "'";
-		// if(answer.length > 0) { statement += ", answer='" + bcrypt.hashSync(answer, 10) + "'"; }
-			// statement += " WHERE email='" + email + "'";
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
