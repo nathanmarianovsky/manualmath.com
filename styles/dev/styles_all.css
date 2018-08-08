@@ -454,3 +454,18 @@ nav {
 #profile, #logout {
 	background: #00b8ff;
 }
+
+
+
+/* All CSS properties related to the cms sidenav modal */
+#sidenav_table_head th {
+	text-align: center;
+}
+
+.del {
+	color: red;
+}
+
+.arrow {
+	color: black;
+}

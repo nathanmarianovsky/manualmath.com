@@ -59,7 +59,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					if(functions.width_func() < 992) {
 						$(".button-collapse").sideNav("hide");
 					}
-					navs.driver("about", subjects);
+					navs.driver("about", 1, subjects);
 					$("body").css("background", "#e0e0e0");
 					$("main").empty();
 					$("main").append($("<div>").attr("id", "latex"));
@@ -118,7 +118,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				if(functions.width_func() < 992) {
 					$(".button-collapse").sideNav("hide");
 				}
-				navs.driver("about", subjects);
+				navs.driver("about", 0, subjects);
 				$("title").text("About");
 				$("body").css("background", "#e0e0e0");
 				$("main").empty();
@@ -145,7 +145,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				if(functions.width_func() < 992) {
 					$(".button-collapse").sideNav("hide");
 				}
-				navs.driver("about", subjects);
+				navs.driver("about", 0, subjects);
 				$("title").text("About");
 				$("body").css("background", "#e0e0e0");
 				$("main").empty();
@@ -175,7 +175,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0];
-				navs.driver("subject", subject);
+				navs.driver("subject", 0, subject);
 				$("main").empty();
 				$("title").text(subject.clean_name);
 				$("body").css("background", "#e0e0e0");
@@ -230,7 +230,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					topic = subject.topics.filter(function(iter) {
 					return iter.tname == toState.params.tname;
 				})[0];
-				navs.driver("topic", topic, subject);
+				navs.driver("topic", 0, topic, subject);
 				$("main").empty();
 				$("title").text(subject.clean_name + " - " + topic.clean_name);
 				$("body").css("background", "#e0e0e0");
@@ -277,7 +277,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					return iter.section_name == toState.params.section_name;
 				})[0];
 				$("main").empty();
-				navs.driver("section", section, topic);
+				navs.driver("section", 0, section, topic);
 				$("#nav-mobile").find("li").removeClass("active");
 				$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 				$("body").css("background", "#e0e0e0");

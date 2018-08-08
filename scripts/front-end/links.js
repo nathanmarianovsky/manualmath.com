@@ -163,6 +163,9 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					functions.modal(0);
 				}
 			}
+			else if($(this).attr("id") == "subjects_change") {
+				functions.sidenav_modal("Subjects", subjects);
+			}
 			else {
 				var id = $(this).attr("id");
 				if(id) {
@@ -171,21 +174,21 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					if(holder.length > 1) {
 						var id_num = holder[1];
 					}
-					if(id_string == "subjects" || id_string == "aboutsubject") {
+					if(id_string == "subjects") {
+						var subject = subjects.filter(function(iter) {
+							return iter.sid == id_num;
+						})[0];
 						if(holder[2] != "cms") {
-							var subject = subjects.filter(function(iter) {
-								return iter.sid == id_num;
-							})[0];
 							router.navigate("subject", {sname: subject.sname});
 						}
 						else {
-
+							console.log("success!!");
 						}
 					}
 					else if(id_string == "subjectnav") {
 						router.navigate("about");
 					}
-					else if(id_string == "topics" || id_string == "abouttopic") {
+					else if(id_string == "topics") {
 						var topic = topics.filter(function(iter) {
 							return iter.tid == id_num;
 						})[0],

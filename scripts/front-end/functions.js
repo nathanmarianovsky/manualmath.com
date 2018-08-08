@@ -107,6 +107,72 @@ define(function() {
 	    }, 100);
 	};
 
+	exports.sidenav_modal = function(type, data) {
+		$.get("/pages/dist/modal-min.html").done(function(content) {
+			var del_list = [];
+			$("body").append(content);
+			$("#popup_title").text(type).css("text-align", "center");
+			$("#popup_")
+			$("#popup_modal_footer")
+				.append($("<a>").attr("id", "popup_add")
+					.addClass("modal-close waves-effect waves-blue btn-flat").text("Add"))
+				.append($("<a>").attr("id", "popup_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			$.get("/pages/dist/sidenav-change-min.html").done(function(table) {
+				$("#popup_body").append(table);
+				console.log(data);
+				data.forEach(function(elem) {
+					var subject_tr = $("<tr>"),
+						subject_name = $("<td>").text(elem.clean_name),
+						subject_move = $("<td>").css("text-align", "center")
+							.append($("<a>").attr("id", "subjectsup_" + elem.sid).addClass("arrow")
+								.append($("<i>").addClass("material-icons").text("keyboard_arrow_up")))
+							.append($("<a>").attr("id", "subjectsdown_" + elem.sid).addClass("arrow")
+								.append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
+						subject_delete = $("<td>").css("text-align", "center").append($("<a>").attr("id", "subjectsdelete_" + elem.sid).addClass("del center")
+								.append($("<i>").addClass("material-icons").text("cancel")));
+					subject_tr.append(subject_name).append(subject_move).append(subject_delete);
+					$("#sidenav_table_body").append(subject_tr);
+				});
+				$(".modal-trigger").leanModal({
+					dismissible: false,
+					opacity: 2,
+					inDuration: 1000,
+					outDuration: 1000
+				});
+				$("#popup_control").click();
+				$("#popup").keypress(function(event) {
+				    if(event.keyCode === 10 || event.keyCode === 13) {
+				        event.preventDefault();
+				    }
+				});
+				$("#popup_exit").click(function(event) {
+					event.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
+
+				$(".del").click(function(e) {
+					e.preventDefault();
+					
+				});
+
+
+				$("#popup_submit").click(function(event) {
+					event.preventDefault();
+
+
+
+
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
+			});
+		});
+	};
+
 	/*
 
 	Purpose:

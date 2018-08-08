@@ -35,22 +35,24 @@ define(["dist/functions-min"], function(functions) {
 		var sidenav = $(".side-nav"),
 			results = [];
 		sidenav.empty();
-		if(typeof cms !== "undefined" && cms !== null) {
-			results = subjects.map(function(subject) {
-				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid + "_cms"),
-					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid + "_cms").text(subject.clean_name);
-				link.append($("<i>").addClass("material-icons right").text("arrow_forward").attr("id", "arrow_" + subject.sid + "_cms"));
-				return subjectli.append(link);
-			});
+		if(cms == 1) {
+			var change_li = $("<li>").addClass("no-padding").attr("id", "subjectsli_change"),
+				change_link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_change").text("Add/Remove");
+			change_link.append($("<i>").addClass("material-icons right").text("library_add"));
+			sidenav.append(change_li.append(change_link));
 		}
-		else {
-			results = subjects.map(function(subject) {
+		results = subjects.map(function(subject) {
+			if(cms == 0) {
 				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid),
 					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid).text(subject.clean_name);
-				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
-				return subjectli.append(link);
-			});
-		}
+			}
+			else if(cms == 1) {
+				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid + "_cms"),
+					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid + "_cms").text(subject.clean_name);
+			}
+			link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+			return subjectli.append(link);
+		});
 		results.forEach(function(subject) { functions.is_mobile() ? sidenav.append(subject, $("<li>").addClass("divider")) : sidenav.append(subject); });
 		exports.extra();
 	};
@@ -162,9 +164,9 @@ define(["dist/functions-min"], function(functions) {
 			An object representing "subject" or "topic"
 
 	*/
-	exports.driver = function(page, param1, param2) {
-		if(page == "about") { exports.subject_side_nav(param1); }
-		else if(page == "about-cms") { exports.subject_side_nav(param1, "cms"); }
+	exports.driver = function(page, cms, param1, param2) {
+		if(page == "about") { exports.subject_side_nav(param1, cms); }
+		// else if(page == "about-cms") { exports.subject_side_nav(param1, cms); }
 		else if(page == "subject") { exports.topic_side_nav(param1); }
 		else {
 			if(typeof param2 !== "undefined" && param2 !== null) {
