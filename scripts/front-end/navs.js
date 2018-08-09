@@ -31,7 +31,7 @@ define(["dist/functions-min"], function(functions) {
 			An array of all the subjects
 
 	*/
-	exports.subject_side_nav = function(subjects, cms) {
+	exports.subject_side_nav = function(subjects, cms, min) {
 		var sidenav = $(".side-nav"),
 			results = [];
 		sidenav.empty();
@@ -42,16 +42,18 @@ define(["dist/functions-min"], function(functions) {
 			sidenav.append(change_li.append(change_link));
 		}
 		results = subjects.map(function(subject) {
-			if(cms == 0) {
+			if(cms == 0 && subject.side_approval !== null && subject.side_approval.split(",").length >= min) {
 				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid),
 					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid).text(subject.clean_name);
+					link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+					return subjectli.append(link);
 			}
 			else if(cms == 1) {
 				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid + "_cms"),
 					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid + "_cms").text(subject.clean_name);
+					link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+					return subjectli.append(link);
 			}
-			link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
-			return subjectli.append(link);
 		});
 		results.forEach(function(subject) { functions.is_mobile() ? sidenav.append(subject, $("<li>").addClass("divider")) : sidenav.append(subject); });
 		exports.extra();
@@ -165,24 +167,26 @@ define(["dist/functions-min"], function(functions) {
 
 	*/
 	exports.driver = function(page, cms, param1, param2) {
-		if(page == "about") { exports.subject_side_nav(param1, cms); }
-		// else if(page == "about-cms") { exports.subject_side_nav(param1, cms); }
-		else if(page == "subject") { exports.topic_side_nav(param1); }
-		else {
-			if(typeof param2 !== "undefined" && param2 !== null) {
-				if(page == "topic") { exports.section_side_nav(param1, param2); }
-				else if(page == "section") {
-					$(".side-nav li").each(function() {
-						if(typeof $(this).attr("id") !== typeof undefined && $(this).attr("id") !== false) {
-							if($(this).attr("id").split("_")[0] == "topic") {
-								exports.example_side_nav(param1, param2);
+		$.get("/api/cms/contributors").done(function(num) {
+			const validation = Math.ceil(Math.log(parseInt(num)));
+			if(page == "about") { exports.subject_side_nav(param1, cms, validation); }
+			else if(page == "subject") { exports.topic_side_nav(param1); }
+			else {
+				if(typeof param2 !== "undefined" && param2 !== null) {
+					if(page == "topic") { exports.section_side_nav(param1, param2); }
+					else if(page == "section") {
+						$(".side-nav li").each(function() {
+							if(typeof $(this).attr("id") !== typeof undefined && $(this).attr("id") !== false) {
+								if($(this).attr("id").split("_")[0] == "topic") {
+									exports.example_side_nav(param1, param2);
+								}
 							}
-						}
-					});
-					if($(".side-nav").is(":empty") || $(".side-nav").children().length == 1) { exports.example_side_nav(param1, param2); }
+						});
+						if($(".side-nav").is(":empty") || $(".side-nav").children().length == 1) { exports.example_side_nav(param1, param2); }
+					}
 				}
 			}
-		}
+		});
 	};
 
 	return exports;

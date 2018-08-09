@@ -1,6 +1,20 @@
 define(function() {
 	var exports = {};
 
+	exports.replace_all = function(str, find, replace) {
+	    return str.replace(new RegExp(find, 'g'), replace);
+	};
+
+	exports.copy = function(obj) {
+		var output, v, key;
+		output = Array.isArray(obj) ? [] : {};
+		for(key in obj) {
+		   v = obj[key];
+		   output[key] = (typeof v === "object") ? exports.copy(v) : v;
+		}
+		return output;
+	};
+
 	/*
 
 	Purpose:
@@ -107,32 +121,51 @@ define(function() {
 	    }, 100);
 	};
 
-	exports.sidenav_modal = function(type, data) {
+	exports.sidenav_modal = function(type, input) {
+		var data = exports.copy(input);
 		$.get("/pages/dist/modal-min.html").done(function(content) {
-			var del_list = [];
 			$("body").append(content);
 			$("#popup_title").text(type).css("text-align", "center");
-			$("#popup_")
+			$("#popup_submit").text("Save Changes").removeClass("modal-close");
 			$("#popup_modal_footer")
 				.append($("<a>").attr("id", "popup_add")
-					.addClass("modal-close waves-effect waves-blue btn-flat").text("Add"))
+					.addClass("waves-effect waves-blue btn-flat").text("Add"))
 				.append($("<a>").attr("id", "popup_exit")
 					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
 			$.get("/pages/dist/sidenav-change-min.html").done(function(table) {
-				$("#popup_body").append(table);
-				console.log(data);
+				var statement = "Below you will find all current " + type.toLowerCase() + " which can be renamed, reorganized, or deleted." +
+					" Furthermore, as a contributor you can approve a subject so that it will be available to users on the client side, or similarly" +
+					" disapprove if you feel that there is something wrong with it. With this design, a subject will appear on the client side only" +
+					" when enough contributors have given approval. To change the approval of a subject simply click on the checkmark and note that" +
+					" the color green indicates an approval from you."
+				$("#popup_body").text(statement).append(table);
 				data.forEach(function(elem) {
-					var subject_tr = $("<tr>"),
-						subject_name = $("<td>").text(elem.clean_name),
-						subject_move = $("<td>").css("text-align", "center")
-							.append($("<a>").attr("id", "subjectsup_" + elem.sid).addClass("arrow")
-								.append($("<i>").addClass("material-icons").text("keyboard_arrow_up")))
-							.append($("<a>").attr("id", "subjectsdown_" + elem.sid).addClass("arrow")
-								.append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
-						subject_delete = $("<td>").css("text-align", "center").append($("<a>").attr("id", "subjectsdelete_" + elem.sid).addClass("del center")
+					var addon = -1;
+					if(type == "Subjects") { addon = elem.sid; }
+					else if(type == "Topics") { addon = elem.tid; }
+					else if(type == "Sections") { addon = elem.section_id; }
+					var item_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
+						item_name = $("<td>").text(elem.clean_name).attr("contentEditable", "true")
+							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
+						item_move = $("<td>").css("text-align", "center")
+							.append($("<a>").attr("id", type.toLowerCase() + "_up_" + addon).addClass("arrow")
+								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_up")))
+							.append($("<a>").attr("id", type.toLowerCase() + "_down_" + addon).addClass("arrow")
+								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
+						item_approve = $("<td>").css("text-align", "center").append($("<a>")
+								.attr("id", type.toLowerCase() + "_check_" + addon).addClass("center")
+								.append($("<i>").addClass("material-icons").text("check_circle"))),
+						item_delete = $("<td>").css("text-align", "center").append($("<a>")
+								.attr("id", type.toLowerCase() + "_delete_" + addon).addClass("del center")
 								.append($("<i>").addClass("material-icons").text("cancel")));
-					subject_tr.append(subject_name).append(subject_move).append(subject_delete);
-					$("#sidenav_table_body").append(subject_tr);
+					item_tr.append(item_name).append(item_move).append(item_approve).append(item_delete);
+					$("#sidenav_table_body").append(item_tr);
+					if(typeof elem.side_approval != "object" && elem.side_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						$("#" + type.toLowerCase() + "_check_" + addon).css("color", "green");
+					}
+					else {
+						$("#" + type.toLowerCase() + "_check_" + addon).css("color", "red");
+					}
 				});
 				$(".modal-trigger").leanModal({
 					dismissible: false,
@@ -151,6 +184,107 @@ define(function() {
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
+				});
+				$("#popup_add").click(function(e) {
+					e.preventDefault();
+					var addon = -1;
+					if(type == "Subjects") { addon = (exports.copy(data)).sort(function(a, b) { return b.sid - a.sid; })[0].sid + 1; }
+					else if(type == "Topics") { addon = (exports.copy(data)).sort(function(a, b) { return b.tid - a.tid; })[0].tid + 1; }
+					else if(type == "Sections") { addon = (exports.copy(data)).sort(function(a, b) { return b.section_id - a.section_id; })[0].section_id + 1; }
+					var new_tr = $("<tr>"),
+						new_name = $("<td>").text("New Item").attr("contentEditable", "true")
+							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
+						new_move = $("<td>").css("text-align", "center")
+							.append($("<a>").attr("id", type.toLowerCase() + "_up_" + addon).addClass("arrow")
+								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_up")))
+							.append($("<a>").attr("id", type.toLowerCase() + "_down_" + addon).addClass("arrow")
+								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
+						new_approve = $("<td>").css("text-align", "center").append($("<a>")
+								.attr("id", type.toLowerCase() + "_check_" + addon).addClass("center").css("color", "red")
+								.append($("<i>").addClass("material-icons").text("check_circle"))),
+						new_delete = $("<td>").css("text-align", "center").append($("<a>")
+								.attr("id", type.toLowerCase() + "_delete_" + addon).addClass("del center")
+								.append($("<i>").addClass("material-icons").text("cancel")));
+					new_tr.append(new_name).append(new_move).append(new_approve).append(new_delete);
+					$("#sidenav_table_body").append(new_tr);
+					data.push({
+						sid: addon,
+						clean_name: "New Item",
+						sname: "New_Item",
+						order: data[data.length - 1].order + 1,
+						topics: [],
+						side_approval: {},
+						created: "yes"
+					});
+					$(".field").on("input", function() {
+						var id = parseInt($(this).attr("id").split("_")[2]);
+						data.forEach(function(iter) { 
+							if(type == "Subjects" && iter.sid == id) {
+								iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
+								var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
+								str = exports.replace_all(str, "-", "AND");
+								str = exports.replace_all(str, "'", "APOSTROPHE");
+								str = exports.replace_all(str, ":", "COLON");
+								str = exports.replace_all(str, ",", "COMMA");
+								iter.sname = str;
+							}
+							else if(type == "Topics" && iter.tid == id) {
+								iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
+								var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
+								str = exports.replace_all(str, "-", "AND");
+								str = exports.replace_all(str, "'", "APOSTROPHE");
+								str = exports.replace_all(str, ":", "COLON");
+								str = exports.replace_all(str, ",", "COMMA");
+								iter.tname = str;
+							}
+							else if(type == "Sections" && iter.section_id == id) {
+								iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
+								var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
+								str = exports.replace_all(str, "-", "AND");
+								str = exports.replace_all(str, "'", "APOSTROPHE");
+								str = exports.replace_all(str, ":", "COLON");
+								str = exports.replace_all(str, ",", "COMMA");
+								iter.section_name = str;
+							}
+						});
+					});
+				});
+				$(".field").on("input", function() {
+					var id = parseInt($(this).attr("id").split("_")[2]);
+					data.forEach(function(iter) { 
+						if(type == "Subjects" && iter.sid == id) {
+							iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
+							var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
+							str = exports.replace_all(str, "-", "AND");
+							str = exports.replace_all(str, "'", "APOSTROPHE");
+							str = exports.replace_all(str, ":", "COLON");
+							str = exports.replace_all(str, ",", "COMMA");
+							iter.sname = str;
+						}
+						else if(type == "Topics" && iter.tid == id) {
+							iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
+							var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
+							str = exports.replace_all(str, "-", "AND");
+							str = exports.replace_all(str, "'", "APOSTROPHE");
+							str = exports.replace_all(str, ":", "COLON");
+							str = exports.replace_all(str, ",", "COMMA");
+							iter.tname = str;
+						}
+						else if(type == "Sections" && iter.section_id == id) {
+							iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
+							var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
+							str = exports.replace_all(str, "-", "AND");
+							str = exports.replace_all(str, "'", "APOSTROPHE");
+							str = exports.replace_all(str, ":", "COLON");
+							str = exports.replace_all(str, ",", "COMMA");
+							iter.section_name = str;
+						}
+					});
+				});
+				$(".arrow").click(function(e) {
+					e.preventDefault();
+					var holder = $(this).attr("id").split("_");
+					// data.
 				});
 
 				$(".del").click(function(e) {
@@ -472,6 +606,9 @@ define(function() {
 
 	*/
 	exports.session_modal = function(router, page, issue) {
+		$(".lean-overlay").remove();
+		$("#popup").remove();
+		$("#popup_control").remove();
 		$.get("/pages/dist/modal-min.html").done(function(content) {
 			$("body").append(content);
 			$("#popup_title").text("Login Issue");

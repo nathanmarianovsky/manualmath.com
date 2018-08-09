@@ -63,8 +63,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$("body").css("background", "#e0e0e0");
 					$("main").empty();
 					$("main").append($("<div>").attr("id", "latex"));
-					$.get("/pages/dist/about-min.html").done(function(content) {
-						$("#latex").append(content);
+					$.get("/pages/dist/about-min.html").done(function(about) {
+						$("#latex").append(about);
 						$.get("/pages/dist/notation-min.html").done(function(notation) {
 							$("#notation_box").append(notation);
 							$.get("/pages/dist/button-min.html").done(function(button) {

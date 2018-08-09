@@ -8,7 +8,7 @@ exports.add_api_routes = (app, pool) => {
 		var objects = request.params.objects;
 		response.set('Cache-Control', 'public, max-age=864000000');
 		if(objects == "subjects") {
-			pool.query("SELECT sid,sname,`order` FROM subject ORDER BY `order` ASC", (err, results) => {
+			pool.query("SELECT sid,sname,`order`,side_approval FROM subject ORDER BY `order` ASC", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(subject => {
 					subject.topics = [];
@@ -706,6 +706,15 @@ exports.add_api_routes = (app, pool) => {
 		pool.query(statement, (err, result) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send({first_name: result[0].first_name, last_name: result[0].last_name, question: result[0].question}); }
+		});
+	});
+
+	// The API method to count the number of contributors
+	app.get("/api/cms/contributors", (request, response) => {
+		var statement = "SELECT email FROM contributors";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send((result.length).toString()); }
 		});
 	});
 };
