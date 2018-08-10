@@ -283,8 +283,48 @@ define(function() {
 				});
 				$(".arrow").click(function(e) {
 					e.preventDefault();
-					var holder = $(this).attr("id").split("_");
-					// data.
+					var holder = $(this).attr("id").split("_"),
+						obj_ref = data.findIndex(function(sub) { return sub.sid == parseInt(holder[2]); }),
+						str = "";
+					if(holder[1] == "up" && obj_ref != 0) {
+						var obj = data[obj_ref],
+							obj_order = obj.order,
+							table_item = 0;
+						str = "#" + type.toLowerCase() + "_tr_";
+						if(type == "Subjects") {
+							table_item = $(str + data[obj_ref - 1].sid).detach();
+						}
+						else if(type == "Topics") {
+							table_item = $(str + data[obj_ref - 1].tid).detach();
+						}
+						else if(type == "Sections") {
+							table_item = $(str + data[obj_ref - 1].section_id).detach();
+						}
+						$("#" + type.toLowerCase() + "_tr_" + holder[2]).after(table_item);
+						data[obj_ref] = data[obj_ref - 1];
+						data[obj_ref - 1] = obj;
+						data[obj_ref - 1].order = data[obj_ref].order;
+						data[obj_ref].order = obj_order;
+					}
+					else if(holder[1] == "down" && obj_ref != data.length - 1) {
+						var table_item = $("#" + type.toLowerCase() + "_tr_" + holder[2]).detach(),
+							obj = data[obj_ref],
+							obj_order = obj.order;
+						str = "#" + type.toLowerCase() + "_tr_";
+						if(type == "Subjects") {
+							$(str + data[obj_ref + 1].sid).after(table_item);
+						}
+						else if(type == "Topics") {
+							$(str + data[obj_ref + 1].tid).after(table_item);
+						}
+						else if(type == "Sections") {
+							$(str + data[obj_ref + 1].section_id).after(table_item);
+						}
+						data[obj_ref] = data[obj_ref + 1];
+						data[obj_ref + 1] = obj;
+						data[obj_ref + 1].order = data[obj_ref].order;
+						data[obj_ref].order = obj_order;
+					}
 				});
 
 				$(".del").click(function(e) {
