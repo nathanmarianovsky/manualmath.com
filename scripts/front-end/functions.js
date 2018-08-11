@@ -122,7 +122,11 @@ define(function() {
 	};
 
 	exports.sidenav_modal = function(type, input) {
-		var data = exports.copy(input);
+		var data = (exports.copy(input)).map(function(elem) { 
+			elem.edited = 0;
+			elem.created = 0;
+			return elem; 
+		});
 		$.get("/pages/dist/modal-min.html").done(function(content) {
 			$("body").append(content);
 			$("#popup_title").text(type).css("text-align", "center");
@@ -191,7 +195,7 @@ define(function() {
 					if(type == "Subjects") { addon = (exports.copy(data)).sort(function(a, b) { return b.sid - a.sid; })[0].sid + 1; }
 					else if(type == "Topics") { addon = (exports.copy(data)).sort(function(a, b) { return b.tid - a.tid; })[0].tid + 1; }
 					else if(type == "Sections") { addon = (exports.copy(data)).sort(function(a, b) { return b.section_id - a.section_id; })[0].section_id + 1; }
-					var new_tr = $("<tr>"),
+					var new_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
 						new_name = $("<td>").text("New Item").attr("contentEditable", "true")
 							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
 						new_move = $("<td>").css("text-align", "center")
@@ -214,12 +218,14 @@ define(function() {
 						order: data[data.length - 1].order + 1,
 						topics: [],
 						side_approval: {},
-						created: "yes"
+						edited: 0,
+						created: 1
 					});
 					$(".field").on("input", function() {
 						var id = parseInt($(this).attr("id").split("_")[2]);
 						data.forEach(function(iter) { 
 							if(type == "Subjects" && iter.sid == id) {
+								iter.edited = 1;
 								iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
 								var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
 								str = exports.replace_all(str, "-", "AND");
@@ -229,6 +235,7 @@ define(function() {
 								iter.sname = str;
 							}
 							else if(type == "Topics" && iter.tid == id) {
+								iter.edited = 1;
 								iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
 								var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
 								str = exports.replace_all(str, "-", "AND");
@@ -238,6 +245,7 @@ define(function() {
 								iter.tname = str;
 							}
 							else if(type == "Sections" && iter.section_id == id) {
+								iter.edited = 1;
 								iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
 								var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
 								str = exports.replace_all(str, "-", "AND");
@@ -248,11 +256,61 @@ define(function() {
 							}
 						});
 					});
+					$(".arrow").click(function(e) {
+						e.preventDefault();
+						var holder = $(this).attr("id").split("_"),
+							obj_ref = data.findIndex(function(sub) { return sub.sid == parseInt(holder[2]); }),
+							str = "";
+						if(holder[1] == "up" && obj_ref != 0) {
+							var obj = data[obj_ref],
+								obj_order = obj.order,
+								table_item = 0;
+							str = "#" + type.toLowerCase() + "_tr_";
+							if(type == "Subjects") {
+								table_item = $(str + data[obj_ref - 1].sid).detach();
+							}
+							else if(type == "Topics") {
+								table_item = $(str + data[obj_ref - 1].tid).detach();
+							}
+							else if(type == "Sections") {
+								table_item = $(str + data[obj_ref - 1].section_id).detach();
+							}
+							$("#" + type.toLowerCase() + "_tr_" + holder[2]).after(table_item);
+							data[obj_ref] = data[obj_ref - 1];
+							data[obj_ref - 1] = obj;
+							data[obj_ref - 1].order = data[obj_ref].order;
+							data[obj_ref].order = obj_order;
+							data[obj_ref - 1].edited = 1;
+							data[obj_ref].edited = 1;
+						}
+						else if(holder[1] == "down" && obj_ref != data.length - 1) {
+							var table_item = $("#" + type.toLowerCase() + "_tr_" + holder[2]).detach(),
+								obj = data[obj_ref],
+								obj_order = obj.order;
+							str = "#" + type.toLowerCase() + "_tr_";
+							if(type == "Subjects") {
+								$(str + data[obj_ref + 1].sid).after(table_item);
+							}
+							else if(type == "Topics") {
+								$(str + data[obj_ref + 1].tid).after(table_item);
+							}
+							else if(type == "Sections") {
+								$(str + data[obj_ref + 1].section_id).after(table_item);
+							}
+							data[obj_ref] = data[obj_ref + 1];
+							data[obj_ref + 1] = obj;
+							data[obj_ref + 1].order = data[obj_ref].order;
+							data[obj_ref].order = obj_order;
+							data[obj_ref + 1].edited = 1;
+							data[obj_ref].edited = 1;
+						}
+					});
 				});
 				$(".field").on("input", function() {
 					var id = parseInt($(this).attr("id").split("_")[2]);
 					data.forEach(function(iter) { 
 						if(type == "Subjects" && iter.sid == id) {
+							iter.edited = 1;
 							iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
 							var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
 							str = exports.replace_all(str, "-", "AND");
@@ -262,6 +320,7 @@ define(function() {
 							iter.sname = str;
 						}
 						else if(type == "Topics" && iter.tid == id) {
+							iter.edited = 1;
 							iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
 							var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
 							str = exports.replace_all(str, "-", "AND");
@@ -271,6 +330,7 @@ define(function() {
 							iter.tname = str;
 						}
 						else if(type == "Sections" && iter.section_id == id) {
+							iter.edited = 1;
 							iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
 							var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
 							str = exports.replace_all(str, "-", "AND");
@@ -305,6 +365,8 @@ define(function() {
 						data[obj_ref - 1] = obj;
 						data[obj_ref - 1].order = data[obj_ref].order;
 						data[obj_ref].order = obj_order;
+						data[obj_ref - 1].edited = 1;
+						data[obj_ref].edited = 1;
 					}
 					else if(holder[1] == "down" && obj_ref != data.length - 1) {
 						var table_item = $("#" + type.toLowerCase() + "_tr_" + holder[2]).detach(),
@@ -324,6 +386,8 @@ define(function() {
 						data[obj_ref + 1] = obj;
 						data[obj_ref + 1].order = data[obj_ref].order;
 						data[obj_ref].order = obj_order;
+						data[obj_ref + 1].edited = 1;
+						data[obj_ref].edited = 1;
 					}
 				});
 
