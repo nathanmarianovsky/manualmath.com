@@ -22,12 +22,15 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 	exports.handle_links = function(router, subjects, topics, sections, examples) {
 		$("button").click(function(e) {
 			e.preventDefault();
+			var statement = "";
 			if($(this).attr("id") == "login_button") {
 				if(functions.validate($("#login_email").val())) {
 					$.post("/api/cms/check/" + $("#login_email").val()).done(function(result) {
 						if(result.length == 1) {
 							if(functions.password_check($("#login_password").val())) {
-								$.post("api/cms/check/" + $("#login_email").val() + "/" + $("#login_password").val()).done(function(obj) {
+								statement = "/api/cms/check/" + $("#login_email").val() + 
+									"/" + $("#login_password").val();
+								$.post(statement).done(function(obj) {
 									if(typeof(obj[0]) == "object") {
 										functions.modal(13, router, obj);
 									}
@@ -35,81 +38,65 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 										if(obj[0] == "Wrong Password") {
 											functions.modal(5);
 										}
-										else {
-											functions.modal(4);
-										}
+										else { functions.modal(4); }
 									}
-									else {
-										functions.modal(3);
-									}
+									else { functions.modal(3); }
 								});
 							}
-							else {
-								functions.modal(5);
-							}
+							else { functions.modal(5); }
 						}
-						else {
-							functions.modal(1);
-						}
+						else { functions.modal(1); }
 					});
 				}
-				else {
-					functions.modal(0);
-				}
+				else { functions.modal(0); }
 			}
 			else if($(this).attr("id") == "register_button") {
 				if(functions.validate($("#email").val())) {
 					$.post("/api/cms/check/" + $("#email").val()).done(function(result) {
 						if(result.length == 0) {
-							if(functions.password_check($("#password").val()) && $("#password").val() == $("#password-confirm").val()) {
-								if($("#first_name").val().trim().length > 0 && !/[^a-zA-Z]/.test($("#first_name").val())) {
-									if($("#last_name").val().trim().length > 0 && !/[^a-zA-Z]/.test($("#last_name").val())) {
+							if(functions.password_check($("#password").val()) && 
+								$("#password").val() == $("#password-confirm").val()) {
+								if($("#first_name").val().trim().length > 0 && 
+									!/[^a-zA-Z]/.test($("#first_name").val())) {
+									if($("#last_name").val().trim().length > 0 && 
+										!/[^a-zA-Z]/.test($("#last_name").val())) {
 										if($("#answer").val().trim().length > 0) {
-											var first = $("#first_name").val()[0].toUpperCase() + $("#first_name").val().slice(1).toLowerCase(),
-												last =  $("#last_name").val()[0].toUpperCase() + $("#last_name").val().slice(1).toLowerCase(),
-												call = "/api/cms/add/" + first + "/" + last + "/" + $("#email").val() 
-												+ "/" + $("#password").val() + "/" + $("#question")[0].options.selectedIndex 
-												+ "/" + $("#answer").val();
+											var first = $("#first_name").val()[0].toUpperCase() + 
+												$("#first_name").val().slice(1).toLowerCase(),
+												last =  $("#last_name").val()[0].toUpperCase() + 
+													$("#last_name").val().slice(1).toLowerCase(),
+												call = "/api/cms/add/" + first + "/" + last + "/" + 
+													$("#email").val() + "/" + $("#password").val() + 
+													"/" + $("#question")[0].options.selectedIndex + 
+													"/" + $("#answer").val();
 											$.post(call).done(function() {
 												$.post("/api/cms/get/admin").done(function(obj) {
 													functions.modal(12, router, obj);
 												});
-											}).fail(function() {
-												functions.modal(11);
-											});
+											}).fail(function() { functions.modal(11); });
 										}
-										else {
-											functions.modal(10);
-										}
+										else { functions.modal(10); }
 									}
-									else {
-										functions.modal(9);
-									}
+									else { functions.modal(9); }
 								}
-								else {
-									functions.modal(8);
-								}
+								else { functions.modal(8); }
 							}
 							else if(!functions.password_check($("#password").val())) {
 								functions.modal(2);
 							}
-							else {
-								functions.modal(7);
-							}
+							else { functions.modal(7); }
 						}
-						else {
-							functions.modal(6);
-						}
+						else { functions.modal(6); }
 					});
 				}
-				else {
-					functions.modal(0);
-				}
+				else { functions.modal(0); }
 			}
 		});
 
 		$("a").click(function(e) {
 			e.preventDefault();
+			console.log("herro!!");
+			console.log($(this).attr("id"));
 			if($(this).attr("id") == "about" || $(this).attr("href") == "about.html") {
 				router.navigate("about");
 			}
@@ -164,10 +151,11 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				}
 			}
 			else if($(this).attr("id") == "subjects_change") {
-				functions.sidenav_modal("Subjects", subjects, router);
+				functions.sidenav_modal("Subjects", subjects);
 			}
 			else {
 				var id = $(this).attr("id");
+				console.log(id);
 				if(id) {
 					var holder = id.split("_"),
 						id_string = holder[0];
@@ -216,7 +204,13 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
+						router.navigate("subject.topic.section.current_page", {
+							sname: subject.sname, 
+							tname: topic.tname, 
+							section_name: 
+							section.section_name, 
+							current_page_name: section.section_name
+						});
 					}
 					else if(id_string == "sectionnav") {
 						var section = sections.filter(function(iter) {
@@ -240,7 +234,12 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: section.section_name});
+						router.navigate("subject.topic.section.current_page", { 
+							sname: subject.sname, 
+							tname: topic.tname, 
+							section_name: section.section_name, 
+							current_page_name: section.section_name
+						});
 					}
 					else if(id_string == "examples") {
 						var example = examples.filter(function(iter) {
@@ -255,7 +254,12 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						router.navigate("subject.topic.section.current_page", {sname: subject.sname, tname: topic.tname, section_name: section.section_name, current_page_name: example.ename});
+						router.navigate("subject.topic.section.current_page", { 
+							sname: subject.sname, 
+							tname: topic.tname, 
+							section_name: section.section_name, 
+							current_page_name: example.ename
+						});
 					}
 				}
 			}

@@ -264,7 +264,8 @@ nav {
     background-color: #4693ec;
     color: white;
     padding: 9px;
-    border-bottom: none
+    border-bottom: none;
+    cursor: pointer;
 }
 
 .cont_div {

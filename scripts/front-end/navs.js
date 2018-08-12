@@ -166,7 +166,7 @@ define(["dist/functions-min"], function(functions) {
 			An object representing "subject" or "topic"
 
 	*/
-	exports.driver = function(page, cms, param1, param2) {
+	exports.driver = function(page, cms, param1, param2, callback) {
 		$.get("/api/cms/contributors").done(function(num) {
 			const validation = Math.ceil(Math.log(parseInt(num)));
 			if(page == "about") { exports.subject_side_nav(param1, cms, validation); }
@@ -186,7 +186,7 @@ define(["dist/functions-min"], function(functions) {
 					}
 				}
 			}
-		});
+		}).done(function() { callback(); });
 	};
 
 	return exports;

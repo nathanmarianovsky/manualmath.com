@@ -1,12 +1,38 @@
 define(function() {
 	var exports = {};
 
+	/*
+
+	Purpose:
+	Replaces all instances of a substring inside of a given string.
+
+	Parameters:
+		str: 
+			The overall string
+		find:
+			The substring which is to be replaced
+		replace:
+			The string which will replace the substring
+
+	*/
 	exports.replace_all = function(str, find, replace) {
-	    return str.replace(new RegExp(find, 'g'), replace);
+	    return str.replace(new RegExp(find, "g"), replace);
 	};
 
+	/*
+
+	Purpose:
+	Returns a deep copy of an object.
+
+	Parameters:
+		obj: 
+			The object which is to be copied
+
+	*/
 	exports.copy = function(obj) {
-		var output, v, key;
+		var output = undefined,
+			v = undefined, 
+			key = undefined;
 		output = Array.isArray(obj) ? [] : {};
 		for(key in obj) {
 		   v = obj[key];
@@ -121,6 +147,18 @@ define(function() {
 	    }, 100);
 	};
 
+	/*
+
+	Purpose:
+	Handles all clicks for the sidenav modal.
+
+	Parameters:
+		type: 
+			A reference to the type of data being handled
+		data:
+			An array of the objects representing the type of data
+
+	*/
 	exports.sidenav_modal_links = function(type, data) {
 		$(".field").on("input", function() {
 			var id = parseInt($(this).attr("id").split("_")[2]);
@@ -223,7 +261,9 @@ define(function() {
 				});
 			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color")) == "#ff0000") {
 				$("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color", "green");
-				if(typeof data[obj_ref].del_approval == "object") { data[obj_ref].del_approval = exports.read_cookie("contributor"); }
+				if(typeof data[obj_ref].del_approval == "object") { 
+					data[obj_ref].del_approval = exports.read_cookie("contributor"); 
+				}
 				else { data[obj_ref].del_approval += "," + exports.read_cookie("contributor"); }
 			}
 			else {
@@ -263,7 +303,9 @@ define(function() {
 				});
 			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_check_" + holder[2]).css("color")) == "#ff0000") {
 				$("#" + type.toLowerCase() + "_check_" + holder[2]).css("color", "green");
-				if(typeof data[obj_ref].side_approval == "object") { data[obj_ref].side_approval = exports.read_cookie("contributor"); }
+				if(typeof data[obj_ref].side_approval == "object") { 
+					data[obj_ref].side_approval = exports.read_cookie("contributor"); 
+				}
 				else { data[obj_ref].side_approval += "," + exports.read_cookie("contributor"); }
 			}
 			else {
@@ -286,7 +328,19 @@ define(function() {
 		});
 	};
 
-	exports.sidenav_modal = function(type, input, router) {
+	/*
+
+	Purpose:
+	Handles the sidenav modal that adds and changes data.
+
+	Parameters:
+		type: 
+			A reference to the type of data being handled
+		data:
+			An array of the objects representing the type of data
+
+	*/
+	exports.sidenav_modal = function(type, input) {
 		var data = (exports.copy(input)).map(function(elem) { 
 			elem.edited = 0;
 			elem.created = 0;
@@ -302,11 +356,13 @@ define(function() {
 				.append($("<a>").attr("id", "popup_exit")
 					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
 			$.get("/pages/dist/sidenav-change-min.html").done(function(table) {
-				var statement = "Below you will find all current " + type.toLowerCase() + " which can be renamed and reorganized." +
-					" Furthermore, as a contributor you can approve a subject so that it will be available to users on the client side, or similarly" +
-					" disapprove if you feel that there is something wrong with it. With this design, a subject will appear on the client side only" +
-					" when enough contributors have given approval. To change the approval of a subject simply click on the checkmark and note that" +
-					" the green color indicates an approval from you. Likewise the system also allows for a " + type.toLowerCase().substring(0, type.length - 1) +
+				var statement = "Below you will find all current " + type.toLowerCase() + " which can be renamed" + 
+					" and reorganized. Furthermore, as a contributor you can approve a subject so that it will be" + 
+					" available to users on the client side, or similarly disapprove if you feel that there is" + 
+					" something wrong with it. With this design, a subject will appear on the client side only" +
+					" when enough contributors have given approval. To change the approval of a subject simply" + 
+					" click on the checkmark and note that the green color indicates an approval from you." + 
+					" Likewise the system also allows for a " + type.toLowerCase().substring(0, type.length - 1) +
 					" to be deleted from the database when enough contributors have given approval for it."
 				$("#popup_body").text(statement).append(table);
 				data.forEach(function(elem) {
@@ -331,13 +387,15 @@ define(function() {
 								.append($("<i>").addClass("material-icons").text("cancel")));
 					item_tr.append(item_name).append(item_move).append(item_approve).append(item_delete);
 					$("#sidenav_table_body").append(item_tr);
-					if(typeof elem.side_approval != "object" && elem.side_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+					if(typeof elem.side_approval != "object" && 
+						elem.side_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
 						$("#" + type.toLowerCase() + "_check_" + addon).css("color", "green");
 					}
 					else {
 						$("#" + type.toLowerCase() + "_check_" + addon).css("color", "red");
 					}
-					if(typeof elem.del_approval != "object" && elem.del_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+					if(typeof elem.del_approval != "object" && 
+						elem.del_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
 						$("#" + type.toLowerCase() + "_delete_" + addon).css("color", "green");
 					}
 					else {
@@ -365,10 +423,26 @@ define(function() {
 				$("#popup_add").click(function(e) {
 					e.preventDefault();
 					var addon = -1;
-					if(type == "Subjects") { addon = (exports.copy(data)).sort(function(a, b) { return b.sid - a.sid; })[0].sid + 1; }
-					else if(type == "Topics") { addon = (exports.copy(data)).sort(function(a, b) { return b.tid - a.tid; })[0].tid + 1; }
-					else if(type == "Sections") { addon = (exports.copy(data)).sort(function(a, b) { return b.section_id - a.section_id; })[0].section_id + 1; }
-					else if(type == "Examples") { addon = (exports.copy(data)).sort(function(a, b) { return b.eid - a.eid; })[0].eid + 1; }
+					if(type == "Subjects") { 
+						addon = (exports.copy(data)).sort(function(a, b) { 
+							return b.sid - a.sid; 
+						})[0].sid + 1;
+					}
+					else if(type == "Topics") { 
+						addon = (exports.copy(data)).sort(function(a, b) { 
+							return b.tid - a.tid; 
+						})[0].tid + 1; 
+					}
+					else if(type == "Sections") { 
+						addon = (exports.copy(data)).sort(function(a, b) { 
+							return b.section_id - a.section_id; 
+						})[0].section_id + 1; 
+					}
+					else if(type == "Examples") { 
+						addon = (exports.copy(data)).sort(function(a, b) { 
+							return b.eid - a.eid; 
+						})[0].eid + 1; 
+					}
 					var new_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
 						new_name = $("<td>").text("New Item").attr("contentEditable", "true")
 							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
@@ -387,7 +461,7 @@ define(function() {
 					$("#sidenav_table_body").append(new_tr);
 					data.push({
 						sid: addon,
-						clean_name: "New Item",
+						clean_name: "New " + type.substring(0, type.length - 1),
 						sname: "New_Item",
 						order: data[data.length - 1].order + 1,
 						topics: [],
@@ -421,8 +495,10 @@ define(function() {
 								if(typeof iter.side_approval == "object" || iter.side_approval == "") { iter.side_approval = "0"; }
 								if(type == "Subjects") {
 									if(iter.created == 1) {
-										$.post("/api/add/subject/" + id + "/" + iter.sname + "/" + iter.order + "/undefined/undefined/" + 
-											iter.side_approval + "/undefined/" + iter.del_approval + "/undefined/undefined").fail(function() {
+										statement = "/api/add/subject/" + id + "/" + iter.sname + "/" + iter.order + 
+											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
+											iter.del_approval + "/undefined/undefined";
+										$.post(statement).fail(function() {
 											$("#popup_title").text("Database Issue");
 											$("#popup_body").text("There was an issue uploading the new subject(s) to the database!");
 											$("#popup_exit").remove();
@@ -435,8 +511,10 @@ define(function() {
 										});
 									}
 									if(iter.edited == 1 && iter.created == 0) {
-										$.post("/api/change/subject/" + id + "/" + iter.sname + "/" + iter.order + "/undefined/undefined/" + 
-											iter.side_approval + "/undefined/" + iter.del_approval + "/undefined/undefined").fail(function() {
+										statement = "/api/change/subject/" + id + "/" + iter.sname + "/" + iter.order + 
+											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
+											iter.del_approval + "/undefined/undefined";
+										$.post(statement).fail(function() {
 											$("#popup_title").text("Database Issue");
 											$("#popup_body").text("There was an issue uploading the subject changes to the database!");
 											$("#popup_exit").remove();
@@ -523,8 +601,9 @@ define(function() {
 							$("#popup_body").text("Please confirm the changes provided by providing your password:").append(material);
 							$("#popup_submit").remove();
 							$("#popup_exit").remove();
-							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Confirm"))
-								.append($("<a>").attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+								.addClass("waves-effect waves-blue btn-flat").text("Confirm")).append($("<a>")
+									.attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
 							$("#new_password_confirm").closest(".row").remove();
 							$("#old_password_label").text("Password");
 							$("#popup_submit").css("pointer-events", "none");
@@ -551,7 +630,8 @@ define(function() {
 										$("#popup_title").text("Password Issue");
 										$("#popup_submit").remove();
 										$("#popup_exit").remove();
-										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+											.addClass("waves-effect waves-blue btn-flat").text("Exit"));
 										$("#popup_body").text("The password you provided did not match the one in the database!");
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
@@ -564,7 +644,8 @@ define(function() {
 										$("#popup_title").text("First Name Issue");
 										$("#popup_submit").remove();
 										$("#popup_exit").remove();
-										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+											.addClass("waves-effect waves-blue btn-flat").text("Exit"));
 										$("#popup_body").text("The first name cannot be left empty or contain an invalid character!");
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
@@ -577,7 +658,8 @@ define(function() {
 										$("#popup_title").text("Last Name Issue");
 										$("#popup_submit").remove();
 										$("#popup_exit").remove();
-										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+											.addClass("waves-effect waves-blue btn-flat").text("Exit"));
 										$("#popup_body").text("The last name cannot be left empty or contain an invalid character!");
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
@@ -587,13 +669,15 @@ define(function() {
 										});
 									}
 									else {
-										var statement = "/api/cms/change/profile/" + email + "/" + fname + "/" + lname + "/" + question + "/" + answer;
+										var statement = "/api/cms/change/profile/" + email + "/" + fname + 
+											"/" + lname + "/" + question + "/" + answer;
 										$.post(statement).done(function(result) {
 										 	if(result == "1") {
 												$("#popup_title").text("Confirmation");
 												$("#popup_submit").remove();
 												$("#popup_exit").remove();
-												$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+												$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+													.addClass("waves-effect waves-blue btn-flat").text("Exit"));
 												$("#popup_body").text("The changes you provided have been implemented!");
 												$("#popup_submit").click(function(e) {
 													e.preventDefault();
@@ -606,8 +690,10 @@ define(function() {
 												$("#popup_title").text("Database Issue");
 												$("#popup_submit").remove();
 												$("#popup_exit").remove();
-												$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
-												$("#popup_body").text("The changes you provided had trouble being uploaded to the database!");
+												$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+													.addClass("waves-effect waves-blue btn-flat").text("Exit"));
+												$("#popup_body").text("The changes you provided had trouble" + 
+													" being uploaded to the database!");
 												$("#popup_submit").click(function(e) {
 													e.preventDefault();
 													$(".lean-overlay").remove();
@@ -622,11 +708,13 @@ define(function() {
 						}
 						else if(exports.password_check($("#password_cms").val())) {
 							$("#popup_title").text("Profile Changes").css("text-align", "center");
-							$("#popup_body").text("Please confirm the changes provided by providing both the old and new passwords:").append(material);
+							$("#popup_body").text("Please confirm the changes provided by providing both the old and new passwords:")
+								.append(material);
 							$("#popup_submit").remove();
 							$("#popup_exit").remove();
-							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Confirm"))
-								.append($("<a>").attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+								.addClass("waves-effect waves-blue btn-flat").text("Confirm")).append($("<a>")
+									.attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
 							$("#popup_submit").css("pointer-events", "none");
 							$("#old_password_confirm").on("input", function() {
 								if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
@@ -656,8 +744,10 @@ define(function() {
 									$("#popup_title").text("Password Issue");
 									$("#popup_submit").remove();
 									$("#popup_exit").remove();
-									$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
-									$("#popup_body").text("The new password provided for confirmation does not match the previous password change!");
+									$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+										.addClass("waves-effect waves-blue btn-flat").text("Exit"));
+									$("#popup_body").text("The new password provided" + 
+										" for confirmation does not match the previous password change!");
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
 										$(".lean-overlay").remove();
@@ -671,8 +761,10 @@ define(function() {
 											$("#popup_title").text("Password Issue");
 											$("#popup_submit").remove();
 											$("#popup_exit").remove();
-											$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
-											$("#popup_body").text("The old password provided for confirmation does not match the one in the database!");
+											$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+												.addClass("waves-effect waves-blue btn-flat").text("Exit"));
+											$("#popup_body").text("The old password provided for confirmation" + 
+												" does not match the one in the database!");
 											$("#popup_submit").click(function(e) {
 												e.preventDefault();
 												$(".lean-overlay").remove();
@@ -681,7 +773,8 @@ define(function() {
 											});
 										}
 										else {
-											var statement = "/api/cms/change/profile/" + email + "/" + fname + "/" + lname + "/" + question + "/" + answer;
+											var statement = "/api/cms/change/profile/" + email + "/" + fname + 
+												"/" + lname + "/" + question + "/" + answer;
 											$.post(statement).done(function(result) {
 											 	if(result == "1") {
 													$.post("/api/cms/change/password/" + email + "/" + new_password).done(function(result) {
@@ -689,7 +782,10 @@ define(function() {
 															$("#popup_title").text("Confirmation");
 															$("#popup_submit").remove();
 															$("#popup_exit").remove();
-															$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+															$("#popup_modal_footer").append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("waves-effect waves-blue btn-flat")
+																.text("Exit"));
 															$("#popup_body").text("The changes you provided have been implemented!");
 															$("#popup_submit").click(function(e) {
 																e.preventDefault();
@@ -702,8 +798,12 @@ define(function() {
 															$("#popup_title").text("Database Issue");
 															$("#popup_submit").remove();
 															$("#popup_exit").remove();
-															$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
-															$("#popup_body").text("The changes you provided had trouble being uploaded to the database!");
+															$("#popup_modal_footer").append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("waves-effect waves-blue btn-flat")
+																.text("Exit"));
+															$("#popup_body").text("The changes you provided" + 
+																" had trouble being uploaded to the database!");
 															$("#popup_submit").click(function(e) {
 																e.preventDefault();
 																$(".lean-overlay").remove();
@@ -717,8 +817,12 @@ define(function() {
 													$("#popup_title").text("Database Issue");
 													$("#popup_submit").remove();
 													$("#popup_exit").remove();
-													$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
-													$("#popup_body").text("The changes you provided had trouble being uploaded to the database!");
+													$("#popup_modal_footer").append($("<a>")
+														.attr("id", "popup_submit")
+														.addClass("waves-effect waves-blue btn-flat")
+														.text("Exit"));
+													$("#popup_body").text("The changes you provided" + 
+														" had trouble being uploaded to the database!");
 													$("#popup_submit").click(function(e) {
 														e.preventDefault();
 														$(".lean-overlay").remove();
@@ -736,7 +840,8 @@ define(function() {
 							$("#popup_title").text("Password Issue");
 							$("#popup_submit").remove();
 							$("#popup_exit").remove();
-							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
+							$("#popup_modal_footer").append($("<a>")
+								.attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
 							$("#popup_body").text("The new password does not meet the minimum security requirements!");
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
@@ -773,13 +878,16 @@ define(function() {
 			$("body").append(content);
 			$("#popup_title").text("Login Issue");
 			if(issue == 0) {
-				$("#popup_body").text("It seems you are not currently signed into the content management system. Please login first!");
+				$("#popup_body").text("It seems you are not currently signed" + 
+					" into the content management system. Please login first!");
 			}
 			else if(issue == 1) {
-				$("#popup_body").text("Your current session has expired. To continue using the system please login again!");
+				$("#popup_body").text("Your current session has expired. To" + 
+					" continue using the system please login again!");
 			}
 			else if(issue == 2) {
-				$("#popup_body").text("You are already logged in! Click the button below to redirect to the content management system.");
+				$("#popup_body").text("You are already logged in! Click the" + 
+					" button below to redirect to the content management system.");
 			}
 			$(".modal-trigger").leanModal({
 				dismissible: false,
@@ -841,7 +949,8 @@ define(function() {
 			}
 			else if(issue == 1) {
 				$("#popup_title").text("Registration Issue");
-				$("#popup_body").text("The email you provided does not exist in the database. Please provide another email!");
+				$("#popup_body").text("The email you provided does not exist in the database." + 
+					" Please provide another email!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -852,7 +961,8 @@ define(function() {
 			}
 			else if(issue == 2) {
 				$("#popup_title").text("Password Issue");
-				$("#popup_body").text("The password must be at least eight characters long while containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
+				$("#popup_body").text("The password must be at least eight characters long while" + 
+					" containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -1030,7 +1140,8 @@ define(function() {
 			else if(issue == 14) {
 				$.get("/pages/dist/password-recovery-min.html").done(function(material) {
 					$("#popup_title").text("Password Recovery");
-					$("#popup_body").text("Please answer the security question associated to the account:").append(material);
+					$("#popup_body").text("Please answer the security question associated to the account:")
+						.append(material);
 					$("#ques").val($("#question option:selected").text());
 					$("#popup_submit").text("Continue").removeClass("modal-close");
 					$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
@@ -1055,7 +1166,8 @@ define(function() {
 					});
 					$("#popup_submit").click(function(e) {
 						e.preventDefault();
-						$.post("/api/cms/check/security/" + $("#login_email").val() + "/" + $("#forgotten").val()).done(function(result) {
+						var statement = "/api/cms/check/security/" + $("#login_email").val() + "/" + $("#forgotten").val();
+						$.post(statement).done(function(result) {
 							if(result == 1) {
 								$.get("/pages/dist/password-change-min.html").done(function(result) {
 									$("#popup_title").text("Password Reset");
@@ -1087,14 +1199,17 @@ define(function() {
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
 										if(exports.password_check($("#newpass").val())) {
-											$.post("/api/cms/change/password/" + $("#login_email").val() + "/" + $("#newpass").val()).done(function() {
+											statement = "/api/cms/change/password/" + $("#login_email").val() + 
+												"/" + $("#newpass").val();
+											$.post(statement).done(function() {
 												$("#popup_title").text("Password Changed");
 												$("#popup_body").text("You may now login with the new password!");
 												$("#popup_exit").remove();
 												$("#popup_submit").remove();
 												$("#popup_modal_footer")
 													.append($("<a>").attr("id", "popup_submit")
-														.addClass("modal-close waves-effect waves-blue btn-flat").text("Continue"));
+														.addClass("modal-close waves-effect waves-blue btn-flat")
+														.text("Continue"));
 												$("#popup_submit").click(function(e) {
 													e.preventDefault();
 													$(".lean-overlay").remove();
@@ -1107,12 +1222,15 @@ define(function() {
 										}
 										else {
 											$("#popup_title").text("Password Issue");
-											$("#popup_body").text("The password must be at least eight characters long while containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
+											$("#popup_body").text("The password must be at least eight characters" + 
+												" long while containing at least one number, one lowercase letter," + 
+												" and one uppercase letter. Please try again!");
 											$("#popup_exit").remove();
 											$("#popup_submit").remove();
 											$("#popup_modal_footer")
 												.append($("<a>").attr("id", "popup_submit")
-													.addClass("modal-close waves-effect waves-blue btn-flat").text("Ok"));
+													.addClass("modal-close waves-effect waves-blue btn-flat")
+													.text("Ok"));
 											$("#popup_submit").click(function(e) {
 												e.preventDefault();
 												$(".lean-overlay").remove();
@@ -1156,8 +1274,8 @@ define(function() {
 
 	*/
 	exports.validate = function(email) {
-    	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    	return re.test(String(email).toLowerCase());
+    	var reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    	return reg.test(String(email).toLowerCase());
 	};
 
 	/*
@@ -1289,7 +1407,9 @@ define(function() {
 			The name of the page currently set
 
 	*/
-	exports.handle_logo_link = function(page) { page == "about" ? $("#logo").css("pointer-events", "none") : $("#logo").css("pointer-events", ""); };
+	exports.handle_logo_link = function(page) { 
+		page == "about" ? $("#logo").css("pointer-events", "none") : $("#logo").css("pointer-events", ""); 
+	};
 
 	/*
 
@@ -1391,8 +1511,10 @@ define(function() {
 	exports.handle_button = function() {
 		$("#latex .show_solution").click(function(defaultevent) {
 			defaultevent.preventDefault();
-			$(this).find(".solution_display").text() == "+" ? $(this).parent().find(".cont_div").fadeIn(300) : $(this).parent().find(".cont_div").fadeOut(300);
-			$(this).find(".solution_display").text() == "+" ? $(this).find(".solution_display").text("-") : $(this).find(".solution_display").text("+");
+			$(this).find(".solution_display").text() == "+" ? $(this).parent().find(".cont_div").fadeIn(300) 
+				: $(this).parent().find(".cont_div").fadeOut(300);
+			$(this).find(".solution_display").text() == "+" ? $(this).find(".solution_display").text("-") 
+				: $(this).find(".solution_display").text("+");
 		});
 	};
 
