@@ -8,7 +8,7 @@ exports.add_api_routes = (app, pool) => {
 		var objects = request.params.objects;
 		response.set('Cache-Control', 'public, max-age=864000000');
 		if(objects == "subjects") {
-			pool.query("SELECT sid,sname,`order`,side_approval FROM subject ORDER BY `order` ASC", (err, results) => {
+			pool.query("SELECT sid,sname,`order`,side_approval,del_approval FROM subject ORDER BY `order` ASC", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(subject => {
 					subject.topics = [];
@@ -203,33 +203,114 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to change the data corresponding to any particular subject
-	app.post("/api/change/subject/:param/:name/:order/:about/:notation", (request, response) => {
-		var param = request.params.param,
+	app.post("/api/:operation/subject/:param/:name/:order/:about/:notation/:side_approval/:cms_approval/:del_approval/:about_cms/:notation_cms", (request, response) => {
+		var operation = request.params.operation
+			param = request.params.param,
 			name = request.params.name,
 			order = request.params.order,
 			about = request.params.about,
 			notation = request.params.notation,
-			statement = "";
-		if(!isNaN(param)) {
-			statement = "UPDATE subject SET ";
-			if(name !== "undefined") {
-				statement += "sname='" + name + "'";
+			side_approval = request.params.side_approval,
+			cms_approval = request.params.cms_approval,
+			del_approval = request.params.del_approval,
+			about_cms = request.params.about_cms,
+			notation_cms = request.params.notation_cms,
+			statement = "",
+			ending = "";
+		if(operation == "change") {
+			if(!isNaN(param)) {
+				statement = "UPDATE subject SET ";
+				if(name !== "undefined") {
+					statement += "sname='" + name + "'";
+				}
+				if(order !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					statement += "`order`='" + order + "'";
+				}
+				if(about !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					statement += "about='" + about + "'";
+				}
+				if(notation !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					statement += "notation='" + notation + "'";
+				}
+				if(side_approval !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					side_approval != "0" ? statement += "side_approval='" + side_approval + "'" : statement += "side_approval=NULL";
+				}
+				if(cms_approval !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" : statement += "cms_approval=NULL";
+				}
+				if(del_approval !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					del_approval != "0" ? statement += "del_approval='" + del_approval + "'" : statement += "del_approval=NULL";
+				}
+				if(about_cms !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					statement += "about_cms='" + about_cms + "'";
+				}
+				if(notation_cms !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					statement += "notation_cms='" + notation_cms + "'";
+				}
+				statement += " WHERE sid=" + param;
 			}
-			if(order !== "undefined") {
-				if(statement[statement.length-1] != " ") { statement += ","; }
-				statement += "`order`='" + order + "'";
-			}
-			if(about !== "undefined") {
-				if(statement[statement.length-1] != " ") { statement += ","; }
-				statement += "about='" + about + "'";
-			}
-			if(notation !== "undefined") {
-				if(statement[statement.length-1] != " ") { statement += ","; }
-				statement += "notation='" + notation + "'";
-			}
-			statement += " WHERE sid=" + param;
+			else { response.send("The sid provided is invalid!"); }
 		}
-		else { response.send("The sid provided is invalid!"); }
+		else if(operation == "add") {
+			if(!isNaN(param)) {
+				statement = "INSERT INTO subject (sid,sname,`order`";
+				ending = " VALUES ('" + param + "','" + name + "','" + order + "'";
+				if(about !== "undefined") {
+					statement += ",about";
+					ending += ",'" + about + "'";
+				}
+				if(notation !== "undefined") {
+					statement += ",notation";
+					ending += ",'" + notation + "'";
+				}
+				if(side_approval !== "undefined") {
+					statement += ",side_approval";
+					if(side_approval == "0") {
+						ending += ",NULL";
+					}
+					else {
+						ending += ",'" + side_approval + "'";
+					}
+				}
+				if(cms_approval !== "undefined") {
+					statement += ",cms_approval";
+					if(cms_approval == "0") {
+						ending += ",NULL";
+					}
+					else {
+						ending += ",'" + cms_approval + "'";
+					}
+				}
+				if(del_approval !== "undefined") {
+					statement += ",del_approval";
+					if(del_approval == "0") {
+						ending += ",NULL";
+					}
+					else {
+						ending += ",'" + del_approval + "'";
+					}
+				}
+				if(about_cms !== "undefined") {
+					statement += ",about_cms";
+					ending += ",'" + about_cms + "'";
+				}
+				if(notation_cms !== "undefined") {
+					statement += ",notation_cms";
+					ending += ",'" + notation_cms + "'";
+				}
+				ending += ")";
+				statement += ")" + ending;
+			}
+			else { response.send("The sid provided is invalid!"); }
+		}
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
@@ -237,28 +318,45 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to add the data corresponding to a new subject
-	app.post("/api/add/subject/:param/:name/:order/:about/:notation", (request, response) => {
-		var param = request.params.param,
-			name = request.params.name,
-			order = request.params.order,
-			about = request.params.about,
-			notation = request.params.notation,
-			statement = "";
-		pool.query("SELECT sid,sname FROM subject", (err, results) => {
-			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-			if(results.some(elem => elem.sid == param || elem.sname == name)) { response.send("0"); }
-			else {
-				statement = "INSERT INTO subject (sid,sname,`order`,about,notation) VALUES ('";
-				if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && about.length > 0 && notation.length > 0) {
-					statement += param + "','" + name + "','" + order + "','" + about + "','" + notation + "')";
-				}
-				pool.query(statement, err => {
-					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-					else { response.send("1"); }
-				});
-			}
-		});
-	});
+	// app.post("/api/add/subject/:param/:name/:order/:about/:notation/:side_approval/:cms_approval/:del_approval/:about_cms/:notation_cms", (request, response) => {
+	// 	var param = request.params.param,
+	// 		name = request.params.name,
+	// 		order = request.params.order,
+	// 		about = request.params.about,
+	// 		notation = request.params.notation,
+	// 		side_approval = request.params.side_approval,
+	// 		cms_approval = request.params.cms_approval,
+	// 		del_approval = request.params.del_approval,
+	// 		about_cms = request.params.about_cms,
+	// 		notation_cms = request.params.notation_cms,
+	// 		statement = "";
+	// 	pool.query("SELECT sid,sname FROM subject", (err, results) => {
+	// 		if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+	// 		if(results.some(elem => elem.sid == param || elem.sname == name)) { response.send("0"); }
+	// 		else {
+	// 			statement = "INSERT INTO subject (sid,sname,`order`";
+	// 			if(about !== "undefined" && notation !== "undefined") {
+	// 				statement += ",about,notation) VALUES ('";
+	// 			}
+	// 			else {
+	// 				statement += ") VALUES ('";
+	// 			}
+	// 			if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && about.length > 0 && notation.length > 0) {
+	// 				statement += param + "','" + name + "','" + order;
+	// 				if(about !== "undefined" && notation !== "undefined") {
+	// 					statement += "','" + about + "','" + notation + "')";
+	// 				}
+	// 				else {
+	// 					statement += "')";
+	// 				}
+	// 			}
+	// 			pool.query(statement, err => {
+	// 				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+	// 				else { response.send("1"); }
+	// 			});
+	// 		}
+	// 	});
+	// });
 
 	// The API method to change the data corresponding to any particular topic
 	app.post("/api/change/topic/:param/:name/:order/:sid/:about", (request, response) => {

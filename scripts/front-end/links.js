@@ -164,7 +164,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				}
 			}
 			else if($(this).attr("id") == "subjects_change") {
-				functions.sidenav_modal("Subjects", subjects);
+				functions.sidenav_modal("Subjects", subjects, router);
 			}
 			else {
 				var id = $(this).attr("id");

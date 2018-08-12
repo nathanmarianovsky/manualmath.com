@@ -121,7 +121,172 @@ define(function() {
 	    }, 100);
 	};
 
-	exports.sidenav_modal = function(type, input) {
+	exports.sidenav_modal_links = function(type, data) {
+		$(".field").on("input", function() {
+			var id = parseInt($(this).attr("id").split("_")[2]);
+			data.forEach(function(iter) { 
+				if((type == "Subjects" && iter.sid == id) || (type == "Topics" && iter.tid == id)
+					|| (type == "Sections" && iter.section_id == id) || (type == "Examples" && iter.eid == id)) {
+					iter.edited = 1;
+					iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
+					var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
+					str = exports.replace_all(str, "-", "AND");
+					str = exports.replace_all(str, "'", "APOSTROPHE");
+					str = exports.replace_all(str, ":", "COLON");
+					str = exports.replace_all(str, ",", "COMMA");
+					if(type == "Subjects") {
+						iter.sname = str;
+					}
+					else if(type == "Topics") {
+						iter.tname = str;
+					}
+					else if(type == "Sections") {
+						iter.section_name = str;
+					}
+					else if(type == "Examples") {
+						iter.section_name = str;
+					}
+				}
+			});
+		});
+		$(".arrow").click(function(e) {
+			e.preventDefault();
+			var holder = $(this).attr("id").split("_"),
+				obj_ref = data.findIndex(function(sub) { return sub.sid == parseInt(holder[2]); }),
+				str = "";
+			if(holder[1] == "up" && obj_ref != 0) {
+				var obj = data[obj_ref],
+					obj_order = obj.order,
+					table_item = 0;
+				str = "#" + type.toLowerCase() + "_tr_";
+				if(type == "Subjects") {
+					table_item = $(str + data[obj_ref - 1].sid).detach();
+				}
+				else if(type == "Topics") {
+					table_item = $(str + data[obj_ref - 1].tid).detach();
+				}
+				else if(type == "Sections") {
+					table_item = $(str + data[obj_ref - 1].section_id).detach();
+				}
+				else if(type == "Examples") {
+					table_item = $(str + data[obj_ref - 1].eid).detach();
+				}
+				$("#" + type.toLowerCase() + "_tr_" + holder[2]).after(table_item);
+				data[obj_ref] = data[obj_ref - 1];
+				data[obj_ref - 1] = obj;
+				data[obj_ref - 1].order = data[obj_ref].order;
+				data[obj_ref].order = obj_order;
+				data[obj_ref - 1].edited = 1;
+				data[obj_ref].edited = 1;
+			}
+			else if(holder[1] == "down" && obj_ref != data.length - 1) {
+				var table_item = $("#" + type.toLowerCase() + "_tr_" + holder[2]).detach(),
+					obj = data[obj_ref],
+					obj_order = obj.order;
+				str = "#" + type.toLowerCase() + "_tr_";
+				if(type == "Subjects") {
+					$(str + data[obj_ref + 1].sid).after(table_item);
+				}
+				else if(type == "Topics") {
+					$(str + data[obj_ref + 1].tid).after(table_item);
+				}
+				else if(type == "Sections") {
+					$(str + data[obj_ref + 1].section_id).after(table_item);
+				}
+				else if(type == "Examples") {
+					$(str + data[obj_ref + 1].eid).after(table_item);
+				}
+				data[obj_ref] = data[obj_ref + 1];
+				data[obj_ref + 1] = obj;
+				data[obj_ref + 1].order = data[obj_ref].order;
+				data[obj_ref].order = obj_order;
+				data[obj_ref + 1].edited = 1;
+				data[obj_ref].edited = 1;
+			}
+		});
+		$(".del").click(function(e) {
+			e.preventDefault();
+			var holder = $(this).attr("id").split("_"),
+				obj_ref = data.findIndex(function(iter) { 
+					if(type == "Subjects") {
+						return iter.sid == parseInt(holder[2]); 
+					}
+					else if(type == "Topics") {
+						return iter.tid == parseInt(holder[2]); 
+					}
+					else if(type == "Sections") {
+						return iter.section_id == parseInt(holder[2]); 
+					}
+					else if(type == "Examples") {
+						return sub.eid == parseInt(holder[2]); 
+					}
+				});
+			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color")) == "#ff0000") {
+				$("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color", "green");
+				if(typeof data[obj_ref].del_approval == "object") { data[obj_ref].del_approval = exports.read_cookie("contributor"); }
+				else { data[obj_ref].del_approval += "," + exports.read_cookie("contributor"); }
+			}
+			else {
+				$("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color", "red");
+				if(typeof data[obj_ref].del_approval != "object") { 
+					var start = data[obj_ref].del_approval.indexOf(exports.read_cookie("contributor"));
+					if(start != -1) {
+						if(start != 0) {
+							data[obj_ref].del_approval = data[obj_ref].del_approval.substring(0, start) + 
+								data[obj_ref].del_approval.substring(start + exports.read_cookie("contributor").length);
+						}
+						else {
+							data[obj_ref].del_approval = data[obj_ref].del_approval.substring(exports.read_cookie("contributor").length + 1);
+						}
+						if(data[obj_ref].del_approval == "") { data[obj_ref].del_approval = {}; }
+					}
+				}
+			}
+			data[obj_ref].edited = 1;
+		});
+		$(".approve").click(function(e) {
+			e.preventDefault();
+			var holder = $(this).attr("id").split("_"),
+				obj_ref = data.findIndex(function(iter) { 
+					if(type == "Subjects") {
+						return iter.sid == parseInt(holder[2]); 
+					}
+					else if(type == "Topics") {
+						return iter.tid == parseInt(holder[2]); 
+					}
+					else if(type == "Sections") {
+						return iter.section_id == parseInt(holder[2]); 
+					}
+					else if(type == "Examples") {
+						return sub.eid == parseInt(holder[2]); 
+					}
+				});
+			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_check_" + holder[2]).css("color")) == "#ff0000") {
+				$("#" + type.toLowerCase() + "_check_" + holder[2]).css("color", "green");
+				if(typeof data[obj_ref].side_approval == "object") { data[obj_ref].side_approval = exports.read_cookie("contributor"); }
+				else { data[obj_ref].side_approval += "," + exports.read_cookie("contributor"); }
+			}
+			else {
+				$("#" + type.toLowerCase() + "_check_" + holder[2]).css("color", "red");
+				if(typeof data[obj_ref].side_approval != "object") { 
+					var start = data[obj_ref].side_approval.indexOf(exports.read_cookie("contributor"));
+					if(start != -1) {
+						if(start != 0) {
+							data[obj_ref].side_approval = data[obj_ref].side_approval.substring(0, start) + 
+								data[obj_ref].side_approval.substring(start + exports.read_cookie("contributor").length);
+						}
+						else {
+							data[obj_ref].side_approval = data[obj_ref].side_approval.substring(exports.read_cookie("contributor").length + 1);
+						}
+						if(data[obj_ref].side_approval == "") { data[obj_ref].side_approval = {}; }
+					}
+				}
+			}
+			data[obj_ref].edited = 1;
+		});
+	};
+
+	exports.sidenav_modal = function(type, input, router) {
 		var data = (exports.copy(input)).map(function(elem) { 
 			elem.edited = 0;
 			elem.created = 0;
@@ -137,17 +302,19 @@ define(function() {
 				.append($("<a>").attr("id", "popup_exit")
 					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
 			$.get("/pages/dist/sidenav-change-min.html").done(function(table) {
-				var statement = "Below you will find all current " + type.toLowerCase() + " which can be renamed, reorganized, or deleted." +
+				var statement = "Below you will find all current " + type.toLowerCase() + " which can be renamed and reorganized." +
 					" Furthermore, as a contributor you can approve a subject so that it will be available to users on the client side, or similarly" +
 					" disapprove if you feel that there is something wrong with it. With this design, a subject will appear on the client side only" +
 					" when enough contributors have given approval. To change the approval of a subject simply click on the checkmark and note that" +
-					" the color green indicates an approval from you."
+					" the green color indicates an approval from you. Likewise the system also allows for a " + type.toLowerCase().substring(0, type.length - 1) +
+					" to be deleted from the database when enough contributors have given approval for it."
 				$("#popup_body").text(statement).append(table);
 				data.forEach(function(elem) {
 					var addon = -1;
 					if(type == "Subjects") { addon = elem.sid; }
 					else if(type == "Topics") { addon = elem.tid; }
 					else if(type == "Sections") { addon = elem.section_id; }
+					else if(type == "Examples") { addon = elem.eid; }
 					var item_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
 						item_name = $("<td>").text(elem.clean_name).attr("contentEditable", "true")
 							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
@@ -157,10 +324,10 @@ define(function() {
 							.append($("<a>").attr("id", type.toLowerCase() + "_down_" + addon).addClass("arrow")
 								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
 						item_approve = $("<td>").css("text-align", "center").append($("<a>")
-								.attr("id", type.toLowerCase() + "_check_" + addon).addClass("center")
+								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_check_" + addon).addClass("approve center")
 								.append($("<i>").addClass("material-icons").text("check_circle"))),
 						item_delete = $("<td>").css("text-align", "center").append($("<a>")
-								.attr("id", type.toLowerCase() + "_delete_" + addon).addClass("del center")
+								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_delete_" + addon).addClass("del center")
 								.append($("<i>").addClass("material-icons").text("cancel")));
 					item_tr.append(item_name).append(item_move).append(item_approve).append(item_delete);
 					$("#sidenav_table_body").append(item_tr);
@@ -169,6 +336,12 @@ define(function() {
 					}
 					else {
 						$("#" + type.toLowerCase() + "_check_" + addon).css("color", "red");
+					}
+					if(typeof elem.del_approval != "object" && elem.del_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						$("#" + type.toLowerCase() + "_delete_" + addon).css("color", "green");
+					}
+					else {
+						$("#" + type.toLowerCase() + "_delete_" + addon).css("color", "red");
 					}
 				});
 				$(".modal-trigger").leanModal({
@@ -195,6 +368,7 @@ define(function() {
 					if(type == "Subjects") { addon = (exports.copy(data)).sort(function(a, b) { return b.sid - a.sid; })[0].sid + 1; }
 					else if(type == "Topics") { addon = (exports.copy(data)).sort(function(a, b) { return b.tid - a.tid; })[0].tid + 1; }
 					else if(type == "Sections") { addon = (exports.copy(data)).sort(function(a, b) { return b.section_id - a.section_id; })[0].section_id + 1; }
+					else if(type == "Examples") { addon = (exports.copy(data)).sort(function(a, b) { return b.eid - a.eid; })[0].eid + 1; }
 					var new_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
 						new_name = $("<td>").text("New Item").attr("contentEditable", "true")
 							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
@@ -204,11 +378,11 @@ define(function() {
 							.append($("<a>").attr("id", type.toLowerCase() + "_down_" + addon).addClass("arrow")
 								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
 						new_approve = $("<td>").css("text-align", "center").append($("<a>")
-								.attr("id", type.toLowerCase() + "_check_" + addon).addClass("center").css("color", "red")
-								.append($("<i>").addClass("material-icons").text("check_circle"))),
+								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_check_" + addon).addClass("approve center")
+								.css("color", "red").append($("<i>").addClass("material-icons").text("check_circle"))),
 						new_delete = $("<td>").css("text-align", "center").append($("<a>")
-								.attr("id", type.toLowerCase() + "_delete_" + addon).addClass("del center")
-								.append($("<i>").addClass("material-icons").text("cancel")));
+								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_delete_" + addon).addClass("del center")
+								.css("color", "red").append($("<i>").addClass("material-icons").text("cancel")));
 					new_tr.append(new_name).append(new_move).append(new_approve).append(new_delete);
 					$("#sidenav_table_body").append(new_tr);
 					data.push({
@@ -218,194 +392,76 @@ define(function() {
 						order: data[data.length - 1].order + 1,
 						topics: [],
 						side_approval: {},
+						del_approval: {},
 						edited: 0,
 						created: 1
 					});
-					$(".field").on("input", function() {
-						var id = parseInt($(this).attr("id").split("_")[2]);
-						data.forEach(function(iter) { 
-							if(type == "Subjects" && iter.sid == id) {
-								iter.edited = 1;
-								iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
-								var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
-								str = exports.replace_all(str, "-", "AND");
-								str = exports.replace_all(str, "'", "APOSTROPHE");
-								str = exports.replace_all(str, ":", "COLON");
-								str = exports.replace_all(str, ",", "COMMA");
-								iter.sname = str;
-							}
-							else if(type == "Topics" && iter.tid == id) {
-								iter.edited = 1;
-								iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
-								var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
-								str = exports.replace_all(str, "-", "AND");
-								str = exports.replace_all(str, "'", "APOSTROPHE");
-								str = exports.replace_all(str, ":", "COLON");
-								str = exports.replace_all(str, ",", "COMMA");
-								iter.tname = str;
-							}
-							else if(type == "Sections" && iter.section_id == id) {
-								iter.edited = 1;
-								iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
-								var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
-								str = exports.replace_all(str, "-", "AND");
-								str = exports.replace_all(str, "'", "APOSTROPHE");
-								str = exports.replace_all(str, ":", "COLON");
-								str = exports.replace_all(str, ",", "COMMA");
-								iter.section_name = str;
-							}
-						});
-					});
-					$(".arrow").click(function(e) {
-						e.preventDefault();
-						var holder = $(this).attr("id").split("_"),
-							obj_ref = data.findIndex(function(sub) { return sub.sid == parseInt(holder[2]); }),
-							str = "";
-						if(holder[1] == "up" && obj_ref != 0) {
-							var obj = data[obj_ref],
-								obj_order = obj.order,
-								table_item = 0;
-							str = "#" + type.toLowerCase() + "_tr_";
-							if(type == "Subjects") {
-								table_item = $(str + data[obj_ref - 1].sid).detach();
-							}
-							else if(type == "Topics") {
-								table_item = $(str + data[obj_ref - 1].tid).detach();
-							}
-							else if(type == "Sections") {
-								table_item = $(str + data[obj_ref - 1].section_id).detach();
-							}
-							$("#" + type.toLowerCase() + "_tr_" + holder[2]).after(table_item);
-							data[obj_ref] = data[obj_ref - 1];
-							data[obj_ref - 1] = obj;
-							data[obj_ref - 1].order = data[obj_ref].order;
-							data[obj_ref].order = obj_order;
-							data[obj_ref - 1].edited = 1;
-							data[obj_ref].edited = 1;
-						}
-						else if(holder[1] == "down" && obj_ref != data.length - 1) {
-							var table_item = $("#" + type.toLowerCase() + "_tr_" + holder[2]).detach(),
-								obj = data[obj_ref],
-								obj_order = obj.order;
-							str = "#" + type.toLowerCase() + "_tr_";
-							if(type == "Subjects") {
-								$(str + data[obj_ref + 1].sid).after(table_item);
-							}
-							else if(type == "Topics") {
-								$(str + data[obj_ref + 1].tid).after(table_item);
-							}
-							else if(type == "Sections") {
-								$(str + data[obj_ref + 1].section_id).after(table_item);
-							}
-							data[obj_ref] = data[obj_ref + 1];
-							data[obj_ref + 1] = obj;
-							data[obj_ref + 1].order = data[obj_ref].order;
-							data[obj_ref].order = obj_order;
-							data[obj_ref + 1].edited = 1;
-							data[obj_ref].edited = 1;
-						}
-					});
+					exports.sidenav_modal_links(type, data);
 				});
-				$(".field").on("input", function() {
-					var id = parseInt($(this).attr("id").split("_")[2]);
-					data.forEach(function(iter) { 
-						if(type == "Subjects" && iter.sid == id) {
-							iter.edited = 1;
-							iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
-							var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
-							str = exports.replace_all(str, "-", "AND");
-							str = exports.replace_all(str, "'", "APOSTROPHE");
-							str = exports.replace_all(str, ":", "COLON");
-							str = exports.replace_all(str, ",", "COMMA");
-							iter.sname = str;
-						}
-						else if(type == "Topics" && iter.tid == id) {
-							iter.edited = 1;
-							iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
-							var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
-							str = exports.replace_all(str, "-", "AND");
-							str = exports.replace_all(str, "'", "APOSTROPHE");
-							str = exports.replace_all(str, ":", "COLON");
-							str = exports.replace_all(str, ",", "COMMA");
-							iter.tname = str;
-						}
-						else if(type == "Sections" && iter.section_id == id) {
-							iter.edited = 1;
-							iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
-							var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
-							str = exports.replace_all(str, "-", "AND");
-							str = exports.replace_all(str, "'", "APOSTROPHE");
-							str = exports.replace_all(str, ":", "COLON");
-							str = exports.replace_all(str, ",", "COMMA");
-							iter.section_name = str;
-						}
-					});
-				});
-				$(".arrow").click(function(e) {
-					e.preventDefault();
-					var holder = $(this).attr("id").split("_"),
-						obj_ref = data.findIndex(function(sub) { return sub.sid == parseInt(holder[2]); }),
-						str = "";
-					if(holder[1] == "up" && obj_ref != 0) {
-						var obj = data[obj_ref],
-							obj_order = obj.order,
-							table_item = 0;
-						str = "#" + type.toLowerCase() + "_tr_";
-						if(type == "Subjects") {
-							table_item = $(str + data[obj_ref - 1].sid).detach();
-						}
-						else if(type == "Topics") {
-							table_item = $(str + data[obj_ref - 1].tid).detach();
-						}
-						else if(type == "Sections") {
-							table_item = $(str + data[obj_ref - 1].section_id).detach();
-						}
-						$("#" + type.toLowerCase() + "_tr_" + holder[2]).after(table_item);
-						data[obj_ref] = data[obj_ref - 1];
-						data[obj_ref - 1] = obj;
-						data[obj_ref - 1].order = data[obj_ref].order;
-						data[obj_ref].order = obj_order;
-						data[obj_ref - 1].edited = 1;
-						data[obj_ref].edited = 1;
-					}
-					else if(holder[1] == "down" && obj_ref != data.length - 1) {
-						var table_item = $("#" + type.toLowerCase() + "_tr_" + holder[2]).detach(),
-							obj = data[obj_ref],
-							obj_order = obj.order;
-						str = "#" + type.toLowerCase() + "_tr_";
-						if(type == "Subjects") {
-							$(str + data[obj_ref + 1].sid).after(table_item);
-						}
-						else if(type == "Topics") {
-							$(str + data[obj_ref + 1].tid).after(table_item);
-						}
-						else if(type == "Sections") {
-							$(str + data[obj_ref + 1].section_id).after(table_item);
-						}
-						data[obj_ref] = data[obj_ref + 1];
-						data[obj_ref + 1] = obj;
-						data[obj_ref + 1].order = data[obj_ref].order;
-						data[obj_ref].order = obj_order;
-						data[obj_ref + 1].edited = 1;
-						data[obj_ref].edited = 1;
-					}
-				});
-
-				$(".del").click(function(e) {
-					e.preventDefault();
-					
-				});
-
-
+				exports.sidenav_modal_links(type, data);
 				$("#popup_submit").click(function(event) {
 					event.preventDefault();
-
-
-
-
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
+					var statement = "";
+					$.get("/api/cms/contributors").done(function(num) {
+						const validation = Math.ceil(Math.log(parseInt(num)));
+						$("#popup_submit").remove();
+						$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
+							.addClass("modal-close waves-effect waves-blue btn-flat").text("Ok"));
+						data.forEach(function(iter) {
+							var id = -1;
+							if(type == "Subjects") { id = iter.sid; }
+							else if(type == "Topics") { id = iter.tid; }
+							else if(type == "Sections") { id = iter.section_id; }
+							else if(type == "Examples") { id = iter.eid; }
+							if(typeof iter.del_approval != "object" && iter.del_approval.split(",").length >= validation) {
+								$.post("/api/delete/" + type.toLowerCase().substring(0, type.length - 1) + "/" + id);
+							}
+							else {
+								if(typeof iter.del_approval == "object" || iter.del_approval == "") { iter.del_approval = "0"; }
+								if(typeof iter.side_approval == "object" || iter.side_approval == "") { iter.side_approval = "0"; }
+								if(type == "Subjects") {
+									if(iter.created == 1) {
+										$.post("/api/add/subject/" + id + "/" + iter.sname + "/" + iter.order + "/undefined/undefined/" + 
+											iter.side_approval + "/undefined/" + iter.del_approval + "/undefined/undefined").fail(function() {
+											$("#popup_title").text("Database Issue");
+											$("#popup_body").text("There was an issue uploading the new subject(s) to the database!");
+											$("#popup_exit").remove();
+											$("#popup_add").remove();
+											$("#popup_submit").text("Ok").click(function(e) {
+												e.preventDefault();
+												location.reload();
+												$(window).scrollTop(0);
+											});
+										});
+									}
+									if(iter.edited == 1 && iter.created == 0) {
+										$.post("/api/change/subject/" + id + "/" + iter.sname + "/" + iter.order + "/undefined/undefined/" + 
+											iter.side_approval + "/undefined/" + iter.del_approval + "/undefined/undefined").fail(function() {
+											$("#popup_title").text("Database Issue");
+											$("#popup_body").text("There was an issue uploading the subject changes to the database!");
+											$("#popup_exit").remove();
+											$("#popup_add").remove();
+											$("#popup_submit").text("Ok").click(function(e) {
+												e.preventDefault();
+												location.reload();
+												$(window).scrollTop(0);
+											});
+										});
+									}
+								}
+							}
+						});
+					}).done(function() {
+						$("#popup_title").text("Changes Saved").css("text-align", "center");
+						$("#popup_body").text("All changes have been saved to the database!");
+						$("#popup_exit").remove();
+						$("#popup_add").remove();
+						$("#popup_submit").click(function(e) {
+							e.preventDefault();
+							location.reload();
+							$(window).scrollTop(0);
+						});
+					});
 				});
 			});
 		});
