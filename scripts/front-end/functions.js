@@ -441,24 +441,32 @@ define(function() {
 					var addon = -1,
 						order = -1;
 					if(type == "Subjects") {
-						addon = (exports.copy(input)).sort(function(a, b) { 
+						addon = Math.max((exports.copy(input)).sort(function(a, b) { 
 							return b.sid - a.sid; 
-						})[0].sid + 1;
+						})[0].sid + 1, (exports.copy(data)).sort(function(a, b) { 
+							return b.sid - a.sid; 
+						})[0].sid + 1);
 					}
 					else if(type == "Topics") {
-						addon = (exports.copy(input)).sort(function(a, b) { 
+						addon = Math.max((exports.copy(input)).sort(function(a, b) { 
 							return b.tid - a.tid; 
-						})[0].tid + 1; 
+						})[0].tid + 1, (exports.copy(data)).sort(function(a, b) { 
+							return b.tid - a.tid; 
+						})[0].tid + 1); 
 					}
 					else if(type == "Sections") {
-						addon = (exports.copy(input)).sort(function(a, b) { 
+						addon = Math.max((exports.copy(input)).sort(function(a, b) { 
 							return b.section_id - a.section_id; 
-						})[0].section_id + 1; 
+						})[0].section_id + 1, (exports.copy(data)).sort(function(a, b) { 
+							return b.section_id - a.section_id; 
+						})[0].section_id + 1); 
 					}
 					else if(type == "Examples") {
-						addon = (exports.copy(input)).sort(function(a, b) { 
+						addon = Math.max((exports.copy(input)).sort(function(a, b) { 
 							return b.eid - a.eid; 
-						})[0].eid + 1; 
+						})[0].eid + 1, (exports.copy(data)).sort(function(a, b) { 
+							return b.eid - a.eid; 
+						})[0].eid + 1); 
 					}
 					var new_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
 						new_name = $("<td>").text("New " + type.substring(0, type.length - 1)).attr("contentEditable", "true")
