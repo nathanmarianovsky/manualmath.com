@@ -262,7 +262,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						if(holder[1] != "cms") {
+						if(holder[2] != "cms") {
 							router.navigate("subject.topic.section.current_page", { 
 								sname: subject.sname, 
 								tname: topic.tname, 

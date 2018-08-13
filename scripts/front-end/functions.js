@@ -182,7 +182,7 @@ define(function() {
 						iter.section_name = str;
 					}
 					else if(type == "Examples") {
-						iter.section_name = str;
+						iter.ename = str;
 					}
 				}
 			});
@@ -254,7 +254,7 @@ define(function() {
 					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
 					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
 					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
-					else if(type == "Examples") { return sub.eid == parseInt(holder[2]); }
+					else if(type == "Examples") { return iter.eid == parseInt(holder[2]); }
 				});
 			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color")) == "#ff0000") {
 				$("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color", "green");

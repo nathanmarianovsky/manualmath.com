@@ -544,7 +544,6 @@ exports.add_api_routes = (app, pool) => {
 			}
 			else { response.send("The section_id provided is invalid!"); }
 		}
-		console.log(statement);
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
@@ -670,7 +669,6 @@ exports.add_api_routes = (app, pool) => {
 			}
 			else { response.send("The eid provided is invalid!"); }
 		}
-		console.log(statement);
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
@@ -681,16 +679,59 @@ exports.add_api_routes = (app, pool) => {
 	app.post("/api/delete/:obj/:param", (request, response) => {
 		var	obj = request.params.obj,
 			param = request.params.param,
-			statement = "";
+			topicStatement = "",
+			sectionStatement = "",
+			exampleStatement = "";
 		if(!isNaN(param)) {
 			if(obj == "subject") {
 				pool.query("SELECT sid FROM subject", (err, results) => {
 					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 					if(results.some(elem => elem.sid == param)) { 
-						statement += "DELETE FROM subject WHERE sid=" + param;
-						pool.query(statement, err => {
+						pool.query("SELECT tid FROM topic WHERE sid=" + param, (err, container) => {
 							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-							else { response.send("1"); }
+							else {
+								container.forEach((iter, iterIndex) => {
+									topicStatement += "DELETE FROM topic WHERE tid=" + iter.tid + ";";
+									pool.query("SELECT section_id FROM section WHERE tid=" + iter.tid, (err, holder) => {
+										if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+										else {
+											holder.forEach((elem, elemIndex) => {
+												sectionStatement += "DELETE FROM section WHERE section_id=" + elem.section_id + ";";
+												pool.query("SELECT eid FROM example WHERE section_id=" + elem.section_id, (err, collection) => {
+													if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+													else {
+														exampleStatement = "";
+														collection.forEach(item => {
+															exampleStatement += "DELETE FROM example WHERE eid=" + item.eid + ";";
+														});
+														pool.query(exampleStatement, err => {
+															if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+															else {
+																if(elemIndex >= holder.length - 1 && iterIndex >= container.length - 1) {
+																	pool.query(sectionStatement, err => {
+																		if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																		else {
+																			pool.query(topicStatement, err => {
+																				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																				else {
+																					pool.query("DELETE FROM subject WHERE sid=" + param, err => {
+																						if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																						else { response.send("1"); }
+																					});
+																				}
+																			});
+																		}
+																	});
+																}
+															}
+														});
+													}
+												});
+											});
+										}
+									});
+								});
+							}
 						});
 					}
 					else {
@@ -701,11 +742,38 @@ exports.add_api_routes = (app, pool) => {
 			else if(obj == "topic") {
 				pool.query("SELECT tid FROM topic", (err, results) => {
 					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-					if(results.some(elem => elem.tid == param)) { 
-						statement += "DELETE FROM topic WHERE tid=" + param;
-						pool.query(statement, err => {
+					if(results.some(elem => elem.tid == param)) {
+						pool.query("SELECT section_id FROM section WHERE tid=" + param, (err, container) => {
 							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-							else { response.send("1"); }
+							else {
+								container.forEach((iter, iterIndex) => {
+									sectionStatement += "DELETE FROM section WHERE section_id=" + iter.section_id + ";";
+									pool.query("SELECT eid FROM example WHERE section_id=" + iter.section_id, (err, holder) => {
+										if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+										else {
+											holder.forEach(elem => {
+												exampleStatement += "DELETE FROM example WHERE eid=" + elem.eid + ";";
+											});
+											pool.query(exampleStatement, err => {
+												if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+												else {
+													if(iterIndex >= container.length - 1) {
+														pool.query(sectionStatement, err => {
+															if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+															else {
+																pool.query("DELETE FROM topic WHERE tid=" + param, err => {
+																	if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																	else { response.send("1"); }
+																});
+															}
+														});
+													}
+												}
+											});
+										}
+									});
+								});
+							}
 						});
 					}
 					else {
@@ -714,13 +782,25 @@ exports.add_api_routes = (app, pool) => {
 				});
 			}
 			else if(obj == "section") {
-				pool.query("SELECT tid FROM section", (err, results) => {
+				pool.query("SELECT section_id FROM section", (err, results) => {
 					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-					if(results.some(elem => elem.tid == param)) { 
-						statement += "DELETE FROM section WHERE section_id=" + param;
-						pool.query(statement, err => {
+					if(results.some(elem => elem.section_id == param)) { 
+						pool.query("SELECT eid FROM example WHERE section_id=" + param, (err, container) => {
 							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-							else { response.send("1"); }
+							else {
+								container.forEach(iter => {
+									exampleStatement += "DELETE FROM example WHERE eid=" + iter.eid + ";";
+								});
+								pool.query(exampleStatement, err => {
+									if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+									else {
+										pool.query("DELETE FROM section WHERE section_id=" + param, err => {
+											if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+											else { response.send("1"); }
+										});
+									}
+								});
+							}
 						});
 					}
 					else {
@@ -731,9 +811,8 @@ exports.add_api_routes = (app, pool) => {
 			else if(obj == "example") {
 				pool.query("SELECT eid FROM example", (err, results) => {
 					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-					if(results.some(elem => elem.tid == param)) { 
-						statement += "DELETE FROM example WHERE eid=" + param;
-						pool.query(statement, err => {
+					if(results.some(elem => elem.eid == param)) { 
+						pool.query("DELETE FROM example WHERE eid=" + param, err => {
 							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 							else { response.send("1"); }
 						});
@@ -744,6 +823,7 @@ exports.add_api_routes = (app, pool) => {
 				});
 			}
 		}
+		else { response.send("The parameter has to be a positive integer."); }
 	});
 
 	// The API method to add a new contributor

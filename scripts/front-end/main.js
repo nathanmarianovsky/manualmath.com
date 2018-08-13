@@ -20,7 +20,9 @@ define(["jquery", "materialize", "router5", "mathjax", "dist/functions-min", "di
 					])
 				])
 			])
-		]);
+		],{
+			defaultRoute: "about"
+		});
 
 		functions.get_all("/api/subjects", "/api/topics", "/api/sections", "/api/examples").done(function(subjects, topics, sections, examples) {
 			functions.organize(subjects, topics, sections, examples);
