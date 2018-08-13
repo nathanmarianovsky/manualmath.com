@@ -273,7 +273,8 @@ define(function() {
 								data[obj_ref].del_approval.substring(start + exports.read_cookie("contributor").length);
 						}
 						else {
-							data[obj_ref].del_approval = data[obj_ref].del_approval.substring(exports.read_cookie("contributor").length + 1);
+							data[obj_ref].del_approval = data[obj_ref].del_approval
+								.substring(exports.read_cookie("contributor").length + 1);
 						}
 						if(data[obj_ref].del_approval == "") { data[obj_ref].del_approval = {}; }
 					}
@@ -307,7 +308,8 @@ define(function() {
 								data[obj_ref].side_approval.substring(start + exports.read_cookie("contributor").length);
 						}
 						else {
-							data[obj_ref].side_approval = data[obj_ref].side_approval.substring(exports.read_cookie("contributor").length + 1);
+							data[obj_ref].side_approval = data[obj_ref].side_approval
+								.substring(exports.read_cookie("contributor").length + 1);
 						}
 						if(data[obj_ref].side_approval == "") { data[obj_ref].side_approval = {}; }
 					}
@@ -394,11 +396,11 @@ define(function() {
 							.append($("<a>").attr("id", type.toLowerCase() + "_down_" + addon).addClass("arrow")
 								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
 						item_approve = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_check_" + addon).addClass("approve center")
-								.append($("<i>").addClass("material-icons").text("check_circle"))),
+								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_check_" + addon)
+								.addClass("approve center").append($("<i>").addClass("material-icons").text("check_circle"))),
 						item_delete = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_delete_" + addon).addClass("del center")
-								.append($("<i>").addClass("material-icons").text("cancel")));
+								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_delete_" + addon)
+								.addClass("del center").append($("<i>").addClass("material-icons").text("cancel")));
 					item_tr.append(item_name).append(item_move).append(item_approve).append(item_delete);
 					$("#sidenav_table_body").append(item_tr);
 					if(typeof elem.side_approval != "object" && 
@@ -467,11 +469,13 @@ define(function() {
 							.append($("<a>").attr("id", type.toLowerCase() + "_down_" + addon).addClass("arrow")
 								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
 						new_approve = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_check_" + addon).addClass("approve center")
-								.css("color", "red").append($("<i>").addClass("material-icons").text("check_circle"))),
+								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_check_" + addon)
+								.addClass("approve center").css("color", "red").append($("<i>")
+									.addClass("material-icons").text("check_circle"))),
 						new_delete = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_delete_" + addon).addClass("del center")
-								.css("color", "red").append($("<i>").addClass("material-icons").text("cancel")));
+								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_delete_" + addon)
+								.addClass("del center").css("color", "red").append($("<i>")
+									.addClass("material-icons").text("cancel")));
 					new_tr.append(new_name).append(new_move).append(new_approve).append(new_delete);
 					$("#sidenav_table_body").append(new_tr);
 					data.length == 0 ? order = 1 : order = data[data.length - 1].order + 1;
@@ -560,21 +564,22 @@ define(function() {
 											iter.del_approval + "/undefined/undefined";
 									}
 									else if(type == "Topics") {
-										statement = "/api/add/topic/" + id + "/" + iter.sid + "/" + iter.tname + "/" + iter.order + 
-											"/undefined/" + iter.side_approval + "/undefined/" + 
+										statement = "/api/add/topic/" + id + "/" + iter.sid + "/" + iter.tname + 
+											"/" + iter.order + "/undefined/" + iter.side_approval + "/undefined/" + 
 											iter.del_approval + "/undefined";
 									}
 									else if(type == "Sections") {
-										statement = "/api/add/section/" + id + "/" + iter.tid + "/" + iter.section_name + "/" + iter.order + 
-											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
-											iter.del_approval + "/undefined/undefined";
+										statement = "/api/add/section/" + id + "/" + iter.tid + "/" + 
+											iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
+											iter.side_approval + "/undefined/" + iter.del_approval + 
+											"/undefined/undefined";
 									}
 									else if(type == "Examples") {
-										statement = "/api/add/example/" + id + "/" + iter.section_id + "/" + iter.ename + "/" + iter.order + 
-											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
-											iter.del_approval + "/undefined/undefined";
+										statement = "/api/add/example/" + id + "/" + iter.section_id + 
+											"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
+											iter.side_approval + "/undefined/" + iter.del_approval + 
+											"/undefined/undefined";
 									}
-									console.log(statement);
 									$.post(statement).fail(function() {
 										$("#popup_title").text("Database Issue");
 										if(type == "Subjects") {
@@ -600,26 +605,28 @@ define(function() {
 								}
 								if(iter.edited == 1 && iter.created == 0) {
 									if(type == "Subjects") {
-										statement = "/api/change/subject/" + id + "/" + iter.sname + "/" + iter.order + 
-											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
-											iter.del_approval + "/undefined/undefined";
+										statement = "/api/change/subject/" + id + "/" + iter.sname + "/" + 
+											iter.order + "/undefined/undefined/" + iter.side_approval + 
+											"/undefined/" + iter.del_approval + "/undefined/undefined";
 									}
 									else if(type == "Topics") {
-										statement = "/api/change/topic/" + id + "/" + iter.sid + "/" + iter.tname + "/" + iter.order + 
-											"/undefined/" + iter.side_approval + "/undefined/" + 
-											iter.del_approval + "/undefined";
+										statement = "/api/change/topic/" + id + "/" + iter.sid + "/" + 
+											iter.tname + "/" + iter.order + "/undefined/" + 
+											iter.side_approval + "/undefined/" + iter.del_approval + 
+											"/undefined";
 									}
 									else if(type == "Sections") {
-										statement = "/api/change/section/" + id + "/" + iter.tid + "/" + iter.section_name + "/" + iter.order + 
-											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
-											iter.del_approval + "/undefined/undefined";
+										statement = "/api/change/section/" + id + "/" + iter.tid + "/" + 
+											iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
+											iter.side_approval + "/undefined/" + iter.del_approval + 
+											"/undefined/undefined";
 									}
 									else if(type == "Examples") {
-										statement = "/api/change/example/" + id + "/" + iter.section_id + "/" + iter.ename + "/" + iter.order + 
-											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
-											iter.del_approval + "/undefined/undefined";
+										statement = "/api/change/example/" + id + "/" + iter.section_id + 
+											"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
+											iter.side_approval + "/undefined/" + iter.del_approval + 
+											"/undefined/undefined";
 									}
-									console.log(statement);
 									$.post(statement).fail(function() {
 										$("#popup_title").text("Database Issue");
 										if(type == "Subjects") {
@@ -714,12 +721,14 @@ define(function() {
 					$.get("/pages/dist/change-confirmation-min.html").done(function(material) {
 						if($("#password_cms").val().length == 0) {
 							$("#popup_title").text("Profile Changes").css("text-align", "center");
-							$("#popup_body").text("Please confirm the changes provided by providing your password:").append(material);
+							$("#popup_body").text("Please confirm the changes provided by providing your password:")
+								.append(material);
 							$("#popup_submit").remove();
 							$("#popup_exit").remove();
 							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
 								.addClass("waves-effect waves-blue btn-flat").text("Confirm")).append($("<a>")
-									.attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+									.attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat")
+									.text("Exit"));
 							$("#new_password_confirm").closest(".row").remove();
 							$("#old_password_label").text("Password");
 							$("#popup_submit").css("pointer-events", "none");

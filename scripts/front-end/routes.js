@@ -488,6 +488,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				});
 				$.get("/pages/dist/main-min.html").done(function(content) {
 					$(document.body).empty().append(content);
+					$("#logo").attr("id", "logo_cms");
 					if(functions.width_func() < 992) {
 						$(".button-collapse").sideNav("hide");
 					}

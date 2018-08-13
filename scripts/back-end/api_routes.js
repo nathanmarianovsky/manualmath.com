@@ -553,7 +553,7 @@ exports.add_api_routes = (app, pool) => {
 
 
 
-	// The API method to add or change the data corresponding to any particular section
+	// The API method to add or change the data corresponding to any particular example
 	app.post("/api/:operation/example/:param/:section_id/:name/:order/:problem/:solution/:side_approval/:cms_approval/:del_approval/:problem_cms/:solution_cms", (request, response) => {
 		var operation = request.params.operation
 			param = request.params.param,
@@ -676,80 +676,6 @@ exports.add_api_routes = (app, pool) => {
 			else { response.send("1"); }
 		});
 	});
-
-
-
-	// // The API method to change the data corresponding to any particular example
-	// app.post("/api/change/example/:param/:name/:order/:section_id/:problem/:solution", (request, response) => {
-	// 	var param = request.params.param,
-	// 		name = request.params.name,
-	// 		order = request.params.order,
-	// 		section_id = request.params.section_id,
-	// 		problem = request.params.problem,
-	// 		solution = request.params.solution,
-	// 		statement = "";
-	// 	if(!isNaN(param)) {
-	// 		statement = "UPDATE example SET ";
-	// 		if(name !== "undefined") {
-	// 			statement += "ename='" + name + "'";
-	// 		}
-	// 		if(order !== "undefined") {
-	// 			if(statement[statement.length-1] != " ") { statement += ","; }
-	// 			statement += "`order`='" + order + "'";
-	// 		}
-	// 		if(section_id !== "undefined") {
-	// 			if(statement[statement.length-1] != " ") { statement += ","; }
-	// 			statement += "section_id='" + section_id + "'";
-	// 		}
-	// 		if(problem !== "undefined") {
-	// 			if(statement[statement.length-1] != " ") { statement += ","; }
-	// 			statement += "problem='" + problem + "'";
-	// 		}
-	// 		if(solution !== "undefined") {
-	// 			if(statement[statement.length-1] != " ") { statement += ","; }
-	// 			statement += "solution='" + solution + "'";
-	// 		}
-	// 		statement += " WHERE eid=" + param;
-	// 	}
-	// 	else { response.send("The eid provided is invalid!"); }
-	// 	pool.query(statement, err => {
-	// 		if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-	// 		else { response.send("1"); }
-	// 	});
-	// });
-
-	// // The API method to add the data corresponding to a new example
-	// app.post("/api/add/example/:param/:name/:order/:section_id/:problem/:solution", (request, response) => {
-	// 	var param = request.params.param,
-	// 		name = request.params.name,
-	// 		order = request.params.order,
-	// 		section_id = request.params.section_id,
-	// 		problem = request.params.problem,
-	// 		solution = request.params.solution,
-	// 		statement = "";
-	// 	pool.query("SELECT eid FROM example", (err, results) => {
-	// 		if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-	// 		if(results.some(elem => elem.eid == param)) { response.send("0"); }
-	// 		else {
-	// 			pool.query("SELECT section_id FROM section", (err, container) => {
-	// 				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-	// 				if(!results.some(elem => elem.section_id == section_id)) { response.send("0"); }
-	// 				else {
-	// 					statement = "INSERT INTO example (eid,ename,`order`,section_id,problem,solution) VALUES ('";
-	// 					if(!isNaN(param) && (name.split(" ")).length == 1 && !isNaN(order) && !isNaN(section_id) && 
-	// 						problem.length > 0 && solution.length > 0) {
-	// 						statement += param + "','" + name + "','" + order + "','" + section_id + 
-	// 							"','" + problem + "','" + solution + "')";
-	// 					}
-	// 					pool.query(statement, err => {
-	// 						if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-	// 						else { response.send("1"); }
-	// 					});
-	// 				}
-	// 			});
-	// 		}
-	// 	});
-	// });
 
 	// The API method to delete the data corresponding to a particular subject, topic, section, or example
 	app.post("/api/delete/:obj/:param", (request, response) => {

@@ -37,25 +37,30 @@ define(["dist/functions-min"], function(functions) {
 		sidenav.empty();
 		if(cms == 1) {
 			var change_li = $("<li>").addClass("no-padding").attr("id", "subjectsli_change"),
-				change_link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_change").text("Add/Remove");
+				change_link = $("<a>").addClass("collapsible-header bold menu_items")
+					.attr("id", "subjects_change").text("Add/Remove");
 			change_link.append($("<i>").addClass("material-icons right").text("library_add"));
 			sidenav.append(change_li.append(change_link));
 		}
 		results = subjects.map(function(subject) {
 			if(cms == 0 && subject.side_approval !== null && subject.side_approval.split(",").length >= min) {
 				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid),
-					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid).text(subject.clean_name);
+					link = $("<a>").addClass("collapsible-header bold menu_items")
+						.attr("id", "subjects_" + subject.sid).text(subject.clean_name);
 				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 				return subjectli.append(link);
 			}
 			else if(cms == 1) {
 				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid + "_cms"),
-					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid + "_cms").text(subject.clean_name);
+					link = $("<a>").addClass("collapsible-header bold menu_items")
+						.attr("id", "subjects_" + subject.sid + "_cms").text(subject.clean_name);
 				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 				return subjectli.append(link);
 			}
 		});
-		results.forEach(function(subject) { functions.is_mobile() ? sidenav.append(subject, $("<li>").addClass("divider")) : sidenav.append(subject); });
+		results.forEach(function(subject) { 
+			functions.is_mobile() ? sidenav.append(subject, $("<li>").addClass("divider")) : sidenav.append(subject); 
+		});
 		exports.extra();
 	};
 
@@ -73,7 +78,8 @@ define(["dist/functions-min"], function(functions) {
 	exports.topic_side_nav = function(subject, cms, min) {
 		var	sidenav = $(".side-nav"),
 			subjectli = $("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid),
-			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjectnav").text("All Subjects"),
+			link = $("<a>").addClass("collapsible-header bold menu_items")
+				.attr("id", "subjectnav").text("All Subjects"),
 			results = [];
 		sidenav.empty();
 		link.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
@@ -83,31 +89,30 @@ define(["dist/functions-min"], function(functions) {
 		if(cms == 1) {
 			$("#subjectnav").attr("id", "subjectnav_cms");
 			var change_li = $("<li>").addClass("no-padding").attr("id", "topicsli_change"),
-				change_link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_change").text("Add/Remove");
+				change_link = $("<a>").addClass("collapsible-header bold menu_items")
+					.attr("id", "topics_change").text("Add/Remove");
 			change_link.append($("<i>").addClass("material-icons right").text("library_add"));
 			sidenav.append(change_li.append(change_link));
 		}
 		results = subject.topics.map(function(topic) {
 			if(cms == 0 && topic.side_approval !== null && topic.side_approval.split(",").length >= min) {
 				var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid),
-					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid).text(topic.clean_name);
+					link = $("<a>").addClass("collapsible-header bold menu_items")
+						.attr("id", "topics_" + topic.tid).text(topic.clean_name);
 				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 				return topicli.append(link);
 			}
 			else if(cms == 1) {
 				var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid + "_cms"),
-					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid + "_cms").text(topic.clean_name)
+					link = $("<a>").addClass("collapsible-header bold menu_items")
+						.attr("id", "topics_" + topic.tid + "_cms").text(topic.clean_name)
 				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 				return topicli.append(link);
 			}
 		});
-		// var results = subject.topics.map(function(topic) {
-		// 	var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid);
-		// 	link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid).text(topic.clean_name);
-		// 	link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
-		// 	return topicli.append(link);
-		// });
-		results.forEach(function(topic) { functions.is_mobile() ? sidenav.append(topic, $("<li>").addClass("divider")) : sidenav.append(topic); });
+		results.forEach(function(topic) { 
+			functions.is_mobile() ? sidenav.append(topic, $("<li>").addClass("divider")) : sidenav.append(topic); 
+		});
 		exports.extra();
 	};
 
@@ -127,7 +132,8 @@ define(["dist/functions-min"], function(functions) {
 	exports.section_side_nav = function(topic, subject, cms, min) {
 		var sidenav = $(".side-nav"),
 			topicli = $("<li>").addClass("no-padding").attr("id", "topic_li" + topic.tid),
-			topicnav = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topicnav_" + topic.tid).text(subject.clean_name),
+			topicnav = $("<a>").addClass("collapsible-header bold menu_items")
+				.attr("id", "topicnav_" + topic.tid).text(subject.clean_name),
 			results = [];
 		sidenav.empty();
 		topicnav.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
@@ -135,27 +141,32 @@ define(["dist/functions-min"], function(functions) {
 		sidenav.append(topicli, $("<li>").addClass("divider"));
 		if(cms == 1) {
 			$("#topic_li" + topic.tid).attr("id", "topic_li" + topic.tid + "_cms");
-			$("#topicsnav_" + topic.tid).attr("id", "topicsnav_" + topic.tid + "_cms");
+			$("#topicnav_" + topic.tid).attr("id", "topicnav_" + topic.tid + "_cms");
 			var change_li = $("<li>").addClass("no-padding").attr("id", "sectionsli_change"),
-				change_link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_change").text("Add/Remove");
+				change_link = $("<a>").addClass("collapsible-header bold menu_items")
+					.attr("id", "sections_change").text("Add/Remove");
 			change_link.append($("<i>").addClass("material-icons right").text("library_add"));
 			sidenav.append(change_li.append(change_link));
 		}
 		results = topic.sections.map(function(section) {
 			if(cms == 0 && section.side_approval !== null && section.side_approval.split(",").length >= min) {
 				var sectionli = $("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id),
-					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id).text(section.clean_name);
+					link = $("<a>").addClass("collapsible-header bold menu_items")
+						.attr("id", "sections_" + section.section_id).text(section.clean_name);
 				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 				return sectionli.append(link);
 			}
 			else if(cms == 1) {
 				var sectionli = $("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id + "_cms"),
-					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id + "_cms").text(section.clean_name);
+					link = $("<a>").addClass("collapsible-header bold menu_items")
+						.attr("id", "sections_" + section.section_id + "_cms").text(section.clean_name);
 				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 				return sectionli.append(link);
 			}
 		});
-		results.forEach(function(section) { functions.is_mobile() ? sidenav.append(section, $("<li>").addClass("divider")) : sidenav.append(section); })
+		results.forEach(function(section) { 
+			functions.is_mobile() ? sidenav.append(section, $("<li>").addClass("divider")) : sidenav.append(section); 
+		});
 		exports.extra();
 	};
 
@@ -174,9 +185,11 @@ define(["dist/functions-min"], function(functions) {
 	*/
 	exports.example_side_nav = function(section, topic, cms, min) {
 		var sidenav = $(".side-nav"),
-			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionname_" + section.section_id).text("Notes"),
+			link = $("<a>").addClass("collapsible-header bold menu_items")
+				.attr("id", "sectionname_" + section.section_id).text("Notes"),
 			sectionli = $("<li>").addClass("no-padding").attr("id", "section_li" + section.section_id),
-			sectionnav = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionnav_" + section.section_id).text(topic.clean_name),
+			sectionnav = $("<a>").addClass("collapsible-header bold menu_items")
+				.attr("id", "sectionnav_" + section.section_id).text(topic.clean_name),
 			sectionname = $("<li>").addClass("no-padding").attr("id", "section_name" + section.section_id);
 		sidenav.empty();
 		sectionnav.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
@@ -189,7 +202,8 @@ define(["dist/functions-min"], function(functions) {
 			sectionname.attr("id", "section_name" + section.section_id + "_cms");
 			link.attr("id", "sectionname_" + section.section_id + "_cms");
 			var change_li = $("<li>").addClass("no-padding").attr("id", "examplesli_change"),
-				change_link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_change").text("Add/Remove");
+				change_link = $("<a>").addClass("collapsible-header bold menu_items")
+					.attr("id", "examples_change").text("Add/Remove");
 			change_link.append($("<i>").addClass("material-icons right").text("library_add"));
 			sidenav.append(change_li.append(change_link));
 		}
@@ -197,22 +211,20 @@ define(["dist/functions-min"], function(functions) {
 		results = section.examples.map(function(example) {
 			if(cms == 0 && example.side_approval !== null && example.side_approval.split(",").length >= min) {
 				var exampleli = $("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid),
-					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name);
+					link = $("<a>").addClass("collapsible-header bold menu_items")
+						.attr("id", "examples_" + example.eid).text(example.clean_name);
 				return exampleli.append(link);
 			}
 			else if(cms == 1) {
 				var exampleli = $("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid + "_cms"),
-					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid + "_cms").text(example.clean_name);
+					link = $("<a>").addClass("collapsible-header bold menu_items")
+						.attr("id", "examples_" + example.eid + "_cms").text(example.clean_name);
 				return exampleli.append(link);
 			}
 		});
-
-		// var results = section.examples.map(function(example) {
-		// 	var exampleli = $("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid);
-		// 	link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name);
-		// 	return exampleli.append(link);
-		// });
-		results.forEach(function(example) { functions.is_mobile() ? sidenav.append(example, $("<li>").addClass("divider")) : sidenav.append(example); })
+		results.forEach(function(example) { 
+			functions.is_mobile() ? sidenav.append(example, $("<li>").addClass("divider")) : sidenav.append(example); 
+		});
 		exports.extra();
 	};
 
@@ -244,7 +256,9 @@ define(["dist/functions-min"], function(functions) {
 								}
 							}
 						});
-						if($(".side-nav").is(":empty") || $(".side-nav").children().length == 1) { exports.example_side_nav(param1, param2, cms, validation); }
+						if($(".side-nav").is(":empty") || $(".side-nav").children().length == 1) { 
+							exports.example_side_nav(param1, param2, cms, validation); 
+						}
 					}
 				}
 			}
