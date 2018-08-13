@@ -258,7 +258,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							functions.handle_desktop_title("subject", subject);
 							$("#topics_change").click(function(e) {
 								e.preventDefault();
-								functions.sidenav_modal("Topics", subject.topics, subject.sid);
+								functions.sidenav_modal("Topics", topics, subject.sid);
 							});
 						});
 					});

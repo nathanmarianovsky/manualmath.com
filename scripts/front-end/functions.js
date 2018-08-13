@@ -330,11 +330,35 @@ define(function() {
 
 	*/
 	exports.sidenav_modal = function(type, input, container_id) {
-		var data = (exports.copy(input)).map(function(elem) { 
-			elem.edited = 0;
-			elem.created = 0;
-			return elem; 
-		});
+		var data = [];
+		if(type == "Subjects") {
+			data = (exports.copy(input)).map(function(elem) { 
+				elem.edited = 0;
+				elem.created = 0;
+				return elem; 
+			});
+		}
+		else if(type == "Topics") {
+			data = (exports.copy(input)).filter(function(iter) { return iter.sid == container_id }).map(function(elem) { 
+				elem.edited = 0;
+				elem.created = 0;
+				return elem; 
+			});
+		}
+		else if(type == "Sections") {
+			data = (exports.copy(input)).filter(function(iter) { return iter.tid == container_id }).map(function(elem) { 
+				elem.edited = 0;
+				elem.created = 0;
+				return elem; 
+			});
+		}
+		else if(type == "Examples") {
+			data = (exports.copy(input)).filter(function(iter) { return iter.section_id == container_id }).map(function(elem) { 
+				elem.edited = 0;
+				elem.created = 0;
+				return elem; 
+			});
+		}
 		console.log(data);
 		$.get("/pages/dist/modal-min.html").done(function(content) {
 			$("body").append(content);
@@ -412,24 +436,25 @@ define(function() {
 				});
 				$("#popup_add").click(function(e) {
 					e.preventDefault();
-					var addon = -1;
-					if(type == "Subjects") { 
-						addon = (exports.copy(data)).sort(function(a, b) { 
+					var addon = -1,
+						order = -1;
+					if(type == "Subjects") {
+						addon = (exports.copy(input)).sort(function(a, b) { 
 							return b.sid - a.sid; 
 						})[0].sid + 1;
 					}
-					else if(type == "Topics") { 
-						addon = (exports.copy(data)).sort(function(a, b) { 
+					else if(type == "Topics") {
+						addon = (exports.copy(input)).sort(function(a, b) { 
 							return b.tid - a.tid; 
 						})[0].tid + 1; 
 					}
-					else if(type == "Sections") { 
-						addon = (exports.copy(data)).sort(function(a, b) { 
+					else if(type == "Sections") {
+						addon = (exports.copy(input)).sort(function(a, b) { 
 							return b.section_id - a.section_id; 
 						})[0].section_id + 1; 
 					}
-					else if(type == "Examples") { 
-						addon = (exports.copy(data)).sort(function(a, b) { 
+					else if(type == "Examples") {
+						addon = (exports.copy(input)).sort(function(a, b) { 
 							return b.eid - a.eid; 
 						})[0].eid + 1; 
 					}
@@ -449,12 +474,13 @@ define(function() {
 								.css("color", "red").append($("<i>").addClass("material-icons").text("cancel")));
 					new_tr.append(new_name).append(new_move).append(new_approve).append(new_delete);
 					$("#sidenav_table_body").append(new_tr);
+					data.length == 0 ? order = 1 : order = data[data.length - 1].order + 1;
 					if(type == "Subjects") {
 						data.push({
 							sid: addon,
 							clean_name: "New " + type.substring(0, type.length - 1),
 							sname: "New_" + type.substring(0, type.length - 1),
-							order: data[data.length - 1].order + 1,
+							order: order,
 							topics: [],
 							side_approval: {},
 							del_approval: {},
@@ -468,7 +494,7 @@ define(function() {
 							sid: container_id,
 							clean_name: "New " + type.substring(0, type.length - 1),
 							tname: "New_" + type.substring(0, type.length - 1),
-							order: data[data.length - 1].order + 1,
+							order: order,
 							sections: [],
 							side_approval: {},
 							del_approval: {},
