@@ -71,7 +71,8 @@ define(function() {
 
 	*/
 	exports.write_cookie = function(name, value, minutes) {
-	    var date, expires;
+	    var dat = undefined, 
+	    	expires = undefined;
 	    if(minutes) {
 	        date = new Date();
 	        date.setTime(date.getTime() + (minutes * 60 * 1000));
@@ -96,10 +97,9 @@ define(function() {
 	    	c = undefined, 
 	    	ca = document.cookie.split(";"), 
 	    	nameEQ = name + "=";
-	    // ca = document.cookie.split(";");
 	    for(i = 0; i < ca.length; i++) {
 	        c = ca[i];
-	        while(c.charAt(0)==" ") {
+	        while(c.charAt(0) == " ") {
 	            c = c.substring(1, c.length);
 	        }
 	        if(c.indexOf(nameEQ) == 0) {
@@ -120,7 +120,7 @@ define(function() {
 
 	*/
 	exports.delete_cookie = function(name) {   
-	    document.cookie = name + "=; Max-Age=-99999999;";  
+	    document.cookie = name + "=; Max-Age=-99999999;path=/;";  
 	};
 
 	/*
@@ -150,6 +150,16 @@ define(function() {
 	    }, 100);
 	};
 
+	/*
+
+	Purpose:
+	Handles the name checks of the sidenav modal.
+
+	Parameters:
+		data:
+			An array of the objects representing the current data
+
+	*/
 	exports.sidenav_modal_name_check = function(data) {
 		var test = data.map(function(elem) { return elem.clean_name; }),
 			i = 0;
