@@ -61,13 +61,13 @@ nav {
 	vertical-align: top;
 }
 
-#logo {
+.logo-cls {
 	display: inline-block;
 	padding: 0 0 0 40px;
 	height: 70px;
 }
 
-#logo img {
+.logo-cls img {
 	width: 40px;
 	padding: 13px 0 0 10px;
 }

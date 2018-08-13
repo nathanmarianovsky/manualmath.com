@@ -95,12 +95,14 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 
 		$("a").click(function(e) {
 			e.preventDefault();
-			console.log("herro!!");
-			console.log($(this).attr("id"));
-			if($(this).attr("id") == "about" || $(this).attr("href") == "about.html") {
+			var id = $(this).attr("id");
+			if(id == "about" || id == "logo") {
 				router.navigate("about");
 			}
-			else if($(this).attr("id") == "login_click") {
+			else if(id == "logo_cms") {
+				router.navigate("cms");
+			}
+			else if(id == "login_click") {
 				$("#register_input").hide(400);
 				$("#login_input").show(400);
 				$("#container").css("height", "400px");
@@ -111,7 +113,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				$("select").material_select();
 				Materialize.updateTextFields();
 			}
-			else if($(this).attr("id") == "register_click") {
+			else if(id == "register_click") {
 				$("#login_input").hide(400);
 				$("#register_input").show(400);
 				$("#container").css("height", "810px");
@@ -120,7 +122,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				$("#login_input input").each(function() { $(this).val(""); });
 				Materialize.updateTextFields();
 			}
-			else if($(this).attr("id") == "logout") {
+			else if(id == "logout") {
 				var cookie = functions.read_cookie("contributor");
 				$.post("/api/cms/remove/live/" + cookie).done(function(result) {
 					if(result == 1) {
@@ -129,7 +131,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
 				});
 			}
-			else if($(this).attr("id") == "profile") {
+			else if(id == "profile") {
 				var cookie = functions.read_cookie("contributor");
 				$.get("/pages/dist/modal-min.html").done(function(result) {
 					if(result != "0") {
@@ -139,7 +141,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
 				});
 			}
-			else if($(this).attr("id") == "forgot") {
+			else if(id == "forgot") {
 				if(functions.validate($("#login_email").val())) {
 					$.post("/api/cms/get/" + $("#login_email").val()).done(function(content) {
 						$("#question")[0].options.selectedIndex = parseInt(content);
@@ -150,19 +152,20 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					functions.modal(0);
 				}
 			}
-			else if($(this).attr("id") == "subjects_change") {
-				functions.sidenav_modal("Subjects", subjects);
-			}
+			// else if($(this).attr("id") == "subjects_change") {
+			// 	functions.sidenav_modal("Subjects", subjects);
+			// }
+			// else if($(this).attr("id") == "topics_change") {
+			// 	functions.sidenav_modal("Topics", subjects);
+			// }
 			else {
-				var id = $(this).attr("id");
-				console.log(id);
 				if(id) {
 					var holder = id.split("_"),
 						id_string = holder[0];
 					if(holder.length > 1) {
 						var id_num = holder[1];
 					}
-					if(id_string == "subjects") {
+					if(id_string == "subjects" && holder[1] != "change") {
 						var subject = subjects.filter(function(iter) {
 							return iter.sid == id_num;
 						})[0];
@@ -170,13 +173,18 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							router.navigate("subject", {sname: subject.sname});
 						}
 						else {
-							console.log("success!!");
+							router.navigate("edit", {sname: subject.sname});
 						}
 					}
 					else if(id_string == "subjectnav") {
-						router.navigate("about");
+						if(holder[1] != "cms") {
+							router.navigate("about");
+						}
+						else {
+							router.navigate("cms");
+						}
 					}
-					else if(id_string == "topics") {
+					else if(id_string == "topics" & holder[1] != "change") {
 						var topic = topics.filter(function(iter) {
 							return iter.tid == id_num;
 						})[0],

@@ -56,6 +56,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 				});
 				$.get("/pages/dist/main-min.html").done(function(content) {
 					$(document.body).empty().append(content);
+					$("#logo").attr("id", "logo_cms");
 					if(functions.width_func() < 992) {
 						$(".button-collapse").sideNav("hide");
 					}
@@ -76,6 +77,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 									links.handle_links(router, subjects, topics, sections, examples);
 									functions.handle_orientation("about", navs, subjects);
 									functions.handle_desktop_title("about");
+									$("#subjects_change").click(function(e) {
+										e.preventDefault();
+										functions.sidenav_modal("Subjects", subjects);
+									});
 								});
 							});
 						});
@@ -167,6 +172,98 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					});
 				});
 			});
+		});
+
+		router.addRouteListener("edit", function(toState, fromState) {
+			$("title").text("Content Management System");
+			if(functions.read_cookie("contributor") == "") {
+				functions.session_modal(router, "login", 0);
+			}
+			else {
+				var cookie = functions.read_cookie("contributor");
+				$.post("/api/cms/live/check/" + cookie).done(function(result) {
+					if(result == "") {
+						$.post("/api/cms/add/live/" + cookie).done(function(result) {
+							if(result == 1) {
+								functions.write_cookie("contributor", cookie, 60);
+							}
+							else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
+						});
+					}
+				});
+				functions.listen_cookie_change("contributor", function() {
+					if(functions.read_cookie("contributor") == "") {
+						$.post("/api/cms/remove/live/" + cookie).done(function(result) {
+							if(result == 1) {
+								functions.session_modal(router, "login", 1);
+							}
+							else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
+						});
+					}
+				});
+				$(window).on("unload", function() {
+					$.ajax({
+					    type: "POST",
+					    async: false,
+					    url: "/api/cms/remove/live/" + cookie
+					});
+				});
+				$.get("/pages/dist/main-min.html").done(function(content) {
+					$(document.body).empty().append(content);
+					$("#logo").attr("id", "logo_cms");
+					if(functions.is_mobile()) {
+						$(".button-collapse").sideNav("hide");
+					}
+					var subject = subjects.filter(function(iter) {
+						return iter.sname == toState.params.sname;
+					})[0];
+					navs.driver("subject", 1, subject, undefined, function() {
+						$("main").empty();
+						$("title").text(subject.clean_name);
+						$("body").css("background", "#e0e0e0");
+						$("main").append($("<div>").attr("id", "latex"));
+						$.get("/api/subject/data/" + subject.sid).done(function(content) {
+							var accordion1 = $("<div>").addClass("accordion"),
+								show_solution1 = $("<div>").addClass("show_solution").text("About"),
+								span1 = $("<span>").addClass("solution_display").text("-"),
+								cont_div1 = $("<div>").addClass("cont_div"),
+								latex_body1 = $("<div>").addClass("latex_body"),
+								accordion2 = $("<div>").addClass("accordion"),
+								show_solution2 = $("<div>").addClass("show_solution").text("Notation"),
+								span2 = $("<span>").addClass("solution_display").text("+"),
+								cont_div2 = $("<div>").addClass("cont_div hidden_div"),
+								latex_body2 = $("<div>").addClass("latex_body");
+							if(content.about == null || content.about == "") { show_solution1.text("NO CONTENT HERE!"); span1.text(""); }
+							if(content.notation == null || content.notation == "") { show_solution2.text("NO NOTATION HERE!"); span2.text(""); }
+							latex_body1.append(content.about);
+							cont_div1.append(latex_body1);
+							show_solution1.append(span1);
+							accordion1.append(show_solution1);
+							accordion1.append(cont_div1);
+							latex_body2.append(content.notation);
+							cont_div2.append(latex_body2);
+							show_solution2.append(span2);
+							accordion2.append(show_solution2);
+							accordion2.append(cont_div2);
+							$("#latex").append(accordion1);
+							$("#latex").append(accordion2);
+							functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
+							MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+							functions.handle_button();
+							functions.handle_logo_link("subject");
+							functions.handle_logo();
+							functions.handle_li_coloring();
+							links.handle_links(router, subjects, topics, sections, examples);
+							functions.handle_orientation("subject", navs, subject);
+							functions.handle_desktop_title("subject", subject);
+							$("#topics_change").click(function(e) {
+								e.preventDefault();
+								functions.sidenav_modal("Topics", subject.topics, subject.sid);
+							});
+						});
+					});
+				});
+			}
 		});
 
 		router.addRouteListener("subject", function(toState, fromState) {

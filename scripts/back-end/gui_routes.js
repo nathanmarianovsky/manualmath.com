@@ -12,6 +12,11 @@ exports.add_gui_routes = app => {
 		response.sendFile("./pages/dist/template-min.html", { "root": "./" });
 	});
 
+	// 
+	app.get("/cms/*", (request, response) => {
+		response.sendFile("./pages/dist/template-min.html", { "root": "./" });
+	});
+
 	// Default request will load default landing page
 	app.get("/", (request, response) => {
 		response.sendFile("./pages/dist/template-min.html", { "root": "./" });

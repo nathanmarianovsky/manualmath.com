@@ -2,7 +2,8 @@ define(["jquery", "materialize", "router5", "mathjax", "dist/functions-min", "di
 	$(function() {
 
 		var router = new router5.Router5([
-			new router5.RouteNode("cms", "/cms"),
+			new router5.RouteNode("cms", "/cms/about"),
+			new router5.RouteNode("edit", "/cms/:sname"),
 			new router5.RouteNode("login", "/login"),
 			new router5.RouteNode("def", "/"),
 			new router5.RouteNode("about", "/client/about"),
@@ -13,9 +14,7 @@ define(["jquery", "materialize", "router5", "mathjax", "dist/functions-min", "di
 					])
 				])
 			])
-		],{
-			defaultRoute: "about"
-		});
+		]);
 
 		functions.get_all("/api/subjects", "/api/topics", "/api/sections", "/api/examples").done(function(subjects, topics, sections, examples) {
 			functions.organize(subjects, topics, sections, examples);

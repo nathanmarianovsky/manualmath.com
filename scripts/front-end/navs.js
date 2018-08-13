@@ -45,14 +45,14 @@ define(["dist/functions-min"], function(functions) {
 			if(cms == 0 && subject.side_approval !== null && subject.side_approval.split(",").length >= min) {
 				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid),
 					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid).text(subject.clean_name);
-					link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
-					return subjectli.append(link);
+				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+				return subjectli.append(link);
 			}
 			else if(cms == 1) {
 				var subjectli = $("<li>").addClass("no-padding").attr("id", "subjects_li" + subject.sid + "_cms"),
 					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjects_" + subject.sid + "_cms").text(subject.clean_name);
-					link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
-					return subjectli.append(link);
+				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+				return subjectli.append(link);
 			}
 		});
 		results.forEach(function(subject) { functions.is_mobile() ? sidenav.append(subject, $("<li>").addClass("divider")) : sidenav.append(subject); });
@@ -70,21 +70,43 @@ define(["dist/functions-min"], function(functions) {
 			An object representing the current subject
 
 	*/
-	exports.topic_side_nav = function(subject) {
+	exports.topic_side_nav = function(subject, cms, min) {
 		var	sidenav = $(".side-nav"),
-			subjectLi = $("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid),
-			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjectnav").text("All Subjects");
+			subjectli = $("<li>").addClass("no-padding").attr("id", "subject_li" + subject.sid),
+			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "subjectnav").text("All Subjects"),
+			results = [];
 		sidenav.empty();
 		link.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
-		subjectLi.append(link);
-		sidenav.append(subjectLi);
+		subjectli.append(link);
+		sidenav.append(subjectli);
 		sidenav.append($("<li>").addClass("divider"));
-		var results = subject.topics.map(function(topic) {
-			var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid);
-			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid).text(topic.clean_name);
-			link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
-			return topicli.append(link);
+		if(cms == 1) {
+			$("#subjectnav").attr("id", "subjectnav_cms");
+			var change_li = $("<li>").addClass("no-padding").attr("id", "topicsli_change"),
+				change_link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_change").text("Add/Remove");
+			change_link.append($("<i>").addClass("material-icons right").text("library_add"));
+			sidenav.append(change_li.append(change_link));
+		}
+		results = subject.topics.map(function(topic) {
+			if(cms == 0 && topic.side_approval !== null && topic.side_approval.split(",").length >= min) {
+				var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid),
+					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid).text(topic.clean_name);
+				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+				return topicli.append(link);
+			}
+			else if(cms == 1) {
+				var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid + "_cms"),
+					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid + "_cms").text(topic.clean_name)
+				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+				return topicli.append(link);
+			}
 		});
+		// var results = subject.topics.map(function(topic) {
+		// 	var topicli = $("<li>").addClass("no-padding").attr("id", "topics_li" + topic.tid);
+		// 	link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topics_" + topic.tid).text(topic.clean_name);
+		// 	link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+		// 	return topicli.append(link);
+		// });
 		results.forEach(function(topic) { functions.is_mobile() ? sidenav.append(topic, $("<li>").addClass("divider")) : sidenav.append(topic); });
 		exports.extra();
 	};
@@ -170,7 +192,7 @@ define(["dist/functions-min"], function(functions) {
 		$.get("/api/cms/contributors").done(function(num) {
 			const validation = Math.ceil(Math.log(parseInt(num)));
 			if(page == "about") { exports.subject_side_nav(param1, cms, validation); }
-			else if(page == "subject") { exports.topic_side_nav(param1); }
+			else if(page == "subject") { exports.topic_side_nav(param1, cms, validation); }
 			else {
 				if(typeof param2 !== "undefined" && param2 !== null) {
 					if(page == "topic") { exports.section_side_nav(param1, param2); }

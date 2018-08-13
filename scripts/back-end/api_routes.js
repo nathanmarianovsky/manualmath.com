@@ -8,7 +8,7 @@ exports.add_api_routes = (app, pool) => {
 		var objects = request.params.objects;
 		response.set('Cache-Control', 'public, max-age=864000000');
 		if(objects == "subjects") {
-			pool.query("SELECT sid,sname,`order`,side_approval,del_approval FROM subject ORDER BY `order` ASC", (err, results) => {
+			pool.query("SELECT sid,sname,`order`,side_approval,del_approval,cms_approval FROM subject ORDER BY `order` ASC", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(subject => {
 					subject.topics = [];
@@ -20,7 +20,7 @@ exports.add_api_routes = (app, pool) => {
 			});
 		}
 		else if(objects == "topics") {
-			pool.query("SELECT sid,tid,tname,`order` FROM topic", (err, results) => {
+			pool.query("SELECT sid,tid,tname,`order`,side_approval,del_approval,cms_approval FROM topic", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				results.forEach(topic => {
 					topic.sections = [];
@@ -321,6 +321,117 @@ exports.add_api_routes = (app, pool) => {
 			else { response.send("1"); }
 		});
 	});
+
+
+
+
+	// The API method to add or change the data corresponding to any particular topic
+	app.post("/api/:operation/topic/:param/:sid/:name/:order/:about/:side_approval/:cms_approval/:del_approval/:about_cms", (request, response) => {
+		var operation = request.params.operation
+			param = request.params.param,
+			sid = request.params.sid,
+			name = request.params.name,
+			order = request.params.order,
+			about = request.params.about,
+			side_approval = request.params.side_approval,
+			cms_approval = request.params.cms_approval,
+			del_approval = request.params.del_approval,
+			about_cms = request.params.about_cms,
+			statement = "",
+			ending = "";
+		if(operation == "change") {
+			if(!isNaN(param)) {
+				statement = "UPDATE topic SET ";
+				if(sid !== "undefined") {
+					statement += "sid='" + sid + "'";
+				}
+				if(name !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					statement += "tname='" + name + "'";
+				}
+				if(order !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					statement += "`order`='" + order + "'";
+				}
+				if(about !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					statement += "about='" + about + "'";
+				}
+				if(side_approval !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					side_approval != "0" ? statement += "side_approval='" + side_approval + "'" 
+						: statement += "side_approval=NULL";
+				}
+				if(cms_approval !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
+						: statement += "cms_approval=NULL";
+				}
+				if(del_approval !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					del_approval != "0" ? statement += "del_approval='" + del_approval + "'" 
+						: statement += "del_approval=NULL";
+				}
+				if(about_cms !== "undefined") {
+					if(statement[statement.length - 1] != " ") { statement += ","; }
+					statement += "about_cms='" + about_cms + "'";
+				}
+				statement += " WHERE tid=" + param;
+			}
+			else { response.send("The tid provided is invalid!"); }
+		}
+		else if(operation == "add") {
+			if(!isNaN(param)) {
+				statement = "INSERT INTO topic (tid,tname,`order`,sid";
+				ending = " VALUES ('" + param + "','" + name + "','" + order + "','" + sid + "'";
+				if(about !== "undefined") {
+					statement += ",about";
+					ending += ",'" + about + "'";
+				}
+				if(side_approval !== "undefined") {
+					statement += ",side_approval";
+					if(side_approval == "0") {
+						ending += ",NULL";
+					}
+					else {
+						ending += ",'" + side_approval + "'";
+					}
+				}
+				if(cms_approval !== "undefined") {
+					statement += ",cms_approval";
+					if(cms_approval == "0") {
+						ending += ",NULL";
+					}
+					else {
+						ending += ",'" + cms_approval + "'";
+					}
+				}
+				if(del_approval !== "undefined") {
+					statement += ",del_approval";
+					if(del_approval == "0") {
+						ending += ",NULL";
+					}
+					else {
+						ending += ",'" + del_approval + "'";
+					}
+				}
+				if(about_cms !== "undefined") {
+					statement += ",about_cms";
+					ending += ",'" + about_cms + "'";
+				}
+				ending += ")";
+				statement += ")" + ending;
+			}
+			else { response.send("The tid provided is invalid!"); }
+		}
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
+
+
 
 	// The API method to change the data corresponding to any particular topic
 	app.post("/api/change/topic/:param/:name/:order/:sid/:about", (request, response) => {

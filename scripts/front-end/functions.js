@@ -190,7 +190,12 @@ define(function() {
 		$(".arrow").click(function(e) {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
-				obj_ref = data.findIndex(function(sub) { return sub.sid == parseInt(holder[2]); }),
+				obj_ref = data.findIndex(function(iter) { 
+					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
+					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
+					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
+					else if(type == "Examples") { return iter.eid == parseInt(holder[2]); }
+				}),
 				str = "";
 			if(holder[1] == "up" && obj_ref != 0) {
 				var obj = data[obj_ref],
@@ -246,18 +251,10 @@ define(function() {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
-					if(type == "Subjects") {
-						return iter.sid == parseInt(holder[2]); 
-					}
-					else if(type == "Topics") {
-						return iter.tid == parseInt(holder[2]); 
-					}
-					else if(type == "Sections") {
-						return iter.section_id == parseInt(holder[2]); 
-					}
-					else if(type == "Examples") {
-						return sub.eid == parseInt(holder[2]); 
-					}
+					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
+					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
+					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
+					else if(type == "Examples") { return sub.eid == parseInt(holder[2]); }
 				});
 			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color")) == "#ff0000") {
 				$("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color", "green");
@@ -288,18 +285,10 @@ define(function() {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
-					if(type == "Subjects") {
-						return iter.sid == parseInt(holder[2]); 
-					}
-					else if(type == "Topics") {
-						return iter.tid == parseInt(holder[2]); 
-					}
-					else if(type == "Sections") {
-						return iter.section_id == parseInt(holder[2]); 
-					}
-					else if(type == "Examples") {
-						return sub.eid == parseInt(holder[2]); 
-					}
+					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
+					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
+					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
+					else if(type == "Examples") { return sub.eid == parseInt(holder[2]); }
 				});
 			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_check_" + holder[2]).css("color")) == "#ff0000") {
 				$("#" + type.toLowerCase() + "_check_" + holder[2]).css("color", "green");
@@ -340,12 +329,13 @@ define(function() {
 			An array of the objects representing the type of data
 
 	*/
-	exports.sidenav_modal = function(type, input) {
+	exports.sidenav_modal = function(type, input, container_id) {
 		var data = (exports.copy(input)).map(function(elem) { 
 			elem.edited = 0;
 			elem.created = 0;
 			return elem; 
 		});
+		console.log(data);
 		$.get("/pages/dist/modal-min.html").done(function(content) {
 			$("body").append(content);
 			$("#popup_title").text(type).css("text-align", "center");
@@ -444,7 +434,7 @@ define(function() {
 						})[0].eid + 1; 
 					}
 					var new_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
-						new_name = $("<td>").text("New Item").attr("contentEditable", "true")
+						new_name = $("<td>").text("New " + type.substring(0, type.length - 1)).attr("contentEditable", "true")
 							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
 						new_move = $("<td>").css("text-align", "center")
 							.append($("<a>").attr("id", type.toLowerCase() + "_up_" + addon).addClass("arrow")
@@ -459,17 +449,33 @@ define(function() {
 								.css("color", "red").append($("<i>").addClass("material-icons").text("cancel")));
 					new_tr.append(new_name).append(new_move).append(new_approve).append(new_delete);
 					$("#sidenav_table_body").append(new_tr);
-					data.push({
-						sid: addon,
-						clean_name: "New " + type.substring(0, type.length - 1),
-						sname: "New_Item",
-						order: data[data.length - 1].order + 1,
-						topics: [],
-						side_approval: {},
-						del_approval: {},
-						edited: 0,
-						created: 1
-					});
+					if(type == "Subjects") {
+						data.push({
+							sid: addon,
+							clean_name: "New " + type.substring(0, type.length - 1),
+							sname: "New_" + type.substring(0, type.length - 1),
+							order: data[data.length - 1].order + 1,
+							topics: [],
+							side_approval: {},
+							del_approval: {},
+							edited: 0,
+							created: 1
+						});
+					}
+					else if(type == "Topics") {
+						data.push({
+							tid: addon,
+							sid: container_id,
+							clean_name: "New " + type.substring(0, type.length - 1),
+							tname: "New_" + type.substring(0, type.length - 1),
+							order: data[data.length - 1].order + 1,
+							sections: [],
+							side_approval: {},
+							del_approval: {},
+							edited: 0,
+							created: 1
+						});
+					}
 					exports.sidenav_modal_links(type, data);
 				});
 				exports.sidenav_modal_links(type, data);
@@ -514,6 +520,40 @@ define(function() {
 										statement = "/api/change/subject/" + id + "/" + iter.sname + "/" + iter.order + 
 											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
 											iter.del_approval + "/undefined/undefined";
+										$.post(statement).fail(function() {
+											$("#popup_title").text("Database Issue");
+											$("#popup_body").text("There was an issue uploading the subject changes to the database!");
+											$("#popup_exit").remove();
+											$("#popup_add").remove();
+											$("#popup_submit").text("Ok").click(function(e) {
+												e.preventDefault();
+												location.reload();
+												$(window).scrollTop(0);
+											});
+										});
+									}
+								}
+								else if(type == "Topics") {
+									if(iter.created == 1) {
+										statement = "/api/add/topic/" + id + "/" + iter.sid + "/" + iter.tname + "/" + iter.order + 
+											"/undefined/" + iter.side_approval + "/undefined/" + 
+											iter.del_approval + "/undefined";
+										$.post(statement).fail(function() {
+											$("#popup_title").text("Database Issue");
+											$("#popup_body").text("There was an issue uploading the new subject(s) to the database!");
+											$("#popup_exit").remove();
+											$("#popup_add").remove();
+											$("#popup_submit").text("Ok").click(function(e) {
+												e.preventDefault();
+												location.reload();
+												$(window).scrollTop(0);
+											});
+										});
+									}
+									if(iter.edited == 1 && iter.created == 0) {
+										statement = "/api/change/topic/" + id + "/" + iter.sid + "/" + iter.tname + "/" + iter.order + 
+											"/undefined/" + iter.side_approval + "/undefined/" + 
+											iter.del_approval + "/undefined";
 										$.post(statement).fail(function() {
 											$("#popup_title").text("Database Issue");
 											$("#popup_body").text("There was an issue uploading the subject changes to the database!");
