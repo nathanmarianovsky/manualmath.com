@@ -160,6 +160,10 @@ define(function() {
 
 	*/
 	exports.sidenav_modal_links = function(type, data) {
+		$(".field").off("input");
+		$(".arrow").off("click");
+		$(".del").off("click");
+		$(".approve").off("click");
 		$(".field").on("input", function() {
 			var id = parseInt($(this).attr("id").split("_")[2]);
 			data.forEach(function(iter) { 
@@ -187,7 +191,7 @@ define(function() {
 				}
 			});
 		});
-		$(".arrow").click(function(e) {
+		$(".arrow").on("click", function(e) {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
@@ -247,7 +251,7 @@ define(function() {
 				data[obj_ref].edited = 1;
 			}
 		});
-		$(".del").click(function(e) {
+		$(".del").on("click", function(e) {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
@@ -282,7 +286,7 @@ define(function() {
 			}
 			data[obj_ref].edited = 1;
 		});
-		$(".approve").click(function(e) {
+		$(".approve").on("click", function(e) {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
