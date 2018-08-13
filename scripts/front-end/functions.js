@@ -288,7 +288,7 @@ define(function() {
 					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
 					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
 					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
-					else if(type == "Examples") { return sub.eid == parseInt(holder[2]); }
+					else if(type == "Examples") { return iter.eid == parseInt(holder[2]); }
 				});
 			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_check_" + holder[2]).css("color")) == "#ff0000") {
 				$("#" + type.toLowerCase() + "_check_" + holder[2]).css("color", "green");
@@ -359,7 +359,7 @@ define(function() {
 				return elem; 
 			});
 		}
-		console.log(data);
+		data.sort(function(a, b) { return a.order - b.order; });
 		$.get("/pages/dist/modal-min.html").done(function(content) {
 			$("body").append(content);
 			$("#popup_title").text(type).css("text-align", "center");
@@ -502,6 +502,33 @@ define(function() {
 							created: 1
 						});
 					}
+					else if(type == "Sections") {
+						data.push({
+							section_id: addon,
+							tid: container_id,
+							clean_name: "New " + type.substring(0, type.length - 1),
+							section_name: "New_" + type.substring(0, type.length - 1),
+							order: order,
+							examples: [],
+							side_approval: {},
+							del_approval: {},
+							edited: 0,
+							created: 1
+						});
+					}
+					else if(type == "Examples") {
+						data.push({
+							eid: addon,
+							section_id: container_id,
+							clean_name: "New " + type.substring(0, type.length - 1),
+							ename: "New_" + type.substring(0, type.length - 1),
+							order: order,
+							side_approval: {},
+							del_approval: {},
+							edited: 0,
+							created: 1
+						});
+					}
 					exports.sidenav_modal_links(type, data);
 				});
 				exports.sidenav_modal_links(type, data);
@@ -525,73 +552,96 @@ define(function() {
 							else {
 								if(typeof iter.del_approval == "object" || iter.del_approval == "") { iter.del_approval = "0"; }
 								if(typeof iter.side_approval == "object" || iter.side_approval == "") { iter.side_approval = "0"; }
-								if(type == "Subjects") {
-									if(iter.created == 1) {
+
+								if(iter.created == 1) {
+									if(type == "Subjects") {
 										statement = "/api/add/subject/" + id + "/" + iter.sname + "/" + iter.order + 
 											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
 											iter.del_approval + "/undefined/undefined";
-										$.post(statement).fail(function() {
-											$("#popup_title").text("Database Issue");
-											$("#popup_body").text("There was an issue uploading the new subject(s) to the database!");
-											$("#popup_exit").remove();
-											$("#popup_add").remove();
-											$("#popup_submit").text("Ok").click(function(e) {
-												e.preventDefault();
-												location.reload();
-												$(window).scrollTop(0);
-											});
-										});
 									}
-									if(iter.edited == 1 && iter.created == 0) {
-										statement = "/api/change/subject/" + id + "/" + iter.sname + "/" + iter.order + 
-											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
-											iter.del_approval + "/undefined/undefined";
-										$.post(statement).fail(function() {
-											$("#popup_title").text("Database Issue");
-											$("#popup_body").text("There was an issue uploading the subject changes to the database!");
-											$("#popup_exit").remove();
-											$("#popup_add").remove();
-											$("#popup_submit").text("Ok").click(function(e) {
-												e.preventDefault();
-												location.reload();
-												$(window).scrollTop(0);
-											});
-										});
-									}
-								}
-								else if(type == "Topics") {
-									if(iter.created == 1) {
+									else if(type == "Topics") {
 										statement = "/api/add/topic/" + id + "/" + iter.sid + "/" + iter.tname + "/" + iter.order + 
 											"/undefined/" + iter.side_approval + "/undefined/" + 
 											iter.del_approval + "/undefined";
-										$.post(statement).fail(function() {
-											$("#popup_title").text("Database Issue");
-											$("#popup_body").text("There was an issue uploading the new subject(s) to the database!");
-											$("#popup_exit").remove();
-											$("#popup_add").remove();
-											$("#popup_submit").text("Ok").click(function(e) {
-												e.preventDefault();
-												location.reload();
-												$(window).scrollTop(0);
-											});
-										});
 									}
-									if(iter.edited == 1 && iter.created == 0) {
+									else if(type == "Sections") {
+										statement = "/api/add/section/" + id + "/" + iter.tid + "/" + iter.section_name + "/" + iter.order + 
+											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
+											iter.del_approval + "/undefined/undefined";
+									}
+									else if(type == "Examples") {
+										statement = "/api/add/example/" + id + "/" + iter.section_id + "/" + iter.ename + "/" + iter.order + 
+											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
+											iter.del_approval + "/undefined/undefined";
+									}
+									console.log(statement);
+									$.post(statement).fail(function() {
+										$("#popup_title").text("Database Issue");
+										if(type == "Subjects") {
+											$("#popup_body").text("There was an issue uploading the new subject(s) to the database!");
+										}
+										else if(type == "Topics") {
+											$("#popup_body").text("There was an issue uploading the new topic(s) to the database!");
+										}
+										else if(type == "Sections") {
+											$("#popup_body").text("There was an issue uploading the new section(s) to the database!");
+										}
+										else if(type == "Examples") {
+											$("#popup_body").text("There was an issue uploading the new example(s) to the database!");
+										}
+										$("#popup_exit").remove();
+										$("#popup_add").remove();
+										$("#popup_submit").text("Ok").click(function(e) {
+											e.preventDefault();
+											location.reload();
+											$(window).scrollTop(0);
+										});
+									});
+								}
+								if(iter.edited == 1 && iter.created == 0) {
+									if(type == "Subjects") {
+										statement = "/api/change/subject/" + id + "/" + iter.sname + "/" + iter.order + 
+											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
+											iter.del_approval + "/undefined/undefined";
+									}
+									else if(type == "Topics") {
 										statement = "/api/change/topic/" + id + "/" + iter.sid + "/" + iter.tname + "/" + iter.order + 
 											"/undefined/" + iter.side_approval + "/undefined/" + 
 											iter.del_approval + "/undefined";
-										$.post(statement).fail(function() {
-											$("#popup_title").text("Database Issue");
-											$("#popup_body").text("There was an issue uploading the subject changes to the database!");
-											$("#popup_exit").remove();
-											$("#popup_add").remove();
-											$("#popup_submit").text("Ok").click(function(e) {
-												e.preventDefault();
-												location.reload();
-												$(window).scrollTop(0);
-											});
-										});
 									}
+									else if(type == "Sections") {
+										statement = "/api/change/section/" + id + "/" + iter.tid + "/" + iter.section_name + "/" + iter.order + 
+											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
+											iter.del_approval + "/undefined/undefined";
+									}
+									else if(type == "Examples") {
+										statement = "/api/change/example/" + id + "/" + iter.section_id + "/" + iter.ename + "/" + iter.order + 
+											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
+											iter.del_approval + "/undefined/undefined";
+									}
+									console.log(statement);
+									$.post(statement).fail(function() {
+										$("#popup_title").text("Database Issue");
+										if(type == "Subjects") {
+											$("#popup_body").text("There was an issue uploading the subject changes to the database!");
+										}
+										else if(type == "Topics") {
+											$("#popup_body").text("There was an issue uploading the topic changes to the database!");
+										}
+										else if(type == "Sections") {
+											$("#popup_body").text("There was an issue uploading the section changes to the database!");
+										}
+										else if(type == "Examples") {
+											$("#popup_body").text("There was an issue uploading the example changes to the database!");
+										}
+										$("#popup_exit").remove();
+										$("#popup_add").remove();
+										$("#popup_submit").text("Ok").click(function(e) {
+											e.preventDefault();
+											location.reload();
+											$(window).scrollTop(0);
+										});
+									});
 								}
 							}
 						});
@@ -1474,7 +1524,7 @@ define(function() {
 
 	*/
 	exports.handle_logo_link = function(page) { 
-		page == "about" ? $("#logo").css("pointer-events", "none") : $("#logo").css("pointer-events", ""); 
+		page == "about" ? $(".logo-cls").css("pointer-events", "none") : $(".logo-cls").css("pointer-events", ""); 
 	};
 
 	/*

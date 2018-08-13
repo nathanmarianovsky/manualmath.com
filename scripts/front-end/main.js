@@ -2,9 +2,15 @@ define(["jquery", "materialize", "router5", "mathjax", "dist/functions-min", "di
 	$(function() {
 
 		var router = new router5.Router5([
-			new router5.RouteNode("cms", "/cms/about"),
-			new router5.RouteNode("edit", "/cms/:sname"),
 			new router5.RouteNode("login", "/login"),
+			new router5.RouteNode("cms", "/cms/about"),
+			new router5.RouteNode("subjectEdit", "/cms/:sname", [
+				new router5.RouteNode("topicEdit", "/:tname", [
+					new router5.RouteNode("sectionEdit", "/:section_name", [
+						new router5.RouteNode("current_pageEdit", "/:current_page_name")
+					])
+				])
+			]),
 			new router5.RouteNode("def", "/"),
 			new router5.RouteNode("about", "/client/about"),
 			new router5.RouteNode("subject", "/client/:sname", [

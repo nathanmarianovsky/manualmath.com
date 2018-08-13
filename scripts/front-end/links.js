@@ -173,10 +173,11 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							router.navigate("subject", {sname: subject.sname});
 						}
 						else {
-							router.navigate("edit", {sname: subject.sname});
+							router.navigate("subjectEdit", {sname: subject.sname});
 						}
 					}
 					else if(id_string == "subjectnav") {
+						holder[1] != "cms" ? router.navigate("about") : router.navigate("cms");
 						if(holder[1] != "cms") {
 							router.navigate("about");
 						}
@@ -191,7 +192,12 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});
+						if(holder[2] != "cms") {
+							router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});						
+						}
+						else {
+							router.navigate("subjectEdit.topicEdit", {sname: subject.sname, tname: topic.tname});						
+						}
 					}
 					else if(id_string == "topicnav") {
 						var topic = topics.filter(function(iter) {
@@ -200,9 +206,16 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						router.navigate("subject", {sname: subject.sname});
+						if(holder[1] != "cms") {
+							router.navigate("subject", {sname: subject.sname});
+						}
+						else {
+							router.navigate("subjectEdit", {sname: subject.sname});
+						}
+						// holder[1] != "cms" ? router.navigate("subject", {sname: subject.sname})
+						// 	: router.navigate("subjectEdit", {sname: subject.sname});
 					}
-					else if(id_string == "sections") {
+					else if(id_string == "sections" && holder[1] != "change") {
 						var section = sections.filter(function(iter) {
 							return iter.section_id == id_num;
 						})[0],
@@ -212,13 +225,31 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						router.navigate("subject.topic.section.current_page", {
-							sname: subject.sname, 
-							tname: topic.tname, 
-							section_name: 
-							section.section_name, 
-							current_page_name: section.section_name
-						});
+						if(holder[2] != "cms") {
+							router.navigate("subject.topic.section.current_page", {
+								sname: subject.sname, 
+								tname: topic.tname, 
+								section_name: 
+								section.section_name, 
+								current_page_name: section.section_name
+							});					
+						}
+						else {
+							router.navigate("subjectEdit.topicEdit.sectionEdit.current_pageEdit", {
+								sname: subject.sname, 
+								tname: topic.tname, 
+								section_name: 
+								section.section_name, 
+								current_page_name: section.section_name
+							});					
+						}
+						// router.navigate("subject.topic.section.current_page", {
+						// 	sname: subject.sname, 
+						// 	tname: topic.tname, 
+						// 	section_name: 
+						// 	section.section_name, 
+						// 	current_page_name: section.section_name
+						// });
 					}
 					else if(id_string == "sectionnav") {
 						var section = sections.filter(function(iter) {
@@ -230,7 +261,13 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});
+						if(holder[1] != "cms") {
+							router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});
+						}
+						else {
+							router.navigate("subjectEdit.topicEdit", {sname: subject.sname, tname: topic.tname});
+						}
+						// router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});
 					}
 					else if(id_string == "sectionname") {
 						var section = sections.filter(function(iter) {
@@ -242,14 +279,24 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						router.navigate("subject.topic.section.current_page", { 
-							sname: subject.sname, 
-							tname: topic.tname, 
-							section_name: section.section_name, 
-							current_page_name: section.section_name
-						});
+						if(holder[1] != "cms") {
+							router.navigate("subject.topic.section.current_page", { 
+								sname: subject.sname, 
+								tname: topic.tname, 
+								section_name: section.section_name, 
+								current_page_name: section.section_name
+							});
+						}
+						else {
+							router.navigate("subjectEdit.topicEdit.sectionEdit.current_pageEdit", { 
+								sname: subject.sname, 
+								tname: topic.tname, 
+								section_name: section.section_name, 
+								current_page_name: section.section_name
+							});
+						}
 					}
-					else if(id_string == "examples") {
+					else if(id_string == "examples" && holder[1] != "change") {
 						var example = examples.filter(function(iter) {
 							return iter.eid == id_num;
 						})[0],
@@ -262,12 +309,22 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							subject = subjects.filter(function(iter) {
 							return iter.sid == topic.sid;
 						})[0];
-						router.navigate("subject.topic.section.current_page", { 
-							sname: subject.sname, 
-							tname: topic.tname, 
-							section_name: section.section_name, 
-							current_page_name: example.ename
-						});
+						if(holder[2] != "cms") {
+							router.navigate("subject.topic.section.current_page", { 
+								sname: subject.sname, 
+								tname: topic.tname, 
+								section_name: section.section_name, 
+								current_page_name: example.ename
+							});
+						}
+						else {
+							router.navigate("subjectEdit.topicEdit.sectionEdit.current_pageEdit", { 
+								sname: subject.sname, 
+								tname: topic.tname, 
+								section_name: section.section_name, 
+								current_page_name: example.ename
+							});
+						}
 					}
 				}
 			}

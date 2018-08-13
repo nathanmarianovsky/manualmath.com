@@ -124,19 +124,36 @@ define(["dist/functions-min"], function(functions) {
 			An object representing the current topic
 
 	*/
-	exports.section_side_nav = function(topic, subject) {
+	exports.section_side_nav = function(topic, subject, cms, min) {
 		var sidenav = $(".side-nav"),
 			topicli = $("<li>").addClass("no-padding").attr("id", "topic_li" + topic.tid),
-			topicnav = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topicnav_" + topic.tid).text(subject.clean_name);
+			topicnav = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "topicnav_" + topic.tid).text(subject.clean_name),
+			results = [];
 		sidenav.empty();
 		topicnav.append($("<i>").addClass("material-icons left").css("padding-right", "30px").text("arrow_backward"));
 		topicli.append(topicnav);
 		sidenav.append(topicli, $("<li>").addClass("divider"));
-		var results = topic.sections.map(function(section) {
-			var sectionli = $("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id),
-				link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id).text(section.clean_name);
-			link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
-			return sectionli.append(link);
+		if(cms == 1) {
+			$("#topic_li" + topic.tid).attr("id", "topic_li" + topic.tid + "_cms");
+			$("#topicsnav_" + topic.tid).attr("id", "topicsnav_" + topic.tid + "_cms");
+			var change_li = $("<li>").addClass("no-padding").attr("id", "sectionsli_change"),
+				change_link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_change").text("Add/Remove");
+			change_link.append($("<i>").addClass("material-icons right").text("library_add"));
+			sidenav.append(change_li.append(change_link));
+		}
+		results = topic.sections.map(function(section) {
+			if(cms == 0 && section.side_approval !== null && section.side_approval.split(",").length >= min) {
+				var sectionli = $("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id),
+					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id).text(section.clean_name);
+				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+				return sectionli.append(link);
+			}
+			else if(cms == 1) {
+				var sectionli = $("<li>").addClass("no-padding").attr("id", "sections_li" + section.section_id + "_cms"),
+					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sections_" + section.section_id + "_cms").text(section.clean_name);
+				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
+				return sectionli.append(link);
+			}
 		});
 		results.forEach(function(section) { functions.is_mobile() ? sidenav.append(section, $("<li>").addClass("divider")) : sidenav.append(section); })
 		exports.extra();
@@ -155,7 +172,7 @@ define(["dist/functions-min"], function(functions) {
 			An object representing the current section
 
 	*/
-	exports.example_side_nav = function(section, topic) {
+	exports.example_side_nav = function(section, topic, cms, min) {
 		var sidenav = $(".side-nav"),
 			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "sectionname_" + section.section_id).text("Notes"),
 			sectionli = $("<li>").addClass("no-padding").attr("id", "section_li" + section.section_id),
@@ -166,12 +183,35 @@ define(["dist/functions-min"], function(functions) {
 		sectionli.append(sectionnav);
 		sidenav.append(sectionli, $("<li>").addClass("divider"));
 		sectionname.append(link);
+		if(cms == 1) {
+			sectionli.attr("id", "section_li" + section.section_id + "_cms");
+			sectionnav.attr("id", "sectionnav_" + section.section_id + "_cms");
+			sectionname.attr("id", "section_name" + section.section_id + "_cms");
+			link.attr("id", "sectionname_" + section.section_id + "_cms");
+			var change_li = $("<li>").addClass("no-padding").attr("id", "examplesli_change"),
+				change_link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_change").text("Add/Remove");
+			change_link.append($("<i>").addClass("material-icons right").text("library_add"));
+			sidenav.append(change_li.append(change_link));
+		}
 		functions.is_mobile() ? sidenav.append(sectionname, $("<li>").addClass("divider")) : sidenav.append(sectionname);
-		var results = section.examples.map(function(example) {
-			var exampleli = $("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid);
-			link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name);
-			return exampleli.append(link);
+		results = section.examples.map(function(example) {
+			if(cms == 0 && example.side_approval !== null && example.side_approval.split(",").length >= min) {
+				var exampleli = $("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid),
+					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name);
+				return exampleli.append(link);
+			}
+			else if(cms == 1) {
+				var exampleli = $("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid + "_cms"),
+					link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid + "_cms").text(example.clean_name);
+				return exampleli.append(link);
+			}
 		});
+
+		// var results = section.examples.map(function(example) {
+		// 	var exampleli = $("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid);
+		// 	link = $("<a>").addClass("collapsible-header bold menu_items").attr("id", "examples_" + example.eid).text(example.clean_name);
+		// 	return exampleli.append(link);
+		// });
 		results.forEach(function(example) { functions.is_mobile() ? sidenav.append(example, $("<li>").addClass("divider")) : sidenav.append(example); })
 		exports.extra();
 	};
@@ -195,16 +235,16 @@ define(["dist/functions-min"], function(functions) {
 			else if(page == "subject") { exports.topic_side_nav(param1, cms, validation); }
 			else {
 				if(typeof param2 !== "undefined" && param2 !== null) {
-					if(page == "topic") { exports.section_side_nav(param1, param2); }
+					if(page == "topic") { exports.section_side_nav(param1, param2, cms, validation); }
 					else if(page == "section") {
 						$(".side-nav li").each(function() {
 							if(typeof $(this).attr("id") !== typeof undefined && $(this).attr("id") !== false) {
 								if($(this).attr("id").split("_")[0] == "topic") {
-									exports.example_side_nav(param1, param2);
+									exports.example_side_nav(param1, param2, cms, validation);
 								}
 							}
 						});
-						if($(".side-nav").is(":empty") || $(".side-nav").children().length == 1) { exports.example_side_nav(param1, param2); }
+						if($(".side-nav").is(":empty") || $(".side-nav").children().length == 1) { exports.example_side_nav(param1, param2, cms, validation); }
 					}
 				}
 			}
