@@ -92,8 +92,11 @@ define(function() {
 
 	*/
 	exports.read_cookie = function(name) {
-	    var i, c, ca, nameEQ = name + "=";
-	    ca = document.cookie.split(";");
+	    var i = undefined, 
+	    	c = undefined, 
+	    	ca = document.cookie.split(";"), 
+	    	nameEQ = name + "=";
+	    // ca = document.cookie.split(";");
 	    for(i = 0; i < ca.length; i++) {
 	        c = ca[i];
 	        while(c.charAt(0)==" ") {
@@ -147,6 +150,18 @@ define(function() {
 	    }, 100);
 	};
 
+	exports.sidenav_modal_name_check = function(data) {
+		var test = data.map(function(elem) { return elem.clean_name; }),
+			i = 0;
+		for(; i < test.length; i++) {
+			if(test.filter(function(item) { return item == test[i] }).length >= 2) {
+				break;
+			}				
+		}
+		i != test.length ? $("#popup_submit").css("pointer-events", "none") 
+			: $("#popup_submit").css("pointer-events", "auto");
+	};
+
 	/*
 
 	Purpose:
@@ -174,6 +189,7 @@ define(function() {
 					var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
 					str = exports.replace_all(str, "-", "AND");
 					str = exports.replace_all(str, "'", "APOSTROPHE");
+					str = exports.replace_all(str, "\"", "QUOTE");
 					str = exports.replace_all(str, ":", "COLON");
 					str = exports.replace_all(str, ",", "COMMA");
 					if(type == "Subjects") {
@@ -190,6 +206,7 @@ define(function() {
 					}
 				}
 			});
+			exports.sidenav_modal_name_check(data);
 		});
 		$(".arrow").on("click", function(e) {
 			e.preventDefault();
@@ -546,6 +563,7 @@ define(function() {
 						});
 					}
 					exports.sidenav_modal_links(type, data);
+					exports.sidenav_modal_name_check(data);
 				});
 				exports.sidenav_modal_links(type, data);
 				$("#popup_submit").click(function(event) {
