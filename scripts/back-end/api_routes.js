@@ -834,9 +834,9 @@ exports.add_api_routes = (app, pool) => {
 			passwd = request.params.passwd,
 			question = request.params.question,
 			answer = request.params.answer,
-			statement = "INSERT INTO contributors (email,first_name,last_name,password,status,question,answer) VALUES ('" 
+			statement = "INSERT INTO contributors (email,first_name,last_name,password,status,question,answer,rank) VALUES ('" 
 				+ email + "','" + fname + "','" + lname + "','" + bcrypt.hashSync(passwd, 10) + "'," + 0 + "," + question 
-				+ ",'" + bcrypt.hashSync(answer, 10) + "')";
+				+ ",'" + bcrypt.hashSync(answer, 10) + "','contributor')";
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
@@ -893,20 +893,14 @@ exports.add_api_routes = (app, pool) => {
 
 	// The API method to get the administrator information
 	app.post("/api/cms/get/admin", (request, response) => {
-		var statement = "SELECT email FROM committee WHERE status='admin'";
+		var statement = "SELECT email,first_name,last_name FROM contributors WHERE rank='admin'";
 		pool.query(statement, (err, results) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else {
-				statement = "SELECT first_name,last_name FROM contributors WHERE email='" + results[0].email + "'";
-				pool.query(statement, (err, container) => {
-					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-					else {
-						response.send({
-							first_name: container[0].first_name, 
-							last_name: container[0].last_name, 
-							email: results[0].email
-						});
-					}
+				response.send({
+					first_name: results[0].first_name, 
+					last_name: results[0].last_name, 
+					email: results[0].email
 				});
 			}
 		});
@@ -1048,12 +1042,17 @@ exports.add_api_routes = (app, pool) => {
 	// The API method to check if a contributor is part of the committee
 	app.get("/api/cms/committee/check/:email", (request, response) => {
 		var email = request.params.email,
-			statement = "SELECT email FROM committee WHERE email='" + email + "'";
+			statement = "SELECT rank FROM contributors WHERE email='" + email + "'";
 		pool.query(statement, (err, result) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else {
 				if(result.length == 0) { response.send("0"); }
-				else { response.send("1"); }
+				else { 
+					if(result[0].rank == "com-member" || result[0].rank == "admin") {
+						response.send("1"); 
+					}
+					else { response.send("0"); }
+				}
 			}
 		});
 	});
@@ -1098,6 +1097,15 @@ exports.add_api_routes = (app, pool) => {
 		pool.query(statement, (err, result) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send((result.length).toString()); }
+		});
+	});
+
+	// The API method to count the number of committee members
+	app.get("/api/cms/committee", (request, response) => {
+		var statement = "SELECT email FROM contributors WHERE rank='com-member'";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send((result.length + 1).toString()); }
 		});
 	});
 };

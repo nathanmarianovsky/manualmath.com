@@ -139,7 +139,6 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				});
 			}
 			else if(id == "committee") {
-				// var cookie = functions.read_cookie("contributor");
 				$.get("/pages/dist/modal-min.html").done(function(result) {
 					$("body").append(result);
 					functions.committee_modal();

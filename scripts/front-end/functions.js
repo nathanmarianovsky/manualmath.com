@@ -306,8 +306,8 @@ define(function() {
 					e.preventDefault();
 					$("#popup_exit").remove();
 					$("#popup_submit").addClass("modal-close");
-					$.get("/api/cms/contributors").done(function(num) {
-						const validation = Math.ceil(Math.log(parseInt(num)));
+					$.get("/api/cms/committee").done(function(num) {
+						const validation = parseInt(num);
 						var statement = "";
 						list.forEach(function(iter) {
 							if(iter.del != null && iter.del.split(",").length >= validation) {
