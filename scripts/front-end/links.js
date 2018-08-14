@@ -134,11 +134,15 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 			else if(id == "profile") {
 				var cookie = functions.read_cookie("contributor");
 				$.get("/pages/dist/modal-min.html").done(function(result) {
-					if(result != "0") {
-						$("body").append(result);
-						functions.profile_modal(cookie);
-					}
-					else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
+					$("body").append(result);
+					functions.profile_modal(cookie);
+				});
+			}
+			else if(id == "committee") {
+				// var cookie = functions.read_cookie("contributor");
+				$.get("/pages/dist/modal-min.html").done(function(result) {
+					$("body").append(result);
+					functions.committee_modal();
 				});
 			}
 			else if(id == "forgot") {

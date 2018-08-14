@@ -466,3 +466,10 @@ nav {
 .arrow {
 	color: black;
 }
+
+
+
+/* All CSS properties related to the cms committee modal */
+#committee_table_head th {
+	text-align: center;
+}

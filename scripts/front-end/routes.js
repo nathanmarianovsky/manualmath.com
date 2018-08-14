@@ -70,16 +70,18 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 								$("#notation_box").append(notation);
 								$.get("/pages/dist/button-min.html").done(function(button) {
 									$("body").append(button);
-									MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-									functions.handle_button();
-									functions.handle_logo_link("about");
-									functions.handle_logo();
-									links.handle_links(router, subjects, topics, sections, examples);
-									functions.handle_orientation("about", navs, subjects);
-									functions.handle_desktop_title("about");
-									$("#subjects_change").click(function(e) {
-										e.preventDefault();
-										functions.sidenav_modal("Subjects", subjects);
+									functions.committee(cookie, function() {
+										MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+										functions.handle_button();
+										functions.handle_logo_link("about");
+										functions.handle_logo();
+										links.handle_links(router, subjects, topics, sections, examples);
+										functions.handle_orientation("about", navs, subjects);
+										functions.handle_desktop_title("about");
+										$("#subjects_change").click(function(e) {
+											e.preventDefault();
+											functions.sidenav_modal("Subjects", subjects);
+										});
 									});
 								});
 							});

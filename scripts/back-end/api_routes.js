@@ -966,6 +966,32 @@ exports.add_api_routes = (app, pool) => {
 		});
 	});
 
+	// The API method to change a contributor's approval
+	app.post("/api/cms/change/contributor/:email/:approval/:del", (request, response) => {
+		var email = request.params.email,
+			approval = request.params.approval,
+			del = request.params.del,
+			statement = "UPDATE contributors SET approval=";
+		approval == "0" ? statement += "NULL, del=" : statement += "'" + approval + "', del=";
+		del == "0" ? statement += "NULL " : statement += "'" + del + "' ";
+		statement += "WHERE email='" + email + "'";
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
+	// The API method to change a contributor's status
+	app.post("/api/cms/change/status/:email/:value", (request, response) => {
+		var email = request.params.email,
+			value = request.params.value,
+			statement = "UPDATE contributors SET status=" + value + " WHERE email='" + email + "'";
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
 	// The API method to record a contributor's live session
 	app.post("/api/cms/add/live/:email", (request, response) => {
 		var email = request.params.email,
@@ -982,7 +1008,14 @@ exports.add_api_routes = (app, pool) => {
 			statement = "DELETE FROM `contributor-sessions` WHERE email='" + email + "'";
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-			else { response.send("1"); }
+			else { 
+				pool.query("UPDATE contributors SET approval=NULL,del=NULL WHERE email='" + email + "'", err => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					else {
+						response.send("1"); 	
+					}
+				});
+			}
 		});
 	});
 
@@ -1009,6 +1042,53 @@ exports.add_api_routes = (app, pool) => {
 					question: result[0].question
 				}); 
 			}
+		});
+	});
+
+	// The API method to check if a contributor is part of the committee
+	app.get("/api/cms/committee/check/:email", (request, response) => {
+		var email = request.params.email,
+			statement = "SELECT email FROM committee WHERE email='" + email + "'";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				if(result.length == 0) { response.send("0"); }
+				else { response.send("1"); }
+			}
+		});
+	});
+
+	// The API method to get the unapproved contributors
+	app.post("/api/cms/contributors/unapproved", (request, response) => {
+		var statement = "SELECT email,first_name,last_name,approval,del FROM contributors WHERE status=0";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				if(result.length == 0) { response.send([]); }
+				else {
+					var container = [];
+					result.forEach(iter => {
+						container.push({
+							email: iter.email,
+							first_name: iter.first_name,
+							last_name: iter.last_name,
+							approval: iter.approval,
+							del: iter.del,
+						});
+					});
+					response.send(container);
+				}
+			}
+		});
+	});
+
+	// The API method to remove a contributor
+	app.post("/api/cms/remove/profile/:email", (request, response) => {
+		var email = request.params.email,
+			statement = "DELETE FROM contributors WHERE email='" + email + "'";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
 		});
 	});
 

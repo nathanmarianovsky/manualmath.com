@@ -153,6 +153,226 @@ define(function() {
 	/*
 
 	Purpose:
+	Adds a committee option to the fixed action button.
+
+	Parameters:
+		email: 
+			A contributor's email
+
+	*/
+	exports.committee = function(email, callback) {
+		$.get("/api/cms/committee/check/" + email).done(function(check) {
+			if(check == 1) {
+				var link = $("<a>").attr("id", "committee").addClass("btn-floating").css("background", "#00b8ff")
+					.append($("<i>").addClass("material-icons").text("group_work"));
+				$("#profile").before($("<li>").append(link));
+			}
+		}).done(function() { callback(); });
+	};
+
+	exports.committee_modal = function() {
+		$.get("/pages/dist/committee-table-min.html").done(function(content) {
+			$(".modal-trigger").leanModal({
+				dismissible: false,
+				opacity: 2,
+				inDuration: 1000,
+				outDuration: 1000
+			});
+			$("#popup_title").text("Committee").css("text-align", "center");
+			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
+				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			$("#popup_submit").removeClass("modal-close");
+			var statement = "When new contributors register for the service," +
+				" they do not automatically gain access to the content management" +
+				" system by design. It is the job of the committee members to approve" +
+				" or disapprove incoming contributors by utilizing the funtionality provided" +
+				" below. Once a contributor reaches majority approval from the committee" +
+				" they will gain access to the content management system. Likewise a majority" +
+				" disapproval means a contributor has been denied access and has their account" +
+				" wiped from the database."
+			$("#popup_body").text(statement).append(content);
+			$.post("/api/cms/contributors/unapproved").done(function(contributors) {
+				var list = contributors.map(function(elem, index) {
+					elem.num = index;
+					elem.edited = 0;
+					return elem;
+				});
+				console.log(list);
+				list.forEach(function(elem) {
+					var item_tr = $("<tr>"),
+						item_fname = $("<td>").text(elem.first_name),
+						item_lname = $("<td>").text(elem.last_name),
+						item_email = $("<td>").text(elem.email).css("text-align", "center"),
+						item_approve = $("<td>").css("text-align", "center").append($("<a>")
+								.css("cursor", "pointer").attr("id", "check_" + elem.num)
+								.addClass("approve-contributor center").append($("<i>")
+									.addClass("material-icons").text("check_circle"))),
+						item_delete = $("<td>").css("text-align", "center").append($("<a>")
+								.css("cursor", "pointer").attr("id", "delete_" + elem.num)
+								.addClass("del-contributor center").append($("<i>")
+									.addClass("material-icons").text("cancel")));
+					item_tr.append(item_fname, item_lname, item_email, item_approve, item_delete);
+					$("#committee_table_body").append(item_tr);
+					if(elem.approval != null && 
+						elem.approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						$("#check_" + elem.num).css("color", "green");
+					}
+					else {
+						$("#check_" + elem.num).css("color", "red");
+					}
+					if(elem.del != null && 
+						elem.del.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						$("#delete_" + elem.num).css("color", "green");
+					}
+					else {
+						$("#delete_" + elem.num).css("color", "red");
+					}
+				});
+				$("#popup_control").click();
+				$("#popup_exit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
+				$(".del-contributor").on("click", function(e) {
+					e.preventDefault();
+					var holder = $(this).attr("id").split("_"),
+						obj_ref = list.findIndex(function(iter) { 
+							return iter.num == holder[1];
+						});
+					if(exports.rgba_to_hex($("#delete_" + holder[1]).css("color")) == "#ff0000") {
+						$("#delete_" + holder[1]).css("color", "green");
+						if(list[obj_ref].del == null) { 
+							list[obj_ref].del = exports.read_cookie("contributor"); 
+						}
+						else { list[obj_ref].del += "," + exports.read_cookie("contributor"); }
+					}
+					else {
+						$("#delete_" + holder[1]).css("color", "red");
+						if(list[obj_ref].del != null) { 
+							var start = list[obj_ref].del.indexOf(exports.read_cookie("contributor")); 
+							if(start != -1) {
+								if(start != 0) {
+									list[obj_ref].del = list[obj_ref].del.substring(0, start) + 
+										list[obj_ref].del.substring(start + exports.read_cookie("contributor").length);
+								}
+								else {
+									list[obj_ref].del = list[obj_ref].del
+										.substring(exports.read_cookie("contributor").length + 1);
+								}
+								if(list[obj_ref].del == "") { list[obj_ref].del = null; }
+							}
+						}
+					}
+					list[obj_ref].edited = 1;
+					console.log(list);
+				});
+				$(".approve-contributor").on("click", function(e) {
+					e.preventDefault();
+					var holder = $(this).attr("id").split("_"),
+						obj_ref = list.findIndex(function(iter) { 
+							return iter.num == holder[1];
+						});
+					if(exports.rgba_to_hex($("#check_" + holder[1]).css("color")) == "#ff0000") {
+						$("#check_" + holder[1]).css("color", "green");
+						if(list[obj_ref].approval == null) { 
+							list[obj_ref].approval = exports.read_cookie("contributor"); 
+						}
+						else { list[obj_ref].approval += "," + exports.read_cookie("contributor"); }
+					}
+					else {
+						$("#check_" + holder[1]).css("color", "red");
+						if(list[obj_ref].approval != null) { 
+							var start = list[obj_ref].approval.indexOf(exports.read_cookie("contributor"));
+							if(start != -1) {
+								if(start != 0) {
+									list[obj_ref].approval = list[obj_ref].approval.substring(0, start) + 
+										list[obj_ref].approval.substring(start + exports.read_cookie("contributor").length);
+								}
+								else {
+									list[obj_ref].approval = list[obj_ref].approval
+										.substring(exports.read_cookie("contributor").length + 1);
+								}
+								if(list[obj_ref].approval == "") { list[obj_ref].approval = null; }
+							}
+						}
+					}
+					list[obj_ref].edited = 1;
+					console.log(list);
+				});
+				$("#popup_submit").text("Save Changes").click(function(e) {
+					console.log(list);
+					e.preventDefault();
+					$("#popup_exit").remove();
+					$("#popup_submit").addClass("modal-close");
+					$.get("/api/cms/contributors").done(function(num) {
+						const validation = Math.ceil(Math.log(parseInt(num)));
+						var statement = "";
+						list.forEach(function(iter) {
+							if(iter.del != null && iter.del.split(",").length >= validation) {
+								$.post("/api/cms/remove/profile/" + iter.email).fail(function() {
+									$("#popup_title").text("Database Issue");
+									$("#popup_body").text("There was an issue deleting a contributor from the database!");
+									$("#popup_submit").text("Ok").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$(window).scrollTop(0);
+									});
+								});
+							}
+							else if(iter.approval != null && iter.approval.split(",").length >= validation) {
+								$.post("/api/cms/change/status/" + iter.email + "/1").fail(function() {
+									$("#popup_title").text("Database Issue");
+									$("#popup_body").text("There was an issue changing the status of a contributor in the database!");
+									$("#popup_submit").text("Ok").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$(window).scrollTop(0);
+									});
+								});
+							}
+							else {
+								if(iter.edited == 1) {
+									statement = "/api/cms/change/contributor/" + iter.email + "/" + 
+										(iter.approval == null ? "0" : iter.approval) + "/" + 
+										(iter.del == null ? "0" : iter.del);
+									$.post(statement).fail(function() {
+										$("#popup_title").text("Database Issue");
+										$("#popup_body").text("There was an issue uploading the contributor changes to the database!");
+										$("#popup_submit").text("Ok").click(function(e) {
+											e.preventDefault();
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											$(window).scrollTop(0);
+										});
+									});
+								}
+							}
+						});
+						$("#popup_title").text("Changes Saved").css("text-align", "center");
+						$("#popup_body").text("All contributor changes have been saved to the database!");
+						$("#popup_submit").text("Ok").click(function(e) {
+							e.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							$(window).scrollTop(0);
+						});
+					});
+				});
+			});
+		});
+	};
+
+	/*
+
+	Purpose:
 	Handles the name checks of the sidenav modal.
 
 	Parameters:
@@ -731,7 +951,6 @@ define(function() {
 				$("#last_name_cms").val(information.last_name);
 				$("#question_cms").val(information.question);
 				Materialize.updateTextFields();
-				$("#popup_control").click();
 				$(".modal-trigger").leanModal({
 					dismissible: false,
 					opacity: 2,
