@@ -252,17 +252,19 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
 							$.get("/pages/dist/button-min.html").done(function(button) {
 								$("body").append(button);
-								MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-								functions.handle_button();
-								functions.handle_logo_link("subject");
-								functions.handle_logo();
-								functions.handle_li_coloring();
-								links.handle_links(router, subjects, topics, sections, examples);
-								functions.handle_orientation("subject", navs, subject);
-								functions.handle_desktop_title("subject", subject);
-								$("#topics_change").click(function(e) {
-									e.preventDefault();
-									functions.sidenav_modal("Topics", topics, subject.sid);
+								functions.committee(cookie, function() {
+									MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+									functions.handle_button();
+									functions.handle_logo_link("subject");
+									functions.handle_logo();
+									functions.handle_li_coloring();
+									links.handle_links(router, subjects, topics, sections, examples);
+									functions.handle_orientation("subject", navs, subject);
+									functions.handle_desktop_title("subject", subject);
+									$("#topics_change").click(function(e) {
+										e.preventDefault();
+										functions.sidenav_modal("Topics", topics, subject.sid);
+									});
 								});
 							});
 						});
@@ -391,17 +393,19 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							functions.handle_breadcrumbs("topic", $(".accordion").first(), subject, topic);
 							$.get("/pages/dist/button-min.html").done(function(button) {
 								$("body").append(button);
-								MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-								functions.handle_button();
-								functions.handle_logo_link("subject.topic");
-								functions.handle_logo();
-								functions.handle_li_coloring();
-								links.handle_links(router, subjects, topics, sections, examples);
-								functions.handle_orientation("topic", navs, topic, subject);
-								functions.handle_desktop_title("topic", subject, topic);
-								$("#sections_change").click(function(e) {
-									e.preventDefault();
-									functions.sidenav_modal("Sections", sections, topic.tid);
+								functions.committee(cookie, function() {
+									MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+									functions.handle_button();
+									functions.handle_logo_link("subject.topic");
+									functions.handle_logo();
+									functions.handle_li_coloring();
+									links.handle_links(router, subjects, topics, sections, examples);
+									functions.handle_orientation("topic", navs, topic, subject);
+									functions.handle_desktop_title("topic", subject, topic);
+									$("#sections_change").click(function(e) {
+										e.preventDefault();
+										functions.sidenav_modal("Sections", sections, topic.tid);
+									});
 								});
 							});
 						});
@@ -586,15 +590,17 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						}
 						$.get("/pages/dist/button-min.html").done(function(button) {
 							$("body").append(button);
-							functions.handle_logo_link("subject.topic.section.current_page");
-							functions.handle_logo();
-							functions.handle_li_coloring();
-							links.handle_links(router, subjects, topics, sections, examples);
-							functions.handle_orientation("section", navs, section, topic);
-							functions.handle_desktop_title("section", subject, topic, section);
-							$("#examples_change").click(function(e) {
-								e.preventDefault();
-								functions.sidenav_modal("Examples", examples, section.section_id);
+							functions.committee(cookie, function() {
+								functions.handle_logo_link("subject.topic.section.current_page");
+								functions.handle_logo();
+								functions.handle_li_coloring();
+								links.handle_links(router, subjects, topics, sections, examples);
+								functions.handle_orientation("section", navs, section, topic);
+								functions.handle_desktop_title("section", subject, topic, section);
+								$("#examples_change").click(function(e) {
+									e.preventDefault();
+									functions.sidenav_modal("Examples", examples, section.section_id);
+								});
 							});
 						});
 					});

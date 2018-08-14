@@ -1092,21 +1092,24 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to count the number of contributors
-	app.get("/api/cms/contributors", (request, response) => {
-		var statement = "SELECT email FROM contributors";
-		pool.query(statement, (err, result) => {
-			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-			else { response.send((result.length).toString()); }
-		});
-	});
-
-	// The API method to count the number of committee members
-	app.get("/api/cms/committee", (request, response) => {
-		var statement = "SELECT email FROM contributors WHERE rank='com-member'";
-		pool.query(statement, (err, result) => {
-			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-			else { response.send((result.length + 1).toString()); }
-		});
+	app.get("/api/cms/:param", (request, response) => {
+		var type = request.params.param,
+			statement = "";
+		if(type == "contributors") {
+			statement = "SELECT email FROM contributors";
+			pool.query(statement, (err, result) => {
+				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				else { response.send((result.length).toString()); }
+			});
+		}
+		else if(type == "committee") {
+			statement = "SELECT email FROM contributors WHERE rank='com-member'";
+			pool.query(statement, (err, result) => {
+				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				else { response.send((result.length + 1).toString()); }
+			});
+		}
+		else { response.send("The given parameter is not one of the accepted choices!"); }
 	});
 };
 
