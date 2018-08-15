@@ -153,6 +153,54 @@ define(function() {
 	/*
 
 	Purpose:
+	Handles the modal for a screen resize.
+
+	Parameters:
+		callback: 
+			Function callback
+
+	*/
+	exports.resize_modal = function(callback) {
+		var counter = 0;
+		function message() {
+			$(".lean-overlay").remove();
+			$("#popup").remove();
+			$("#popup_control").remove();
+			$.get("/pages/dist/modal-min.html").done(function(content) {
+				$("body").append(content);
+				$(".modal-trigger").leanModal({
+					dismissible: false,
+					opacity: 2,
+					inDuration: 1000,
+					outDuration: 1000
+				});
+				$("#popup_submit").remove();
+				$("#popup_title").text("Size Issue");
+				var statement = "By design the content management system cannot" +
+					" operate on a screen less than 992 pixels. Please increase" +
+					" the width of the browser to continue working."
+				$("#popup_body").text(statement);
+				$("#popup_control").click();
+			});
+		};
+		if(exports.width_func() < 992) { message(); }
+		else { counter++; callback(); }
+		$(window).on("resize", function() {
+			if(exports.width_func() < 992) {
+				message(); 
+			}
+			else {
+				$(".lean-overlay").remove();
+				$("#popup").remove();
+				$("#popup_control").remove();
+				if(counter == 0) { counter++; callback(); }
+			}
+		});
+	};
+
+	/*
+
+	Purpose:
 	Adds a committee option to the fixed action button.
 
 	Parameters:
@@ -165,7 +213,7 @@ define(function() {
 			if(check == 1) {
 				var link = $("<a>").attr("id", "committee").addClass("btn-floating").css("background", "#00b8ff")
 					.append($("<i>").addClass("material-icons").text("group_work"));
-				$("#profile").before($("<li>").append(link));
+				$("#profile").closest("li").before($("<li>").append(link));
 			}
 		}).done(function() { callback(); });
 	};
