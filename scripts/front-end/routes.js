@@ -242,12 +242,14 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$.get("/api/subject/data/" + subject.sid).done(function(content) {
 								var accordion1 = $("<div>").addClass("accordion"),
 									show_solution1 = $("<div>").addClass("show_solution").text("About"),
-									span1 = $("<span>").addClass("solution_display").text("-"),
+									span1 = $("<span>").addClass("solution_display")
+										.append($("<i>").addClass("material-icons").text("remove")),
 									cont_div1 = $("<div>").addClass("cont_div"),
 									latex_body1 = $("<div>").addClass("latex_body"),
 									accordion2 = $("<div>").addClass("accordion"),
 									show_solution2 = $("<div>").addClass("show_solution").text("Notation"),
-									span2 = $("<span>").addClass("solution_display").text("+"),
+									span2 = $("<span>").addClass("solution_display")
+										.append($("<i>").addClass("material-icons").text("add")),
 									cont_div2 = $("<div>").addClass("cont_div hidden_div"),
 									latex_body2 = $("<div>").addClass("latex_body");
 								if(content.about == null || content.about == "") { 
@@ -310,12 +312,14 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$.get("/api/subject/data/" + subject.sid).done(function(content) {
 						var accordion1 = $("<div>").addClass("accordion"),
 							show_solution1 = $("<div>").addClass("show_solution").text("About"),
-							span1 = $("<span>").addClass("solution_display").text("-"),
+							span1 = $("<span>").addClass("solution_display")
+								.append($("<i>").addClass("material-icons").text("remove")),
 							cont_div1 = $("<div>").addClass("cont_div"),
 							latex_body1 = $("<div>").addClass("latex_body"),
 							accordion2 = $("<div>").addClass("accordion"),
 							show_solution2 = $("<div>").addClass("show_solution").text("Notation"),
-							span2 = $("<span>").addClass("solution_display").text("+"),
+							span2 = $("<span>").addClass("solution_display")
+								.append($("<i>").addClass("material-icons").text("add")),
 							cont_div2 = $("<div>").addClass("cont_div hidden_div"),
 							latex_body2 = $("<div>").addClass("latex_body");
 						if(content.about == null || content.about == "") { show_solution1.text("NO CONTENT HERE!"); span1.text(""); }
@@ -401,7 +405,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$.get("/api/topic/data/" + topic.tid).done(function(content) {
 								var accordion = $("<div>").addClass("accordion"),
 									show_solution = $("<div>").addClass("show_solution").text("About"),
-									span = $("<span>").addClass("solution_display").text("-"),
+									span = $("<span>").addClass("solution_display")
+										.append($("<i>").addClass("material-icons").text("remove")),
 									cont_div = $("<div>").addClass("cont_div"),
 									latex_body = $("<div>").addClass("latex_body");
 								if(content == null || content == "") { show_solution.text("NO CONTENT HERE!"); span.text(""); }
@@ -456,7 +461,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$.get("/api/topic/data/" + topic.tid).done(function(content) {
 						var accordion = $("<div>").addClass("accordion"),
 							show_solution = $("<div>").addClass("show_solution").text("About"),
-							span = $("<span>").addClass("solution_display").text("-"),
+							span = $("<span>").addClass("solution_display")
+								.append($("<i>").addClass("material-icons").text("remove")),
 							cont_div = $("<div>").addClass("cont_div"),
 							latex_body = $("<div>").addClass("latex_body");
 						if(content == null || content == "") { show_solution.text("NO CONTENT HERE!"); span.text(""); }
@@ -550,11 +556,11 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 											latex_body = $("<div>").addClass("latex_body");
 										if(content["title" + i].split("_").length == 1) {
 											cont_div = $("<div>").addClass("cont_div");
-											span.text("-");
+											span.append($("<i>").addClass("material-icons").text("remove"));
 										}
 										else {
 											cont_div = $("<div>").addClass("cont_div hidden_div");
-											span.text("+");
+											span.append($("<i>").addClass("material-icons").text("add"));
 										}	
 										latex_body.append(content["content" + i]);
 										cont_div.append(latex_body);
@@ -585,12 +591,14 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 								$.get("/api/example/data/" + example.eid).done(function(content) {
 									var accordion1 = $("<div>").addClass("accordion"),
 										show_solution1 = $("<div>").addClass("show_solution").text("Problem"),
-										problem_span = $("<span>").addClass("solution_display").attr("id", "problem_span").text("-"),
+										problem_span = $("<span>").addClass("solution_display").attr("id", "problem_span")
+											.append($("<i>").addClass("material-icons").text("remove")),
 										cont_div1 = $("<div>").addClass("cont_div"),
 										latex_body1 = $("<div>").addClass("latex_body"),
 										accordion2 = $("<div>").addClass("accordion"),
 										show_solution2 = $("<div>").addClass("show_solution").text("Solution"),
-										solution_span = $("<span>").addClass("solution_display").attr("id", "solution_span").text("+"),
+										solution_span = $("<span>").addClass("solution_display").attr("id", "solution_span")
+											.append($("<i>").addClass("material-icons").text("add")),
 										cont_div2 = $("<div>").addClass("cont_div hidden_div"),
 										latex_body2 = $("<div>").addClass("latex_body");
 									if(content.problem == null || content.problem == "") { show_solution1.text("NO PROBLEM HERE!"); problem_span.text(""); }
@@ -667,11 +675,11 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 									latex_body = $("<div>").addClass("latex_body");
 								if(content["title" + i].split("_").length == 1) {
 									cont_div = $("<div>").addClass("cont_div");
-									span.text("-");
+									span.append($("<i>").addClass("material-icons").text("remove"));
 								}
 								else {
 									cont_div = $("<div>").addClass("cont_div hidden_div");
-									span.text("+");
+									span.append($("<i>").addClass("material-icons").text("add"));
 								}	
 								latex_body.append(content["content" + i]);
 								cont_div.append(latex_body);
@@ -702,12 +710,14 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						$.get("/api/example/data/" + example.eid).done(function(content) {
 							var accordion1 = $("<div>").addClass("accordion"),
 								show_solution1 = $("<div>").addClass("show_solution").text("Problem"),
-								problem_span = $("<span>").addClass("solution_display").attr("id", "problem_span").text("-"),
+								problem_span = $("<span>").addClass("solution_display").attr("id", "problem_span")
+									.append($("<i>").addClass("material-icons").text("remove")),
 								cont_div1 = $("<div>").addClass("cont_div"),
 								latex_body1 = $("<div>").addClass("latex_body"),
 								accordion2 = $("<div>").addClass("accordion"),
 								show_solution2 = $("<div>").addClass("show_solution").text("Solution"),
-								solution_span = $("<span>").addClass("solution_display").attr("id", "solution_span").text("+"),
+								solution_span = $("<span>").addClass("solution_display").attr("id", "solution_span")
+									.append($("<i>").addClass("material-icons").text("add")),
 								cont_div2 = $("<div>").addClass("cont_div hidden_div"),
 								latex_body2 = $("<div>").addClass("latex_body");
 							if(content.problem == null || content.problem == "") { show_solution1.text("NO PROBLEM HERE!"); problem_span.text(""); }

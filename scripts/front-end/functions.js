@@ -1943,10 +1943,10 @@ define(function() {
 	exports.handle_button = function() {
 		$("#latex .show_solution").click(function(defaultevent) {
 			defaultevent.preventDefault();
-			$(this).find(".solution_display").text() == "+" ? $(this).parent().find(".cont_div").fadeIn(300) 
+			$(this).find(".solution_display i").text() == "add" ? $(this).parent().find(".cont_div").fadeIn(300) 
 				: $(this).parent().find(".cont_div").fadeOut(300);
-			$(this).find(".solution_display").text() == "+" ? $(this).find(".solution_display").text("-") 
-				: $(this).find(".solution_display").text("+");
+			$(this).find(".solution_display i").text() == "add" ? $(this).find(".solution_display i").text("remove") 
+				: $(this).find(".solution_display i").text("add");
 		});
 	};
 
