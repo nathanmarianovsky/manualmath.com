@@ -577,7 +577,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												show_solution = $("<div>").addClass("show_solution").text(title),
 												span = $("<span>").addClass("solution_display"),
 												latex_body = $("<div>").addClass("latex_body");
-											if(data.title_cms[i].split("_").length == 1) {
+											if(data.title_cms[i].split("_hidden").length == 1) {
 												cont_div = $("<div>").addClass("cont_div");
 												span.append($("<i>").addClass("material-icons").text("remove"));
 											}
@@ -599,10 +599,62 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 										functions.handle_breadcrumbs("section", $(".accordion").first(), subject, topic, section);
 										MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 										functions.handle_button();
+										if(data.cms_approval != null && 
+											data.cms_approval.split(",").some(function(elem) { return elem == cookie; })) {
+											$("#approve").css("color", "green");
+										}
+										else {
+											$("#approve").css("color", "red");
+										}
 
-
+										$("#approve").click(function(e) {
+											e.preventDefault();
+											if(functions.rgba_to_hex($("#approve").css("color")) == "#ff0000") {
+												$("#approve").css("color", "green");
+												if(data.cms_approval == null) {
+													data.cms_approval = cookie;
+												}
+												else {
+													data.cms_approval += "," + cookie;
+												}
+											}
+											else {
+												$("#approve").css("color", "red");
+												var pos = data.cms_approval.indexOf(cookie);
+												if(pos == 0) {
+													data.cms_approval = data.cms_approval.substring(cookie.length + 2);
+												}
+												else {
+													data.cms_approval = data.cms_approval.substring(0, pos - 1) +
+														data.cms_approval.substring(pos + cookie.length);
+												}
+											}
+											if(data.cms_approval == "") { data.cms_approval = null; }
+										});
 										$("#live-version").click(function(e) {
 											e.preventDefault();
+											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
+												$(".latex_body").each(function(index) {
+													var arr_title = [],
+														arr_body = [];
+													$(".show_solution").each(function(index) {
+														var title = $(this).children().first().clone().children().remove().end().text();
+														$(this).children().children().each(function(index) {
+															if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+																arr_title.push(title + "_hidden");
+															}
+															else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+																arr_title.push(title);
+															}
+														});
+														$(this).siblings().each(function(index) {
+															arr_body.push($(this).children()[0].innerHTML);
+														});
+													});
+													data.title_cms = arr_title;
+													data.content_cms = arr_body;
+												});
+											}
 											if(functions.rgba_to_hex($("#live-version").closest("li").css("background-color")) != "#008cc3") {
 												var controller = $("#bar-div").detach();
 												$("#latex").empty().append(controller);
@@ -637,15 +689,34 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												$("#live-version").closest("li").css("background-color", "#008cc3");
 												$("#cms-version").closest("li").css("background-color", "#00b7ff");
 												$("#edit").closest("li").css("background-color", "#00b7ff");
-												$("#add-box").closest("li").css("background-color", "#00b7ff");
-												$("#add-math").closest("li").css("background-color", "#00b7ff");
-												$("#add-image").closest("li").css("background-color", "#00b7ff");
 												MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 												functions.handle_button();
 											}
 										});
 										$("#cms-version").click(function(e) {
 											e.preventDefault();
+											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
+												$(".latex_body").each(function(index) {
+													var arr_title = [],
+														arr_body = [];
+													$(".show_solution").each(function(index) {
+														var title = $(this).children().first().clone().children().remove().end().text();
+														$(this).children().children().each(function(index) {
+															if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+																arr_title.push(title + "_hidden");
+															}
+															else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+																arr_title.push(title);
+															}
+														});
+														$(this).siblings().each(function(index) {
+															arr_body.push($(this).children()[0].innerHTML);
+														});
+													});
+													data.title_cms = arr_title;
+													data.content_cms = arr_body;
+												});
+											}
 											if(functions.rgba_to_hex($("#cms-version").closest("li").css("background-color")) != "#008cc3") {
 												var controller = $("#bar-div").detach();
 												$("#latex").empty().append(controller);
@@ -665,7 +736,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 													else {
 														cont_div = $("<div>").addClass("cont_div hidden_div");
 														span.append($("<i>").addClass("material-icons").text("add"));
-													}	
+													}		
 													latex_body.append(data.content_cms[j]);
 													cont_div.append(latex_body);
 													show_solution.append(span);
@@ -680,9 +751,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												$("#cms-version").closest("li").css("background-color", "#008cc3");
 												$("#live-version").closest("li").css("background-color", "#00b7ff");
 												$("#edit").closest("li").css("background-color", "#00b7ff");
-												$("#add-box").closest("li").css("background-color", "#00b7ff");
-												$("#add-math").closest("li").css("background-color", "#00b7ff");
-												$("#add-image").closest("li").css("background-color", "#00b7ff");
 												MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 												functions.handle_button();
 											}
@@ -698,20 +766,25 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 													var cont_div = "",
 														title = data.title_cms[j].split("_")[0],
 														accordion = $("<div>").addClass("accordion"),
-														show_solution = $("<div>").addClass("show_solution").text(title),
+														show_solution = $("<div>").addClass("show_solution")
+															.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
+															.text(title)),
 														span = $("<span>").addClass("solution_display"),
+														span_toggle = $("<span>").addClass("solution_toggle"),
 														latex_body = $("<div>").addClass("latex_body");
 													if(data.title_cms[j].split("_").length == 1) {
 														cont_div = $("<div>").addClass("cont_div");
 														span.append($("<i>").addClass("material-icons").text("remove"));
+														span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
 													}
 													else {
 														cont_div = $("<div>").addClass("cont_div hidden_div");
 														span.append($("<i>").addClass("material-icons").text("add"));
+														span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_off"));
 													}	
 													latex_body.append(data.content_cms[j]);
 													cont_div.append(latex_body);
-													show_solution.append(span);
+													show_solution.append(span_toggle, span);
 													accordion.append(show_solution);
 													accordion.append(cont_div);
 													$("#latex").append(accordion);
@@ -723,20 +796,34 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												$("#edit").closest("li").css("background-color", "#008cc3");
 												$("#live-version").closest("li").css("background-color", "#00b7ff");
 												$("#cms-version").closest("li").css("background-color", "#00b7ff");
-												$("#add-box").closest("li").css("background-color", "#00b7ff");
-												$("#add-math").closest("li").css("background-color", "#00b7ff");
-												$("#add-image").closest("li").css("background-color", "#00b7ff");
-												// MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-												functions.handle_button();
+												$(".toggle").click(function(e) {
+													e.preventDefault();
+													e.stopPropagation();
+													var item = $(this).parents().prev().clone().children().remove().end().text();
+													var ref = data.title_cms.findIndex(function(elem) {
+														return elem.split("_hidden")[0] == item;
+													});
+													console.log(item, data);
+													if($(this).text() == "toggle_off") {
+														$(this).text("toggle_on");
+														data.title_cms[ref] = item;
+													}
+													else if($(this).text() == "toggle_on") {
+														$(this).text("toggle_off");
+														data.title_cms[ref] += "_hidden";
+													}
+												});
+												functions.handle_button(1);
+												$(".latex_body").attr("contentEditable", "true");
 											}
 										});
 
 
-										if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
-											MathJax.Hub.Queue(function() {
-												functions.hide_mathjax_span();
-											});
-										}
+										// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
+										// 	MathJax.Hub.Queue(function() {
+										// 		functions.hide_mathjax_span();
+										// 	});
+										// }
 									});
 								}
 								else {

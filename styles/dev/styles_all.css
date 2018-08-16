@@ -289,6 +289,8 @@ nav {
     top: -10px;
     right: 10px;
     font-size: 40px;
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 
@@ -488,4 +490,13 @@ nav {
 
 #bar-nav {
 	background-color: #00b7ff;
+}
+
+.solution_toggle {
+    position: absolute;
+    top: -10px;
+    right: 100px;
+    font-size: 40px;
+    cursor: pointer;
+    pointer-events: auto;
 }

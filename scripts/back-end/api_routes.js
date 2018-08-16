@@ -84,7 +84,7 @@ exports.add_api_routes = (app, pool) => {
 			});
 		}
 		else if(want == "section") {
-			statement = "SELECT title,content,title_cms,content_cms FROM section WHERE section_id=" + param;
+			statement = "SELECT title,content,title_cms,content_cms,cms_approval FROM section WHERE section_id=" + param;
 			pool.query(statement, (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				if(results.length != 0) {
@@ -100,7 +100,8 @@ exports.add_api_routes = (app, pool) => {
 						title: title_arr,
 						title_cms: title_arr_cms,
 						content: content_arr,
-						content_cms: content_arr_cms
+						content_cms: content_arr_cms,
+						cms_approval: results[0].cms_approval
 					};
 					// for(var k = 0; k < title_arr.length; k++) {
 						// obj["title" + k] = title_arr[k];
