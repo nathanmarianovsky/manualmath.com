@@ -1096,7 +1096,7 @@ exports.add_api_routes = (app, pool) => {
 		var type = request.params.param,
 			statement = "";
 		if(type == "contributors") {
-			statement = "SELECT email FROM contributors";
+			statement = "SELECT email FROM contributors WHERE status=1";
 			pool.query(statement, (err, result) => {
 				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 				else { response.send((result.length).toString()); }
