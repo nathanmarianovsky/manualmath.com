@@ -84,19 +84,30 @@ exports.add_api_routes = (app, pool) => {
 			});
 		}
 		else if(want == "section") {
-			statement = "SELECT title,content FROM section WHERE section_id=" + param;
+			statement = "SELECT title,content,title_cms,content_cms FROM section WHERE section_id=" + param;
 			pool.query(statement, (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				if(results.length != 0) {
 					var title_str = results[0].title,
+						title_str_cms = results[0].title_cms,
 						content_str = results[0].content,
+						content_str_cms = results[0].content_cms,
 						title_arr = title_str != null ? title_str.split("-----") : [],
+						title_arr_cms = title_str_cms != null ? title_str_cms.split("-----") : [],
 						content_arr = content_str != null ? content_str.split("-----") : [];
-					var obj = {};
-					for(var k = 0; k < title_arr.length; k++) {
-						obj["title" + k] = title_arr[k];
-						obj["content" + k] = content_arr[k];
-					}
+						content_arr_cms = content_str_cms != null ? content_str_cms.split("-----") : [];
+					var obj = {
+						title: title_arr,
+						title_cms: title_arr_cms,
+						content: content_arr,
+						content_cms: content_arr_cms
+					};
+					// for(var k = 0; k < title_arr.length; k++) {
+						// obj["title" + k] = title_arr[k];
+						// obj["title" + k] = title_arr[k];
+						// obj["content" + k] = content_arr[k];
+						// obj["content" + k] = content_arr[k];
+					// }
 					response.send(obj);
 				}
 				else { response.send("Cannot find an object with the given section_id!"); }

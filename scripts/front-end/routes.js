@@ -87,8 +87,9 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												functions.handle_orientation("about", navs, subjects);
 												functions.handle_desktop_title("about");
 												$("#bar-nav").css("width", "100%");
+												$("#bar").css("width", "82%");
 												$("#live-version").parent("li").css("margin-left", "25px");
-												$("#add-image").parent("li").css("margin-right", "25px");
+												$("#save").parent("li").css("margin-right", "25px");
 												$("#main_message").css("margin-top", "100px");
 												$("#subjects_change").click(function(e) {
 													e.preventDefault();
@@ -291,8 +292,9 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 											functions.handle_orientation("subject", navs, subject);
 											functions.handle_desktop_title("subject", subject);
 											$("#bar-nav").css("width", "100%");
+											$("#bar").css("width", "82%");
 											$("#live-version").parent("li").css("margin-left", "25px");
-											$("#add-image").parent("li").css("margin-right", "25px");
+											$("#save").parent("li").css("margin-right", "25px");
 											$("#topics_change").click(function(e) {
 												e.preventDefault();
 												functions.sidenav_modal("Topics", topics, subject.sid);
@@ -443,8 +445,9 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 											functions.handle_orientation("topic", navs, topic, subject);
 											functions.handle_desktop_title("topic", subject, topic);
 											$("#bar-nav").css("width", "100%");
+											$("#bar").css("width", "82%");
 											$("#live-version").parent("li").css("margin-left", "25px");
-											$("#add-image").parent("li").css("margin-right", "25px");
+											$("#save").parent("li").css("margin-right", "25px");
 											$("#sections_change").click(function(e) {
 												e.preventDefault();
 												functions.sidenav_modal("Sections", sections, topic.tid);
@@ -564,17 +567,17 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 								$("#latex").append(bar);
 								if(section.section_name == toState.params.current_page_name) {
 									$("#section_name" + section.section_id + "_cms").addClass("active");
-									$.get("/api/section/data/" + section.section_id).done(function(content) {
+									$.get("/api/section/data/" + section.section_id).done(function(data) {
 										var i = 0;
 										for(; i >= 0; i++) {
-											if(content["title" + i] == null || content["title" + i] == "") { break; }
+											if(data.title_cms[i] == null || data.title_cms[i] == "") { break; }
 											var cont_div = "",
-												title = content["title" + i].split("_")[0],
+												title = data.title_cms[i].split("_")[0],
 												accordion = $("<div>").addClass("accordion"),
 												show_solution = $("<div>").addClass("show_solution").text(title),
 												span = $("<span>").addClass("solution_display"),
 												latex_body = $("<div>").addClass("latex_body");
-											if(content["title" + i].split("_").length == 1) {
+											if(data.title_cms[i].split("_").length == 1) {
 												cont_div = $("<div>").addClass("cont_div");
 												span.append($("<i>").addClass("material-icons").text("remove"));
 											}
@@ -582,7 +585,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												cont_div = $("<div>").addClass("cont_div hidden_div");
 												span.append($("<i>").addClass("material-icons").text("add"));
 											}	
-											latex_body.append(content["content" + i]);
+											latex_body.append(data.content_cms[i]);
 											cont_div.append(latex_body);
 											show_solution.append(span);
 											accordion.append(show_solution);
@@ -596,6 +599,139 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 										functions.handle_breadcrumbs("section", $(".accordion").first(), subject, topic, section);
 										MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 										functions.handle_button();
+
+
+										$("#live-version").click(function(e) {
+											e.preventDefault();
+											if(functions.rgba_to_hex($("#live-version").closest("li").css("background-color")) != "#008cc3") {
+												var controller = $("#bar-div").detach();
+												$("#latex").empty().append(controller);
+												var j = 0;
+												for(; j >= 0; j++) {
+													if(data.title[j] == null || data.title[j] == "") { break; }
+													var cont_div = "",
+														title = data.title[j].split("_")[0],
+														accordion = $("<div>").addClass("accordion"),
+														show_solution = $("<div>").addClass("show_solution").text(title),
+														span = $("<span>").addClass("solution_display"),
+														latex_body = $("<div>").addClass("latex_body");
+													if(data.title[j].split("_").length == 1) {
+														cont_div = $("<div>").addClass("cont_div");
+														span.append($("<i>").addClass("material-icons").text("remove"));
+													}
+													else {
+														cont_div = $("<div>").addClass("cont_div hidden_div");
+														span.append($("<i>").addClass("material-icons").text("add"));
+													}	
+													latex_body.append(data.content[j]);
+													cont_div.append(latex_body);
+													show_solution.append(span);
+													accordion.append(show_solution);
+													accordion.append(cont_div);
+													$("#latex").append(accordion);
+												}
+												if(j == 0) {
+													$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+														.addClass("show_solution").text("NO CONTENT HERE!")));
+												}
+												$("#live-version").closest("li").css("background-color", "#008cc3");
+												$("#cms-version").closest("li").css("background-color", "#00b7ff");
+												$("#edit").closest("li").css("background-color", "#00b7ff");
+												$("#add-box").closest("li").css("background-color", "#00b7ff");
+												$("#add-math").closest("li").css("background-color", "#00b7ff");
+												$("#add-image").closest("li").css("background-color", "#00b7ff");
+												MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+												functions.handle_button();
+											}
+										});
+										$("#cms-version").click(function(e) {
+											e.preventDefault();
+											if(functions.rgba_to_hex($("#cms-version").closest("li").css("background-color")) != "#008cc3") {
+												var controller = $("#bar-div").detach();
+												$("#latex").empty().append(controller);
+												var j = 0;
+												for(; j >= 0; j++) {
+													if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
+													var cont_div = "",
+														title = data.title_cms[j].split("_")[0],
+														accordion = $("<div>").addClass("accordion"),
+														show_solution = $("<div>").addClass("show_solution").text(title),
+														span = $("<span>").addClass("solution_display"),
+														latex_body = $("<div>").addClass("latex_body");
+													if(data.title_cms[j].split("_").length == 1) {
+														cont_div = $("<div>").addClass("cont_div");
+														span.append($("<i>").addClass("material-icons").text("remove"));
+													}
+													else {
+														cont_div = $("<div>").addClass("cont_div hidden_div");
+														span.append($("<i>").addClass("material-icons").text("add"));
+													}	
+													latex_body.append(data.content_cms[j]);
+													cont_div.append(latex_body);
+													show_solution.append(span);
+													accordion.append(show_solution);
+													accordion.append(cont_div);
+													$("#latex").append(accordion);
+												}
+												if(j == 0) {
+													$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+														.addClass("show_solution").text("NO CONTENT HERE!")));
+												}
+												$("#cms-version").closest("li").css("background-color", "#008cc3");
+												$("#live-version").closest("li").css("background-color", "#00b7ff");
+												$("#edit").closest("li").css("background-color", "#00b7ff");
+												$("#add-box").closest("li").css("background-color", "#00b7ff");
+												$("#add-math").closest("li").css("background-color", "#00b7ff");
+												$("#add-image").closest("li").css("background-color", "#00b7ff");
+												MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+												functions.handle_button();
+											}
+										});
+										$("#edit").click(function(e) {
+											e.preventDefault();
+											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) != "#008cc3") {
+												var controller = $("#bar-div").detach();
+												$("#latex").empty().append(controller);
+												var j = 0;
+												for(; j >= 0; j++) {
+													if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
+													var cont_div = "",
+														title = data.title_cms[j].split("_")[0],
+														accordion = $("<div>").addClass("accordion"),
+														show_solution = $("<div>").addClass("show_solution").text(title),
+														span = $("<span>").addClass("solution_display"),
+														latex_body = $("<div>").addClass("latex_body");
+													if(data.title_cms[j].split("_").length == 1) {
+														cont_div = $("<div>").addClass("cont_div");
+														span.append($("<i>").addClass("material-icons").text("remove"));
+													}
+													else {
+														cont_div = $("<div>").addClass("cont_div hidden_div");
+														span.append($("<i>").addClass("material-icons").text("add"));
+													}	
+													latex_body.append(data.content_cms[j]);
+													cont_div.append(latex_body);
+													show_solution.append(span);
+													accordion.append(show_solution);
+													accordion.append(cont_div);
+													$("#latex").append(accordion);
+												}
+												if(j == 0) {
+													$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+														.addClass("show_solution").text("NO CONTENT HERE!")));
+												}
+												$("#edit").closest("li").css("background-color", "#008cc3");
+												$("#live-version").closest("li").css("background-color", "#00b7ff");
+												$("#cms-version").closest("li").css("background-color", "#00b7ff");
+												$("#add-box").closest("li").css("background-color", "#00b7ff");
+												$("#add-math").closest("li").css("background-color", "#00b7ff");
+												$("#add-image").closest("li").css("background-color", "#00b7ff");
+												// MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+												functions.handle_button();
+											}
+										});
+
+
 										if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
 											MathJax.Hub.Queue(function() {
 												functions.hide_mathjax_span();
@@ -649,8 +785,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 										functions.handle_orientation("section", navs, section, topic);
 										functions.handle_desktop_title("section", subject, topic, section);
 										$("#bar-nav").css("width", "100%");
+										$("#bar").css("width", "82%");
 										$("#live-version").parent("li").css("margin-left", "25px");
-										$("#add-image").parent("li").css("margin-right", "25px");
+										$("#save").parent("li").css("margin-right", "25px");
+										$("#cms-version").closest("li").css("background-color", "#008cc3");
 										$("#examples_change").click(function(e) {
 											e.preventDefault();
 											functions.sidenav_modal("Examples", examples, section.section_id);

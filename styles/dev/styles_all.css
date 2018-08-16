@@ -482,6 +482,10 @@ nav {
 	justify-content: space-between;
 }
 
+#bar a {
+	cursor: pointer;
+}
+
 #bar-nav {
 	background-color: #00b7ff;
 }
