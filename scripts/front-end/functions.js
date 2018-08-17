@@ -739,35 +739,44 @@ define(function() {
 				$("#popup_add").click(function(e) {
 					e.preventDefault();
 					var addon = -1,
-						order = -1;
+						order = -1,
+						lhs = -1,
+						rhs = -1,
+						inp_cpy = exports.copy(input),
+						dat_cpy = exports.copy(data);
 					if(type == "Subjects") {
-						addon = Math.max((exports.copy(input)).sort(function(a, b) { 
+						lhs = inp_cpy.length != 0 ? inp_cpy.sort(function(a, b) { 
 							return b.sid - a.sid; 
-						})[0].sid + 1, (exports.copy(data)).sort(function(a, b) { 
+						})[0].sid + 1 : 1,
+						rhs = dat_cpy.length != 0 ? dat_cpy.sort(function(a, b) { 
 							return b.sid - a.sid; 
-						})[0].sid + 1);
+						})[0].sid + 1 : 1;
 					}
 					else if(type == "Topics") {
-						addon = Math.max((exports.copy(input)).sort(function(a, b) { 
+						lhs = inp_cpy.length != 0 ? inp_cpy.sort(function(a, b) { 
 							return b.tid - a.tid; 
-						})[0].tid + 1, (exports.copy(data)).sort(function(a, b) { 
+						})[0].tid + 1 : 1,
+						rhs = dat_cpy.length != 0 ? dat_cpy.sort(function(a, b) { 
 							return b.tid - a.tid; 
-						})[0].tid + 1); 
+						})[0].tid + 1 : 1;
 					}
 					else if(type == "Sections") {
-						addon = Math.max((exports.copy(input)).sort(function(a, b) { 
+						lhs = inp_cpy.length != 0 ? inp_cpy.sort(function(a, b) { 
 							return b.section_id - a.section_id; 
-						})[0].section_id + 1, (exports.copy(data)).sort(function(a, b) { 
+						})[0].section_id + 1 : 1,
+						rhs = dat_cpy.length != 0 ? dat_cpy.sort(function(a, b) { 
 							return b.section_id - a.section_id; 
-						})[0].section_id + 1); 
+						})[0].section_id + 1 : 1;
 					}
 					else if(type == "Examples") {
-						addon = Math.max((exports.copy(input)).sort(function(a, b) { 
+						lhs = inp_cpy.length != 0 ? inp_cpy.sort(function(a, b) { 
 							return b.eid - a.eid; 
-						})[0].eid + 1, (exports.copy(data)).sort(function(a, b) { 
+						})[0].eid + 1 : 1,
+						rhs = dat_cpy.length != 0 ? dat_cpy.sort(function(a, b) { 
 							return b.eid - a.eid; 
-						})[0].eid + 1); 
+						})[0].eid + 1 : 1;
 					}
+					addon = Math.max(lhs, rhs);
 					var new_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
 						new_name = $("<td>").text("New " + type.substring(0, type.length - 1)).attr("contentEditable", "true")
 							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
