@@ -607,7 +607,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 											$("#approve").css("color", "red");
 										}
 
-										$("#approve").click(function(e) {
+										$(".tooltipped").tooltip();
+										$("#approve").hover(function() {
+											console.log("herro");
+										}).click(function(e) {
 											e.preventDefault();
 											if(functions.rgba_to_hex($("#approve").css("color")) == "#ff0000") {
 												$("#approve").css("color", "green");
