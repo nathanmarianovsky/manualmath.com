@@ -776,6 +776,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 															.append($("<i>").addClass("material-icons add-math").text("border_color"))
 															.attr("data-position", "top")
 															.attr("data-tooltip", "Insert Math Box Below"),
+														span_image = $("<span>").addClass("solution_img add-image-tooltipped")
+															.append($("<i>").addClass("material-icons add-image").text("image"))
+															.attr("data-position", "top")
+															.attr("data-tooltip", "Insert Image Below"),
 														latex_body = $("<div>").addClass("latex_body");
 													if(data.title_cms[j].split("_").length == 1) {
 														cont_div = $("<div>").addClass("cont_div");
@@ -789,7 +793,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 													}	
 													latex_body.append(data.content_cms[j]);
 													cont_div.append(latex_body);
-													show_solution.append(span_box, span_toggle, span);
+													show_solution.append(span_box, span_image, span_toggle, span);
 													accordion.append(show_solution);
 													accordion.append(cont_div);
 													$("#latex").append(accordion);
@@ -834,12 +838,16 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 															.append($("<i>").addClass("material-icons add-math").text("border_color"))
 															.attr("data-position", "top")
 															.attr("data-tooltip", "Insert Math Box Below"),
+														span_image = $("<span>").addClass("solution_img add-image-tooltipped")
+															.append($("<i>").addClass("material-icons add-image").text("image"))
+															.attr("data-position", "top")
+															.attr("data-tooltip", "Insert Image Below"),
 														latex_body = $("<div>").addClass("latex_body").text("New Content"),
 														cont_div = $("<div>").addClass("cont_div");
 													span.append($("<i>").addClass("material-icons").text("remove"));
 													span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
 													cont_div.append(latex_body);
-													show_solution.append(span_box, span_toggle, span);
+													show_solution.append(span_box, span_image, span_toggle, span);
 													accordion.append(show_solution);
 													accordion.append(cont_div);
 													$("#latex").append(accordion);
@@ -977,14 +985,14 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						$.get("/api/section/data/" + section.section_id).done(function(content) {
 							var i = 0;
 							for(; i >= 0; i++) {
-								if(content["title" + i] == null || content["title" + i] == "") { break; }
+								if(content.title[i] == null || content.title[i] == "") { break; }
 								var cont_div = "",
-									title = content["title" + i].split("_")[0],
+									title = content.title[i].split("_")[0],
 									accordion = $("<div>").addClass("accordion"),
 									show_solution = $("<div>").addClass("show_solution").text(title),
 									span = $("<span>").addClass("solution_display"),
 									latex_body = $("<div>").addClass("latex_body");
-								if(content["title" + i].split("_").length == 1) {
+								if(content.title[i].split("_").length == 1) {
 									cont_div = $("<div>").addClass("cont_div");
 									span.append($("<i>").addClass("material-icons").text("remove"));
 								}
@@ -992,7 +1000,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 									cont_div = $("<div>").addClass("cont_div hidden_div");
 									span.append($("<i>").addClass("material-icons").text("add"));
 								}	
-								latex_body.append(content["content" + i]);
+								latex_body.append(content.content[i]);
 								cont_div.append(latex_body);
 								show_solution.append(span);
 								accordion.append(show_solution);
@@ -1006,11 +1014,11 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							functions.handle_breadcrumbs("section", $(".accordion").first(), subject, topic, section);
 							MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 							functions.handle_button();
-							if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
-								MathJax.Hub.Queue(function() {
-									functions.hide_mathjax_span();
-								});
-							}
+							// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
+							// 	MathJax.Hub.Queue(function() {
+							// 		functions.hide_mathjax_span();
+							// 	});
+							// }
 						});
 					}
 					else {

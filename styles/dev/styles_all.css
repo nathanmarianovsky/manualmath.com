@@ -495,7 +495,16 @@ nav {
 .solution_toggle {
     position: absolute;
     top: -10px;
-    right: 100px;
+    right: 60px;
+    font-size: 40px;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.solution_img {
+    position: absolute;
+    top: -10px;
+    right: 110px;
     font-size: 40px;
     cursor: pointer;
     pointer-events: auto;
@@ -504,7 +513,7 @@ nav {
 .solution_box {
     position: absolute;
     top: -10px;
-    right: 190px;
+    right: 160px;
     font-size: 40px;
     cursor: pointer;
     pointer-events: auto;

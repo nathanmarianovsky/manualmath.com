@@ -186,8 +186,9 @@ define(function() {
 		if(exports.width_func() < 992) { message(); }
 		else { counter++; callback(); }
 		$(window).on("resize", function() {
+			$("body").css("width", "100%");
 			if(exports.width_func() < 992) {
-				message(); 
+				message();
 			}
 			else {
 				$(".lean-overlay").remove();
