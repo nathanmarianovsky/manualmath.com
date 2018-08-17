@@ -879,9 +879,64 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												});
 												$(".add-math").click(function(e) {
 													e.preventDefault();
-
 													var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
 													obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
+												});
+												// function previewFile() {
+												//   // var preview = document.querySelector('img');
+												//   // var file = document.querySelector("input[type=file]").files[0];
+												//   console.log(document.querySelector("input[type=file]"));
+												//   console.log($("#file"));
+												//   var file = $("#file")[0].files[0];
+												//   var reader  = new FileReader();
+
+												//   reader.addEventListener("load", function () {
+												//   	console.log(reader);
+												//   	console.log(reader.result);
+												//     // preview.src = reader.result;
+												//   }, false);
+
+												//   if (file) {
+												//     reader.readAsDataURL(file);
+												//   }
+												// }
+												$(".add-image").click(function(e) {
+													e.preventDefault();
+													$("body").append($("<input>").css("display", "none").attr({
+														id: "file",
+														type: "file"
+													}));
+													
+													var obj = $(this).parent().parent().parent()
+														.find(".cont_div .latex_body").first();
+													  // function receivedText() {
+													    // document.getElementById('editor').appendChild(document.createTextNode(fr.result));
+
+													  // }  
+													$("#file").click();
+
+													$("#file").on("change", function() {
+														// var preview = document.querySelector('img');
+														  var file = $("#file")[0].files[0];
+														  var reader  = new FileReader();
+
+														  reader.addEventListener("load", function () {
+														  	console.log(reader);
+														  	console.log(reader.result);
+														    // preview.src = reader.result;
+
+														    
+															obj.append($("<div>").addClass("latex_equation")
+																.append($("<img>").attr("src", reader.result)));
+
+															$("#file").remove();
+
+														  }, false);
+
+														  if (file) {
+														    reader.readAsDataURL(file);
+														  }
+													});
 
 												});
 											}
