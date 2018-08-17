@@ -608,9 +608,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 										}
 
 										$(".tooltipped").tooltip();
-										$("#approve").hover(function() {
-											console.log("herro");
-										}).click(function(e) {
+										$("#approve").click(function(e) {
 											e.preventDefault();
 											if(functions.rgba_to_hex($("#approve").css("color")) == "#ff0000") {
 												$("#approve").css("color", "green");
@@ -690,8 +688,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 														.addClass("show_solution").text("NO CONTENT HERE!")));
 												}
 												$("#live-version").closest("li").css("background-color", "#008cc3");
-												$("#cms-version").closest("li").css("background-color", "#00b7ff");
-												$("#edit").closest("li").css("background-color", "#00b7ff");
+												$("#cms-version").closest("li").css("background-color", "");
+												$("#edit").closest("li").css("background-color", "");
 												MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 												functions.handle_button();
 											}
@@ -752,8 +750,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 														.addClass("show_solution").text("NO CONTENT HERE!")));
 												}
 												$("#cms-version").closest("li").css("background-color", "#008cc3");
-												$("#live-version").closest("li").css("background-color", "#00b7ff");
-												$("#edit").closest("li").css("background-color", "#00b7ff");
+												$("#live-version").closest("li").css("background-color", "");
+												$("#edit").closest("li").css("background-color", "");
 												MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 												functions.handle_button();
 											}
@@ -774,6 +772,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 															.text(title)),
 														span = $("<span>").addClass("solution_display"),
 														span_toggle = $("<span>").addClass("solution_toggle"),
+														span_box = $("<span>").addClass("solution_box add-math-tooltipped")
+															.append($("<i>").addClass("material-icons add-math").text("border_color"))
+															.attr("data-position", "top")
+															.attr("data-tooltip", "Insert Math Box Below"),
 														latex_body = $("<div>").addClass("latex_body");
 													if(data.title_cms[j].split("_").length == 1) {
 														cont_div = $("<div>").addClass("cont_div");
@@ -787,7 +789,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 													}	
 													latex_body.append(data.content_cms[j]);
 													cont_div.append(latex_body);
-													show_solution.append(span_toggle, span);
+													show_solution.append(span_box, span_toggle, span);
 													accordion.append(show_solution);
 													accordion.append(cont_div);
 													$("#latex").append(accordion);
@@ -797,9 +799,9 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 														.addClass("show_solution").text("NO CONTENT HERE!")));
 												}
 												$("#edit").closest("li").css("background-color", "#008cc3");
-												$("#live-version").closest("li").css("background-color", "#00b7ff");
-												$("#cms-version").closest("li").css("background-color", "#00b7ff");
-												$(".toggle").click(function(e) {
+												$("#live-version").closest("li").css("background-color", "");
+												$("#cms-version").closest("li").css("background-color", "");
+												$(".toggle").on("click", function(e) {
 													e.preventDefault();
 													e.stopPropagation();
 													var item = $(this).parents().prev().clone().children().remove().end().text();
@@ -818,6 +820,62 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												});
 												functions.handle_button(1);
 												$(".latex_body").attr("contentEditable", "true");
+												$(".add-math-tooltipped").tooltip();
+												$("#add-box").click(function(e) {
+													e.preventDefault();
+													var cont_div = "",
+														accordion = $("<div>").addClass("accordion"),
+														show_solution = $("<div>").addClass("show_solution")
+															.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
+															.text("New Title")),
+														span = $("<span>").addClass("solution_display"),
+														span_toggle = $("<span>").addClass("solution_toggle"),
+														span_box = $("<span>").addClass("solution_box add-math-tooltipped")
+															.append($("<i>").addClass("material-icons add-math").text("border_color"))
+															.attr("data-position", "top")
+															.attr("data-tooltip", "Insert Math Box Below"),
+														latex_body = $("<div>").addClass("latex_body").text("New Content"),
+														cont_div = $("<div>").addClass("cont_div");
+													span.append($("<i>").addClass("material-icons").text("remove"));
+													span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
+													cont_div.append(latex_body);
+													show_solution.append(span_box, span_toggle, span);
+													accordion.append(show_solution);
+													accordion.append(cont_div);
+													$("#latex").append(accordion);
+
+													data.title_cms.push("New Title");
+													data.content_cms.push("New Content");
+
+													$(".toggle").off();
+													$("#latex .solution_display").off();
+													$(".toggle").on("click", function(e) {
+														e.preventDefault();
+														e.stopPropagation();
+														var item = $(this).parents().prev().clone().children().remove().end().text();
+														var ref = data.title_cms.findIndex(function(elem) {
+															return elem.split("_hidden")[0] == item;
+														});
+														if($(this).text() == "toggle_off") {
+															$(this).text("toggle_on");
+															data.title_cms[ref] = item;
+														}
+														else if($(this).text() == "toggle_on") {
+															$(this).text("toggle_off");
+															data.title_cms[ref] += "_hidden";
+														}
+													});
+													functions.handle_button(1);
+													$(".latex_body").attr("contentEditable", "true");
+													$(".add-math-tooltipped").tooltip();
+												});
+												$(".add-math").click(function(e) {
+													e.preventDefault();
+
+													var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
+													obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
+
+												});
 											}
 										});
 
@@ -879,6 +937,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 										$("#live-version").parent("li").css("margin-left", "25px");
 										$("#save").parent("li").css("margin-right", "25px");
 										$("#cms-version").closest("li").css("background-color", "#008cc3");
+										$("#edit").parent().mouseenter();
 										$("#examples_change").click(function(e) {
 											e.preventDefault();
 											functions.sidenav_modal("Examples", examples, section.section_id);

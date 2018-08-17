@@ -1942,16 +1942,16 @@ define(function() {
 	*/
 	exports.handle_button = function(cms) {
 		if(cms == 1) {
-			$("#latex .solution_display").click(function(defaultevent) {
+			$("#latex .solution_display").on("click", function(defaultevent) {
 				defaultevent.preventDefault();
-				$(this).find(".solution_display i").text() == "add" ? $(this).parent().find(".cont_div").fadeIn(300) 
-					: $(this).parent().find(".cont_div").fadeOut(300);
-				$(this).find(".solution_display i").text() == "add" ? $(this).find(".solution_display i").text("remove") 
-					: $(this).find(".solution_display i").text("add");
+				$(this).find("i").text() == "add" ? $(this).parent().parent().find(".cont_div").fadeIn(300) 
+					: $(this).parent().parent().find(".cont_div").fadeOut(300);
+				$(this).find("i").text() == "add" ? $(this).find("i").text("remove") 
+					: $(this).find("i").text("add");
 			});
 		}
 		else {
-			$("#latex .show_solution").click(function(defaultevent) {
+			$("#latex .show_solution").on("click", function(defaultevent) {
 				defaultevent.preventDefault();
 				$(this).find(".solution_display i").text() == "add" ? $(this).parent().find(".cont_div").fadeIn(300) 
 					: $(this).parent().find(".cont_div").fadeOut(300);

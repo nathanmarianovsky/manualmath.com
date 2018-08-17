@@ -500,3 +500,12 @@ nav {
     cursor: pointer;
     pointer-events: auto;
 }
+
+.solution_box {
+    position: absolute;
+    top: -10px;
+    right: 190px;
+    font-size: 40px;
+    cursor: pointer;
+    pointer-events: auto;
+}
