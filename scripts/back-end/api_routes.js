@@ -6,7 +6,7 @@ exports.add_api_routes = (app, pool) => {
 	// The API methods to get all subjects, topics, sections, or examples
 	app.get("/api/:objects", (request, response) => {
 		var objects = request.params.objects;
-		response.set('Cache-Control', 'public, max-age=864000000');
+		// response.set('Cache-Control', 'public, max-age=864000000');
 		if(objects == "subjects") {
 			pool.query("SELECT sid,sname,`order`,side_approval,del_approval,cms_approval FROM subject ORDER BY `order` ASC", (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
@@ -58,48 +58,32 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API methods to get the data corresponding to any particular subject, topic, section, or example
-	app.get("/api/:want/data/:param", (request, response) => {
+	app.post("/api/:want/data/", (request, response) => {
 		var want = request.params.want,
-			param = request.params.param,
-			statement = "";
-		response.set('Cache-Control', 'public, max-age=864000000');
+			param = request.body.param,
+			statement = "SELECT title,content,title_cms,content_cms,cms_approval FROM ";
+		// response.set("Cache-Control", "public, max-age=864000000");
 		if(want == "subject") {
-			statement = "SELECT about,notation FROM subject WHERE sid=" + param;
-			pool.query(statement, (err, results) => {
-				if(err) { console.error("Error Connecting: " + err.stack); return; }
-				if(results.length != 0) {
-					response.send(results[0]);
-				}
-				else { response.send("Cannot find an object associated with the given sid!"); }
-			});
+			statement += "subject WHERE sid=";
 		}
 		else if(want == "topic") {
-			statement = "SELECT about FROM topic WHERE tid=" + param;
-			pool.query(statement, (err, results) => {
-				if(err) { console.error("Error Connecting: " + err.stack); return; }
-				if(results.length != 0) {
-					response.send(results[0].about);
-				}
-				else { response.send("Cannot find an object associated with the given tid!"); }
-			});
+			statement += "topic WHERE tid=";
 		}
 		else if(want == "section") {
-			statement = "SELECT title,content,title_cms,content_cms,cms_approval FROM section WHERE section_id=" + param;
+			statement += "section WHERE section_id=";
+		}
+		else if(want == "example") {
+			statement += "example WHERE eid=";
+		}
+		if(want == "subject" || want == "topic" || want == "section" || want == "example") {
+			statement += param;
 			pool.query(statement, (err, results) => {
-				if(err) { console.error("Error Connecting: " + err.stack); return; }
+				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 				if(results.length != 0) {
 					var title_str = results[0].title != null ? results[0].title : "",
 						title_str_cms = results[0].title_cms != null ? results[0].title_cms : "",
-						// content_str = results[0].content != null ? results[0].content : "",
-						// content_str_cms = results[0].content_cms != null ? results[0].content_cms : "";
-						// content_str_cms = results[0].content_cms != null ? results[0].content_cms : "";
-						content_str = results[0].content != null ? new Buffer(results[0].content, "binary").toString() : "";
+						content_str = results[0].content != null ? new Buffer(results[0].content, "binary").toString() : "",
 						content_str_cms = results[0].content_cms != null ? new Buffer(results[0].content_cms, "binary").toString() : "";
-						// title_arr = title_str != null ? title_str : "",
-						// title_arr_cms = title_str_cms != null ? title_str_cms : "",
-						// content_arr = content_str != null ? content_str : "";
-						// content_arr_cms = content_str_cms != null ? content_str_cms : "";
-					// console.log(results[0].content_cms);
 					var obj = {
 						title: title_str,
 						title_cms: title_str_cms,
@@ -107,28 +91,66 @@ exports.add_api_routes = (app, pool) => {
 						content_cms: content_str_cms,
 						cms_approval: results[0].cms_approval
 					};
-					// for(var k = 0; k < title_arr.length; k++) {
-						// obj["title" + k] = title_arr[k];
-						// obj["title" + k] = title_arr[k];
-						// obj["content" + k] = content_arr[k];
-						// obj["content" + k] = content_arr[k];
-					// }
 					response.send(obj);
 				}
-				else { response.send("Cannot find an object with the given section_id!"); }
-			});
-		}
-		else if(want == "example") {
-			statement = "SELECT problem,solution FROM example WHERE eid=" + param;
-			pool.query(statement, (err, results) => {
-				if(err) { console.error("Error Connecting: " + err.stack); return; }
-				if(results.length != 0) {
-					response.send(results[0]);
-				}
-				else { response.send("Cannot find an object associated with the given eid!"); }
+				else { response.send("Cannot find an object with the given id!"); }
 			});
 		}
 		else { response.send("This object whose file you want does not seem to exist in the database!"); }
+		
+
+		// if(want == "subject") {
+		// 	statement = "SELECT about,notation FROM subject WHERE sid=" + param;
+		// 	pool.query(statement, (err, results) => {
+		// 		if(err) { console.error("Error Connecting: " + err.stack); return; }
+		// 		if(results.length != 0) {
+		// 			response.send(results[0]);
+		// 		}
+		// 		else { response.send("Cannot find an object associated with the given sid!"); }
+		// 	});
+		// }
+		// else if(want == "topic") {
+		// 	statement = "SELECT about FROM topic WHERE tid=" + param;
+		// 	pool.query(statement, (err, results) => {
+		// 		if(err) { console.error("Error Connecting: " + err.stack); return; }
+		// 		if(results.length != 0) {
+		// 			response.send(results[0].about);
+		// 		}
+		// 		else { response.send("Cannot find an object associated with the given tid!"); }
+		// 	});
+		// }
+		// else if(want == "section") {
+		// 	statement = "SELECT title,content,title_cms,content_cms,cms_approval FROM section WHERE section_id=" + param;
+		// 	pool.query(statement, (err, results) => {
+		// 		if(err) { console.error("Error Connecting: " + err.stack); return; }
+		// 		if(results.length != 0) {
+		// 			var title_str = results[0].title != null ? results[0].title : "",
+		// 				title_str_cms = results[0].title_cms != null ? results[0].title_cms : "",
+		// 				content_str = results[0].content != null ? new Buffer(results[0].content, "binary").toString() : "",
+		// 				content_str_cms = results[0].content_cms != null ? new Buffer(results[0].content_cms, "binary").toString() : "";
+		// 			var obj = {
+		// 				title: title_str,
+		// 				title_cms: title_str_cms,
+		// 				content: content_str,
+		// 				content_cms: content_str_cms,
+		// 				cms_approval: results[0].cms_approval
+		// 			};
+		// 			response.send(obj);
+		// 		}
+		// 		else { response.send("Cannot find an object with the given section_id!"); }
+		// 	});
+		// }
+		// else if(want == "example") {
+		// 	statement = "SELECT problem,solution FROM example WHERE eid=" + param;
+		// 	pool.query(statement, (err, results) => {
+		// 		if(err) { console.error("Error Connecting: " + err.stack); return; }
+		// 		if(results.length != 0) {
+		// 			response.send(results[0]);
+		// 		}
+		// 		else { response.send("Cannot find an object associated with the given eid!"); }
+		// 	});
+		// }
+		// else { response.send("This object whose file you want does not seem to exist in the database!"); }
 	});
 
 	// The API methods to get a specific object containing all of the information of the associated id or name
@@ -141,7 +163,7 @@ exports.add_api_routes = (app, pool) => {
 			statement = "",
 			check = false,
 			existence = false;
-		response.set('Cache-Control', 'public, max-age=864000000');
+		// response.set('Cache-Control', 'public, max-age=864000000');
 		want != "section" ? holder_name = want.slice(0,1) + "name" : holder_name = "section_name";
 		want != "section" ? holder_id = want.slice(0,1) + "id" : holder_id = "section_id";
 		param_type == "name" ? statement = "SELECT " + holder_id + " FROM " + want + " WHERE " + holder_name + "='" + param + "'" 
@@ -221,234 +243,235 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to add or change the data corresponding to any particular subject
-	app.post("/api/:operation/subject/:param/:name/:order/:about/:notation/:side_approval/:cms_approval/:del_approval/:about_cms/:notation_cms", (request, response) => {
-		var operation = request.params.operation
-			param = request.params.param,
-			name = request.params.name,
-			order = request.params.order,
-			about = request.params.about,
-			notation = request.params.notation,
-			side_approval = request.params.side_approval,
-			cms_approval = request.params.cms_approval,
-			del_approval = request.params.del_approval,
-			about_cms = request.params.about_cms,
-			notation_cms = request.params.notation_cms,
-			statement = "",
-			ending = "";
-		if(operation == "change") {
-			if(!isNaN(param)) {
-				statement = "UPDATE subject SET ";
-				if(name !== "undefined") {
-					statement += "sname='" + name + "'";
-				}
-				if(order !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "`order`='" + order + "'";
-				}
-				if(about !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "about='" + about + "'";
-				}
-				if(notation !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "notation='" + notation + "'";
-				}
-				if(side_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					side_approval != "0" ? statement += "side_approval='" + side_approval + "'" 
-						: statement += "side_approval=NULL";
-				}
-				if(cms_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
-						: statement += "cms_approval=NULL";
-				}
-				if(del_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					del_approval != "0" ? statement += "del_approval='" + del_approval + "'" 
-						: statement += "del_approval=NULL";
-				}
-				if(about_cms !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "about_cms='" + about_cms + "'";
-				}
-				if(notation_cms !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "notation_cms='" + notation_cms + "'";
-				}
-				statement += " WHERE sid=" + param;
-			}
-			else { response.send("The sid provided is invalid!"); }
-		}
-		else if(operation == "add") {
-			if(!isNaN(param)) {
-				statement = "INSERT INTO subject (sid,sname,`order`";
-				ending = " VALUES ('" + param + "','" + name + "','" + order + "'";
-				if(about !== "undefined") {
-					statement += ",about";
-					ending += ",'" + about + "'";
-				}
-				if(notation !== "undefined") {
-					statement += ",notation";
-					ending += ",'" + notation + "'";
-				}
-				if(side_approval !== "undefined") {
-					statement += ",side_approval";
-					if(side_approval == "0") {
-						ending += ",NULL";
-					}
-					else {
-						ending += ",'" + side_approval + "'";
-					}
-				}
-				if(cms_approval !== "undefined") {
-					statement += ",cms_approval";
-					if(cms_approval == "0") {
-						ending += ",NULL";
-					}
-					else {
-						ending += ",'" + cms_approval + "'";
-					}
-				}
-				if(del_approval !== "undefined") {
-					statement += ",del_approval";
-					if(del_approval == "0") {
-						ending += ",NULL";
-					}
-					else {
-						ending += ",'" + del_approval + "'";
-					}
-				}
-				if(about_cms !== "undefined") {
-					statement += ",about_cms";
-					ending += ",'" + about_cms + "'";
-				}
-				if(notation_cms !== "undefined") {
-					statement += ",notation_cms";
-					ending += ",'" + notation_cms + "'";
-				}
-				ending += ")";
-				statement += ")" + ending;
-			}
-			else { response.send("The sid provided is invalid!"); }
-		}
-		pool.query(statement, err => {
-			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-			else { response.send("1"); }
-		});
-	});
+	// app.post("/api/:operation/subject/:param/:name/:order/:about/:notation/:side_approval/:cms_approval/:del_approval/:about_cms/:notation_cms", (request, response) => {
+	// 	var operation = request.params.operation
+	// 		param = request.params.param,
+	// 		name = request.params.name,
+	// 		order = request.params.order,
+	// 		about = request.params.about,
+	// 		notation = request.params.notation,
+	// 		side_approval = request.params.side_approval,
+	// 		cms_approval = request.params.cms_approval,
+	// 		del_approval = request.params.del_approval,
+	// 		about_cms = request.params.about_cms,
+	// 		notation_cms = request.params.notation_cms,
+	// 		statement = "",
+	// 		ending = "";
+	// 	if(operation == "change") {
+	// 		if(!isNaN(param)) {
+	// 			statement = "UPDATE subject SET ";
+	// 			if(name !== "undefined") {
+	// 				statement += "sname='" + name + "'";
+	// 			}
+	// 			if(order !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "`order`='" + order + "'";
+	// 			}
+	// 			if(about !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "about='" + about + "'";
+	// 			}
+	// 			if(notation !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "notation='" + notation + "'";
+	// 			}
+	// 			if(side_approval !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				side_approval != "0" ? statement += "side_approval='" + side_approval + "'" 
+	// 					: statement += "side_approval=NULL";
+	// 			}
+	// 			if(cms_approval !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
+	// 					: statement += "cms_approval=NULL";
+	// 			}
+	// 			if(del_approval !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				del_approval != "0" ? statement += "del_approval='" + del_approval + "'" 
+	// 					: statement += "del_approval=NULL";
+	// 			}
+	// 			if(about_cms !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "about_cms='" + about_cms + "'";
+	// 			}
+	// 			if(notation_cms !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "notation_cms='" + notation_cms + "'";
+	// 			}
+	// 			statement += " WHERE sid=" + param;
+	// 		}
+	// 		else { response.send("The sid provided is invalid!"); }
+	// 	}
+	// 	else if(operation == "add") {
+	// 		if(!isNaN(param)) {
+	// 			statement = "INSERT INTO subject (sid,sname,`order`";
+	// 			ending = " VALUES ('" + param + "','" + name + "','" + order + "'";
+	// 			if(about !== "undefined") {
+	// 				statement += ",about";
+	// 				ending += ",'" + about + "'";
+	// 			}
+	// 			if(notation !== "undefined") {
+	// 				statement += ",notation";
+	// 				ending += ",'" + notation + "'";
+	// 			}
+	// 			if(side_approval !== "undefined") {
+	// 				statement += ",side_approval";
+	// 				if(side_approval == "0") {
+	// 					ending += ",NULL";
+	// 				}
+	// 				else {
+	// 					ending += ",'" + side_approval + "'";
+	// 				}
+	// 			}
+	// 			if(cms_approval !== "undefined") {
+	// 				statement += ",cms_approval";
+	// 				if(cms_approval == "0") {
+	// 					ending += ",NULL";
+	// 				}
+	// 				else {
+	// 					ending += ",'" + cms_approval + "'";
+	// 				}
+	// 			}
+	// 			if(del_approval !== "undefined") {
+	// 				statement += ",del_approval";
+	// 				if(del_approval == "0") {
+	// 					ending += ",NULL";
+	// 				}
+	// 				else {
+	// 					ending += ",'" + del_approval + "'";
+	// 				}
+	// 			}
+	// 			if(about_cms !== "undefined") {
+	// 				statement += ",about_cms";
+	// 				ending += ",'" + about_cms + "'";
+	// 			}
+	// 			if(notation_cms !== "undefined") {
+	// 				statement += ",notation_cms";
+	// 				ending += ",'" + notation_cms + "'";
+	// 			}
+	// 			ending += ")";
+	// 			statement += ")" + ending;
+	// 		}
+	// 		else { response.send("The sid provided is invalid!"); }
+	// 	}
+	// 	pool.query(statement, err => {
+	// 		if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+	// 		else { response.send("1"); }
+	// 	});
+	// });
 
 	// The API method to add or change the data corresponding to any particular topic
-	app.post("/api/:operation/topic/:param/:sid/:name/:order/:about/:side_approval/:cms_approval/:del_approval/:about_cms", (request, response) => {
-		var operation = request.params.operation
-			param = request.params.param,
-			sid = request.params.sid,
-			name = request.params.name,
-			order = request.params.order,
-			about = request.params.about,
-			side_approval = request.params.side_approval,
-			cms_approval = request.params.cms_approval,
-			del_approval = request.params.del_approval,
-			about_cms = request.params.about_cms,
-			statement = "",
-			ending = "";
-		if(operation == "change") {
-			if(!isNaN(param)) {
-				statement = "UPDATE topic SET ";
-				if(sid !== "undefined") {
-					statement += "sid='" + sid + "'";
-				}
-				if(name !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "tname='" + name + "'";
-				}
-				if(order !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "`order`='" + order + "'";
-				}
-				if(about !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "about='" + about + "'";
-				}
-				if(side_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					side_approval != "0" ? statement += "side_approval='" + side_approval + "'" 
-						: statement += "side_approval=NULL";
-				}
-				if(cms_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
-						: statement += "cms_approval=NULL";
-				}
-				if(del_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					del_approval != "0" ? statement += "del_approval='" + del_approval + "'" 
-						: statement += "del_approval=NULL";
-				}
-				if(about_cms !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "about_cms='" + about_cms + "'";
-				}
-				statement += " WHERE tid=" + param;
-			}
-			else { response.send("The tid provided is invalid!"); }
-		}
-		else if(operation == "add") {
-			if(!isNaN(param)) {
-				statement = "INSERT INTO topic (tid,tname,`order`,sid";
-				ending = " VALUES ('" + param + "','" + name + "','" + order + "','" + sid + "'";
-				if(about !== "undefined") {
-					statement += ",about";
-					ending += ",'" + about + "'";
-				}
-				if(side_approval !== "undefined") {
-					statement += ",side_approval";
-					if(side_approval == "0") {
-						ending += ",NULL";
-					}
-					else {
-						ending += ",'" + side_approval + "'";
-					}
-				}
-				if(cms_approval !== "undefined") {
-					statement += ",cms_approval";
-					if(cms_approval == "0") {
-						ending += ",NULL";
-					}
-					else {
-						ending += ",'" + cms_approval + "'";
-					}
-				}
-				if(del_approval !== "undefined") {
-					statement += ",del_approval";
-					if(del_approval == "0") {
-						ending += ",NULL";
-					}
-					else {
-						ending += ",'" + del_approval + "'";
-					}
-				}
-				if(about_cms !== "undefined") {
-					statement += ",about_cms";
-					ending += ",'" + about_cms + "'";
-				}
-				ending += ")";
-				statement += ")" + ending;
-			}
-			else { response.send("The tid provided is invalid!"); }
-		}
-		pool.query(statement, err => {
-			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-			else { response.send("1"); }
-		});
-	});
+	// app.post("/api/:operation/topic/:param/:sid/:name/:order/:about/:side_approval/:cms_approval/:del_approval/:about_cms", (request, response) => {
+	// 	var operation = request.params.operation
+	// 		param = request.params.param,
+	// 		sid = request.params.sid,
+	// 		name = request.params.name,
+	// 		order = request.params.order,
+	// 		about = request.params.about,
+	// 		side_approval = request.params.side_approval,
+	// 		cms_approval = request.params.cms_approval,
+	// 		del_approval = request.params.del_approval,
+	// 		about_cms = request.params.about_cms,
+	// 		statement = "",
+	// 		ending = "";
+	// 	if(operation == "change") {
+	// 		if(!isNaN(param)) {
+	// 			statement = "UPDATE topic SET ";
+	// 			if(sid !== "undefined") {
+	// 				statement += "sid='" + sid + "'";
+	// 			}
+	// 			if(name !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "tname='" + name + "'";
+	// 			}
+	// 			if(order !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "`order`='" + order + "'";
+	// 			}
+	// 			if(about !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "about='" + about + "'";
+	// 			}
+	// 			if(side_approval !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				side_approval != "0" ? statement += "side_approval='" + side_approval + "'" 
+	// 					: statement += "side_approval=NULL";
+	// 			}
+	// 			if(cms_approval !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
+	// 					: statement += "cms_approval=NULL";
+	// 			}
+	// 			if(del_approval !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				del_approval != "0" ? statement += "del_approval='" + del_approval + "'" 
+	// 					: statement += "del_approval=NULL";
+	// 			}
+	// 			if(about_cms !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "about_cms='" + about_cms + "'";
+	// 			}
+	// 			statement += " WHERE tid=" + param;
+	// 		}
+	// 		else { response.send("The tid provided is invalid!"); }
+	// 	}
+	// 	else if(operation == "add") {
+	// 		if(!isNaN(param)) {
+	// 			statement = "INSERT INTO topic (tid,tname,`order`,sid";
+	// 			ending = " VALUES ('" + param + "','" + name + "','" + order + "','" + sid + "'";
+	// 			if(about !== "undefined") {
+	// 				statement += ",about";
+	// 				ending += ",'" + about + "'";
+	// 			}
+	// 			if(side_approval !== "undefined") {
+	// 				statement += ",side_approval";
+	// 				if(side_approval == "0") {
+	// 					ending += ",NULL";
+	// 				}
+	// 				else {
+	// 					ending += ",'" + side_approval + "'";
+	// 				}
+	// 			}
+	// 			if(cms_approval !== "undefined") {
+	// 				statement += ",cms_approval";
+	// 				if(cms_approval == "0") {
+	// 					ending += ",NULL";
+	// 				}
+	// 				else {
+	// 					ending += ",'" + cms_approval + "'";
+	// 				}
+	// 			}
+	// 			if(del_approval !== "undefined") {
+	// 				statement += ",del_approval";
+	// 				if(del_approval == "0") {
+	// 					ending += ",NULL";
+	// 				}
+	// 				else {
+	// 					ending += ",'" + del_approval + "'";
+	// 				}
+	// 			}
+	// 			if(about_cms !== "undefined") {
+	// 				statement += ",about_cms";
+	// 				ending += ",'" + about_cms + "'";
+	// 			}
+	// 			ending += ")";
+	// 			statement += ")" + ending;
+	// 		}
+	// 		else { response.send("The tid provided is invalid!"); }
+	// 	}
+	// 	pool.query(statement, err => {
+	// 		if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+	// 		else { response.send("1"); }
+	// 	});
+	// });
 
 	// The API method to add or change the data corresponding to any particular section
 	// app.post("/api/:operation/section/:param/:tid/:name/:order/:title/:content/:side_approval/:cms_approval/:del_approval/:title_cms", (request, response) => {
-	app.post("/api/:operation/section", (request, response) => {
+	app.post("/api/:operation/:type", (request, response) => {
 		var operation = request.params.operation
+			type = request.params.type,
 			param = request.body.param,
-			tid = request.body.tid,
+			ref = request.body.ref,
 			name = request.body.name,
 			order = request.body.order,
 			title = request.body.title,
@@ -462,13 +485,24 @@ exports.add_api_routes = (app, pool) => {
 			ending = "";
 		if(operation == "change") {
 			if(!isNaN(param)) {
-				statement = "UPDATE section SET ";
-				if(tid !== "undefined") {
-					statement += "tid='" + tid + "'";
+				statement = "UPDATE " 
+				if(type == "subject") { statement += "subject SET "; }
+				else if(type == "topic") { statement += "topic SET "; }
+				else if(type == "section") { statement += "section SET "; }
+				else if(type == "example") { statement += "example SET "; }
+				if(ref !== "undefined") {
+					if(type == "topic") { statement += "sid='"; }
+					else if(type == "section") { statement += "tid='"; }
+					else if(type == "example") { statement += "section_id='"; }
+					statement += ref + "'";
 				}
 				if(name !== "undefined") {
 					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "section_name='" + name + "'";
+					if(type == "subject") { statement += "sname='"; }
+					else if(type == "topic") { statement += "tname='"; }
+					else if(type == "section") { statement += "section_name='"; }
+					else if(type == "example") { statement += "ename='"; }
+					statement += name + "'";
 				}
 				if(order !== "undefined") {
 					if(statement[statement.length - 1] != " ") { statement += ","; }
@@ -509,14 +543,26 @@ exports.add_api_routes = (app, pool) => {
 					content_cms != "0" ? statement += "content_cms='" + content_cms + "'" 
 						: statement += "content_cms=NULL";
 				}
-				statement += " WHERE section_id=" + param;
+				if(type == "subject") { statement += " WHERE sid=" + param; }
+				else if(type == "topic") { statement += " WHERE tid=" + param; }
+				else if(type == "section") { statement += " WHERE section_id=" + param; }
+				else if(type == "example") { statement += " WHERE eid=" + param; }
 			}
 			else { response.send("The section_id provided is invalid!"); }
 		}
 		else if(operation == "add") {
 			if(!isNaN(param)) {
-				statement = "INSERT INTO section (section_id,section_name,`order`,tid";
-				ending = " VALUES ('" + param + "','" + name + "','" + order + "','" + tid + "'";
+				statement = "INSERT INTO " 
+				if(type == "subject") { statement += "subject (sid,sname,`order`"; }
+				else if(type == "topic") { statement += "topic (tid,sid,tname,`order`"; }
+				else if(type == "section") { statement += "section (section_id,tid,section_name,`order`"; }
+				else if(type == "example") { statement += "example (eid,section_id,ename,`order`"; }
+				if(type == "subject") {
+					ending = " VALUES ('" + param + "','" + name + "','" + order + "'";
+				}
+				else {
+					ending = " VALUES ('" + param + "','" + ref + "','" + name + "','" + order + "'";
+				}
 				if(title !== "undefined") {
 					statement += ",title";
 					ending += ",'" + title + "'";
@@ -563,7 +609,7 @@ exports.add_api_routes = (app, pool) => {
 				ending += ")";
 				statement += ")" + ending;
 			}
-			else { response.send("The section_id provided is invalid!"); }
+			else { response.send("The id provided is invalid!"); }
 		}
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
@@ -574,127 +620,127 @@ exports.add_api_routes = (app, pool) => {
 
 
 	// The API method to add or change the data corresponding to any particular example
-	app.post("/api/:operation/example/:param/:section_id/:name/:order/:problem/:solution/:side_approval/:cms_approval/:del_approval/:problem_cms/:solution_cms", (request, response) => {
-		var operation = request.params.operation
-			param = request.params.param,
-			section_id = request.params.section_id,
-			name = request.params.name,
-			order = request.params.order,
-			problem = request.params.problem,
-			solution = request.params.solution,
-			side_approval = request.params.side_approval,
-			cms_approval = request.params.cms_approval,
-			del_approval = request.params.del_approval,
-			problem_cms = request.params.problem_cms,
-			solution_cms = request.params.solution_cms,
-			statement = "",
-			ending = "";
-		if(operation == "change") {
-			if(!isNaN(param)) {
-				statement = "UPDATE example SET ";
-				if(section_id !== "undefined") {
-					statement += "section_id='" + section_id + "'";
-				}
-				if(name !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "ename='" + name + "'";
-				}
-				if(order !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "`order`='" + order + "'";
-				}
-				if(problem !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "problem='" + problem + "'";
-				}
-				if(solution !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "solution='" + solution + "'";
-				}
-				if(side_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					side_approval != "0" ? statement += "side_approval='" + side_approval + "'" 
-						: statement += "side_approval=NULL";
-				}
-				if(cms_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
-						: statement += "cms_approval=NULL";
-				}
-				if(del_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					del_approval != "0" ? statement += "del_approval='" + del_approval + "'" 
-						: statement += "del_approval=NULL";
-				}
-				if(problem_cms !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "problem_cms='" + problem_cms + "'";
-				}
-				if(solution_cms !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "solution_cms='" + solution_cms + "'";
-				}
-				statement += " WHERE eid=" + param;
-			}
-			else { response.send("The eid provided is invalid!"); }
-		}
-		else if(operation == "add") {
-			if(!isNaN(param)) {
-				statement = "INSERT INTO example (eid,ename,`order`,section_id";
-				ending = " VALUES ('" + param + "','" + name + "','" + order + "','" + section_id + "'";
-				if(problem !== "undefined") {
-					statement += ",problem";
-					ending += ",'" + problem + "'";
-				}
-				if(solution !== "undefined") {
-					statement += ",solution";
-					ending += ",'" + solution + "'";
-				}
-				if(side_approval !== "undefined") {
-					statement += ",side_approval";
-					if(side_approval == "0") {
-						ending += ",NULL";
-					}
-					else {
-						ending += ",'" + side_approval + "'";
-					}
-				}
-				if(cms_approval !== "undefined") {
-					statement += ",cms_approval";
-					if(cms_approval == "0") {
-						ending += ",NULL";
-					}
-					else {
-						ending += ",'" + cms_approval + "'";
-					}
-				}
-				if(del_approval !== "undefined") {
-					statement += ",del_approval";
-					if(del_approval == "0") {
-						ending += ",NULL";
-					}
-					else {
-						ending += ",'" + del_approval + "'";
-					}
-				}
-				if(problem_cms !== "undefined") {
-					statement += ",problem_cms";
-					ending += ",'" + problem_cms + "'";
-				}
-				if(solution_cms !== "undefined") {
-					statement += ",solution_cms";
-					ending += ",'" + solution_cms + "'";
-				}
-				ending += ")";
-				statement += ")" + ending;
-			}
-			else { response.send("The eid provided is invalid!"); }
-		}
-		pool.query(statement, err => {
-			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-			else { response.send("1"); }
-		});
-	});
+	// app.post("/api/:operation/example/:param/:section_id/:name/:order/:problem/:solution/:side_approval/:cms_approval/:del_approval/:problem_cms/:solution_cms", (request, response) => {
+	// 	var operation = request.params.operation
+	// 		param = request.params.param,
+	// 		section_id = request.params.section_id,
+	// 		name = request.params.name,
+	// 		order = request.params.order,
+	// 		problem = request.params.problem,
+	// 		solution = request.params.solution,
+	// 		side_approval = request.params.side_approval,
+	// 		cms_approval = request.params.cms_approval,
+	// 		del_approval = request.params.del_approval,
+	// 		problem_cms = request.params.problem_cms,
+	// 		solution_cms = request.params.solution_cms,
+	// 		statement = "",
+	// 		ending = "";
+	// 	if(operation == "change") {
+	// 		if(!isNaN(param)) {
+	// 			statement = "UPDATE example SET ";
+	// 			if(section_id !== "undefined") {
+	// 				statement += "section_id='" + section_id + "'";
+	// 			}
+	// 			if(name !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "ename='" + name + "'";
+	// 			}
+	// 			if(order !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "`order`='" + order + "'";
+	// 			}
+	// 			if(problem !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "problem='" + problem + "'";
+	// 			}
+	// 			if(solution !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "solution='" + solution + "'";
+	// 			}
+	// 			if(side_approval !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				side_approval != "0" ? statement += "side_approval='" + side_approval + "'" 
+	// 					: statement += "side_approval=NULL";
+	// 			}
+	// 			if(cms_approval !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
+	// 					: statement += "cms_approval=NULL";
+	// 			}
+	// 			if(del_approval !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				del_approval != "0" ? statement += "del_approval='" + del_approval + "'" 
+	// 					: statement += "del_approval=NULL";
+	// 			}
+	// 			if(problem_cms !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "problem_cms='" + problem_cms + "'";
+	// 			}
+	// 			if(solution_cms !== "undefined") {
+	// 				if(statement[statement.length - 1] != " ") { statement += ","; }
+	// 				statement += "solution_cms='" + solution_cms + "'";
+	// 			}
+	// 			statement += " WHERE eid=" + param;
+	// 		}
+	// 		else { response.send("The eid provided is invalid!"); }
+	// 	}
+	// 	else if(operation == "add") {
+	// 		if(!isNaN(param)) {
+	// 			statement = "INSERT INTO example (eid,ename,`order`,section_id";
+	// 			ending = " VALUES ('" + param + "','" + name + "','" + order + "','" + section_id + "'";
+	// 			if(problem !== "undefined") {
+	// 				statement += ",problem";
+	// 				ending += ",'" + problem + "'";
+	// 			}
+	// 			if(solution !== "undefined") {
+	// 				statement += ",solution";
+	// 				ending += ",'" + solution + "'";
+	// 			}
+	// 			if(side_approval !== "undefined") {
+	// 				statement += ",side_approval";
+	// 				if(side_approval == "0") {
+	// 					ending += ",NULL";
+	// 				}
+	// 				else {
+	// 					ending += ",'" + side_approval + "'";
+	// 				}
+	// 			}
+	// 			if(cms_approval !== "undefined") {
+	// 				statement += ",cms_approval";
+	// 				if(cms_approval == "0") {
+	// 					ending += ",NULL";
+	// 				}
+	// 				else {
+	// 					ending += ",'" + cms_approval + "'";
+	// 				}
+	// 			}
+	// 			if(del_approval !== "undefined") {
+	// 				statement += ",del_approval";
+	// 				if(del_approval == "0") {
+	// 					ending += ",NULL";
+	// 				}
+	// 				else {
+	// 					ending += ",'" + del_approval + "'";
+	// 				}
+	// 			}
+	// 			if(problem_cms !== "undefined") {
+	// 				statement += ",problem_cms";
+	// 				ending += ",'" + problem_cms + "'";
+	// 			}
+	// 			if(solution_cms !== "undefined") {
+	// 				statement += ",solution_cms";
+	// 				ending += ",'" + solution_cms + "'";
+	// 			}
+	// 			ending += ")";
+	// 			statement += ")" + ending;
+	// 		}
+	// 		else { response.send("The eid provided is invalid!"); }
+	// 	}
+	// 	pool.query(statement, err => {
+	// 		if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+	// 		else { response.send("1"); }
+	// 	});
+	// });
 
 	// The API method to delete the data corresponding to a particular subject, topic, section, or example
 	app.post("/api/delete/:obj/:param", (request, response) => {
@@ -711,47 +757,95 @@ exports.add_api_routes = (app, pool) => {
 						pool.query("SELECT tid FROM topic WHERE sid=" + param, (err, container) => {
 							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 							else {
-								container.forEach((iter, iterIndex) => {
-									topicStatement += "DELETE FROM topic WHERE tid=" + iter.tid + ";";
-									pool.query("SELECT section_id FROM section WHERE tid=" + iter.tid, (err, holder) => {
-										if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-										else {
-											holder.forEach((elem, elemIndex) => {
-												sectionStatement += "DELETE FROM section WHERE section_id=" + elem.section_id + ";";
-												pool.query("SELECT eid FROM example WHERE section_id=" + elem.section_id, (err, collection) => {
-													if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-													else {
-														exampleStatement = "";
-														collection.forEach(item => {
-															exampleStatement += "DELETE FROM example WHERE eid=" + item.eid + ";";
-														});
-														pool.query(exampleStatement, err => {
+								if(container.length != 0) {
+									container.forEach((iter, iterIndex) => {
+										topicStatement += "DELETE FROM topic WHERE tid=" + iter.tid + ";";
+										pool.query("SELECT section_id FROM section WHERE tid=" + iter.tid, (err, holder) => {
+											if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+											else {
+												if(holder.length != 0) {
+													holder.forEach((elem, elemIndex) => {
+														sectionStatement += "DELETE FROM section WHERE section_id=" + elem.section_id + ";";
+														pool.query("SELECT eid FROM example WHERE section_id=" + elem.section_id, (err, collection) => {
 															if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 															else {
-																if(elemIndex >= holder.length - 1 && iterIndex >= container.length - 1) {
-																	pool.query(sectionStatement, err => {
+																if(collection.length != 0) {
+																	exampleStatement = "";
+																	collection.forEach(item => {
+																		exampleStatement += "DELETE FROM example WHERE eid=" + item.eid + ";";
+																	});
+																	pool.query(exampleStatement, err => {
 																		if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 																		else {
-																			pool.query(topicStatement, err => {
-																				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-																				else {
-																					pool.query("DELETE FROM subject WHERE sid=" + param, err => {
-																						if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-																						else { response.send("1"); }
-																					});
-																				}
-																			});
+																			if(elemIndex >= holder.length - 1 && iterIndex >= container.length - 1) {
+																				pool.query(sectionStatement, err => {
+																					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																					else {
+																						pool.query(topicStatement, err => {
+																							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																							else {
+																								pool.query("DELETE FROM subject WHERE sid=" + param, err => {
+																									if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																									else { response.send("1"); }
+																								});
+																							}
+																						});
+																					}
+																				});
+																			}
 																		}
 																	});
 																}
+																else {
+																	if(elemIndex >= holder.length - 1 && iterIndex >= container.length - 1) {
+																		pool.query(sectionStatement, err => {
+																			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																			else {
+																				pool.query(topicStatement, err => {
+																					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																					else {
+																						pool.query("DELETE FROM subject WHERE sid=" + param, err => {
+																							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																							else { response.send("1"); }
+																						});
+																					}
+																				});
+																			}
+																		});
+																	}
+																}
+															}
+														});
+													});
+												}
+												else {
+													if(elemIndex >= holder.length - 1 && iterIndex >= container.length - 1) {
+														pool.query(sectionStatement, err => {
+															if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+															else {
+																pool.query(topicStatement, err => {
+																	if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																	else {
+																		pool.query("DELETE FROM subject WHERE sid=" + param, err => {
+																			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																			else { response.send("1"); }
+																		});
+																	}
+																});
 															}
 														});
 													}
-												});
-											});
-										}
+												}
+											}
+										});
 									});
-								});
+								}
+								else {
+									pool.query("DELETE FROM subject WHERE sid=" + param, err => {
+										if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+										else { response.send("1"); }
+									});
+								}
 							}
 						});
 					}
@@ -767,16 +861,33 @@ exports.add_api_routes = (app, pool) => {
 						pool.query("SELECT section_id FROM section WHERE tid=" + param, (err, container) => {
 							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 							else {
-								container.forEach((iter, iterIndex) => {
-									sectionStatement += "DELETE FROM section WHERE section_id=" + iter.section_id + ";";
-									pool.query("SELECT eid FROM example WHERE section_id=" + iter.section_id, (err, holder) => {
-										if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-										else {
-											holder.forEach(elem => {
-												exampleStatement += "DELETE FROM example WHERE eid=" + elem.eid + ";";
-											});
-											pool.query(exampleStatement, err => {
-												if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+								if(container.length != 0) {
+									container.forEach((iter, iterIndex) => {
+										sectionStatement += "DELETE FROM section WHERE section_id=" + iter.section_id + ";";
+										pool.query("SELECT eid FROM example WHERE section_id=" + iter.section_id, (err, holder) => {
+											if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+											else {
+												if(holder.length != 0) {
+													holder.forEach(elem => {
+														exampleStatement += "DELETE FROM example WHERE eid=" + elem.eid + ";";
+													});
+													pool.query(exampleStatement, err => {
+														if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+														else {
+															if(iterIndex >= container.length - 1) {
+																pool.query(sectionStatement, err => {
+																	if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																	else {
+																		pool.query("DELETE FROM topic WHERE tid=" + param, err => {
+																			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+																			else { response.send("1"); }
+																		});
+																	}
+																});
+															}
+														}
+													});
+												}
 												else {
 													if(iterIndex >= container.length - 1) {
 														pool.query(sectionStatement, err => {
@@ -790,10 +901,16 @@ exports.add_api_routes = (app, pool) => {
 														});
 													}
 												}
-											});
-										}
+											}
+										});
 									});
-								});
+								}
+								else {
+									pool.query("DELETE FROM topic WHERE tid=" + param, err => {
+										if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+										else { response.send("1"); }
+									});
+								}
 							}
 						});
 					}
@@ -809,18 +926,26 @@ exports.add_api_routes = (app, pool) => {
 						pool.query("SELECT eid FROM example WHERE section_id=" + param, (err, container) => {
 							if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 							else {
-								container.forEach(iter => {
-									exampleStatement += "DELETE FROM example WHERE eid=" + iter.eid + ";";
-								});
-								pool.query(exampleStatement, err => {
-									if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-									else {
-										pool.query("DELETE FROM section WHERE section_id=" + param, err => {
-											if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-											else { response.send("1"); }
-										});
-									}
-								});
+								if(container.length != 0) {
+									container.forEach(iter => {
+										exampleStatement += "DELETE FROM example WHERE eid=" + iter.eid + ";";
+									});
+									pool.query(exampleStatement, err => {
+										if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+										else {
+											pool.query("DELETE FROM section WHERE section_id=" + param, err => {
+												if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+												else { response.send("1"); }
+											});
+										}
+									});
+								}
+								else {
+									pool.query("DELETE FROM section WHERE section_id=" + param, err => {
+										if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+										else { response.send("1"); }
+									});
+								}
 							}
 						});
 					}
