@@ -619,6 +619,22 @@ define(function() {
 			}
 			data[obj_ref].edited = 1;
 		});
+		$(".garbage").on("click", function(e) {
+			e.preventDefault();
+			var holder = $(this).attr("id").split("_"),
+				obj_ref = data.findIndex(function(iter) { 
+					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
+					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
+					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
+					else if(type == "Examples") { return iter.eid == parseInt(holder[2]); }
+				});
+			data = data.slice(0, obj_ref).concat(data.slice(obj_ref + 1));
+			$(this).parent().parent().remove();
+			if(data.every(function(elem) { return elem.created == 0; })) {
+				$("#garbage_head").remove();
+			}
+			console.log(data);
+		});
 	};
 
 	/*
@@ -801,8 +817,10 @@ define(function() {
 								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_garbage_" + addon)
 								.addClass("garbage center").css("color", "red").append($("<i>")
 									.addClass("material-icons").text("delete_sweep")));
+					if(data.every(function(elem) { return elem.created == 0 })) {
+						$("#sidenav_table_head").find("tr").append($("<th>").attr("id", "garbage_head").text("Remove"));
+					}
 					new_tr.append(new_name, new_move, new_approve, new_delete, new_garbage);
-					$("#sidenav_table_head").find("tr").append($("<th>").text("Remove"));
 					$("#sidenav_table_body").append(new_tr);
 					data.length == 0 ? order = 1 : order = data[data.length - 1].order + 1;
 					if(type == "Subjects") {
@@ -859,6 +877,7 @@ define(function() {
 							created: 1
 						});
 					}
+					console.log(data);
 					exports.sidenav_modal_links(type, data);
 					exports.sidenav_modal_name_check(data);
 				});
@@ -2182,15 +2201,9 @@ define(function() {
 	    else { return false; }
 	};
 
-	exports.latex_cms = function(page, cookie, router, toState, links, subjects, topics, sections, examples, subject, topic, section, example) {
+	exports.latex_cms = function(page, cookie, router, links, subjects, topics, sections, examples, subject, topic, section, example) {
 		$.get("/pages/dist/edit-bar-min.html").done(function(bar) {
 			$("#latex").append(bar);
-			if(page == "section" && section.section_name == toState.params.current_page_name) {
-				$("#section_name" + section.section_id + "_cms").addClass("active");
-			}
-			else if(page == "example" && example.ename == toState.params.current_page_name) {
-				$("#examples_li" + example.eid + "_cms").addClass("active");
-			}
 			var statement = "/api/",
 				db_id = -1,
 				ref = -1;
@@ -2198,10 +2211,7 @@ define(function() {
 			else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; ref = subject.sid; }
 			else if(page == "section") { statement += "section/data/"; db_id = section.section_id; ref = topic.tid; }
 			else if(page == "example") { statement += "example/data/"; db_id = example.eid; ref = section.section_id; }
-			console.log(db_id);
 			$.post(statement, {"param": db_id}).done(function(data) {
-				console.log(statement);
-				console.log(data);
 				data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
 				data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
 				data.title_cms = data.title_cms != null ? decodeURIComponent(data.title_cms).split("-----") : [""];
@@ -2758,15 +2768,9 @@ define(function() {
 		});
 	};
 
-	exports.latex = function(page, router, toState, links, subjects, topics, sections, examples, subject, topic, section, example) {
+	exports.latex = function(page, router, links, subjects, topics, sections, examples, subject, topic, section, example) {
 		// $.get("/pages/dist/edit-bar-min.html").done(function(bar) {
 			// $("#latex").append(bar);
-			if(page == "section" && section.section_name == toState.params.current_page_name) {
-				$("#section_name" + section.section_id + "_cms").addClass("active");
-			}
-			else if(page == "example" && example.ename == toState.params.current_page_name) {
-				$("#examples_li" + example.eid + "_cms").addClass("active");
-			}
 			var statement = "/api/",
 				db_id = -1;
 			if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; }

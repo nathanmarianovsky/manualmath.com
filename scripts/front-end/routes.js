@@ -243,7 +243,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$("title").text(subject.clean_name);
 							$("body").css("background", "#e0e0e0");
 							$("main").append($("<div>").attr("id", "latex"));
-							functions.latex_cms("subject", cookie, router, toState, links, subjects, topics, sections, examples, subject);
+							functions.latex_cms("subject", cookie, router, links, subjects, topics, sections, examples, subject);
 
 							// $("#top_content").append($("<ul>").addClass("right")
 							// 	.append($("<li>").append("<a>").attr("id", )))
@@ -324,7 +324,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$("title").text(subject.clean_name);
 					$("body").css("background", "#e0e0e0");
 					$("main").append($("<div>").attr("id", "latex"));
-					functions.latex("subject", router, toState, links, subjects, topics, sections, examples, subject);
+					functions.latex("subject", router, links, subjects, topics, sections, examples, subject);
 					// $.get("/api/subject/data/" + subject.sid).done(function(content) {
 					// 	var accordion1 = $("<div>").addClass("accordion"),
 					// 		show_solution1 = $("<div>").addClass("show_solution").text("About"),
@@ -418,7 +418,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$("title").text(subject.clean_name + " - " + topic.clean_name);
 							$("body").css("background", "#e0e0e0");
 							$("main").append($("<div>").attr("id", "latex"));
-							functions.latex_cms("topic", cookie, router, toState, links, subjects, topics, sections, examples, subject, topic);
+							functions.latex_cms("topic", cookie, router, links, subjects, topics, sections, examples, subject, topic);
 							// $.get("/pages/dist/edit-bar-min.html").done(function(bar) {
 							// 	$("#latex").append(bar);
 							// 	$.get("/api/topic/data/" + topic.tid).done(function(content) {
@@ -482,7 +482,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$("title").text(subject.clean_name + " - " + topic.clean_name);
 					$("body").css("background", "#e0e0e0");
 					$("main").append($("<div>").attr("id", "latex"));
-					functions.latex("topic", router, toState, links, subjects, topics, sections, examples, subject, topic);
+					functions.latex("topic", router, links, subjects, topics, sections, examples, subject, topic);
 					// $.get("/api/topic/data/" + topic.tid).done(function(content) {
 					// 	var accordion = $("<div>").addClass("accordion"),
 					// 		show_solution = $("<div>").addClass("show_solution").text("About"),
@@ -553,14 +553,14 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$(".button-collapse").sideNav("hide");
 						}
 						var subject = subjects.filter(function(iter) {
-							return iter.sname == toState.params.sname;
-						})[0],
+								return iter.sname == toState.params.sname;
+							})[0],
 							topic = subject.topics.filter(function(iter) {
-							return iter.tname == toState.params.tname;
-						})[0],
+								return iter.tname == toState.params.tname;
+							})[0],
 							section = topic.sections.filter(function(iter) {
-							return iter.section_name == toState.params.section_name;
-						})[0];
+								return iter.section_name == toState.params.section_name;
+							})[0];
 						$("main").empty();
 						navs.driver("section", 1, section, topic, function() {
 							$("#nav-mobile").find("li").removeClass("active");
@@ -568,13 +568,15 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$("body").css("background", "#e0e0e0");
 							$("main").append($("<div>").attr("id", "latex"));
 							if(section.section_name == toState.params.current_page_name) {
-								functions.latex_cms("section", cookie, router, toState, subjects, topics, sections, examples, subject, topic, section);
+								$("#section_name" + section.section_id + "_cms").addClass("active");
+								functions.latex_cms("section", cookie, router, links, subjects, topics, sections, examples, subject, topic, section);
 							}
 							else {
 								var example = section.examples.filter(function(iter) {
 									return iter.ename == toState.params.current_page_name;
 								})[0];
-								functions.latex_cms("example", cookie, router, toState, subjects, topics, sections, examples, subject, topic, section, example);
+								$("#examples_li" + example.eid + "_cms").addClass("active");
+								functions.latex_cms("example", cookie, router, links, subjects, topics, sections, examples, subject, topic, section, example);
 							}
 
 
@@ -606,13 +608,15 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$("body").css("background", "#e0e0e0");
 					$("main").append($("<div>").attr("id", "latex"));
 					if(section.section_name == toState.params.current_page_name) {
-						functions.latex("section", router, toState, subjects, topics, sections, examples, subject, topic, section);
+						$("#section_name" + section.section_id + "_cms").addClass("active");
+						functions.latex("section", router, links, subjects, topics, sections, examples, subject, topic, section);
 					}
 					else {
 						var example = section.examples.filter(function(iter) {
 							return iter.ename == toState.params.current_page_name;
 						})[0];
-						functions.latex("example", router, toState, subjects, topics, sections, examples, subject, topic, section, example);
+						$("#examples_li" + example.eid + "_cms").addClass("active");
+						functions.latex("example", router, links, subjects, topics, sections, examples, subject, topic, section, example);
 					}
 					// if(section.section_name == toState.params.current_page_name) {
 					// 	$("#section_name" + section.section_id).addClass("active");
