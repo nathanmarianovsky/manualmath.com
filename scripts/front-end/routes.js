@@ -638,7 +638,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 											console.log(data);
 										});
 										$("#add-box").css("pointer-events", "none");
-										$("#save").css("pointer-events", "none");
 										$("#live-version").click(function(e) {
 											e.preventDefault();
 											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
@@ -667,7 +666,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												var controller = $("#bar-div").detach();
 												$("#latex").empty().append(controller);
 												$("#add-box").css("pointer-events", "none");
-												$("#save").css("pointer-events", "none");
 												var j = 0;
 												for(; j >= 0; j++) {
 													if(data.title[j] == null || data.title[j] == "") { break; }
@@ -731,7 +729,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												var controller = $("#bar-div").detach();
 												$("#latex").empty().append(controller);
 												$("#add-box").css("pointer-events", "none");
-												$("#save").css("pointer-events", "none");
 												var j = 0;
 												for(; j >= 0; j++) {
 													if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
@@ -913,23 +910,16 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 															.find(".cont_div .latex_body").first();
 														$("#file").click();
 														$("#file").on("change", function() {
-															  var file = $("#file")[0].files[0];
-															  var reader  = new FileReader();
-															  reader.addEventListener("load", function () {
-															  // 	blobUtil.imgSrcToBlob(reader.result).then(function(blob) {
-															  // 		obj.append($("<div>").addClass("latex_equation")
-																	// 	.append($("<img>").attr("src", blobUtil.createObjectURL(blob))));
-																	// $("#file").remove();
-															  // 	});
-															  	// blobUtil.imgSrcToBlob(reader.result).then(function(blob) {
-															  		obj.append($("<div>").addClass("latex_equation")
-																		.append($("<img>").attr("src", reader.result)));
-																	$("#file").remove();
-															  	// });
-															  }, false);
-															  if(file) {
+															var file = $("#file")[0].files[0],
+																reader  = new FileReader();
+															reader.addEventListener("load", function () {
+														  		obj.append($("<div>").addClass("latex_equation")
+																	.append($("<img>").attr("src", reader.result)));
+																$("#file").remove();
+													  		}, false);
+														  	if(file) {
 															    reader.readAsDataURL(file);
-															  }
+														  	}
 														});
 													});
 												});
@@ -946,151 +936,141 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 														.find(".cont_div .latex_body").first();
 													$("#file").click();
 													$("#file").on("change", function() {
-														  var file = $("#file")[0].files[0];
-														  var reader  = new FileReader();
-														  reader.addEventListener("load", function () {
-															
-														  	// blobUtil.imgSrcToBlob(reader.result).then(function(blob) {
-														  	// 	blobUtil.blobToDataURL(blob).then(function(imgData) {
-															  // 		obj.append($("<div>").addClass("latex_equation")
-																	// 	.append($("<img>").attr("src", imgData)));
-																	// $("#file").remove();
-														  	// 	});
-														  	// });
-
+														var file = $("#file")[0].files[0],
+															reader  = new FileReader();
+														reader.addEventListener("load", function () {
 															obj.append($("<div>").addClass("latex_equation")
 																.append($("<img>").attr("src", reader.result)));
 															$("#file").remove();
-														  }, false);
-														  if(file) {
-														    reader.readAsDataURL(file);
-														  }
-													});
-												});
-												$("#save").click(function(e) {
-													e.preventDefault();
-													$(".latex_body").each(function(index) {
-														var arr_title = [],
-															arr_body = [];
-														$(".show_solution").each(function(index) {
-															var title = $(this).children().first().clone().children().remove().end().text();
-															$(this).children().children().each(function(index) {
-																if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
-																	arr_title.push(title + "_hidden");
-																}
-																else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
-																	arr_title.push(title);
-																}
-															});
-															$(this).siblings().each(function(index) {
-																arr_body.push($(this).children()[0].innerHTML);
-															});
-														});
-														data.title_cms = arr_title;
-														data.content_cms = arr_body;
-													});
-													$.get("/pages/dist/modal-min.html").done(function(content) {
-														$("body").append(content);
-														$(".modal-trigger").leanModal({
-															dismissible: false,
-															opacity: 2,
-															inDuration: 1000,
-															outDuration: 1000
-														});
-														$.get("/api/cms/contributors").done(function(num) {
-															const validation = Math.ceil(Math.log(parseInt(num)));
-															console.log(data);
-															data.title_cms = data.title_cms.map(function(elem) {
-																return elem.split("\\$").map(function(iter, index) {
-																	if(index % 2 == 0) {
-																		return iter.replace(/\\/g, "%5C");
-																	}
-																	else {
-																		return iter;
-																	}
-																}).join("\$");
-															});
-															data.content_cms = data.content_cms.map(function(elem) {
-																return elem.split("\\$").map(function(iter, index) {
-																	if(index % 2 == 0) {
-																		return iter.replace(/\\/g, "%5C");
-																	}
-																	else {
-																		return iter;
-																	}
-																}).join("\$");
-															});
-															if(data.cms_approval != null && data.cms_approval != "" 
-																&& data.cms_approval.split(",").length >= validation) {
-																data.title = functions.copy(data.title_cms);
-																data.content = functions.copy(data.content_cms);
-																data.cms_approval = 0;
-															}
-															// var comp1 = encodeURIComponent(data.title.join("-----")),
-																// comp2 = encodeURIComponent(data.content.join("-----")),
-																// comp2 = encodeURIComponent(data.cms_approval),
-																// comp3 = encodeURIComponent(data.title_cms.join("-----")),
-																// comp5 = encodeURIComponent(data.content_cms.join("-----")),
-															// blobUtil.blobToBinaryString(blobUtil.createBlob([data.content_cms.join("-----")]))
-															// 	.then(function(content_cms_blob) {
-															// 	blobUtil.blobToBinaryString(blobUtil.createBlob([data.content.join("-----")]))
-															// 		.then(function(content_blob) {
-																	// var obj = {
-																	// 	param: section.section_id,
-																	// 	tid: "undefined",
-																	// 	name: "undefined",
-																	// 	order: "undefined",
-																	// 	title: (data.title.join("-----") != "" ? encodeURIComponent(data.title.join("-----")) : "0"),
-																	// 	content: (content_blob != "" ? encodeURIComponent(content_blob) : "0"),
-																	// 	side_approval: "undefined",
-																	// 	cms_approval: (data.cms_approval != "" && data.cms_approval != null ? encodeURIComponent(content_cms_blob) : "0"),
-																	// 	del_approval: "undefined",
-																	// 	title_cms: (data.title_cms.join("-----") != "" ? encodeURIComponent(data.title_cms.join("-----")) : "0"),
-																	// 	content_cms: (content_cms_blob != "" ? encodeURIComponent(content_cms_blob) : "0")
-																	// };
-																	var obj = {
-																		param: section.section_id,
-																		tid: "undefined",
-																		name: "undefined",
-																		order: "undefined",
-																		title: (data.title.join("-----") != "" ? data.title.join("-----") : "0"),
-																		content: (data.content.join("-----") != "" ? data.content.join("-----") : "0"),
-																		side_approval: "undefined",
-																		cms_approval: (data.cms_approval != "" && data.cms_approval != null ? content.cms_approval : "0"),
-																		del_approval: "undefined",
-																		title_cms: (data.title_cms.join("-----") != "" ? data.title_cms.join("-----") : "0"),
-																		content_cms: (data.content_cms.join("-----") != "" ? data.content_cms.join("-----") : "0")
-																	};
-																	// console.log(comp5);
-																	$.post("/api/change/section/", obj).fail(function(xhr, status, error) {
-																		console.log(xhr);
-																		console.log(status);
-																		console.log(error);
-																		$("#popup_title").text("Database Issue");
-																		$("#popup_body").text("There was an issue uploading the content changes to the database!");
-																		$("#popup_control").click();
-																		$("#popup_submit").click(function(e) {
-																			e.preventDefault();
-																			$(".lean-overlay").remove();
-																			$("#popup").remove();
-																			$("#popup_control").remove();
-																		});
-																	}).done(function() {
-																		$("#popup_title").text("Changes Saved");
-																		$("#popup_body").text("All changes to the content have been saved to the database!");
-																		$("#popup_control").click();
-																		$("#popup_submit").click(function(e) {
-																			e.preventDefault();
-																			location.reload();
-																			$(window).scrollTop(0);
-																		});
-																	});
-															// 	});
-															// });
-														});
+													  	}, false);
+													  	if(file) {
+														  	reader.readAsDataURL(file);
+													  	}
 													});
 												});
 											}
+										});
+										$("#save").click(function(e) {
+											e.preventDefault();
+											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
+												$(".latex_body").each(function(index) {
+													var arr_title = [],
+														arr_body = [];
+													$(".show_solution").each(function(index) {
+														var title = $(this).children().first().clone().children().remove().end().text();
+														$(this).children().children().each(function(index) {
+															if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+																arr_title.push(title + "_hidden");
+															}
+															else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+																arr_title.push(title);
+															}
+														});
+														$(this).siblings().each(function(index) {
+															arr_body.push($(this).children()[0].innerHTML);
+														});
+													});
+													data.title_cms = arr_title;
+													data.content_cms = arr_body;
+												});
+											}
+											$.get("/pages/dist/modal-min.html").done(function(content) {
+												$("body").append(content);
+												$(".modal-trigger").leanModal({
+													dismissible: false,
+													opacity: 2,
+													inDuration: 1000,
+													outDuration: 1000
+												});
+												$.get("/api/cms/contributors").done(function(num) {
+													const validation = Math.ceil(Math.log(parseInt(num)));
+													console.log(data);
+													data.title_cms = data.title_cms.map(function(elem) {
+														return elem.split("\\$").map(function(iter, index) {
+															if(index % 2 == 0) {
+																return iter.replace(/\\/g, "%5C");
+															}
+															else {
+																return iter;
+															}
+														}).join("\$");
+													});
+													data.content_cms = data.content_cms.map(function(elem) {
+														return elem.split("\\$").map(function(iter, index) {
+															if(index % 2 == 0) {
+																return iter.replace(/\\/g, "%5C");
+															}
+															else {
+																return iter;
+															}
+														}).join("\$");
+													});
+													if(data.cms_approval != null && data.cms_approval != "" 
+														&& data.cms_approval.split(",").length >= validation) {
+														data.title = functions.copy(data.title_cms);
+														data.content = functions.copy(data.content_cms);
+														data.cms_approval = 0;
+													}
+													else {
+														data.title = data.title.map(function(elem) {
+															return elem.split("\\$").map(function(iter, index) {
+																if(index % 2 == 0) {
+																	return iter.replace(/\\/g, "%5C");
+																}
+																else {
+																	return iter;
+																}
+															}).join("\$");
+														});
+														data.content = data.content.map(function(elem) {
+															return elem.split("\\$").map(function(iter, index) {
+																if(index % 2 == 0) {
+																	return iter.replace(/\\/g, "%5C");
+																}
+																else {
+																	return iter;
+																}
+															}).join("\$");
+														});
+													}
+													var obj = {
+														param: section.section_id,
+														tid: "undefined",
+														name: "undefined",
+														order: "undefined",
+														title: (data.title.join("-----") != "" ? data.title.join("-----") : "0"),
+														content: (data.content.join("-----") != "" ? data.content.join("-----") : "0"),
+														side_approval: "undefined",
+														cms_approval: (data.cms_approval != "" && data.cms_approval != null ? content.cms_approval : "0"),
+														del_approval: "undefined",
+														title_cms: (data.title_cms.join("-----") != "" ? data.title_cms.join("-----") : "0"),
+														content_cms: (data.content_cms.join("-----") != "" ? data.content_cms.join("-----") : "0")
+													};
+													$.post("/api/change/section/", obj).fail(function(xhr, status, error) {
+														console.log(xhr);
+														console.log(status);
+														console.log(error);
+														$("#popup_title").text("Database Issue");
+														$("#popup_body").text("There was an issue uploading the content changes to the database!");
+														$("#popup_control").click();
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+														});
+													}).done(function() {
+														$("#popup_title").text("Changes Saved");
+														$("#popup_body").text("All changes to the content have been saved to the database!");
+														$("#popup_control").click();
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															location.reload();
+															$(window).scrollTop(0);
+														});
+													});
+												});
+											});
 										});
 										
 										// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {

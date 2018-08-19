@@ -31,10 +31,10 @@ app.use(favicon("./favicon.ico", {"maxAge": 2592000000 }));
 
 // Tells the app to use the current directory as the default path
 app.use(express.static(__dirname, {"maxAge": 864000000 }));
-// app.use(express.static(__dirname));
 
-app.use(bodyParser.json({limit: "50mb"})); // for parsing application/json
-app.use(bodyParser.urlencoded({limit: "50mb", extended: true})); // for parsing application/x-www-form-urlencoded
+// Tells the app to use json data parsing
+app.use(bodyParser.json({limit: "100mb"}));
+app.use(bodyParser.urlencoded({limit: "100mb", extended: true}));
 
 // Adds all of the routes
 client_routes.add_gui_routes(app);
