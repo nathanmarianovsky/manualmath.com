@@ -243,66 +243,67 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$("title").text(subject.clean_name);
 							$("body").css("background", "#e0e0e0");
 							$("main").append($("<div>").attr("id", "latex"));
+							functions.latex_cms("subject", cookie, router, toState, links, subjects, topics, sections, examples, subject);
 
 							// $("#top_content").append($("<ul>").addClass("right")
 							// 	.append($("<li>").append("<a>").attr("id", )))
-							$.get("/pages/dist/edit-bar-min.html").done(function(bar) {
-								$("#latex").append(bar);
-								$.get("/api/subject/data/" + subject.sid).done(function(content) {
-									var accordion1 = $("<div>").addClass("accordion"),
-										show_solution1 = $("<div>").addClass("show_solution").text("About"),
-										span1 = $("<span>").addClass("solution_display")
-											.append($("<i>").addClass("material-icons").text("remove")),
-										cont_div1 = $("<div>").addClass("cont_div"),
-										latex_body1 = $("<div>").addClass("latex_body"),
-										accordion2 = $("<div>").addClass("accordion"),
-										show_solution2 = $("<div>").addClass("show_solution").text("Notation"),
-										span2 = $("<span>").addClass("solution_display")
-											.append($("<i>").addClass("material-icons").text("add")),
-										cont_div2 = $("<div>").addClass("cont_div hidden_div"),
-										latex_body2 = $("<div>").addClass("latex_body");
-									if(content.about == null || content.about == "") { 
-										show_solution1.text("NO CONTENT HERE!"); span1.text(""); 
-									}
-									if(content.notation == null || content.notation == "") { 
-										show_solution2.text("NO NOTATION HERE!"); span2.text(""); 
-									}
-									latex_body1.append(content.about);
-									cont_div1.append(latex_body1);
-									show_solution1.append(span1);
-									accordion1.append(show_solution1);
-									accordion1.append(cont_div1);
-									latex_body2.append(content.notation);
-									cont_div2.append(latex_body2);
-									show_solution2.append(span2);
-									accordion2.append(show_solution2);
-									accordion2.append(cont_div2);
-									$("#latex").append(accordion1);
-									$("#latex").append(accordion2);
-									functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
-									$.get("/pages/dist/button-min.html").done(function(button) {
-										$("body").append(button);
-										functions.committee(cookie, function() {
-											MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-											functions.handle_button();
-											functions.handle_logo_link("subject");
-											functions.handle_logo();
-											functions.handle_li_coloring();
-											links.handle_links(router, subjects, topics, sections, examples);
-											functions.handle_orientation("subject", navs, subject);
-											functions.handle_desktop_title("subject", subject);
-											$("#bar-nav").css("width", "100%");
-											$("#bar").css("width", "82%");
-											$("#live-version").parent("li").css("margin-left", "25px");
-											$("#save").parent("li").css("margin-right", "25px");
-											$("#topics_change").click(function(e) {
-												e.preventDefault();
-												functions.sidenav_modal("Topics", topics, subject.sid);
-											});
-										});
-									});
-								});
-							});
+							// $.get("/pages/dist/edit-bar-min.html").done(function(bar) {
+							// 	$("#latex").append(bar);
+							// 	$.get("/api/subject/data/" + subject.sid).done(function(content) {
+							// 		var accordion1 = $("<div>").addClass("accordion"),
+							// 			show_solution1 = $("<div>").addClass("show_solution").text("About"),
+							// 			span1 = $("<span>").addClass("solution_display")
+							// 				.append($("<i>").addClass("material-icons").text("remove")),
+							// 			cont_div1 = $("<div>").addClass("cont_div"),
+							// 			latex_body1 = $("<div>").addClass("latex_body"),
+							// 			accordion2 = $("<div>").addClass("accordion"),
+							// 			show_solution2 = $("<div>").addClass("show_solution").text("Notation"),
+							// 			span2 = $("<span>").addClass("solution_display")
+							// 				.append($("<i>").addClass("material-icons").text("add")),
+							// 			cont_div2 = $("<div>").addClass("cont_div hidden_div"),
+							// 			latex_body2 = $("<div>").addClass("latex_body");
+							// 		if(content.about == null || content.about == "") { 
+							// 			show_solution1.text("NO CONTENT HERE!"); span1.text(""); 
+							// 		}
+							// 		if(content.notation == null || content.notation == "") { 
+							// 			show_solution2.text("NO NOTATION HERE!"); span2.text(""); 
+							// 		}
+							// 		latex_body1.append(content.about);
+							// 		cont_div1.append(latex_body1);
+							// 		show_solution1.append(span1);
+							// 		accordion1.append(show_solution1);
+							// 		accordion1.append(cont_div1);
+							// 		latex_body2.append(content.notation);
+							// 		cont_div2.append(latex_body2);
+							// 		show_solution2.append(span2);
+							// 		accordion2.append(show_solution2);
+							// 		accordion2.append(cont_div2);
+							// 		$("#latex").append(accordion1);
+							// 		$("#latex").append(accordion2);
+							// 		functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
+							// 		$.get("/pages/dist/button-min.html").done(function(button) {
+							// 			$("body").append(button);
+							// 			functions.committee(cookie, function() {
+							// 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+							// 				functions.handle_button();
+							// 				functions.handle_logo_link("subject");
+							// 				functions.handle_logo();
+							// 				functions.handle_li_coloring();
+							// 				links.handle_links(router, subjects, topics, sections, examples);
+							// 				functions.handle_orientation("subject", navs, subject);
+							// 				functions.handle_desktop_title("subject", subject);
+							// 				$("#bar-nav").css("width", "100%");
+							// 				$("#bar").css("width", "82%");
+							// 				$("#live-version").parent("li").css("margin-left", "25px");
+							// 				$("#save").parent("li").css("margin-right", "25px");
+							// 				$("#topics_change").click(function(e) {
+							// 					e.preventDefault();
+							// 					functions.sidenav_modal("Topics", topics, subject.sid);
+							// 				});
+							// 			});
+							// 		});
+							// 	});
+							// });
 						});
 					});
 				}
@@ -323,43 +324,44 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$("title").text(subject.clean_name);
 					$("body").css("background", "#e0e0e0");
 					$("main").append($("<div>").attr("id", "latex"));
-					$.get("/api/subject/data/" + subject.sid).done(function(content) {
-						var accordion1 = $("<div>").addClass("accordion"),
-							show_solution1 = $("<div>").addClass("show_solution").text("About"),
-							span1 = $("<span>").addClass("solution_display")
-								.append($("<i>").addClass("material-icons").text("remove")),
-							cont_div1 = $("<div>").addClass("cont_div"),
-							latex_body1 = $("<div>").addClass("latex_body"),
-							accordion2 = $("<div>").addClass("accordion"),
-							show_solution2 = $("<div>").addClass("show_solution").text("Notation"),
-							span2 = $("<span>").addClass("solution_display")
-								.append($("<i>").addClass("material-icons").text("add")),
-							cont_div2 = $("<div>").addClass("cont_div hidden_div"),
-							latex_body2 = $("<div>").addClass("latex_body");
-						if(content.about == null || content.about == "") { show_solution1.text("NO CONTENT HERE!"); span1.text(""); }
-						if(content.notation == null || content.notation == "") { show_solution2.text("NO NOTATION HERE!"); span2.text(""); }
-						latex_body1.append(content.about);
-						cont_div1.append(latex_body1);
-						show_solution1.append(span1);
-						accordion1.append(show_solution1);
-						accordion1.append(cont_div1);
-						latex_body2.append(content.notation);
-						cont_div2.append(latex_body2);
-						show_solution2.append(span2);
-						accordion2.append(show_solution2);
-						accordion2.append(cont_div2);
-						$("#latex").append(accordion1);
-						$("#latex").append(accordion2);
-						functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
-						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-						functions.handle_button();
-						functions.handle_logo_link("subject");
-						functions.handle_logo();
-						functions.handle_li_coloring();
-						links.handle_links(router, subjects, topics, sections, examples);
-						functions.handle_orientation("subject", navs, subject);
-						functions.handle_desktop_title("subject", subject);
-					});
+					functions.latex("subject", router, toState, links, subjects, topics, sections, examples, subject);
+					// $.get("/api/subject/data/" + subject.sid).done(function(content) {
+					// 	var accordion1 = $("<div>").addClass("accordion"),
+					// 		show_solution1 = $("<div>").addClass("show_solution").text("About"),
+					// 		span1 = $("<span>").addClass("solution_display")
+					// 			.append($("<i>").addClass("material-icons").text("remove")),
+					// 		cont_div1 = $("<div>").addClass("cont_div"),
+					// 		latex_body1 = $("<div>").addClass("latex_body"),
+					// 		accordion2 = $("<div>").addClass("accordion"),
+					// 		show_solution2 = $("<div>").addClass("show_solution").text("Notation"),
+					// 		span2 = $("<span>").addClass("solution_display")
+					// 			.append($("<i>").addClass("material-icons").text("add")),
+					// 		cont_div2 = $("<div>").addClass("cont_div hidden_div"),
+					// 		latex_body2 = $("<div>").addClass("latex_body");
+					// 	if(content.about == null || content.about == "") { show_solution1.text("NO CONTENT HERE!"); span1.text(""); }
+					// 	if(content.notation == null || content.notation == "") { show_solution2.text("NO NOTATION HERE!"); span2.text(""); }
+					// 	latex_body1.append(content.about);
+					// 	cont_div1.append(latex_body1);
+					// 	show_solution1.append(span1);
+					// 	accordion1.append(show_solution1);
+					// 	accordion1.append(cont_div1);
+					// 	latex_body2.append(content.notation);
+					// 	cont_div2.append(latex_body2);
+					// 	show_solution2.append(span2);
+					// 	accordion2.append(show_solution2);
+					// 	accordion2.append(cont_div2);
+					// 	$("#latex").append(accordion1);
+					// 	$("#latex").append(accordion2);
+					// 	functions.handle_breadcrumbs("subject", $(".accordion").first(), subject);
+					// 	MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+					// 	functions.handle_button();
+					// 	functions.handle_logo_link("subject");
+					// 	functions.handle_logo();
+					// 	functions.handle_li_coloring();
+					// 	links.handle_links(router, subjects, topics, sections, examples);
+					// 	functions.handle_orientation("subject", navs, subject);
+					// 	functions.handle_desktop_title("subject", subject);
+					// });
 				});
 			});
 		});
@@ -416,46 +418,47 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$("title").text(subject.clean_name + " - " + topic.clean_name);
 							$("body").css("background", "#e0e0e0");
 							$("main").append($("<div>").attr("id", "latex"));
-							$.get("/pages/dist/edit-bar-min.html").done(function(bar) {
-								$("#latex").append(bar);
-								$.get("/api/topic/data/" + topic.tid).done(function(content) {
-									var accordion = $("<div>").addClass("accordion"),
-										show_solution = $("<div>").addClass("show_solution").text("About"),
-										span = $("<span>").addClass("solution_display")
-											.append($("<i>").addClass("material-icons").text("remove")),
-										cont_div = $("<div>").addClass("cont_div"),
-										latex_body = $("<div>").addClass("latex_body");
-									if(content == null || content == "") { show_solution.text("NO CONTENT HERE!"); span.text(""); }
-									latex_body.append(content);
-									cont_div.append(latex_body);
-									show_solution.append(span);
-									accordion.append(show_solution);
-									accordion.append(cont_div);
-									$("#latex").append(accordion);
-									functions.handle_breadcrumbs("topic", $(".accordion").first(), subject, topic);
-									$.get("/pages/dist/button-min.html").done(function(button) {
-										$("body").append(button);
-										functions.committee(cookie, function() {
-											MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-											functions.handle_button();
-											functions.handle_logo_link("subject.topic");
-											functions.handle_logo();
-											functions.handle_li_coloring();
-											links.handle_links(router, subjects, topics, sections, examples);
-											functions.handle_orientation("topic", navs, topic, subject);
-											functions.handle_desktop_title("topic", subject, topic);
-											$("#bar-nav").css("width", "100%");
-											$("#bar").css("width", "82%");
-											$("#live-version").parent("li").css("margin-left", "25px");
-											$("#save").parent("li").css("margin-right", "25px");
-											$("#sections_change").click(function(e) {
-												e.preventDefault();
-												functions.sidenav_modal("Sections", sections, topic.tid);
-											});
-										});
-									});
-								});
-							});
+							functions.latex_cms("topic", cookie, router, toState, links, subjects, topics, sections, examples, subject, topic);
+							// $.get("/pages/dist/edit-bar-min.html").done(function(bar) {
+							// 	$("#latex").append(bar);
+							// 	$.get("/api/topic/data/" + topic.tid).done(function(content) {
+							// 		var accordion = $("<div>").addClass("accordion"),
+							// 			show_solution = $("<div>").addClass("show_solution").text("About"),
+							// 			span = $("<span>").addClass("solution_display")
+							// 				.append($("<i>").addClass("material-icons").text("remove")),
+							// 			cont_div = $("<div>").addClass("cont_div"),
+							// 			latex_body = $("<div>").addClass("latex_body");
+							// 		if(content == null || content == "") { show_solution.text("NO CONTENT HERE!"); span.text(""); }
+							// 		latex_body.append(content);
+							// 		cont_div.append(latex_body);
+							// 		show_solution.append(span);
+							// 		accordion.append(show_solution);
+							// 		accordion.append(cont_div);
+							// 		$("#latex").append(accordion);
+							// 		functions.handle_breadcrumbs("topic", $(".accordion").first(), subject, topic);
+							// 		$.get("/pages/dist/button-min.html").done(function(button) {
+							// 			$("body").append(button);
+							// 			functions.committee(cookie, function() {
+							// 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+							// 				functions.handle_button();
+							// 				functions.handle_logo_link("subject.topic");
+							// 				functions.handle_logo();
+							// 				functions.handle_li_coloring();
+							// 				links.handle_links(router, subjects, topics, sections, examples);
+							// 				functions.handle_orientation("topic", navs, topic, subject);
+							// 				functions.handle_desktop_title("topic", subject, topic);
+							// 				$("#bar-nav").css("width", "100%");
+							// 				$("#bar").css("width", "82%");
+							// 				$("#live-version").parent("li").css("margin-left", "25px");
+							// 				$("#save").parent("li").css("margin-right", "25px");
+							// 				$("#sections_change").click(function(e) {
+							// 					e.preventDefault();
+							// 					functions.sidenav_modal("Sections", sections, topic.tid);
+							// 				});
+							// 			});
+							// 		});
+							// 	});
+							// });
 						});
 					});
 				}
@@ -479,30 +482,31 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$("title").text(subject.clean_name + " - " + topic.clean_name);
 					$("body").css("background", "#e0e0e0");
 					$("main").append($("<div>").attr("id", "latex"));
-					$.get("/api/topic/data/" + topic.tid).done(function(content) {
-						var accordion = $("<div>").addClass("accordion"),
-							show_solution = $("<div>").addClass("show_solution").text("About"),
-							span = $("<span>").addClass("solution_display")
-								.append($("<i>").addClass("material-icons").text("remove")),
-							cont_div = $("<div>").addClass("cont_div"),
-							latex_body = $("<div>").addClass("latex_body");
-						if(content == null || content == "") { show_solution.text("NO CONTENT HERE!"); span.text(""); }
-						latex_body.append(content);
-						cont_div.append(latex_body);
-						show_solution.append(span);
-						accordion.append(show_solution);
-						accordion.append(cont_div);
-						$("#latex").append(accordion);
-						functions.handle_breadcrumbs("topic", $(".accordion").first(), subject, topic);
-						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-						functions.handle_button();
-						functions.handle_logo_link("subject.topic");
-						functions.handle_logo();
-						functions.handle_li_coloring();
-						links.handle_links(router, subjects, topics, sections, examples);
-						functions.handle_orientation("topic", navs, topic, subject);
-						functions.handle_desktop_title("topic", subject, topic);
-					});
+					functions.latex("topic", router, toState, links, subjects, topics, sections, examples, subject, topic);
+					// $.get("/api/topic/data/" + topic.tid).done(function(content) {
+					// 	var accordion = $("<div>").addClass("accordion"),
+					// 		show_solution = $("<div>").addClass("show_solution").text("About"),
+					// 		span = $("<span>").addClass("solution_display")
+					// 			.append($("<i>").addClass("material-icons").text("remove")),
+					// 		cont_div = $("<div>").addClass("cont_div"),
+					// 		latex_body = $("<div>").addClass("latex_body");
+					// 	if(content == null || content == "") { show_solution.text("NO CONTENT HERE!"); span.text(""); }
+					// 	latex_body.append(content);
+					// 	cont_div.append(latex_body);
+					// 	show_solution.append(span);
+					// 	accordion.append(show_solution);
+					// 	accordion.append(cont_div);
+					// 	$("#latex").append(accordion);
+					// 	functions.handle_breadcrumbs("topic", $(".accordion").first(), subject, topic);
+					// 	MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+					// 	functions.handle_button();
+					// 	functions.handle_logo_link("subject.topic");
+					// 	functions.handle_logo();
+					// 	functions.handle_li_coloring();
+					// 	links.handle_links(router, subjects, topics, sections, examples);
+					// 	functions.handle_orientation("topic", navs, topic, subject);
+					// 	functions.handle_desktop_title("topic", subject, topic);
+					// });
 				});
 			});
 		});
@@ -563,581 +567,17 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
 							$("body").css("background", "#e0e0e0");
 							$("main").append($("<div>").attr("id", "latex"));
-							$.get("/pages/dist/edit-bar-min.html").done(function(bar) {
-								$("#latex").append(bar);
-								if(section.section_name == toState.params.current_page_name) {
-									$("#section_name" + section.section_id + "_cms").addClass("active");
-									$.get("/api/section/data/" + section.section_id).done(function(data) {
-										data.title = data.title != null ? data.title.split("-----") : [""];
-										data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
-										data.title_cms = data.title_cms != null ? data.title_cms.split("-----") : [""];
-										data.content_cms = data.content_cms != null ? decodeURIComponent(data.content_cms).split("-----") : [""];
-										var i = 0;
-										for(; i >= 0; i++) {
-											if(data.title_cms[i] == null || data.title_cms[i] == "") { break; }
-											var cont_div = "",
-												title = data.title_cms[i].split("_")[0],
-												accordion = $("<div>").addClass("accordion"),
-												show_solution = $("<div>").addClass("show_solution").text(title),
-												span = $("<span>").addClass("solution_display"),
-												latex_body = $("<div>").addClass("latex_body");
-											if(data.title_cms[i].split("_hidden").length == 1) {
-												cont_div = $("<div>").addClass("cont_div");
-												span.append($("<i>").addClass("material-icons").text("remove"));
-											}
-											else {
-												cont_div = $("<div>").addClass("cont_div hidden_div");
-												span.append($("<i>").addClass("material-icons").text("add"));
-											}	
-											latex_body.append(data.content_cms[i]);
-											cont_div.append(latex_body);
-											show_solution.append(span);
-											accordion.append(show_solution);
-											accordion.append(cont_div);
-											$("#latex").append(accordion);
-										}
-										if(i == 0) {
-											$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-												.addClass("show_solution").text("NO CONTENT HERE!")));
-										}
-										functions.handle_breadcrumbs("section", $(".accordion").first(), subject, topic, section);
-										MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-										functions.handle_button();
-										if(data.cms_approval != null && 
-											data.cms_approval.split(",").some(function(elem) { return elem == cookie; })) {
-											$("#approve").css("color", "green");
-										}
-										else {
-											$("#approve").css("color", "red");
-										}
+							if(section.section_name == toState.params.current_page_name) {
+								functions.latex_cms("section", cookie, router, toState, subjects, topics, sections, examples, subject, topic, section);
+							}
+							else {
+								var example = section.examples.filter(function(iter) {
+									return iter.ename == toState.params.current_page_name;
+								})[0];
+								functions.latex_cms("example", cookie, router, toState, subjects, topics, sections, examples, subject, topic, section, example);
+							}
 
-										$(".tooltipped").tooltip();
-										$("#approve").click(function(e) {
-											e.preventDefault();
-											if(functions.rgba_to_hex($("#approve").css("color")) == "#ff0000") {
-												$("#approve").css("color", "green");
-												if(data.cms_approval == null) {
-													data.cms_approval = cookie;
-												}
-												else {
-													data.cms_approval += "," + cookie;
-												}
-											}
-											else {
-												$("#approve").css("color", "red");
-												var pos = data.cms_approval.indexOf(cookie);
-												if(pos == 0) {
-													data.cms_approval = data.cms_approval.substring(cookie.length + 2);
-												}
-												else {
-													data.cms_approval = data.cms_approval.substring(0, pos - 1) +
-														data.cms_approval.substring(pos + cookie.length);
-												}
-											}
-											if(data.cms_approval == "") { data.cms_approval = null; }
-											console.log(data);
-										});
-										$("#add-box").css("pointer-events", "none");
-										$("#live-version").click(function(e) {
-											e.preventDefault();
-											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
-												$(".latex_body").each(function(index) {
-													var arr_title = [],
-														arr_body = [];
-													$(".show_solution").each(function(index) {
-														var title = $(this).children().first().clone().children().remove().end().text();
-														$(this).children().children().each(function(index) {
-															if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
-																arr_title.push(title + "_hidden");
-															}
-															else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
-																arr_title.push(title);
-															}
-														});
-														$(this).siblings().each(function(index) {
-															arr_body.push($(this).children()[0].innerHTML);
-														});
-													});
-													data.title_cms = arr_title;
-													data.content_cms = arr_body;
-												});
-											}
-											if(functions.rgba_to_hex($("#live-version").closest("li").css("background-color")) != "#008cc3") {
-												var controller = $("#bar-div").detach();
-												$("#latex").empty().append(controller);
-												$("#add-box").css("pointer-events", "none");
-												var j = 0;
-												for(; j >= 0; j++) {
-													if(data.title[j] == null || data.title[j] == "") { break; }
-													var cont_div = "",
-														title = data.title[j].split("_")[0],
-														accordion = $("<div>").addClass("accordion"),
-														show_solution = $("<div>").addClass("show_solution").text(title),
-														span = $("<span>").addClass("solution_display"),
-														latex_body = $("<div>").addClass("latex_body");
-													if(data.title[j].split("_").length == 1) {
-														cont_div = $("<div>").addClass("cont_div");
-														span.append($("<i>").addClass("material-icons").text("remove"));
-													}
-													else {
-														cont_div = $("<div>").addClass("cont_div hidden_div");
-														span.append($("<i>").addClass("material-icons").text("add"));
-													}	
-													latex_body.append(data.content[j]);
-													cont_div.append(latex_body);
-													show_solution.append(span);
-													accordion.append(show_solution);
-													accordion.append(cont_div);
-													$("#latex").append(accordion);
-												}
-												if(j == 0) {
-													$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-														.addClass("show_solution").text("NO CONTENT HERE!")));
-												}
-												$("#live-version").closest("li").css("background-color", "#008cc3");
-												$("#cms-version").closest("li").css("background-color", "");
-												$("#edit").closest("li").css("background-color", "");
-												MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-												functions.handle_button();
-											}
-										});
-										$("#cms-version").click(function(e) {
-											e.preventDefault();
-											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
-												$(".latex_body").each(function(index) {
-													var arr_title = [],
-														arr_body = [];
-													$(".show_solution").each(function(index) {
-														var title = $(this).children().first().clone().children().remove().end().text();
-														$(this).children().children().each(function(index) {
-															if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
-																arr_title.push(title + "_hidden");
-															}
-															else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
-																arr_title.push(title);
-															}
-														});
-														$(this).siblings().each(function(index) {
-															arr_body.push($(this).children()[0].innerHTML);
-														});
-													});
-													data.title_cms = arr_title;
-													data.content_cms = arr_body;
-												});
-											}
-											if(functions.rgba_to_hex($("#cms-version").closest("li").css("background-color")) != "#008cc3") {
-												var controller = $("#bar-div").detach();
-												$("#latex").empty().append(controller);
-												$("#add-box").css("pointer-events", "none");
-												var j = 0;
-												for(; j >= 0; j++) {
-													if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
-													var cont_div = "",
-														title = data.title_cms[j].split("_")[0],
-														accordion = $("<div>").addClass("accordion"),
-														show_solution = $("<div>").addClass("show_solution").text(title),
-														span = $("<span>").addClass("solution_display"),
-														latex_body = $("<div>").addClass("latex_body");
-													if(data.title_cms[j].split("_").length == 1) {
-														cont_div = $("<div>").addClass("cont_div");
-														span.append($("<i>").addClass("material-icons").text("remove"));
-													}
-													else {
-														cont_div = $("<div>").addClass("cont_div hidden_div");
-														span.append($("<i>").addClass("material-icons").text("add"));
-													}		
-													latex_body.append(data.content_cms[j]);
-													cont_div.append(latex_body);
-													show_solution.append(span);
-													accordion.append(show_solution);
-													accordion.append(cont_div);
-													$("#latex").append(accordion);
-												}
-												if(j == 0) {
-													$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-														.addClass("show_solution").text("NO CONTENT HERE!")));
-												}
-												$("#cms-version").closest("li").css("background-color", "#008cc3");
-												$("#live-version").closest("li").css("background-color", "");
-												$("#edit").closest("li").css("background-color", "");
-												MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-												functions.handle_button();
-											}
-										});
-										$("#edit").click(function(e) {
-											e.preventDefault();
-											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) != "#008cc3") {
-												var controller = $("#bar-div").detach();
-												$("#latex").empty().append(controller);
-												$("#add-box").css("pointer-events", "auto");
-												$("#save").css("pointer-events", "auto");
-												var j = 0;
-												for(; j >= 0; j++) {
-													if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
-													var cont_div = "",
-														title = data.title_cms[j].split("_")[0],
-														accordion = $("<div>").addClass("accordion"),
-														show_solution = $("<div>").addClass("show_solution")
-															.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
-															.text(title)),
-														span = $("<span>").addClass("solution_display"),
-														span_toggle = $("<span>").addClass("solution_toggle"),
-														span_box = $("<span>").addClass("solution_box add-math-tooltipped")
-															.append($("<i>").addClass("material-icons add-math").text("border_color"))
-															.attr("data-position", "top")
-															.attr("data-tooltip", "Insert Math Box Below"),
-														span_image = $("<span>").addClass("solution_img add-image-tooltipped")
-															.append($("<i>").addClass("material-icons add-image").text("image"))
-															.attr("data-position", "top")
-															.attr("data-tooltip", "Insert Image Below"),
-														latex_body = $("<div>").addClass("latex_body");
-													if(data.title_cms[j].split("_").length == 1) {
-														cont_div = $("<div>").addClass("cont_div");
-														span.append($("<i>").addClass("material-icons").text("remove"));
-														span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
-													}
-													else {
-														cont_div = $("<div>").addClass("cont_div hidden_div");
-														span.append($("<i>").addClass("material-icons").text("add"));
-														span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_off"));
-													}	
-													latex_body.append(data.content_cms[j]);
-													cont_div.append(latex_body);
-													show_solution.append(span_box, span_image, span_toggle, span);
-													accordion.append(show_solution);
-													accordion.append(cont_div);
-													$("#latex").append(accordion);
-												}
-												if(j == 0) {
-													$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-														.addClass("show_solution").text("NO CONTENT HERE!")));
-												}
-												$("#edit").closest("li").css("background-color", "#008cc3");
-												$("#live-version").closest("li").css("background-color", "");
-												$("#cms-version").closest("li").css("background-color", "");
-												$(".toggle").on("click", function(e) {
-													e.preventDefault();
-													e.stopPropagation();
-													var item = $(this).parents().prev().clone().children().remove().end().text();
-													var ref = data.title_cms.findIndex(function(elem) {
-														return elem.split("_hidden")[0] == item;
-													});
-													console.log(item, data);
-													if($(this).text() == "toggle_off") {
-														$(this).text("toggle_on");
-														data.title_cms[ref] = item;
-													}
-													else if($(this).text() == "toggle_on") {
-														$(this).text("toggle_off");
-														data.title_cms[ref] += "_hidden";
-													}
-												});
-												functions.handle_button(1);
-												$(".latex_body").attr("contentEditable", "true");
-												$("div[contenteditable]").keydown(function(e) {
-												    if (e.keyCode === 13) {
-												      document.execCommand("insertHTML", false, "<br><br>");
-												      return false;
-												    }
-												});
-												$(".add-math-tooltipped").tooltip();
-												$(".add-image-tooltipped").tooltip();
-												$("#add-box").click(function(e) {
-													e.preventDefault();
-													if($(".accordion").length == 1 && $(".accordion .show_solution").text() == "NO CONTENT HERE!") {
-														$(".accordion").remove();
-													}
-													var cont_div = "",
-														accordion = $("<div>").addClass("accordion"),
-														show_solution = $("<div>").addClass("show_solution")
-															.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
-															.text("New Title")),
-														span = $("<span>").addClass("solution_display"),
-														span_toggle = $("<span>").addClass("solution_toggle"),
-														span_box = $("<span>").addClass("solution_box add-math-tooltipped")
-															.append($("<i>").addClass("material-icons add-math").text("border_color"))
-															.attr("data-position", "top")
-															.attr("data-tooltip", "Insert Math Box Below"),
-														span_image = $("<span>").addClass("solution_img add-image-tooltipped")
-															.append($("<i>").addClass("material-icons add-image").text("image"))
-															.attr("data-position", "top")
-															.attr("data-tooltip", "Insert Image Below"),
-														latex_body = $("<div>").addClass("latex_body").text("New Content"),
-														cont_div = $("<div>").addClass("cont_div");
-													span.append($("<i>").addClass("material-icons").text("remove"));
-													span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
-													cont_div.append(latex_body);
-													show_solution.append(span_box, span_image, span_toggle, span);
-													accordion.append(show_solution);
-													accordion.append(cont_div);
-													$("#latex").append(accordion);
-													data.title_cms.push("New Title");
-													data.content_cms.push("New Content");
-													$(".toggle").off();
-													$(".add-image").off();
-													$(".add-math").off();
-													$("#latex .solution_display").off();
-													$(".toggle").on("click", function(e) {
-														e.preventDefault();
-														e.stopPropagation();
-														var item = $(this).parents().prev().clone().children().remove().end().text();
-														var ref = data.title_cms.findIndex(function(elem) {
-															return elem.split("_hidden")[0] == item;
-														});
-														if($(this).text() == "toggle_off") {
-															$(this).text("toggle_on");
-															data.title_cms[ref] = item;
-														}
-														else if($(this).text() == "toggle_on") {
-															$(this).text("toggle_off");
-															data.title_cms[ref] += "_hidden";
-														}
-													});
-													functions.handle_button(1);
-													$(".latex_body").attr("contentEditable", "true");
-													$(".add-math-tooltipped").tooltip();
-													$(".add-image-tooltipped").tooltip();
-													$(".add-math").on("click", function(e) {
-														e.preventDefault();
-														var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
-														obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
-													});
-													$(".add-image").on("click", function(e) {
-														e.preventDefault();
-														$("body").append($("<input>").css("display", "none")
-															.attr({id: "file", type: "file"}));
-														var obj = $(this).parent().parent().parent()
-															.find(".cont_div .latex_body").first();
-														$("#file").click();
-														$("#file").on("change", function() {
-															var file = $("#file")[0].files[0],
-																reader  = new FileReader();
-															reader.addEventListener("load", function () {
-														  		obj.append($("<div>").addClass("latex_equation")
-																	.append($("<img>").attr("src", reader.result)));
-																$("#file").remove();
-													  		}, false);
-														  	if(file) {
-															    reader.readAsDataURL(file);
-														  	}
-														});
-													});
-												});
-												$(".add-math").on("click", function(e) {
-													e.preventDefault();
-													var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
-													obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
-												});
-												$(".add-image").on("click", function(e) {
-													e.preventDefault();
-													$("body").append($("<input>").css("display", "none")
-														.attr({id: "file", type: "file"}));
-													var obj = $(this).parent().parent().parent()
-														.find(".cont_div .latex_body").first();
-													$("#file").click();
-													$("#file").on("change", function() {
-														var file = $("#file")[0].files[0],
-															reader  = new FileReader();
-														reader.addEventListener("load", function () {
-															obj.append($("<div>").addClass("latex_equation")
-																.append($("<img>").attr("src", reader.result)));
-															$("#file").remove();
-													  	}, false);
-													  	if(file) {
-														  	reader.readAsDataURL(file);
-													  	}
-													});
-												});
-											}
-										});
-										$("#save").click(function(e) {
-											e.preventDefault();
-											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
-												$(".latex_body").each(function(index) {
-													var arr_title = [],
-														arr_body = [];
-													$(".show_solution").each(function(index) {
-														var title = $(this).children().first().clone().children().remove().end().text();
-														$(this).children().children().each(function(index) {
-															if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
-																arr_title.push(title + "_hidden");
-															}
-															else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
-																arr_title.push(title);
-															}
-														});
-														$(this).siblings().each(function(index) {
-															arr_body.push($(this).children()[0].innerHTML);
-														});
-													});
-													data.title_cms = arr_title;
-													data.content_cms = arr_body;
-												});
-											}
-											$.get("/pages/dist/modal-min.html").done(function(content) {
-												$("body").append(content);
-												$(".modal-trigger").leanModal({
-													dismissible: false,
-													opacity: 2,
-													inDuration: 1000,
-													outDuration: 1000
-												});
-												$.get("/api/cms/contributors").done(function(num) {
-													const validation = Math.ceil(Math.log(parseInt(num)));
-													console.log(data);
-													data.title_cms = data.title_cms.map(function(elem) {
-														return elem.split("\\$").map(function(iter, index) {
-															if(index % 2 == 0) {
-																return iter.replace(/\\/g, "%5C");
-															}
-															else {
-																return iter;
-															}
-														}).join("\$");
-													});
-													data.content_cms = data.content_cms.map(function(elem) {
-														return elem.split("\\$").map(function(iter, index) {
-															if(index % 2 == 0) {
-																return iter.replace(/\\/g, "%5C");
-															}
-															else {
-																return iter;
-															}
-														}).join("\$");
-													});
-													if(data.cms_approval != null && data.cms_approval != "" 
-														&& data.cms_approval.split(",").length >= validation) {
-														data.title = functions.copy(data.title_cms);
-														data.content = functions.copy(data.content_cms);
-														data.cms_approval = 0;
-													}
-													else {
-														data.title = data.title.map(function(elem) {
-															return elem.split("\\$").map(function(iter, index) {
-																if(index % 2 == 0) {
-																	return iter.replace(/\\/g, "%5C");
-																}
-																else {
-																	return iter;
-																}
-															}).join("\$");
-														});
-														data.content = data.content.map(function(elem) {
-															return elem.split("\\$").map(function(iter, index) {
-																if(index % 2 == 0) {
-																	return iter.replace(/\\/g, "%5C");
-																}
-																else {
-																	return iter;
-																}
-															}).join("\$");
-														});
-													}
-													var obj = {
-														param: section.section_id,
-														tid: "undefined",
-														name: "undefined",
-														order: "undefined",
-														title: (data.title.join("-----") != "" ? data.title.join("-----") : "0"),
-														content: (data.content.join("-----") != "" ? data.content.join("-----") : "0"),
-														side_approval: "undefined",
-														cms_approval: (data.cms_approval != "" && data.cms_approval != null ? content.cms_approval : "0"),
-														del_approval: "undefined",
-														title_cms: (data.title_cms.join("-----") != "" ? data.title_cms.join("-----") : "0"),
-														content_cms: (data.content_cms.join("-----") != "" ? data.content_cms.join("-----") : "0")
-													};
-													$.post("/api/change/section/", obj).fail(function(xhr, status, error) {
-														console.log(xhr);
-														console.log(status);
-														console.log(error);
-														$("#popup_title").text("Database Issue");
-														$("#popup_body").text("There was an issue uploading the content changes to the database!");
-														$("#popup_control").click();
-														$("#popup_submit").click(function(e) {
-															e.preventDefault();
-															$(".lean-overlay").remove();
-															$("#popup").remove();
-															$("#popup_control").remove();
-														});
-													}).done(function() {
-														$("#popup_title").text("Changes Saved");
-														$("#popup_body").text("All changes to the content have been saved to the database!");
-														$("#popup_control").click();
-														$("#popup_submit").click(function(e) {
-															e.preventDefault();
-															location.reload();
-															$(window).scrollTop(0);
-														});
-													});
-												});
-											});
-										});
-										
-										// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
-										// 	MathJax.Hub.Queue(function() {
-										// 		functions.hide_mathjax_span();
-										// 	});
-										// }
-									});
-								}
-								else {
-									var example = section.examples.filter(function(iter) {
-										return iter.ename == toState.params.current_page_name;
-									})[0];
-									$("#examples_li" + example.eid + "_cms").addClass("active");
-									$.get("/api/example/data/" + example.eid).done(function(content) {
-										var accordion1 = $("<div>").addClass("accordion"),
-											show_solution1 = $("<div>").addClass("show_solution").text("Problem"),
-											problem_span = $("<span>").addClass("solution_display").attr("id", "problem_span")
-												.append($("<i>").addClass("material-icons").text("remove")),
-											cont_div1 = $("<div>").addClass("cont_div"),
-											latex_body1 = $("<div>").addClass("latex_body"),
-											accordion2 = $("<div>").addClass("accordion"),
-											show_solution2 = $("<div>").addClass("show_solution").text("Solution"),
-											solution_span = $("<span>").addClass("solution_display").attr("id", "solution_span")
-												.append($("<i>").addClass("material-icons").text("add")),
-											cont_div2 = $("<div>").addClass("cont_div hidden_div"),
-											latex_body2 = $("<div>").addClass("latex_body");
-										if(content.problem == null || content.problem == "") { show_solution1.text("NO PROBLEM HERE!"); problem_span.text(""); }
-										if(content.solution == null || content.solution == "") { show_solution2.text("NO SOLUTION HERE!"); solution_span.text(""); }
-										latex_body1.append(content.problem);
-										cont_div1.append(latex_body1);
-										show_solution1.append(problem_span);
-										accordion1.append(show_solution1);
-										accordion1.append(cont_div1);
-										latex_body2.append(content.solution);
-										cont_div2.append(latex_body2);
-										show_solution2.append(solution_span);
-										accordion2.append(show_solution2);
-										accordion2.append(cont_div2);
-										$("#latex").append(accordion1).append(accordion2);
-										functions.handle_breadcrumbs("example", $(".accordion").first(), subject, topic, section, example);
-										MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-										functions.handle_button();
-									});
-								}
-								$.get("/pages/dist/button-min.html").done(function(button) {
-									$("body").append(button);
-									functions.committee(cookie, function() {
-										functions.handle_logo_link("subject.topic.section.current_page");
-										functions.handle_logo();
-										functions.handle_li_coloring();
-										links.handle_links(router, subjects, topics, sections, examples);
-										functions.handle_orientation("section", navs, section, topic);
-										functions.handle_desktop_title("section", subject, topic, section);
-										$("#bar-nav").css("width", "100%");
-										$("#bar").css("width", "82%");
-										$("#live-version").parent("li").css("margin-left", "25px");
-										$("#save").parent("li").css("margin-right", "25px");
-										$("#cms-version").closest("li").css("background-color", "#008cc3");
-										$("#edit").parent().mouseenter();
-										$("#examples_change").click(function(e) {
-											e.preventDefault();
-											functions.sidenav_modal("Examples", examples, section.section_id);
-										});
-									});
-								});
-							});
+
 						});
 					});
 				}
@@ -1166,88 +606,97 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$("body").css("background", "#e0e0e0");
 					$("main").append($("<div>").attr("id", "latex"));
 					if(section.section_name == toState.params.current_page_name) {
-						$("#section_name" + section.section_id).addClass("active");
-						$.get("/api/section/data/" + section.section_id).done(function(content) {
-							var i = 0;
-							for(; i >= 0; i++) {
-								if(content.title[i] == null || content.title[i] == "") { break; }
-								var cont_div = "",
-									title = content.title[i].split("_")[0],
-									accordion = $("<div>").addClass("accordion"),
-									show_solution = $("<div>").addClass("show_solution").text(title),
-									span = $("<span>").addClass("solution_display"),
-									latex_body = $("<div>").addClass("latex_body");
-								if(content.title[i].split("_").length == 1) {
-									cont_div = $("<div>").addClass("cont_div");
-									span.append($("<i>").addClass("material-icons").text("remove"));
-								}
-								else {
-									cont_div = $("<div>").addClass("cont_div hidden_div");
-									span.append($("<i>").addClass("material-icons").text("add"));
-								}	
-								latex_body.append(content.content[i]);
-								cont_div.append(latex_body);
-								show_solution.append(span);
-								accordion.append(show_solution);
-								accordion.append(cont_div);
-								$("#latex").append(accordion);
-							}
-							if(i == 0) {
-								$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-									.addClass("show_solution").text("NO CONTENT HERE!")));
-							}
-							functions.handle_breadcrumbs("section", $(".accordion").first(), subject, topic, section);
-							MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-							functions.handle_button();
-							// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
-							// 	MathJax.Hub.Queue(function() {
-							// 		functions.hide_mathjax_span();
-							// 	});
-							// }
-						});
+						functions.latex("section", router, toState, subjects, topics, sections, examples, subject, topic, section);
 					}
 					else {
 						var example = section.examples.filter(function(iter) {
 							return iter.ename == toState.params.current_page_name;
 						})[0];
-						$("#examples_li" + example.eid).addClass("active");
-						$.get("/api/example/data/" + example.eid).done(function(content) {
-							var accordion1 = $("<div>").addClass("accordion"),
-								show_solution1 = $("<div>").addClass("show_solution").text("Problem"),
-								problem_span = $("<span>").addClass("solution_display").attr("id", "problem_span")
-									.append($("<i>").addClass("material-icons").text("remove")),
-								cont_div1 = $("<div>").addClass("cont_div"),
-								latex_body1 = $("<div>").addClass("latex_body"),
-								accordion2 = $("<div>").addClass("accordion"),
-								show_solution2 = $("<div>").addClass("show_solution").text("Solution"),
-								solution_span = $("<span>").addClass("solution_display").attr("id", "solution_span")
-									.append($("<i>").addClass("material-icons").text("add")),
-								cont_div2 = $("<div>").addClass("cont_div hidden_div"),
-								latex_body2 = $("<div>").addClass("latex_body");
-							if(content.problem == null || content.problem == "") { show_solution1.text("NO PROBLEM HERE!"); problem_span.text(""); }
-							if(content.solution == null || content.solution == "") { show_solution2.text("NO SOLUTION HERE!"); solution_span.text(""); }
-							latex_body1.append(content.problem);
-							cont_div1.append(latex_body1);
-							show_solution1.append(problem_span);
-							accordion1.append(show_solution1);
-							accordion1.append(cont_div1);
-							latex_body2.append(content.solution);
-							cont_div2.append(latex_body2);
-							show_solution2.append(solution_span);
-							accordion2.append(show_solution2);
-							accordion2.append(cont_div2);
-							$("#latex").append(accordion1).append(accordion2);
-							functions.handle_breadcrumbs("example", $(".accordion").first(), subject, topic, section, example);
-							MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-							functions.handle_button();
-						});
+						functions.latex("example", router, toState, subjects, topics, sections, examples, subject, topic, section, example);
 					}
-					functions.handle_logo_link("subject.topic.section.current_page");
-					functions.handle_logo();
-					functions.handle_li_coloring();
-					links.handle_links(router, subjects, topics, sections, examples);
-					functions.handle_orientation("section", navs, section, topic);
-					functions.handle_desktop_title("section", subject, topic, section);
+					// if(section.section_name == toState.params.current_page_name) {
+					// 	$("#section_name" + section.section_id).addClass("active");
+					// 	$.get("/api/section/data/" + section.section_id).done(function(content) {
+					// 		var i = 0;
+					// 		for(; i >= 0; i++) {
+					// 			if(content.title[i] == null || content.title[i] == "") { break; }
+					// 			var cont_div = "",
+					// 				title = content.title[i].split("_")[0],
+					// 				accordion = $("<div>").addClass("accordion"),
+					// 				show_solution = $("<div>").addClass("show_solution").text(title),
+					// 				span = $("<span>").addClass("solution_display"),
+					// 				latex_body = $("<div>").addClass("latex_body");
+					// 			if(content.title[i].split("_").length == 1) {
+					// 				cont_div = $("<div>").addClass("cont_div");
+					// 				span.append($("<i>").addClass("material-icons").text("remove"));
+					// 			}
+					// 			else {
+					// 				cont_div = $("<div>").addClass("cont_div hidden_div");
+					// 				span.append($("<i>").addClass("material-icons").text("add"));
+					// 			}	
+					// 			latex_body.append(content.content[i]);
+					// 			cont_div.append(latex_body);
+					// 			show_solution.append(span);
+					// 			accordion.append(show_solution);
+					// 			accordion.append(cont_div);
+					// 			$("#latex").append(accordion);
+					// 		}
+					// 		if(i == 0) {
+					// 			$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+					// 				.addClass("show_solution").text("NO CONTENT HERE!")));
+					// 		}
+					// 		functions.handle_breadcrumbs("section", $(".accordion").first(), subject, topic, section);
+					// 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+					// 		functions.handle_button();
+					// 		// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
+					// 		// 	MathJax.Hub.Queue(function() {
+					// 		// 		functions.hide_mathjax_span();
+					// 		// 	});
+					// 		// }
+					// 	});
+					// }
+					// else {
+					// 	var example = section.examples.filter(function(iter) {
+					// 		return iter.ename == toState.params.current_page_name;
+					// 	})[0];
+					// 	$("#examples_li" + example.eid).addClass("active");
+					// 	$.get("/api/example/data/" + example.eid).done(function(content) {
+					// 		var accordion1 = $("<div>").addClass("accordion"),
+					// 			show_solution1 = $("<div>").addClass("show_solution").text("Problem"),
+					// 			problem_span = $("<span>").addClass("solution_display").attr("id", "problem_span")
+					// 				.append($("<i>").addClass("material-icons").text("remove")),
+					// 			cont_div1 = $("<div>").addClass("cont_div"),
+					// 			latex_body1 = $("<div>").addClass("latex_body"),
+					// 			accordion2 = $("<div>").addClass("accordion"),
+					// 			show_solution2 = $("<div>").addClass("show_solution").text("Solution"),
+					// 			solution_span = $("<span>").addClass("solution_display").attr("id", "solution_span")
+					// 				.append($("<i>").addClass("material-icons").text("add")),
+					// 			cont_div2 = $("<div>").addClass("cont_div hidden_div"),
+					// 			latex_body2 = $("<div>").addClass("latex_body");
+					// 		if(content.problem == null || content.problem == "") { show_solution1.text("NO PROBLEM HERE!"); problem_span.text(""); }
+					// 		if(content.solution == null || content.solution == "") { show_solution2.text("NO SOLUTION HERE!"); solution_span.text(""); }
+					// 		latex_body1.append(content.problem);
+					// 		cont_div1.append(latex_body1);
+					// 		show_solution1.append(problem_span);
+					// 		accordion1.append(show_solution1);
+					// 		accordion1.append(cont_div1);
+					// 		latex_body2.append(content.solution);
+					// 		cont_div2.append(latex_body2);
+					// 		show_solution2.append(solution_span);
+					// 		accordion2.append(show_solution2);
+					// 		accordion2.append(cont_div2);
+					// 		$("#latex").append(accordion1).append(accordion2);
+					// 		functions.handle_breadcrumbs("example", $(".accordion").first(), subject, topic, section, example);
+					// 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+					// 		functions.handle_button();
+					// 	});
+					// }
+					// functions.handle_logo_link("subject.topic.section.current_page");
+					// functions.handle_logo();
+					// functions.handle_li_coloring();
+					// links.handle_links(router, subjects, topics, sections, examples);
+					// functions.handle_orientation("section", navs, section, topic);
+					// functions.handle_desktop_title("section", subject, topic, section);
 				});
 			});
 		});

@@ -549,6 +549,7 @@ define(function() {
 		});
 		$(".del").on("click", function(e) {
 			e.preventDefault();
+			console.log(data);
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
 					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
@@ -581,6 +582,7 @@ define(function() {
 				}
 			}
 			data[obj_ref].edited = 1;
+			console.log(data);
 		});
 		$(".approve").on("click", function(e) {
 			e.preventDefault();
@@ -679,8 +681,10 @@ define(function() {
 					" when enough contributors have given approval. To change the approval of a subject simply" + 
 					" click on the checkmark and note that the green color indicates an approval from you." + 
 					" Likewise the system also allows for a " + type.toLowerCase().substring(0, type.length - 1) +
-					" to be deleted from the database when enough contributors have given approval for it."
-				$("#popup_body").text(statement).append(table);
+					" to be deleted from the database when enough contributors have given approval for it.<br><br>" +
+					"Lastly for any " + type.toLowerCase().substring(0, type.length - 1) + " that has just been added," +
+					" you remove it without having to exit and clicking back by clicking on the trash can icon."
+				$("#popup_body").html(statement).append(table);
 				data.forEach(function(elem) {
 					var addon = -1;
 					if(type == "Subjects") { addon = elem.sid; }
@@ -792,8 +796,13 @@ define(function() {
 						new_delete = $("<td>").css("text-align", "center").append($("<a>")
 								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_delete_" + addon)
 								.addClass("del center").css("color", "red").append($("<i>")
-									.addClass("material-icons").text("cancel")));
-					new_tr.append(new_name).append(new_move).append(new_approve).append(new_delete);
+									.addClass("material-icons").text("cancel"))),
+						new_garbage = $("<td>").css("text-align", "center").append($("<a>")
+								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_garbage_" + addon)
+								.addClass("garbage center").css("color", "red").append($("<i>")
+									.addClass("material-icons").text("delete_sweep")));
+					new_tr.append(new_name, new_move, new_approve, new_delete, new_garbage);
+					$("#sidenav_table_head").find("tr").append($("<th>").text("Remove"));
 					$("#sidenav_table_body").append(new_tr);
 					data.length == 0 ? order = 1 : order = data[data.length - 1].order + 1;
 					if(type == "Subjects") {
@@ -863,42 +872,63 @@ define(function() {
 						$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
 							.addClass("modal-close waves-effect waves-blue btn-flat").text("Ok"));
 						data.forEach(function(iter) {
-							var id = -1;
-							if(type == "Subjects") { id = iter.sid; }
-							else if(type == "Topics") { id = iter.tid; }
-							else if(type == "Sections") { id = iter.section_id; }
-							else if(type == "Examples") { id = iter.eid; }
+							var id = -1,
+								ref = -1,
+								name = "";
+							if(type == "Subjects") { id = iter.sid; name = iter.sname; ref = "undefined"; }
+							else if(type == "Topics") { id = iter.tid; name = iter.tname; ref = iter.sid; }
+							else if(type == "Sections") { id = iter.section_id; name = iter.section_name; ref = iter.tid; }
+							else if(type == "Examples") { id = iter.eid; name = iter.ename; ref = iter.section_id; }
 							if(typeof iter.del_approval != "object" && iter.del_approval.split(",").length >= validation) {
+								console.log(data);
+								console.log("/api/delete/" + type.toLowerCase().substring(0, type.length - 1) + "/" + id);
 								$.post("/api/delete/" + type.toLowerCase().substring(0, type.length - 1) + "/" + id);
 							}
 							else {
 								if(typeof iter.del_approval == "object" || iter.del_approval == "") { iter.del_approval = "0"; }
 								if(typeof iter.side_approval == "object" || iter.side_approval == "") { iter.side_approval = "0"; }
-
+								var obj = {
+									param: id,
+									ref: ref,
+									name: name,
+									order: iter.order,
+									title: "undefined",
+									content: "undefined",
+									side_approval: iter.side_approval,
+									cms_approval: "undefined",
+									del_approval: iter.del_approval,
+									title_cms: "undefined",
+									content_cms: "undefined"
+								};
 								if(iter.created == 1) {
+									statement = "/api/add/";
 									if(type == "Subjects") {
-										statement = "/api/add/subject/" + id + "/" + iter.sname + "/" + iter.order + 
-											"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
-											iter.del_approval + "/undefined/undefined";
+										statement += "subject/";
+										// statement = "/api/add/subject/" + id + "/" + iter.sname + "/" + iter.order + 
+										// 	"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
+										// 	iter.del_approval + "/undefined/undefined";
 									}
 									else if(type == "Topics") {
-										statement = "/api/add/topic/" + id + "/" + iter.sid + "/" + iter.tname + 
-											"/" + iter.order + "/undefined/" + iter.side_approval + "/undefined/" + 
-											iter.del_approval + "/undefined";
+										statement += "topic/";
+										// statement = "/api/add/topic/" + id + "/" + iter.sid + "/" + iter.tname + 
+										// 	"/" + iter.order + "/undefined/" + iter.side_approval + "/undefined/" + 
+										// 	iter.del_approval + "/undefined";
 									}
 									else if(type == "Sections") {
-										statement = "/api/add/section/" + id + "/" + iter.tid + "/" + 
-											iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
-											iter.side_approval + "/undefined/" + iter.del_approval + 
-											"/undefined/undefined";
+										statement += "section/";
+										// statement = "/api/add/section/" + id + "/" + iter.tid + "/" + 
+										// 	iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
+										// 	iter.side_approval + "/undefined/" + iter.del_approval + 
+										// 	"/undefined/undefined";
 									}
 									else if(type == "Examples") {
-										statement = "/api/add/example/" + id + "/" + iter.section_id + 
-											"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
-											iter.side_approval + "/undefined/" + iter.del_approval + 
-											"/undefined/undefined";
+										statement += "example/";
+										// statement = "/api/add/example/" + id + "/" + iter.section_id + 
+										// 	"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
+										// 	iter.side_approval + "/undefined/" + iter.del_approval + 
+										// 	"/undefined/undefined";
 									}
-									$.post(statement).fail(function() {
+									$.post(statement, obj).fail(function() {
 										$("#popup_title").text("Database Issue");
 										if(type == "Subjects") {
 											$("#popup_body").text("There was an issue uploading the new subject(s) to the database!");
@@ -922,30 +952,57 @@ define(function() {
 									});
 								}
 								if(iter.edited == 1 && iter.created == 0) {
+									statement = "/api/change/";
 									if(type == "Subjects") {
-										statement = "/api/change/subject/" + id + "/" + iter.sname + "/" + 
-											iter.order + "/undefined/undefined/" + iter.side_approval + 
-											"/undefined/" + iter.del_approval + "/undefined/undefined";
+										statement += "subject/";
+										// statement = "/api/add/subject/" + id + "/" + iter.sname + "/" + iter.order + 
+										// 	"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
+										// 	iter.del_approval + "/undefined/undefined";
 									}
 									else if(type == "Topics") {
-										statement = "/api/change/topic/" + id + "/" + iter.sid + "/" + 
-											iter.tname + "/" + iter.order + "/undefined/" + 
-											iter.side_approval + "/undefined/" + iter.del_approval + 
-											"/undefined";
+										statement += "topic/";
+										// statement = "/api/add/topic/" + id + "/" + iter.sid + "/" + iter.tname + 
+										// 	"/" + iter.order + "/undefined/" + iter.side_approval + "/undefined/" + 
+										// 	iter.del_approval + "/undefined";
 									}
 									else if(type == "Sections") {
-										statement = "/api/change/section/" + id + "/" + iter.tid + "/" + 
-											iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
-											iter.side_approval + "/undefined/" + iter.del_approval + 
-											"/undefined/undefined";
+										statement += "section/";
+										// statement = "/api/add/section/" + id + "/" + iter.tid + "/" + 
+										// 	iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
+										// 	iter.side_approval + "/undefined/" + iter.del_approval + 
+										// 	"/undefined/undefined";
 									}
 									else if(type == "Examples") {
-										statement = "/api/change/example/" + id + "/" + iter.section_id + 
-											"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
-											iter.side_approval + "/undefined/" + iter.del_approval + 
-											"/undefined/undefined";
+										statement += "example/";
+										// statement = "/api/add/example/" + id + "/" + iter.section_id + 
+										// 	"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
+										// 	iter.side_approval + "/undefined/" + iter.del_approval + 
+										// 	"/undefined/undefined";
 									}
-									$.post(statement).fail(function() {
+									// if(type == "Subjects") {
+									// 	statement = "/api/change/subject/" + id + "/" + iter.sname + "/" + 
+									// 		iter.order + "/undefined/undefined/" + iter.side_approval + 
+									// 		"/undefined/" + iter.del_approval + "/undefined/undefined";
+									// }
+									// else if(type == "Topics") {
+									// 	statement = "/api/change/topic/" + id + "/" + iter.sid + "/" + 
+									// 		iter.tname + "/" + iter.order + "/undefined/" + 
+									// 		iter.side_approval + "/undefined/" + iter.del_approval + 
+									// 		"/undefined";
+									// }
+									// else if(type == "Sections") {
+									// 	statement = "/api/change/section/" + id + "/" + iter.tid + "/" + 
+									// 		iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
+									// 		iter.side_approval + "/undefined/" + iter.del_approval + 
+									// 		"/undefined/undefined";
+									// }
+									// else if(type == "Examples") {
+									// 	statement = "/api/change/example/" + id + "/" + iter.section_id + 
+									// 		"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
+									// 		iter.side_approval + "/undefined/" + iter.del_approval + 
+									// 		"/undefined/undefined";
+									// }
+									$.post(statement, obj).fail(function() {
 										$("#popup_title").text("Database Issue");
 										if(type == "Subjects") {
 											$("#popup_body").text("There was an issue uploading the subject changes to the database!");
@@ -2123,6 +2180,701 @@ define(function() {
 		    navigator.userAgent.match(/SM-T330NU/i)
 		) { return true; }
 	    else { return false; }
+	};
+
+	exports.latex_cms = function(page, cookie, router, toState, links, subjects, topics, sections, examples, subject, topic, section, example) {
+		$.get("/pages/dist/edit-bar-min.html").done(function(bar) {
+			$("#latex").append(bar);
+			if(page == "section" && section.section_name == toState.params.current_page_name) {
+				$("#section_name" + section.section_id + "_cms").addClass("active");
+			}
+			else if(page == "example" && example.ename == toState.params.current_page_name) {
+				$("#examples_li" + example.eid + "_cms").addClass("active");
+			}
+			var statement = "/api/",
+				db_id = -1,
+				ref = -1;
+			if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; ref = "undefined"; }
+			else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; ref = subject.sid; }
+			else if(page == "section") { statement += "section/data/"; db_id = section.section_id; ref = topic.tid; }
+			else if(page == "example") { statement += "example/data/"; db_id = example.eid; ref = section.section_id; }
+			console.log(db_id);
+			$.post(statement, {"param": db_id}).done(function(data) {
+				console.log(statement);
+				console.log(data);
+				data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
+				data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
+				data.title_cms = data.title_cms != null ? decodeURIComponent(data.title_cms).split("-----") : [""];
+				data.content_cms = data.content_cms != null ? decodeURIComponent(data.content_cms).split("-----") : [""];
+				var i = 0;
+				for(; i >= 0; i++) {
+					if(data.title_cms[i] == null || data.title_cms[i] == "") { break; }
+					var cont_div = "",
+						title = data.title_cms[i].split("_")[0],
+						accordion = $("<div>").addClass("accordion"),
+						show_solution = $("<div>").addClass("show_solution").text(title),
+						span = $("<span>").addClass("solution_display"),
+						latex_body = $("<div>").addClass("latex_body");
+					if(data.title_cms[i].split("_hidden").length == 1) {
+						cont_div = $("<div>").addClass("cont_div");
+						span.append($("<i>").addClass("material-icons").text("remove"));
+					}
+					else {
+						cont_div = $("<div>").addClass("cont_div hidden_div");
+						span.append($("<i>").addClass("material-icons").text("add"));
+					}	
+					latex_body.append(data.content_cms[i]);
+					cont_div.append(latex_body);
+					show_solution.append(span);
+					accordion.append(show_solution);
+					accordion.append(cont_div);
+					$("#latex").append(accordion);
+				}
+				if(i == 0) {
+					$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+						.addClass("show_solution").text("NO CONTENT HERE!")));
+				}
+				exports.handle_breadcrumbs(page, $(".accordion").first(), subject, topic, section, example);
+				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+				exports.handle_button();
+				if(data.cms_approval != null && 
+					data.cms_approval.split(",").some(function(elem) { return elem == cookie; })) {
+					$("#approve").css("color", "green");
+				}
+				else {
+					$("#approve").css("color", "red");
+				}
+				$(".tooltipped").tooltip();
+				$("#approve").click(function(e) {
+					e.preventDefault();
+					if(exports.rgba_to_hex($("#approve").css("color")) == "#ff0000") {
+						$("#approve").css("color", "green");
+						if(data.cms_approval == null) {
+							data.cms_approval = cookie;
+						}
+						else {
+							data.cms_approval += "," + cookie;
+						}
+					}
+					else {
+						$("#approve").css("color", "red");
+						var pos = data.cms_approval.indexOf(cookie);
+						if(pos == 0) {
+							data.cms_approval = data.cms_approval.substring(cookie.length + 2);
+						}
+						else {
+							data.cms_approval = data.cms_approval.substring(0, pos - 1) +
+								data.cms_approval.substring(pos + cookie.length);
+						}
+					}
+					if(data.cms_approval == "") { data.cms_approval = null; }
+				});
+				$("#add-box").css("pointer-events", "none");
+				$("#live-version").click(function(e) {
+					e.preventDefault();
+					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
+						$(".latex_body").each(function(index) {
+							var arr_title = [],
+								arr_body = [];
+							$(".show_solution").each(function(index) {
+								var title = $(this).children().first().clone().children().remove().end().text();
+								$(this).children().children().each(function(index) {
+									if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+										arr_title.push(title + "_hidden");
+									}
+									else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+										arr_title.push(title);
+									}
+								});
+								$(this).siblings().each(function(index) {
+									arr_body.push($(this).children()[0].innerHTML);
+								});
+							});
+							data.title_cms = arr_title;
+							data.content_cms = arr_body;
+						});
+					}
+					if(exports.rgba_to_hex($("#live-version").closest("li").css("background-color")) != "#008cc3") {
+						var controller = $("#bar-div").detach();
+						$("#latex").empty().append(controller);
+						$("#add-box").css("pointer-events", "none");
+						var j = 0;
+						for(; j >= 0; j++) {
+							if(data.title[j] == null || data.title[j] == "") { break; }
+							var cont_div = "",
+								title = data.title[j].split("_")[0],
+								accordion = $("<div>").addClass("accordion"),
+								show_solution = $("<div>").addClass("show_solution").text(title),
+								span = $("<span>").addClass("solution_display"),
+								latex_body = $("<div>").addClass("latex_body");
+							if(data.title[j].split("_").length == 1) {
+								cont_div = $("<div>").addClass("cont_div");
+								span.append($("<i>").addClass("material-icons").text("remove"));
+							}
+							else {
+								cont_div = $("<div>").addClass("cont_div hidden_div");
+								span.append($("<i>").addClass("material-icons").text("add"));
+							}	
+							latex_body.append(data.content[j]);
+							cont_div.append(latex_body);
+							show_solution.append(span);
+							accordion.append(show_solution);
+							accordion.append(cont_div);
+							$("#latex").append(accordion);
+						}
+						if(j == 0) {
+							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+								.addClass("show_solution").text("NO CONTENT HERE!")));
+						}
+						$("#live-version").closest("li").css("background-color", "#008cc3");
+						$("#cms-version").closest("li").css("background-color", "");
+						$("#edit").closest("li").css("background-color", "");
+						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+						exports.handle_button();
+					}
+				});
+				$("#cms-version").click(function(e) {
+					e.preventDefault();
+					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
+						$(".latex_body").each(function(index) {
+							var arr_title = [],
+								arr_body = [];
+							$(".show_solution").each(function(index) {
+								var title = $(this).children().first().clone().children().remove().end().text();
+								$(this).children().children().each(function(index) {
+									if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+										arr_title.push(title + "_hidden");
+									}
+									else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+										arr_title.push(title);
+									}
+								});
+								$(this).siblings().each(function(index) {
+									arr_body.push($(this).children()[0].innerHTML);
+								});
+							});
+							data.title_cms = arr_title;
+							data.content_cms = arr_body;
+						});
+					}
+					if(exports.rgba_to_hex($("#cms-version").closest("li").css("background-color")) != "#008cc3") {
+						var controller = $("#bar-div").detach();
+						$("#latex").empty().append(controller);
+						$("#add-box").css("pointer-events", "none");
+						var j = 0;
+						for(; j >= 0; j++) {
+							if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
+							var cont_div = "",
+								title = data.title_cms[j].split("_")[0],
+								accordion = $("<div>").addClass("accordion"),
+								show_solution = $("<div>").addClass("show_solution").text(title),
+								span = $("<span>").addClass("solution_display"),
+								latex_body = $("<div>").addClass("latex_body");
+							if(data.title_cms[j].split("_").length == 1) {
+								cont_div = $("<div>").addClass("cont_div");
+								span.append($("<i>").addClass("material-icons").text("remove"));
+							}
+							else {
+								cont_div = $("<div>").addClass("cont_div hidden_div");
+								span.append($("<i>").addClass("material-icons").text("add"));
+							}		
+							latex_body.append(data.content_cms[j]);
+							cont_div.append(latex_body);
+							show_solution.append(span);
+							accordion.append(show_solution);
+							accordion.append(cont_div);
+							$("#latex").append(accordion);
+						}
+						if(j == 0) {
+							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+								.addClass("show_solution").text("NO CONTENT HERE!")));
+						}
+						$("#cms-version").closest("li").css("background-color", "#008cc3");
+						$("#live-version").closest("li").css("background-color", "");
+						$("#edit").closest("li").css("background-color", "");
+						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+						exports.handle_button();
+					}
+				});
+				$("#edit").click(function(e) {
+					e.preventDefault();
+					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) != "#008cc3") {
+						var controller = $("#bar-div").detach();
+						$("#latex").empty().append(controller);
+						$("#add-box").css("pointer-events", "auto");
+						$("#save").css("pointer-events", "auto");
+						var j = 0;
+						for(; j >= 0; j++) {
+							if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
+							var cont_div = "",
+								title = data.title_cms[j].split("_")[0],
+								accordion = $("<div>").addClass("accordion"),
+								show_solution = $("<div>").addClass("show_solution")
+									.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
+									.text(title)),
+								span = $("<span>").addClass("solution_display"),
+								span_toggle = $("<span>").addClass("solution_toggle"),
+								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
+									.append($("<i>").addClass("material-icons add-math").text("border_color"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert Math Box Below"),
+								span_image = $("<span>").addClass("solution_img add-image-tooltipped")
+									.append($("<i>").addClass("material-icons add-image").text("image"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert Image Below"),
+								latex_body = $("<div>").addClass("latex_body");
+							if(data.title_cms[j].split("_").length == 1) {
+								cont_div = $("<div>").addClass("cont_div");
+								span.append($("<i>").addClass("material-icons").text("remove"));
+								span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
+							}
+							else {
+								cont_div = $("<div>").addClass("cont_div hidden_div");
+								span.append($("<i>").addClass("material-icons").text("add"));
+								span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_off"));
+							}	
+							latex_body.append(data.content_cms[j]);
+							cont_div.append(latex_body);
+							show_solution.append(span_box, span_image, span_toggle, span);
+							accordion.append(show_solution);
+							accordion.append(cont_div);
+							$("#latex").append(accordion);
+						}
+						if(j == 0) {
+							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+								.addClass("show_solution").text("NO CONTENT HERE!")));
+						}
+						$("#edit").closest("li").css("background-color", "#008cc3");
+						$("#live-version").closest("li").css("background-color", "");
+						$("#cms-version").closest("li").css("background-color", "");
+						$(".toggle").on("click", function(e) {
+							e.preventDefault();
+							e.stopPropagation();
+							var item = $(this).parents().prev().clone().children().remove().end().text();
+							var ref = data.title_cms.findIndex(function(elem) {
+								return elem.split("_hidden")[0] == item;
+							});
+							console.log(item, data);
+							if($(this).text() == "toggle_off") {
+								$(this).text("toggle_on");
+								data.title_cms[ref] = item;
+							}
+							else if($(this).text() == "toggle_on") {
+								$(this).text("toggle_off");
+								data.title_cms[ref] += "_hidden";
+							}
+						});
+						exports.handle_button(1);
+						$(".latex_body").attr("contentEditable", "true");
+						$("div[contenteditable]").keydown(function(e) {
+						    if (e.keyCode === 13) {
+						      document.execCommand("insertHTML", false, "<br><br>");
+						      return false;
+						    }
+						});
+						$(".add-math-tooltipped").tooltip();
+						$(".add-image-tooltipped").tooltip();
+						$("#add-box").click(function(e) {
+							e.preventDefault();
+							if($(".accordion").length == 1 && $(".accordion .show_solution").text() == "NO CONTENT HERE!") {
+								$(".accordion").remove();
+							}
+							var cont_div = "",
+								accordion = $("<div>").addClass("accordion"),
+								show_solution = $("<div>").addClass("show_solution")
+									.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
+									.text("New Title")),
+								span = $("<span>").addClass("solution_display"),
+								span_toggle = $("<span>").addClass("solution_toggle"),
+								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
+									.append($("<i>").addClass("material-icons add-math").text("border_color"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert Math Box Below"),
+								span_image = $("<span>").addClass("solution_img add-image-tooltipped")
+									.append($("<i>").addClass("material-icons add-image").text("image"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert Image Below"),
+								latex_body = $("<div>").addClass("latex_body").text("New Content"),
+								cont_div = $("<div>").addClass("cont_div");
+							span.append($("<i>").addClass("material-icons").text("remove"));
+							span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
+							cont_div.append(latex_body);
+							show_solution.append(span_box, span_image, span_toggle, span);
+							accordion.append(show_solution);
+							accordion.append(cont_div);
+							$("#latex").append(accordion);
+							data.title_cms.push("New Title");
+							data.content_cms.push("New Content");
+							$(".toggle").off();
+							$(".add-image").off();
+							$(".add-math").off();
+							$("#latex .solution_display").off();
+							$(".toggle").on("click", function(e) {
+								e.preventDefault();
+								e.stopPropagation();
+								var item = $(this).parents().prev().clone().children().remove().end().text();
+								var ref = data.title_cms.findIndex(function(elem) {
+									return elem.split("_hidden")[0] == item;
+								});
+								if($(this).text() == "toggle_off") {
+									$(this).text("toggle_on");
+									data.title_cms[ref] = item;
+								}
+								else if($(this).text() == "toggle_on") {
+									$(this).text("toggle_off");
+									data.title_cms[ref] += "_hidden";
+								}
+							});
+							exports.handle_button(1);
+							$(".latex_body").attr("contentEditable", "true");
+							$(".add-math-tooltipped").tooltip();
+							$(".add-image-tooltipped").tooltip();
+							$(".add-math").on("click", function(e) {
+								e.preventDefault();
+								var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
+								obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
+							});
+							$(".add-image").on("click", function(e) {
+								e.preventDefault();
+								$("body").append($("<input>").css("display", "none")
+									.attr({id: "file", type: "file"}));
+								var obj = $(this).parent().parent().parent()
+									.find(".cont_div .latex_body").first();
+								$("#file").click();
+								$("#file").on("change", function() {
+									var file = $("#file")[0].files[0],
+										reader  = new FileReader();
+									reader.addEventListener("load", function () {
+								  		obj.append($("<div>").addClass("latex_equation")
+											.append($("<img>").attr("src", reader.result)));
+										$("#file").remove();
+							  		}, false);
+								  	if(file) {
+									    reader.readAsDataURL(file);
+								  	}
+								});
+							});
+						});
+						$(".add-math").on("click", function(e) {
+							e.preventDefault();
+							var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
+							obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
+						});
+						$(".add-image").on("click", function(e) {
+							e.preventDefault();
+							$("body").append($("<input>").css("display", "none")
+								.attr({id: "file", type: "file"}));
+							var obj = $(this).parent().parent().parent()
+								.find(".cont_div .latex_body").first();
+							$("#file").click();
+							$("#file").on("change", function() {
+								var file = $("#file")[0].files[0],
+									reader  = new FileReader();
+								reader.addEventListener("load", function () {
+									obj.append($("<div>").addClass("latex_equation")
+										.append($("<img>").attr("src", reader.result)));
+									$("#file").remove();
+							  	}, false);
+							  	if(file) {
+								  	reader.readAsDataURL(file);
+							  	}
+							});
+						});
+					}
+				});
+				$("#save").click(function(e) {
+					e.preventDefault();
+					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
+						$(".latex_body").each(function(index) {
+							var arr_title = [],
+								arr_body = [];
+							$(".show_solution").each(function(index) {
+								var title = $(this).children().first().clone().children().remove().end().text();
+								$(this).children().children().each(function(index) {
+									if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+										arr_title.push(title + "_hidden");
+									}
+									else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+										arr_title.push(title);
+									}
+								});
+								$(this).siblings().each(function(index) {
+									arr_body.push($(this).children()[0].innerHTML);
+								});
+							});
+							data.title_cms = arr_title;
+							data.content_cms = arr_body;
+						});
+					}
+					$.get("/pages/dist/modal-min.html").done(function(content) {
+						$("body").append(content);
+						$(".modal-trigger").leanModal({
+							dismissible: false,
+							opacity: 2,
+							inDuration: 1000,
+							outDuration: 1000
+						});
+						$.get("/api/cms/contributors").done(function(num) {
+							const validation = Math.ceil(Math.log(parseInt(num)));
+							console.log(data);
+							data.title_cms = data.title_cms.map(function(elem) {
+								return elem.split("\\$").map(function(iter, index) {
+									if(index % 2 == 0) {
+										return iter.replace(/\\/g, "%5C");
+									}
+									else {
+										return iter;
+									}
+								}).join("\$");
+							});
+							data.content_cms = data.content_cms.map(function(elem) {
+								return elem.split("\\$").map(function(iter, index) {
+									if(index % 2 == 0) {
+										return iter.replace(/\\/g, "%5C");
+									}
+									else {
+										return iter;
+									}
+								}).join("\$");
+							});
+							if(data.cms_approval != null && data.cms_approval != "" 
+								&& data.cms_approval.split(",").length >= validation) {
+								data.title = exports.copy(data.title_cms);
+								data.content = exports.copy(data.content_cms);
+								data.cms_approval = 0;
+							}
+							else {
+								data.title = data.title.map(function(elem) {
+									return elem.split("\\$").map(function(iter, index) {
+										if(index % 2 == 0) {
+											return iter.replace(/\\/g, "%5C");
+										}
+										else {
+											return iter;
+										}
+									}).join("\$");
+								});
+								data.content = data.content.map(function(elem) {
+									return elem.split("\\$").map(function(iter, index) {
+										if(index % 2 == 0) {
+											return iter.replace(/\\/g, "%5C");
+										}
+										else {
+											return iter;
+										}
+									}).join("\$");
+								});
+							}
+							var obj = {
+								param: db_id,
+								ref: ref,
+								name: "undefined",
+								order: "undefined",
+								title: (data.title.join("-----") != "" ? data.title.join("-----") : "0"),
+								content: (data.content.join("-----") != "" ? data.content.join("-----") : "0"),
+								side_approval: "undefined",
+								cms_approval: (data.cms_approval != "" && data.cms_approval != null ? content.cms_approval : "0"),
+								del_approval: "undefined",
+								title_cms: (data.title_cms.join("-----") != "" ? data.title_cms.join("-----") : "0"),
+								content_cms: (data.content_cms.join("-----") != "" ? data.content_cms.join("-----") : "0")
+							};
+							statement = "/api/change/";
+							if(page == "subject") { statement += "subject/"; }
+							else if(page == "topic") { statement += "topic/"; }
+							else if(page == "section") { statement += "section/"; }
+							else if(page == "example") { statement += "example/"; }
+							$.post(statement, obj).fail(function() {
+								$("#popup_title").text("Database Issue");
+								$("#popup_body").text("There was an issue uploading the content changes to the database!");
+								$("#popup_control").click();
+								$("#popup_submit").click(function(e) {
+									e.preventDefault();
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+								});
+							}).done(function() {
+								$("#popup_title").text("Changes Saved");
+								$("#popup_body").text("All changes to the content have been saved to the database!");
+								$("#popup_control").click();
+								$("#popup_submit").click(function(e) {
+									e.preventDefault();
+									location.reload();
+									$(window).scrollTop(0);
+								});
+							});
+						});
+					});
+				});
+				$.get("/pages/dist/button-min.html").done(function(button) {
+					$("body").append(button);
+					exports.committee(cookie, function() {
+						exports.handle_logo_link("");
+						exports.handle_logo();
+						exports.handle_li_coloring();
+						links.handle_links(router, subjects, topics, sections, examples);
+						// functions.handle_orientation("section", navs, section, topic);
+						if(page == "subject") {
+							exports.handle_desktop_title("subject", subject);
+						}
+						else if(page == "topic") {
+							exports.handle_desktop_title("topic", subject, topic);
+						}
+						else if(page == "section" || page == "example") {
+							exports.handle_desktop_title("section", subject, topic, section);
+						}
+						$("#bar-nav").css("width", "100%");
+						$("#bar").css("width", "82%");
+						$("#live-version").parent("li").css("margin-left", "25px");
+						$("#save").parent("li").css("margin-right", "25px");
+						$("#cms-version").closest("li").css("background-color", "#008cc3");
+						if(page == "subject") {
+							$("#topics_change").click(function(e) {
+								e.preventDefault();
+								exports.sidenav_modal("Topics", topics, subject.sid);
+							});
+						}
+						else if(page == "topic") {
+							$("#sections_change").click(function(e) {
+								e.preventDefault();
+								exports.sidenav_modal("Sections", sections, topic.tid);
+							});
+						}
+						else if(page == "section" || page == "example") {
+							$("#examples_change").click(function(e) {
+								e.preventDefault();
+								exports.sidenav_modal("Examples", examples, section.section_id);
+							});
+						}
+					});
+				});
+				
+				// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
+				// 	MathJax.Hub.Queue(function() {
+				// 		functions.hide_mathjax_span();
+				// 	});
+				// }
+			});
+		});
+	};
+
+	exports.latex = function(page, router, toState, links, subjects, topics, sections, examples, subject, topic, section, example) {
+		// $.get("/pages/dist/edit-bar-min.html").done(function(bar) {
+			// $("#latex").append(bar);
+			if(page == "section" && section.section_name == toState.params.current_page_name) {
+				$("#section_name" + section.section_id + "_cms").addClass("active");
+			}
+			else if(page == "example" && example.ename == toState.params.current_page_name) {
+				$("#examples_li" + example.eid + "_cms").addClass("active");
+			}
+			var statement = "/api/",
+				db_id = -1;
+			if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; }
+			else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; }
+			else if(page == "section") { statement += "section/data/"; db_id = section.section_id; }
+			else if(page == "example") { statement += "example/data/"; db_id = example.eid; }
+			$.post(statement, {"param": db_id}).done(function(data) {
+				data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
+				data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
+				var i = 0;
+				for(; i >= 0; i++) {
+					if(data.title[i] == null || data.title[i] == "") { break; }
+					var cont_div = "",
+						title = data.title[i].split("_")[0],
+						accordion = $("<div>").addClass("accordion"),
+						show_solution = $("<div>").addClass("show_solution").text(title),
+						span = $("<span>").addClass("solution_display"),
+						latex_body = $("<div>").addClass("latex_body");
+					if(data.title[i].split("_hidden").length == 1) {
+						cont_div = $("<div>").addClass("cont_div");
+						span.append($("<i>").addClass("material-icons").text("remove"));
+					}
+					else {
+						cont_div = $("<div>").addClass("cont_div hidden_div");
+						span.append($("<i>").addClass("material-icons").text("add"));
+					}	
+					latex_body.append(data.content[i]);
+					cont_div.append(latex_body);
+					show_solution.append(span);
+					accordion.append(show_solution);
+					accordion.append(cont_div);
+					$("#latex").append(accordion);
+				}
+				if(i == 0) {
+					$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+						.addClass("show_solution").text("NO CONTENT HERE!")));
+				}
+				exports.handle_breadcrumbs(page, $(".accordion").first(), subject, topic, section, example);
+				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+				exports.handle_button();
+				exports.handle_logo_link("");
+				exports.handle_logo();
+				exports.handle_li_coloring();
+				links.handle_links(router, subjects, topics, sections, examples);
+				// functions.handle_orientation("section", navs, section, topic);
+				if(page == "subject") {
+					exports.handle_desktop_title("subject", subject);
+				}
+				else if(page == "topic") {
+					exports.handle_desktop_title("topic", subject, topic);
+				}
+				else if(page == "section" || page == "example") {
+					exports.handle_desktop_title("section", subject, topic, section);
+				}
+
+
+
+				
+				// $.get("/pages/dist/button-min.html").done(function(button) {
+				// 	$("body").append(button);
+				// 	exports.committee(cookie, function() {
+				// 		exports.handle_logo_link("");
+				// 		exports.handle_logo();
+				// 		exports.handle_li_coloring();
+				// 		links.handle_links(router, subjects, topics, sections, examples);
+				// 		// functions.handle_orientation("section", navs, section, topic);
+				// 		if(page == "subject") {
+				// 			exports.handle_desktop_title("subject", subject);
+				// 		}
+				// 		else if(page == "topic") {
+				// 			exports.handle_desktop_title("topic", subject, topic);
+				// 		}
+				// 		else if(page == "section" || page == "example") {
+				// 			exports.handle_desktop_title("section", subject, topic, section);
+				// 		}
+				// 		$("#bar-nav").css("width", "100%");
+				// 		$("#bar").css("width", "82%");
+				// 		$("#live-version").parent("li").css("margin-left", "25px");
+				// 		$("#save").parent("li").css("margin-right", "25px");
+				// 		$("#cms-version").closest("li").css("background-color", "#008cc3");
+				// 		if(page == "subject") {
+				// 			$("#topics_change").click(function(e) {
+				// 				e.preventDefault();
+				// 				exports.sidenav_modal("Topics", topics, subject.sid);
+				// 			});
+				// 		}
+				// 		else if(page == "topic") {
+				// 			$("#sections_change").click(function(e) {
+				// 				e.preventDefault();
+				// 				exports.sidenav_modal("Sections", sections, topic.tid);
+				// 			});
+				// 		}
+				// 		else if(page == "section" || page == "example") {
+				// 			$("#examples_change").click(function(e) {
+				// 				e.preventDefault();
+				// 				exports.sidenav_modal("Examples", examples, section.section_id);
+				// 			});
+				// 		}
+				// 	});
+				// });
+				
+				// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
+				// 	MathJax.Hub.Queue(function() {
+				// 		functions.hide_mathjax_span();
+				// 	});
+				// }
+			});
+		// });
 	};
 
 	return exports;
