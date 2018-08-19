@@ -568,6 +568,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 								if(section.section_name == toState.params.current_page_name) {
 									$("#section_name" + section.section_id + "_cms").addClass("active");
 									$.get("/api/section/data/" + section.section_id).done(function(data) {
+										data.title = data.title != null ? data.title.split("-----") : [""];
+										data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
+										data.title_cms = data.title_cms != null ? data.title_cms.split("-----") : [""];
+										data.content_cms = data.content_cms != null ? decodeURIComponent(data.content_cms).split("-----") : [""];
 										var i = 0;
 										for(; i >= 0; i++) {
 											if(data.title_cms[i] == null || data.title_cms[i] == "") { break; }
@@ -631,7 +635,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												}
 											}
 											if(data.cms_approval == "") { data.cms_approval = null; }
+											console.log(data);
 										});
+										$("#add-box").css("pointer-events", "none");
+										$("#save").css("pointer-events", "none");
 										$("#live-version").click(function(e) {
 											e.preventDefault();
 											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
@@ -659,6 +666,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 											if(functions.rgba_to_hex($("#live-version").closest("li").css("background-color")) != "#008cc3") {
 												var controller = $("#bar-div").detach();
 												$("#latex").empty().append(controller);
+												$("#add-box").css("pointer-events", "none");
+												$("#save").css("pointer-events", "none");
 												var j = 0;
 												for(; j >= 0; j++) {
 													if(data.title[j] == null || data.title[j] == "") { break; }
@@ -721,6 +730,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 											if(functions.rgba_to_hex($("#cms-version").closest("li").css("background-color")) != "#008cc3") {
 												var controller = $("#bar-div").detach();
 												$("#latex").empty().append(controller);
+												$("#add-box").css("pointer-events", "none");
+												$("#save").css("pointer-events", "none");
 												var j = 0;
 												for(; j >= 0; j++) {
 													if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
@@ -761,6 +772,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 											if(functions.rgba_to_hex($("#edit").closest("li").css("background-color")) != "#008cc3") {
 												var controller = $("#bar-div").detach();
 												$("#latex").empty().append(controller);
+												$("#add-box").css("pointer-events", "auto");
+												$("#save").css("pointer-events", "auto");
 												var j = 0;
 												for(; j >= 0; j++) {
 													if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
@@ -824,9 +837,19 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 												});
 												functions.handle_button(1);
 												$(".latex_body").attr("contentEditable", "true");
+												$("div[contenteditable]").keydown(function(e) {
+												    if (e.keyCode === 13) {
+												      document.execCommand("insertHTML", false, "<br><br>");
+												      return false;
+												    }
+												});
 												$(".add-math-tooltipped").tooltip();
+												$(".add-image-tooltipped").tooltip();
 												$("#add-box").click(function(e) {
 													e.preventDefault();
+													if($(".accordion").length == 1 && $(".accordion .show_solution").text() == "NO CONTENT HERE!") {
+														$(".accordion").remove();
+													}
 													var cont_div = "",
 														accordion = $("<div>").addClass("accordion"),
 														show_solution = $("<div>").addClass("show_solution")
@@ -851,11 +874,11 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 													accordion.append(show_solution);
 													accordion.append(cont_div);
 													$("#latex").append(accordion);
-
 													data.title_cms.push("New Title");
 													data.content_cms.push("New Content");
-
 													$(".toggle").off();
+													$(".add-image").off();
+													$(".add-math").off();
 													$("#latex .solution_display").off();
 													$(".toggle").on("click", function(e) {
 														e.preventDefault();
@@ -876,73 +899,200 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 													functions.handle_button(1);
 													$(".latex_body").attr("contentEditable", "true");
 													$(".add-math-tooltipped").tooltip();
+													$(".add-image-tooltipped").tooltip();
+													$(".add-math").on("click", function(e) {
+														e.preventDefault();
+														var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
+														obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
+													});
+													$(".add-image").on("click", function(e) {
+														e.preventDefault();
+														$("body").append($("<input>").css("display", "none")
+															.attr({id: "file", type: "file"}));
+														var obj = $(this).parent().parent().parent()
+															.find(".cont_div .latex_body").first();
+														$("#file").click();
+														$("#file").on("change", function() {
+															  var file = $("#file")[0].files[0];
+															  var reader  = new FileReader();
+															  reader.addEventListener("load", function () {
+															  // 	blobUtil.imgSrcToBlob(reader.result).then(function(blob) {
+															  // 		obj.append($("<div>").addClass("latex_equation")
+																	// 	.append($("<img>").attr("src", blobUtil.createObjectURL(blob))));
+																	// $("#file").remove();
+															  // 	});
+															  	// blobUtil.imgSrcToBlob(reader.result).then(function(blob) {
+															  		obj.append($("<div>").addClass("latex_equation")
+																		.append($("<img>").attr("src", reader.result)));
+																	$("#file").remove();
+															  	// });
+															  }, false);
+															  if(file) {
+															    reader.readAsDataURL(file);
+															  }
+														});
+													});
 												});
-												$(".add-math").click(function(e) {
+												$(".add-math").on("click", function(e) {
 													e.preventDefault();
 													var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
 													obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
 												});
-												// function previewFile() {
-												//   // var preview = document.querySelector('img');
-												//   // var file = document.querySelector("input[type=file]").files[0];
-												//   console.log(document.querySelector("input[type=file]"));
-												//   console.log($("#file"));
-												//   var file = $("#file")[0].files[0];
-												//   var reader  = new FileReader();
-
-												//   reader.addEventListener("load", function () {
-												//   	console.log(reader);
-												//   	console.log(reader.result);
-												//     // preview.src = reader.result;
-												//   }, false);
-
-												//   if (file) {
-												//     reader.readAsDataURL(file);
-												//   }
-												// }
-												$(".add-image").click(function(e) {
+												$(".add-image").on("click", function(e) {
 													e.preventDefault();
-													$("body").append($("<input>").css("display", "none").attr({
-														id: "file",
-														type: "file"
-													}));
-													
+													$("body").append($("<input>").css("display", "none")
+														.attr({id: "file", type: "file"}));
 													var obj = $(this).parent().parent().parent()
 														.find(".cont_div .latex_body").first();
-													  // function receivedText() {
-													    // document.getElementById('editor').appendChild(document.createTextNode(fr.result));
-
-													  // }  
 													$("#file").click();
-
 													$("#file").on("change", function() {
-														// var preview = document.querySelector('img');
 														  var file = $("#file")[0].files[0];
 														  var reader  = new FileReader();
-
 														  reader.addEventListener("load", function () {
-														  	console.log(reader);
-														  	console.log(reader.result);
-														    // preview.src = reader.result;
+															
+														  	// blobUtil.imgSrcToBlob(reader.result).then(function(blob) {
+														  	// 	blobUtil.blobToDataURL(blob).then(function(imgData) {
+															  // 		obj.append($("<div>").addClass("latex_equation")
+																	// 	.append($("<img>").attr("src", imgData)));
+																	// $("#file").remove();
+														  	// 	});
+														  	// });
 
-														    
 															obj.append($("<div>").addClass("latex_equation")
 																.append($("<img>").attr("src", reader.result)));
-
 															$("#file").remove();
-
 														  }, false);
-
-														  if (file) {
+														  if(file) {
 														    reader.readAsDataURL(file);
 														  }
 													});
-
+												});
+												$("#save").click(function(e) {
+													e.preventDefault();
+													$(".latex_body").each(function(index) {
+														var arr_title = [],
+															arr_body = [];
+														$(".show_solution").each(function(index) {
+															var title = $(this).children().first().clone().children().remove().end().text();
+															$(this).children().children().each(function(index) {
+																if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+																	arr_title.push(title + "_hidden");
+																}
+																else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+																	arr_title.push(title);
+																}
+															});
+															$(this).siblings().each(function(index) {
+																arr_body.push($(this).children()[0].innerHTML);
+															});
+														});
+														data.title_cms = arr_title;
+														data.content_cms = arr_body;
+													});
+													$.get("/pages/dist/modal-min.html").done(function(content) {
+														$("body").append(content);
+														$(".modal-trigger").leanModal({
+															dismissible: false,
+															opacity: 2,
+															inDuration: 1000,
+															outDuration: 1000
+														});
+														$.get("/api/cms/contributors").done(function(num) {
+															const validation = Math.ceil(Math.log(parseInt(num)));
+															console.log(data);
+															data.title_cms = data.title_cms.map(function(elem) {
+																return elem.split("\\$").map(function(iter, index) {
+																	if(index % 2 == 0) {
+																		return iter.replace(/\\/g, "%5C");
+																	}
+																	else {
+																		return iter;
+																	}
+																}).join("\$");
+															});
+															data.content_cms = data.content_cms.map(function(elem) {
+																return elem.split("\\$").map(function(iter, index) {
+																	if(index % 2 == 0) {
+																		return iter.replace(/\\/g, "%5C");
+																	}
+																	else {
+																		return iter;
+																	}
+																}).join("\$");
+															});
+															if(data.cms_approval != null && data.cms_approval != "" 
+																&& data.cms_approval.split(",").length >= validation) {
+																data.title = functions.copy(data.title_cms);
+																data.content = functions.copy(data.content_cms);
+																data.cms_approval = 0;
+															}
+															// var comp1 = encodeURIComponent(data.title.join("-----")),
+																// comp2 = encodeURIComponent(data.content.join("-----")),
+																// comp2 = encodeURIComponent(data.cms_approval),
+																// comp3 = encodeURIComponent(data.title_cms.join("-----")),
+																// comp5 = encodeURIComponent(data.content_cms.join("-----")),
+															// blobUtil.blobToBinaryString(blobUtil.createBlob([data.content_cms.join("-----")]))
+															// 	.then(function(content_cms_blob) {
+															// 	blobUtil.blobToBinaryString(blobUtil.createBlob([data.content.join("-----")]))
+															// 		.then(function(content_blob) {
+																	// var obj = {
+																	// 	param: section.section_id,
+																	// 	tid: "undefined",
+																	// 	name: "undefined",
+																	// 	order: "undefined",
+																	// 	title: (data.title.join("-----") != "" ? encodeURIComponent(data.title.join("-----")) : "0"),
+																	// 	content: (content_blob != "" ? encodeURIComponent(content_blob) : "0"),
+																	// 	side_approval: "undefined",
+																	// 	cms_approval: (data.cms_approval != "" && data.cms_approval != null ? encodeURIComponent(content_cms_blob) : "0"),
+																	// 	del_approval: "undefined",
+																	// 	title_cms: (data.title_cms.join("-----") != "" ? encodeURIComponent(data.title_cms.join("-----")) : "0"),
+																	// 	content_cms: (content_cms_blob != "" ? encodeURIComponent(content_cms_blob) : "0")
+																	// };
+																	var obj = {
+																		param: section.section_id,
+																		tid: "undefined",
+																		name: "undefined",
+																		order: "undefined",
+																		title: (data.title.join("-----") != "" ? data.title.join("-----") : "0"),
+																		content: (data.content.join("-----") != "" ? data.content.join("-----") : "0"),
+																		side_approval: "undefined",
+																		cms_approval: (data.cms_approval != "" && data.cms_approval != null ? content.cms_approval : "0"),
+																		del_approval: "undefined",
+																		title_cms: (data.title_cms.join("-----") != "" ? data.title_cms.join("-----") : "0"),
+																		content_cms: (data.content_cms.join("-----") != "" ? data.content_cms.join("-----") : "0")
+																	};
+																	// console.log(comp5);
+																	$.post("/api/change/section/", obj).fail(function(xhr, status, error) {
+																		console.log(xhr);
+																		console.log(status);
+																		console.log(error);
+																		$("#popup_title").text("Database Issue");
+																		$("#popup_body").text("There was an issue uploading the content changes to the database!");
+																		$("#popup_control").click();
+																		$("#popup_submit").click(function(e) {
+																			e.preventDefault();
+																			$(".lean-overlay").remove();
+																			$("#popup").remove();
+																			$("#popup_control").remove();
+																		});
+																	}).done(function() {
+																		$("#popup_title").text("Changes Saved");
+																		$("#popup_body").text("All changes to the content have been saved to the database!");
+																		$("#popup_control").click();
+																		$("#popup_submit").click(function(e) {
+																			e.preventDefault();
+																			location.reload();
+																			$(window).scrollTop(0);
+																		});
+																	});
+															// 	});
+															// });
+														});
+													});
 												});
 											}
 										});
-
-
+										
 										// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
 										// 	MathJax.Hub.Queue(function() {
 										// 		functions.hide_mathjax_span();

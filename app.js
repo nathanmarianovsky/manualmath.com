@@ -15,6 +15,8 @@ var express = require("express"),
 	minifier = require("./scripts/back-end/minifier"),
 	app = express(),
 	pool = config.add_connections(mysql),
+	bodyParser = require("body-parser"),
+	multer = require("multer"),
 	cluster = require("cluster"),
 	numCPUs = require("os").cpus().length;
 	// morgan = require("morgan");
@@ -30,6 +32,9 @@ app.use(favicon("./favicon.ico", {"maxAge": 2592000000 }));
 // Tells the app to use the current directory as the default path
 app.use(express.static(__dirname, {"maxAge": 864000000 }));
 // app.use(express.static(__dirname));
+
+app.use(bodyParser.json({limit: "50mb"})); // for parsing application/json
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true})); // for parsing application/x-www-form-urlencoded
 
 // Adds all of the routes
 client_routes.add_gui_routes(app);

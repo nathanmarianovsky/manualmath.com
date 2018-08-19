@@ -88,19 +88,23 @@ exports.add_api_routes = (app, pool) => {
 			pool.query(statement, (err, results) => {
 				if(err) { console.error("Error Connecting: " + err.stack); return; }
 				if(results.length != 0) {
-					var title_str = results[0].title,
-						title_str_cms = results[0].title_cms,
-						content_str = results[0].content,
-						content_str_cms = results[0].content_cms,
-						title_arr = title_str != null ? title_str.split("-----") : [],
-						title_arr_cms = title_str_cms != null ? title_str_cms.split("-----") : [],
-						content_arr = content_str != null ? content_str.split("-----") : [];
-						content_arr_cms = content_str_cms != null ? content_str_cms.split("-----") : [];
+					var title_str = results[0].title != null ? results[0].title : "",
+						title_str_cms = results[0].title_cms != null ? results[0].title_cms : "",
+						// content_str = results[0].content != null ? results[0].content : "",
+						// content_str_cms = results[0].content_cms != null ? results[0].content_cms : "";
+						// content_str_cms = results[0].content_cms != null ? results[0].content_cms : "";
+						content_str = results[0].content != null ? new Buffer(results[0].content, "binary").toString() : "";
+						content_str_cms = results[0].content_cms != null ? new Buffer(results[0].content_cms, "binary").toString() : "";
+						// title_arr = title_str != null ? title_str : "",
+						// title_arr_cms = title_str_cms != null ? title_str_cms : "",
+						// content_arr = content_str != null ? content_str : "";
+						// content_arr_cms = content_str_cms != null ? content_str_cms : "";
+					// console.log(results[0].content_cms);
 					var obj = {
-						title: title_arr,
-						title_cms: title_arr_cms,
-						content: content_arr,
-						content_cms: content_arr_cms,
+						title: title_str,
+						title_cms: title_str_cms,
+						content: content_str,
+						content_cms: content_str_cms,
 						cms_approval: results[0].cms_approval
 					};
 					// for(var k = 0; k < title_arr.length; k++) {
@@ -440,19 +444,20 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to add or change the data corresponding to any particular section
-	app.post("/api/:operation/section/:param/:tid/:name/:order/:title/:content/:side_approval/:cms_approval/:del_approval/:title_cms/:content_cms", (request, response) => {
+	// app.post("/api/:operation/section/:param/:tid/:name/:order/:title/:content/:side_approval/:cms_approval/:del_approval/:title_cms", (request, response) => {
+	app.post("/api/:operation/section", (request, response) => {
 		var operation = request.params.operation
-			param = request.params.param,
-			tid = request.params.tid,
-			name = request.params.name,
-			order = request.params.order,
-			title = request.params.title,
-			content = request.params.content,
-			side_approval = request.params.side_approval,
-			cms_approval = request.params.cms_approval,
-			del_approval = request.params.del_approval,
-			title_cms = request.params.title_cms,
-			content_cms = request.params.content_cms,
+			param = request.body.param,
+			tid = request.body.tid,
+			name = request.body.name,
+			order = request.body.order,
+			title = request.body.title,
+			content = request.body.content,
+			side_approval = request.body.side_approval,
+			cms_approval = request.body.cms_approval,
+			del_approval = request.body.del_approval,
+			title_cms = request.body.title_cms,
+			content_cms = request.body.content_cms,
 			statement = "",
 			ending = "";
 		if(operation == "change") {
@@ -471,11 +476,13 @@ exports.add_api_routes = (app, pool) => {
 				}
 				if(title !== "undefined") {
 					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "title='" + title + "'";
+					title != "0" ? statement += "title='" + title + "'" 
+						: statement += "title=NULL";
 				}
 				if(content !== "undefined") {
 					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "content='" + content + "'";
+					content != "0" ? statement += "content='" + content + "'" 
+						: statement += "content=NULL";
 				}
 				if(side_approval !== "undefined") {
 					if(statement[statement.length - 1] != " ") { statement += ","; }
@@ -494,11 +501,13 @@ exports.add_api_routes = (app, pool) => {
 				}
 				if(title_cms !== "undefined") {
 					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "title_cms='" + title_cms + "'";
+					title_cms != "0" ? statement += "title_cms='" + title_cms + "'" 
+						: statement += "title_cms=NULL";
 				}
 				if(content_cms !== "undefined") {
 					if(statement[statement.length - 1] != " ") { statement += ","; }
-					statement += "content_cms='" + content_cms + "'";
+					content_cms != "0" ? statement += "content_cms='" + content_cms + "'" 
+						: statement += "content_cms=NULL";
 				}
 				statement += " WHERE section_id=" + param;
 			}

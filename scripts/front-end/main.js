@@ -1,4 +1,5 @@
-define(["jquery", "materialize", "router5", "mathjax", "dist/functions-min", "dist/routes-min"], function($, Materialize, router5, MathJax, functions, routes) {
+define(["jquery", "materialize", "router5", "mathjax", "dist/functions-min", "dist/routes-min"], 
+	function($, Materialize, router5, MathJax, functions, routes) {
 	$(function() {
 
 		var router = new router5.Router5([
