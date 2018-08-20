@@ -2423,7 +2423,8 @@ define(function() {
 									.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
 									.text(title)),
 								span = $("<span>").addClass("solution_display"),
-								span_toggle = $("<span>").addClass("solution_toggle"),
+								span_toggle = $("<span>").addClass("solution_toggle").attr("data-position", "top")
+									.attr("data-tooltip", "Toggle the Default Display of the Box Below"),
 								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
 									.append($("<i>").addClass("material-icons add-math").text("border_color"))
 									.attr("data-position", "top")
@@ -2432,6 +2433,10 @@ define(function() {
 									.append($("<i>").addClass("material-icons add-image").text("image"))
 									.attr("data-position", "top")
 									.attr("data-tooltip", "Insert Image Below"),
+								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
+									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Delete Box Below"),
 								latex_body = $("<div>").addClass("latex_body");
 							if(data.title_cms[j].split("_").length == 1) {
 								cont_div = $("<div>").addClass("cont_div");
@@ -2445,7 +2450,7 @@ define(function() {
 							}	
 							latex_body.append(data.content_cms[j]);
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_image, span_toggle, span);
+							show_solution.append(span_box, span_image, span_del, span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
@@ -2482,6 +2487,8 @@ define(function() {
 						      return false;
 						    }
 						});
+						$(".solution_toggle").tooltip();
+						$(".del-box-tooltipped").tooltip();
 						$(".add-math-tooltipped").tooltip();
 						$(".add-image-tooltipped").tooltip();
 						$("#add-box").click(function(e) {
@@ -2495,7 +2502,8 @@ define(function() {
 									.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
 									.text("New Title")),
 								span = $("<span>").addClass("solution_display"),
-								span_toggle = $("<span>").addClass("solution_toggle"),
+								span_toggle = $("<span>").addClass("solution_toggle").attr("data-position", "top")
+									.attr("data-tooltip", "Toggle the Default Display of the Box Below"),
 								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
 									.append($("<i>").addClass("material-icons add-math").text("border_color"))
 									.attr("data-position", "top")
@@ -2504,12 +2512,16 @@ define(function() {
 									.append($("<i>").addClass("material-icons add-image").text("image"))
 									.attr("data-position", "top")
 									.attr("data-tooltip", "Insert Image Below"),
+								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
+									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Delete Box Below"),
 								latex_body = $("<div>").addClass("latex_body").text("New Content"),
 								cont_div = $("<div>").addClass("cont_div");
 							span.append($("<i>").addClass("material-icons").text("remove"));
 							span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_image, span_toggle, span);
+							show_solution.append(span_box, span_image, span_del, span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
@@ -2518,6 +2530,7 @@ define(function() {
 							$(".toggle").off();
 							$(".add-image").off();
 							$(".add-math").off();
+							$(".del-box").off();
 							$("#latex .solution_display").off();
 							$(".toggle").on("click", function(e) {
 								e.preventDefault();
@@ -2537,6 +2550,8 @@ define(function() {
 							});
 							exports.handle_button(1);
 							$(".latex_body").attr("contentEditable", "true");
+							$(".solution_toggle").tooltip();
+							$(".del-box-tooltipped").tooltip();
 							$(".add-math-tooltipped").tooltip();
 							$(".add-image-tooltipped").tooltip();
 							$(".add-math").on("click", function(e) {
@@ -2564,6 +2579,19 @@ define(function() {
 								  	}
 								});
 							});
+							$(".del-box").on("click", function(e) {
+								e.preventDefault();
+								$(this).parent().parent().children().each(function(index) {
+									if($(this).attr("data-position") == "top") {
+										$("#" + $(this).attr("data-tooltip-id")).remove();
+									}
+								});
+								$(this).parent().parent().parent().remove();
+								if($("#latex .accordion").length == 0) {
+									$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+										.addClass("show_solution").text("NO CONTENT HERE!")));
+								}
+							});
 						});
 						$(".add-math").on("click", function(e) {
 							e.preventDefault();
@@ -2589,6 +2617,19 @@ define(function() {
 								  	reader.readAsDataURL(file);
 							  	}
 							});
+						});
+						$(".del-box").on("click", function(e) {
+							e.preventDefault();
+							$(this).parent().parent().children().each(function(index) {
+								if($(this).attr("data-position") == "top") {
+									$("#" + $(this).attr("data-tooltip-id")).css("display", "none");
+								}
+							});
+							$(this).parent().parent().parent().remove();
+							if($("#latex .accordion").length == 0) {
+								$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+									.addClass("show_solution").text("NO CONTENT HERE!")));
+							}
 						});
 					}
 				});
