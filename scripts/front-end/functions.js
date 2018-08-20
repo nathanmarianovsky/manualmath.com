@@ -211,13 +211,254 @@ define(function() {
 	*/
 	exports.committee = function(email, callback) {
 		$.get("/api/cms/committee/check/" + email).done(function(check) {
-			if(check == 1) {
-				var link = $("<a>").attr("id", "committee").addClass("btn-floating").css("background", "#00b8ff")
+			if(check >= 1) {
+				var group = $("<a>").attr("id", "committee").addClass("btn-floating").css("background", "#00b8ff")
 					.append($("<i>").addClass("material-icons").text("group_work"));
-				$("#profile").closest("li").before($("<li>").append(link));
+			}
+			if(check == 1) {
+				var ranking = $("<a>").attr("id", "ranking").addClass("btn-floating").css("background", "#00b8ff")
+					.append($("<i>").addClass("material-icons").text("thumbs_up_down"));
+				$("#profile").closest("li").before($("<li>").append(ranking), $("<li>").append(group));
+			}
+			else if(check == 2) {
+				var decision = $("<a>").attr("id", "decision").addClass("btn-floating").css("background", "#00b8ff")
+					.append($("<i>").addClass("material-icons").text("group"));
+				$("#profile").closest("li").before($("<li>").append(decision), $("<li>").append(group));
 			}
 		}).done(function() { callback(); });
 	};
+
+
+
+
+
+	exports.ranking_modal = function() {
+		$.get("/pages/dist/committee-table-min.html").done(function(content) {
+			$(".modal-trigger").leanModal({
+				dismissible: false,
+				opacity: 2,
+				inDuration: 1000,
+				outDuration: 1000
+			});
+			$("#popup_title").text("Committee Approval of New Committee Members").css("text-align", "center");
+			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
+				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			$("#popup_submit").removeClass("modal-close");
+			var statement = "As a committee member on manualmath you have the power to" +
+				" try to sway the administrator's decision on whether a current contributor" +
+				" joins the committee or not. Using the table below you can provide an approval or" +
+				" disapproval which will be indicated by a green color."
+			$("#popup_body").text(statement).append(content);
+			$.post("/api/cms/contributors/nonmember").done(function(contributors) {
+				var list = contributors.map(function(elem, index) {
+					elem.num = index;
+					elem.edited = 0;
+					return elem;
+				});
+				list.forEach(function(elem) {
+					var item_tr = $("<tr>"),
+						item_fname = $("<td>").text(elem.first_name),
+						item_lname = $("<td>").text(elem.last_name),
+						item_email = $("<td>").text(elem.email).css("text-align", "center"),
+						item_approve = $("<td>").css("text-align", "center").append($("<a>")
+								.css("cursor", "pointer").attr("id", "approve_" + elem.num)
+								.addClass("approve-contributor center").append($("<i>")
+									.addClass("material-icons").text("check_circle"))),
+						item_disapprove = $("<td>").css("text-align", "center").append($("<a>")
+								.css("cursor", "pointer").attr("id", "disapprove_" + elem.num)
+								.addClass("disapprove-contributor center").append($("<i>")
+									.addClass("material-icons").text("cancel")));
+					item_tr.append(item_fname, item_lname, item_email, item_approve, item_disapprove);
+					$("#committee_table_head").find("tr th").last().text("Disapprove");
+					$("#committee_table_body").append(item_tr);
+					if(elem.rank_approval != null && 
+						elem.rank_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						$("#approve_" + elem.num).css("color", "green");
+					}
+					else {
+						$("#approve_" + elem.num).css("color", "red");
+					}
+					if(elem.rank_disapproval != null && 
+						elem.rank_disapproval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						$("#disapprove_" + elem.num).css("color", "green");
+					}
+					else {
+						$("#disapprove_" + elem.num).css("color", "red");
+					}
+				});
+				$("#popup_control").click();
+				$("#popup_exit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
+				$(".disapprove-contributor").on("click", function(e) {
+					e.preventDefault();
+					var holder = $(this).attr("id").split("_"),
+						obj_ref = list.findIndex(function(iter) { 
+							return iter.num == holder[1];
+						});
+					if(exports.rgba_to_hex($("#disapprove_" + holder[1]).css("color")) == "#ff0000") {
+						$("#disapprove_" + holder[1]).css("color", "green");
+						$("#approve_" + holder[1]).css("color", "red");
+						if(list[obj_ref].rank_disapproval == null) { 
+							list[obj_ref].rank_disapproval = exports.read_cookie("contributor"); 
+						}
+						else { list[obj_ref].rank_disapproval += "," + exports.read_cookie("contributor"); }
+						if(list[obj_ref].rank_approval != null) { 
+							var start = list[obj_ref].rank_approval.indexOf(exports.read_cookie("contributor"));
+							if(start != -1) {
+								if(start != 0) {
+									list[obj_ref].rank_approval = list[obj_ref].rank_approval.substring(0, start) + 
+										list[obj_ref].rank_approval.substring(start + exports.read_cookie("contributor").length);
+								}
+								else {
+									list[obj_ref].rank_approval = list[obj_ref].rank_approval
+										.substring(exports.read_cookie("contributor").length + 1);
+								}
+								if(list[obj_ref].rank_approval == "") { list[obj_ref].rank_approval = null; }
+							}
+						}
+					}
+					else {
+						$("#disapprove_" + holder[1]).css("color", "red");
+						if(list[obj_ref].rank_disapproval != null) { 
+							var start = list[obj_ref].rank_disapproval.indexOf(exports.read_cookie("contributor")); 
+							if(start != -1) {
+								if(start != 0) {
+									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval.substring(0, start) + 
+										list[obj_ref].rank_disapproval.substring(start + exports.read_cookie("contributor").length);
+								}
+								else {
+									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval
+										.substring(exports.read_cookie("contributor").length + 1);
+								}
+								if(list[obj_ref].rank_disapproval == "") { list[obj_ref].rank_disapproval = null; }
+							}
+						}
+					}
+					list[obj_ref].edited = 1;
+				});
+				$(".approve-contributor").on("click", function(e) {
+					e.preventDefault();
+					var holder = $(this).attr("id").split("_"),
+						obj_ref = list.findIndex(function(iter) { 
+							return iter.num == holder[1];
+						});
+					if(exports.rgba_to_hex($("#approve_" + holder[1]).css("color")) == "#ff0000") {
+						$("#approve_" + holder[1]).css("color", "green");
+						$("#disapprove_" + holder[1]).css("color", "red");
+						if(list[obj_ref].rank_approval == null) { 
+							list[obj_ref].rank_approval = exports.read_cookie("contributor"); 
+						}
+						else { list[obj_ref].rank_approval += "," + exports.read_cookie("contributor"); }
+						if(list[obj_ref].rank_disapproval != null) { 
+							var start = list[obj_ref].rank_disapproval.indexOf(exports.read_cookie("contributor")); 
+							if(start != -1) {
+								if(start != 0) {
+									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval.substring(0, start) + 
+										list[obj_ref].rank_disapproval.substring(start + exports.read_cookie("contributor").length);
+								}
+								else {
+									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval
+										.substring(exports.read_cookie("contributor").length + 1);
+								}
+								if(list[obj_ref].rank_disapproval == "") { list[obj_ref].rank_disapproval = null; }
+							}
+						}
+					}
+					else {
+						$("#approve_" + holder[1]).css("color", "red");
+						if(list[obj_ref].rank_approval != null) { 
+							var start = list[obj_ref].rank_approval.indexOf(exports.read_cookie("contributor"));
+							if(start != -1) {
+								if(start != 0) {
+									list[obj_ref].rank_approval = list[obj_ref].rank_approval.substring(0, start) + 
+										list[obj_ref].rank_approval.substring(start + exports.read_cookie("contributor").length);
+								}
+								else {
+									list[obj_ref].rank_approval = list[obj_ref].rank_approval
+										.substring(exports.read_cookie("contributor").length + 1);
+								}
+								if(list[obj_ref].rank_approval == "") { list[obj_ref].rank_approval = null; }
+							}
+						}
+					}
+					list[obj_ref].edited = 1;
+				});
+				$("#popup_submit").text("Save Changes").click(function(e) {
+					e.preventDefault();
+					$("#popup_exit").remove();
+					$("#popup_submit").addClass("modal-close");
+					// $.get("/api/cms/committee").done(function(num) {
+						// const validation = parseInt(num);
+						// var statement = "";
+						list.forEach(function(iter) {
+							// if(iter.del != null && iter.del.split(",").length >= validation) {
+							// 	$.post("/api/cms/remove/profile/" + iter.email).fail(function() {
+							// 		$("#popup_title").text("Database Issue");
+							// 		$("#popup_body").text("There was an issue deleting a contributor from the database!");
+							// 		$("#popup_submit").text("Ok").click(function(e) {
+							// 			e.preventDefault();
+							// 			$(".lean-overlay").remove();
+							// 			$("#popup").remove();
+							// 			$("#popup_control").remove();
+							// 			$(window).scrollTop(0);
+							// 		});
+							// 	});
+							// }
+							// else if(iter.approval != null && iter.approval.split(",").length >= validation) {
+							// 	$.post("/api/cms/change/status/" + iter.email + "/1").fail(function() {
+							// 		$("#popup_title").text("Database Issue");
+							// 		$("#popup_body").text("There was an issue changing the status of a contributor in the database!");
+							// 		$("#popup_submit").text("Ok").click(function(e) {
+							// 			e.preventDefault();
+							// 			$(".lean-overlay").remove();
+							// 			$("#popup").remove();
+							// 			$("#popup_control").remove();
+							// 			$(window).scrollTop(0);
+							// 		});
+							// 	});
+							// }
+							// else {
+								if(iter.edited == 1) {
+									var obj = {
+										email: iter.email,
+										rank_approval: (iter.rank_approval == null ? "0" : iter.rank_approval),
+										rank_disapproval: (iter.rank_disapproval == null ? "0" : iter.rank_disapproval)
+									};
+									$.post("/api/cms/change/contributor/rank/approval", obj).fail(function() {
+										$("#popup_title").text("Database Issue");
+										$("#popup_body").text("There was an issue uploading the contributor changes to the database!");
+										$("#popup_submit").text("Ok").click(function(e) {
+											e.preventDefault();
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											$(window).scrollTop(0);
+										});
+									});
+								}
+							// }
+						});
+						$("#popup_title").text("Changes Saved").css("text-align", "center");
+						$("#popup_body").text("All contributor changes have been saved to the database!");
+						$("#popup_submit").text("Ok").click(function(e) {
+							e.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							$(window).scrollTop(0);
+						});
+					// });
+				});
+			});
+		});
+	};
+
+
+
 
 	/*
 
@@ -233,7 +474,7 @@ define(function() {
 				inDuration: 1000,
 				outDuration: 1000
 			});
-			$("#popup_title").text("Committee").css("text-align", "center");
+			$("#popup_title").text("Committee Approval of New Users").css("text-align", "center");
 			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
 				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
 			$("#popup_submit").removeClass("modal-close");

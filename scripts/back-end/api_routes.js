@@ -1121,6 +1121,21 @@ exports.add_api_routes = (app, pool) => {
 		});
 	});
 
+	// The API method to change a contributor's rank approval
+	app.post("/api/cms/change/contributor/rank/approval", (request, response) => {
+		var email = request.body.email,
+			rank_approval = request.body.rank_approval,
+			rank_disapproval = request.body.rank_disapproval,
+			statement = "UPDATE contributors SET rank_approval=";
+		rank_approval == "0" ? statement += "NULL, rank_disapproval=" : statement += "'" + rank_approval + "', rank_disapproval=";
+		rank_disapproval == "0" ? statement += "NULL " : statement += "'" + rank_disapproval + "' ";
+		statement += "WHERE email='" + email + "'";
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else { response.send("1"); }
+		});
+	});
+
 	// The API method to change a contributor's status
 	app.post("/api/cms/change/status/:email/:value", (request, response) => {
 		var email = request.params.email,
@@ -1194,8 +1209,11 @@ exports.add_api_routes = (app, pool) => {
 			else {
 				if(result.length == 0) { response.send("0"); }
 				else { 
-					if(result[0].rank == "com-member" || result[0].rank == "admin") {
+					if(result[0].rank == "com-member") {
 						response.send("1"); 
+					}
+					else if(result[0].rank == "admin") {
+						response.send("2");
 					}
 					else { response.send("0"); }
 				}
@@ -1219,6 +1237,31 @@ exports.add_api_routes = (app, pool) => {
 							last_name: iter.last_name,
 							approval: iter.approval,
 							del: iter.del,
+						});
+					});
+					response.send(container);
+				}
+			}
+		});
+	});
+
+	// The API method to get the contributors who are not committee memberss
+	app.post("/api/cms/contributors/nonmember", (request, response) => {
+		var statement = "SELECT email,first_name,last_name,rank_approval,rank_disapproval" +
+			" FROM contributors WHERE status=1 AND rank='contributor'";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				if(result.length == 0) { response.send([]); }
+				else {
+					var container = [];
+					result.forEach(iter => {
+						container.push({
+							email: iter.email,
+							first_name: iter.first_name,
+							last_name: iter.last_name,
+							rank_approval: iter.rank_approval,
+							rank_disapproval: iter.rank_disapproval
 						});
 					});
 					response.send(container);

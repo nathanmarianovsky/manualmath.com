@@ -144,6 +144,12 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					functions.committee_modal();
 				});
 			}
+			else if(id == "ranking") {
+				$.get("/pages/dist/modal-min.html").done(function(result) {
+					$("body").append(result);
+					functions.ranking_modal();
+				});
+			}
 			else if(id == "forgot") {
 				if(functions.validate($("#login_email").val())) {
 					$.post("/api/cms/get/" + $("#login_email").val()).done(function(content) {
