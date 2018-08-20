@@ -252,7 +252,6 @@ define(function() {
 					elem.edited = 0;
 					return elem;
 				});
-				console.log(list);
 				list.forEach(function(elem) {
 					var item_tr = $("<tr>"),
 						item_fname = $("<td>").text(elem.first_name),
@@ -321,7 +320,6 @@ define(function() {
 						}
 					}
 					list[obj_ref].edited = 1;
-					console.log(list);
 				});
 				$(".approve-contributor").on("click", function(e) {
 					e.preventDefault();
@@ -354,10 +352,8 @@ define(function() {
 						}
 					}
 					list[obj_ref].edited = 1;
-					console.log(list);
 				});
 				$("#popup_submit").text("Save Changes").click(function(e) {
-					console.log(list);
 					e.preventDefault();
 					$("#popup_exit").remove();
 					$("#popup_submit").addClass("modal-close");
@@ -881,7 +877,6 @@ define(function() {
 							created: 1
 						});
 					}
-					console.log(data);
 					exports.sidenav_modal_links(type, data);
 					exports.sidenav_modal_name_check(data);
 				});
@@ -903,8 +898,6 @@ define(function() {
 							else if(type == "Sections") { id = iter.section_id; name = iter.section_name; ref = iter.tid; }
 							else if(type == "Examples") { id = iter.eid; name = iter.ename; ref = iter.section_id; }
 							if(typeof iter.del_approval != "object" && iter.del_approval.split(",").length >= validation) {
-								console.log(data);
-								console.log("/api/delete/" + type.toLowerCase().substring(0, type.length - 1) + "/" + id);
 								$.post("/api/delete/" + type.toLowerCase().substring(0, type.length - 1) + "/" + id);
 							}
 							else {
@@ -2265,29 +2258,36 @@ define(function() {
 					if(data.cms_approval == "") { data.cms_approval = null; }
 				});
 				$("#add-box").css("pointer-events", "none");
+				$("#cms-version").css("pointer-events", "none");
 				$("#live-version").click(function(e) {
 					e.preventDefault();
 					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
-						$(".latex_body").each(function(index) {
-							var arr_title = [],
-								arr_body = [];
-							$(".show_solution").each(function(index) {
-								var title = $(this).children().first().clone().children().remove().end().text();
-								$(this).children().children().each(function(index) {
-									if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
-										arr_title.push(title + "_hidden");
-									}
-									else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
-										arr_title.push(title);
-									}
+						if($(".latex_body").length != 0) {
+							$(".latex_body").each(function(index) {
+								var arr_title = [],
+									arr_body = [];
+								$(".show_solution").each(function(index) {
+									var title = $(this).children().first().clone().children().remove().end().text();
+									$(this).children().children().each(function(index) {
+										if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+											arr_title.push(title + "_hidden");
+										}
+										else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+											arr_title.push(title);
+										}
+									});
+									$(this).siblings().each(function(index) {
+										arr_body.push($(this).children()[0].innerHTML);
+									});
 								});
-								$(this).siblings().each(function(index) {
-									arr_body.push($(this).children()[0].innerHTML);
-								});
+								data.title_cms = arr_title;
+								data.content_cms = arr_body;
 							});
-							data.title_cms = arr_title;
-							data.content_cms = arr_body;
-						});
+						}
+						else {
+							data.title_cms = [""];
+							data.content_cms = [""];
+						}
 					}
 					if(exports.rgba_to_hex($("#live-version").closest("li").css("background-color")) != "#008cc3") {
 						var controller = $("#bar-div").detach();
@@ -2321,9 +2321,9 @@ define(function() {
 							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
 								.addClass("show_solution").text("NO CONTENT HERE!")));
 						}
-						$("#live-version").closest("li").css("background-color", "#008cc3");
-						$("#cms-version").closest("li").css("background-color", "");
-						$("#edit").closest("li").css("background-color", "");
+						$("#live-version").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
+						$("#cms-version").css("pointer-events", "auto").closest("li").css("background-color", "");
+						$("#edit").css("pointer-events", "auto").closest("li").css("background-color", "");
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						exports.handle_button();
 					}
@@ -2331,27 +2331,34 @@ define(function() {
 				$("#cms-version").click(function(e) {
 					e.preventDefault();
 					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
-						$(".latex_body").each(function(index) {
-							var arr_title = [],
-								arr_body = [];
-							$(".show_solution").each(function(index) {
-								var title = $(this).children().first().clone().children().remove().end().text();
-								$(this).children().children().each(function(index) {
-									if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
-										arr_title.push(title + "_hidden");
-									}
-									else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
-										arr_title.push(title);
-									}
+						if($(".latex_body").length != 0) {
+							$(".latex_body").each(function(index) {
+								var arr_title = [],
+									arr_body = [];
+								$(".show_solution").each(function(index) {
+									var title = $(this).children().first().clone().children().remove().end().text();
+									$(this).children().children().each(function(index) {
+										if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+											arr_title.push(title + "_hidden");
+										}
+										else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+											arr_title.push(title);
+										}
+									});
+									$(this).siblings().each(function(index) {
+										arr_body.push($(this).children()[0].innerHTML);
+									});
 								});
-								$(this).siblings().each(function(index) {
-									arr_body.push($(this).children()[0].innerHTML);
-								});
+								data.title_cms = arr_title;
+								data.content_cms = arr_body;
 							});
-							data.title_cms = arr_title;
-							data.content_cms = arr_body;
-						});
+						}
+						else {
+							data.title_cms = [""];
+							data.content_cms = [""];
+						}
 					}
+					console.log(data);
 					if(exports.rgba_to_hex($("#cms-version").closest("li").css("background-color")) != "#008cc3") {
 						var controller = $("#bar-div").detach();
 						$("#latex").empty().append(controller);
@@ -2384,9 +2391,9 @@ define(function() {
 							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
 								.addClass("show_solution").text("NO CONTENT HERE!")));
 						}
-						$("#cms-version").closest("li").css("background-color", "#008cc3");
-						$("#live-version").closest("li").css("background-color", "");
-						$("#edit").closest("li").css("background-color", "");
+						$("#cms-version").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
+						$("#live-version").css("pointer-events", "auto").closest("li").css("background-color", "");
+						$("#edit").css("pointer-events", "auto").closest("li").css("background-color", "");
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						exports.handle_button();
 					}
@@ -2444,9 +2451,9 @@ define(function() {
 							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
 								.addClass("show_solution").text("NO CONTENT HERE!")));
 						}
-						$("#edit").closest("li").css("background-color", "#008cc3");
-						$("#live-version").closest("li").css("background-color", "");
-						$("#cms-version").closest("li").css("background-color", "");
+						$("#edit").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
+						$("#live-version").css("pointer-events", "auto").closest("li").css("background-color", "");
+						$("#cms-version").css("pointer-events", "auto").closest("li").css("background-color", "");
 						$(".toggle").on("click", function(e) {
 							e.preventDefault();
 							e.stopPropagation();
@@ -2454,7 +2461,6 @@ define(function() {
 							var ref = data.title_cms.findIndex(function(elem) {
 								return elem.split("_hidden")[0] == item;
 							});
-							console.log(item, data);
 							if($(this).text() == "toggle_off") {
 								$(this).text("toggle_on");
 								data.title_cms[ref] = item;
@@ -2608,7 +2614,7 @@ define(function() {
 							e.preventDefault();
 							$(this).parent().parent().children().each(function(index) {
 								if($(this).attr("data-position") == "top") {
-									$("#" + $(this).attr("data-tooltip-id")).css("display", "none");
+									$("#" + $(this).attr("data-tooltip-id")).remove();
 								}
 							});
 							$(this).parent().parent().parent().remove();
@@ -2653,7 +2659,6 @@ define(function() {
 						});
 						$.get("/api/cms/contributors").done(function(num) {
 							const validation = Math.ceil(Math.log(parseInt(num)));
-							console.log(data);
 							data.title_cms = data.title_cms.map(function(elem) {
 								return elem.split("\\$").map(function(iter, index) {
 									if(index % 2 == 0) {
