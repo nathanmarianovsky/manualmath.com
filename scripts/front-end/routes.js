@@ -150,19 +150,20 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$("body").css("background", "#e0e0e0");
 					$("main").empty();
 					$("main").append($("<div>").attr("id", "latex"));
-					$.get("/pages/dist/about-min.html").done(function(content) {
-						$("#latex").append(content);
-						$.get("/pages/dist/notation-min.html").done(function(notation) {
-							$("#notation_box").append(notation);
-							MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-							functions.handle_button();
-							functions.handle_logo_link("about");
-							functions.handle_logo();
-							links.handle_links(router, subjects, topics, sections, examples);
-							functions.handle_orientation("about", navs, subjects);
-							functions.handle_desktop_title("about");
-						});
-					});
+					functions.latex("about", router, links, subjects, topics, sections, examples);
+					// $.get("/pages/dist/about-min.html").done(function(content) {
+					// 	$("#latex").append(content);
+					// 	$.get("/pages/dist/notation-min.html").done(function(notation) {
+					// 		$("#notation_box").append(notation);
+					// 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+					// 		functions.handle_button();
+					// 		functions.handle_logo_link("about");
+					// 		functions.handle_logo();
+					// 		links.handle_links(router, subjects, topics, sections, examples);
+					// 		functions.handle_orientation("about", navs, subjects);
+					// 		functions.handle_desktop_title("about");
+					// 	});
+					// });
 				});
 			});
 		});
@@ -178,19 +179,20 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$("body").css("background", "#e0e0e0");
 					$("main").empty();
 					$("main").append($("<div>").attr("id", "latex"));
-					$.get("/pages/dist/about-min.html").done(function(content) {
-						$("#latex").append(content);
-						$.get("/pages/dist/notation-min.html").done(function(notation) {
-							$("#notation_box").append(notation);
-							MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-							functions.handle_button();
-							functions.handle_logo_link("about");
-							functions.handle_logo();
-							links.handle_links(router, subjects, topics, sections, examples);
-							functions.handle_orientation("about", navs, subjects);
-							functions.handle_desktop_title("about");
-						});
-					});
+					functions.latex("about", router, links, subjects, topics, sections, examples);
+					// $.get("/pages/dist/about-min.html").done(function(content) {
+					// 	$("#latex").append(content);
+					// 	$.get("/pages/dist/notation-min.html").done(function(notation) {
+					// 		$("#notation_box").append(notation);
+					// 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+					// 		functions.handle_button();
+					// 		functions.handle_logo_link("about");
+					// 		functions.handle_logo();
+					// 		links.handle_links(router, subjects, topics, sections, examples);
+					// 		functions.handle_orientation("about", navs, subjects);
+					// 		functions.handle_desktop_title("about");
+					// 	});
+					// });
 				});
 			});
 		});

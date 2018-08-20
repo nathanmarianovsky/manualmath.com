@@ -2676,16 +2676,14 @@ define(function() {
 			else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; ref = subject.sid; }
 			else if(page == "section") { statement += "section/data/"; db_id = section.section_id; ref = topic.tid; }
 			else if(page == "example") { statement += "example/data/"; db_id = example.eid; ref = section.section_id; }
-			console.log(statement);
 			$.post(statement, {param: db_id}).done(function(data) {
-				console.log(data);
 				data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
 				data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
 				data.title_cms = data.title_cms != null ? decodeURIComponent(data.title_cms).split("-----") : [""];
 				data.content_cms = data.content_cms != null ? decodeURIComponent(data.content_cms).split("-----") : [""];
 				if(page == "about") {
 					$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
-						.append($("<h1>").text(data.heading_cms)));
+						.append($("<h1>").text(data.heading_cms).css("margin-top", "-60px")));
 				}
 				var i = 0;
 				for(; i >= 0; i++) {
@@ -2789,7 +2787,7 @@ define(function() {
 						$("#add-box").css("pointer-events", "none");
 						if(page == "about") {
 							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
-								.append($("<h1>").text(data.heading_cms)));
+								.append($("<h1>").text(data.heading_cms).css("margin-top", "-60px")));
 						}
 						var j = 0;
 						for(; j >= 0; j++) {
@@ -2863,7 +2861,7 @@ define(function() {
 						$("#add-box").css("pointer-events", "none");
 						if(page == "about") {
 							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
-								.append($("<h1>").text(data.heading_cms)));
+								.append($("<h1>").text(data.heading_cms).css("margin-top", "-60px")));
 						}
 						var j = 0;
 						for(; j >= 0; j++) {
@@ -2909,7 +2907,7 @@ define(function() {
 						$("#save").css("pointer-events", "auto");
 						if(page == "about") {
 							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
-								.append($("<h1>").text(data.heading_cms)
+								.append($("<h1>").text(data.heading_cms).css("margin-top", "-60px")
 									.attr({contentEditable: "true", id: "edit_title"})));
 						}
 						var j = 0;
@@ -3237,13 +3235,18 @@ define(function() {
 	exports.latex = function(page, router, links, subjects, topics, sections, examples, subject, topic, section, example) {
 		var statement = "/api/",
 			db_id = -1;
-		if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; }
+		if(page == "about") { statement += "cms/about/data"; }
+		else if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; }
 		else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; }
 		else if(page == "section") { statement += "section/data/"; db_id = section.section_id; }
 		else if(page == "example") { statement += "example/data/"; db_id = example.eid; }
 		$.post(statement, {"param": db_id}).done(function(data) {
 			data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
 			data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
+			if(page == "about") {
+				$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
+					.append($("<h1>").text(data.heading)));
+			}
 			var i = 0;
 			for(; i >= 0; i++) {
 				if(data.title[i] == null || data.title[i] == "") { break; }
@@ -3280,7 +3283,10 @@ define(function() {
 			exports.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
 			// functions.handle_orientation("section", navs, section, topic);
-			if(page == "subject") {
+			if(page == "about") {
+				exports.handle_desktop_title("about");
+			}
+			else if(page == "subject") {
 				exports.handle_desktop_title("subject", subject);
 			}
 			else if(page == "topic") {
