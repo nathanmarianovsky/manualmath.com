@@ -1395,9 +1395,9 @@ define(function() {
 				inDuration: 1000,
 				outDuration: 1000
 			});
-			$("#popup").keypress(function(event) {
-			    if(event.keyCode === 10 || event.keyCode === 13) {
-			        event.preventDefault();
+			$("body").on("keypress", function(event) {
+			    if(event.which === 10 || event.which === 13) {
+			        return false;
 			    }
 			});
 			if(issue == 0) {
@@ -1568,10 +1568,14 @@ define(function() {
 					$("#popup").remove();
 					$("#popup_control").remove();
 					$("#login_click").click();
+					$("body").off();
 				});
 				$("#popup_submit").click(function() {
+					$("body").off();
 					if(obj[0].status == 1) {
-						$("#popup_control").click();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
 						$.post("/api/cms/add/live/" + $("#login_email").val()).done(function(result) {
 							if(result == 1) {
 								exports.write_cookie("contributor", $("#login_email").val(), 60);
@@ -1597,6 +1601,7 @@ define(function() {
 							$("#popup").remove();
 							$("#popup_control").remove();
 							$(window).scrollTop(0);
+							$("body").off();
 						});
 					}
 				});
@@ -1627,6 +1632,7 @@ define(function() {
 						$("#popup_control").remove();
 						$("#login_click").click();
 						$(window).scrollTop(0);
+						$("body").off();
 					});
 					$("#popup_submit").click(function(e) {
 						e.preventDefault();
@@ -1659,9 +1665,16 @@ define(function() {
 										$("#popup_control").remove();
 										$("#login_click").click();
 										$(window).scrollTop(0);
+										$("body").off();
+									});
+									$("body").on("keypress", function(event) {
+									    if(event.which === 10 || event.which === 13) {
+									        return false;
+									    }
 									});
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
+										$("body").off();
 										if(exports.password_check($("#newpass").val())) {
 											statement = "/api/cms/change/password/" + $("#login_email").val() + 
 												"/" + $("#newpass").val();
@@ -1681,6 +1694,7 @@ define(function() {
 													$("#popup_control").remove();
 													$("#login_click").click();
 													$(window).scrollTop(0);
+													$("body").off();
 												});
 											});
 										}
@@ -1702,6 +1716,7 @@ define(function() {
 												$("#popup_control").remove();
 												$("#login_click").click();
 												$(window).scrollTop(0);
+												$("body").off();
 											});
 										}
 									});
@@ -1711,6 +1726,7 @@ define(function() {
 								$("#popup_title").text("Password Recovery").css("text-align", "left");
 								$("#popup_body").text("You provided the wrong answer to the security question!");
 								$("#popup_exit").remove();
+								$("body").off();
 								$("#popup_submit").text("Ok").click(function(e) {
 									e.preventDefault();
 									$(".lean-overlay").remove();
@@ -1718,6 +1734,7 @@ define(function() {
 									$("#popup_control").remove();
 									$("#login_click").click();
 									$(window).scrollTop(0);
+									$("body").off();
 								});
 							}
 						});
