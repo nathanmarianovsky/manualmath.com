@@ -2424,7 +2424,7 @@ define(function() {
 									.text(title)),
 								span = $("<span>").addClass("solution_display"),
 								span_toggle = $("<span>").addClass("solution_toggle").attr("data-position", "top")
-									.attr("data-tooltip", "Toggle the Default Display of the Box Below"),
+									.attr("data-tooltip", "Toggle the Display"),
 								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
 									.append($("<i>").addClass("material-icons add-math").text("border_color"))
 									.attr("data-position", "top")
@@ -2503,7 +2503,7 @@ define(function() {
 									.text("New Title")),
 								span = $("<span>").addClass("solution_display"),
 								span_toggle = $("<span>").addClass("solution_toggle").attr("data-position", "top")
-									.attr("data-tooltip", "Toggle the Default Display of the Box Below"),
+									.attr("data-tooltip", "Toggle the Display"),
 								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
 									.append($("<i>").addClass("material-icons add-math").text("border_color"))
 									.attr("data-position", "top")
