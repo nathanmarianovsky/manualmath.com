@@ -219,6 +219,12 @@ define(function() {
 		}).done(function() { callback(); });
 	};
 
+	/*
+
+	Purpose:
+	Handles the committee modal.
+
+	*/
 	exports.committee_modal = function() {
 		$.get("/pages/dist/committee-table-min.html").done(function(content) {
 			$(".modal-trigger").leanModal({
@@ -458,6 +464,7 @@ define(function() {
 		$(".arrow").off("click");
 		$(".del").off("click");
 		$(".approve").off("click");
+		$(".garbage").off("click");
 		$(".field").on("input", function() {
 			var id = parseInt($(this).attr("id").split("_")[2]);
 			data.forEach(function(iter) { 
@@ -549,7 +556,6 @@ define(function() {
 		});
 		$(".del").on("click", function(e) {
 			e.preventDefault();
-			console.log(data);
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
 					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
@@ -582,7 +588,6 @@ define(function() {
 				}
 			}
 			data[obj_ref].edited = 1;
-			console.log(data);
 		});
 		$(".approve").on("click", function(e) {
 			e.preventDefault();
@@ -633,7 +638,6 @@ define(function() {
 			if(data.every(function(elem) { return elem.created == 0; })) {
 				$("#garbage_head").remove();
 			}
-			console.log(data);
 		});
 	};
 
@@ -923,29 +927,15 @@ define(function() {
 									statement = "/api/add/";
 									if(type == "Subjects") {
 										statement += "subject/";
-										// statement = "/api/add/subject/" + id + "/" + iter.sname + "/" + iter.order + 
-										// 	"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
-										// 	iter.del_approval + "/undefined/undefined";
 									}
 									else if(type == "Topics") {
 										statement += "topic/";
-										// statement = "/api/add/topic/" + id + "/" + iter.sid + "/" + iter.tname + 
-										// 	"/" + iter.order + "/undefined/" + iter.side_approval + "/undefined/" + 
-										// 	iter.del_approval + "/undefined";
 									}
 									else if(type == "Sections") {
 										statement += "section/";
-										// statement = "/api/add/section/" + id + "/" + iter.tid + "/" + 
-										// 	iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
-										// 	iter.side_approval + "/undefined/" + iter.del_approval + 
-										// 	"/undefined/undefined";
 									}
 									else if(type == "Examples") {
 										statement += "example/";
-										// statement = "/api/add/example/" + id + "/" + iter.section_id + 
-										// 	"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
-										// 	iter.side_approval + "/undefined/" + iter.del_approval + 
-										// 	"/undefined/undefined";
 									}
 									$.post(statement, obj).fail(function() {
 										$("#popup_title").text("Database Issue");
@@ -974,53 +964,16 @@ define(function() {
 									statement = "/api/change/";
 									if(type == "Subjects") {
 										statement += "subject/";
-										// statement = "/api/add/subject/" + id + "/" + iter.sname + "/" + iter.order + 
-										// 	"/undefined/undefined/" + iter.side_approval + "/undefined/" + 
-										// 	iter.del_approval + "/undefined/undefined";
 									}
 									else if(type == "Topics") {
 										statement += "topic/";
-										// statement = "/api/add/topic/" + id + "/" + iter.sid + "/" + iter.tname + 
-										// 	"/" + iter.order + "/undefined/" + iter.side_approval + "/undefined/" + 
-										// 	iter.del_approval + "/undefined";
 									}
 									else if(type == "Sections") {
 										statement += "section/";
-										// statement = "/api/add/section/" + id + "/" + iter.tid + "/" + 
-										// 	iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
-										// 	iter.side_approval + "/undefined/" + iter.del_approval + 
-										// 	"/undefined/undefined";
 									}
 									else if(type == "Examples") {
 										statement += "example/";
-										// statement = "/api/add/example/" + id + "/" + iter.section_id + 
-										// 	"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
-										// 	iter.side_approval + "/undefined/" + iter.del_approval + 
-										// 	"/undefined/undefined";
 									}
-									// if(type == "Subjects") {
-									// 	statement = "/api/change/subject/" + id + "/" + iter.sname + "/" + 
-									// 		iter.order + "/undefined/undefined/" + iter.side_approval + 
-									// 		"/undefined/" + iter.del_approval + "/undefined/undefined";
-									// }
-									// else if(type == "Topics") {
-									// 	statement = "/api/change/topic/" + id + "/" + iter.sid + "/" + 
-									// 		iter.tname + "/" + iter.order + "/undefined/" + 
-									// 		iter.side_approval + "/undefined/" + iter.del_approval + 
-									// 		"/undefined";
-									// }
-									// else if(type == "Sections") {
-									// 	statement = "/api/change/section/" + id + "/" + iter.tid + "/" + 
-									// 		iter.section_name + "/" + iter.order + "/undefined/undefined/" + 
-									// 		iter.side_approval + "/undefined/" + iter.del_approval + 
-									// 		"/undefined/undefined";
-									// }
-									// else if(type == "Examples") {
-									// 	statement = "/api/change/example/" + id + "/" + iter.section_id + 
-									// 		"/" + iter.ename + "/" + iter.order + "/undefined/undefined/" + 
-									// 		iter.side_approval + "/undefined/" + iter.del_approval + 
-									// 		"/undefined/undefined";
-									// }
 									$.post(statement, obj).fail(function() {
 										$("#popup_title").text("Database Issue");
 										if(type == "Subjects") {
@@ -2201,6 +2154,38 @@ define(function() {
 	    else { return false; }
 	};
 
+	/*
+
+	Purpose:
+	Handles the loading of all content for the cms pages.
+
+	Parameters:
+		page: 
+			The name of the page currently set
+		cookie:
+			A browser cookie representing the live session of a contributor
+		router:
+			An object representing the router
+		links:
+			An object that handles all links on a page
+		subjects:
+			An array of all subjects in the database
+		topics:
+			An array of all topics in the database
+		sections:
+			An array of all sections in the database
+		examples:
+			An array of all examples in the database
+		subject: 
+			An object representing the current subject
+		topic: 
+			An object representing the current topic
+		section: 
+			An object representing the current section
+		example:
+			An object representing the current example
+
+	*/
 	exports.latex_cms = function(page, cookie, router, links, subjects, topics, sections, examples, subject, topic, section, example) {
 		$.get("/pages/dist/edit-bar-min.html").done(function(bar) {
 			$("#latex").append(bar);
@@ -2493,7 +2478,8 @@ define(function() {
 						$(".add-image-tooltipped").tooltip();
 						$("#add-box").click(function(e) {
 							e.preventDefault();
-							if($(".accordion").length == 1 && $(".accordion .show_solution").text() == "NO CONTENT HERE!") {
+							if($(".accordion").length == 1 && 
+								$(".accordion .show_solution").text() == "NO CONTENT HERE!") {
 								$(".accordion").remove();
 							}
 							var cont_div = "",
@@ -2809,117 +2795,98 @@ define(function() {
 		});
 	};
 
+	/*
+
+	Purpose:
+	Handles the loading of all content for the client pages.
+
+	Parameters:
+		page: 
+			The name of the page currently set
+		router:
+			An object representing the router
+		links:
+			An object that handles all links on a page
+		subjects:
+			An array of all subjects in the database
+		topics:
+			An array of all topics in the database
+		sections:
+			An array of all sections in the database
+		examples:
+			An array of all examples in the database
+		subject: 
+			An object representing the current subject
+		topic: 
+			An object representing the current topic
+		section: 
+			An object representing the current section
+		example:
+			An object representing the current example
+
+	*/
 	exports.latex = function(page, router, links, subjects, topics, sections, examples, subject, topic, section, example) {
-		// $.get("/pages/dist/edit-bar-min.html").done(function(bar) {
-			// $("#latex").append(bar);
-			var statement = "/api/",
-				db_id = -1;
-			if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; }
-			else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; }
-			else if(page == "section") { statement += "section/data/"; db_id = section.section_id; }
-			else if(page == "example") { statement += "example/data/"; db_id = example.eid; }
-			$.post(statement, {"param": db_id}).done(function(data) {
-				data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
-				data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
-				var i = 0;
-				for(; i >= 0; i++) {
-					if(data.title[i] == null || data.title[i] == "") { break; }
-					var cont_div = "",
-						title = data.title[i].split("_")[0],
-						accordion = $("<div>").addClass("accordion"),
-						show_solution = $("<div>").addClass("show_solution").text(title),
-						span = $("<span>").addClass("solution_display"),
-						latex_body = $("<div>").addClass("latex_body");
-					if(data.title[i].split("_hidden").length == 1) {
-						cont_div = $("<div>").addClass("cont_div");
-						span.append($("<i>").addClass("material-icons").text("remove"));
-					}
-					else {
-						cont_div = $("<div>").addClass("cont_div hidden_div");
-						span.append($("<i>").addClass("material-icons").text("add"));
-					}	
-					latex_body.append(data.content[i]);
-					cont_div.append(latex_body);
-					show_solution.append(span);
-					accordion.append(show_solution);
-					accordion.append(cont_div);
-					$("#latex").append(accordion);
+		var statement = "/api/",
+			db_id = -1;
+		if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; }
+		else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; }
+		else if(page == "section") { statement += "section/data/"; db_id = section.section_id; }
+		else if(page == "example") { statement += "example/data/"; db_id = example.eid; }
+		$.post(statement, {"param": db_id}).done(function(data) {
+			data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
+			data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
+			var i = 0;
+			for(; i >= 0; i++) {
+				if(data.title[i] == null || data.title[i] == "") { break; }
+				var cont_div = "",
+					title = data.title[i].split("_")[0],
+					accordion = $("<div>").addClass("accordion"),
+					show_solution = $("<div>").addClass("show_solution").text(title),
+					span = $("<span>").addClass("solution_display"),
+					latex_body = $("<div>").addClass("latex_body");
+				if(data.title[i].split("_hidden").length == 1) {
+					cont_div = $("<div>").addClass("cont_div");
+					span.append($("<i>").addClass("material-icons").text("remove"));
 				}
-				if(i == 0) {
-					$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-						.addClass("show_solution").text("NO CONTENT HERE!")));
-				}
-				exports.handle_breadcrumbs(page, $(".accordion").first(), subject, topic, section, example);
-				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-				exports.handle_button();
-				exports.handle_logo_link("");
-				exports.handle_logo();
-				exports.handle_li_coloring();
-				links.handle_links(router, subjects, topics, sections, examples);
-				// functions.handle_orientation("section", navs, section, topic);
-				if(page == "subject") {
-					exports.handle_desktop_title("subject", subject);
-				}
-				else if(page == "topic") {
-					exports.handle_desktop_title("topic", subject, topic);
-				}
-				else if(page == "section" || page == "example") {
-					exports.handle_desktop_title("section", subject, topic, section);
-				}
-
-
-
-				
-				// $.get("/pages/dist/button-min.html").done(function(button) {
-				// 	$("body").append(button);
-				// 	exports.committee(cookie, function() {
-				// 		exports.handle_logo_link("");
-				// 		exports.handle_logo();
-				// 		exports.handle_li_coloring();
-				// 		links.handle_links(router, subjects, topics, sections, examples);
-				// 		// functions.handle_orientation("section", navs, section, topic);
-				// 		if(page == "subject") {
-				// 			exports.handle_desktop_title("subject", subject);
-				// 		}
-				// 		else if(page == "topic") {
-				// 			exports.handle_desktop_title("topic", subject, topic);
-				// 		}
-				// 		else if(page == "section" || page == "example") {
-				// 			exports.handle_desktop_title("section", subject, topic, section);
-				// 		}
-				// 		$("#bar-nav").css("width", "100%");
-				// 		$("#bar").css("width", "82%");
-				// 		$("#live-version").parent("li").css("margin-left", "25px");
-				// 		$("#save").parent("li").css("margin-right", "25px");
-				// 		$("#cms-version").closest("li").css("background-color", "#008cc3");
-				// 		if(page == "subject") {
-				// 			$("#topics_change").click(function(e) {
-				// 				e.preventDefault();
-				// 				exports.sidenav_modal("Topics", topics, subject.sid);
-				// 			});
-				// 		}
-				// 		else if(page == "topic") {
-				// 			$("#sections_change").click(function(e) {
-				// 				e.preventDefault();
-				// 				exports.sidenav_modal("Sections", sections, topic.tid);
-				// 			});
-				// 		}
-				// 		else if(page == "section" || page == "example") {
-				// 			$("#examples_change").click(function(e) {
-				// 				e.preventDefault();
-				// 				exports.sidenav_modal("Examples", examples, section.section_id);
-				// 			});
-				// 		}
-				// 	});
-				// });
-				
-				// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
-				// 	MathJax.Hub.Queue(function() {
-				// 		functions.hide_mathjax_span();
-				// 	});
-				// }
-			});
-		// });
+				else {
+					cont_div = $("<div>").addClass("cont_div hidden_div");
+					span.append($("<i>").addClass("material-icons").text("add"));
+				}	
+				latex_body.append(data.content[i]);
+				cont_div.append(latex_body);
+				show_solution.append(span);
+				accordion.append(show_solution);
+				accordion.append(cont_div);
+				$("#latex").append(accordion);
+			}
+			if(i == 0) {
+				$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+					.addClass("show_solution").text("NO CONTENT HERE!")));
+			}
+			exports.handle_breadcrumbs(page, $(".accordion").first(), subject, topic, section, example);
+			MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+			exports.handle_button();
+			exports.handle_logo_link("");
+			exports.handle_logo();
+			exports.handle_li_coloring();
+			links.handle_links(router, subjects, topics, sections, examples);
+			// functions.handle_orientation("section", navs, section, topic);
+			if(page == "subject") {
+				exports.handle_desktop_title("subject", subject);
+			}
+			else if(page == "topic") {
+				exports.handle_desktop_title("topic", subject, topic);
+			}
+			else if(page == "section" || page == "example") {
+				exports.handle_desktop_title("section", subject, topic, section);
+			}
+			
+			// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
+			// 	MathJax.Hub.Queue(function() {
+			// 		functions.hide_mathjax_span();
+			// 	});
+			// }
+		});
 	};
 
 	return exports;
