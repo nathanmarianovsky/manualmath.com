@@ -2147,6 +2147,72 @@ define(function() {
 	    else { return false; }
 	};
 
+	exports.latex_cms_links = function(data) {
+		$(".toggle").off();
+		$(".add-image").off();
+		$(".add-math").off();
+		$(".del-box").off();
+		$("#latex .solution_display").off();
+		$(".toggle").on("click", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			var item = $(this).parents().prev().clone().children().remove().end().text();
+			var ref = data.title_cms.findIndex(function(elem) {
+				return elem.split("_hidden")[0] == item;
+			});
+			if($(this).text() == "toggle_off") {
+				$(this).text("toggle_on");
+				data.title_cms[ref] = item;
+			}
+			else if($(this).text() == "toggle_on") {
+				$(this).text("toggle_off");
+				data.title_cms[ref] += "_hidden";
+			}
+		});
+		$(".solution_toggle").tooltip();
+		$(".del-box-tooltipped").tooltip();
+		$(".add-math-tooltipped").tooltip();
+		$(".add-image-tooltipped").tooltip();
+		$(".add-math").on("click", function(e) {
+			e.preventDefault();
+			var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
+			obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
+		});
+		$(".add-image").on("click", function(e) {
+			e.preventDefault();
+			$("body").append($("<input>").css("display", "none")
+				.attr({id: "file", type: "file"}));
+			var obj = $(this).parent().parent().parent()
+				.find(".cont_div .latex_body").first();
+			$("#file").click();
+			$("#file").on("change", function() {
+				var file = $("#file")[0].files[0],
+					reader  = new FileReader();
+				reader.addEventListener("load", function () {
+			  		obj.append($("<div>").addClass("latex_equation")
+						.append($("<img>").attr("src", reader.result)));
+					$("#file").remove();
+		  		}, false);
+			  	if(file) {
+				    reader.readAsDataURL(file);
+			  	}
+			});
+		});
+		$(".del-box").on("click", function(e) {
+			e.preventDefault();
+			$(this).parent().parent().children().each(function(index) {
+				if($(this).attr("data-position") == "top") {
+					$("#" + $(this).attr("data-tooltip-id")).remove();
+				}
+			});
+			$(this).parent().parent().parent().remove();
+			if($("#latex .accordion").length == 0) {
+				$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+					.addClass("show_solution").text("NO CONTENT HERE!")));
+			}
+		});
+	};
+
 	/*
 
 	Purpose:
@@ -2454,22 +2520,6 @@ define(function() {
 						$("#edit").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
 						$("#live-version").css("pointer-events", "auto").closest("li").css("background-color", "");
 						$("#cms-version").css("pointer-events", "auto").closest("li").css("background-color", "");
-						$(".toggle").on("click", function(e) {
-							e.preventDefault();
-							e.stopPropagation();
-							var item = $(this).parents().prev().clone().children().remove().end().text();
-							var ref = data.title_cms.findIndex(function(elem) {
-								return elem.split("_hidden")[0] == item;
-							});
-							if($(this).text() == "toggle_off") {
-								$(this).text("toggle_on");
-								data.title_cms[ref] = item;
-							}
-							else if($(this).text() == "toggle_on") {
-								$(this).text("toggle_off");
-								data.title_cms[ref] += "_hidden";
-							}
-						});
 						exports.handle_button(1);
 						$(".latex_body").attr("contentEditable", "true");
 						$("div[contenteditable]").keydown(function(e) {
@@ -2482,7 +2532,8 @@ define(function() {
 						$(".del-box-tooltipped").tooltip();
 						$(".add-math-tooltipped").tooltip();
 						$(".add-image-tooltipped").tooltip();
-						$("#add-box").click(function(e) {
+						$("#add-box").off();
+						$("#add-box").on("click", function(e) {
 							e.preventDefault();
 							if($(".accordion").length == 1 && 
 								$(".accordion .show_solution").text() == "NO CONTENT HERE!") {
@@ -2519,110 +2570,11 @@ define(function() {
 							$("#latex").append(accordion);
 							data.title_cms.push("New Title");
 							data.content_cms.push("New Content");
-							$(".toggle").off();
-							$(".add-image").off();
-							$(".add-math").off();
-							$(".del-box").off();
-							$("#latex .solution_display").off();
-							$(".toggle").on("click", function(e) {
-								e.preventDefault();
-								e.stopPropagation();
-								var item = $(this).parents().prev().clone().children().remove().end().text();
-								var ref = data.title_cms.findIndex(function(elem) {
-									return elem.split("_hidden")[0] == item;
-								});
-								if($(this).text() == "toggle_off") {
-									$(this).text("toggle_on");
-									data.title_cms[ref] = item;
-								}
-								else if($(this).text() == "toggle_on") {
-									$(this).text("toggle_off");
-									data.title_cms[ref] += "_hidden";
-								}
-							});
-							exports.handle_button(1);
 							$(".latex_body").attr("contentEditable", "true");
-							$(".solution_toggle").tooltip();
-							$(".del-box-tooltipped").tooltip();
-							$(".add-math-tooltipped").tooltip();
-							$(".add-image-tooltipped").tooltip();
-							$(".add-math").on("click", function(e) {
-								e.preventDefault();
-								var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
-								obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
-							});
-							$(".add-image").on("click", function(e) {
-								e.preventDefault();
-								$("body").append($("<input>").css("display", "none")
-									.attr({id: "file", type: "file"}));
-								var obj = $(this).parent().parent().parent()
-									.find(".cont_div .latex_body").first();
-								$("#file").click();
-								$("#file").on("change", function() {
-									var file = $("#file")[0].files[0],
-										reader  = new FileReader();
-									reader.addEventListener("load", function () {
-								  		obj.append($("<div>").addClass("latex_equation")
-											.append($("<img>").attr("src", reader.result)));
-										$("#file").remove();
-							  		}, false);
-								  	if(file) {
-									    reader.readAsDataURL(file);
-								  	}
-								});
-							});
-							$(".del-box").on("click", function(e) {
-								e.preventDefault();
-								$(this).parent().parent().children().each(function(index) {
-									if($(this).attr("data-position") == "top") {
-										$("#" + $(this).attr("data-tooltip-id")).remove();
-									}
-								});
-								$(this).parent().parent().parent().remove();
-								if($("#latex .accordion").length == 0) {
-									$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-										.addClass("show_solution").text("NO CONTENT HERE!")));
-								}
-							});
+							exports.handle_button(1);
+							exports.latex_cms_links(data);
 						});
-						$(".add-math").on("click", function(e) {
-							e.preventDefault();
-							var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
-							obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
-						});
-						$(".add-image").on("click", function(e) {
-							e.preventDefault();
-							$("body").append($("<input>").css("display", "none")
-								.attr({id: "file", type: "file"}));
-							var obj = $(this).parent().parent().parent()
-								.find(".cont_div .latex_body").first();
-							$("#file").click();
-							$("#file").on("change", function() {
-								var file = $("#file")[0].files[0],
-									reader  = new FileReader();
-								reader.addEventListener("load", function () {
-									obj.append($("<div>").addClass("latex_equation")
-										.append($("<img>").attr("src", reader.result)));
-									$("#file").remove();
-							  	}, false);
-							  	if(file) {
-								  	reader.readAsDataURL(file);
-							  	}
-							});
-						});
-						$(".del-box").on("click", function(e) {
-							e.preventDefault();
-							$(this).parent().parent().children().each(function(index) {
-								if($(this).attr("data-position") == "top") {
-									$("#" + $(this).attr("data-tooltip-id")).remove();
-								}
-							});
-							$(this).parent().parent().parent().remove();
-							if($("#latex .accordion").length == 0) {
-								$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-									.addClass("show_solution").text("NO CONTENT HERE!")));
-							}
-						});
+						exports.latex_cms_links(data);
 					}
 				});
 				$("#save").click(function(e) {
