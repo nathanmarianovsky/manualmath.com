@@ -70,36 +70,37 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							$("body").css("background", "#e0e0e0");
 							$("main").empty();
 							$("main").append($("<div>").attr("id", "latex"));
-							$.get("/pages/dist/edit-bar-min.html").done(function(bar) {
-								$("#latex").append(bar);
-								$.get("/pages/dist/about-min.html").done(function(about) {
-									$("#latex").append(about);
-									$.get("/pages/dist/notation-min.html").done(function(notation) {
-										$("#notation_box").append(notation);
-										$.get("/pages/dist/button-min.html").done(function(button) {
-											$("body").append(button);
-											functions.committee(cookie, function() {
-												MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-												functions.handle_button();
-												functions.handle_logo_link("about");
-												functions.handle_logo();
-												links.handle_links(router, subjects, topics, sections, examples);
-												functions.handle_orientation("about", navs, subjects);
-												functions.handle_desktop_title("about");
-												$("#bar-nav").css("width", "100%");
-												$("#bar").css("width", "82%");
-												$("#live-version").parent("li").css("margin-left", "25px");
-												$("#save").parent("li").css("margin-right", "25px");
-												$("#main_message").css("margin-top", "100px");
-												$("#subjects_change").click(function(e) {
-													e.preventDefault();
-													functions.sidenav_modal("Subjects", subjects);
-												});
-											});
-										});
-									});
-								});
-							});
+							functions.latex_cms("about", cookie, router, links, subjects, topics, sections, examples);
+							// $.get("/pages/dist/edit-bar-min.html").done(function(bar) {
+							// 	$("#latex").append(bar);
+							// 	$.get("/pages/dist/about-min.html").done(function(about) {
+							// 		$("#latex").append(about);
+							// 		$.get("/pages/dist/notation-min.html").done(function(notation) {
+							// 			$("#notation_box").append(notation);
+							// 			$.get("/pages/dist/button-min.html").done(function(button) {
+							// 				$("body").append(button);
+							// 				functions.committee(cookie, function() {
+							// 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+							// 					functions.handle_button();
+							// 					functions.handle_logo_link("about");
+							// 					functions.handle_logo();
+							// 					links.handle_links(router, subjects, topics, sections, examples);
+							// 					functions.handle_orientation("about", navs, subjects);
+							// 					functions.handle_desktop_title("about");
+							// 					$("#bar-nav").css("width", "100%");
+							// 					$("#bar").css("width", "82%");
+							// 					$("#live-version").parent("li").css("margin-left", "25px");
+							// 					$("#save").parent("li").css("margin-right", "25px");
+							// 					$("#main_message").css("margin-top", "100px");
+							// 					$("#subjects_change").click(function(e) {
+							// 						e.preventDefault();
+							// 						functions.sidenav_modal("Subjects", subjects);
+							// 					});
+							// 				});
+							// 			});
+							// 		});
+							// 	});
+							// });
 						});
 					});
 				}

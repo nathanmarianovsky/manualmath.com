@@ -1221,6 +1221,30 @@ exports.add_api_routes = (app, pool) => {
 		});
 	});
 
+	// The API method to add a contributor to the committee
+	app.post("/api/cms/committee/add", (request, response) => {
+		var email = request.body.email,
+			statement = "UPDATE contributors SET rank='com-member' WHERE email='" + email + "'";
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				response.send("1");
+			}
+		});
+	});
+
+	// The API method to remove a contributor from the committee
+	app.post("/api/cms/committee/remove", (request, response) => {
+		var email = request.body.email,
+			statement = "UPDATE contributors SET rank='contributor' WHERE email='" + email + "'";
+		pool.query(statement, err => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				response.send("1");
+			}
+		});
+	});
+
 	// The API method to get the unapproved contributors
 	app.post("/api/cms/contributors/unapproved", (request, response) => {
 		var statement = "SELECT email,first_name,last_name,approval,del FROM contributors WHERE status=0";
@@ -1245,7 +1269,7 @@ exports.add_api_routes = (app, pool) => {
 		});
 	});
 
-	// The API method to get the contributors who are not committee memberss
+	// The API method to get all contributors not on the committee
 	app.post("/api/cms/contributors/nonmember", (request, response) => {
 		var statement = "SELECT email,first_name,last_name,rank_approval,rank_disapproval" +
 			" FROM contributors WHERE status=1 AND rank='contributor'";
@@ -1270,13 +1294,93 @@ exports.add_api_routes = (app, pool) => {
 		});
 	});
 
+	// The API method to get all contributors except the administrator
+	app.post("/api/cms/contributors/data", (request, response) => {
+		var statement = "SELECT email,first_name,last_name,rank,rank_approval,rank_disapproval" +
+			" FROM contributors WHERE status=1 AND rank!='admin'";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				if(result.length == 0) { response.send([]); }
+				else {
+					var container = [];
+					result.forEach(iter => {
+						container.push({
+							email: iter.email,
+							first_name: iter.first_name,
+							last_name: iter.last_name,
+							rank: iter.rank,
+							rank_approval: iter.rank_approval,
+							rank_disapproval: iter.rank_disapproval
+						});
+					});
+					response.send(container);
+				}
+			}
+		});
+	});
+
 	// The API method to remove a contributor
-	app.post("/api/cms/remove/profile/:email", (request, response) => {
-		var email = request.params.email,
+	app.post("/api/cms/remove/profile", (request, response) => {
+		var email = request.body.email,
 			statement = "DELETE FROM contributors WHERE email='" + email + "'";
 		pool.query(statement, (err, result) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 			else { response.send("1"); }
+		});
+	});
+
+	// The API method to change the content of the landing page
+	app.post("/api/cms/about/change", (request, response) => {
+		var heading = request.body.heading,
+			title = request.body.title,
+			content = request.body.content,
+			heading_cms = request.body.heading_cms,
+			title_cms = request.body.title_cms,
+			content_cms = request.body.content_cms,
+			cms_approval = request.body.cms_approval,
+			statement = "UPDATE about SET ";
+		if(heading !== "undefined") {
+			if(statement[statement.length - 1] != " ") { statement += ","; }
+			heading != "0" ? statement += "heading='" + heading + "'" 
+				: statement += "heading=NULL";
+		}
+		if(title !== "undefined") {
+			if(statement[statement.length - 1] != " ") { statement += ","; }
+			title != "0" ? statement += "title='" + title + "'" 
+				: statement += "title=NULL";
+		}
+		if(content !== "undefined") {
+			if(statement[statement.length - 1] != " ") { statement += ","; }
+			content != "0" ? statement += "content='" + content + "'" 
+				: statement += "content=NULL";
+		}
+		if(cms_approval !== "undefined") {
+			if(statement[statement.length - 1] != " ") { statement += ","; }
+			cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
+				: statement += "cms_approval=NULL";
+		}
+		if(heading_cms !== "undefined") {
+			if(statement[statement.length - 1] != " ") { statement += ","; }
+			heading_cms != "0" ? statement += "heading_cms='" + heading_cms + "'" 
+				: statement += "heading_cms=NULL";
+		}
+		if(title_cms !== "undefined") {
+			if(statement[statement.length - 1] != " ") { statement += ","; }
+			title_cms != "0" ? statement += "title_cms='" + title_cms + "'" 
+				: statement += "title_cms=NULL";
+		}
+		if(content_cms !== "undefined") {
+			if(statement[statement.length - 1] != " ") { statement += ","; }
+			content_cms != "0" ? statement += "content_cms='" + content_cms + "'" 
+				: statement += "content_cms=NULL";
+		}
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				if(result.length == 0) { response.send("0"); }
+				else { response.send("1"); }
+			}
 		});
 	});
 
@@ -1299,6 +1403,33 @@ exports.add_api_routes = (app, pool) => {
 			});
 		}
 		else { response.send("The given parameter is not one of the accepted choices!"); }
+	});
+
+	// The API method to get the content of the landing page
+	app.post("/api/cms/about/data", (request, response) => {
+		var statement = "SELECT * FROM about";
+		pool.query(statement, (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				if(result.length == 0) { response.send("0"); }
+				else {
+					var heading_str = result[0].heading != null ? result[0].heading : "",
+						heading_str_cms = result[0].heading_cms != null ? result[0].heading_cms : "",
+						title_str = result[0].title != null ? result[0].title : "",
+						title_str_cms = result[0].title_cms != null ? result[0].title_cms : "",
+						content_str = result[0].content != null ? new Buffer(result[0].content, "binary").toString() : "",
+						content_str_cms = result[0].content_cms != null ? new Buffer(result[0].content_cms, "binary").toString() : ""; 
+					response.send({
+						heading: heading_str,
+						title: title_str,
+						content: content_str,
+						heading_cms: heading_str_cms,
+						title_cms: title_str_cms,
+						content_cms: content_str_cms
+					});
+				}
+			}
+		});
 	});
 };
 

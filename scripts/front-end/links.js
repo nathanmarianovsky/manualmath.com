@@ -123,6 +123,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				Materialize.updateTextFields();
 			}
 			else if(id == "logout") {
+				$("#drop_up").click();
 				var cookie = functions.read_cookie("contributor");
 				$.post("/api/cms/remove/live/" + cookie).done(function(result) {
 					if(result == 1) {
@@ -132,6 +133,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				});
 			}
 			else if(id == "profile") {
+				$("#drop_up").click();
 				var cookie = functions.read_cookie("contributor");
 				$.get("/pages/dist/modal-min.html").done(function(result) {
 					$("body").append(result);
@@ -139,15 +141,24 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				});
 			}
 			else if(id == "committee") {
+				$("#drop_up").click();
 				$.get("/pages/dist/modal-min.html").done(function(result) {
 					$("body").append(result);
 					functions.committee_modal();
 				});
 			}
 			else if(id == "ranking") {
+				$("#drop_up").click();
 				$.get("/pages/dist/modal-min.html").done(function(result) {
 					$("body").append(result);
 					functions.ranking_modal();
+				});
+			}
+			else if(id == "decision") {
+				$("#drop_up").click();
+				$.get("/pages/dist/modal-min.html").done(function(result) {
+					$("body").append(result);
+					functions.decision_modal();
 				});
 			}
 			else if(id == "forgot") {

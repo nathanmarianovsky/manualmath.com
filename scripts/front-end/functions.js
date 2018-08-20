@@ -231,7 +231,203 @@ define(function() {
 
 
 
+	/*
 
+	Purpose:
+	Handles the decision modal for the administrator.
+
+	*/
+	exports.decision_modal = function() {
+		$.get("/pages/dist/committee-table-min.html").done(function(content) {
+			$(".modal-trigger").leanModal({
+				dismissible: false,
+				opacity: 2,
+				inDuration: 1000,
+				outDuration: 1000
+			});
+			$("#popup_title").text("Administrator Privileges").css("text-align", "center");
+			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
+				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			$("#popup_submit").removeClass("modal-close");
+			var statement = "As the administrator of manualmath you have the power to increase a" +
+				" contributor's current role by adding the user to the committee. At the same time" +
+				" you may also decrease a contributor's current role by deleting their account from" +
+				" the database. Using the table below you can approve and delete contributors who have" +
+				" a green light indicator."
+			$("#popup_body").text(statement).append(content);
+			$.post("/api/cms/contributors/data").done(function(contributors) {
+				var list = contributors.map(function(elem, index) {
+					elem.num = index;
+					elem.rank_up = 0;
+					elem.rank_down = 0;
+					elem.deleted = 0;
+					return elem;
+				});
+				$("#committee_table_head").find("tr th:nth-last-child(2)").text("Member Up Votes");
+				$("#committee_table_head").find("tr th").last().text("Member Down Votes");
+				$("#committee_table_head").find("tr")
+					.append($("<th>").text("Rank Down"), $("<th>").text("Rank Up"), $("<th>").text("Delete"));
+				list.forEach(function(elem) {
+					var first = elem.rank_approval != null ? elem.rank_approval.split(",").length : "0",
+						second = elem.rank_disapproval != null ? elem.rank_disapproval.split(",").length : "0";
+					if(elem.rank == "com-member") { first = "N/A"; second = "N/A"; }
+					var item_tr = $("<tr>"),
+						item_fname = $("<td>").text(elem.first_name),
+						item_lname = $("<td>").text(elem.last_name),
+						item_email = $("<td>").text(elem.email).css("text-align", "center"),
+						item_approval = $("<td>").text(first).css("text-align", "center"),
+						item_disapproval = $("<td>").text(second).css("text-align", "center"),
+						item_rank_down = $("<td>").css("text-align", "center").append($("<a>")
+								.css("cursor", "pointer").attr("id", "rank_down_" + elem.num)
+								.addClass("rank-down-contributor center").css("color", "red")
+								.append($("<i>").addClass("material-icons").text("thumb_down"))),
+						item_rank_up = $("<td>").css("text-align", "center").append($("<a>")
+								.css("cursor", "pointer").attr("id", "rank_up_" + elem.num)
+								.addClass("rank-up-contributor center").css("color", "red")
+								.append($("<i>").addClass("material-icons").text("thumb_up"))),
+						item_rank_delete = $("<td>").css("text-align", "center").append($("<a>")
+								.css("cursor", "pointer").attr("id", "delete_" + elem.num)
+								.addClass("delete-contributor center").css("color", "red")
+								.append($("<i>").addClass("material-icons").text("cancel")));
+					item_tr.append(item_fname, item_lname, item_email, item_approval, item_disapproval, 
+						item_rank_down, item_rank_up, item_rank_delete);
+					$("#committee_table_body").append(item_tr);
+					// if(elem.rank_approval != null && 
+					// 	elem.rank_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+					// 	$("#approve_" + elem.num).css("color", "green");
+					// }
+					// else {
+					// 	$("#approve_" + elem.num).css("color", "red");
+					// }
+					// if(elem.rank_disapproval != null && 
+					// 	elem.rank_disapproval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+					// 	$("#disapprove_" + elem.num).css("color", "green");
+					// }
+					// else {
+					// 	$("#disapprove_" + elem.num).css("color", "red");
+					// }
+				});
+				$("#popup_control").click();
+				$("#popup_exit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
+				$(".delete-contributor").on("click", function(e) {
+					e.preventDefault();
+					var holder = $(this).attr("id").split("_"),
+						obj_ref = list.findIndex(function(iter) { 
+							return iter.num == holder[1];
+						});
+					if(exports.rgba_to_hex($("#delete_" + holder[1]).css("color")) == "#ff0000") {
+						$("#delete_" + holder[1]).css("color", "green");
+						list[obj_ref].deleted = 1;
+					}
+					else {
+						$("#delete_" + holder[1]).css("color", "red");
+						list[obj_ref].deleted = 0;
+					}
+				});
+				$(".rank-up-contributor").on("click", function(e) {
+					e.preventDefault();
+					var holder = $(this).attr("id").split("_"),
+						obj_ref = list.findIndex(function(iter) { 
+							return iter.num == holder[2];
+						});
+					if(exports.rgba_to_hex($("#rank_up_" + holder[2]).css("color")) == "#ff0000") {
+						$("#rank_up_" + holder[2]).css("color", "green");
+						$("#rank_down_" + holder[2]).css("color", "red");
+						list[obj_ref].rank_up = 1;
+					}
+					else {
+						$("#rank_up_" + holder[2]).css("color", "red");
+						list[obj_ref].rank_up = 0;
+					}
+				});
+				$(".rank-down-contributor").on("click", function(e) {
+					e.preventDefault();
+					var holder = $(this).attr("id").split("_"),
+						obj_ref = list.findIndex(function(iter) { 
+							return iter.num == holder[2];
+						});
+					if(exports.rgba_to_hex($("#rank_down_" + holder[2]).css("color")) == "#ff0000") {
+						$("#rank_down_" + holder[2]).css("color", "green");
+						$("#rank_up_" + holder[2]).css("color", "red");
+						list[obj_ref].rank_down = 1;
+					}
+					else {
+						$("#rank_down_" + holder[2]).css("color", "red");
+						list[obj_ref].rank_down = 0;
+					}
+				});
+				$("#popup_submit").text("Save Changes").click(function(e) {
+					e.preventDefault();
+					$("#popup_exit").remove();
+					$("#popup_submit").addClass("modal-close");
+					list.forEach(function(iter) {
+						if(iter.deleted == 1) {
+							$.post("/api/cms/remove/profile/", {email: iter.email}).fail(function() {
+								$("#popup_title").text("Database Issue");
+								$("#popup_body").text("There was an issue deleting contributor(s) from the database!");
+								$("#popup_submit").text("Ok").click(function(e) {
+									e.preventDefault();
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									$(window).scrollTop(0);
+								});
+							});
+						}
+						else if(iter.deleted == 0 && iter.rank_up == 1) {
+							$.post("/api/cms/committee/add", {email: iter.email}).fail(function() {
+								$("#popup_title").text("Database Issue");
+								$("#popup_body").text("There was an issue ranking up contributo(r) in the database!");
+								$("#popup_submit").text("Ok").click(function(e) {
+									e.preventDefault();
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									$(window).scrollTop(0);
+								});
+							});
+						}
+						else if(iter.deleted == 0 && iter.rank_down == 1) {
+							$.post("/api/cms/committee/remove", {email: iter.email}).fail(function() {
+								$("#popup_title").text("Database Issue");
+								$("#popup_body").text("There was an issue ranking down contributo(r) in the database!");
+								$("#popup_submit").text("Ok").click(function(e) {
+									e.preventDefault();
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									$(window).scrollTop(0);
+								});
+							});
+						}
+					});
+					$("#popup_title").text("Changes Saved").css("text-align", "center");
+					$("#popup_body").text("All contributor changes have been saved to the database!");
+					$("#popup_submit").text("Ok").click(function(e) {
+						e.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						$(window).scrollTop(0);
+					});
+				});
+			});
+		});
+	};
+
+
+
+	/*
+
+	Purpose:
+	Handles the ranking modal for committee members excluding the administrator.
+
+	*/
 	exports.ranking_modal = function() {
 		$.get("/pages/dist/committee-table-min.html").done(function(content) {
 			$(".modal-trigger").leanModal({
@@ -255,6 +451,7 @@ define(function() {
 					elem.edited = 0;
 					return elem;
 				});
+				$("#committee_table_head").find("tr th").last().text("Disapprove");
 				list.forEach(function(elem) {
 					var item_tr = $("<tr>"),
 						item_fname = $("<td>").text(elem.first_name),
@@ -263,13 +460,12 @@ define(function() {
 						item_approve = $("<td>").css("text-align", "center").append($("<a>")
 								.css("cursor", "pointer").attr("id", "approve_" + elem.num)
 								.addClass("approve-contributor center").append($("<i>")
-									.addClass("material-icons").text("check_circle"))),
+									.addClass("material-icons").text("thumb_up"))),
 						item_disapprove = $("<td>").css("text-align", "center").append($("<a>")
 								.css("cursor", "pointer").attr("id", "disapprove_" + elem.num)
 								.addClass("disapprove-contributor center").append($("<i>")
-									.addClass("material-icons").text("cancel")));
+									.addClass("material-icons").text("thumb_down")));
 					item_tr.append(item_fname, item_lname, item_email, item_approve, item_disapprove);
-					$("#committee_table_head").find("tr th").last().text("Disapprove");
 					$("#committee_table_body").append(item_tr);
 					if(elem.rank_approval != null && 
 						elem.rank_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
@@ -391,74 +587,39 @@ define(function() {
 					e.preventDefault();
 					$("#popup_exit").remove();
 					$("#popup_submit").addClass("modal-close");
-					// $.get("/api/cms/committee").done(function(num) {
-						// const validation = parseInt(num);
-						// var statement = "";
-						list.forEach(function(iter) {
-							// if(iter.del != null && iter.del.split(",").length >= validation) {
-							// 	$.post("/api/cms/remove/profile/" + iter.email).fail(function() {
-							// 		$("#popup_title").text("Database Issue");
-							// 		$("#popup_body").text("There was an issue deleting a contributor from the database!");
-							// 		$("#popup_submit").text("Ok").click(function(e) {
-							// 			e.preventDefault();
-							// 			$(".lean-overlay").remove();
-							// 			$("#popup").remove();
-							// 			$("#popup_control").remove();
-							// 			$(window).scrollTop(0);
-							// 		});
-							// 	});
-							// }
-							// else if(iter.approval != null && iter.approval.split(",").length >= validation) {
-							// 	$.post("/api/cms/change/status/" + iter.email + "/1").fail(function() {
-							// 		$("#popup_title").text("Database Issue");
-							// 		$("#popup_body").text("There was an issue changing the status of a contributor in the database!");
-							// 		$("#popup_submit").text("Ok").click(function(e) {
-							// 			e.preventDefault();
-							// 			$(".lean-overlay").remove();
-							// 			$("#popup").remove();
-							// 			$("#popup_control").remove();
-							// 			$(window).scrollTop(0);
-							// 		});
-							// 	});
-							// }
-							// else {
-								if(iter.edited == 1) {
-									var obj = {
-										email: iter.email,
-										rank_approval: (iter.rank_approval == null ? "0" : iter.rank_approval),
-										rank_disapproval: (iter.rank_disapproval == null ? "0" : iter.rank_disapproval)
-									};
-									$.post("/api/cms/change/contributor/rank/approval", obj).fail(function() {
-										$("#popup_title").text("Database Issue");
-										$("#popup_body").text("There was an issue uploading the contributor changes to the database!");
-										$("#popup_submit").text("Ok").click(function(e) {
-											e.preventDefault();
-											$(".lean-overlay").remove();
-											$("#popup").remove();
-											$("#popup_control").remove();
-											$(window).scrollTop(0);
-										});
-									});
-								}
-							// }
-						});
-						$("#popup_title").text("Changes Saved").css("text-align", "center");
-						$("#popup_body").text("All contributor changes have been saved to the database!");
-						$("#popup_submit").text("Ok").click(function(e) {
-							e.preventDefault();
-							$(".lean-overlay").remove();
-							$("#popup").remove();
-							$("#popup_control").remove();
-							$(window).scrollTop(0);
-						});
-					// });
+					list.forEach(function(iter) {
+						if(iter.edited == 1) {
+							var obj = {
+								email: iter.email,
+								rank_approval: (iter.rank_approval == null ? "0" : iter.rank_approval),
+								rank_disapproval: (iter.rank_disapproval == null ? "0" : iter.rank_disapproval)
+							};
+							$.post("/api/cms/change/contributor/rank/approval", obj).fail(function() {
+								$("#popup_title").text("Database Issue");
+								$("#popup_body").text("There was an issue uploading the contributor changes to the database!");
+								$("#popup_submit").text("Ok").click(function(e) {
+									e.preventDefault();
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									$(window).scrollTop(0);
+								});
+							});
+						}
+					});
+					$("#popup_title").text("Changes Saved").css("text-align", "center");
+					$("#popup_body").text("All contributor changes have been saved to the database!");
+					$("#popup_submit").text("Ok").click(function(e) {
+						e.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						$(window).scrollTop(0);
+					});
 				});
 			});
 		});
 	};
-
-
-
 
 	/*
 
@@ -603,7 +764,7 @@ define(function() {
 						var statement = "";
 						list.forEach(function(iter) {
 							if(iter.del != null && iter.del.split(",").length >= validation) {
-								$.post("/api/cms/remove/profile/" + iter.email).fail(function() {
+								$.post("/api/cms/remove/profile/", {email: iter.email}).fail(function() {
 									$("#popup_title").text("Database Issue");
 									$("#popup_body").text("There was an issue deleting a contributor from the database!");
 									$("#popup_submit").text("Ok").click(function(e) {
@@ -2232,15 +2393,16 @@ define(function() {
 	*/
 	exports.handle_button = function(cms) {
 		if(cms == 1) {
-			$("#latex .solution_display").on("click", function(defaultevent) {
+			$("#latex .solution_display i").off();
+			$("#latex .solution_display i").on("click", function(defaultevent) {
 				defaultevent.preventDefault();
-				$(this).find("i").text() == "add" ? $(this).parent().parent().find(".cont_div").fadeIn(300) 
-					: $(this).parent().parent().find(".cont_div").fadeOut(300);
-				$(this).find("i").text() == "add" ? $(this).find("i").text("remove") 
-					: $(this).find("i").text("add");
+				$(this).text() == "add" ? $(this).parent().parent().next(".cont_div").fadeIn(300) 
+					: $(this).parent().parent().next(".cont_div").fadeOut(300);
+				$(this).text() == "add" ? $(this).text("remove") : $(this).text("add");
 			});
 		}
 		else {
+			$("#latex .show_solution").off();
 			$("#latex .show_solution").on("click", function(defaultevent) {
 				defaultevent.preventDefault();
 				$(this).find(".solution_display i").text() == "add" ? $(this).parent().find(".cont_div").fadeIn(300) 
@@ -2509,15 +2671,22 @@ define(function() {
 			var statement = "/api/",
 				db_id = -1,
 				ref = -1;
-			if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; ref = "undefined"; }
+			if(page == "about") { statement += "cms/about/data"; }
+			else if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; ref = "undefined"; }
 			else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; ref = subject.sid; }
 			else if(page == "section") { statement += "section/data/"; db_id = section.section_id; ref = topic.tid; }
 			else if(page == "example") { statement += "example/data/"; db_id = example.eid; ref = section.section_id; }
-			$.post(statement, {"param": db_id}).done(function(data) {
+			console.log(statement);
+			$.post(statement, {param: db_id}).done(function(data) {
+				console.log(data);
 				data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
 				data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
 				data.title_cms = data.title_cms != null ? decodeURIComponent(data.title_cms).split("-----") : [""];
 				data.content_cms = data.content_cms != null ? decodeURIComponent(data.content_cms).split("-----") : [""];
+				if(page == "about") {
+					$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
+						.append($("<h1>").text(data.heading_cms)));
+				}
 				var i = 0;
 				for(; i >= 0; i++) {
 					if(data.title_cms[i] == null || data.title_cms[i] == "") { break; }
@@ -2586,6 +2755,7 @@ define(function() {
 				$("#live-version").click(function(e) {
 					e.preventDefault();
 					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
+						if(page == "about") { data.heading_cms = $("#edit_title").text(); }
 						if($(".latex_body").length != 0) {
 							$(".latex_body").each(function(index) {
 								var arr_title = [],
@@ -2617,6 +2787,10 @@ define(function() {
 						var controller = $("#bar-div").detach();
 						$("#latex").empty().append(controller);
 						$("#add-box").css("pointer-events", "none");
+						if(page == "about") {
+							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
+								.append($("<h1>").text(data.heading_cms)));
+						}
 						var j = 0;
 						for(; j >= 0; j++) {
 							if(data.title[j] == null || data.title[j] == "") { break; }
@@ -2655,6 +2829,7 @@ define(function() {
 				$("#cms-version").click(function(e) {
 					e.preventDefault();
 					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
+						if(page == "about") { data.heading_cms = $("#edit_title").text(); }
 						if($(".latex_body").length != 0) {
 							$(".latex_body").each(function(index) {
 								var arr_title = [],
@@ -2682,11 +2857,14 @@ define(function() {
 							data.content_cms = [""];
 						}
 					}
-					console.log(data);
 					if(exports.rgba_to_hex($("#cms-version").closest("li").css("background-color")) != "#008cc3") {
 						var controller = $("#bar-div").detach();
 						$("#latex").empty().append(controller);
 						$("#add-box").css("pointer-events", "none");
+						if(page == "about") {
+							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
+								.append($("<h1>").text(data.heading_cms)));
+						}
 						var j = 0;
 						for(; j >= 0; j++) {
 							if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
@@ -2729,6 +2907,11 @@ define(function() {
 						$("#latex").empty().append(controller);
 						$("#add-box").css("pointer-events", "auto");
 						$("#save").css("pointer-events", "auto");
+						if(page == "about") {
+							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
+								.append($("<h1>").text(data.heading_cms)
+									.attr({contentEditable: "true", id: "edit_title"})));
+						}
 						var j = 0;
 						for(; j >= 0; j++) {
 							if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
@@ -2778,18 +2961,18 @@ define(function() {
 						$("#edit").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
 						$("#live-version").css("pointer-events", "auto").closest("li").css("background-color", "");
 						$("#cms-version").css("pointer-events", "auto").closest("li").css("background-color", "");
-						exports.handle_button(1);
 						$(".latex_body").attr("contentEditable", "true");
 						$("div[contenteditable]").keydown(function(e) {
-						    if (e.keyCode === 13) {
-						      document.execCommand("insertHTML", false, "<br><br>");
-						      return false;
+						    if(e.keyCode === 13) {
+						    	document.execCommand("insertHTML", false, "<br><br>");
+						    	return false;
 						    }
 						});
 						$(".solution_toggle").tooltip();
 						$(".del-box-tooltipped").tooltip();
 						$(".add-math-tooltipped").tooltip();
 						$(".add-image-tooltipped").tooltip();
+						exports.handle_button(1);
 						$("#add-box").off();
 						$("#add-box").on("click", function(e) {
 							e.preventDefault();
@@ -2891,8 +3074,9 @@ define(function() {
 							});
 							if(data.cms_approval != null && data.cms_approval != "" 
 								&& data.cms_approval.split(",").length >= validation) {
-								data.title = exports.copy(data.title_cms);
-								data.content = exports.copy(data.content_cms);
+								data.title = data.title_cms;
+								data.content = data.content_cms;
+								data.heading = data.heading_cms;
 								data.cms_approval = 0;
 							}
 							else {
@@ -2935,6 +3119,13 @@ define(function() {
 							else if(page == "topic") { statement += "topic/"; }
 							else if(page == "section") { statement += "section/"; }
 							else if(page == "example") { statement += "example/"; }
+							else if(page == "about") {
+								statement = "/api/cms/about/change/";
+								obj.heading = data.heading;
+								obj.heading_cms = data.heading_cms;
+							}
+							console.log(statement);
+							console.log(obj);
 							$.post(statement, obj).fail(function() {
 								$("#popup_title").text("Database Issue");
 								$("#popup_body").text("There was an issue uploading the content changes to the database!");
@@ -2966,7 +3157,10 @@ define(function() {
 						exports.handle_li_coloring();
 						links.handle_links(router, subjects, topics, sections, examples);
 						// functions.handle_orientation("section", navs, section, topic);
-						if(page == "subject") {
+						if(page == "about") {
+							exports.handle_desktop_title("about");
+						}
+						else if(page == "subject") {
 							exports.handle_desktop_title("subject", subject);
 						}
 						else if(page == "topic") {
