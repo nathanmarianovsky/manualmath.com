@@ -3172,7 +3172,13 @@ define(function() {
 						$("#live-version").parent("li").css("margin-left", "25px");
 						$("#save").parent("li").css("margin-right", "25px");
 						$("#cms-version").closest("li").css("background-color", "#008cc3");
-						if(page == "subject") {
+						if(page == "about") {
+							$("#subjects_change").click(function(e) {
+								e.preventDefault();
+								exports.sidenav_modal("Subjects", subjects);
+							});
+						}
+						else if(page == "subject") {
 							$("#topics_change").click(function(e) {
 								e.preventDefault();
 								exports.sidenav_modal("Topics", topics, subject.sid);
