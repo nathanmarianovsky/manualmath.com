@@ -1643,7 +1643,8 @@ define(function() {
 												"/" + lname + "/" + question + "/" + answer;
 											$.post(statement).done(function(result) {
 											 	if(result == "1") {
-													$.post("/api/cms/change/password/" + email + "/" + new_password).done(function(result) {
+													$.post("/api/cms/change/password/", {email: email, password: new_password})
+														.done(function(result) {
 													 	if(result == "1") {
 															$("#popup_title").text("Confirmation");
 															$("#popup_submit").remove();

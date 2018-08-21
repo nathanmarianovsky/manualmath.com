@@ -28,9 +28,11 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					$.post("/api/cms/check/" + $("#login_email").val()).done(function(result) {
 						if(result.length == 1) {
 							if(functions.password_check($("#login_password").val())) {
-								statement = "/api/cms/check/" + $("#login_email").val() + 
-									"/" + $("#login_password").val();
-								$.post(statement).done(function(obj) {
+								// statement = "/api/cms/check/" + $("#login_email").val() + 
+								// 	"/" + $("#login_password").val();
+								$.post("/api/cms/check/login", 
+									{email: $("#login_email").val(), passwd: encodeURIComponent($("#login_password").val())})
+									.done(function(obj) {
 									if(typeof(obj[0]) == "object") {
 										functions.modal(13, router, obj);
 									}
@@ -62,14 +64,18 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 										!/[^a-zA-Z]/.test($("#last_name").val())) {
 										if($("#answer").val().trim().length > 0) {
 											var first = $("#first_name").val()[0].toUpperCase() + 
-												$("#first_name").val().slice(1).toLowerCase(),
+													$("#first_name").val().slice(1).toLowerCase(),
 												last =  $("#last_name").val()[0].toUpperCase() + 
-													$("#last_name").val().slice(1).toLowerCase(),
-												call = "/api/cms/add/" + first + "/" + last + "/" + 
-													$("#email").val() + "/" + $("#password").val() + 
-													"/" + $("#question")[0].options.selectedIndex + 
-													"/" + $("#answer").val();
-											$.post(call).done(function() {
+													$("#last_name").val().slice(1).toLowerCase();
+											var obj = {
+												fname: first,
+												lname: last,
+												email: $("#email").val(),
+												passwd: encodeURIComponent($("#password").val()),
+												question: $("#question")[0].options.selectedIndex,
+												answer: $("#answer").val()
+											};
+											$.post("/api/cms/contributor/add", obj).done(function() {
 												$.post("/api/cms/get/admin").done(function(obj) {
 													functions.modal(12, router, obj);
 												});

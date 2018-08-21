@@ -973,13 +973,13 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to add a new contributor
-	app.post("/api/cms/add/:fname/:lname/:email/:passwd/:question/:answer", (request, response) => {
-		var fname = request.params.fname,
-			lname = request.params.lname,
-			email = request.params.email,
-			passwd = request.params.passwd,
-			question = request.params.question,
-			answer = request.params.answer,
+	app.post("/api/cms/contributor/add", (request, response) => {
+		var fname = request.body.fname,
+			lname = request.body.lname,
+			email = request.body.email,
+			passwd = request.body.passwd,
+			question = request.body.question,
+			answer = request.body.answer,
 			statement = "INSERT INTO contributors (email,first_name,last_name,password,status,question,answer,rank) VALUES ('" 
 				+ email + "','" + fname + "','" + lname + "','" + bcrypt.hashSync(passwd, 10) + "'," + 0 + "," + question 
 				+ ",'" + bcrypt.hashSync(answer, 10) + "','contributor')";
@@ -990,9 +990,9 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to check login credentials
-	app.post("/api/cms/check/:email/:passwd", (request, response) => {
-		var email = request.params.email,
-			passwd = request.params.passwd,
+	app.post("/api/cms/check/login", (request, response) => {
+		var email = request.body.email,
+			passwd = request.body.passwd,
 			statement = "SELECT status,password FROM contributors WHERE email='" + email + "'";
 		pool.query(statement, (err, result) => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
@@ -1065,9 +1065,9 @@ exports.add_api_routes = (app, pool) => {
 	});
 
 	// The API method to change a contributor's password
-	app.post("/api/cms/change/password/:email/:password", (request, response) => {
-		var email = request.params.email,
-			password = request.params.password,
+	app.post("/api/cms/change/password", (request, response) => {
+		var email = request.body.email,
+			password = request.body.password,
 			statement = "UPDATE contributors SET password='" + bcrypt.hashSync(password, 10) + "' WHERE email='" + email + "'";
 		pool.query(statement, err => {
 			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
