@@ -1,32 +1,32 @@
 define(function() {
 	var exports = {};
 
-	exports.scale_down = function(dataUrl, newWidth, imageType, imageArguments) {
-	    "use strict";
-	    var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
+	// exports.scale_down = function(dataUrl, newWidth, imageType, imageArguments) {
+	//     "use strict";
+	//     var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
 
-	    // Provide default values
-	    imageType = imageType || "image/jpeg";
-	    imageArguments = imageArguments || 0.7;
+	//     // Provide default values
+	//     imageType = imageType || "image/jpeg";
+	//     imageArguments = imageArguments || 0.7;
 
-	    // Create a temporary image so that we can compute the height of the downscaled image.
-	    image = new Image();
-	    image.src = dataUrl;
-	    oldWidth = image.width;
-	    oldHeight = image.height;
-	    newHeight = Math.floor(oldHeight / oldWidth * newWidth)
+	//     // Create a temporary image so that we can compute the height of the downscaled image.
+	//     image = new Image();
+	//     image.src = dataUrl;
+	//     oldWidth = image.width;
+	//     oldHeight = image.height;
+	//     newHeight = Math.floor(oldHeight / oldWidth * newWidth)
 
-	    // Create a temporary canvas to draw the downscaled image on.
-	    canvas = document.createElement("canvas");
-	    canvas.width = newWidth;
-	    canvas.height = newHeight;
+	//     // Create a temporary canvas to draw the downscaled image on.
+	//     canvas = document.createElement("canvas");
+	//     canvas.width = newWidth;
+	//     canvas.height = newHeight;
 
-	    // Draw the downscaled image on the canvas and return the new data URL.
-	    ctx = canvas.getContext("2d");
-	    ctx.drawImage(image, 0, 0, newWidth, newHeight);
-	    newDataUrl = canvas.toDataURL(imageType, imageArguments);
-	    return newDataUrl;
-	};
+	//     // Draw the downscaled image on the canvas and return the new data URL.
+	//     ctx = canvas.getContext("2d");
+	//     ctx.drawImage(image, 0, 0, newWidth, newHeight);
+	//     newDataUrl = canvas.toDataURL(imageType, imageArguments);
+	//     return newDataUrl;
+	// };
 
 	/*
 
@@ -2024,7 +2024,6 @@ define(function() {
 						
 						$("#login_input input").each(function() { $(this).val(""); });
 						Materialize.updateTextFields();
-						$("body").css("overflow", "inherit").css("width", "auto");
 						$("#popup_submit").click(function(e) {
 							e.preventDefault();
 							$(".lean-overlay").remove();
@@ -2034,6 +2033,7 @@ define(function() {
 							$("body").off();
 						});
 					}
+					$("body").css({overflow: "inherit", width: "auto"});
 				});
 			}
 			else if(issue == 14) {
@@ -2645,111 +2645,104 @@ define(function() {
 
 
 
-					// returns a function that calculates lanczos weight
-					// function lanczosCreate(lobes) {
-					//     return function(x) {
-					//         if (x > lobes)
-					//             return 0;
-					//         x *= Math.PI;
-					//         if (Math.abs(x) < 1e-16)
-					//             return 1;
-					//         var xx = x / lobes;
-					//         return Math.sin(x) * Math.sin(xx) / x / xx;
-					//     };
-					// }
+					/**
+					 * Hermite resize - fast image resize/resample using Hermite filter. 1 cpu version!
+					 * 
+					 * @param {HtmlElement} canvas
+					 * @param {int} width
+					 * @param {int} height
+					 * @param {boolean} resize_canvas if true, canvas will be resized. Optional.
+					 */
+					function resample_single(canvas, width, height, resize_canvas) {
+					    var width_source = canvas.width;
+					    var height_source = canvas.height;
+					    width = Math.round(width);
+					    height = Math.round(height);
 
-					// // elem: canvas element, img: image element, sx: scaled width, lobes: kernel radius
-					// function thumbnailer(elem, img, sx, lobes) {
-					//     this.canvas = elem;
-					//     elem.width = img.width;
-					//     elem.height = img.height;
-					//     elem.style.display = "none";
-					//     this.ctx = elem.getContext("2d");
-					//     this.ctx.drawImage(img, 0, 0);
-					//     this.img = img;
-					//     this.src = this.ctx.getImageData(0, 0, img.width, img.height);
-					//     this.dest = {
-					//         width : sx,
-					//         height : Math.round(img.height * sx / img.width),
-					//     };
-					//     this.dest.data = new Array(this.dest.width * this.dest.height * 3);
-					//     this.lanczos = lanczosCreate(lobes);
-					//     this.ratio = img.width / sx;
-					//     this.rcp_ratio = 2 / this.ratio;
-					//     this.range2 = Math.ceil(this.ratio * lobes / 2);
-					//     this.cacheLanc = {};
-					//     this.center = {};
-					//     this.icenter = {};
-					//     setTimeout(this.process1, 0, this, 0);
-					// }
+					    var ratio_w = width_source / width;
+					    var ratio_h = height_source / height;
+					    var ratio_w_half = Math.ceil(ratio_w / 2);
+					    var ratio_h_half = Math.ceil(ratio_h / 2);
 
-					// thumbnailer.prototype.process1 = function(self, u) {
-					//     self.center.x = (u + 0.5) * self.ratio;
-					//     self.icenter.x = Math.floor(self.center.x);
-					//     for (var v = 0; v < self.dest.height; v++) {
-					//         self.center.y = (v + 0.5) * self.ratio;
-					//         self.icenter.y = Math.floor(self.center.y);
-					//         var a, r, g, b;
-					//         a = r = g = b = 0;
-					//         for (var i = self.icenter.x - self.range2; i <= self.icenter.x + self.range2; i++) {
-					//             if (i < 0 || i >= self.src.width)
-					//                 continue;
-					//             var f_x = Math.floor(1000 * Math.abs(i - self.center.x));
-					//             if (!self.cacheLanc[f_x])
-					//                 self.cacheLanc[f_x] = {};
-					//             for (var j = self.icenter.y - self.range2; j <= self.icenter.y + self.range2; j++) {
-					//                 if (j < 0 || j >= self.src.height)
-					//                     continue;
-					//                 var f_y = Math.floor(1000 * Math.abs(j - self.center.y));
-					//                 if (self.cacheLanc[f_x][f_y] == undefined)
-					//                     self.cacheLanc[f_x][f_y] = self.lanczos(Math.sqrt(Math.pow(f_x * self.rcp_ratio, 2)
-					//                             + Math.pow(f_y * self.rcp_ratio, 2)) / 1000);
-					//                 weight = self.cacheLanc[f_x][f_y];
-					//                 if (weight > 0) {
-					//                     var idx = (j * self.src.width + i) * 4;
-					//                     a += weight;
-					//                     r += weight * self.src.data[idx];
-					//                     g += weight * self.src.data[idx + 1];
-					//                     b += weight * self.src.data[idx + 2];
-					//                 }
-					//             }
-					//         }
-					//         var idx = (v * self.dest.width + u) * 3;
-					//         self.dest.data[idx] = r / a;
-					//         self.dest.data[idx + 1] = g / a;
-					//         self.dest.data[idx + 2] = b / a;
-					//     }
+					    var ctx = canvas.getContext("2d");
+					    var img = ctx.getImageData(0, 0, width_source, height_source);
+					    var img2 = ctx.createImageData(width, height);
+					    var data = img.data;
+					    var data2 = img2.data;
 
-					//     if (++u < self.dest.width)
-					//         setTimeout(self.process1, 0, self, u);
-					//     else
-					//         setTimeout(self.process2, 0, self);
-					// };
-					// thumbnailer.prototype.process2 = function(self) {
-					//     self.canvas.width = self.dest.width;
-					//     self.canvas.height = self.dest.height;
-					//     self.ctx.drawImage(self.img, 0, 0, self.dest.width, self.dest.height);
-					//     self.src = self.ctx.getImageData(0, 0, self.dest.width, self.dest.height);
-					//     var idx, idx2;
-					//     for (var i = 0; i < self.dest.width; i++) {
-					//         for (var j = 0; j < self.dest.height; j++) {
-					//             idx = (j * self.dest.width + i) * 3;
-					//             idx2 = (j * self.dest.width + i) * 4;
-					//             self.src.data[idx2] = self.dest.data[idx];
-					//             self.src.data[idx2 + 1] = self.dest.data[idx + 1];
-					//             self.src.data[idx2 + 2] = self.dest.data[idx + 2];
-					//         }
-					//     }
-					//     self.ctx.putImageData(self.src, 0, 0);
-					//     self.canvas.style.display = "block";
-					// };
+					    for (var j = 0; j < height; j++) {
+					        for (var i = 0; i < width; i++) {
+					            var x2 = (i + j * width) * 4;
+					            var weight = 0;
+					            var weights = 0;
+					            var weights_alpha = 0;
+					            var gx_r = 0;
+					            var gx_g = 0;
+					            var gx_b = 0;
+					            var gx_a = 0;
+					            var center_y = (j + 0.5) * ratio_h;
+					            var yy_start = Math.floor(j * ratio_h);
+					            var yy_stop = Math.ceil((j + 1) * ratio_h);
+					            for (var yy = yy_start; yy < yy_stop; yy++) {
+					                var dy = Math.abs(center_y - (yy + 0.5)) / ratio_h_half;
+					                var center_x = (i + 0.5) * ratio_w;
+					                var w0 = dy * dy; //pre-calc part of w
+					                var xx_start = Math.floor(i * ratio_w);
+					                var xx_stop = Math.ceil((i + 1) * ratio_w);
+					                for (var xx = xx_start; xx < xx_stop; xx++) {
+					                    var dx = Math.abs(center_x - (xx + 0.5)) / ratio_w_half;
+					                    var w = Math.sqrt(w0 + dx * dx);
+					                    if (w >= 1) {
+					                        //pixel too far
+					                        continue;
+					                    }
+					                    //hermite filter
+					                    weight = 2 * w * w * w - 3 * w * w + 1;
+					                    var pos_x = 4 * (xx + yy * width_source);
+					                    //alpha
+					                    gx_a += weight * data[pos_x + 3];
+					                    weights_alpha += weight;
+					                    //colors
+					                    if (data[pos_x + 3] < 255)
+					                        weight = weight * data[pos_x + 3] / 250;
+					                    gx_r += weight * data[pos_x];
+					                    gx_g += weight * data[pos_x + 1];
+					                    gx_b += weight * data[pos_x + 2];
+					                    weights += weight;
+					                }
+					            }
+					            data2[x2] = gx_r / weights;
+					            data2[x2 + 1] = gx_g / weights;
+					            data2[x2 + 2] = gx_b / weights;
+					            data2[x2 + 3] = gx_a / weights_alpha;
+					        }
+					    }
+					    //clear and resize canvas
+					    if (resize_canvas === true) {
+					        canvas.width = width;
+					        canvas.height = height;
+					    } else {
+					        ctx.clearRect(0, 0, width_source, height_source);
+					    }
 
-					// var canvas = document.createElement("canvas");
-    				// new thumbnailer(canvas, reader.result, 188, 3); //this produces lanczos3
+					    //draw
+					    ctx.putImageData(img2, 0, 0);
+					}
+
+					// var canvas = $("<canvas>").append($("<img>").attr("src", reader.result));
+					var img = new Image();
+					var canvas = document.createElement("canvas");
+					var ctx = canvas.getContext("2d");
+					img.src = reader.result;
+					ctx.clearRect(0, 0, 1000, 1000);
+					img.onload = function() {
+						ctx.drawImage(img, 0, 0);
+	    				// resample_single(canvas, 650, 650, 1);
+					}
 
 
 			  		obj.append($("<div>").addClass("latex_equation")
-						.append($("<img>").attr("src", reader.result)));
+						.append(canvas));
 						// .append($("<img>").attr("src", canvas.toDataURL())));
 			  		// console.log(reader.result);
 			  		// console.log(exports.scale_down(reader.result.substring(23), 500, "image/jpeg", "base64"));
@@ -3343,6 +3336,9 @@ define(function() {
 								exports.sidenav_modal("Examples", examples, section.section_id);
 							});
 						}
+						document.height = Math.max( document.body.scrollHeight, document.body.offsetHeight, 
+		          			document.documentElement.clientHeight, document.documentElement.scrollHeight, 
+		          			document.documentElement.offsetHeight );
 					});
 				});
 				
