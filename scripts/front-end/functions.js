@@ -1,32 +1,33 @@
 define(function() {
 	var exports = {};
 
-	// exports.scale_down = function(dataUrl, newWidth, imageType, imageArguments) {
-	//     "use strict";
-	//     var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
+	/*
 
-	//     // Provide default values
-	//     imageType = imageType || "image/jpeg";
-	//     imageArguments = imageArguments || 0.7;
+	Purpose:
+	Rescales a given data url.
 
-	//     // Create a temporary image so that we can compute the height of the downscaled image.
-	//     image = new Image();
-	//     image.src = dataUrl;
-	//     oldWidth = image.width;
-	//     oldHeight = image.height;
-	//     newHeight = Math.floor(oldHeight / oldWidth * newWidth)
+	Parameters:
+		url: 
+			The data url representing the image
+		width:
+			The desired width of the image
+		height:
+			The desired height of the image
+		callback:
+			A callback function
 
-	//     // Create a temporary canvas to draw the downscaled image on.
-	//     canvas = document.createElement("canvas");
-	//     canvas.width = newWidth;
-	//     canvas.height = newHeight;
-
-	//     // Draw the downscaled image on the canvas and return the new data URL.
-	//     ctx = canvas.getContext("2d");
-	//     ctx.drawImage(image, 0, 0, newWidth, newHeight);
-	//     newDataUrl = canvas.toDataURL(imageType, imageArguments);
-	//     return newDataUrl;
-	// };
+	*/
+	exports.resize_image = function(url, width, height, callback) {
+	    var sourceImage = new Image();
+	    sourceImage.onload = function() {
+	        var canvas = document.createElement("canvas");
+	        canvas.width = width;
+	        canvas.height = height;
+	        canvas.getContext("2d").drawImage(sourceImage, 0, 0, width, height);
+	        callback(canvas.toDataURL());
+	    }
+	    sourceImage.src = url;
+	};
 
 	/*
 
@@ -319,20 +320,6 @@ define(function() {
 					item_tr.append(item_fname, item_lname, item_email, item_approval, item_disapproval, 
 						item_rank_down, item_rank_up, item_rank_delete);
 					$("#committee_table_body").append(item_tr);
-					// if(elem.rank_approval != null && 
-					// 	elem.rank_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
-					// 	$("#approve_" + elem.num).css("color", "green");
-					// }
-					// else {
-					// 	$("#approve_" + elem.num).css("color", "red");
-					// }
-					// if(elem.rank_disapproval != null && 
-					// 	elem.rank_disapproval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
-					// 	$("#disapprove_" + elem.num).css("color", "green");
-					// }
-					// else {
-					// 	$("#disapprove_" + elem.num).css("color", "red");
-					// }
 				});
 				$("#popup_control").click();
 				$("#popup_exit").click(function(e) {
@@ -2641,36 +2628,10 @@ define(function() {
 				var file = $("#file")[0].files[0],
 					reader  = new FileReader();
 				reader.addEventListener("load", function () {
-					// var ref = reader.result.indexOf("data:image/jpeg;base64")
-
-
-
-					function resizeImage(url, width, height, callback) {
-					    var sourceImage = new Image();
-
-					    sourceImage.onload = function() {
-					        // Create a canvas with the desired dimensions
-					        var canvas = document.createElement("canvas");
-					        canvas.width = width;
-					        canvas.height = height;
-
-					        // Scale and draw the source image to the canvas
-					        canvas.getContext("2d").drawImage(sourceImage, 0, 0, width, height);
-
-					        // Convert the canvas to a data URL in PNG format
-					        callback(canvas.toDataURL());
-					    }
-
-					    sourceImage.src = url;
-					}
-
-					resizeImage(reader.result, 500, 500, function(compressed_data) {
+					resizeImage(reader.result, 400, 400, function(scaled_data) {
 				  		obj.append($("<div>").addClass("latex_equation")
-							.append($("<img>").attr("src", compressed_data)));
+							.append($("<img>").attr("src", scaled_data)));
 					});
-						// .append(canvas));
-			  		// console.log(reader.result);
-			  		// console.log(exports.scale_down(reader.result.substring(23), 500, "image/jpeg", "base64"));
 					$("#file").remove();
 		  		}, false);
 			  	if(file) {
