@@ -262,7 +262,7 @@ define(["dist/functions-min"], function(functions) {
 					}
 				}
 			}
-		}).done(function() { callback(); });
+		}).done(function() { functions.handle_side_nav(); callback(); });
 	};
 
 	return exports;

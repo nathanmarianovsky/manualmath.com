@@ -20,9 +20,43 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 
 	*/
 	exports.add_listeners = function(router, subjects, topics, sections, examples) {
+		router.addRouteListener("login", function(toState, fromState) {
+			functions.resize_modal(function() {
+				if(functions.width_func() > 992) {
+					$(window).off();
+				}
+				else { functions.resize_modal(); }
+				var cookie = functions.read_cookie("contributor");
+				$("title").text("Content Management System: Login");
+				if(cookie == "") {
+					$.get("/pages/dist/login-min.html").done(function(content) {
+						$(document.body).empty().append(content).css("background", "#1163A9");
+						$("select").material_select();
+						links.handle_links(router, subjects, topics, sections, examples);
+						$.post("/api/cms/get/admin").done(function(obj) {
+							$("#admin_name").text("Name: " + obj.first_name + " " + obj.last_name);
+							$("#admin_email").text("Email: " + obj.email);
+						});
+					});
+				}
+				else {
+					$.post("/api/cms/live/check/" + cookie).done(function(result) {
+						if(result == "") {
+							$.post("/api/cms/add/live/" + cookie).done(function(result) {
+								if(result == 1) {
+									functions.write_cookie("contributor", cookie, 60);
+								}
+								else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
+							});
+						}
+						functions.session_modal(router, "cms", 2);
+					});
+				}
+			});
+		});
+
 		router.addRouteListener("cms", function(toState, fromState) {
 			functions.resize_modal(function() {
-				$("title").text("Content Management System");
 				$(window).on("resize", function() {
 					if(functions.read_cookie("contributor") == "" && functions.width_func() >= 992) {
 						functions.session_modal(router, "login", 0);
@@ -62,81 +96,13 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					});
 					$.get("/pages/dist/main-min.html").done(function(content) {
 						$(document.body).empty().append(content);
-						$("#logo").attr("id", "logo_cms");
-						if(functions.width_func() < 992) {
+						if(functions.is_mobile()) {
 							$(".button-collapse").sideNav("hide");
 						}
+						$("#logo").attr("id", "logo_cms");
 						navs.driver("about", 1, subjects, undefined, function() {
-							$("body").css("background", "#e0e0e0");
-							$("main").empty();
-							$("main").append($("<div>").attr("id", "latex"));
 							functions.latex_cms("about", cookie, router, links, subjects, topics, sections, examples);
-							// $.get("/pages/dist/edit-bar-min.html").done(function(bar) {
-							// 	$("#latex").append(bar);
-							// 	$.get("/pages/dist/about-min.html").done(function(about) {
-							// 		$("#latex").append(about);
-							// 		$.get("/pages/dist/notation-min.html").done(function(notation) {
-							// 			$("#notation_box").append(notation);
-							// 			$.get("/pages/dist/button-min.html").done(function(button) {
-							// 				$("body").append(button);
-							// 				functions.committee(cookie, function() {
-							// 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-							// 					functions.handle_button();
-							// 					functions.handle_logo_link("about");
-							// 					functions.handle_logo();
-							// 					links.handle_links(router, subjects, topics, sections, examples);
-							// 					functions.handle_orientation("about", navs, subjects);
-							// 					functions.handle_desktop_title("about");
-							// 					$("#bar-nav").css("width", "100%");
-							// 					$("#bar").css("width", "82%");
-							// 					$("#live-version").parent("li").css("margin-left", "25px");
-							// 					$("#save").parent("li").css("margin-right", "25px");
-							// 					$("#main_message").css("margin-top", "100px");
-							// 					$("#subjects_change").click(function(e) {
-							// 						e.preventDefault();
-							// 						functions.sidenav_modal("Subjects", subjects);
-							// 					});
-							// 				});
-							// 			});
-							// 		});
-							// 	});
-							// });
 						});
-					});
-				}
-			});
-		});
-
-		router.addRouteListener("login", function(toState, fromState) {
-			functions.resize_modal(function() {
-				if(functions.width_func() > 992) {
-					$(window).off();
-				}
-				else { functions.resize_modal(); }
-				var cookie = functions.read_cookie("contributor");
-				$("title").text("Content Management System: Login");
-				if(cookie == "") {
-					$.get("/pages/dist/login-min.html").done(function(content) {
-						$(document.body).empty().append(content).css("background", "#1163A9");
-						$("select").material_select();
-						links.handle_links(router, subjects, topics, sections, examples);
-						$.post("/api/cms/get/admin").done(function(obj) {
-							$("#admin_name").text("Name: " + obj.first_name + " " + obj.last_name);
-							$("#admin_email").text("Email: " + obj.email);
-						});
-					});
-				}
-				else {
-					$.post("/api/cms/live/check/" + cookie).done(function(result) {
-						if(result == "") {
-							$.post("/api/cms/add/live/" + cookie).done(function(result) {
-								if(result == 1) {
-									functions.write_cookie("contributor", cookie, 60);
-								}
-								else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
-							});
-						}
-						functions.session_modal(router, "cms", 2);
 					});
 				}
 			});
@@ -146,24 +112,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
 				navs.driver("about", 0, subjects, undefined, function() {
-					$("title").text("About");
-					$("body").css("background", "#e0e0e0");
-					$("main").empty();
-					$("main").append($("<div>").attr("id", "latex"));
 					functions.latex("about", router, links, subjects, topics, sections, examples);
-					// $.get("/pages/dist/about-min.html").done(function(content) {
-					// 	$("#latex").append(content);
-					// 	$.get("/pages/dist/notation-min.html").done(function(notation) {
-					// 		$("#notation_box").append(notation);
-					// 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-					// 		functions.handle_button();
-					// 		functions.handle_logo_link("about");
-					// 		functions.handle_logo();
-					// 		links.handle_links(router, subjects, topics, sections, examples);
-					// 		functions.handle_orientation("about", navs, subjects);
-					// 		functions.handle_desktop_title("about");
-					// 	});
-					// });
 				});
 			});
 		});
@@ -171,35 +120,14 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		router.addRouteListener("about", function(toState, fromState) {
 			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
-				if(functions.width_func() < 992) {
-					$(".button-collapse").sideNav("hide");
-				}
 				navs.driver("about", 0, subjects, undefined, function() {
-					$("title").text("About");
-					$("body").css("background", "#e0e0e0");
-					$("main").empty();
-					$("main").append($("<div>").attr("id", "latex"));
 					functions.latex("about", router, links, subjects, topics, sections, examples);
-					// $.get("/pages/dist/about-min.html").done(function(content) {
-					// 	$("#latex").append(content);
-					// 	$.get("/pages/dist/notation-min.html").done(function(notation) {
-					// 		$("#notation_box").append(notation);
-					// 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
-					// 		functions.handle_button();
-					// 		functions.handle_logo_link("about");
-					// 		functions.handle_logo();
-					// 		links.handle_links(router, subjects, topics, sections, examples);
-					// 		functions.handle_orientation("about", navs, subjects);
-					// 		functions.handle_desktop_title("about");
-					// 	});
-					// });
 				});
 			});
 		});
 
 		router.addRouteListener("subjectEdit", function(toState, fromState) {
 			functions.resize_modal(function() {
-				$("title").text("Content Management System");
 				if(functions.read_cookie("contributor") == "") {
 					functions.session_modal(router, "login", 0);
 				}
@@ -242,10 +170,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							return iter.sname == toState.params.sname;
 						})[0];
 						navs.driver("subject", 1, subject, undefined, function() {
-							$("main").empty();
-							$("title").text(subject.clean_name);
-							$("body").css("background", "#e0e0e0");
-							$("main").append($("<div>").attr("id", "latex"));
 							functions.latex_cms("subject", cookie, router, links, subjects, topics, sections, examples, subject);
 						});
 					});
@@ -256,17 +180,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		router.addRouteListener("subject", function(toState, fromState) {
 			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
-				if(functions.is_mobile()) {
-					$(".button-collapse").sideNav("hide");
-				}
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0];
 				navs.driver("subject", 0, subject, undefined, function() {
-					$("main").empty();
-					$("title").text(subject.clean_name);
-					$("body").css("background", "#e0e0e0");
-					$("main").append($("<div>").attr("id", "latex"));
 					functions.latex("subject", router, links, subjects, topics, sections, examples, subject);
 				});
 			});
@@ -274,7 +191,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 
 		router.addRouteListener("subjectEdit.topicEdit", function(toState, fromState) {
 			functions.resize_modal(function() {
-				$("title").text("Content Management System");
 				if(functions.read_cookie("contributor") == "") {
 					functions.session_modal(router, "login", 0);
 				}
@@ -320,10 +236,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							return iter.tname == toState.params.tname;
 						})[0];
 						navs.driver("topic", 1, topic, subject, function() {
-							$("main").empty();
-							$("title").text(subject.clean_name + " - " + topic.clean_name);
-							$("body").css("background", "#e0e0e0");
-							$("main").append($("<div>").attr("id", "latex"));
 							functions.latex_cms("topic", cookie, router, links, subjects, topics, sections, examples, subject, topic);
 						});
 					});
@@ -334,9 +246,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		router.addRouteListener("subject.topic", function(toState, fromState) {
 			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
-				if(functions.is_mobile()) {
-					$(".button-collapse").sideNav("hide");
-				}
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0],
@@ -344,10 +253,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					return iter.tname == toState.params.tname;
 				})[0];
 				navs.driver("topic", 0, topic, subject, function() {
-					$("main").empty();
-					$("title").text(subject.clean_name + " - " + topic.clean_name);
-					$("body").css("background", "#e0e0e0");
-					$("main").append($("<div>").attr("id", "latex"));
 					functions.latex("topic", router, links, subjects, topics, sections, examples, subject, topic);
 				});
 			});
@@ -355,7 +260,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 
 		router.addRouteListener("subjectEdit.topicEdit.sectionEdit.current_pageEdit", function(toState, fromState) {
 			functions.resize_modal(function() {
-				$("title").text("Content Management System");
 				if(functions.read_cookie("contributor") == "") {
 					functions.session_modal(router, "login", 0);
 				}
@@ -391,7 +295,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					$.get("/pages/dist/main-min.html").done(function(content) {
 						$(document.body).empty().append(content);
 						$("#logo").attr("id", "logo_cms");
-						if(functions.width_func() < 992) {
+						if(functions.is_mobile()) {
 							$(".button-collapse").sideNav("hide");
 						}
 						var subject = subjects.filter(function(iter) {
@@ -403,12 +307,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 							section = topic.sections.filter(function(iter) {
 								return iter.section_name == toState.params.section_name;
 							})[0];
-						$("main").empty();
 						navs.driver("section", 1, section, topic, function() {
 							$("#nav-mobile").find("li").removeClass("active");
-							$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
-							$("body").css("background", "#e0e0e0");
-							$("main").append($("<div>").attr("id", "latex"));
 							if(section.section_name == toState.params.current_page_name) {
 								$("#section_name" + section.section_id + "_cms").addClass("active");
 								functions.latex_cms("section", cookie, router, links, subjects, 
@@ -431,9 +331,6 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		router.addRouteListener("subject.topic.section.current_page", function(toState, fromState) {
 			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
-				if(functions.width_func() < 992) {
-					$(".button-collapse").sideNav("hide");
-				}
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0],
@@ -443,14 +340,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					section = topic.sections.filter(function(iter) {
 					return iter.section_name == toState.params.section_name;
 				})[0];
-				$("main").empty();
 				navs.driver("section", 0, section, topic, function() {
 					$("#nav-mobile").find("li").removeClass("active");
-					$("title").text(subject.clean_name + " - " + topic.clean_name + " - " + section.clean_name);
-					$("body").css("background", "#e0e0e0");
-					$("main").append($("<div>").attr("id", "latex"));
 					if(section.section_name == toState.params.current_page_name) {
-						$("#section_name" + section.section_id + "_cms").addClass("active");
+						$("#section_name" + section.section_id).addClass("active");
 						functions.latex("section", router, links, subjects, topics, 
 							sections, examples, subject, topic, section);
 					}
@@ -458,7 +351,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						var example = section.examples.filter(function(iter) {
 							return iter.ename == toState.params.current_page_name;
 						})[0];
-						$("#examples_li" + example.eid + "_cms").addClass("active");
+						$("#examples_li" + example.eid).addClass("active");
 						functions.latex("example", router, links, subjects, topics, 
 							sections, examples, subject, topic, section, example);
 					}

@@ -2350,7 +2350,8 @@ define(function() {
 	*/
 	exports.handle_side_nav = function() {
 		var width = 0,
-			screen_width = exports.width_func();
+			screen_width = exports.width_func(),
+			mobile = exports.is_mobile();
 		if(screen_width >= 992) { width = 350; }
 		else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
 		else { width = screen_width * .72; }
@@ -2358,7 +2359,7 @@ define(function() {
 			"menuWidth": width,
 			"closeOnClick": true
 		});
-		if(screen_width < 992) { $(".button-collapse").sideNav("hide"); }
+		if(screen_width < 992 || mobile) { $(".button-collapse").sideNav("hide"); }
 	};
 
 	/*
@@ -2628,7 +2629,7 @@ define(function() {
 				var file = $("#file")[0].files[0],
 					reader  = new FileReader();
 				reader.addEventListener("load", function () {
-					resizeImage(reader.result, 400, 400, function(scaled_data) {
+					exports.resize_image(reader.result, 400, 400, function(scaled_data) {
 				  		obj.append($("<div>").addClass("latex_equation")
 							.append($("<img>").attr("src", scaled_data)));
 					});
@@ -2687,6 +2688,10 @@ define(function() {
 
 	*/
 	exports.latex_cms = function(page, cookie, router, links, subjects, topics, sections, examples, subject, topic, section, example) {
+		$("body").css("background", "#e0e0e0");
+		$("title").text("Content Management System");
+		$("main").empty();
+		$("main").append($("<div>").attr("id", "latex"));
 		$.get("/pages/dist/edit-bar-min.html").done(function(bar) {
 			$("#latex").append(bar);
 			var statement = "/api/",
@@ -3268,13 +3273,37 @@ define(function() {
 
 	*/
 	exports.latex = function(page, router, links, subjects, topics, sections, examples, subject, topic, section, example) {
+		$("body").css("background", "#e0e0e0");
+		$("main").empty();
+		$("main").append($("<div>").attr("id", "latex"));
 		var statement = "/api/",
 			db_id = -1;
-		if(page == "about") { statement += "cms/about/data"; }
-		else if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; }
-		else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; }
-		else if(page == "section") { statement += "section/data/"; db_id = section.section_id; }
-		else if(page == "example") { statement += "example/data/"; db_id = example.eid; }
+		if(page == "about") { 
+			statement += "cms/about/data";
+			$("title").text("About");
+		}
+		else if(page == "subject") { 
+			statement += "subject/data/";
+			db_id = subject.sid;
+			$("title").text(subject.clean_name);
+		}
+		else if(page == "topic") { 
+			statement += "topic/data/";
+			db_id = topic.tid;
+			$("title").text(subject.clean_name + " - " + topic.clean_name);
+		}
+		else if(page == "section") { 
+			statement += "section/data/";
+			db_id = section.section_id;
+			$("title").text(subject.clean_name + " - " + topic.clean_name + 
+				" - " + section.clean_name);
+		}
+		else if(page == "example") { 
+			statement += "example/data/";
+			db_id = example.eid;
+			$("title").text(subject.clean_name + " - " + topic.clean_name + 
+				" - " + section.clean_name);
+		}
 		$.post(statement, {"param": db_id}).done(function(data) {
 			data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
 			data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
