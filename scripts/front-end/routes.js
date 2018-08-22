@@ -59,7 +59,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("cms", function(toState, fromState) {
-			functions.initial_cms(function(cookie) {
+			functions.initial_cms(router, function(cookie) {
 				navs.driver("about", 1, subjects, undefined, function() {
 					functions.latex_cms("about", cookie, router, links, subjects, topics,
 						sections, examples);
@@ -88,7 +88,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subjectEdit", function(toState, fromState) {
-			functions.initial_cms(function(cookie) {
+			functions.initial_cms(router, function(cookie) {
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0];
@@ -113,7 +113,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subjectEdit.topicEdit", function(toState, fromState) {
-			functions.initial_cms(function(cookie) {
+			functions.initial_cms(router, function(cookie) {
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0],
@@ -145,7 +145,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subjectEdit.topicEdit.sectionEdit.current_pageEdit", function(toState, fromState) {
-			functions.initial_cms(function(cookie) {
+			functions.initial_cms(router, function(cookie) {
 				var subject = subjects.filter(function(iter) {
 						return iter.sname == toState.params.sname;
 					})[0],

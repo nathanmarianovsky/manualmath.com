@@ -215,6 +215,7 @@ define(function() {
 		else { counter++; callback(); }
 		$(window).on("resize", function() {
 			$("body").css("width", "100%");
+			$("#bar").css("width", ((exports.width_func() * 0.019) + 45) + "%");
 			if(exports.width_func() < 992) {
 				message();
 			}
@@ -2369,31 +2370,11 @@ define(function() {
 
 	*/
 	exports.handle_logo = function() {
-		if(exports.width_func() < 992) {
-			if(exports.width_func() >= 750) {
-				$("#logo").css({
-					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 183,
-					"display": "inline-block"
-				});
-			}
-			else if(exports.width_func() < 750 && exports.width_func() >= 550) {
-				$("#logo").css({
-					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 165,
-					"display": "inline-block"
-				});
-			}
-			else if(exports.width_func() < 550 && exports.width_func() >= 400) {
-				$("#logo").css({
-					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 164,
-					"display": "inline-block"
-				});
-			}
-			else {
-				$("#logo").css({
-					"left": (exports.width_func() / 2) - ($("#mobile_title").width() / 2) - 150,
-					"display": "inline-block"
-				});
-			}
+		if(exports.width_func() < 992 || exports.is_mobile()) {
+			$("#logo").css({
+				"float": "right",
+				"right": "10px"
+			});
 		}
 	};
 
@@ -2593,7 +2574,7 @@ define(function() {
 			A function callback
 
 	*/
-	exports.initial_cms = function(callback) {
+	exports.initial_cms = function(router, callback) {
 		exports.resize_modal(function() {
 			if(exports.read_cookie("contributor") == "") {
 				exports.session_modal(router, "login", 0);
@@ -3277,7 +3258,7 @@ define(function() {
 				$.get("/pages/dist/button-min.html").done(function(button) {
 					$("body").append(button);
 					exports.committee(cookie, function() {
-						exports.handle_logo_link("");
+						exports.handle_logo_link(page);
 						exports.handle_logo();
 						exports.handle_li_coloring();
 						links.handle_links(router, subjects, topics, sections, examples);
@@ -3295,7 +3276,7 @@ define(function() {
 							exports.handle_desktop_title("section", subject, topic, section);
 						}
 						$("#bar-nav").css("width", "100%");
-						$("#bar").css("width", "82%");
+						$("#bar").css("width", ((exports.width_func() * 0.019) + 45) + "%");
 						$("#live-version").parent("li").css("margin-left", "25px");
 						$("#save").parent("li").css("margin-right", "25px");
 						$("#cms-version").closest("li").css("background-color", "#008cc3");
@@ -3439,7 +3420,7 @@ define(function() {
 			exports.handle_breadcrumbs(page, $(".accordion").first(), subject, topic, section, example);
 			MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 			exports.handle_button();
-			exports.handle_logo_link("");
+			exports.handle_logo_link(page);
 			exports.handle_logo();
 			exports.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
