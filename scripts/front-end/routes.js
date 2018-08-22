@@ -46,7 +46,10 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 								if(result == 1) {
 									functions.write_cookie("contributor", cookie, 60);
 								}
-								else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
+								else {
+									console.log("There was an issue adding the" + 
+										" contributor to the list of live sessions!");
+								}
 							});
 						}
 						functions.session_modal(router, "cms", 2);
@@ -56,55 +59,11 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("cms", function(toState, fromState) {
-			functions.resize_modal(function() {
-				$(window).on("resize", function() {
-					if(functions.read_cookie("contributor") == "" && functions.width_func() >= 992) {
-						functions.session_modal(router, "login", 0);
-					}
+			functions.initial_cms(function(cookie) {
+				navs.driver("about", 1, subjects, undefined, function() {
+					functions.latex_cms("about", cookie, router, links, subjects, topics,
+						sections, examples);
 				});
-				if(functions.read_cookie("contributor") == "") {
-					functions.session_modal(router, "login", 0);
-				}
-				else {
-					var cookie = functions.read_cookie("contributor");
-					$.post("/api/cms/live/check/" + cookie).done(function(result) {
-						if(result == "") {
-							$.post("/api/cms/add/live/" + cookie).done(function(result) {
-								if(result == 1) {
-									functions.write_cookie("contributor", cookie, 60);
-								}
-								else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
-							});
-						}
-					});
-					functions.listen_cookie_change("contributor", function() {
-						if(functions.read_cookie("contributor") == "") {
-							$.post("/api/cms/remove/live/" + cookie).done(function(result) {
-								if(result == 1) {
-									functions.session_modal(router, "login", 1);
-								}
-								else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
-							});
-						}
-					});
-					$(window).on("unload", function() {
-						$.ajax({
-						    type: "POST",
-						    async: false,
-						    url: "/api/cms/remove/live/" + cookie
-						});
-					});
-					$.get("/pages/dist/main-min.html").done(function(content) {
-						$(document.body).empty().append(content);
-						if(functions.is_mobile()) {
-							$(".button-collapse").sideNav("hide");
-						}
-						$("#logo").attr("id", "logo_cms");
-						navs.driver("about", 1, subjects, undefined, function() {
-							functions.latex_cms("about", cookie, router, links, subjects, topics, sections, examples);
-						});
-					});
-				}
 			});
 		});
 
@@ -112,7 +71,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
 				navs.driver("about", 0, subjects, undefined, function() {
-					functions.latex("about", router, links, subjects, topics, sections, examples);
+					functions.latex("about", router, links, subjects, topics,
+						sections, examples);
 				});
 			});
 		});
@@ -121,59 +81,21 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 			$.get("/pages/dist/main-min.html").done(function(content) {
 				$(document.body).empty().append(content);
 				navs.driver("about", 0, subjects, undefined, function() {
-					functions.latex("about", router, links, subjects, topics, sections, examples);
+					functions.latex("about", router, links, subjects, topics,
+						sections, examples);
 				});
 			});
 		});
 
 		router.addRouteListener("subjectEdit", function(toState, fromState) {
-			functions.resize_modal(function() {
-				if(functions.read_cookie("contributor") == "") {
-					functions.session_modal(router, "login", 0);
-				}
-				else {
-					var cookie = functions.read_cookie("contributor");
-					$.post("/api/cms/live/check/" + cookie).done(function(result) {
-						if(result == "") {
-							$.post("/api/cms/add/live/" + cookie).done(function(result) {
-								if(result == 1) {
-									functions.write_cookie("contributor", cookie, 60);
-								}
-								else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
-							});
-						}
-					});
-					functions.listen_cookie_change("contributor", function() {
-						if(functions.read_cookie("contributor") == "") {
-							$.post("/api/cms/remove/live/" + cookie).done(function(result) {
-								if(result == 1) {
-									functions.session_modal(router, "login", 1);
-								}
-								else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
-							});
-						}
-					});
-					$(window).on("unload", function() {
-						$.ajax({
-						    type: "POST",
-						    async: false,
-						    url: "/api/cms/remove/live/" + cookie
-						});
-					});
-					$.get("/pages/dist/main-min.html").done(function(content) {
-						$(document.body).empty().append(content);
-						$("#logo").attr("id", "logo_cms");
-						if(functions.is_mobile()) {
-							$(".button-collapse").sideNav("hide");
-						}
-						var subject = subjects.filter(function(iter) {
-							return iter.sname == toState.params.sname;
-						})[0];
-						navs.driver("subject", 1, subject, undefined, function() {
-							functions.latex_cms("subject", cookie, router, links, subjects, topics, sections, examples, subject);
-						});
-					});
-				}
+			functions.initial_cms(function(cookie) {
+				var subject = subjects.filter(function(iter) {
+					return iter.sname == toState.params.sname;
+				})[0];
+				navs.driver("subject", 1, subject, undefined, function() {
+					functions.latex_cms("subject", cookie, router, links, subjects, topics,
+						sections, examples, subject);
+				});
 			});
 		});
 
@@ -184,62 +106,25 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					return iter.sname == toState.params.sname;
 				})[0];
 				navs.driver("subject", 0, subject, undefined, function() {
-					functions.latex("subject", router, links, subjects, topics, sections, examples, subject);
+					functions.latex("subject", router, links, subjects, topics,
+						sections, examples, subject);
 				});
 			});
 		});
 
 		router.addRouteListener("subjectEdit.topicEdit", function(toState, fromState) {
-			functions.resize_modal(function() {
-				if(functions.read_cookie("contributor") == "") {
-					functions.session_modal(router, "login", 0);
-				}
-				else {
-					var cookie = functions.read_cookie("contributor");
-					$.post("/api/cms/live/check/" + cookie).done(function(result) {
-						if(result == "") {
-							$.post("/api/cms/add/live/" + cookie).done(function(result) {
-								if(result == 1) {
-									functions.write_cookie("contributor", cookie, 60);
-								}
-								else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
-							});
-						}
-					});
-					functions.listen_cookie_change("contributor", function() {
-						if(functions.read_cookie("contributor") == "") {
-							$.post("/api/cms/remove/live/" + cookie).done(function(result) {
-								if(result == 1) {
-									functions.session_modal(router, "login", 1);
-								}
-								else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
-							});
-						}
-					});
-					$(window).on("unload", function() {
-						$.ajax({
-						    type: "POST",
-						    async: false,
-						    url: "/api/cms/remove/live/" + cookie
-						});
-					});
-					$.get("/pages/dist/main-min.html").done(function(content) {
-						$(document.body).empty().append(content);
-						$("#logo").attr("id", "logo_cms");
-						if(functions.is_mobile()) {
-							$(".button-collapse").sideNav("hide");
-						}
-						var subject = subjects.filter(function(iter) {
-							return iter.sname == toState.params.sname;
-						})[0],
-							topic = subject.topics.filter(function(iter) {
-							return iter.tname == toState.params.tname;
-						})[0];
-						navs.driver("topic", 1, topic, subject, function() {
-							functions.latex_cms("topic", cookie, router, links, subjects, topics, sections, examples, subject, topic);
-						});
-					});
-				}
+			functions.initial_cms(function(cookie) {
+				var subject = subjects.filter(function(iter) {
+					return iter.sname == toState.params.sname;
+				})[0],
+					topic = subject.topics.filter(function(iter) {
+					return iter.tname == toState.params.tname;
+				})[0];
+
+				navs.driver("topic", 1, topic, subject, function() {
+					functions.latex_cms("topic", cookie, router, links, subjects, topics,
+						sections, examples, subject, topic);
+				});
 			});
 		});
 
@@ -253,78 +138,39 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 					return iter.tname == toState.params.tname;
 				})[0];
 				navs.driver("topic", 0, topic, subject, function() {
-					functions.latex("topic", router, links, subjects, topics, sections, examples, subject, topic);
+					functions.latex("topic", router, links, subjects, topics,
+						sections, examples, subject, topic);
 				});
 			});
 		});
 
 		router.addRouteListener("subjectEdit.topicEdit.sectionEdit.current_pageEdit", function(toState, fromState) {
-			functions.resize_modal(function() {
-				if(functions.read_cookie("contributor") == "") {
-					functions.session_modal(router, "login", 0);
-				}
-				else {
-					var cookie = functions.read_cookie("contributor");
-					$.post("/api/cms/live/check/" + cookie).done(function(result) {
-						if(result == "") {
-							$.post("/api/cms/add/live/" + cookie).done(function(result) {
-								if(result == 1) {
-									functions.write_cookie("contributor", cookie, 60);
-								}
-								else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
-							});
-						}
-					});
-					functions.listen_cookie_change("contributor", function() {
-						if(functions.read_cookie("contributor") == "") {
-							$.post("/api/cms/remove/live/" + cookie).done(function(result) {
-								if(result == 1) {
-									functions.session_modal(router, "login", 1);
-								}
-								else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
-							});
-						}
-					});
-					$(window).on("unload", function() {
-						$.ajax({
-						    type: "POST",
-						    async: false,
-						    url: "/api/cms/remove/live/" + cookie
-						});
-					});
-					$.get("/pages/dist/main-min.html").done(function(content) {
-						$(document.body).empty().append(content);
-						$("#logo").attr("id", "logo_cms");
-						if(functions.is_mobile()) {
-							$(".button-collapse").sideNav("hide");
-						}
-						var subject = subjects.filter(function(iter) {
-								return iter.sname == toState.params.sname;
-							})[0],
-							topic = subject.topics.filter(function(iter) {
-								return iter.tname == toState.params.tname;
-							})[0],
-							section = topic.sections.filter(function(iter) {
-								return iter.section_name == toState.params.section_name;
-							})[0];
-						navs.driver("section", 1, section, topic, function() {
-							$("#nav-mobile").find("li").removeClass("active");
-							if(section.section_name == toState.params.current_page_name) {
-								$("#section_name" + section.section_id + "_cms").addClass("active");
-								functions.latex_cms("section", cookie, router, links, subjects, 
-									topics, sections, examples, subject, topic, section);
-							}
-							else {
-								var example = section.examples.filter(function(iter) {
-									return iter.ename == toState.params.current_page_name;
-								})[0];
-								$("#examples_li" + example.eid + "_cms").addClass("active");
-								functions.latex_cms("example", cookie, router, links, subjects, 
-									topics, sections, examples, subject, topic, section, example);
-							}
-						});
-					});
-				}
+			functions.initial_cms(function(cookie) {
+				var subject = subjects.filter(function(iter) {
+						return iter.sname == toState.params.sname;
+					})[0],
+					topic = subject.topics.filter(function(iter) {
+						return iter.tname == toState.params.tname;
+					})[0],
+					section = topic.sections.filter(function(iter) {
+						return iter.section_name == toState.params.section_name;
+					})[0];
+				navs.driver("section", 1, section, topic, function() {
+					$("#nav-mobile").find("li").removeClass("active");
+					if(section.section_name == toState.params.current_page_name) {
+						$("#section_name" + section.section_id + "_cms").addClass("active");
+						functions.latex_cms("section", cookie, router, links, subjects, 
+							topics, sections, examples, subject, topic, section);
+					}
+					else {
+						var example = section.examples.filter(function(iter) {
+							return iter.ename == toState.params.current_page_name;
+						})[0];
+						$("#examples_li" + example.eid + "_cms").addClass("active");
+						functions.latex_cms("example", cookie, router, links, subjects, 
+							topics, sections, examples, subject, topic, section, example);
+					}
+				});
 			});
 		});
 

@@ -2583,6 +2583,76 @@ define(function() {
 	    else { return false; }
 	};
 
+	/*
+
+	Purpose:
+	Handles the initial load of any cms page.
+
+	Parameters:
+		callback: 
+			A function callback
+
+	*/
+	exports.initial_cms = function(callback) {
+		exports.resize_modal(function() {
+			if(exports.read_cookie("contributor") == "") {
+				exports.session_modal(router, "login", 0);
+			}
+			else {
+				var cookie = exports.read_cookie("contributor");
+				$.post("/api/cms/live/check/" + cookie).done(function(result) {
+					if(result == "") {
+						$.post("/api/cms/add/live/" + cookie).done(function(result) {
+							if(result == 1) {
+								exports.write_cookie("contributor", cookie, 60);
+							}
+							else {
+								console.log("There was an issue adding" + 
+									" the contributor to the list of live sessions!");
+							}
+						});
+					}
+				});
+				exports.listen_cookie_change("contributor", function() {
+					if(exports.read_cookie("contributor") == "") {
+						$.post("/api/cms/remove/live/" + cookie).done(function(result) {
+							if(result == 1) {
+								exports.session_modal(router, "login", 1);
+							}
+							else {
+								console.log("There was an issue removing" + 
+									" the contributor from the list of live sessions!");
+							}
+						});
+					}
+				});
+				$(window).on("unload", function() {
+					$.ajax({
+					    type: "POST",
+					    async: false,
+					    url: "/api/cms/remove/live/" + cookie
+					});
+				});
+				$.get("/pages/dist/main-min.html").done(function(content) {
+					$(document.body).empty().append(content);
+					$("#logo").attr("id", "logo_cms");
+					callback();
+				});
+				return cookie;
+			}
+		});
+	};
+
+	/*
+
+	Purpose:
+	Handles the cms box links.
+
+	Parameters:
+		data: 
+			An array of objects representing the current set of data
+
+	*/
 	exports.latex_cms_links = function(data) {
 		$(".toggle").off();
 		$(".add-image").off();
@@ -2592,7 +2662,8 @@ define(function() {
 		$(".toggle").on("click", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
-			var item = $(this).parents().prev().clone().children().remove().end().text();
+			var item = $(this).parents().prev().clone()
+				.children().remove().end().text();
 			var ref = data.title_cms.findIndex(function(elem) {
 				return elem.split("_hidden")[0] == item;
 			});
@@ -2615,8 +2686,10 @@ define(function() {
 		$(".add-image-tooltipped").tooltip();
 		$(".add-math").on("click", function(e) {
 			e.preventDefault();
-			var obj = $(this).parent().parent().parent().find(".cont_div .latex_body").first();
-			obj.append($("<div>").addClass("latex_equation").text("$New Equation$"));
+			var obj = $(this).parent().parent().parent()
+				.find(".cont_div .latex_body").first();
+			obj.append($("<div>").addClass("latex_equation")
+				.text("$New Equation$"));
 		});
 		$(".add-image").on("click", function(e) {
 			e.preventDefault();
@@ -2649,8 +2722,9 @@ define(function() {
 			});
 			$(this).parent().parent().parent().remove();
 			if($("#latex .accordion").length == 0) {
-				$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-					.addClass("show_solution").text("NO CONTENT HERE!")));
+				$("#latex").append($("<div>").addClass("accordion")
+					.append($("<div>").addClass("show_solution")
+						.text("NO CONTENT HERE!")));
 			}
 		});
 	};
@@ -2687,7 +2761,8 @@ define(function() {
 			An object representing the current example
 
 	*/
-	exports.latex_cms = function(page, cookie, router, links, subjects, topics, sections, examples, subject, topic, section, example) {
+	exports.latex_cms = function(page, cookie, router, links, subjects, topics,
+		sections, examples, subject, topic, section, example) {
 		$("body").css("background", "#e0e0e0");
 		$("title").text("Content Management System");
 		$("main").empty();
@@ -2698,18 +2773,39 @@ define(function() {
 				db_id = -1,
 				ref = -1;
 			if(page == "about") { statement += "cms/about/data"; }
-			else if(page == "subject") { statement += "subject/data/"; db_id = subject.sid; ref = "undefined"; }
-			else if(page == "topic") { statement += "topic/data/"; db_id = topic.tid; ref = subject.sid; }
-			else if(page == "section") { statement += "section/data/"; db_id = section.section_id; ref = topic.tid; }
-			else if(page == "example") { statement += "example/data/"; db_id = example.eid; ref = section.section_id; }
+			else if(page == "subject") {
+				statement += "subject/data/";
+				db_id = subject.sid;
+				ref = "undefined"; }
+			else if(page == "topic") {
+				statement += "topic/data/";
+				db_id = topic.tid;
+				ref = subject.sid; }
+			else if(page == "section") {
+				statement += "section/data/";
+				db_id = section.section_id;
+				ref = topic.tid; }
+			else if(page == "example") {
+				statement += "example/data/";
+				db_id = example.eid;
+				ref = section.section_id; }
 			$.post(statement, {param: db_id}).done(function(data) {
-				data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
-				data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
-				data.title_cms = data.title_cms != null ? decodeURIComponent(data.title_cms).split("-----") : [""];
-				data.content_cms = data.content_cms != null ? decodeURIComponent(data.content_cms).split("-----") : [""];
+				data.title = data.title != null 
+					? decodeURIComponent(data.title).split("-----") 
+					: [""];
+				data.content = data.content != null 
+					? decodeURIComponent(data.content).split("-----") 
+					: [""];
+				data.title_cms = data.title_cms != null 
+					? decodeURIComponent(data.title_cms).split("-----") 
+					: [""];
+				data.content_cms = data.content_cms != null 
+					? decodeURIComponent(data.content_cms).split("-----") 
+					: [""];
 				if(page == "about") {
-					$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
-						.append($("<h1>").text(data.heading_cms).css("margin-top", "-60px")));
+					$("#latex").append($("<div>").attr("id", "main_message")
+						.addClass("box_message").append($("<h1>")
+							.text(data.heading_cms).css("margin-top", "-60px")));
 				}
 				var i = 0;
 				for(; i >= 0; i++) {
@@ -3086,9 +3182,7 @@ define(function() {
 									if(index % 2 == 0) {
 										return iter.replace(/\\/g, "%5C");
 									}
-									else {
-										return iter;
-									}
+									else { return iter; }
 								}).join("\$");
 							});
 							data.content_cms = data.content_cms.map(function(elem) {
@@ -3096,9 +3190,7 @@ define(function() {
 									if(index % 2 == 0) {
 										return iter.replace(/\\/g, "%5C");
 									}
-									else {
-										return iter;
-									}
+									else { return iter; }
 								}).join("\$");
 							});
 							if(data.cms_approval != null && data.cms_approval != "" 
@@ -3114,9 +3206,7 @@ define(function() {
 										if(index % 2 == 0) {
 											return iter.replace(/\\/g, "%5C");
 										}
-										else {
-											return iter;
-										}
+										else { return iter; }
 									}).join("\$");
 								});
 								data.content = data.content.map(function(elem) {
@@ -3124,9 +3214,7 @@ define(function() {
 										if(index % 2 == 0) {
 											return iter.replace(/\\/g, "%5C");
 										}
-										else {
-											return iter;
-										}
+										else { return iter; }
 									}).join("\$");
 								});
 							}
@@ -3135,13 +3223,19 @@ define(function() {
 								ref: ref,
 								name: "undefined",
 								order: "undefined",
-								title: (data.title.join("-----") != "" ? data.title.join("-----") : "0"),
-								content: (data.content.join("-----") != "" ? data.content.join("-----") : "0"),
+								title: data.title.join("-----") != "" 
+									? data.title.join("-----") : "0",
+								content: data.content.join("-----") != "" 
+									? data.content.join("-----") : "0",
 								side_approval: "undefined",
-								cms_approval: (data.cms_approval != "" && data.cms_approval != null ? content.cms_approval : "0"),
+								cms_approval: data.cms_approval != "" 
+									&& data.cms_approval != null 
+									? content.cms_approval : "0",
 								del_approval: "undefined",
-								title_cms: (data.title_cms.join("-----") != "" ? data.title_cms.join("-----") : "0"),
-								content_cms: (data.content_cms.join("-----") != "" ? data.content_cms.join("-----") : "0")
+								title_cms: data.title_cms.join("-----") != "" 
+									? data.title_cms.join("-----") : "0",
+								content_cms: data.content_cms.join("-----") != "" 
+									? data.content_cms.join("-----") : "0"
 							};
 							statement = "/api/change/";
 							if(page == "subject") { statement += "subject/"; }
@@ -3157,7 +3251,8 @@ define(function() {
 							console.log(obj);
 							$.post(statement, obj).fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue uploading the content changes to the database!");
+								$("#popup_body").text("There was an issue" + 
+									" uploading the content changes to the database!");
 								$("#popup_control").click();
 								$("#popup_submit").click(function(e) {
 									e.preventDefault();
@@ -3167,7 +3262,8 @@ define(function() {
 								});
 							}).done(function() {
 								$("#popup_title").text("Changes Saved");
-								$("#popup_body").text("All changes to the content have been saved to the database!");
+								$("#popup_body").text("All changes to the content" + 
+									" have been saved to the database!");
 								$("#popup_control").click();
 								$("#popup_submit").click(function(e) {
 									e.preventDefault();
@@ -3272,7 +3368,8 @@ define(function() {
 			An object representing the current example
 
 	*/
-	exports.latex = function(page, router, links, subjects, topics, sections, examples, subject, topic, section, example) {
+	exports.latex = function(page, router, links, subjects, topics,
+		sections, examples, subject, topic, section, example) {
 		$("body").css("background", "#e0e0e0");
 		$("main").empty();
 		$("main").append($("<div>").attr("id", "latex"));
@@ -3359,6 +3456,7 @@ define(function() {
 			else if(page == "section" || page == "example") {
 				exports.handle_desktop_title("section", subject, topic, section);
 			}
+			$("body").css("overflow", "auto");
 			
 			// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
 			// 	MathJax.Hub.Queue(function() {
