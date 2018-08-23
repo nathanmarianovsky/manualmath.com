@@ -241,7 +241,7 @@ define(["dist/functions-min"], function(functions) {
 
 	*/
 	exports.driver = function(page, cms, param1, param2, callback) {
-		$.get("/api/cms/contributors").done(function(num) {
+		$.get("/api/cms/count/contributors").done(function(num) {
 			const validation = Math.ceil(Math.log(parseInt(num)));
 			if(page == "about") { exports.subject_side_nav(param1, cms, validation); }
 			else if(page == "subject") { exports.topic_side_nav(param1, cms, validation); }

@@ -25,7 +25,8 @@ define(["jquery", "materialize", "router5", "mathjax", "dist/functions-min", "di
 			defaultRoute: "about"
 		});
 
-		functions.get_all("/api/subjects", "/api/topics", "/api/sections", "/api/examples").done(function(subjects, topics, sections, examples) {
+		functions.get_all("/api/subjects", "/api/topics", "/api/sections", "/api/examples")
+			.done(function(subjects, topics, sections, examples) {
 			functions.organize(subjects, topics, sections, examples);
 			functions.sort_subjects(subjects);
 			routes.add_listeners(router, subjects, topics, sections, examples);

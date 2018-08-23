@@ -239,7 +239,7 @@ define(function() {
 
 	*/
 	exports.committee = function(email, callback) {
-		$.get("/api/cms/committee/check/" + email).done(function(check) {
+		$.post("/api/cms/committee/check/", {email: email}).done(function(check) {
 			if(check >= 1) {
 				var group = $("<a>").attr("id", "committee").addClass("btn-floating").css("background", "#00b8ff")
 					.append($("<i>").addClass("material-icons").text("group_work"));
@@ -382,7 +382,7 @@ define(function() {
 					$("#popup_submit").addClass("modal-close");
 					list.forEach(function(iter) {
 						if(iter.deleted == 1) {
-							$.post("/api/cms/remove/profile/", {email: iter.email}).fail(function() {
+							$.post("/api/cms/contributor/remove/", {email: iter.email}).fail(function() {
 								$("#popup_title").text("Database Issue");
 								$("#popup_body").text("There was an issue deleting contributor(s) from the database!");
 								$("#popup_submit").text("Ok").click(function(e) {
@@ -604,12 +604,11 @@ define(function() {
 					$("#popup_submit").addClass("modal-close");
 					list.forEach(function(iter) {
 						if(iter.edited == 1) {
-							var obj = {
+							$.post("/api/cms/contributor/change/rankApproval", {
 								email: iter.email,
 								rank_approval: (iter.rank_approval == null ? "0" : iter.rank_approval),
 								rank_disapproval: (iter.rank_disapproval == null ? "0" : iter.rank_disapproval)
-							};
-							$.post("/api/cms/change/contributor/rank/approval", obj).fail(function() {
+							}).fail(function() {
 								$("#popup_title").text("Database Issue");
 								$("#popup_body").text("There was an issue uploading the contributor changes to the database!");
 								$("#popup_submit").text("Ok").click(function(e) {
@@ -774,12 +773,12 @@ define(function() {
 					e.preventDefault();
 					$("#popup_exit").remove();
 					$("#popup_submit").addClass("modal-close");
-					$.get("/api/cms/committee").done(function(num) {
+					$.get("/api/cms/count/committee").done(function(num) {
 						const validation = parseInt(num);
 						var statement = "";
 						list.forEach(function(iter) {
 							if(iter.del != null && iter.del.split(",").length >= validation) {
-								$.post("/api/cms/remove/profile/", {email: iter.email}).fail(function() {
+								$.post("/api/cms/contributor/remove/", {email: iter.email}).fail(function() {
 									$("#popup_title").text("Database Issue");
 									$("#popup_body").text("There was an issue deleting a contributor from the database!");
 									$("#popup_submit").text("Ok").click(function(e) {
@@ -792,7 +791,8 @@ define(function() {
 								});
 							}
 							else if(iter.approval != null && iter.approval.split(",").length >= validation) {
-								$.post("/api/cms/change/status/" + iter.email + "/1").fail(function() {
+								$.post("/api/cms/contributor/change/status/", {email: iter.email, status: 1})
+									.fail(function() {
 									$("#popup_title").text("Database Issue");
 									$("#popup_body").text("There was an issue changing the status of a contributor in the database!");
 									$("#popup_submit").text("Ok").click(function(e) {
@@ -806,10 +806,14 @@ define(function() {
 							}
 							else {
 								if(iter.edited == 1) {
-									statement = "/api/cms/change/contributor/" + iter.email + "/" + 
-										(iter.approval == null ? "0" : iter.approval) + "/" + 
-										(iter.del == null ? "0" : iter.del);
-									$.post(statement).fail(function() {
+									// statement = "/api/cms/change/contributor/" + iter.email + "/" + 
+									// 	(iter.approval == null ? "0" : iter.approval) + "/" + 
+									// 	(iter.del == null ? "0" : iter.del);
+									$.post("/api/cms/contributor/change/approval/", {
+										email: iter.email,
+										approval: iter.approval == null ? "0" : iter.approval,
+										del: iter.del == null ? "0" : iter.del
+									}).fail(function() {
 										$("#popup_title").text("Database Issue");
 										$("#popup_body").text("There was an issue uploading the contributor changes to the database!");
 										$("#popup_submit").text("Ok").click(function(e) {
@@ -1301,7 +1305,7 @@ define(function() {
 				$("#popup_submit").click(function(event) {
 					event.preventDefault();
 					var statement = "";
-					$.get("/api/cms/contributors").done(function(num) {
+					$.get("/api/cms/count/contributors").done(function(num) {
 						const validation = Math.ceil(Math.log(parseInt(num)));
 						$("#popup_submit").remove();
 						$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
@@ -1315,7 +1319,14 @@ define(function() {
 							else if(type == "Sections") { id = iter.section_id; name = iter.section_name; ref = iter.tid; }
 							else if(type == "Examples") { id = iter.eid; name = iter.ename; ref = iter.section_id; }
 							if(typeof iter.del_approval != "object" && iter.del_approval.split(",").length >= validation) {
-								$.post("/api/delete/" + type.toLowerCase().substring(0, type.length - 1) + "/" + id);
+								console.log(iter);
+								console.log(validation);
+								$.post("/api/delete/" + type.toLowerCase().substring(0, type.length - 1) + "/", {param: id})
+								.fail(function(xhr, status, error) {
+									console.log(xhr);
+									console.log(status);
+									console.log(error);
+								});
 							}
 							else {
 								if(typeof iter.del_approval == "object" || iter.del_approval == "") { iter.del_approval = "0"; }
@@ -1443,7 +1454,7 @@ define(function() {
 			$("#popup_submit").removeClass("modal-close");
 			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
 				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-			$.post("/api/cms/profile/" + email).done(function(information) {
+			$.post("/api/cms/contributor/profile/", {email: email}).done(function(information) {
 				$("#first_name_cms").val(information.first_name);
 				$("#last_name_cms").val(information.last_name);
 				$("#question_cms").val(information.question);
@@ -1504,7 +1515,8 @@ define(function() {
 							});
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
-								$.post("/api/cms/check/" + email + "/" + $("#old_password_confirm").val()).done(function(result) {
+								$.post("/api/cms/check/login/", {email: email, passwd: $("#old_password_confirm").val()})
+									.done(function(result) {
 									$("#popup_submit").addClass("modal-close");
 									$("#popup_exit").remove();
 									if(result[0] == "Wrong Password") {
@@ -1550,9 +1562,13 @@ define(function() {
 										});
 									}
 									else {
-										var statement = "/api/cms/change/profile/" + email + "/" + fname + 
-											"/" + lname + "/" + question + "/" + answer;
-										$.post(statement).done(function(result) {
+										$.post("/api/cms/contributor/change/profile/", {
+											email: email,
+											fname: fname,
+											lname: lname,
+											question: question,
+											answer: answer
+										}).done(function(result) {
 										 	if(result == "1") {
 												$("#popup_title").text("Confirmation");
 												$("#popup_submit").remove();
@@ -1637,7 +1653,8 @@ define(function() {
 									});
 								}
 								else {
-									$.post("/api/cms/check/" + email + "/" + $("#old_password_confirm").val()).done(function(result) {
+									$.post("/api/cms/check/login/", {email: email, passwd: $("#old_password_confirm").val()})
+										.done(function(result) {
 										if(result[0] == "Wrong Password") {
 											$("#popup_title").text("Password Issue");
 											$("#popup_submit").remove();
@@ -1654,12 +1671,18 @@ define(function() {
 											});
 										}
 										else {
-											var statement = "/api/cms/change/profile/" + email + "/" + fname + 
-												"/" + lname + "/" + question + "/" + answer;
-											$.post(statement).done(function(result) {
+											$.post("/api/cms/contributor/change/profile/", {
+												email: email,
+												fname: fname,
+												lname: lname,
+												question: question,
+												answer: answer
+											}).done(function(result) {
 											 	if(result == "1") {
-													$.post("/api/cms/change/password/", {email: email, password: new_password})
-														.done(function(result) {
+													$.post("/api/cms/contributor/change/password/", {
+														email: email,
+														password: new_password
+													}).done(function(result) {
 													 	if(result == "1") {
 															$("#popup_title").text("Confirmation");
 															$("#popup_submit").remove();
@@ -1994,7 +2017,7 @@ define(function() {
 						$(".lean-overlay").remove();
 						$("#popup").remove();
 						$("#popup_control").remove();
-						$.post("/api/cms/add/live/" + $("#login_email").val()).done(function(result) {
+						$.post("/api/cms/live/add/", {email: $("#login_email").val()}).done(function(result) {
 							if(result == 1) {
 								exports.write_cookie("contributor", $("#login_email").val(), 60);
 								router.navigate("cms", {reload: true});
@@ -2054,8 +2077,10 @@ define(function() {
 					});
 					$("#popup_submit").click(function(e) {
 						e.preventDefault();
-						var statement = "/api/cms/check/security/" + $("#login_email").val() + "/" + $("#forgotten").val();
-						$.post(statement).done(function(result) {
+						$.post("/api/cms/contributor/check/security/", {
+							email: $("#login_email").val(),
+							answer: $("#forgotten").val()
+						}).done(function(result) {
 							if(result == 1) {
 								$.get("/pages/dist/password-change-min.html").done(function(result) {
 									$("#popup_title").text("Password Reset");
@@ -2094,9 +2119,10 @@ define(function() {
 										e.preventDefault();
 										$("body").off();
 										if(exports.password_check($("#newpass").val())) {
-											statement = "/api/cms/change/password/" + $("#login_email").val() + 
-												"/" + $("#newpass").val();
-											$.post(statement).done(function() {
+											$.post("/api/cms/contributor/change/password/", {
+												email: $("#login_email").val(),
+												password: encodeURIComponent($("#newpass").val())
+											}).done(function() {
 												$("#popup_title").text("Password Changed");
 												$("#popup_body").text("You may now login with the new password!");
 												$("#popup_exit").remove();
@@ -2581,9 +2607,9 @@ define(function() {
 			}
 			else {
 				var cookie = exports.read_cookie("contributor");
-				$.post("/api/cms/live/check/" + cookie).done(function(result) {
+				$.post("/api/cms/live/check/", {email: cookie}).done(function(result) {
 					if(result == "") {
-						$.post("/api/cms/add/live/" + cookie).done(function(result) {
+						$.post("/api/cms/live/add/", {email: cookie}).done(function(result) {
 							if(result == 1) {
 								exports.write_cookie("contributor", cookie, 60);
 							}
@@ -2596,7 +2622,7 @@ define(function() {
 				});
 				exports.listen_cookie_change("contributor", function() {
 					if(exports.read_cookie("contributor") == "") {
-						$.post("/api/cms/remove/live/" + cookie).done(function(result) {
+						$.post("/api/cms/live/remove", {email: cookie}).done(function(result) {
 							if(result == 1) {
 								exports.session_modal(router, "login", 1);
 							}
@@ -2611,7 +2637,8 @@ define(function() {
 					$.ajax({
 					    type: "POST",
 					    async: false,
-					    url: "/api/cms/remove/live/" + cookie
+					    url: "/api/cms/live/remove/",
+					    data: {email: cookie}
 					});
 				});
 				$.get("/pages/dist/main-min.html").done(function(content) {
@@ -2619,7 +2646,6 @@ define(function() {
 					$("#logo").attr("id", "logo_cms");
 					callback();
 				});
-				return cookie;
 			}
 		});
 	};
@@ -2890,7 +2916,7 @@ define(function() {
 						$("#add-box").css("pointer-events", "none");
 						if(page == "about") {
 							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
-								.append($("<h1>").text(data.heading_cms).css("margin-top", "-60px")));
+								.append($("<h1>").text(data.heading).css("margin-top", "-60px")));
 						}
 						var j = 0;
 						for(; j >= 0; j++) {
@@ -3127,26 +3153,33 @@ define(function() {
 				$("#save").click(function(e) {
 					e.preventDefault();
 					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
-						$(".latex_body").each(function(index) {
-							var arr_title = [],
-								arr_body = [];
-							$(".show_solution").each(function(index) {
-								var title = $(this).children().first().clone().children().remove().end().text();
-								$(this).children().children().each(function(index) {
-									if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
-										arr_title.push(title + "_hidden");
-									}
-									else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
-										arr_title.push(title);
-									}
+						if(page == "about") { data.heading_cms = $("#edit_title").text(); }
+						if($(".latex_body").length != 0) {
+							$(".latex_body").each(function(index) {
+								var arr_title = [],
+									arr_body = [];
+								$(".show_solution").each(function(index) {
+									var title = $(this).children().first().clone().children().remove().end().text();
+									$(this).children().children().each(function(index) {
+										if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+											arr_title.push(title + "_hidden");
+										}
+										else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+											arr_title.push(title);
+										}
+									});
+									$(this).siblings().each(function(index) {
+										arr_body.push($(this).children()[0].innerHTML);
+									});
 								});
-								$(this).siblings().each(function(index) {
-									arr_body.push($(this).children()[0].innerHTML);
-								});
+								data.title_cms = arr_title;
+								data.content_cms = arr_body;
 							});
-							data.title_cms = arr_title;
-							data.content_cms = arr_body;
-						});
+						}
+						else {
+							data.title_cms = [""];
+							data.content_cms = [""];
+						}
 					}
 					$.get("/pages/dist/modal-min.html").done(function(content) {
 						$("body").append(content);
@@ -3156,7 +3189,7 @@ define(function() {
 							inDuration: 1000,
 							outDuration: 1000
 						});
-						$.get("/api/cms/contributors").done(function(num) {
+						$.get("/api/cms/count/contributors").done(function(num) {
 							const validation = Math.ceil(Math.log(parseInt(num)));
 							data.title_cms = data.title_cms.map(function(elem) {
 								return elem.split("\\$").map(function(iter, index) {
@@ -3228,8 +3261,6 @@ define(function() {
 								obj.heading = data.heading;
 								obj.heading_cms = data.heading_cms;
 							}
-							console.log(statement);
-							console.log(obj);
 							$.post(statement, obj).fail(function() {
 								$("#popup_title").text("Database Issue");
 								$("#popup_body").text("There was an issue" + 
@@ -3438,6 +3469,20 @@ define(function() {
 				exports.handle_desktop_title("section", subject, topic, section);
 			}
 			$("body").css("overflow", "auto");
+			$(window).on("resize", function() {
+				if(exports.width_func() < 992) {
+					$("#logo").css({
+						"float": "right",
+						"right": "10px"
+					});
+				}
+				else {
+					$("#logo").css({
+						"float": "",
+						"right": ""
+					});
+				}
+			});
 			
 			// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
 			// 	MathJax.Hub.Queue(function() {

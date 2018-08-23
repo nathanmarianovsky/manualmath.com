@@ -33,16 +33,16 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 						$(document.body).empty().append(content).css("background", "#1163A9");
 						$("select").material_select();
 						links.handle_links(router, subjects, topics, sections, examples);
-						$.post("/api/cms/get/admin").done(function(obj) {
+						$.post("/api/cms/admin/info").done(function(obj) {
 							$("#admin_name").text("Name: " + obj.first_name + " " + obj.last_name);
 							$("#admin_email").text("Email: " + obj.email);
 						});
 					});
 				}
 				else {
-					$.post("/api/cms/live/check/" + cookie).done(function(result) {
+					$.post("/api/cms/live/check/", {email: cookie}).done(function(result) {
 						if(result == "") {
-							$.post("/api/cms/add/live/" + cookie).done(function(result) {
+							$.post("/api/cms/live/add/", {email: cookie}).done(function(result) {
 								if(result == 1) {
 									functions.write_cookie("contributor", cookie, 60);
 								}
@@ -59,7 +59,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("cms", function(toState, fromState) {
-			functions.initial_cms(router, function(cookie) {
+			var cookie = functions.read_cookie("contributor");
+			functions.initial_cms(router, function() {
 				navs.driver("about", 1, subjects, undefined, function() {
 					functions.latex_cms("about", cookie, router, links, subjects, topics,
 						sections, examples);
@@ -88,7 +89,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subjectEdit", function(toState, fromState) {
-			functions.initial_cms(router, function(cookie) {
+			var cookie = functions.read_cookie("contributor");
+			functions.initial_cms(router, function() {
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0];
@@ -113,7 +115,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subjectEdit.topicEdit", function(toState, fromState) {
-			functions.initial_cms(router, function(cookie) {
+			var cookie = functions.read_cookie("contributor");
+			functions.initial_cms(router, function() {
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0],
@@ -145,7 +148,8 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subjectEdit.topicEdit.sectionEdit.current_pageEdit", function(toState, fromState) {
-			functions.initial_cms(router, function(cookie) {
+			var cookie = functions.read_cookie("contributor");
+			functions.initial_cms(router, function() {
 				var subject = subjects.filter(function(iter) {
 						return iter.sname == toState.params.sname;
 					})[0],

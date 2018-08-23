@@ -25,14 +25,13 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 			var statement = "";
 			if($(this).attr("id") == "login_button") {
 				if(functions.validate($("#login_email").val())) {
-					$.post("/api/cms/check/" + $("#login_email").val()).done(function(result) {
+					$.post("/api/cms/check/email/", {email: $("#login_email").val()}).done(function(result) {
 						if(result.length == 1) {
 							if(functions.password_check($("#login_password").val())) {
-								// statement = "/api/cms/check/" + $("#login_email").val() + 
-								// 	"/" + $("#login_password").val();
-								$.post("/api/cms/check/login", 
-									{email: $("#login_email").val(), passwd: encodeURIComponent($("#login_password").val())})
-									.done(function(obj) {
+								$.post("/api/cms/check/login/", {
+									email: $("#login_email").val(),
+									passwd: encodeURIComponent($("#login_password").val())
+								}).done(function(obj) {
 									if(typeof(obj[0]) == "object") {
 										functions.modal(13, router, obj);
 									}
@@ -54,7 +53,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 			}
 			else if($(this).attr("id") == "register_button") {
 				if(functions.validate($("#email").val())) {
-					$.post("/api/cms/check/" + $("#email").val()).done(function(result) {
+					$.post("/api/cms/check/email/", {email: $("#email").val()}).done(function(result) {
 						if(result.length == 0) {
 							if(functions.password_check($("#password").val()) && 
 								$("#password").val() == $("#password-confirm").val()) {
@@ -76,7 +75,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 												answer: $("#answer").val()
 											};
 											$.post("/api/cms/contributor/add", obj).done(function() {
-												$.post("/api/cms/get/admin").done(function(obj) {
+												$.post("/api/cms/admin/info/").done(function(obj) {
 													functions.modal(12, router, obj);
 												});
 											}).fail(function() { functions.modal(11); });
@@ -131,7 +130,7 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 			else if(id == "logout") {
 				$("#drop_up").click();
 				var cookie = functions.read_cookie("contributor");
-				$.post("/api/cms/remove/live/" + cookie).done(function(result) {
+				$.post("/api/cms/live/remove/", {email: cookie}).done(function(result) {
 					if(result == 1) {
 						functions.delete_cookie("contributor");
 					}
@@ -169,7 +168,8 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 			}
 			else if(id == "forgot") {
 				if(functions.validate($("#login_email").val())) {
-					$.post("/api/cms/get/" + $("#login_email").val()).done(function(content) {
+					$.post("/api/cms/contributor/security/", {email: $("#login_email").val()})
+						.done(function(content) {
 						$("#question")[0].options.selectedIndex = parseInt(content);
 						functions.modal(14);
 					});
