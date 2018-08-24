@@ -2209,6 +2209,20 @@ define(function() {
 	/*
 
 	Purpose:
+	Validates a given URL.
+
+	Parameters:
+		url: 
+			The URL to test
+
+	*/
+	exports.valid_url = function(url) {
+	    return /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(url) ? 1 : -1;
+	};
+
+	/*
+
+	Purpose:
 	Compares two objects based on their order property.
 
 	Parameters:
@@ -2681,6 +2695,7 @@ define(function() {
 		$(".add-math").off();
 		$(".del-box").off();
 		$(".add-table").off();
+		$(".add-link").off();
 		$(".add-row").off();
 		$(".add-column").off();
 		$(".remove-row").off();
@@ -2707,10 +2722,14 @@ define(function() {
 		$(".del-box-tooltipped").tooltip("destroy");
 		$(".add-math-tooltipped").tooltip("destroy");
 		$(".add-image-tooltipped").tooltip("destroy");
+		$(".add-table-tooltipped").tooltip("destroy");
+		$(".add-link-tooltipped").tooltip("destroy");
 		$(".solution_toggle").tooltip();
 		$(".del-box-tooltipped").tooltip();
 		$(".add-math-tooltipped").tooltip();
 		$(".add-image-tooltipped").tooltip();
+		$(".add-table-tooltipped").tooltip();
+		$(".add-link-tooltipped").tooltip();
 		$(".add-math").on("click", function(e) {
 			e.preventDefault();
 			var obj = $(this).parent().parent().parent()
@@ -2834,6 +2853,68 @@ define(function() {
 			if(list.first().children().length == 0) {
 				$(this).parent().parent().remove();
 			}
+		});
+		$(".add-link").on("click", function(e) {
+			e.preventDefault();
+			var obj = $(this).parent().parent().parent()
+				.find(".cont_div .latex_body").first();
+			$.get("/pages/dist/modal-min.html").done(function(content) {
+				$("body").append(content);
+				$(".modal-trigger").leanModal({
+					dismissible: false,
+					opacity: 2,
+					inDuration: 1000,
+					outDuration: 1000
+				});
+				$("body").on("keypress", function(event) {
+				    if(event.which === 10 || event.which === 13) {
+				        return false;
+				    }
+				});
+				$("#popup_title").text("Add Link");
+				$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+				$.get("/pages/dist/add-link-min.html").done(function(form) {
+					$("#popup_body").append(form);
+					$("#popup_submit").css("pointer-events", "none");
+					$("#popup_control").click();
+					$("#link-text").on("input", function() {
+						if($("#link-text").val().length > 0 && $("#link-url").val().length > 0
+							&& exports.valid_url($("#link-url").val())) {
+							$("#popup_submit").css("pointer-events", "auto");
+						}
+						else {
+							$("#popup_submit").css("pointer-events", "none");
+						}
+					});
+					$("#link-url").on("input", function() {
+						if($("#link-text").val().length > 0 && $("#link-url").val().length > 0
+							&& exports.valid_url($("#link-url").val())) {
+							$("#popup_submit").css("pointer-events", "auto");
+						}
+						else {
+							$("#popup_submit").css("pointer-events", "none");
+						}
+					});
+					$("#popup_exit").click(function(e) {
+						e.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+					});
+					$("#popup_submit").click(function(e) {
+						e.preventDefault();
+						obj.append($("<a>").addClass("content-link")
+							.text($("#link-text").val()).attr({
+							href: "//" + $("#link-url").val(),
+							target: "_blank"
+						}));
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+					});
+				});
+			});
 		});
 		$(".del-box").on("click", function(e) {
 			e.preventDefault();
@@ -3181,6 +3262,10 @@ define(function() {
 									.append($("<i>").addClass("material-icons add-table").text("table_chart"))
 									.attr("data-position", "top")
 									.attr("data-tooltip", "Insert Table Below"),
+								span_link = $("<span>").addClass("solution_link add-link-tooltipped")
+									.append($("<i>").addClass("material-icons add-link").text("link"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert Link Below"),
 								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
 									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
 									.attr("data-position", "top")
@@ -3198,7 +3283,7 @@ define(function() {
 							}	
 							latex_body.append(data.content_cms[j]);
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_table, span_image, span_del, span_toggle, span);
+							show_solution.append(span_box, span_table, span_image, span_link, span_del, span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
@@ -3222,6 +3307,7 @@ define(function() {
 						$(".add-math-tooltipped").tooltip();
 						$(".add-image-tooltipped").tooltip();
 						$(".add-table-tooltipped").tooltip();
+						$(".add-link-tooltipped").tooltip();
 						exports.handle_button(1);
 						$("#add-box").off();
 						$("#add-box").on("click", function(e) {
@@ -3250,6 +3336,10 @@ define(function() {
 									.append($("<i>").addClass("material-icons add-table").text("table_chart"))
 									.attr("data-position", "top")
 									.attr("data-tooltip", "Insert Table Below"),
+								span_link = $("<span>").addClass("solution_link add-link-tooltipped")
+									.append($("<i>").addClass("material-icons add-link").text("link"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert Link Below"),
 								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
 									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
 									.attr("data-position", "top")
@@ -3259,7 +3349,7 @@ define(function() {
 							span.append($("<i>").addClass("material-icons").text("remove"));
 							span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_table, span_image, span_del, span_toggle, span);
+							show_solution.append(span_box, span_table, span_image, span_link, span_del, span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
@@ -3268,11 +3358,9 @@ define(function() {
 							$(".latex_body").attr("contentEditable", "true");
 							exports.handle_button(1);
 							exports.latex_cms_links(data);
-
-							document.height = Math.max( document.body.scrollHeight, document.body.offsetHeight, 
+							document.height = Math.max(document.body.scrollHeight, document.body.offsetHeight, 
                       			document.documentElement.clientHeight, document.documentElement.scrollHeight, 
-                      			document.documentElement.offsetHeight );
-
+                      			document.documentElement.offsetHeight); 
 						});
 						exports.latex_cms_links(data);
 					}

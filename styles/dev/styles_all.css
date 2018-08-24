@@ -495,7 +495,7 @@ nav {
 
 .solution_toggle, .solution_del,
 .solution_img, .solution_table,
-.solution_box {
+.solution_box, .solution_link {
 	position: absolute;
     top: -10px;
     font-size: 40px;
@@ -511,16 +511,20 @@ nav {
     right: 150px;
 }
 
-.solution_img {
-    right: 200px;
+.solution_link {
+	right: 200px;
 }
 
-.solution_table {
+.solution_img {
     right: 250px;
 }
 
-.solution_box {
+.solution_table {
     right: 300px;
+}
+
+.solution_box {
+    right: 350px;
 }
 
 .table-buttons {
@@ -533,4 +537,10 @@ nav {
 
 .table-buttons a, .table-buttons a:hover {
 	background-color: #4693eb;
+}
+
+.content-link {
+	padding-left: 4px;
+	color: inherit;
+	text-decoration: underline;
 }
