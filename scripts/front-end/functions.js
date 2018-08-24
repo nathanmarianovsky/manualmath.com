@@ -219,6 +219,9 @@ define(function() {
 			if(exports.width_func() < 992) {
 				message();
 			}
+			if(exports.read_cookie("contributor") == "") {
+				exports.session_modal(router, "login", 0);
+			}
 			else {
 				$(".lean-overlay").remove();
 				$("#popup").remove();
