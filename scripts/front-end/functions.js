@@ -215,7 +215,7 @@ define(function() {
 		else { counter++; callback(); }
 		$(window).on("resize", function() {
 			$("body").css("width", "100%");
-			$("#bar").css("width", ((exports.width_func() * 0.019) + 45) + "%");
+			$("#bar").css("width", $("#latex").width());
 			if(exports.width_func() < 992) {
 				message();
 			}
@@ -2913,17 +2913,17 @@ define(function() {
 				ref = section.section_id; }
 			$.post(statement, {param: db_id}).done(function(data) {
 				data.title = data.title != null 
-					? decodeURIComponent(data.title).split("-----") 
-					: [""];
+					? exports.replace_all(decodeURIComponent(data.title),
+						"APOSTROPHE", "'").split("-----") : [""];
 				data.content = data.content != null 
-					? decodeURIComponent(data.content).split("-----") 
-					: [""];
+					? exports.replace_all(decodeURIComponent(data.content),
+						"APOSTROPHE", "'").split("-----") : [""];
 				data.title_cms = data.title_cms != null 
-					? decodeURIComponent(data.title_cms).split("-----") 
-					: [""];
+					? exports.replace_all(decodeURIComponent(data.title_cms),
+						"APOSTROPHE", "'").split("-----") : [""];
 				data.content_cms = data.content_cms != null 
-					? decodeURIComponent(data.content_cms).split("-----") 
-					: [""];
+					? exports.replace_all(decodeURIComponent(data.content_cms),
+						"APOSTROPHE", "'").split("-----") : [""];
 				if(page == "about") {
 					$("#latex").append($("<div>").attr("id", "main_message")
 						.addClass("box_message").append($("<h1>")
@@ -3321,7 +3321,8 @@ define(function() {
 							data.title_cms = data.title_cms.map(function(elem) {
 								return elem.split("\\$").map(function(iter, index) {
 									if(index % 2 == 0) {
-										return iter.replace(/\\/g, "%5C");
+										return exports.replace_all(iter
+											.replace(/\\/g, "%5C"), "'", "APOSTROPHE");
 									}
 									else { return iter; }
 								}).join("\$");
@@ -3329,7 +3330,8 @@ define(function() {
 							data.content_cms = data.content_cms.map(function(elem) {
 								return elem.split("\\$").map(function(iter, index) {
 									if(index % 2 == 0) {
-										return iter.replace(/\\/g, "%5C");
+										return exports.replace_all(iter
+											.replace(/\\/g, "%5C"), "'", "APOSTROPHE");
 									}
 									else { return iter; }
 								}).join("\$");
@@ -3357,7 +3359,8 @@ define(function() {
 								data.title = data.title.map(function(elem) {
 									return elem.split("\\$").map(function(iter, index) {
 										if(index % 2 == 0) {
-											return iter.replace(/\\/g, "%5C");
+											return exports.replace_all(iter
+												.replace(/\\/g, "%5C"), "'", "APOSTROPHE");
 										}
 										else { return iter; }
 									}).join("\$");
@@ -3365,7 +3368,8 @@ define(function() {
 								data.content = data.content.map(function(elem) {
 									return elem.split("\\$").map(function(iter, index) {
 										if(index % 2 == 0) {
-											return iter.replace(/\\/g, "%5C");
+											return exports.replace_all(iter
+												.replace(/\\/g, "%5C"), "'", "APOSTROPHE");
 										}
 										else { return iter; }
 									}).join("\$");
@@ -3446,7 +3450,7 @@ define(function() {
 							exports.handle_desktop_title("section", subject, topic, section);
 						}
 						$("#bar-nav").css("width", "100%");
-						$("#bar").css("width", ((exports.width_func() * 0.019) + 45) + "%");
+						$("#bar").css("width", $("#latex").width());
 						$("#live-version").parent("li").css("margin-left", "25px");
 						$("#save").parent("li").css("margin-right", "25px");
 						$("#cms-version").closest("li").css("background-color", "#008cc3");
