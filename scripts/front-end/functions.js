@@ -2677,6 +2677,11 @@ define(function() {
 		$(".add-image").off();
 		$(".add-math").off();
 		$(".del-box").off();
+		$(".add-table").off();
+		$(".add-row").off();
+		$(".add-column").off();
+		$(".remove-row").off();
+		$(".remove-column").off();
 		$("#latex .solution_display").off();
 		$(".toggle").on("click", function(e) {
 			e.preventDefault();
@@ -2731,6 +2736,89 @@ define(function() {
 				    reader.readAsDataURL(file);
 			  	}
 			});
+		});
+		$(".add-table").on("click", function(e) {
+			e.preventDefault();
+			var obj = $(this).parent().parent().parent()
+				.find(".cont_div .latex_body").first();
+			obj.append($("<div>").addClass("latex_equation").append($("<div>").addClass("table-buttons")
+				.append($("<a>").addClass("waves-effect waves-light btn add-row")
+					.text("Row").attr("contentEditable", "false").append($("<i>")
+						.addClass("material-icons right").text("add")))
+				.append($("<a>").addClass("waves-effect waves-light btn remove-row")
+					.text("Row").attr("contentEditable", "false").append($("<i>")
+						.addClass("material-icons right").text("remove")))
+				.append($("<a>").addClass("waves-effect waves-light btn add-column")
+					.text("Column").attr("contentEditable", "false").append($("<i>")
+						.addClass("material-icons right").text("add")))
+				.append($("<a>").addClass("waves-effect waves-light btn remove-column")
+					.text("Column").attr("contentEditable", "false").append($("<i>")
+						.addClass("material-icons right").text("remove"))), $("<table>")
+							.append($("<tbody>").append($("<tr>").append($("<td>"))))), "<br>");
+			$(".add-row").off();
+			$(".add-column").off();
+			$(".remove-row").off();
+			$(".remove-column").off();
+			$(".add-row").on("click", function(e) {
+				e.preventDefault();
+				$(this).parent().next().find("tbody")
+					.first().append($("<tr>").append($("<td>")));
+			});
+			$(".add-column").on("click", function(e) {
+				e.preventDefault();
+				$(this).parent().next().find("tbody").children().each(function() {
+					$(this).append($("<td>"));
+				});
+			});
+			$(".remove-row").on("click", function(e) {
+				e.preventDefault();
+				var list = $(this).parent().next().find("tbody")
+					.first().children();
+				list.last().remove();
+				if(list.length - 1 == 0) {
+					$(this).parent().parent().remove();
+				}
+			});
+			$(".remove-column").on("click", function(e) {
+				e.preventDefault();
+				var list = $(this).parent().next().find("tbody").children();
+				list.each(function() {
+					$(this).children().last().remove();
+				});
+				if(list.first().children().length == 0) {
+					$(this).parent().parent().remove();
+				}
+			});
+		});
+		$(".add-row").on("click", function(e) {
+			e.preventDefault();
+			$(this).parent().next().find("tbody")
+				.first().append($("<tr>").append($("<td>")));
+		});
+		$(".add-column").on("click", function(e) {
+			e.preventDefault();
+			$(this).parent().next().find("tbody").children().each(function() {
+				$(this).append($("<td>"));
+			});
+		});
+		$(".remove-row").on("click", function(e) {
+			e.preventDefault();
+			var list = $(this).parent().next().find("tbody")
+				.first().children();
+			list.last().remove();
+			if(list.length - 1 == 0) {
+				$(this).parent().parent().remove();
+			}
+		});
+		$(".remove-column").on("click", function(e) {
+			e.preventDefault();
+			var list = $(this).parent().next().find("tbody").children();
+			list.each(function() {
+				$(this).children().last().remove();
+			});
+			if(list.first().children().length == 0) {
+				$(this).parent().parent().remove();
+			}
 		});
 		$(".del-box").on("click", function(e) {
 			e.preventDefault();
@@ -2854,6 +2942,7 @@ define(function() {
 					$("#latex").append($("<div>").addClass("accordion").append($("<div>")
 						.addClass("show_solution").text("NO CONTENT HERE!")));
 				}
+				$(".table-buttons").css("display", "none");
 				exports.handle_breadcrumbs(page, $(".accordion").first(), subject, topic, section, example);
 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 				exports.handle_button();
@@ -2958,6 +3047,7 @@ define(function() {
 							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
 								.addClass("show_solution").text("NO CONTENT HERE!")));
 						}
+						$(".table-buttons").css("display", "none");
 						$("#live-version").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
 						$("#cms-version").css("pointer-events", "auto").closest("li").css("background-color", "");
 						$("#edit").css("pointer-events", "auto").closest("li").css("background-color", "");
@@ -3032,6 +3122,7 @@ define(function() {
 							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
 								.addClass("show_solution").text("NO CONTENT HERE!")));
 						}
+						$(".table-buttons").css("display", "none");
 						$("#cms-version").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
 						$("#live-version").css("pointer-events", "auto").closest("li").css("background-color", "");
 						$("#edit").css("pointer-events", "auto").closest("li").css("background-color", "");
@@ -3071,6 +3162,10 @@ define(function() {
 									.append($("<i>").addClass("material-icons add-image").text("image"))
 									.attr("data-position", "top")
 									.attr("data-tooltip", "Insert Image Below"),
+								span_table = $("<span>").addClass("solution_table add-table-tooltipped")
+									.append($("<i>").addClass("material-icons add-table").text("table_chart"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert Table Below"),
 								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
 									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
 									.attr("data-position", "top")
@@ -3088,7 +3183,7 @@ define(function() {
 							}	
 							latex_body.append(data.content_cms[j]);
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_image, span_del, span_toggle, span);
+							show_solution.append(span_box, span_table, span_image, span_del, span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
@@ -3104,7 +3199,6 @@ define(function() {
 						$("div[contenteditable]").keydown(function(e) {
 						    if(e.keyCode === 13) {
 						    	document.execCommand("insertHTML", false, "<br><br>");
-						    	// document.execCommand("insertHTML", false, "<br>");
 						    	return false;
 						    }
 						});
@@ -3112,6 +3206,7 @@ define(function() {
 						$(".del-box-tooltipped").tooltip();
 						$(".add-math-tooltipped").tooltip();
 						$(".add-image-tooltipped").tooltip();
+						$(".add-table-tooltipped").tooltip();
 						exports.handle_button(1);
 						$("#add-box").off();
 						$("#add-box").on("click", function(e) {
@@ -3136,6 +3231,10 @@ define(function() {
 									.append($("<i>").addClass("material-icons add-image").text("image"))
 									.attr("data-position", "top")
 									.attr("data-tooltip", "Insert Image Below"),
+								span_table = $("<span>").addClass("solution_table add-table-tooltipped")
+									.append($("<i>").addClass("material-icons add-table").text("table_chart"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert Table Below"),
 								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
 									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
 									.attr("data-position", "top")
@@ -3145,7 +3244,7 @@ define(function() {
 							span.append($("<i>").addClass("material-icons").text("remove"));
 							span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_image, span_del, span_toggle, span);
+							show_solution.append(span_box, span_table, span_image, span_del, span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
@@ -3223,7 +3322,19 @@ define(function() {
 							if(data.cms_approval != null && data.cms_approval != "" 
 								&& data.cms_approval.split(",").length >= validation) {
 								data.title = data.title_cms;
-								data.content = data.content_cms;
+								data.content = data.content_cms.map(function(elem) {
+									return exports.replace_all(elem, '<div class="table-buttons">' +
+										'<a class="waves-effect waves-light btn add-row"' +
+										' contenteditable="false">Row<i class="material-icons' +
+										' right">add</i></a><a class="waves-effect waves-light' +
+										' btn remove-row" contenteditable="false">Row<i' +
+										' class="material-icons right">remove</i></a><a' +
+										' class="waves-effect waves-light btn add-column"' +
+										' contenteditable="false">Column<i class="material-icons' +
+										' right">add</i></a><a class="waves-effect waves-light btn' +
+										' remove-column" contenteditable="false">Column<i class=' +
+										'"material-icons right">remove</i></a></div>', "");
+								});
 								data.heading = data.heading_cms;
 								data.cms_approval = 0;
 							}
