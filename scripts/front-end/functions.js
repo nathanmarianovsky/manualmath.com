@@ -2764,8 +2764,14 @@ define(function() {
 			$(".remove-column").off();
 			$(".add-row").on("click", function(e) {
 				e.preventDefault();
+				var count = $(this).parent().next().find("tbody")
+					.first().children().first().find("td").length,
+					cont = $("<tr>");
+				for(var i = 0; i < count; i++) {
+					cont.append($("<td>"));
+				}
 				$(this).parent().next().find("tbody")
-					.first().append($("<tr>").append($("<td>")));
+					.first().append(cont);
 			});
 			$(".add-column").on("click", function(e) {
 				e.preventDefault();
@@ -2795,8 +2801,14 @@ define(function() {
 		});
 		$(".add-row").on("click", function(e) {
 			e.preventDefault();
+			var count = $(this).parent().next().find("tbody")
+				.first().children().first().find("td").length,
+				cont = $("<tr>");
+			for(var i = 0; i < count; i++) {
+				cont.append($("<td>"));
+			}
 			$(this).parent().next().find("tbody")
-				.first().append($("<tr>").append($("<td>")));
+				.first().append(cont);
 		});
 		$(".add-column").on("click", function(e) {
 			e.preventDefault();
