@@ -2468,25 +2468,35 @@ define(function() {
 		if(exports.width_func() < 992) {
 			if(page == "subject") {
 				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(subject.clean_name).css("display", "inline-block")));
 			}
 			else if(page == "topic") {
 				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(topic.clean_name));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(subject.clean_name).css("display", "inline-block")));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(topic.clean_name).css("display", "inline-block")));
 			}
 			else if(page == "section") {
 				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name)));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(section.clean_name)));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(subject.clean_name).css("display", "inline-block")));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(topic.clean_name).css("display", "inline-block")));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(section.clean_name).css("display", "inline-block")));
 			}
 			else if(page == "example") {
 				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").text(subject.clean_name));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(topic.clean_name)));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(section.clean_name)));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb").append($("<div>").text(example.clean_name)));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(subject.clean_name).css("display", "inline-block")));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(topic.clean_name).css("display", "inline-block")));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(section.clean_name).css("display", "inline-block")));
+				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
+					.append($("<div>").text(example.clean_name).css("display", "inline-block")));
 			}
 			$(".breadcrumb:not(:first)").toggleClass("changed");
 		}
@@ -2596,6 +2606,8 @@ define(function() {
 	Handles the initial load of any cms page.
 
 	Parameters:
+		router:
+			An object representing the router
 		callback: 
 			A function callback
 
@@ -2696,7 +2708,7 @@ define(function() {
 			var obj = $(this).parent().parent().parent()
 				.find(".cont_div .latex_body").first();
 			obj.append($("<div>").addClass("latex_equation")
-				.text("$New Equation$"));
+				.text("$\\eqalign{New Equation}$"));
 		});
 		$(".add-image").on("click", function(e) {
 			e.preventDefault();
@@ -3092,6 +3104,7 @@ define(function() {
 						$("div[contenteditable]").keydown(function(e) {
 						    if(e.keyCode === 13) {
 						    	document.execCommand("insertHTML", false, "<br><br>");
+						    	// document.execCommand("insertHTML", false, "<br>");
 						    	return false;
 						    }
 						});
@@ -3347,6 +3360,23 @@ define(function() {
 				// 	});
 				// }
 			});
+		});
+	};
+
+	/*
+
+	Purpose:
+	Handles the initial load of any client page.
+
+	Parameters:
+		callback: 
+			A function callback
+
+	*/
+	exports.initial_client = function(callback) {
+		$.get("/pages/dist/main-min.html").done(function(content) {
+			$(document.body).empty().append(content);
+			callback();
 		});
 	};
 

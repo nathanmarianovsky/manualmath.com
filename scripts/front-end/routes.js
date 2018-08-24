@@ -69,8 +69,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("def", function(toState, fromState) {
-			$.get("/pages/dist/main-min.html").done(function(content) {
-				$(document.body).empty().append(content);
+			functions.initial_client(function() {
 				navs.driver("about", 0, subjects, undefined, function() {
 					functions.latex("about", router, links, subjects, topics,
 						sections, examples);
@@ -79,8 +78,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("about", function(toState, fromState) {
-			$.get("/pages/dist/main-min.html").done(function(content) {
-				$(document.body).empty().append(content);
+			functions.initial_client(function() {
 				navs.driver("about", 0, subjects, undefined, function() {
 					functions.latex("about", router, links, subjects, topics,
 						sections, examples);
@@ -102,8 +100,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subject", function(toState, fromState) {
-			$.get("/pages/dist/main-min.html").done(function(content) {
-				$(document.body).empty().append(content);
+			functions.initial_client(function() {
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0];
@@ -132,8 +129,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subject.topic", function(toState, fromState) {
-			$.get("/pages/dist/main-min.html").done(function(content) {
-				$(document.body).empty().append(content);
+			functions.initial_client(function() {
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0],
@@ -179,8 +175,7 @@ define(["dist/functions-min", "dist/navs-min", "dist/links-min"], function(funct
 		});
 
 		router.addRouteListener("subject.topic.section.current_page", function(toState, fromState) {
-			$.get("/pages/dist/main-min.html").done(function(content) {
-				$(document.body).empty().append(content);
+			functions.initial_client(function() {
 				var subject = subjects.filter(function(iter) {
 					return iter.sname == toState.params.sname;
 				})[0],
