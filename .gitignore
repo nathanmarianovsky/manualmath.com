@@ -8,3 +8,5 @@ api/config.php
 scripts/back-end/config.js
 *.DS-Store
 package-lock.json
+api/config.php
+scripts/back-end/config.js
