@@ -89,7 +89,8 @@ exports.minify_html = (minify, mkdirp, fs) => {
 		"./pages/button.html", "./pages/modal.html", "./pages/contributor-profile.html",
 		"./pages/change-confirmation.html", "./pages/password-recovery.html",
 		"./pages/password-change.html", "./pages/sidenav-change.html",
-		"./pages/committee-table.html", "./pages/edit-bar.html", "./pages/add-link.html"],
+		"./pages/committee-table.html", "./pages/edit-bar.html", "./pages/add-link.html",
+		"./pages/list-form.html"],
 		tmp = [];
 	container.forEach(file => {
 		fs.readFile(file, "utf8", (err, data) => {

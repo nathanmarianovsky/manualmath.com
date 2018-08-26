@@ -495,7 +495,8 @@ nav {
 
 .solution_toggle, .solution_del,
 .solution_img, .solution_table,
-.solution_box, .solution_link {
+.solution_box, .solution_link,
+.solution_bullet {
 	position: absolute;
     top: -10px;
     font-size: 40px;
@@ -515,16 +516,20 @@ nav {
 	right: 200px;
 }
 
-.solution_img {
-    right: 250px;
+.solution_bullet {
+	right: 250px;
 }
 
-.solution_table {
+.solution_img {
     right: 300px;
 }
 
-.solution_box {
+.solution_table {
     right: 350px;
+}
+
+.solution_box {
+    right: 400px;
 }
 
 .table-buttons {
@@ -540,7 +545,23 @@ nav {
 }
 
 .content-link {
-	padding-left: 4px;
 	color: inherit;
 	text-decoration: underline;
+}
+
+.list-label {
+	display: block;
+	margin-top: 10px;
+}
+
+.list-label span {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.list-label input[type="radio"]:not(checked),
+.list-label input[type="radio"]:checked {
+	position: inherit;
+	left: 0px;
+	visibility: visible;
 }

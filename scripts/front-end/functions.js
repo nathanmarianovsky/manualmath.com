@@ -2696,6 +2696,7 @@ define(function() {
 		$(".del-box").off();
 		$(".add-table").off();
 		$(".add-link").off();
+		$(".add-bullet").off();
 		$(".add-row").off();
 		$(".add-column").off();
 		$(".remove-row").off();
@@ -2724,12 +2725,178 @@ define(function() {
 		$(".add-image-tooltipped").tooltip("destroy");
 		$(".add-table-tooltipped").tooltip("destroy");
 		$(".add-link-tooltipped").tooltip("destroy");
+		$(".add-bullet-tooltipped").tooltip("destroy");
 		$(".solution_toggle").tooltip();
 		$(".del-box-tooltipped").tooltip();
 		$(".add-math-tooltipped").tooltip();
 		$(".add-image-tooltipped").tooltip();
 		$(".add-table-tooltipped").tooltip();
 		$(".add-link-tooltipped").tooltip();
+		$(".add-bullet-tooltipped").tooltip();
+		$(".add-bullet").on("click", function(e) {
+			e.preventDefault();
+			var obj = $(this).parent().parent().parent()
+				.find(".cont_div .latex_body").first();
+			$.get("/pages/dist/modal-min.html").done(function(content) {
+				$("body").append(content);
+				$(".modal-trigger").leanModal({
+					dismissible: false,
+					opacity: 2,
+					inDuration: 1000,
+					outDuration: 1000
+				});
+				$("body").on("keypress", function(event) {
+				    if(event.which === 10 || event.which === 13) {
+				        return false;
+				    }
+				});
+				$("#popup_title").text("Add List");
+				$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+				$.get("/pages/dist/list-form-min.html").done(function(form) {
+					$("#popup_body").append(form);
+					$("#popup_submit").css("pointer-events", "none");
+					$("#popup_control").click();
+					$("#unordered").on("change", function() {
+						if($(this)[0].checked) {
+							$("#popup_submit").css("pointer-events", "none");
+							$("#ordered-options").remove();
+							var par = $("<p>").attr("id", "unordered-options")
+								.text("Choose the style:"),
+								label = $("<label>").addClass("list-label"),
+								input_disc = $("<input>").addClass("with-gap")
+								.attr({type: "radio", value: "disc", name: "unordered"}),
+								span_disc = $("<span>").addClass("black-text").text("Disc"),
+								input_circle = $("<input>").addClass("with-gap")
+								.attr({type: "radio", value: "circle", name: "unordered"}),
+								span_circle = $("<span>").addClass("black-text").text("Circle"),
+								input_square = $("<input>").addClass("with-gap")
+								.attr({type: "radio", value: "square", name: "unordered"}),
+								span_square = $("<span>").addClass("black-text").text("Square");
+							label.append(input_disc, span_disc, input_circle, span_circle,
+								input_square, span_square);
+							par.append(label);
+							$("#list-form").append(par);
+							$('input:radio[name="unordered"]').on("change", function() {
+								if($(this)[0].checked) {
+									$("#popup_submit").css("pointer-events", "auto");
+								}
+								else {
+									$("#popup_submit").css("pointer-events", "none");
+								}
+							});
+						}
+						else {
+							$("#unordered-options").remove();
+						}
+					});
+					$("#ordered").on("change", function() {
+						if($(this)[0].checked) {
+							$("#popup_submit").css("pointer-events", "none");
+							$("#unordered-options").remove();
+							var par = $("<p>").attr("id", "ordered-options")
+								.text("Choose the ordering style:"),
+								label = $("<label>").addClass("list-label"),
+								input_number = $("<input>").addClass("with-gap")
+								.attr({type: "radio", value: "1", name: "ordered"}),
+								span_number = $("<span>").addClass("black-text").text("Numbered"),
+								input_uppercaseLetter = $("<input>").addClass("with-gap")
+								.attr({type: "radio", value: "A", name: "ordered"}),
+								span_uppercaseLetter = $("<span>").addClass("black-text").text("Uppercase Letters"),
+								input_lowercaseLetter = $("<input>").addClass("with-gap")
+								.attr({type: "radio", value: "a", name: "ordered"}),
+								span_lowercaseLetter = $("<span>").addClass("black-text").text("Lowercase Letters"),
+								input_uppercaseRoman = $("<input>").addClass("with-gap")
+								.attr({type: "radio", value: "I", name: "ordered"}),
+								span_uppercaseRoman = $("<span>").addClass("black-text").text("Uppercase Roman Numbers"),
+								input_lowercaseRoman = $("<input>").addClass("with-gap")
+								.attr({type: "radio", value: "i", name: "ordered"}),
+								span_lowercaseRoman = $("<span>").addClass("black-text").text("Lowercase Roman Numbers");
+							label.append(input_number, span_number, input_uppercaseLetter, span_uppercaseLetter,
+								input_lowercaseLetter, span_lowercaseLetter, input_uppercaseRoman, span_uppercaseRoman,
+								input_lowercaseRoman, span_lowercaseRoman);
+							par.append(label);
+							$("#popup_body").append(par);
+							$('input:radio[name="ordered"]').on("change", function() {
+								if($(this)[0].checked) {
+									$("#popup_submit").css("pointer-events", "auto");
+								}
+								else {
+									$("#popup_submit").css("pointer-events", "none");
+								}
+							});
+						}
+						else {
+							$("#ordered-options").remove();
+						}
+					});
+					$("#popup_exit").click(function(e) {
+						e.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+					});
+					$("#popup_submit").click(function(e) {
+						e.preventDefault();
+						var type = $('input:radio[name="ordering"]:checked').val(),
+							style = type == "0" ? $('input:radio[name="unordered"]:checked').val()
+								: $('input:radio[name="ordered"]:checked').val();
+						if(type == "0") {
+							obj.append($("<div>").addClass("latex_equation").attr("contentEditable", "false")
+								.append($("<div>").addClass("table-buttons")
+									.append($("<a>").addClass("waves-effect waves-light btn plus-bullet")
+										.text("Bullet").attr("contentEditable", "false").append($("<i>")
+										.addClass("material-icons right").text("add")))
+									.append($("<a>").addClass("waves-effect waves-light btn minus-bullet")
+										.text("Bullet").attr("contentEditable", "false").append($("<i>")
+										.addClass("material-icons right").text("remove"))),
+								$("<ul>").css("list-style-position", "inside")
+									.append($("<li>").attr("contentEditable", "true")
+										.css({"list-style-type": style, "text-align": "left"}))), "<br>");
+						}
+						else if(type == "1") {
+							obj.append($("<div>").addClass("latex_equation").attr("contentEditable", "false")
+								.append($("<div>").addClass("table-buttons")
+									.append($("<a>").addClass("waves-effect waves-light btn plus-bullet")
+										.text("Bullet").attr("contentEditable", "false").append($("<i>")
+										.addClass("material-icons right").text("add")))
+									.append($("<a>").addClass("waves-effect waves-light btn minus-bullet")
+										.text("Bullet").attr("contentEditable", "false").append($("<i>")
+										.addClass("material-icons right").text("remove"))),
+								$("<ol>").css("list-style-position", "inside")
+									.attr("type", style).append($("<li>").attr("contentEditable", "true")
+										.css("text-align", "left"))), "<br>");
+						}
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						$(".plus-bullet").click(function(e) {
+							e.preventDefault();
+							if(type == "0") {
+								$(this).parent().next().append($("<li>").css({
+									"list-style-type": style,
+									"text-align": "left"
+								}).attr("contentEditable", "true"));
+							}
+							else if(type == "1") {
+								$(this).parent().next().append($("<li>").attr("contentEditable", "true")
+									.css("text-align", "left"));
+							}
+						});
+						$(".minus-bullet").click(function(e) {
+							e.preventDefault();
+							var children = $(this).parent().next().children();
+							if(children.length - 1 == 0) {
+								$(this).parent().parent().remove();
+							}
+							else {
+								$(this).parent().next().children().last().remove();
+							}
+						});
+					});
+				});
+			});
+		});
 		$(".add-math").on("click", function(e) {
 			e.preventDefault();
 			var obj = $(this).parent().parent().parent()
@@ -3266,6 +3433,10 @@ define(function() {
 									.append($("<i>").addClass("material-icons add-link").text("link"))
 									.attr("data-position", "top")
 									.attr("data-tooltip", "Insert Link Below"),
+								span_bullet = $("<span>").addClass("solution_bullet add-bullet-tooltipped")
+									.append($("<i>").addClass("material-icons add-bullet").text("list"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert List Below"),
 								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
 									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
 									.attr("data-position", "top")
@@ -3283,7 +3454,8 @@ define(function() {
 							}	
 							latex_body.append(data.content_cms[j]);
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_table, span_image, span_link, span_del, span_toggle, span);
+							show_solution.append(span_box, span_table, span_image, span_bullet,
+								span_link, span_del, span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
@@ -3296,7 +3468,7 @@ define(function() {
 						$("#live-version").css("pointer-events", "auto").closest("li").css("background-color", "");
 						$("#cms-version").css("pointer-events", "auto").closest("li").css("background-color", "");
 						$(".latex_body").attr("contentEditable", "true");
-						$("div[contenteditable]").keydown(function(e) {
+						$(".latex_body").keydown(function(e) {
 						    if(e.keyCode === 13) {
 						    	document.execCommand("insertHTML", false, "<br><br>");
 						    	return false;
@@ -3308,6 +3480,7 @@ define(function() {
 						$(".add-image-tooltipped").tooltip();
 						$(".add-table-tooltipped").tooltip();
 						$(".add-link-tooltipped").tooltip();
+						$(".add-bullet-tooltipped").tooltip();
 						exports.handle_button(1);
 						$("#add-box").off();
 						$("#add-box").on("click", function(e) {
@@ -3340,6 +3513,10 @@ define(function() {
 									.append($("<i>").addClass("material-icons add-link").text("link"))
 									.attr("data-position", "top")
 									.attr("data-tooltip", "Insert Link Below"),
+								span_bullet = $("<span>").addClass("solution_bullet add-bullet-tooltipped")
+									.append($("<i>").addClass("material-icons add-bullet").text("list"))
+									.attr("data-position", "top")
+									.attr("data-tooltip", "Insert List Below"),
 								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
 									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
 									.attr("data-position", "top")
@@ -3349,7 +3526,8 @@ define(function() {
 							span.append($("<i>").addClass("material-icons").text("remove"));
 							span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_table, span_image, span_link, span_del, span_toggle, span);
+							show_solution.append(span_box, span_table, span_image, span_bullet,
+								span_link, span_del, span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
