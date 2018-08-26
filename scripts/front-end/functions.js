@@ -809,9 +809,6 @@ define(function() {
 							}
 							else {
 								if(iter.edited == 1) {
-									// statement = "/api/cms/change/contributor/" + iter.email + "/" + 
-									// 	(iter.approval == null ? "0" : iter.approval) + "/" + 
-									// 	(iter.del == null ? "0" : iter.del);
 									$.post("/api/cms/contributor/change/approval/", {
 										email: iter.email,
 										approval: iter.approval == null ? "0" : iter.approval,
@@ -2217,7 +2214,8 @@ define(function() {
 
 	*/
 	exports.valid_url = function(url) {
-	    return /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(url) ? 1 : -1;
+		var reg = /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
+	    return reg.test(url) ? 1 : -1;
 	};
 
 	/*

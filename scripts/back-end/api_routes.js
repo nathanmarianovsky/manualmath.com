@@ -507,7 +507,6 @@ exports.add_api_routes = (app, pool) => {
 	app.post("/api/cms/check/:param", (request, response) => {
 		var param = request.params.param,
 			email = request.body.email,
-			passwd = request.body.passwd,
 			statement = "";
 		if(param == "login" || param == "email") {
 			if(param == "login") {
@@ -520,6 +519,7 @@ exports.add_api_routes = (app, pool) => {
 				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 				else {
 					if(param == "login") {
+						var passwd = request.body.passwd;
 						if(result.length > 0) {
 							if(bcrypt.compareSync(passwd, result[0].password)) {
 								response.send([{email: email, password: passwd, status: result[0].status}]);
@@ -626,7 +626,6 @@ exports.add_api_routes = (app, pool) => {
 			if(param == "add") {
 				var fname = request.body.fname,
 					lname = request.body.lname,
-					email = request.body.email,
 					passwd = request.body.passwd,
 					question = request.body.question,
 					answer = request.body.answer;
