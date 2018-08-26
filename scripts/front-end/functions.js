@@ -214,7 +214,7 @@ define(function() {
 		if(exports.width_func() < 992) { message(); }
 		else { counter++; callback(); }
 		$(window).on("resize", function() {
-			$("body").css("width", "100%");
+			$("body").css({width: "100%", overflow: "auto"});
 			$("#bar").css("width", $("#latex").width());
 			if(exports.width_func() < 992) {
 				message();
@@ -3896,6 +3896,19 @@ define(function() {
 			}
 			$("body").css("overflow", "auto");
 			$(window).on("resize", function() {
+				if(page == "about") {
+					exports.handle_desktop_title("about");
+				}
+				else if(page == "subject") {
+					exports.handle_desktop_title("subject", subject);
+				}
+				else if(page == "topic") {
+					exports.handle_desktop_title("topic", subject, topic);
+				}
+				else if(page == "section" || page == "example") {
+					exports.handle_desktop_title("section", subject, topic, section);
+				}
+				exports.handle_side_nav();
 				if(exports.width_func() < 992) {
 					$("#logo").css({
 						"float": "right",
