@@ -3604,7 +3604,7 @@ define(function() {
 								&& data.cms_approval.split(",").length >= validation) {
 								data.title = data.title_cms;
 								data.content = data.content_cms.map(function(elem) {
-									return exports.replace_all(elem, '<div class="table-buttons">' +
+									var filter = exports.replace_all(elem, '<div class="table-buttons">' +
 										'<a class="waves-effect waves-light btn add-row"' +
 										' contenteditable="false">Row<i class="material-icons' +
 										' right">add</i></a><a class="waves-effect waves-light' +
@@ -3615,6 +3615,12 @@ define(function() {
 										' right">add</i></a><a class="waves-effect waves-light btn' +
 										' remove-column" contenteditable="false">Column<i class=' +
 										'"material-icons right">remove</i></a></div>', "");
+									return exports.replace_all(filter, '<div class="table-buttons"><a class="waves-effect' +
+										' waves-light btn plus-bullet" contenteditable="false"' +
+										'>Bullet<i class="material-icons right">add</i></a><a' +
+										' class="waves-effect waves-light btn minus-bullet"' +
+										' contenteditable="false">Bullet<i class="material-icons' +
+										' right">remove</i></a></div>', "");
 								});
 								data.heading = data.heading_cms;
 								data.cms_approval = 0;
