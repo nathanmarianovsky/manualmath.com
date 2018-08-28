@@ -62,11 +62,11 @@ define(["dist/functions-min"], function(functions) {
 			}
 		});
 		results.forEach(function(subject) { 
-			if(functions.is_mobile() && subject !== 0) {
-				sidenav.append(subject, $("<li>").addClass("divider"))
+			if(functions.width_func() < 992 && subject !== 0) {
+				sidenav.append(subject, $("<li>").addClass("divider"));
 			}
 			else if(subject !== 0) {
-				sidenav.append(subject)
+				sidenav.append(subject);
 			}
 		});
 		exports.extra();
@@ -122,11 +122,11 @@ define(["dist/functions-min"], function(functions) {
 			}
 		});
 		results.forEach(function(topic) {
-			if(functions.is_mobile() && topic !== 0) {
-				sidenav.append(topic, $("<li>").addClass("divider"))
+			if(functions.width_func() < 992 && topic !== 0) {
+				sidenav.append(topic, $("<li>").addClass("divider"));
 			}
 			else if(topic !== 0) {
-				sidenav.append(topic)
+				sidenav.append(topic);
 			}
 		});
 		exports.extra();
@@ -184,11 +184,11 @@ define(["dist/functions-min"], function(functions) {
 			}
 		});
 		results.forEach(function(section) {
-			if(functions.is_mobile() && section !== 0) {
-				sidenav.append(section, $("<li>").addClass("divider"))
+			if(functions.width_func() < 992 && section !== 0) {
+				sidenav.append(section, $("<li>").addClass("divider"));
 			}
 			else if(section !== 0) {
-				sidenav.append(section)
+				sidenav.append(section);
 			}
 		});
 		exports.extra();
@@ -250,11 +250,11 @@ define(["dist/functions-min"], function(functions) {
 			}
 		});
 		results.forEach(function(example) {
-			if(functions.is_mobile() && example !== 0) {
-				sidenav.append(example, $("<li>").addClass("divider"))
+			if(functions.width_func() < 992 && example !== 0) {
+				sidenav.append(example, $("<li>").addClass("divider"));
 			}
 			else if(example !== 0) {
-				sidenav.append(example)
+				sidenav.append(example);
 			}
 		});
 		exports.extra();

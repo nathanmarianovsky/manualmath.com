@@ -1319,13 +1319,10 @@ define(function() {
 							else if(type == "Sections") { id = iter.section_id; name = iter.section_name; ref = iter.tid; }
 							else if(type == "Examples") { id = iter.eid; name = iter.ename; ref = iter.section_id; }
 							if(typeof iter.del_approval != "object" && iter.del_approval.split(",").length >= validation) {
-								console.log(iter);
-								console.log(validation);
 								$.post("/api/delete/" + type.toLowerCase().substring(0, type.length - 1) + "/", {param: id})
 								.fail(function(xhr, status, error) {
-									console.log(xhr);
-									console.log(status);
-									console.log(error);
+									console.log("Deleting the " + type.toLowerCase().substring(0, type.length - 1) +
+										"with id " + id + " failed with the error: " + error);
 								});
 							}
 							else {
@@ -2421,7 +2418,7 @@ define(function() {
 
 	*/
 	exports.handle_logo = function() {
-		if(exports.width_func() < 992 || exports.is_mobile()) {
+		if(exports.width_func() < 992) {
 			$("#logo").css({
 				"float": "right",
 				"right": "10px"
@@ -2614,6 +2611,16 @@ define(function() {
 		    navigator.userAgent.match(/Tablet/i) ||
 		    navigator.userAgent.match(/iPad/i) ||
 		    navigator.userAgent.match(/Kindle/i) ||
+		    navigator.userAgent.match(/Silk/i) ||
+		    navigator.userAgent.match(/KFTT/i) ||
+		    navigator.userAgent.match(/KFOT/i) ||
+		    navigator.userAgent.match(/KFJWA/i) ||
+		    navigator.userAgent.match(/KFJWI/i) ||
+		    navigator.userAgent.match(/KFSOWI/i) ||
+		    navigator.userAgent.match(/KFTHWA/i) ||
+		    navigator.userAgent.match(/KFTHWI/i) ||
+		    navigator.userAgent.match(/KFAPWA/i) ||
+		    navigator.userAgent.match(/KFAPWI/i) ||
 		    navigator.userAgent.match(/Playbook/i) ||
 		    navigator.userAgent.match(/Nexus/i) ||
 		    navigator.userAgent.match(/Xoom/i) ||
