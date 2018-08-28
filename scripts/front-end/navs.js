@@ -57,9 +57,17 @@ define(["dist/functions-min"], function(functions) {
 				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 				return subjectli.append(link);
 			}
+			else {
+				return 0;
+			}
 		});
 		results.forEach(function(subject) { 
-			functions.is_mobile() ? sidenav.append(subject, $("<li>").addClass("divider")) : sidenav.append(subject); 
+			if(functions.is_mobile() && subject !== 0) {
+				sidenav.append(subject, $("<li>").addClass("divider"))
+			}
+			else if(subject !== 0) {
+				sidenav.append(subject)
+			}
 		});
 		exports.extra();
 	};
@@ -109,9 +117,17 @@ define(["dist/functions-min"], function(functions) {
 				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 				return topicli.append(link);
 			}
+			else {
+				return 0;
+			}
 		});
-		results.forEach(function(topic) { 
-			functions.is_mobile() ? sidenav.append(topic, $("<li>").addClass("divider")) : sidenav.append(topic); 
+		results.forEach(function(topic) {
+			if(functions.is_mobile() && topic !== 0) {
+				sidenav.append(topic, $("<li>").addClass("divider"))
+			}
+			else if(topic !== 0) {
+				sidenav.append(topic)
+			}
 		});
 		exports.extra();
 	};
@@ -163,9 +179,17 @@ define(["dist/functions-min"], function(functions) {
 				link.append($("<i>").addClass("material-icons right").text("arrow_forward"));
 				return sectionli.append(link);
 			}
+			else {
+				return 0;
+			}
 		});
-		results.forEach(function(section) { 
-			functions.is_mobile() ? sidenav.append(section, $("<li>").addClass("divider")) : sidenav.append(section); 
+		results.forEach(function(section) {
+			if(functions.is_mobile() && section !== 0) {
+				sidenav.append(section, $("<li>").addClass("divider"))
+			}
+			else if(section !== 0) {
+				sidenav.append(section)
+			}
 		});
 		exports.extra();
 	};
@@ -221,9 +245,17 @@ define(["dist/functions-min"], function(functions) {
 						.attr("id", "examples_" + example.eid + "_cms").text(example.clean_name);
 				return exampleli.append(link);
 			}
+			else {
+				return 0;
+			}
 		});
-		results.forEach(function(example) { 
-			functions.is_mobile() ? sidenav.append(example, $("<li>").addClass("divider")) : sidenav.append(example); 
+		results.forEach(function(example) {
+			if(functions.is_mobile() && example !== 0) {
+				sidenav.append(example, $("<li>").addClass("divider"))
+			}
+			else if(example !== 0) {
+				sidenav.append(example)
+			}
 		});
 		exports.extra();
 	};
