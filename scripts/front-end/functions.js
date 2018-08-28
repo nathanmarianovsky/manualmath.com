@@ -2387,6 +2387,16 @@ define(function() {
 	/*
 
 	Purpose:
+	Returns the screen height.
+
+	*/
+	exports.height_func = function() {
+		return (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0);
+	}
+
+	/*
+
+	Purpose:
 	Handles the side nav for different screens.
 
 	*/
@@ -3929,10 +3939,12 @@ define(function() {
 					});
 				}
 				var screen_width = exports.width_func(),
+					screen_height = exports.height_func(),
+					val = Math.min(screen_width, screen_height),
 					width = -1;
-				if(screen_width >= 992) { width = 350; }
-				else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
-				else { width = screen_width * .72; }
+				if(val >= 992) { width = 350; }
+				else if(val < 992 && val > 400) { width = val * .75; }
+				else { width = val * .72; }
 				$("#nav-mobile").css("width", width);
 			});
 			
