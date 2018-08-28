@@ -2466,13 +2466,18 @@ define(function() {
 	*/
 	exports.handle_orientation = function() {
 		$(window).on("orientationchange", function() {
+			console.log("flipped");
 			var orientation = screen.msOrientation ||
 				(screen.orientation || screen.mozOrientation || {}).type,
-				val = -1,
+				val = exports.height_func(),
 				width = -1;
-			orientation === "portrait-primary" || orientation === "portrait-secondary"
-				|| orientation === undefined ? val = exports.width_func()
-				: val = exports.height_func();
+			console.log(orientation);
+			// orientation === "portrait-primary" || orientation === "portrait-secondary"
+			// 	|| orientation === undefined ? val = exports.width_func()
+			// 	: val = exports.height_func();
+			console.log(exports.width_func());
+			console.log(exports.height_func());
+			console.log(val);
 			if(val >= 992) { width = 350; }
 			else if(val < 992 && val > 400) { width = val * .75; }
 			else { width = val * .72; }
