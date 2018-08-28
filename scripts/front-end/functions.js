@@ -2915,7 +2915,10 @@ define(function() {
 				reader.addEventListener("load", function () {
 					exports.resize_image(reader.result, 400, 400, function(scaled_data) {
 				  		obj.append($("<div>").addClass("latex_equation")
-							.append($("<img>").attr("src", scaled_data)));
+							.append($("<img>").attr({
+								src: scaled_data,
+								alt: "Math Image"
+							})));
 					});
 					$("#file").remove();
 		  		}, false);
@@ -3072,7 +3075,8 @@ define(function() {
 						obj.append($("<a>").addClass("content-link")
 							.text($("#link-text").val()).attr({
 							href: "//" + $("#link-url").val(),
-							target: "_blank"
+							target: "_blank",
+							rel: "noreferrer"
 						}));
 						$(".lean-overlay").remove();
 						$("#popup").remove();
@@ -3142,19 +3146,19 @@ define(function() {
 				ref = -1;
 			if(page == "about") { statement += "cms/about/data"; }
 			else if(page == "subject") {
-				statement += "subject/data/";
+				statement += "subject/data/cms";
 				db_id = subject.sid;
 				ref = "undefined"; }
 			else if(page == "topic") {
-				statement += "topic/data/";
+				statement += "topic/data/cms";
 				db_id = topic.tid;
 				ref = subject.sid; }
 			else if(page == "section") {
-				statement += "section/data/";
+				statement += "section/data/cms";
 				db_id = section.section_id;
 				ref = topic.tid; }
 			else if(page == "example") {
-				statement += "example/data/";
+				statement += "example/data/cms";
 				db_id = example.eid;
 				ref = section.section_id; }
 			$.post(statement, {param: db_id}).done(function(data) {
@@ -3818,27 +3822,27 @@ define(function() {
 		var statement = "/api/",
 			db_id = -1;
 		if(page == "about") { 
-			statement += "cms/about/data";
+			statement += "about/client";
 			$("title").text("About");
 		}
 		else if(page == "subject") { 
-			statement += "subject/data/";
+			statement += "subject/data/client";
 			db_id = subject.sid;
 			$("title").text(subject.clean_name);
 		}
 		else if(page == "topic") { 
-			statement += "topic/data/";
+			statement += "topic/data/client";
 			db_id = topic.tid;
 			$("title").text(subject.clean_name + " - " + topic.clean_name);
 		}
 		else if(page == "section") { 
-			statement += "section/data/";
+			statement += "section/data/client";
 			db_id = section.section_id;
 			$("title").text(subject.clean_name + " - " + topic.clean_name + 
 				" - " + section.clean_name);
 		}
 		else if(page == "example") { 
-			statement += "example/data/";
+			statement += "example/data/client";
 			db_id = example.eid;
 			$("title").text(subject.clean_name + " - " + topic.clean_name + 
 				" - " + section.clean_name);

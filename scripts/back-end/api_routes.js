@@ -3,48 +3,81 @@ var exports = {},
 
 // Adds all of the API routes
 exports.add_api_routes = (app, pool) => {
-	// The API methods to get the data corresponding to any particular subject, topic, section, or example
-	app.post("/api/:want/data/", (request, response) => {
-		var want = request.params.want,
-			param = request.body.param,
-			statement = "SELECT title,content,title_cms,content_cms,cms_approval FROM ";
-		// response.set("Cache-Control", "public, max-age=864000000");
-		if(want == "subject") {
-			statement += "subject WHERE sid=";
-		}
-		else if(want == "topic") {
-			statement += "topic WHERE tid=";
-		}
-		else if(want == "section") {
-			statement += "section WHERE section_id=";
-		}
-		else if(want == "example") {
-			statement += "example WHERE eid=";
-		}
-		if(want == "subject" || want == "topic" || want == "section" || want == "example") {
-			statement += param;
-			pool.query(statement, (err, results) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-				if(results.length != 0) {
-					var title_str = results[0].title != null ? results[0].title : "",
-						title_str_cms = results[0].title_cms != null ? results[0].title_cms : "",
-						content_str = results[0].content != null 
-							? new Buffer(results[0].content, "binary").toString() : "",
-						content_str_cms = results[0].content_cms != null 
-							? new Buffer(results[0].content_cms, "binary").toString() : "";
-					var obj = {
+	// The API method to get the content of the landing page for the client side
+	app.post("/api/about/client", (request, response) => {
+		pool.query("SELECT heading,title,content FROM about", (err, result) => {
+			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			else {
+				if(result.length == 0) { response.send("0"); }
+				else {
+					var heading_str = result[0].heading != null ? result[0].heading : "",
+						title_str = result[0].title != null ? result[0].title : "",
+						content_str = result[0].content != null 
+							? new Buffer(result[0].content, "binary").toString() : "";
+					response.send({
+						heading: heading_str,
 						title: title_str,
-						title_cms: title_str_cms,
-						content: content_str,
-						content_cms: content_str_cms,
-						cms_approval: results[0].cms_approval
-					};
-					response.send(obj);
+						content: content_str
+					});
 				}
-				else { response.send("Cannot find an object with the given id!"); }
-			});
+			}
+		});
+	});
+	
+	// The API methods to get the data corresponding to any particular subject, topic, section, or example
+	app.post("/api/:want/data/:side", (request, response) => {
+		var want = request.params.want,
+			side = request.params.side,
+			param = request.body.param,
+			statement = "";
+		// response.set("Cache-Control", "public, max-age=864000000");
+		if(side == "client" || side == "cms") {
+			side == "cms" ? statement = "SELECT title,content,title_cms,content_cms,cms_approval FROM "
+				: statement = "SELECT title,content FROM ";
+			if(want == "subject") {
+				statement += "subject WHERE sid=";
+			}
+			else if(want == "topic") {
+				statement += "topic WHERE tid=";
+			}
+			else if(want == "section") {
+				statement += "section WHERE section_id=";
+			}
+			else if(want == "example") {
+				statement += "example WHERE eid=";
+			}
+			if(want == "subject" || want == "topic" || want == "section" || want == "example") {
+				statement += param;
+				pool.query(statement, (err, results) => {
+					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					if(results.length != 0) {
+						var title_str = results[0].title != null ? results[0].title : "",
+							content_str = results[0].content != null 
+								? new Buffer(results[0].content, "binary").toString() : "";
+						if(side == "client") {
+							var title_str_cms = results[0].title_cms != null ? results[0].title_cms : "",
+								content_str_cms = results[0].content_cms != null 
+									? new Buffer(results[0].content_cms, "binary").toString() : "";
+						}
+						var obj = {
+							title: title_str,
+							content: content_str
+						};
+						if(side == "client") {
+							obj.title_cms = title_str_cms;
+							obj.content_cms = content_str_cms;
+							obj.cms_approval = results[0].cms_approval;
+						}
+						response.send(obj);
+					}
+					else { response.send("Cannot find an object with the given id!"); }
+				});
+			}
+			else { response.send("This object whose file you want does not seem to exist in the database!"); }
 		}
-		else { response.send("This object whose file you want does not seem to exist in the database!"); }
+		else {
+			response.send("No such API request exists!")
+		}
 	});
 
 	// The API method to delete the data corresponding to a particular subject, topic, section, or example

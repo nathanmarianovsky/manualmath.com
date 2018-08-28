@@ -18,6 +18,7 @@
 - [Using the API](#using-the-api)
     - [Getting All Objects of a Certain Type (GET)](#getting-all-objects-of-a-certain-type-get)
     - [Getting the Content of the About Page (POST)](#getting-the-content-of-the-about-page-post)
+    - [Getting the Content of the About Page for Client (POST)](#getting-the-content-of-the-about-page-for-client-post)
     - [Changing the Content of the About Page (POST)](#changing-the-content-of-the-about-page-post)
     - [Getting the Content of any Subject, Topic, Section, or Example (POST)](#getting-the-content-of-any-subject-topic-section-or-example-post)
     - [Adding & Changing the Content of any Subject, Topic, Section, or Example (POST)](#adding--changing-the-content-of-any-subject-topic-section-or-example-post)
@@ -167,6 +168,13 @@ To get the content of the about page you would call on:
 ```
 localhost/api/cms/about/data
 ```
+
+### Getting the Content of the About Page for Client (POST)
+To get the content of the about page you would call on:
+```
+localhost/api/about/client
+```
+The difference between this and the previous call is that this does not grab the cms information for the client side as it is unnecessary.
 
 ### Changing the Content of the About Page (POST)
 To change the content of the about page you would call on:
