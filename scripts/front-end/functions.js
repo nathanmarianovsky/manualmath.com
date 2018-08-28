@@ -2464,9 +2464,19 @@ define(function() {
 	Handles the mobile logo placement on an orientation change.
 
 	*/
-	exports.handle_orientation = function(page, navs, param1, param2) {
-		$(window).on("deviceorientation", function(event) { 
-			// exports.handle_logo();
+	exports.handle_orientation = function() {
+		$(window).on("orientationchange", function() {
+			var orientation = screen.msOrientation ||
+				(screen.orientation || screen.mozOrientation || {}).type,
+				val = -1,
+				width = -1;
+			orientation === "portrait-primary" || orientation === "portrait-secondary"
+				|| orientation === undefined ? val = exports.width_func()
+				: val = exports.height_func();
+			if(val >= 992) { width = 350; }
+			else if(val < 992 && val > 400) { width = val * .75; }
+			else { width = val * .72; }
+			$("#nav-mobile").css("width", width);
 		});
 	};
 
@@ -3727,7 +3737,7 @@ define(function() {
 						exports.handle_logo();
 						exports.handle_li_coloring();
 						links.handle_links(router, subjects, topics, sections, examples);
-						// functions.handle_orientation("section", navs, section, topic);
+						exports.handle_orientation();
 						if(page == "about") {
 							exports.handle_desktop_title("about");
 						}
@@ -3906,7 +3916,7 @@ define(function() {
 			exports.handle_logo();
 			exports.handle_li_coloring();
 			links.handle_links(router, subjects, topics, sections, examples);
-			// functions.handle_orientation("section", navs, section, topic);
+			exports.handle_orientation();
 			if(page == "about") {
 				exports.handle_desktop_title("about");
 			}
@@ -3945,14 +3955,6 @@ define(function() {
 						"right": ""
 					});
 				}
-				var screen_width = exports.width_func(),
-					screen_height = exports.height_func(),
-					val = Math.min(screen_width, screen_height),
-					width = -1;
-				if(val >= 992) { width = 350; }
-				else if(val < 992 && val > 400) { width = val * .75; }
-				else { width = val * .72; }
-				$("#nav-mobile").css("width", width);
 			});
 			
 			// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
