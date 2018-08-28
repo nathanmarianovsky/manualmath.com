@@ -3619,12 +3619,12 @@ define(function() {
 										' right">add</i></a><a class="waves-effect waves-light btn' +
 										' remove-column" contenteditable="false">Column<i class=' +
 										'"material-icons right">remove</i></a></div>', "");
-									return exports.replace_all(filter, '<div class="table-buttons"><a class="waves-effect' +
-										' waves-light btn plus-bullet" contenteditable="false"' +
-										'>Bullet<i class="material-icons right">add</i></a><a' +
-										' class="waves-effect waves-light btn minus-bullet"' +
+									return exports.replace_all(filter, '<div class="table-buttons">' +
+										'<a class="waves-effect waves-light btn plus-bullet"' +
 										' contenteditable="false">Bullet<i class="material-icons' +
-										' right">remove</i></a></div>', "");
+										' right">add</i></a><a class="waves-effect waves-light' +
+										' btn minus-bullet" contenteditable="false">Bullet' +
+										'<i class="material-icons right">remove</i></a></div>', "");
 								});
 								data.heading = data.heading_cms;
 								data.cms_approval = 0;
@@ -3916,7 +3916,6 @@ define(function() {
 				else if(page == "section" || page == "example") {
 					exports.handle_desktop_title("section", subject, topic, section);
 				}
-				exports.handle_side_nav();
 				if(exports.width_func() < 992) {
 					$("#logo").css({
 						"float": "right",
@@ -3929,6 +3928,12 @@ define(function() {
 						"right": ""
 					});
 				}
+				var screen_width = exports.width_func(),
+					width = -1;
+				if(screen_width >= 992) { width = 350; }
+				else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
+				else { width = screen_width * .72; }
+				$("#nav-mobile").css("width", width);
 			});
 			
 			// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
