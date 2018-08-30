@@ -14,12 +14,14 @@ define(function() {
 		$(".divider").remove();
 		if(exports.width_func() < 992) {
 			$(".menu_items").each(function(index) {
-				$(this).parent().after($("<li>").addClass("divider"));
+				$(this).parent().after($("<li>")
+					.addClass("divider"));
 			});
 		}
 		else {
 			if(page != "about") {
-				$("#nav-mobile").children().first().after($("<li>").addClass("divider"));
+				$("#nav-mobile").children().first()
+					.after($("<li>").addClass("divider"));
 			}
 		}
 	};
@@ -46,7 +48,8 @@ define(function() {
 	        var canvas = document.createElement("canvas");
 	        canvas.width = width;
 	        canvas.height = height;
-	        canvas.getContext("2d").drawImage(sourceImage, 0, 0, width, height);
+	        canvas.getContext("2d")
+	        	.drawImage(sourceImage, 0, 0, width, height);
 	        callback(canvas.toDataURL());
 	    }
 	    sourceImage.src = url;
@@ -267,18 +270,24 @@ define(function() {
 	exports.committee = function(email, callback) {
 		$.post("/api/cms/committee/check/", {email: email}).done(function(check) {
 			if(check >= 1) {
-				var group = $("<a>").attr("id", "committee").addClass("btn-floating").css("background", "#00b8ff")
+				var group = $("<a>").attr("id", "committee")
+					.addClass("btn-floating").css("background", "#00b8ff")
 					.append($("<i>").addClass("material-icons").text("group_work"));
 			}
 			if(check == 1) {
-				var ranking = $("<a>").attr("id", "ranking").addClass("btn-floating").css("background", "#00b8ff")
-					.append($("<i>").addClass("material-icons").text("thumbs_up_down"));
-				$("#profile").closest("li").before($("<li>").append(ranking), $("<li>").append(group));
+				var ranking = $("<a>").attr("id", "ranking")
+					.addClass("btn-floating").css("background", "#00b8ff")
+					.append($("<i>").addClass("material-icons")
+						.text("thumbs_up_down"));
+				$("#profile").closest("li").before($("<li>").append(ranking),
+					$("<li>").append(group));
 			}
 			else if(check == 2) {
-				var decision = $("<a>").attr("id", "decision").addClass("btn-floating").css("background", "#00b8ff")
+				var decision = $("<a>").attr("id", "decision")
+					.addClass("btn-floating").css("background", "#00b8ff")
 					.append($("<i>").addClass("material-icons").text("group"));
-				$("#profile").closest("li").before($("<li>").append(decision), $("<li>").append(group));
+				$("#profile").closest("li").before($("<li>").append(decision),
+					$("<li>").append(group));
 			}
 		}).done(function() { callback(); });
 	};
@@ -323,8 +332,10 @@ define(function() {
 				$("#committee_table_head").find("tr")
 					.append($("<th>").text("Rank Down"), $("<th>").text("Rank Up"), $("<th>").text("Delete"));
 				list.forEach(function(elem) {
-					var first = elem.rank_approval != null ? elem.rank_approval.split(",").length : "0",
-						second = elem.rank_disapproval != null ? elem.rank_disapproval.split(",").length : "0";
+					var first = elem.rank_approval != null
+							? elem.rank_approval.split(",").length : "0",
+						second = elem.rank_disapproval != null
+							? elem.rank_disapproval.split(",").length : "0";
 					if(elem.rank == "com-member") { first = "N/A"; second = "N/A"; }
 					var item_tr = $("<tr>"),
 						item_fname = $("<td>").text(elem.first_name),
@@ -408,9 +419,11 @@ define(function() {
 					$("#popup_submit").addClass("modal-close");
 					list.forEach(function(iter) {
 						if(iter.deleted == 1) {
-							$.post("/api/cms/contributor/remove/", {email: iter.email}).fail(function() {
+							$.post("/api/cms/contributor/remove/", {email: iter.email})
+								.fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue deleting contributor(s) from the database!");
+								$("#popup_body").text("There was an issue deleting" +
+									" contributor(s) from the database!");
 								$("#popup_submit").text("Ok").click(function(e) {
 									e.preventDefault();
 									$(".lean-overlay").remove();
@@ -421,9 +434,11 @@ define(function() {
 							});
 						}
 						else if(iter.deleted == 0 && iter.rank_up == 1) {
-							$.post("/api/cms/committee/add", {email: iter.email}).fail(function() {
+							$.post("/api/cms/committee/add", {email: iter.email})
+								.fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue ranking up contributo(r) in the database!");
+								$("#popup_body").text("There was an issue ranking" +
+									" up contributo(r) in the database!");
 								$("#popup_submit").text("Ok").click(function(e) {
 									e.preventDefault();
 									$(".lean-overlay").remove();
@@ -434,9 +449,11 @@ define(function() {
 							});
 						}
 						else if(iter.deleted == 0 && iter.rank_down == 1) {
-							$.post("/api/cms/committee/remove", {email: iter.email}).fail(function() {
+							$.post("/api/cms/committee/remove", {email: iter.email})
+								.fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue ranking down contributo(r) in the database!");
+								$("#popup_body").text("There was an issue ranking" +
+									" down contributo(r) in the database!");
 								$("#popup_submit").text("Ok").click(function(e) {
 									e.preventDefault();
 									$(".lean-overlay").remove();
@@ -447,8 +464,10 @@ define(function() {
 							});
 						}
 					});
-					$("#popup_title").text("Changes Saved").css("text-align", "center");
-					$("#popup_body").text("All contributor changes have been saved to the database!");
+					$("#popup_title").text("Changes Saved")
+						.css("text-align", "center");
+					$("#popup_body").text("All contributor changes have" +
+						" been saved to the database!");
 					$("#popup_submit").text("Ok").click(function(e) {
 						e.preventDefault();
 						$(".lean-overlay").remove();
@@ -509,14 +528,18 @@ define(function() {
 					item_tr.append(item_fname, item_lname, item_email, item_approve, item_disapprove);
 					$("#committee_table_body").append(item_tr);
 					if(elem.rank_approval != null && 
-						elem.rank_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						elem.rank_approval.split(",").some(function(iter) {
+							return iter == exports.read_cookie("contributor");
+						})) {
 						$("#approve_" + elem.num).css("color", "green");
 					}
 					else {
 						$("#approve_" + elem.num).css("color", "red");
 					}
 					if(elem.rank_disapproval != null && 
-						elem.rank_disapproval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						elem.rank_disapproval.split(",").some(function(iter) {
+							return iter == exports.read_cookie("contributor");
+						})) {
 						$("#disapprove_" + elem.num).css("color", "green");
 					}
 					else {
@@ -542,36 +565,47 @@ define(function() {
 						if(list[obj_ref].rank_disapproval == null) { 
 							list[obj_ref].rank_disapproval = exports.read_cookie("contributor"); 
 						}
-						else { list[obj_ref].rank_disapproval += "," + exports.read_cookie("contributor"); }
+						else {
+							list[obj_ref].rank_disapproval += "," +
+								exports.read_cookie("contributor");
+						}
 						if(list[obj_ref].rank_approval != null) { 
-							var start = list[obj_ref].rank_approval.indexOf(exports.read_cookie("contributor"));
+							var start = list[obj_ref].rank_approval
+								.indexOf(exports.read_cookie("contributor"));
 							if(start != -1) {
 								if(start != 0) {
 									list[obj_ref].rank_approval = list[obj_ref].rank_approval.substring(0, start) + 
-										list[obj_ref].rank_approval.substring(start + exports.read_cookie("contributor").length);
+										list[obj_ref].rank_approval.substring(start +
+											exports.read_cookie("contributor").length);
 								}
 								else {
 									list[obj_ref].rank_approval = list[obj_ref].rank_approval
 										.substring(exports.read_cookie("contributor").length + 1);
 								}
-								if(list[obj_ref].rank_approval == "") { list[obj_ref].rank_approval = null; }
+								if(list[obj_ref].rank_approval == "") {
+									list[obj_ref].rank_approval = null;
+								}
 							}
 						}
 					}
 					else {
 						$("#disapprove_" + holder[1]).css("color", "red");
 						if(list[obj_ref].rank_disapproval != null) { 
-							var start = list[obj_ref].rank_disapproval.indexOf(exports.read_cookie("contributor")); 
+							var start = list[obj_ref].rank_disapproval
+								.indexOf(exports.read_cookie("contributor")); 
 							if(start != -1) {
 								if(start != 0) {
 									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval.substring(0, start) + 
-										list[obj_ref].rank_disapproval.substring(start + exports.read_cookie("contributor").length);
+										list[obj_ref].rank_disapproval.substring(start +
+											exports.read_cookie("contributor").length);
 								}
 								else {
 									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval
 										.substring(exports.read_cookie("contributor").length + 1);
 								}
-								if(list[obj_ref].rank_disapproval == "") { list[obj_ref].rank_disapproval = null; }
+								if(list[obj_ref].rank_disapproval == "") {
+									list[obj_ref].rank_disapproval = null;
+								}
 							}
 						}
 					}
@@ -589,36 +623,47 @@ define(function() {
 						if(list[obj_ref].rank_approval == null) { 
 							list[obj_ref].rank_approval = exports.read_cookie("contributor"); 
 						}
-						else { list[obj_ref].rank_approval += "," + exports.read_cookie("contributor"); }
+						else {
+							list[obj_ref].rank_approval += "," +
+								exports.read_cookie("contributor");
+						}
 						if(list[obj_ref].rank_disapproval != null) { 
-							var start = list[obj_ref].rank_disapproval.indexOf(exports.read_cookie("contributor")); 
+							var start = list[obj_ref].rank_disapproval
+								.indexOf(exports.read_cookie("contributor")); 
 							if(start != -1) {
 								if(start != 0) {
 									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval.substring(0, start) + 
-										list[obj_ref].rank_disapproval.substring(start + exports.read_cookie("contributor").length);
+										list[obj_ref].rank_disapproval.substring(start +
+											exports.read_cookie("contributor").length);
 								}
 								else {
 									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval
 										.substring(exports.read_cookie("contributor").length + 1);
 								}
-								if(list[obj_ref].rank_disapproval == "") { list[obj_ref].rank_disapproval = null; }
+								if(list[obj_ref].rank_disapproval == "") {
+									list[obj_ref].rank_disapproval = null;
+								}
 							}
 						}
 					}
 					else {
 						$("#approve_" + holder[1]).css("color", "red");
 						if(list[obj_ref].rank_approval != null) { 
-							var start = list[obj_ref].rank_approval.indexOf(exports.read_cookie("contributor"));
+							var start = list[obj_ref].rank_approval
+							.indexOf(exports.read_cookie("contributor"));
 							if(start != -1) {
 								if(start != 0) {
 									list[obj_ref].rank_approval = list[obj_ref].rank_approval.substring(0, start) + 
-										list[obj_ref].rank_approval.substring(start + exports.read_cookie("contributor").length);
+										list[obj_ref].rank_approval.substring(start +
+											exports.read_cookie("contributor").length);
 								}
 								else {
 									list[obj_ref].rank_approval = list[obj_ref].rank_approval
 										.substring(exports.read_cookie("contributor").length + 1);
 								}
-								if(list[obj_ref].rank_approval == "") { list[obj_ref].rank_approval = null; }
+								if(list[obj_ref].rank_approval == "") {
+									list[obj_ref].rank_approval = null;
+								}
 							}
 						}
 					}
@@ -632,11 +677,14 @@ define(function() {
 						if(iter.edited == 1) {
 							$.post("/api/cms/contributor/change/rankApproval", {
 								email: iter.email,
-								rank_approval: (iter.rank_approval == null ? "0" : iter.rank_approval),
-								rank_disapproval: (iter.rank_disapproval == null ? "0" : iter.rank_disapproval)
+								rank_approval: (iter.rank_approval == null
+									? "0" : iter.rank_approval),
+								rank_disapproval: (iter.rank_disapproval == null
+									? "0" : iter.rank_disapproval)
 							}).fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue uploading the contributor changes to the database!");
+								$("#popup_body").text("There was an issue uploading" +
+									" the contributor changes to the database!");
 								$("#popup_submit").text("Ok").click(function(e) {
 									e.preventDefault();
 									$(".lean-overlay").remove();
@@ -648,7 +696,8 @@ define(function() {
 						}
 					});
 					$("#popup_title").text("Changes Saved").css("text-align", "center");
-					$("#popup_body").text("All contributor changes have been saved to the database!");
+					$("#popup_body").text("All contributor changes have" +
+						" been saved to the database!");
 					$("#popup_submit").text("Ok").click(function(e) {
 						e.preventDefault();
 						$(".lean-overlay").remove();
@@ -707,17 +756,22 @@ define(function() {
 								.css("cursor", "pointer").attr("id", "delete_" + elem.num)
 								.addClass("del-contributor center").append($("<i>")
 									.addClass("material-icons").text("cancel")));
-					item_tr.append(item_fname, item_lname, item_email, item_approve, item_delete);
+					item_tr.append(item_fname, item_lname, item_email,
+						item_approve, item_delete);
 					$("#committee_table_body").append(item_tr);
 					if(elem.approval != null && 
-						elem.approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						elem.approval.split(",").some(function(iter) {
+							return iter == exports.read_cookie("contributor");
+						})) {
 						$("#check_" + elem.num).css("color", "green");
 					}
 					else {
 						$("#check_" + elem.num).css("color", "red");
 					}
 					if(elem.del != null && 
-						elem.del.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
+						elem.del.split(",").some(function(iter) {
+							return iter == exports.read_cookie("contributor");
+						})) {
 						$("#delete_" + elem.num).css("color", "green");
 					}
 					else {
@@ -747,11 +801,13 @@ define(function() {
 					else {
 						$("#delete_" + holder[1]).css("color", "red");
 						if(list[obj_ref].del != null) { 
-							var start = list[obj_ref].del.indexOf(exports.read_cookie("contributor")); 
+							var start = list[obj_ref].del
+								.indexOf(exports.read_cookie("contributor")); 
 							if(start != -1) {
 								if(start != 0) {
 									list[obj_ref].del = list[obj_ref].del.substring(0, start) + 
-										list[obj_ref].del.substring(start + exports.read_cookie("contributor").length);
+										list[obj_ref].del.substring(start +
+											exports.read_cookie("contributor").length);
 								}
 								else {
 									list[obj_ref].del = list[obj_ref].del
@@ -774,16 +830,21 @@ define(function() {
 						if(list[obj_ref].approval == null) { 
 							list[obj_ref].approval = exports.read_cookie("contributor"); 
 						}
-						else { list[obj_ref].approval += "," + exports.read_cookie("contributor"); }
+						else {
+							list[obj_ref].approval += "," +
+								exports.read_cookie("contributor");
+							}
 					}
 					else {
 						$("#check_" + holder[1]).css("color", "red");
 						if(list[obj_ref].approval != null) { 
-							var start = list[obj_ref].approval.indexOf(exports.read_cookie("contributor"));
+							var start = list[obj_ref].approval
+								.indexOf(exports.read_cookie("contributor"));
 							if(start != -1) {
 								if(start != 0) {
 									list[obj_ref].approval = list[obj_ref].approval.substring(0, start) + 
-										list[obj_ref].approval.substring(start + exports.read_cookie("contributor").length);
+										list[obj_ref].approval.substring(start +
+											exports.read_cookie("contributor").length);
 								}
 								else {
 									list[obj_ref].approval = list[obj_ref].approval
@@ -804,9 +865,11 @@ define(function() {
 						var statement = "";
 						list.forEach(function(iter) {
 							if(iter.del != null && iter.del.split(",").length >= validation) {
-								$.post("/api/cms/contributor/remove/", {email: iter.email}).fail(function() {
+								$.post("/api/cms/contributor/remove/", {email: iter.email})
+									.fail(function() {
 									$("#popup_title").text("Database Issue");
-									$("#popup_body").text("There was an issue deleting a contributor from the database!");
+									$("#popup_body").text("There was an issue deleting" +
+										" a contributor from the database!");
 									$("#popup_submit").text("Ok").click(function(e) {
 										e.preventDefault();
 										$(".lean-overlay").remove();
@@ -820,7 +883,8 @@ define(function() {
 								$.post("/api/cms/contributor/change/status/", {email: iter.email, status: 1})
 									.fail(function() {
 									$("#popup_title").text("Database Issue");
-									$("#popup_body").text("There was an issue changing the status of a contributor in the database!");
+									$("#popup_body").text("There was an issue changing" +
+										" the status of a contributor in the database!");
 									$("#popup_submit").text("Ok").click(function(e) {
 										e.preventDefault();
 										$(".lean-overlay").remove();
@@ -838,7 +902,8 @@ define(function() {
 										del: iter.del == null ? "0" : iter.del
 									}).fail(function() {
 										$("#popup_title").text("Database Issue");
-										$("#popup_body").text("There was an issue uploading the contributor changes to the database!");
+										$("#popup_body").text("There was an issue" +
+											" uploading the contributor changes to the database!");
 										$("#popup_submit").text("Ok").click(function(e) {
 											e.preventDefault();
 											$(".lean-overlay").remove();
@@ -851,7 +916,8 @@ define(function() {
 							}
 						});
 						$("#popup_title").text("Changes Saved").css("text-align", "center");
-						$("#popup_body").text("All contributor changes have been saved to the database!");
+						$("#popup_body").text("All contributor changes have" +
+							" been saved to the database!");
 						$("#popup_submit").text("Ok").click(function(e) {
 							e.preventDefault();
 							$(".lean-overlay").remove();
@@ -879,7 +945,7 @@ define(function() {
 		var test = data.map(function(elem) { return elem.clean_name; }),
 			i = 0;
 		for(; i < test.length; i++) {
-			if(test.filter(function(item) { return item == test[i] }).length >= 2) {
+			if(test.filter(function(item) { return item == test[i]; }).length >= 2) {
 				break;
 			}				
 		}
@@ -908,11 +974,15 @@ define(function() {
 		$(".field").on("input", function() {
 			var id = parseInt($(this).attr("id").split("_")[2]);
 			data.forEach(function(iter) { 
-				if((type == "Subjects" && iter.sid == id) || (type == "Topics" && iter.tid == id)
-					|| (type == "Sections" && iter.section_id == id) || (type == "Examples" && iter.eid == id)) {
+				if((type == "Subjects" && iter.sid == id) ||
+					(type == "Topics" && iter.tid == id) ||
+					(type == "Sections" && iter.section_id == id) ||
+					(type == "Examples" && iter.eid == id)) {
 					iter.edited = 1;
-					iter.clean_name = $("#" + type.toLowerCase() + "_td_" + id).text();
-					var str = exports.replace_all($("#" + type.toLowerCase() + "_td_" + id).text(), " ", "_");
+					iter.clean_name = $("#" +
+						type.toLowerCase() + "_td_" + id).text();
+					var str = exports.replace_all($("#" +
+						type.toLowerCase() + "_td_" + id).text(), " ", "_");
 					str = exports.replace_all(str, "-", "AND");
 					str = exports.replace_all(str, "'", "APOSTROPHE");
 					str = exports.replace_all(str, "\"", "QUOTE");
@@ -938,10 +1008,18 @@ define(function() {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
-					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
-					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
-					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
-					else if(type == "Examples") { return iter.eid == parseInt(holder[2]); }
+					if(type == "Subjects") {
+						return iter.sid == parseInt(holder[2]);
+					}
+					else if(type == "Topics") {
+						return iter.tid == parseInt(holder[2]);
+					}
+					else if(type == "Sections") {
+						return iter.section_id == parseInt(holder[2]);
+					}
+					else if(type == "Examples") {
+						return iter.eid == parseInt(holder[2]);
+					}
 				}),
 				str = "";
 			if(holder[1] == "up" && obj_ref != 0) {
@@ -950,18 +1028,23 @@ define(function() {
 					table_item = 0;
 				str = "#" + type.toLowerCase() + "_tr_";
 				if(type == "Subjects") {
-					table_item = $(str + data[obj_ref - 1].sid).detach();
+					table_item = $(str + data[obj_ref - 1].sid
+						.detach();
 				}
 				else if(type == "Topics") {
-					table_item = $(str + data[obj_ref - 1].tid).detach();
+					table_item = $(str + data[obj_ref - 1].tid)
+						.detach();
 				}
 				else if(type == "Sections") {
-					table_item = $(str + data[obj_ref - 1].section_id).detach();
+					table_item = $(str + data[obj_ref - 1].section_id)
+						.detach();
 				}
 				else if(type == "Examples") {
-					table_item = $(str + data[obj_ref - 1].eid).detach();
+					table_item = $(str + data[obj_ref - 1].eid)
+						.detach();
 				}
-				$("#" + type.toLowerCase() + "_tr_" + holder[2]).after(table_item);
+				$("#" + type.toLowerCase() + "_tr_" + holder[2])
+					.after(table_item);
 				data[obj_ref] = data[obj_ref - 1];
 				data[obj_ref - 1] = obj;
 				data[obj_ref - 1].order = data[obj_ref].order;
@@ -970,21 +1053,26 @@ define(function() {
 				data[obj_ref].edited = 1;
 			}
 			else if(holder[1] == "down" && obj_ref != data.length - 1) {
-				var table_item = $("#" + type.toLowerCase() + "_tr_" + holder[2]).detach(),
+				var table_item = $("#" + type.toLowerCase() +
+						"_tr_" + holder[2]).detach(),
 					obj = data[obj_ref],
 					obj_order = obj.order;
 				str = "#" + type.toLowerCase() + "_tr_";
 				if(type == "Subjects") {
-					$(str + data[obj_ref + 1].sid).after(table_item);
+					$(str + data[obj_ref + 1].sid)
+						.after(table_item);
 				}
 				else if(type == "Topics") {
-					$(str + data[obj_ref + 1].tid).after(table_item);
+					$(str + data[obj_ref + 1].tid)
+						.after(table_item);
 				}
 				else if(type == "Sections") {
-					$(str + data[obj_ref + 1].section_id).after(table_item);
+					$(str + data[obj_ref + 1].section_id)
+						.after(table_item);
 				}
 				else if(type == "Examples") {
-					$(str + data[obj_ref + 1].eid).after(table_item);
+					$(str + data[obj_ref + 1].eid)
+						.after(table_item);
 				}
 				data[obj_ref] = data[obj_ref + 1];
 				data[obj_ref + 1] = obj;
@@ -998,12 +1086,21 @@ define(function() {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
-					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
-					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
-					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
-					else if(type == "Examples") { return iter.eid == parseInt(holder[2]); }
+					if(type == "Subjects") {
+						return iter.sid == parseInt(holder[2]);
+					}
+					else if(type == "Topics") {
+						return iter.tid == parseInt(holder[2]);
+					}
+					else if(type == "Sections") {
+						return iter.section_id == parseInt(holder[2]);
+					}
+					else if(type == "Examples") {
+						return iter.eid == parseInt(holder[2]);
+					}
 				});
-			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color")) == "#ff0000") {
+			if(exports.rgba_to_hex($("#" + type.toLowerCase() +
+				"_delete_" + holder[2]).css("color")) == "#ff0000") {
 				$("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color", "green");
 				if(typeof data[obj_ref].del_approval == "object") { 
 					data[obj_ref].del_approval = exports.read_cookie("contributor"); 
@@ -1017,7 +1114,8 @@ define(function() {
 					if(start != -1) {
 						if(start != 0) {
 							data[obj_ref].del_approval = data[obj_ref].del_approval.substring(0, start) + 
-								data[obj_ref].del_approval.substring(start + exports.read_cookie("contributor").length);
+								data[obj_ref].del_approval.substring(start +
+									exports.read_cookie("contributor").length);
 						}
 						else {
 							data[obj_ref].del_approval = data[obj_ref].del_approval
@@ -1033,13 +1131,23 @@ define(function() {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
-					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
-					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
-					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
-					else if(type == "Examples") { return iter.eid == parseInt(holder[2]); }
+					if(type == "Subjects") {
+						return iter.sid == parseInt(holder[2]);
+					}
+					else if(type == "Topics") {
+						return iter.tid == parseInt(holder[2]);
+					}
+					else if(type == "Sections") {
+						return iter.section_id == parseInt(holder[2]);
+					}
+					else if(type == "Examples") {
+						return iter.eid == parseInt(holder[2]);
+					}
 				});
-			if(exports.rgba_to_hex($("#" + type.toLowerCase() + "_check_" + holder[2]).css("color")) == "#ff0000") {
-				$("#" + type.toLowerCase() + "_check_" + holder[2]).css("color", "green");
+			if(exports.rgba_to_hex($("#" + type.toLowerCase() +
+				"_check_" + holder[2]).css("color")) == "#ff0000") {
+				$("#" + type.toLowerCase() + "_check_" + holder[2])
+					.css("color", "green");
 				if(typeof data[obj_ref].side_approval == "object") { 
 					data[obj_ref].side_approval = exports.read_cookie("contributor"); 
 				}
@@ -1048,11 +1156,13 @@ define(function() {
 			else {
 				$("#" + type.toLowerCase() + "_check_" + holder[2]).css("color", "red");
 				if(typeof data[obj_ref].side_approval != "object") { 
-					var start = data[obj_ref].side_approval.indexOf(exports.read_cookie("contributor"));
+					var start = data[obj_ref].side_approval
+					.indexOf(exports.read_cookie("contributor"));
 					if(start != -1) {
 						if(start != 0) {
 							data[obj_ref].side_approval = data[obj_ref].side_approval.substring(0, start) + 
-								data[obj_ref].side_approval.substring(start + exports.read_cookie("contributor").length);
+								data[obj_ref].side_approval.substring(start +
+									exports.read_cookie("contributor").length);
 						}
 						else {
 							data[obj_ref].side_approval = data[obj_ref].side_approval
@@ -1068,14 +1178,25 @@ define(function() {
 			e.preventDefault();
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
-					if(type == "Subjects") { return iter.sid == parseInt(holder[2]); }
-					else if(type == "Topics") { return iter.tid == parseInt(holder[2]); }
-					else if(type == "Sections") { return iter.section_id == parseInt(holder[2]); }
-					else if(type == "Examples") { return iter.eid == parseInt(holder[2]); }
+					if(type == "Subjects") {
+						return iter.sid == parseInt(holder[2]);
+					}
+					else if(type == "Topics") {
+						return iter.tid == parseInt(holder[2]);
+					}
+					else if(type == "Sections") {
+						return iter.section_id == parseInt(holder[2]);
+					}
+					else if(type == "Examples") {
+						return iter.eid == parseInt(holder[2]);
+					}
 				});
-			data = data.slice(0, obj_ref).concat(data.slice(obj_ref + 1));
+			data = data.slice(0, obj_ref)
+				.concat(data.slice(obj_ref + 1));
 			$(this).parent().parent().remove();
-			if(data.every(function(elem) { return elem.created == 0; })) {
+			if(data.every(function(elem) {
+				return elem.created == 0;
+			})) {
 				$("#garbage_head").remove();
 			}
 		});
@@ -1103,21 +1224,27 @@ define(function() {
 			});
 		}
 		else if(type == "Topics") {
-			data = (exports.copy(input)).filter(function(iter) { return iter.sid == container_id }).map(function(elem) { 
+			data = (exports.copy(input)).filter(function(iter) {
+				return iter.sid == container_id
+			}).map(function(elem) { 
 				elem.edited = 0;
 				elem.created = 0;
 				return elem; 
 			});
 		}
 		else if(type == "Sections") {
-			data = (exports.copy(input)).filter(function(iter) { return iter.tid == container_id }).map(function(elem) { 
+			data = (exports.copy(input)).filter(function(iter) {
+				return iter.tid == container_id
+			}).map(function(elem) { 
 				elem.edited = 0;
 				elem.created = 0;
 				return elem; 
 			});
 		}
 		else if(type == "Examples") {
-			data = (exports.copy(input)).filter(function(iter) { return iter.section_id == container_id }).map(function(elem) { 
+			data = (exports.copy(input)).filter(function(iter) {
+				return iter.section_id == container_id
+			}).map(function(elem) { 
 				elem.edited = 0;
 				elem.created = 0;
 				return elem; 
@@ -2368,7 +2495,8 @@ define(function() {
 
 	*/
 	exports.handle_logo_link = function(page) { 
-		page == "about" ? $(".logo-cls").css("pointer-events", "none") : $(".logo-cls").css("pointer-events", ""); 
+		page == "about" ? $(".logo-cls").css("pointer-events", "none")
+			: $(".logo-cls").css("pointer-events", ""); 
 	};
 
 	/*
@@ -2386,7 +2514,9 @@ define(function() {
 			else {
 				if($(this).css("background-color")) {
 					if(exports.rgba_to_hex($(this).css("background-color")) == "#4693ec") {
-						window.innerWidth < 992 ? $(this).css("background-color", "white") : $(this).css("background-color", "");
+						window.innerWidth < 992
+							? $(this).css("background-color", "white")
+							: $(this).css("background-color", "");
 						$(this).find("a").css("color", "#444");
 					}
 				}
@@ -2401,7 +2531,9 @@ define(function() {
 
 	*/
 	exports.width_func = function() {
-		return (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0);
+		return (window.innerWidth ||
+			document.documentElement.clientWidth ||
+			document.body.clientWidth || 0);
 	}
 
 	/*
@@ -2411,7 +2543,9 @@ define(function() {
 
 	*/
 	exports.height_func = function() {
-		return (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0);
+		return (window.innerHeight ||
+			document.documentElement.clientHeight ||
+			document.body.clientHeight || 0);
 	}
 
 	/*
@@ -2425,13 +2559,17 @@ define(function() {
 			screen_width = exports.width_func(),
 			mobile = exports.is_mobile();
 		if(screen_width >= 992) { width = 350; }
-		else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
+		else if(screen_width < 992 && screen_width > 400) {
+			width = screen_width * .75;
+		}
 		else { width = screen_width * .72; }
 		$(".button-collapse").sideNav({
 			"menuWidth": width,
 			"closeOnClick": true
 		});
-		if(screen_width < 992 || mobile) { $(".button-collapse").sideNav("hide"); }
+		if(screen_width < 992 || mobile) {
+			$(".button-collapse").sideNav("hide");
+		}
 	};
 
 	/*
@@ -2464,18 +2602,22 @@ define(function() {
 			$("#latex .solution_display i").off();
 			$("#latex .solution_display i").on("click", function(defaultevent) {
 				defaultevent.preventDefault();
-				$(this).text() == "add" ? $(this).parent().parent().next(".cont_div").fadeIn(300) 
+				$(this).text() == "add"
+					? $(this).parent().parent().next(".cont_div").fadeIn(300) 
 					: $(this).parent().parent().next(".cont_div").fadeOut(300);
-				$(this).text() == "add" ? $(this).text("remove") : $(this).text("add");
+				$(this).text() == "add" ? $(this).text("remove")
+					: $(this).text("add");
 			});
 		}
 		else {
 			$("#latex .show_solution").off();
 			$("#latex .show_solution").on("click", function(defaultevent) {
 				defaultevent.preventDefault();
-				$(this).find(".solution_display i").text() == "add" ? $(this).parent().find(".cont_div").fadeIn(300) 
+				$(this).find(".solution_display i").text() == "add"
+					? $(this).parent().find(".cont_div").fadeIn(300) 
 					: $(this).parent().find(".cont_div").fadeOut(300);
-				$(this).find(".solution_display i").text() == "add" ? $(this).find(".solution_display i").text("remove") 
+				$(this).find(".solution_display i").text() == "add"
+					? $(this).find(".solution_display i").text("remove") 
 					: $(this).find(".solution_display i").text("add");
 			});
 		}
@@ -2522,34 +2664,44 @@ define(function() {
 			if(page == "subject") {
 				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(subject.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(subject.clean_name)
+						.css("display", "inline-block")));
 			}
 			else if(page == "topic") {
 				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(subject.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(subject.clean_name)
+						.css("display", "inline-block")));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(topic.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(topic.clean_name)
+						.css("display", "inline-block")));
 			}
 			else if(page == "section") {
 				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(subject.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(subject.clean_name)
+						.css("display", "inline-block")));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(topic.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(topic.clean_name)
+						.css("display", "inline-block")));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(section.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(section.clean_name)
+						.css("display", "inline-block")));
 			}
 			else if(page == "example") {
 				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(subject.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(subject.clean_name)
+						.css("display", "inline-block")));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(topic.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(topic.clean_name)
+						.css("display", "inline-block")));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(section.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(section.clean_name)
+						.css("display", "inline-block")));
 				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(example.clean_name).css("display", "inline-block")));
+					.append($("<div>").text(example.clean_name)
+						.css("display", "inline-block")));
 			}
 			$(".breadcrumb:not(:first)").toggleClass("changed");
 		}
@@ -2601,19 +2753,26 @@ define(function() {
 		if(exports.width_func() >= 992) {
 			$("#desktop_title").empty();
 			if(page == "about") {
-				$("#desktop_title").append($("<a>").addClass("breadcrumb").text("About"));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+					.text("About"));
 			}
 			else if(page == "subject") {
-				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+					.text(subject.clean_name));
 			}
 			else if(page == "topic") {
-				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
-				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+					.text(subject.clean_name));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+					.text(topic.clean_name));
 			}
 			else if(page == "section") {
-				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(subject.clean_name));
-				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(topic.clean_name));
-				$("#desktop_title").append($("<a>").addClass("breadcrumb").text(section.clean_name));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+					.text(subject.clean_name));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+					.text(topic.clean_name));
+				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+					.text(section.clean_name));
 			}
 			else { console.log("No such page exists: " + page); }
 			$(".breadcrumb:not(:first)").toggleClass("changed");
@@ -2811,14 +2970,17 @@ define(function() {
 								.text("Choose the style:"),
 								label = $("<label>").addClass("list-label"),
 								input_disc = $("<input>").addClass("with-gap")
-								.attr({type: "radio", value: "disc", name: "unordered"}),
-								span_disc = $("<span>").addClass("black-text").text("Disc"),
+									.attr({type: "radio", value: "disc", name: "unordered"}),
+								span_disc = $("<span>").addClass("black-text")
+									.text("Disc"),
 								input_circle = $("<input>").addClass("with-gap")
-								.attr({type: "radio", value: "circle", name: "unordered"}),
-								span_circle = $("<span>").addClass("black-text").text("Circle"),
+									.attr({type: "radio", value: "circle", name: "unordered"}),
+								span_circle = $("<span>").addClass("black-text")
+									.text("Circle"),
 								input_square = $("<input>").addClass("with-gap")
-								.attr({type: "radio", value: "square", name: "unordered"}),
-								span_square = $("<span>").addClass("black-text").text("Square");
+									.attr({type: "radio", value: "square", name: "unordered"}),
+								span_square = $("<span>").addClass("black-text")
+									.text("Square");
 							label.append(input_disc, span_disc, input_circle, span_circle,
 								input_square, span_square);
 							par.append(label);
@@ -2848,19 +3010,25 @@ define(function() {
 								span_number = $("<span>").addClass("black-text").text("Numbered"),
 								input_uppercaseLetter = $("<input>").addClass("with-gap")
 								.attr({type: "radio", value: "A", name: "ordered"}),
-								span_uppercaseLetter = $("<span>").addClass("black-text").text("Uppercase Letters"),
+								span_uppercaseLetter = $("<span>").addClass("black-text")
+									.text("Uppercase Letters"),
 								input_lowercaseLetter = $("<input>").addClass("with-gap")
 								.attr({type: "radio", value: "a", name: "ordered"}),
-								span_lowercaseLetter = $("<span>").addClass("black-text").text("Lowercase Letters"),
+								span_lowercaseLetter = $("<span>").addClass("black-text")
+									.text("Lowercase Letters"),
 								input_uppercaseRoman = $("<input>").addClass("with-gap")
 								.attr({type: "radio", value: "I", name: "ordered"}),
-								span_uppercaseRoman = $("<span>").addClass("black-text").text("Uppercase Roman Numbers"),
+								span_uppercaseRoman = $("<span>").addClass("black-text")
+									.text("Uppercase Roman Numbers"),
 								input_lowercaseRoman = $("<input>").addClass("with-gap")
 								.attr({type: "radio", value: "i", name: "ordered"}),
-								span_lowercaseRoman = $("<span>").addClass("black-text").text("Lowercase Roman Numbers");
-							label.append(input_number, span_number, input_uppercaseLetter, span_uppercaseLetter,
-								input_lowercaseLetter, span_lowercaseLetter, input_uppercaseRoman, span_uppercaseRoman,
-								input_lowercaseRoman, span_lowercaseRoman);
+								span_lowercaseRoman = $("<span>").addClass("black-text")
+									.text("Lowercase Roman Numbers");
+							label.append(input_number, span_number, input_uppercaseLetter,
+								span_uppercaseLetter, input_lowercaseLetter,
+								span_lowercaseLetter, input_uppercaseRoman,
+								span_uppercaseRoman, input_lowercaseRoman,
+								span_lowercaseRoman);
 							par.append(label);
 							$("#popup_body").append(par);
 							$('input:radio[name="ordered"]').on("change", function() {
@@ -2888,29 +3056,36 @@ define(function() {
 							style = type == "0" ? $('input:radio[name="unordered"]:checked').val()
 								: $('input:radio[name="ordered"]:checked').val();
 						if(type == "0") {
-							obj.append($("<div>").addClass("latex_equation").attr("contentEditable", "false")
+							obj.append($("<div>").addClass("latex_equation")
+								.attr("contentEditable", "false")
 								.append($("<div>").addClass("table-buttons")
 									.append($("<a>").addClass("waves-effect waves-light btn plus-bullet")
-										.text("Bullet").attr("contentEditable", "false").append($("<i>")
-										.addClass("material-icons right").text("add")))
+										.text("Bullet").attr("contentEditable", "false")
+										.append($("<i>").addClass("material-icons right")
+											.text("add")))
 									.append($("<a>").addClass("waves-effect waves-light btn minus-bullet")
-										.text("Bullet").attr("contentEditable", "false").append($("<i>")
-										.addClass("material-icons right").text("remove"))),
+										.text("Bullet").attr("contentEditable", "false")
+										.append($("<i>").addClass("material-icons right")
+											.text("remove"))),
 								$("<ul>").css("list-style-position", "inside")
 									.append($("<li>").attr("contentEditable", "true")
 										.css({"list-style-type": style, "text-align": "left"}))), "<br>");
 						}
 						else if(type == "1") {
-							obj.append($("<div>").addClass("latex_equation").attr("contentEditable", "false")
+							obj.append($("<div>").addClass("latex_equation")
+								.attr("contentEditable", "false")
 								.append($("<div>").addClass("table-buttons")
 									.append($("<a>").addClass("waves-effect waves-light btn plus-bullet")
-										.text("Bullet").attr("contentEditable", "false").append($("<i>")
-										.addClass("material-icons right").text("add")))
+										.text("Bullet").attr("contentEditable", "false")
+										.append($("<i>").addClass("material-icons right")
+											.text("add")))
 									.append($("<a>").addClass("waves-effect waves-light btn minus-bullet")
-										.text("Bullet").attr("contentEditable", "false").append($("<i>")
-										.addClass("material-icons right").text("remove"))),
+										.text("Bullet").attr("contentEditable", "false")
+										.append($("<i>").addClass("material-icons right")
+											.text("remove"))),
 								$("<ol>").css("list-style-position", "inside")
-									.attr("type", style).append($("<li>").attr("contentEditable", "true")
+									.attr("type", style).append($("<li>")
+										.attr("contentEditable", "true")
 										.css("text-align", "left"))), "<br>");
 						}
 						$(".lean-overlay").remove();
@@ -2925,18 +3100,22 @@ define(function() {
 								}).attr("contentEditable", "true"));
 							}
 							else if(type == "1") {
-								$(this).parent().next().append($("<li>").attr("contentEditable", "true")
-									.css("text-align", "left"));
+								$(this).parent().next()
+									.append($("<li>")
+										.attr("contentEditable", "true")
+										.css("text-align", "left"));
 							}
 						});
 						$(".minus-bullet").click(function(e) {
 							e.preventDefault();
-							var children = $(this).parent().next().children();
+							var children = $(this).parent()
+								.next().children();
 							if(children.length - 1 == 0) {
 								$(this).parent().parent().remove();
 							}
 							else {
-								$(this).parent().next().children().last().remove();
+								$(this).parent().next()
+									.children().last().remove();
 							}
 						});
 					});
@@ -2961,12 +3140,13 @@ define(function() {
 				var file = $("#file")[0].files[0],
 					reader  = new FileReader();
 				reader.addEventListener("load", function () {
-					exports.resize_image(reader.result, 400, 400, function(scaled_data) {
+					exports.resize_image(reader.result, 400, 400,
+						function(scaled_data) {
 				  		obj.append($("<div>").addClass("latex_equation")
 							.append($("<img>").attr({
 								src: scaled_data,
 								alt: "Math Image"
-							})));
+						})));
 					});
 					$("#file").remove();
 		  		}, false);
@@ -2979,7 +3159,8 @@ define(function() {
 			e.preventDefault();
 			var obj = $(this).parent().parent().parent()
 				.find(".cont_div .latex_body").first();
-			obj.append($("<div>").addClass("latex_equation").append($("<div>").addClass("table-buttons")
+			obj.append($("<div>").addClass("latex_equation").append($("<div>")
+				.addClass("table-buttons")
 				.append($("<a>").addClass("waves-effect waves-light btn add-row")
 					.text("Row").attr("contentEditable", "false").append($("<i>")
 						.addClass("material-icons right").text("add")))
@@ -3010,13 +3191,15 @@ define(function() {
 			});
 			$(".add-column").on("click", function(e) {
 				e.preventDefault();
-				$(this).parent().next().find("tbody").children().each(function() {
+				$(this).parent().next().find("tbody")
+					.children().each(function() {
 					$(this).append($("<td>"));
 				});
 			});
 			$(".remove-row").on("click", function(e) {
 				e.preventDefault();
-				var list = $(this).parent().next().find("tbody")
+				var list = $(this).parent()
+					.next().find("tbody")
 					.first().children();
 				list.last().remove();
 				if(list.length - 1 == 0) {
@@ -3025,7 +3208,8 @@ define(function() {
 			});
 			$(".remove-column").on("click", function(e) {
 				e.preventDefault();
-				var list = $(this).parent().next().find("tbody").children();
+				var list = $(this).parent()
+					.next().find("tbody").children();
 				list.each(function() {
 					$(this).children().last().remove();
 				});
@@ -3036,8 +3220,9 @@ define(function() {
 		});
 		$(".add-row").on("click", function(e) {
 			e.preventDefault();
-			var count = $(this).parent().next().find("tbody")
-				.first().children().first().find("td").length,
+			var count = $(this).parent().next()
+				.find("tbody").first().children()
+				.first().find("td").length,
 				cont = $("<tr>");
 			for(var i = 0; i < count; i++) {
 				cont.append($("<td>"));
@@ -3047,13 +3232,15 @@ define(function() {
 		});
 		$(".add-column").on("click", function(e) {
 			e.preventDefault();
-			$(this).parent().next().find("tbody").children().each(function() {
+			$(this).parent().next().find("tbody")
+				.children().each(function() {
 				$(this).append($("<td>"));
 			});
 		});
 		$(".remove-row").on("click", function(e) {
 			e.preventDefault();
-			var list = $(this).parent().next().find("tbody")
+			var list = $(this).parent()
+				.next().find("tbody")
 				.first().children();
 			list.last().remove();
 			if(list.length - 1 == 0) {
@@ -3062,7 +3249,8 @@ define(function() {
 		});
 		$(".remove-column").on("click", function(e) {
 			e.preventDefault();
-			var list = $(this).parent().next().find("tbody").children();
+			var list = $(this).parent().next()
+				.find("tbody").children();
 			list.each(function() {
 				$(this).children().last().remove();
 			});
@@ -3089,13 +3277,15 @@ define(function() {
 				});
 				$("#popup_title").text("Add Link");
 				$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
-					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+					.addClass("modal-close waves-effect waves-blue btn-flat")
+					.text("Exit"));
 				$.get("/pages/dist/add-link-min.html").done(function(form) {
 					$("#popup_body").append(form);
 					$("#popup_submit").css("pointer-events", "none");
 					$("#popup_control").click();
 					$("#link-text").on("input", function() {
-						if($("#link-text").val().length > 0 && $("#link-url").val().length > 0
+						if($("#link-text").val().length > 0
+							&& $("#link-url").val().length > 0
 							&& exports.valid_url($("#link-url").val())) {
 							$("#popup_submit").css("pointer-events", "auto");
 						}
@@ -3104,7 +3294,8 @@ define(function() {
 						}
 					});
 					$("#link-url").on("input", function() {
-						if($("#link-text").val().length > 0 && $("#link-url").val().length > 0
+						if($("#link-text").val().length > 0
+							&& $("#link-url").val().length > 0
 							&& exports.valid_url($("#link-url").val())) {
 							$("#popup_submit").css("pointer-events", "auto");
 						}
@@ -3229,20 +3420,25 @@ define(function() {
 				}
 				var i = 0;
 				for(; i >= 0; i++) {
-					if(data.title_cms[i] == null || data.title_cms[i] == "") { break; }
+					if(data.title_cms[i] == null || data.title_cms[i] == "") {
+						break;
+					}
 					var cont_div = "",
 						title = data.title_cms[i].split("_")[0],
 						accordion = $("<div>").addClass("accordion"),
-						show_solution = $("<div>").addClass("show_solution").text(title),
+						show_solution = $("<div>").addClass("show_solution")
+							.text(title),
 						span = $("<span>").addClass("solution_display"),
 						latex_body = $("<div>").addClass("latex_body");
 					if(data.title_cms[i].split("_hidden").length == 1) {
 						cont_div = $("<div>").addClass("cont_div");
-						span.append($("<i>").addClass("material-icons").text("remove"));
+						span.append($("<i>").addClass("material-icons")
+							.text("remove"));
 					}
 					else {
 						cont_div = $("<div>").addClass("cont_div hidden_div");
-						span.append($("<i>").addClass("material-icons").text("add"));
+						span.append($("<i>").addClass("material-icons")
+							.text("add"));
 					}	
 					latex_body.append(data.content_cms[i]);
 					cont_div.append(latex_body);
@@ -3252,15 +3448,19 @@ define(function() {
 					$("#latex").append(accordion);
 				}
 				if(i == 0) {
-					$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+					$("#latex").append($("<div>")
+						.addClass("accordion").append($("<div>")
 						.addClass("show_solution").text("NO CONTENT HERE!")));
 				}
 				$(".table-buttons").css("display", "none");
-				exports.handle_breadcrumbs(page, $(".accordion").first(), subject, topic, section, example);
+				exports.handle_breadcrumbs(page, $(".accordion").first(),
+					subject, topic, section, example);
 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 				exports.handle_button();
 				if(data.cms_approval != null && 
-					data.cms_approval.split(",").some(function(elem) { return elem == cookie; })) {
+					data.cms_approval.split(",").some(function(elem) {
+						return elem == cookie;
+					})) {
 					$("#approve").css("color", "green");
 				}
 				else {
@@ -3302,12 +3502,15 @@ define(function() {
 								var arr_title = [],
 									arr_body = [];
 								$(".show_solution").each(function(index) {
-									var title = $(this).children().first().clone().children().remove().end().text();
+									var title = $(this).children().first().clone()
+										.children().remove().end().text();
 									$(this).children().children().each(function(index) {
-										if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+										if($(this).hasClass("toggle") &&
+											$(this).text() == "toggle_off") {
 											arr_title.push(title + "_hidden");
 										}
-										else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+										else if($(this).hasClass("toggle") &&
+											$(this).text() == "toggle_on") {
 											arr_title.push(title);
 										}
 									});
@@ -3327,10 +3530,10 @@ define(function() {
 					if(exports.rgba_to_hex($("#live-version").closest("li").css("background-color")) != "#008cc3") {
 						var controller = $("#bar-div").detach();
 						$("#latex").empty().append(controller);
-						$("#add-box").css("pointer-events", "none");
 						if(page == "about") {
-							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
-								.append($("<h1>").text(data.heading).css("margin-top", "-60px")));
+							$("#latex").append($("<div>").attr("id", "main_message")
+								.addClass("box_message").append($("<h1>")
+									.text(data.heading).css("margin-top", "-60px")));
 						}
 						var j = 0;
 						for(; j >= 0; j++) {
@@ -3338,16 +3541,19 @@ define(function() {
 							var cont_div = "",
 								title = data.title[j].split("_")[0],
 								accordion = $("<div>").addClass("accordion"),
-								show_solution = $("<div>").addClass("show_solution").text(title),
+								show_solution = $("<div>").addClass("show_solution")
+									.text(title),
 								span = $("<span>").addClass("solution_display"),
 								latex_body = $("<div>").addClass("latex_body");
 							if(data.title[j].split("_").length == 1) {
 								cont_div = $("<div>").addClass("cont_div");
-								span.append($("<i>").addClass("material-icons").text("remove"));
+								span.append($("<i>").addClass("material-icons")
+									.text("remove"));
 							}
 							else {
 								cont_div = $("<div>").addClass("cont_div hidden_div");
-								span.append($("<i>").addClass("material-icons").text("add"));
+								span.append($("<i>").addClass("material-icons")
+									.text("add"));
 							}	
 							latex_body.append(data.content[j]);
 							cont_div.append(latex_body);
@@ -3361,9 +3567,13 @@ define(function() {
 								.addClass("show_solution").text("NO CONTENT HERE!")));
 						}
 						$(".table-buttons").css("display", "none");
-						$("#live-version").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
-						$("#cms-version").css("pointer-events", "auto").closest("li").css("background-color", "");
-						$("#edit").css("pointer-events", "auto").closest("li").css("background-color", "");
+						$("#add-box").css("pointer-events", "none");
+						$("#live-version").css("pointer-events", "none")
+							.closest("li").css("background-color", "#008cc3");
+						$("#cms-version").css("pointer-events", "auto")
+							.closest("li").css("background-color", "");
+						$("#edit").css("pointer-events", "auto")
+							.closest("li").css("background-color", "");
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						exports.handle_button();
 					}
@@ -3377,12 +3587,15 @@ define(function() {
 								var arr_title = [],
 									arr_body = [];
 								$(".show_solution").each(function(index) {
-									var title = $(this).children().first().clone().children().remove().end().text();
+									var title = $(this).children().first().clone()
+										.children().remove().end().text();
 									$(this).children().children().each(function(index) {
-										if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+										if($(this).hasClass("toggle") &&
+											$(this).text() == "toggle_off") {
 											arr_title.push(title + "_hidden");
 										}
-										else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+										else if($(this).hasClass("toggle") &&
+											$(this).text() == "toggle_on") {
 											arr_title.push(title);
 										}
 									});
@@ -3402,10 +3615,10 @@ define(function() {
 					if(exports.rgba_to_hex($("#cms-version").closest("li").css("background-color")) != "#008cc3") {
 						var controller = $("#bar-div").detach();
 						$("#latex").empty().append(controller);
-						$("#add-box").css("pointer-events", "none");
 						if(page == "about") {
-							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
-								.append($("<h1>").text(data.heading_cms).css("margin-top", "-60px")));
+							$("#latex").append($("<div>").attr("id", "main_message")
+								.addClass("box_message").append($("<h1>")
+									.text(data.heading_cms).css("margin-top", "-60px")));
 						}
 						var j = 0;
 						for(; j >= 0; j++) {
@@ -3413,16 +3626,19 @@ define(function() {
 							var cont_div = "",
 								title = data.title_cms[j].split("_")[0],
 								accordion = $("<div>").addClass("accordion"),
-								show_solution = $("<div>").addClass("show_solution").text(title),
+								show_solution = $("<div>").addClass("show_solution")
+									.text(title),
 								span = $("<span>").addClass("solution_display"),
 								latex_body = $("<div>").addClass("latex_body");
 							if(data.title_cms[j].split("_").length == 1) {
 								cont_div = $("<div>").addClass("cont_div");
-								span.append($("<i>").addClass("material-icons").text("remove"));
+								span.append($("<i>").addClass("material-icons")
+									.text("remove"));
 							}
 							else {
 								cont_div = $("<div>").addClass("cont_div hidden_div");
-								span.append($("<i>").addClass("material-icons").text("add"));
+								span.append($("<i>").addClass("material-icons")
+									.text("add"));
 							}		
 							latex_body.append(data.content_cms[j]);
 							cont_div.append(latex_body);
@@ -3436,9 +3652,13 @@ define(function() {
 								.addClass("show_solution").text("NO CONTENT HERE!")));
 						}
 						$(".table-buttons").css("display", "none");
-						$("#cms-version").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
-						$("#live-version").css("pointer-events", "auto").closest("li").css("background-color", "");
-						$("#edit").css("pointer-events", "auto").closest("li").css("background-color", "");
+						$("#add-box").css("pointer-events", "none");
+						$("#cms-version").css("pointer-events", "none")
+							.closest("li").css("background-color", "#008cc3");
+						$("#live-version").css("pointer-events", "auto")
+							.closest("li").css("background-color", "");
+						$("#edit").css("pointer-events", "auto")
+							.closest("li").css("background-color", "");
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						exports.handle_button();
 					}
@@ -3448,11 +3668,11 @@ define(function() {
 					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) != "#008cc3") {
 						var controller = $("#bar-div").detach();
 						$("#latex").empty().append(controller);
-						$("#add-box").css("pointer-events", "auto");
-						$("#save").css("pointer-events", "auto");
 						if(page == "about") {
-							$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
-								.append($("<h1>").text(data.heading_cms).css("margin-top", "-60px")
+							$("#latex").append($("<div>")
+								.attr("id", "main_message").addClass("box_message")
+								.append($("<h1>").text(data.heading_cms)
+									.css("margin-top", "-60px")
 									.attr({contentEditable: "true", id: "edit_title"})));
 						}
 						var j = 0;
@@ -3462,45 +3682,48 @@ define(function() {
 								title = data.title_cms[j].split("_")[0],
 								accordion = $("<div>").addClass("accordion"),
 								show_solution = $("<div>").addClass("show_solution")
-									.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
-									.text(title)),
+									.append($("<div>").addClass("tog-title")
+										.attr("contentEditable", "true").text(title)),
 								span = $("<span>").addClass("solution_display"),
-								span_toggle = $("<span>").addClass("solution_toggle").attr("data-position", "top")
+								span_toggle = $("<span>").addClass("solution_toggle")
+									.attr("data-position", "top")
 									.attr("data-tooltip", "Toggle the Display"),
 								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
-									.append($("<i>").addClass("material-icons add-math").text("border_color"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons add-math")
+										.text("border_color")).attr("data-position", "top")
 									.attr("data-tooltip", "Insert Math Box Below"),
 								span_image = $("<span>").addClass("solution_img add-image-tooltipped")
 									.append($("<i>").addClass("material-icons add-image").text("image"))
 									.attr("data-position", "top")
 									.attr("data-tooltip", "Insert Image Below"),
 								span_table = $("<span>").addClass("solution_table add-table-tooltipped")
-									.append($("<i>").addClass("material-icons add-table").text("table_chart"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons add-table")
+										.text("table_chart")).attr("data-position", "top")
 									.attr("data-tooltip", "Insert Table Below"),
 								span_link = $("<span>").addClass("solution_link add-link-tooltipped")
-									.append($("<i>").addClass("material-icons add-link").text("link"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons add-link")
+										.text("link")).attr("data-position", "top")
 									.attr("data-tooltip", "Insert Link Below"),
 								span_bullet = $("<span>").addClass("solution_bullet add-bullet-tooltipped")
-									.append($("<i>").addClass("material-icons add-bullet").text("list"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons add-bullet")
+										.text("list")).attr("data-position", "top")
 									.attr("data-tooltip", "Insert List Below"),
 								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
-									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons del-box")
+										.text("delete_sweep")).attr("data-position", "top")
 									.attr("data-tooltip", "Delete Box Below"),
 								latex_body = $("<div>").addClass("latex_body");
 							if(data.title_cms[j].split("_").length == 1) {
 								cont_div = $("<div>").addClass("cont_div");
 								span.append($("<i>").addClass("material-icons").text("remove"));
-								span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
+								span_toggle.append($("<i>")
+									.addClass("material-icons toggle").text("toggle_on"));
 							}
 							else {
 								cont_div = $("<div>").addClass("cont_div hidden_div");
 								span.append($("<i>").addClass("material-icons").text("add"));
-								span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_off"));
+								span_toggle.append($("<i>")
+									.addClass("material-icons toggle").text("toggle_off"));
 							}	
 							latex_body.append(data.content_cms[j]);
 							cont_div.append(latex_body);
@@ -3514,9 +3737,13 @@ define(function() {
 							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
 								.addClass("show_solution").text("NO CONTENT HERE!")));
 						}
-						$("#edit").css("pointer-events", "none").closest("li").css("background-color", "#008cc3");
-						$("#live-version").css("pointer-events", "auto").closest("li").css("background-color", "");
-						$("#cms-version").css("pointer-events", "auto").closest("li").css("background-color", "");
+						$("#add-box").css("pointer-events", "auto");
+						$("#edit").css("pointer-events", "none")
+							.closest("li").css("background-color", "#008cc3");
+						$("#live-version").css("pointer-events", "auto")
+							.closest("li").css("background-color", "");
+						$("#cms-version").css("pointer-events", "auto")
+							.closest("li").css("background-color", "");
 						$(".latex_body").attr("contentEditable", "true");
 						$(".latex_body").keydown(function(e) {
 						    if(e.keyCode === 13) {
@@ -3532,7 +3759,7 @@ define(function() {
 						$(".add-link-tooltipped").tooltip();
 						$(".add-bullet-tooltipped").tooltip();
 						exports.handle_button(1);
-						$("#add-box").off();
+						$("#add-box").off("click");
 						$("#add-box").on("click", function(e) {
 							e.preventDefault();
 							if($(".accordion").length == 1 && 
@@ -3542,39 +3769,41 @@ define(function() {
 							var cont_div = "",
 								accordion = $("<div>").addClass("accordion"),
 								show_solution = $("<div>").addClass("show_solution")
-									.append($("<div>").addClass("tog-title").attr("contentEditable", "true")
-									.text("New Title")),
+									.append($("<div>").addClass("tog-title")
+										.attr("contentEditable", "true").text("New Title")),
 								span = $("<span>").addClass("solution_display"),
-								span_toggle = $("<span>").addClass("solution_toggle").attr("data-position", "top")
+								span_toggle = $("<span>").addClass("solution_toggle")
+									.attr("data-position", "top")
 									.attr("data-tooltip", "Toggle the Display"),
 								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
-									.append($("<i>").addClass("material-icons add-math").text("border_color"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons add-math")
+										.text("border_color")).attr("data-position", "top")
 									.attr("data-tooltip", "Insert Math Box Below"),
 								span_image = $("<span>").addClass("solution_img add-image-tooltipped")
-									.append($("<i>").addClass("material-icons add-image").text("image"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons add-image")
+										.text("image")).attr("data-position", "top")
 									.attr("data-tooltip", "Insert Image Below"),
 								span_table = $("<span>").addClass("solution_table add-table-tooltipped")
-									.append($("<i>").addClass("material-icons add-table").text("table_chart"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons add-table")
+										.text("table_chart")).attr("data-position", "top")
 									.attr("data-tooltip", "Insert Table Below"),
 								span_link = $("<span>").addClass("solution_link add-link-tooltipped")
-									.append($("<i>").addClass("material-icons add-link").text("link"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons add-link")
+										.text("link")).attr("data-position", "top")
 									.attr("data-tooltip", "Insert Link Below"),
 								span_bullet = $("<span>").addClass("solution_bullet add-bullet-tooltipped")
-									.append($("<i>").addClass("material-icons add-bullet").text("list"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons add-bullet")
+										.text("list")).attr("data-position", "top")
 									.attr("data-tooltip", "Insert List Below"),
 								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
-									.append($("<i>").addClass("material-icons del-box").text("delete_sweep"))
-									.attr("data-position", "top")
+									.append($("<i>").addClass("material-icons del-box")
+										.text("delete_sweep")).attr("data-position", "top")
 									.attr("data-tooltip", "Delete Box Below"),
 								latex_body = $("<div>").addClass("latex_body").text("New Content"),
 								cont_div = $("<div>").addClass("cont_div");
 							span.append($("<i>").addClass("material-icons").text("remove"));
-							span_toggle.append($("<i>").addClass("material-icons toggle").text("toggle_on"));
+							span_toggle.append($("<i>")
+								.addClass("material-icons toggle").text("toggle_on"));
 							cont_div.append(latex_body);
 							show_solution.append(span_box, span_table, span_image, span_bullet,
 								span_link, span_del, span_toggle, span);
@@ -3586,9 +3815,13 @@ define(function() {
 							$(".latex_body").attr("contentEditable", "true");
 							exports.handle_button(1);
 							exports.latex_cms_links(data);
-							document.height = Math.max(document.body.scrollHeight, document.body.offsetHeight, 
-                      			document.documentElement.clientHeight, document.documentElement.scrollHeight, 
-                      			document.documentElement.offsetHeight); 
+							document.height = Math.max(
+								document.body.scrollHeight,
+								document.body.offsetHeight, 
+                      			document.documentElement.clientHeight,
+                      			document.documentElement.scrollHeight, 
+                      			document.documentElement.offsetHeight
+                      		); 
 						});
 						exports.latex_cms_links(data);
 					}
@@ -3602,12 +3835,15 @@ define(function() {
 								var arr_title = [],
 									arr_body = [];
 								$(".show_solution").each(function(index) {
-									var title = $(this).children().first().clone().children().remove().end().text();
+									var title = $(this).children().first().clone()
+										.children().remove().end().text();
 									$(this).children().children().each(function(index) {
-										if($(this).hasClass("toggle") && $(this).text() == "toggle_off") {
+										if($(this).hasClass("toggle") &&
+											$(this).text() == "toggle_off") {
 											arr_title.push(title + "_hidden");
 										}
-										else if($(this).hasClass("toggle") && $(this).text() == "toggle_on") {
+										else if($(this).hasClass("toggle") &&
+											$(this).text() == "toggle_on") {
 											arr_title.push(title);
 										}
 									});
@@ -3757,64 +3993,81 @@ define(function() {
 						exports.handle_logo_link(page);
 						exports.handle_logo();
 						exports.handle_li_coloring();
-						links.handle_links(router, subjects, topics, sections, examples);
+						links.handle_links(router, subjects,
+							topics, sections, examples);
 						exports.handle_orientation();
 						if(page == "about") {
 							exports.handle_desktop_title("about");
 						}
 						else if(page == "subject") {
-							exports.handle_desktop_title("subject", subject);
+							exports.handle_desktop_title("subject",
+								subject);
 						}
 						else if(page == "topic") {
-							exports.handle_desktop_title("topic", subject, topic);
+							exports.handle_desktop_title("topic",
+								subject, topic);
 						}
 						else if(page == "section" || page == "example") {
-							exports.handle_desktop_title("section", subject, topic, section);
+							exports.handle_desktop_title("section",
+								subject, topic, section);
 						}
 						$("#bar-nav").css("width", "100%");
 						$("#bar").css("width", $("#latex").width());
-						$("#live-version").parent("li").css("margin-left", "25px");
+						$("#live-version").parent("li")
+							.css("margin-left", "25px");
 						$("#save").parent("li").css("margin-right", "25px");
-						$("#cms-version").closest("li").css("background-color", "#008cc3");
+						$("#cms-version").closest("li")
+							.css("background-color", "#008cc3");
 						if(page == "about") {
 							$("#subjects_change").click(function(e) {
 								e.preventDefault();
-								exports.sidenav_modal("Subjects", subjects);
+								exports.sidenav_modal("Subjects",
+									subjects);
 							});
 						}
 						else if(page == "subject") {
 							$("#topics_change").click(function(e) {
 								e.preventDefault();
-								exports.sidenav_modal("Topics", topics, subject.sid);
+								exports.sidenav_modal("Topics",
+									topics, subject.sid);
 							});
 						}
 						else if(page == "topic") {
 							$("#sections_change").click(function(e) {
 								e.preventDefault();
-								exports.sidenav_modal("Sections", sections, topic.tid);
+								exports.sidenav_modal("Sections",
+									sections, topic.tid);
 							});
 						}
 						else if(page == "section" || page == "example") {
 							$("#examples_change").click(function(e) {
 								e.preventDefault();
-								exports.sidenav_modal("Examples", examples, section.section_id);
+								exports.sidenav_modal("Examples",
+									examples, section.section_id);
 							});
 						}
-						document.height = Math.max( document.body.scrollHeight, document.body.offsetHeight, 
-		          			document.documentElement.clientHeight, document.documentElement.scrollHeight, 
-		          			document.documentElement.offsetHeight );
+						document.height = Math.max(
+							document.body.scrollHeight,
+							document.body.offsetHeight, 
+		          			document.documentElement.clientHeight,
+		          			document.documentElement.scrollHeight, 
+		          			document.documentElement.offsetHeight
+		          		);
 						$(window).on("resize", function() {
 							if(page == "about") {
 								exports.handle_desktop_title("about");
 							}
 							else if(page == "subject") {
-								exports.handle_desktop_title("subject", subject);
+								exports.handle_desktop_title("subject",
+									subject);
 							}
 							else if(page == "topic") {
-								exports.handle_desktop_title("topic", subject, topic);
+								exports.handle_desktop_title("topic",
+									subject, topic);
 							}
 							else if(page == "section" || page == "example") {
-								exports.handle_desktop_title("section", subject, topic, section);
+								exports.handle_desktop_title("section",
+									subject, topic, section);
 							}
 							if(exports.width_func() < 992) {
 								$("#logo").css({
@@ -3828,13 +4081,15 @@ define(function() {
 									"right": ""
 								});
 							}
-							exports.handle_breadcrumbs(page, $(".accordion").first(), subject,
-								topic, section, example);
+							exports.handle_breadcrumbs(page, $(".accordion").first(),
+								subject, topic, section, example);
 							exports.handle_dividers(page);
 							var width = 0,
 								screen_width = exports.width_func();
 							if(screen_width >= 992) { width = 350; }
-							else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
+							else if(screen_width < 992 && screen_width > 400) {
+								width = screen_width * .75;
+							}
 							else { width = screen_width * .72; }
 							$("#nav-mobile").css("width", width);
 						});
@@ -3910,25 +4165,34 @@ define(function() {
 		else if(page == "topic") { 
 			statement += "topic/data/client";
 			db_id = topic.tid;
-			$("title").text(subject.clean_name + " - " + topic.clean_name);
+			$("title").text(subject.clean_name +
+				" - " + topic.clean_name);
 		}
 		else if(page == "section") { 
 			statement += "section/data/client";
 			db_id = section.section_id;
-			$("title").text(subject.clean_name + " - " + topic.clean_name + 
+			$("title").text(subject.clean_name +
+				" - " + topic.clean_name + 
 				" - " + section.clean_name);
 		}
 		else if(page == "example") { 
 			statement += "example/data/client";
 			db_id = example.eid;
-			$("title").text(subject.clean_name + " - " + topic.clean_name + 
+			$("title").text(subject.clean_name +
+				" - " + topic.clean_name + 
 				" - " + section.clean_name);
 		}
 		$.post(statement, {"param": db_id}).done(function(data) {
-			data.title = data.title != null ? decodeURIComponent(data.title).split("-----") : [""];
-			data.content = data.content != null ? decodeURIComponent(data.content).split("-----") : [""];
+			data.title = data.title != null
+				? decodeURIComponent(data.title).split("-----")
+				: [""];
+			data.content = data.content != null
+				? decodeURIComponent(data.content).split("-----")
+				: [""];
 			if(page == "about") {
-				$("#latex").append($("<div>").attr("id", "main_message").addClass("box_message")
+				$("#latex").append($("<div>")
+					.attr("id", "main_message")
+					.addClass("box_message")
 					.append($("<h1>").text(data.heading)));
 			}
 			var i = 0;
@@ -3937,16 +4201,19 @@ define(function() {
 				var cont_div = "",
 					title = data.title[i].split("_")[0],
 					accordion = $("<div>").addClass("accordion"),
-					show_solution = $("<div>").addClass("show_solution").text(title),
+					show_solution = $("<div>").addClass("show_solution")
+						.text(title),
 					span = $("<span>").addClass("solution_display"),
 					latex_body = $("<div>").addClass("latex_body");
 				if(data.title[i].split("_hidden").length == 1) {
 					cont_div = $("<div>").addClass("cont_div");
-					span.append($("<i>").addClass("material-icons").text("remove"));
+					span.append($("<i>").addClass("material-icons")
+						.text("remove"));
 				}
 				else {
 					cont_div = $("<div>").addClass("cont_div hidden_div");
-					span.append($("<i>").addClass("material-icons").text("add"));
+					span.append($("<i>").addClass("material-icons")
+						.text("add"));
 				}	
 				latex_body.append(data.content[i]);
 				cont_div.append(latex_body);
@@ -3956,28 +4223,34 @@ define(function() {
 				$("#latex").append(accordion);
 			}
 			if(i == 0) {
-				$("#latex").append($("<div>").addClass("accordion").append($("<div>")
+				$("#latex").append($("<div>")
+					.addClass("accordion").append($("<div>")
 					.addClass("show_solution").text("NO CONTENT HERE!")));
 			}
-			exports.handle_breadcrumbs(page, $(".accordion").first(), subject, topic, section, example);
+			exports.handle_breadcrumbs(page, $(".accordion").first(),
+				subject, topic, section, example);
 			MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 			exports.handle_button();
 			exports.handle_logo_link(page);
 			exports.handle_logo();
 			exports.handle_li_coloring();
-			links.handle_links(router, subjects, topics, sections, examples);
+			links.handle_links(router, subjects, topics,
+				sections, examples);
 			exports.handle_orientation();
 			if(page == "about") {
 				exports.handle_desktop_title("about");
 			}
 			else if(page == "subject") {
-				exports.handle_desktop_title("subject", subject);
+				exports.handle_desktop_title("subject",
+					subject);
 			}
 			else if(page == "topic") {
-				exports.handle_desktop_title("topic", subject, topic);
+				exports.handle_desktop_title("topic",
+					subject, topic);
 			}
 			else if(page == "section" || page == "example") {
-				exports.handle_desktop_title("section", subject, topic, section);
+				exports.handle_desktop_title("section",
+					subject, topic, section);
 			}
 			$("body").css("overflow", "auto");
 			$(window).on("resize", function() {
@@ -3985,13 +4258,16 @@ define(function() {
 					exports.handle_desktop_title("about");
 				}
 				else if(page == "subject") {
-					exports.handle_desktop_title("subject", subject);
+					exports.handle_desktop_title("subject",
+						subject);
 				}
 				else if(page == "topic") {
-					exports.handle_desktop_title("topic", subject, topic);
+					exports.handle_desktop_title("topic",
+						subject, topic);
 				}
 				else if(page == "section" || page == "example") {
-					exports.handle_desktop_title("section", subject, topic, section);
+					exports.handle_desktop_title("section",
+						subject, topic, section);
 				}
 				if(exports.width_func() < 992) {
 					$("#logo").css({
@@ -4005,13 +4281,15 @@ define(function() {
 						"right": ""
 					});
 				}
-				exports.handle_breadcrumbs(page, $(".accordion").first(), subject,
-					topic, section, example);
+				exports.handle_breadcrumbs(page, $(".accordion").first(),
+					subject, topic, section, example);
 				exports.handle_dividers(page);
 				var width = 0,
 					screen_width = exports.width_func();
 				if(screen_width >= 992) { width = 350; }
-				else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
+				else if(screen_width < 992 && screen_width > 400) {
+					width = screen_width * .75;
+				}
 				else { width = screen_width * .72; }
 				$("#nav-mobile").css("width", width);
 			});
