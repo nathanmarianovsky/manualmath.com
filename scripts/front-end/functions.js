@@ -3803,14 +3803,43 @@ define(function() {
 						document.height = Math.max( document.body.scrollHeight, document.body.offsetHeight, 
 		          			document.documentElement.clientHeight, document.documentElement.scrollHeight, 
 		          			document.documentElement.offsetHeight );
+						$(window).on("resize", function() {
+							if(page == "about") {
+								exports.handle_desktop_title("about");
+							}
+							else if(page == "subject") {
+								exports.handle_desktop_title("subject", subject);
+							}
+							else if(page == "topic") {
+								exports.handle_desktop_title("topic", subject, topic);
+							}
+							else if(page == "section" || page == "example") {
+								exports.handle_desktop_title("section", subject, topic, section);
+							}
+							if(exports.width_func() < 992) {
+								$("#logo").css({
+									"float": "right",
+									"right": "10px"
+								});
+							}
+							else {
+								$("#logo").css({
+									"float": "",
+									"right": ""
+								});
+							}
+							exports.handle_breadcrumbs(page, $(".accordion").first(), subject,
+								topic, section, example);
+							exports.handle_dividers(page);
+							var width = 0,
+								screen_width = exports.width_func();
+							if(screen_width >= 992) { width = 350; }
+							else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
+							else { width = screen_width * .72; }
+							$("#nav-mobile").css("width", width);
+						});
 					});
 				});
-				
-				// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
-				// 	MathJax.Hub.Queue(function() {
-				// 		functions.hide_mathjax_span();
-				// 	});
-				// }
 			});
 		});
 	};
