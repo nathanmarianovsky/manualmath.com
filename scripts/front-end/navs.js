@@ -231,7 +231,7 @@ define(["dist/functions-min"], function(functions) {
 			change_link.append($("<i>").addClass("material-icons right").text("library_add"));
 			sidenav.append(change_li.append(change_link));
 		}
-		functions.is_mobile() ? sidenav.append(sectionname, $("<li>").addClass("divider")) : sidenav.append(sectionname);
+		functions.width_func() < 992 ? sidenav.append(sectionname, $("<li>").addClass("divider")) : sidenav.append(sectionname);
 		results = section.examples.map(function(example) {
 			if(cms == 0 && example.side_approval !== null && example.side_approval.split(",").length >= min) {
 				var exampleli = $("<li>").addClass("no-padding").attr("id", "examples_li" + example.eid),

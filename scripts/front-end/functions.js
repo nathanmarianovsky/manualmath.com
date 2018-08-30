@@ -4,6 +4,24 @@ define(function() {
 	/*
 
 	Purpose:
+	Adds and removes dividers in the sidenav as the screen is resized.
+
+	*/
+	exports.handle_dividers = function() {
+		$(".divider").remove();
+		if(exports.width_func() < 992) {
+			$(".menu_items").each(function(index) {
+				$(this).parent().after($("<li>").addClass("divider"));
+			});
+		}
+		else {
+			$("#nav-mobile").children().first().after($("<li>").addClass("divider"));
+		}
+	};
+
+	/*
+
+	Purpose:
 	Rescales a given data url.
 
 	Parameters:
@@ -2466,18 +2484,10 @@ define(function() {
 	*/
 	exports.handle_orientation = function() {
 		$(window).on("orientationchange", function() {
-			console.log("flipped");
 			var orientation = screen.msOrientation ||
 				(screen.orientation || screen.mozOrientation || {}).type,
 				val = exports.height_func(),
 				width = -1;
-			console.log(orientation);
-			// orientation === "portrait-primary" || orientation === "portrait-secondary"
-			// 	|| orientation === undefined ? val = exports.width_func()
-			// 	: val = exports.height_func();
-			console.log(exports.width_func());
-			console.log(exports.height_func());
-			console.log(val);
 			if(val >= 992) { width = 350; }
 			else if(val < 992 && val > 400) { width = val * .75; }
 			else { width = val * .72; }
@@ -2502,6 +2512,7 @@ define(function() {
 
 	*/
 	exports.handle_breadcrumbs = function(page, obj, subject, topic, section, example) {
+		$("#breadcrumbs").remove();
 		if(exports.width_func() < 992) {
 			if(page == "subject") {
 				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
@@ -3960,13 +3971,16 @@ define(function() {
 						"right": ""
 					});
 				}
+				exports.handle_breadcrumbs(page, $(".accordion").first(), subject,
+					topic, section, example);
+				exports.handle_dividers();
+				var width = 0,
+					screen_width = exports.width_func();
+				if(screen_width >= 992) { width = 350; }
+				else if(screen_width < 992 && screen_width > 400) { width = screen_width * .75; }
+				else { width = screen_width * .72; }
+				$("#nav-mobile").css("width", width);
 			});
-			
-			// if(functions.is_mobile() && section.section_name == "Common_Derivatives_and_Properties") {
-			// 	MathJax.Hub.Queue(function() {
-			// 		functions.hide_mathjax_span();
-			// 	});
-			// }
 		});
 	};
 
