@@ -6,8 +6,11 @@ define(function() {
 	Purpose:
 	Adds and removes dividers in the sidenav as the screen is resized.
 
+	Parameters:
+		page: The name of the page currently set
+
 	*/
-	exports.handle_dividers = function() {
+	exports.handle_dividers = function(page) {
 		$(".divider").remove();
 		if(exports.width_func() < 992) {
 			$(".menu_items").each(function(index) {
@@ -15,7 +18,9 @@ define(function() {
 			});
 		}
 		else {
-			$("#nav-mobile").children().first().after($("<li>").addClass("divider"));
+			if(page != "about") {
+				$("#nav-mobile").children().first().after($("<li>").addClass("divider"));
+			}
 		}
 	};
 
@@ -3973,7 +3978,7 @@ define(function() {
 				}
 				exports.handle_breadcrumbs(page, $(".accordion").first(), subject,
 					topic, section, example);
-				exports.handle_dividers();
+				exports.handle_dividers(page);
 				var width = 0,
 					screen_width = exports.width_func();
 				if(screen_width >= 992) { width = 350; }
