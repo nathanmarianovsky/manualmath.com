@@ -3013,8 +3013,14 @@ define(function() {
 
 	*/
 	exports.validate = function(email) {
-    	var reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    	return reg.test(String(email).toLowerCase());
+    	var reg = new RegExp('^(([^<>()\\[\\]' +
+    		'\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]' +
+    		'\\\\.,;:\\s@"]+)*)|(".+"))@((\\' +
+    		'[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9' +
+    		']{1,3}\\.[0-9]{1,3}\\])|(([a-zA' +
+    		'-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$');
+    	return reg.test(String(email)
+    		.toLowerCase());
 	};
 
 	/*
@@ -3028,8 +3034,11 @@ define(function() {
 
 	*/
 	exports.valid_url = function(url) {
-		var reg = /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
-	    return reg.test(url) ? 1 : -1;
+		var reg = new RegExp('[a-z0-9]+([' +
+			'\\-\\.]{1}[a-z0-9]+)*\\.[a-z' +
+			']{2,5}(:[0-9]{1,5})?(\\/.*)' +
+			'?$', "i");
+	    return reg.test(url) ? 1 : 0;
 	};
 
 	/*
@@ -3446,7 +3455,8 @@ define(function() {
 						.text(example.clean_name)
 						.css("display", "inline-block")));
 			}
-			$(".breadcrumb:not(:first)").toggleClass("changed");
+			$(".breadcrumb:not(:first)")
+				.toggleClass("changed");
 		}
 	};
 
@@ -3465,17 +3475,6 @@ define(function() {
 			$(".breadcrumb.changed")
 				.css("display", "inline-flex");
 		}
-	};
-
-	/*
-
-	Purpose:
-	Removes the extra spacing created by an invisible MathJax span.
-	
-	*/
-	exports.hide_mathjax_span = function() {
-		$("#latex .MathJax").first()
-			.css("display", "none");
 	};
 
 	/*
@@ -3737,10 +3736,10 @@ define(function() {
 				    }
 				});
 				$("#popup_title").text("Add List");
-				$("#popup_modal_footer").append($("<a>"
+				$("#popup_modal_footer").append($("<a>")
 					.attr("id", "popup_exit")
 					.addClass("modal-close waves-effect waves-blue btn-flat")
-					.text("Exit")));
+					.text("Exit"));
 				$.get("/pages/dist/list-form-min.html")
 					.done(function(form) {
 					$("#popup_body").append(form);
