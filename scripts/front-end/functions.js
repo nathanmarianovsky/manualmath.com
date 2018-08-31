@@ -3335,7 +3335,7 @@ define(function() {
 			if($("#latex .accordion").length == 0) {
 				$("#latex").append($("<div>").addClass("accordion")
 					.append($("<div>").addClass("show_solution")
-						.text("NO CONTENT HERE!")));
+						.text("NO CONTENT HERE!").css("pointer-events", "none")));
 			}
 		});
 	};
@@ -3450,7 +3450,8 @@ define(function() {
 				if(i == 0) {
 					$("#latex").append($("<div>")
 						.addClass("accordion").append($("<div>")
-						.addClass("show_solution").text("NO CONTENT HERE!")));
+							.addClass("show_solution").text("NO CONTENT HERE!")
+							.css("pointer-events", "none")));
 				}
 				$(".table-buttons").css("display", "none");
 				exports.handle_breadcrumbs(page, $(".accordion").first(),
@@ -3563,8 +3564,10 @@ define(function() {
 							$("#latex").append(accordion);
 						}
 						if(j == 0) {
-							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-								.addClass("show_solution").text("NO CONTENT HERE!")));
+							$("#latex").append($("<div>")
+								.addClass("accordion").append($("<div>")
+									.addClass("show_solution").text("NO CONTENT HERE!")
+									.css("pointer-events", "none")));
 						}
 						$(".table-buttons").css("display", "none");
 						$("#add-box").css("pointer-events", "none");
@@ -3648,8 +3651,10 @@ define(function() {
 							$("#latex").append(accordion);
 						}
 						if(j == 0) {
-							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-								.addClass("show_solution").text("NO CONTENT HERE!")));
+							$("#latex").append($("<div>")
+								.addClass("accordion").append($("<div>")
+									.addClass("show_solution").text("NO CONTENT HERE!")
+									.css("pointer-events", "none")));
 						}
 						$(".table-buttons").css("display", "none");
 						$("#add-box").css("pointer-events", "none");
@@ -3663,6 +3668,8 @@ define(function() {
 						exports.handle_button();
 					}
 				});
+				var titleComparison = data.title_cms.join("-----"),
+					contentComparison = data.content_cms.join("-----");
 				$("#edit").click(function(e) {
 					e.preventDefault();
 					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) != "#008cc3") {
@@ -3734,8 +3741,10 @@ define(function() {
 							$("#latex").append(accordion);
 						}
 						if(j == 0) {
-							$("#latex").append($("<div>").addClass("accordion").append($("<div>")
-								.addClass("show_solution").text("NO CONTENT HERE!")));
+							$("#latex").append($("<div>")
+								.addClass("accordion").append($("<div>")
+								.addClass("show_solution").text("NO CONTENT HERE!")
+								.css("pointer-events", "none")));
 						}
 						$("#add-box").css("pointer-events", "auto");
 						$("#edit").css("pointer-events", "none")
@@ -3888,7 +3897,9 @@ define(function() {
 									else { return iter; }
 								}).join("\$");
 							});
-							if(data.cms_approval != null && data.cms_approval != "" 
+							if(data.cms_approval != null && data.cms_approval != ""
+								&& titleComparison === data.title_cms.join("-----")
+								&& contentComparison === data.content_cms.join("-----")
 								&& data.cms_approval.split(",").length >= validation) {
 								data.title = data.title_cms;
 								data.content = data.content_cms.map(function(elem) {
@@ -3914,6 +3925,12 @@ define(function() {
 								data.cms_approval = 0;
 							}
 							else {
+								if(!(titleComparison === data.title_cms.join("-----") &&
+									contentComparison === data.content_cms.join("-----"))) {
+									data.cms_approval !== null && data.cms_approval.indexOf(cookie) != -1
+										? data.cms_approval = cookie
+										: data.cms_approval = "";
+								}
 								data.title = data.title.map(function(elem) {
 									return elem.split("\\$").map(function(iter, index) {
 										if(index % 2 == 0) {
@@ -3945,7 +3962,7 @@ define(function() {
 								side_approval: "undefined",
 								cms_approval: data.cms_approval != "" 
 									&& data.cms_approval != null 
-									? content.cms_approval : "0",
+									? data.cms_approval : "0",
 								del_approval: "undefined",
 								title_cms: data.title_cms.join("-----") != "" 
 									? data.title_cms.join("-----") : "0",
@@ -4225,7 +4242,8 @@ define(function() {
 			if(i == 0) {
 				$("#latex").append($("<div>")
 					.addClass("accordion").append($("<div>")
-					.addClass("show_solution").text("NO CONTENT HERE!")));
+						.addClass("show_solution").text("NO CONTENT HERE!")
+						.css("pointer-events", "none")));
 			}
 			exports.handle_breadcrumbs(page, $(".accordion").first(),
 				subject, topic, section, example);

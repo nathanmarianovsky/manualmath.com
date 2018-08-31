@@ -54,7 +54,7 @@ exports.add_api_routes = (app, pool) => {
 						var title_str = results[0].title != null ? results[0].title : "",
 							content_str = results[0].content != null 
 								? new Buffer(results[0].content, "binary").toString() : "";
-						if(side == "client") {
+						if(side != "client") {
 							var title_str_cms = results[0].title_cms != null ? results[0].title_cms : "",
 								content_str_cms = results[0].content_cms != null 
 									? new Buffer(results[0].content_cms, "binary").toString() : "";
@@ -63,7 +63,7 @@ exports.add_api_routes = (app, pool) => {
 							title: title_str,
 							content: content_str
 						};
-						if(side == "client") {
+						if(side != "client") {
 							obj.title_cms = title_str_cms;
 							obj.content_cms = content_str_cms;
 							obj.cms_approval = results[0].cms_approval;
@@ -639,7 +639,6 @@ exports.add_api_routes = (app, pool) => {
 					: statement += "'" + rank_disapproval + "' ";
 				statement += "WHERE email='" + email + "'";
 			}
-			console.log(statement);
 			pool.query(statement, err => {
 				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 				else { response.send("1"); }
