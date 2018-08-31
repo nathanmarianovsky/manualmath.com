@@ -861,7 +861,7 @@ define(function() {
 					$("#popup_exit").remove();
 					$("#popup_submit").addClass("modal-close");
 					$.get("/api/cms/count/committee").done(function(num) {
-						const validation = parseInt(num);
+						const validation = Math.ceil((parseInt(num) + 1) / 2);
 						var statement = "";
 						list.forEach(function(iter) {
 							if(iter.del != null && iter.del.split(",").length >= validation) {
@@ -1028,7 +1028,7 @@ define(function() {
 					table_item = 0;
 				str = "#" + type.toLowerCase() + "_tr_";
 				if(type == "Subjects") {
-					table_item = $(str + data[obj_ref - 1].sid
+					table_item = $(str + data[obj_ref - 1].sid)
 						.detach();
 				}
 				else if(type == "Topics") {

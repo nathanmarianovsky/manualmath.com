@@ -615,7 +615,7 @@ exports.add_api_routes = (app, pool) => {
 					email + "'";
 			}
 			else if(param == "status") {
-				var value = request.body.value,
+				var value = request.body.status,
 				statement = "UPDATE contributors SET status=" +
 					value + " WHERE email='" + email + "'";
 			}
@@ -639,6 +639,7 @@ exports.add_api_routes = (app, pool) => {
 					: statement += "'" + rank_disapproval + "' ";
 				statement += "WHERE email='" + email + "'";
 			}
+			console.log(statement);
 			pool.query(statement, err => {
 				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 				else { response.send("1"); }
