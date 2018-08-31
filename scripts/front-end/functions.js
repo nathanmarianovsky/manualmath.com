@@ -271,12 +271,15 @@ define(function() {
 		$.post("/api/cms/committee/check/", {email: email}).done(function(check) {
 			if(check >= 1) {
 				var group = $("<a>").attr("id", "committee")
-					.addClass("btn-floating").css("background", "#00b8ff")
-					.append($("<i>").addClass("material-icons").text("group_work"));
+					.addClass("btn-floating")
+					.css("background", "#00b8ff")
+					.append($("<i>").addClass("material-icons")
+						.text("group_work"));
 			}
 			if(check == 1) {
 				var ranking = $("<a>").attr("id", "ranking")
-					.addClass("btn-floating").css("background", "#00b8ff")
+					.addClass("btn-floating")
+					.css("background", "#00b8ff")
 					.append($("<i>").addClass("material-icons")
 						.text("thumbs_up_down"));
 				$("#profile").closest("li").before($("<li>").append(ranking),
@@ -285,7 +288,8 @@ define(function() {
 			else if(check == 2) {
 				var decision = $("<a>").attr("id", "decision")
 					.addClass("btn-floating").css("background", "#00b8ff")
-					.append($("<i>").addClass("material-icons").text("group"));
+					.append($("<i>").addClass("material-icons")
+						.text("group"));
 				$("#profile").closest("li").before($("<li>").append(decision),
 					$("<li>").append(group));
 			}
@@ -302,22 +306,28 @@ define(function() {
 
 	*/
 	exports.decision_modal = function() {
-		$.get("/pages/dist/committee-table-min.html").done(function(content) {
+		$.get("/pages/dist/committee-table-min.html")
+			.done(function(content) {
 			$(".modal-trigger").leanModal({
 				dismissible: false,
 				opacity: 2,
 				inDuration: 1000,
 				outDuration: 1000
 			});
-			$("#popup_title").text("Administrator Privileges").css("text-align", "center");
-			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
-				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			$("#popup_title").text("Administrator Privileges")
+				.css("text-align", "center");
+			$("#popup_modal_footer").append($("<a>")
+				.attr("id", "popup_exit")
+				.addClass("modal-close waves-effect waves-blue btn-flat")
+				.text("Exit"));
 			$("#popup_submit").removeClass("modal-close");
-			var statement = "As the administrator of manualmath you have the power to increase a" +
-				" contributor's current role by adding the user to the committee. At the same time" +
-				" you may also decrease a contributor's current role by deleting their account from" +
-				" the database. Using the table below you can approve and delete contributors who have" +
-				" a green light indicator."
+			var statement = "As the administrator of manualmath you have" +
+				" the power to increase a contributor's current role by" +
+				" adding the user to the committee. At the same time you" +
+				" may also decrease a contributor's current role by deleting" +
+				" their account from the database. Using the table below you" +
+				" can approve and delete contributors who have a green light" +
+				" indicator."
 			$("#popup_body").text(statement).append(content);
 			$.post("/api/cms/contributors/data").done(function(contributors) {
 				var list = contributors.map(function(elem, index) {
@@ -327,36 +337,61 @@ define(function() {
 					elem.deleted = 0;
 					return elem;
 				});
-				$("#committee_table_head").find("tr th:nth-last-child(2)").text("Member Up Votes");
-				$("#committee_table_head").find("tr th").last().text("Member Down Votes");
+				$("#committee_table_head").find("tr th:nth-last-child(2)")
+					.text("Member Up Votes");
+				$("#committee_table_head").find("tr th")
+					.last().text("Member Down Votes");
 				$("#committee_table_head").find("tr")
-					.append($("<th>").text("Rank Down"), $("<th>").text("Rank Up"), $("<th>").text("Delete"));
+					.append($("<th>").text("Rank Down"),
+						$("<th>").text("Rank Up"), $("<th>").text("Delete"));
 				list.forEach(function(elem) {
 					var first = elem.rank_approval != null
-							? elem.rank_approval.split(",").length : "0",
+							? elem.rank_approval.split(",").length
+							: "0",
 						second = elem.rank_disapproval != null
-							? elem.rank_disapproval.split(",").length : "0";
-					if(elem.rank == "com-member") { first = "N/A"; second = "N/A"; }
+							? elem.rank_disapproval.split(",").length
+							: "0";
+					if(elem.rank == "com-member") {
+						first = "N/A";
+						second = "N/A";
+					}
 					var item_tr = $("<tr>"),
 						item_fname = $("<td>").text(elem.first_name),
 						item_lname = $("<td>").text(elem.last_name),
-						item_email = $("<td>").text(elem.email).css("text-align", "center"),
-						item_approval = $("<td>").text(first).css("text-align", "center"),
-						item_disapproval = $("<td>").text(second).css("text-align", "center"),
-						item_rank_down = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", "rank_down_" + elem.num)
-								.addClass("rank-down-contributor center").css("color", "red")
-								.append($("<i>").addClass("material-icons").text("thumb_down"))),
-						item_rank_up = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", "rank_up_" + elem.num)
-								.addClass("rank-up-contributor center").css("color", "red")
-								.append($("<i>").addClass("material-icons").text("thumb_up"))),
-						item_rank_delete = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", "delete_" + elem.num)
-								.addClass("delete-contributor center").css("color", "red")
-								.append($("<i>").addClass("material-icons").text("cancel")));
-					item_tr.append(item_fname, item_lname, item_email, item_approval, item_disapproval, 
-						item_rank_down, item_rank_up, item_rank_delete);
+						item_email = $("<td>").text(elem.email)
+							.css("text-align", "center"),
+						item_approval = $("<td>").text(first)
+							.css("text-align", "center"),
+						item_disapproval = $("<td>").text(second)
+							.css("text-align", "center"),
+						item_rank_down = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", "rank_down_" + elem.num)
+								.addClass("rank-down-contributor center")
+								.css("color", "red")
+								.append($("<i>").addClass("material-icons")
+									.text("thumb_down"))),
+						item_rank_up = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", "rank_up_" + elem.num)
+								.addClass("rank-up-contributor center")
+								.css("color", "red")
+								.append($("<i>").addClass("material-icons")
+									.text("thumb_up"))),
+						item_rank_delete = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", "delete_" + elem.num)
+								.addClass("delete-contributor center")
+								.css("color", "red")
+								.append($("<i>").addClass("material-icons")
+									.text("cancel")));
+					item_tr.append(item_fname, item_lname, item_email,
+						item_approval, item_disapproval, 
+						item_rank_down, item_rank_up,
+						item_rank_delete);
 					$("#committee_table_body").append(item_tr);
 				});
 				$("#popup_control").click();
@@ -372,7 +407,8 @@ define(function() {
 						obj_ref = list.findIndex(function(iter) { 
 							return iter.num == holder[1];
 						});
-					if(exports.rgba_to_hex($("#delete_" + holder[1]).css("color")) == "#ff0000") {
+					if(exports.rgba_to_hex($("#delete_" +
+						holder[1]).css("color")) == "#ff0000") {
 						$("#delete_" + holder[1]).css("color", "green");
 						list[obj_ref].deleted = 1;
 					}
@@ -387,7 +423,8 @@ define(function() {
 						obj_ref = list.findIndex(function(iter) { 
 							return iter.num == holder[2];
 						});
-					if(exports.rgba_to_hex($("#rank_up_" + holder[2]).css("color")) == "#ff0000") {
+					if(exports.rgba_to_hex($("#rank_up_" +
+						holder[2]).css("color")) == "#ff0000") {
 						$("#rank_up_" + holder[2]).css("color", "green");
 						$("#rank_down_" + holder[2]).css("color", "red");
 						list[obj_ref].rank_up = 1;
@@ -403,7 +440,8 @@ define(function() {
 						obj_ref = list.findIndex(function(iter) { 
 							return iter.num == holder[2];
 						});
-					if(exports.rgba_to_hex($("#rank_down_" + holder[2]).css("color")) == "#ff0000") {
+					if(exports.rgba_to_hex($("#rank_down_" +
+						holder[2]).css("color")) == "#ff0000") {
 						$("#rank_down_" + holder[2]).css("color", "green");
 						$("#rank_up_" + holder[2]).css("color", "red");
 						list[obj_ref].rank_down = 1;
@@ -419,47 +457,56 @@ define(function() {
 					$("#popup_submit").addClass("modal-close");
 					list.forEach(function(iter) {
 						if(iter.deleted == 1) {
-							$.post("/api/cms/contributor/remove/", {email: iter.email})
+							$.post("/api/cms/contributor/remove/",
+								{email: iter.email})
 								.fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue deleting" +
-									" contributor(s) from the database!");
-								$("#popup_submit").text("Ok").click(function(e) {
-									e.preventDefault();
-									$(".lean-overlay").remove();
-									$("#popup").remove();
-									$("#popup_control").remove();
-									$(window).scrollTop(0);
+								$("#popup_body").text("There was an issue" +
+									" deleting contributor(s) from the" +
+									" database!");
+								$("#popup_submit").text("Ok")
+									.click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$(window).scrollTop(0);
 								});
 							});
 						}
 						else if(iter.deleted == 0 && iter.rank_up == 1) {
-							$.post("/api/cms/committee/add", {email: iter.email})
+							$.post("/api/cms/committee/add",
+								{email: iter.email})
 								.fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue ranking" +
-									" up contributo(r) in the database!");
-								$("#popup_submit").text("Ok").click(function(e) {
-									e.preventDefault();
-									$(".lean-overlay").remove();
-									$("#popup").remove();
-									$("#popup_control").remove();
-									$(window).scrollTop(0);
+								$("#popup_body").text("There was an issue" +
+									" ranking up contributo(r) in the" +
+									" database!");
+								$("#popup_submit").text("Ok")
+									.click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$(window).scrollTop(0);
 								});
 							});
 						}
 						else if(iter.deleted == 0 && iter.rank_down == 1) {
-							$.post("/api/cms/committee/remove", {email: iter.email})
+							$.post("/api/cms/committee/remove",
+								{email: iter.email})
 								.fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue ranking" +
-									" down contributo(r) in the database!");
-								$("#popup_submit").text("Ok").click(function(e) {
-									e.preventDefault();
-									$(".lean-overlay").remove();
-									$("#popup").remove();
-									$("#popup_control").remove();
-									$(window).scrollTop(0);
+								$("#popup_body").text("There was an issue" +
+									" ranking down contributo(r) in the" +
+									" database!");
+								$("#popup_submit").text("Ok")
+									.click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$(window).scrollTop(0);
 								});
 							});
 						}
@@ -496,14 +543,18 @@ define(function() {
 				inDuration: 1000,
 				outDuration: 1000
 			});
-			$("#popup_title").text("Committee Approval of New Committee Members").css("text-align", "center");
+			$("#popup_title").text("Committee Approval of New Committee Members")
+				.css("text-align", "center");
 			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
-				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+				.addClass("modal-close waves-effect waves-blue btn-flat")
+				.text("Exit"));
 			$("#popup_submit").removeClass("modal-close");
-			var statement = "As a committee member on manualmath you have the power to" +
-				" try to sway the administrator's decision on whether a current contributor" +
-				" joins the committee or not. Using the table below you can provide an approval or" +
-				" disapproval which will be indicated by a green color."
+			var statement = "As a committee member on manualmath you have" +
+				" the power to try to sway the administrator's decision" +
+				" on whether a current contributor joins the committee" +
+				" or not. Using the table below you can provide an" +
+				" approval or disapproval which will be indicated by" +
+				" a green color."
 			$("#popup_body").text(statement).append(content);
 			$.post("/api/cms/contributors/nonmember").done(function(contributors) {
 				var list = contributors.map(function(elem, index) {
@@ -511,21 +562,32 @@ define(function() {
 					elem.edited = 0;
 					return elem;
 				});
-				$("#committee_table_head").find("tr th").last().text("Disapprove");
+				$("#committee_table_head").find("tr th").last()
+					.text("Disapprove");
 				list.forEach(function(elem) {
 					var item_tr = $("<tr>"),
 						item_fname = $("<td>").text(elem.first_name),
 						item_lname = $("<td>").text(elem.last_name),
-						item_email = $("<td>").text(elem.email).css("text-align", "center"),
-						item_approve = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", "approve_" + elem.num)
-								.addClass("approve-contributor center").append($("<i>")
-									.addClass("material-icons").text("thumb_up"))),
-						item_disapprove = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", "disapprove_" + elem.num)
-								.addClass("disapprove-contributor center").append($("<i>")
-									.addClass("material-icons").text("thumb_down")));
-					item_tr.append(item_fname, item_lname, item_email, item_approve, item_disapprove);
+						item_email = $("<td>").text(elem.email)
+							.css("text-align", "center"),
+						item_approve = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", "approve_" + elem.num)
+								.addClass("approve-contributor center")
+								.append($("<i>")
+									.addClass("material-icons")
+									.text("thumb_up"))),
+						item_disapprove = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", "disapprove_" + elem.num)
+								.addClass("disapprove-contributor center")
+								.append($("<i>")
+									.addClass("material-icons")
+									.text("thumb_down")));
+					item_tr.append(item_fname, item_lname,
+						item_email, item_approve, item_disapprove);
 					$("#committee_table_body").append(item_tr);
 					if(elem.rank_approval != null && 
 						elem.rank_approval.split(",").some(function(iter) {
@@ -559,11 +621,13 @@ define(function() {
 						obj_ref = list.findIndex(function(iter) { 
 							return iter.num == holder[1];
 						});
-					if(exports.rgba_to_hex($("#disapprove_" + holder[1]).css("color")) == "#ff0000") {
+					if(exports.rgba_to_hex($("#disapprove_"
+						+ holder[1]).css("color")) == "#ff0000") {
 						$("#disapprove_" + holder[1]).css("color", "green");
 						$("#approve_" + holder[1]).css("color", "red");
 						if(list[obj_ref].rank_disapproval == null) { 
-							list[obj_ref].rank_disapproval = exports.read_cookie("contributor"); 
+							list[obj_ref].rank_disapproval = 
+								exports.read_cookie("contributor"); 
 						}
 						else {
 							list[obj_ref].rank_disapproval += "," +
@@ -574,13 +638,19 @@ define(function() {
 								.indexOf(exports.read_cookie("contributor"));
 							if(start != -1) {
 								if(start != 0) {
-									list[obj_ref].rank_approval = list[obj_ref].rank_approval.substring(0, start) + 
-										list[obj_ref].rank_approval.substring(start +
-											exports.read_cookie("contributor").length);
+									list[obj_ref].rank_approval = 
+										list[obj_ref].rank_approval
+											.substring(0, start) + 
+										list[obj_ref].rank_approval
+											.substring(start +
+											exports.read_cookie("contributor")
+											.length);
 								}
 								else {
-									list[obj_ref].rank_approval = list[obj_ref].rank_approval
-										.substring(exports.read_cookie("contributor").length + 1);
+									list[obj_ref].rank_approval =
+										list[obj_ref].rank_approval
+											.substring(exports.read_cookie(
+												"contributor").length + 1);
 								}
 								if(list[obj_ref].rank_approval == "") {
 									list[obj_ref].rank_approval = null;
@@ -595,13 +665,19 @@ define(function() {
 								.indexOf(exports.read_cookie("contributor")); 
 							if(start != -1) {
 								if(start != 0) {
-									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval.substring(0, start) + 
-										list[obj_ref].rank_disapproval.substring(start +
-											exports.read_cookie("contributor").length);
+									list[obj_ref].rank_disapproval =
+										list[obj_ref].rank_disapproval
+											.substring(0, start) + 
+										list[obj_ref].rank_disapproval
+											.substring(start +
+											exports.read_cookie(
+												"contributor").length);
 								}
 								else {
-									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval
-										.substring(exports.read_cookie("contributor").length + 1);
+									list[obj_ref].rank_disapproval =
+										list[obj_ref].rank_disapproval
+											.substring(exports.read_cookie(
+												"contributor").length + 1);
 								}
 								if(list[obj_ref].rank_disapproval == "") {
 									list[obj_ref].rank_disapproval = null;
@@ -617,11 +693,13 @@ define(function() {
 						obj_ref = list.findIndex(function(iter) { 
 							return iter.num == holder[1];
 						});
-					if(exports.rgba_to_hex($("#approve_" + holder[1]).css("color")) == "#ff0000") {
+					if(exports.rgba_to_hex($("#approve_" +
+						holder[1]).css("color")) == "#ff0000") {
 						$("#approve_" + holder[1]).css("color", "green");
 						$("#disapprove_" + holder[1]).css("color", "red");
 						if(list[obj_ref].rank_approval == null) { 
-							list[obj_ref].rank_approval = exports.read_cookie("contributor"); 
+							list[obj_ref].rank_approval =
+								exports.read_cookie("contributor"); 
 						}
 						else {
 							list[obj_ref].rank_approval += "," +
@@ -632,13 +710,19 @@ define(function() {
 								.indexOf(exports.read_cookie("contributor")); 
 							if(start != -1) {
 								if(start != 0) {
-									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval.substring(0, start) + 
-										list[obj_ref].rank_disapproval.substring(start +
-											exports.read_cookie("contributor").length);
+									list[obj_ref].rank_disapproval = 
+										list[obj_ref].rank_disapproval
+											.substring(0, start) + 
+										list[obj_ref].rank_disapproval
+											.substring(start +
+												exports.read_cookie(
+													"contributor").length);
 								}
 								else {
-									list[obj_ref].rank_disapproval = list[obj_ref].rank_disapproval
-										.substring(exports.read_cookie("contributor").length + 1);
+									list[obj_ref].rank_disapproval =
+										list[obj_ref].rank_disapproval
+											.substring(exports.read_cookie(
+												"contributor").length + 1);
 								}
 								if(list[obj_ref].rank_disapproval == "") {
 									list[obj_ref].rank_disapproval = null;
@@ -653,13 +737,19 @@ define(function() {
 							.indexOf(exports.read_cookie("contributor"));
 							if(start != -1) {
 								if(start != 0) {
-									list[obj_ref].rank_approval = list[obj_ref].rank_approval.substring(0, start) + 
-										list[obj_ref].rank_approval.substring(start +
-											exports.read_cookie("contributor").length);
+									list[obj_ref].rank_approval =
+										list[obj_ref].rank_approval
+											.substring(0, start) + 
+										list[obj_ref].rank_approval
+											.substring(start +
+												exports.read_cookie(
+													"contributor").length);
 								}
 								else {
-									list[obj_ref].rank_approval = list[obj_ref].rank_approval
-										.substring(exports.read_cookie("contributor").length + 1);
+									list[obj_ref].rank_approval =
+										list[obj_ref].rank_approval
+											.substring(exports.read_cookie(
+												"contributor").length + 1);
 								}
 								if(list[obj_ref].rank_approval == "") {
 									list[obj_ref].rank_approval = null;
@@ -675,7 +765,8 @@ define(function() {
 					$("#popup_submit").addClass("modal-close");
 					list.forEach(function(iter) {
 						if(iter.edited == 1) {
-							$.post("/api/cms/contributor/change/rankApproval", {
+							$.post("/api/cms/contributor/change" +
+								"/rankApproval", {
 								email: iter.email,
 								rank_approval: (iter.rank_approval == null
 									? "0" : iter.rank_approval),
@@ -683,19 +774,22 @@ define(function() {
 									? "0" : iter.rank_disapproval)
 							}).fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue uploading" +
-									" the contributor changes to the database!");
-								$("#popup_submit").text("Ok").click(function(e) {
-									e.preventDefault();
-									$(".lean-overlay").remove();
-									$("#popup").remove();
-									$("#popup_control").remove();
-									$(window).scrollTop(0);
+								$("#popup_body").text("There was an issue" +
+									" uploading the contributor changes" +
+									" to the database!");
+								$("#popup_submit").text("Ok")
+									.click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$(window).scrollTop(0);
 								});
 							});
 						}
 					});
-					$("#popup_title").text("Changes Saved").css("text-align", "center");
+					$("#popup_title").text("Changes Saved")
+						.css("text-align", "center");
 					$("#popup_body").text("All contributor changes have" +
 						" been saved to the database!");
 					$("#popup_submit").text("Ok").click(function(e) {
@@ -717,27 +811,36 @@ define(function() {
 
 	*/
 	exports.committee_modal = function() {
-		$.get("/pages/dist/committee-table-min.html").done(function(content) {
+		$.get("/pages/dist/committee-table-min.html")
+			.done(function(content) {
 			$(".modal-trigger").leanModal({
 				dismissible: false,
 				opacity: 2,
 				inDuration: 1000,
 				outDuration: 1000
 			});
-			$("#popup_title").text("Committee Approval of New Users").css("text-align", "center");
-			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
-				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+			$("#popup_title").text("Committee Approval of New Users")
+				.css("text-align", "center");
+			$("#popup_modal_footer").append($("<a>")
+				.attr("id", "popup_exit")
+				.addClass("modal-close waves-effect waves-blue btn-flat")
+				.text("Exit"));
 			$("#popup_submit").removeClass("modal-close");
-			var statement = "When new contributors register for the service," +
-				" they do not automatically gain access to the content management" +
-				" system by design. It is the job of the committee members to approve" +
-				" or disapprove incoming contributors by utilizing the funtionality provided" +
-				" below. Once a contributor reaches majority approval from the committee" +
-				" they will gain access to the content management system. Likewise a majority" +
-				" disapproval means a contributor has been denied access and has their account" +
-				" wiped from the database."
+			var statement = "When new contributors register" +
+				" for the service, system by design. It is" +
+				" the job of the committee members to approve" +
+				" or disapprove incoming contributors by" +
+				" utilizing the funtionality provided below." +
+				" Once a contributor reaches majority" +
+				" approval from the committee they will" +
+				" gain access to the content management" +
+				" system. Likewise a majority disapproval" +
+				" means a contributor has been denied" +
+				" access and has their account wiped" +
+				" from the database."
 			$("#popup_body").text(statement).append(content);
-			$.post("/api/cms/contributors/unapproved").done(function(contributors) {
+			$.post("/api/cms/contributors/unapproved")
+				.done(function(contributors) {
 				var list = contributors.map(function(elem, index) {
 					elem.num = index;
 					elem.edited = 0;
@@ -747,17 +850,26 @@ define(function() {
 					var item_tr = $("<tr>"),
 						item_fname = $("<td>").text(elem.first_name),
 						item_lname = $("<td>").text(elem.last_name),
-						item_email = $("<td>").text(elem.email).css("text-align", "center"),
-						item_approve = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", "check_" + elem.num)
-								.addClass("approve-contributor center").append($("<i>")
-									.addClass("material-icons").text("check_circle"))),
-						item_delete = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", "delete_" + elem.num)
-								.addClass("del-contributor center").append($("<i>")
-									.addClass("material-icons").text("cancel")));
-					item_tr.append(item_fname, item_lname, item_email,
-						item_approve, item_delete);
+						item_email = $("<td>").text(elem.email)
+							.css("text-align", "center"),
+						item_approve = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", "check_" + elem.num)
+								.addClass("approve-contributor center")
+								.append($("<i>")
+									.addClass("material-icons")
+									.text("check_circle"))),
+						item_delete = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", "delete_" + elem.num)
+								.addClass("del-contributor center")
+								.append($("<i>")
+									.addClass("material-icons")
+									.text("cancel")));
+					item_tr.append(item_fname, item_lname,
+						item_email, item_approve, item_delete);
 					$("#committee_table_body").append(item_tr);
 					if(elem.approval != null && 
 						elem.approval.split(",").some(function(iter) {
@@ -791,12 +903,17 @@ define(function() {
 						obj_ref = list.findIndex(function(iter) { 
 							return iter.num == holder[1];
 						});
-					if(exports.rgba_to_hex($("#delete_" + holder[1]).css("color")) == "#ff0000") {
+					if(exports.rgba_to_hex($("#delete_" +
+						holder[1]).css("color")) == "#ff0000") {
 						$("#delete_" + holder[1]).css("color", "green");
 						if(list[obj_ref].del == null) { 
-							list[obj_ref].del = exports.read_cookie("contributor"); 
+							list[obj_ref].del =
+								exports.read_cookie("contributor"); 
 						}
-						else { list[obj_ref].del += "," + exports.read_cookie("contributor"); }
+						else {
+							list[obj_ref].del += "," +
+								exports.read_cookie("contributor");
+						}
 					}
 					else {
 						$("#delete_" + holder[1]).css("color", "red");
@@ -805,15 +922,20 @@ define(function() {
 								.indexOf(exports.read_cookie("contributor")); 
 							if(start != -1) {
 								if(start != 0) {
-									list[obj_ref].del = list[obj_ref].del.substring(0, start) + 
+									list[obj_ref].del = 
+										list[obj_ref].del.substring(0, start) + 
 										list[obj_ref].del.substring(start +
-											exports.read_cookie("contributor").length);
+											exports.read_cookie(
+												"contributor").length);
 								}
 								else {
 									list[obj_ref].del = list[obj_ref].del
-										.substring(exports.read_cookie("contributor").length + 1);
+										.substring(exports.read_cookie(
+											"contributor").length + 1);
 								}
-								if(list[obj_ref].del == "") { list[obj_ref].del = null; }
+								if(list[obj_ref].del == "") {
+									list[obj_ref].del = null;
+								}
 							}
 						}
 					}
@@ -825,10 +947,12 @@ define(function() {
 						obj_ref = list.findIndex(function(iter) { 
 							return iter.num == holder[1];
 						});
-					if(exports.rgba_to_hex($("#check_" + holder[1]).css("color")) == "#ff0000") {
+					if(exports.rgba_to_hex($("#check_" +
+						holder[1]).css("color")) == "#ff0000") {
 						$("#check_" + holder[1]).css("color", "green");
 						if(list[obj_ref].approval == null) { 
-							list[obj_ref].approval = exports.read_cookie("contributor"); 
+							list[obj_ref].approval =
+								exports.read_cookie("contributor"); 
 						}
 						else {
 							list[obj_ref].approval += "," +
@@ -842,15 +966,23 @@ define(function() {
 								.indexOf(exports.read_cookie("contributor"));
 							if(start != -1) {
 								if(start != 0) {
-									list[obj_ref].approval = list[obj_ref].approval.substring(0, start) + 
-										list[obj_ref].approval.substring(start +
-											exports.read_cookie("contributor").length);
+									list[obj_ref].approval =
+										list[obj_ref].approval
+											.substring(0, start) + 
+										list[obj_ref].approval
+											.substring(start +
+												exports.read_cookie(
+													"contributor").length);
 								}
 								else {
-									list[obj_ref].approval = list[obj_ref].approval
-										.substring(exports.read_cookie("contributor").length + 1);
+									list[obj_ref].approval =
+										list[obj_ref].approval
+											.substring(exports.read_cookie(
+												"contributor").length + 1);
 								}
-								if(list[obj_ref].approval == "") { list[obj_ref].approval = null; }
+								if(list[obj_ref].approval == "") {
+									list[obj_ref].approval = null;
+								}
 							}
 						}
 					}
@@ -864,66 +996,83 @@ define(function() {
 						const validation = Math.ceil((parseInt(num) + 1) / 2);
 						var statement = "";
 						list.forEach(function(iter) {
-							if(iter.del != null && iter.del.split(",").length >= validation) {
-								$.post("/api/cms/contributor/remove/", {email: iter.email})
+							if(iter.del != null &&
+								iter.del.split(",").length >= validation) {
+								$.post("/api/cms/contributor/remove/",
+									{email: iter.email})
 									.fail(function() {
 									$("#popup_title").text("Database Issue");
-									$("#popup_body").text("There was an issue deleting" +
-										" a contributor from the database!");
-									$("#popup_submit").text("Ok").click(function(e) {
-										e.preventDefault();
-										$(".lean-overlay").remove();
-										$("#popup").remove();
-										$("#popup_control").remove();
-										$(window).scrollTop(0);
-									});
-								});
-							}
-							else if(iter.approval != null && iter.approval.split(",").length >= validation) {
-								$.post("/api/cms/contributor/change/status/", {email: iter.email, status: 1})
-									.fail(function() {
-									$("#popup_title").text("Database Issue");
-									$("#popup_body").text("There was an issue changing" +
-										" the status of a contributor in the database!");
-									$("#popup_submit").text("Ok").click(function(e) {
-										e.preventDefault();
-										$(".lean-overlay").remove();
-										$("#popup").remove();
-										$("#popup_control").remove();
-										$(window).scrollTop(0);
-									});
-								});
-							}
-							else {
-								if(iter.edited == 1) {
-									$.post("/api/cms/contributor/change/approval/", {
-										email: iter.email,
-										approval: iter.approval == null ? "0" : iter.approval,
-										del: iter.del == null ? "0" : iter.del
-									}).fail(function() {
-										$("#popup_title").text("Database Issue");
-										$("#popup_body").text("There was an issue" +
-											" uploading the contributor changes to the database!");
-										$("#popup_submit").text("Ok").click(function(e) {
+									$("#popup_body").text("There was an" +
+										" issue deleting a contributor" +
+										" from the database!");
+									$("#popup_submit").text("Ok")
+										.click(function(e) {
 											e.preventDefault();
 											$(".lean-overlay").remove();
 											$("#popup").remove();
 											$("#popup_control").remove();
 											$(window).scrollTop(0);
+									});
+								});
+							}
+							else if(iter.approval != null &&
+								iter.approval.split(",").length >= validation) {
+								$.post("/api/cms/contributor/change/status/",
+									{email: iter.email, status: 1})
+									.fail(function() {
+									$("#popup_title").text("Database Issue");
+									$("#popup_body").text("There was an" +
+										" issue changing the status" +
+										" of a contributor in the database!");
+									$("#popup_submit").text("Ok")
+										.click(function(e) {
+											e.preventDefault();
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											$(window).scrollTop(0);
+									});
+								});
+							}
+							else {
+								if(iter.edited == 1) {
+									$.post("/api/cms/contributor/change" +
+										"/approval/", {
+										email: iter.email,
+										approval: iter.approval == null
+											? "0" : iter.approval,
+										del: iter.del == null
+											? "0" : iter.del
+									}).fail(function() {
+										$("#popup_title").text("Database Issue");
+										$("#popup_body").text("There was an" +
+											" issue uploading the" +
+											" contributor changes to" +
+											" the database!");
+										$("#popup_submit").text("Ok")
+											.click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$(window).scrollTop(0);
 										});
 									});
 								}
 							}
 						});
-						$("#popup_title").text("Changes Saved").css("text-align", "center");
-						$("#popup_body").text("All contributor changes have" +
-							" been saved to the database!");
-						$("#popup_submit").text("Ok").click(function(e) {
-							e.preventDefault();
-							$(".lean-overlay").remove();
-							$("#popup").remove();
-							$("#popup_control").remove();
-							$(window).scrollTop(0);
+						$("#popup_title").text("Changes Saved")
+							.css("text-align", "center");
+						$("#popup_body").text("All contributor" +
+							" changes have been saved" +
+							" to the database!");
+						$("#popup_submit").text("Ok")
+							.click(function(e) {
+								e.preventDefault();
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+								$(window).scrollTop(0);
 						});
 					});
 				});
@@ -942,14 +1091,19 @@ define(function() {
 
 	*/
 	exports.sidenav_modal_name_check = function(data) {
-		var test = data.map(function(elem) { return elem.clean_name; }),
+		var test = data.map(function(elem) {
+				return elem.clean_name;
+			}),
 			i = 0;
 		for(; i < test.length; i++) {
-			if(test.filter(function(item) { return item == test[i]; }).length >= 2) {
+			if(test.filter(function(item) {
+				return item == test[i];
+			}).length >= 2) {
 				break;
 			}				
 		}
-		i != test.length ? $("#popup_submit").css("pointer-events", "none") 
+		i != test.length 
+			? $("#popup_submit").css("pointer-events", "none") 
 			: $("#popup_submit").css("pointer-events", "auto");
 	};
 
@@ -972,22 +1126,34 @@ define(function() {
 		$(".approve").off("click");
 		$(".garbage").off("click");
 		$(".field").on("input", function() {
-			var id = parseInt($(this).attr("id").split("_")[2]);
+			var id = parseInt($(this).attr("id")
+				.split("_")[2]);
 			data.forEach(function(iter) { 
-				if((type == "Subjects" && iter.sid == id) ||
-					(type == "Topics" && iter.tid == id) ||
-					(type == "Sections" && iter.section_id == id) ||
-					(type == "Examples" && iter.eid == id)) {
+				if((type == "Subjects" &&
+						iter.sid == id) ||
+					(type == "Topics" &&
+						iter.tid == id) ||
+					(type == "Sections" &&
+						iter.section_id == id) ||
+					(type == "Examples" &&
+						iter.eid == id)) {
 					iter.edited = 1;
 					iter.clean_name = $("#" +
-						type.toLowerCase() + "_td_" + id).text();
+						type.toLowerCase() + "_td_" + id)
+						.text();
 					var str = exports.replace_all($("#" +
-						type.toLowerCase() + "_td_" + id).text(), " ", "_");
-					str = exports.replace_all(str, "-", "AND");
-					str = exports.replace_all(str, "'", "APOSTROPHE");
-					str = exports.replace_all(str, "\"", "QUOTE");
-					str = exports.replace_all(str, ":", "COLON");
-					str = exports.replace_all(str, ",", "COMMA");
+						type.toLowerCase() + "_td_" +
+						id).text(), " ", "_");
+					str = exports.replace_all(str,
+						"-", "AND");
+					str = exports.replace_all(str,
+						"'", "APOSTROPHE");
+					str = exports.replace_all(str,
+						"\"", "QUOTE");
+					str = exports.replace_all(str,
+						":", "COLON");
+					str = exports.replace_all(str,
+						",", "COMMA");
 					if(type == "Subjects") {
 						iter.sname = str;
 					}
@@ -1009,16 +1175,20 @@ define(function() {
 			var holder = $(this).attr("id").split("_"),
 				obj_ref = data.findIndex(function(iter) { 
 					if(type == "Subjects") {
-						return iter.sid == parseInt(holder[2]);
+						return iter.sid ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Topics") {
-						return iter.tid == parseInt(holder[2]);
+						return iter.tid ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Sections") {
-						return iter.section_id == parseInt(holder[2]);
+						return iter.section_id ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Examples") {
-						return iter.eid == parseInt(holder[2]);
+						return iter.eid ==
+							parseInt(holder[2]);
 					}
 				}),
 				str = "";
@@ -1028,36 +1198,45 @@ define(function() {
 					table_item = 0;
 				str = "#" + type.toLowerCase() + "_tr_";
 				if(type == "Subjects") {
-					table_item = $(str + data[obj_ref - 1].sid)
+					table_item = $(str +
+						data[obj_ref - 1].sid)
 						.detach();
 				}
 				else if(type == "Topics") {
-					table_item = $(str + data[obj_ref - 1].tid)
+					table_item = $(str +
+						data[obj_ref - 1].tid)
 						.detach();
 				}
 				else if(type == "Sections") {
-					table_item = $(str + data[obj_ref - 1].section_id)
+					table_item = $(str +
+						data[obj_ref - 1].section_id)
 						.detach();
 				}
 				else if(type == "Examples") {
-					table_item = $(str + data[obj_ref - 1].eid)
+					table_item = $(str +
+						data[obj_ref - 1].eid)
 						.detach();
 				}
-				$("#" + type.toLowerCase() + "_tr_" + holder[2])
-					.after(table_item);
+				$("#" + type.toLowerCase() + "_tr_"
+					+ holder[2]).after(table_item);
 				data[obj_ref] = data[obj_ref - 1];
 				data[obj_ref - 1] = obj;
-				data[obj_ref - 1].order = data[obj_ref].order;
+				data[obj_ref - 1].order =
+					data[obj_ref].order;
 				data[obj_ref].order = obj_order;
 				data[obj_ref - 1].edited = 1;
 				data[obj_ref].edited = 1;
 			}
-			else if(holder[1] == "down" && obj_ref != data.length - 1) {
-				var table_item = $("#" + type.toLowerCase() +
-						"_tr_" + holder[2]).detach(),
+			else if(holder[1] == "down" && obj_ref
+				!= data.length - 1) {
+				var table_item = $("#" +
+						type.toLowerCase() +
+						"_tr_" + holder[2])
+					.detach(),
 					obj = data[obj_ref],
 					obj_order = obj.order;
-				str = "#" + type.toLowerCase() + "_tr_";
+				str = "#" + type.toLowerCase()
+					+ "_tr_";
 				if(type == "Subjects") {
 					$(str + data[obj_ref + 1].sid)
 						.after(table_item);
@@ -1076,7 +1255,8 @@ define(function() {
 				}
 				data[obj_ref] = data[obj_ref + 1];
 				data[obj_ref + 1] = obj;
-				data[obj_ref + 1].order = data[obj_ref].order;
+				data[obj_ref + 1].order =
+					data[obj_ref].order;
 				data[obj_ref].order = obj_order;
 				data[obj_ref + 1].edited = 1;
 				data[obj_ref].edited = 1;
@@ -1084,44 +1264,71 @@ define(function() {
 		});
 		$(".del").on("click", function(e) {
 			e.preventDefault();
-			var holder = $(this).attr("id").split("_"),
+			var holder = $(this).attr("id")
+				.split("_"),
 				obj_ref = data.findIndex(function(iter) { 
 					if(type == "Subjects") {
-						return iter.sid == parseInt(holder[2]);
+						return iter.sid ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Topics") {
-						return iter.tid == parseInt(holder[2]);
+						return iter.tid ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Sections") {
-						return iter.section_id == parseInt(holder[2]);
+						return iter.section_id ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Examples") {
-						return iter.eid == parseInt(holder[2]);
+						return iter.eid ==
+							parseInt(holder[2]);
 					}
 				});
-			if(exports.rgba_to_hex($("#" + type.toLowerCase() +
-				"_delete_" + holder[2]).css("color")) == "#ff0000") {
-				$("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color", "green");
-				if(typeof data[obj_ref].del_approval == "object") { 
-					data[obj_ref].del_approval = exports.read_cookie("contributor"); 
+			if(exports.rgba_to_hex($("#" +
+				type.toLowerCase() + "_delete_"
+				+ holder[2]).css("color"))
+				== "#ff0000") {
+				$("#" + type.toLowerCase() +
+					"_delete_" + holder[2])
+					.css("color", "green");
+				if(typeof data[obj_ref].del_approval
+					== "object") { 
+					data[obj_ref].del_approval =
+						exports.read_cookie("contributor"); 
 				}
-				else { data[obj_ref].del_approval += "," + exports.read_cookie("contributor"); }
+				else {
+					data[obj_ref].del_approval += "," +
+						exports.read_cookie("contributor");
+				}
 			}
 			else {
-				$("#" + type.toLowerCase() + "_delete_" + holder[2]).css("color", "red");
-				if(typeof data[obj_ref].del_approval != "object") { 
-					var start = data[obj_ref].del_approval.indexOf(exports.read_cookie("contributor"));
+				$("#" + type.toLowerCase() +
+					"_delete_" + holder[2])
+					.css("color", "red");
+				if(typeof data[obj_ref].del_approval
+					!= "object") { 
+					var start = data[obj_ref].del_approval
+						.indexOf(exports.read_cookie(
+							"contributor"));
 					if(start != -1) {
 						if(start != 0) {
-							data[obj_ref].del_approval = data[obj_ref].del_approval.substring(0, start) + 
-								data[obj_ref].del_approval.substring(start +
-									exports.read_cookie("contributor").length);
+							data[obj_ref].del_approval =
+								data[obj_ref].del_approval
+									.substring(0, start) + 
+								data[obj_ref].del_approval
+									.substring(start +
+										exports.read_cookie(
+											"contributor").length);
 						}
 						else {
-							data[obj_ref].del_approval = data[obj_ref].del_approval
-								.substring(exports.read_cookie("contributor").length + 1);
+							data[obj_ref].del_approval =
+								data[obj_ref].del_approval
+									.substring(exports.read_cookie(
+										"contributor").length + 1);
 						}
-						if(data[obj_ref].del_approval == "") { data[obj_ref].del_approval = {}; }
+						if(data[obj_ref].del_approval == "") {
+							data[obj_ref].del_approval = {};
+						}
 					}
 				}
 			}
@@ -1129,46 +1336,71 @@ define(function() {
 		});
 		$(".approve").on("click", function(e) {
 			e.preventDefault();
-			var holder = $(this).attr("id").split("_"),
+			var holder = $(this).attr("id")
+				.split("_"),
 				obj_ref = data.findIndex(function(iter) { 
 					if(type == "Subjects") {
-						return iter.sid == parseInt(holder[2]);
+						return iter.sid ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Topics") {
-						return iter.tid == parseInt(holder[2]);
+						return iter.tid ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Sections") {
-						return iter.section_id == parseInt(holder[2]);
+						return iter.section_id ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Examples") {
-						return iter.eid == parseInt(holder[2]);
+						return iter.eid ==
+							parseInt(holder[2]);
 					}
 				});
-			if(exports.rgba_to_hex($("#" + type.toLowerCase() +
-				"_check_" + holder[2]).css("color")) == "#ff0000") {
-				$("#" + type.toLowerCase() + "_check_" + holder[2])
+			if(exports.rgba_to_hex($("#" +
+				type.toLowerCase() + "_check_"
+				+ holder[2]).css("color"))
+				== "#ff0000") {
+				$("#" + type.toLowerCase() +
+					"_check_" + holder[2])
 					.css("color", "green");
-				if(typeof data[obj_ref].side_approval == "object") { 
-					data[obj_ref].side_approval = exports.read_cookie("contributor"); 
+				if(typeof data[obj_ref].side_approval
+					== "object") { 
+					data[obj_ref].side_approval =
+						exports.read_cookie("contributor"); 
 				}
-				else { data[obj_ref].side_approval += "," + exports.read_cookie("contributor"); }
+				else {
+					data[obj_ref].side_approval += "," +
+						exports.read_cookie("contributor");
+				}
 			}
 			else {
-				$("#" + type.toLowerCase() + "_check_" + holder[2]).css("color", "red");
-				if(typeof data[obj_ref].side_approval != "object") { 
+				$("#" + type.toLowerCase() +
+					"_check_" + holder[2])
+					.css("color", "red");
+				if(typeof data[obj_ref].side_approval
+					!= "object") { 
 					var start = data[obj_ref].side_approval
-					.indexOf(exports.read_cookie("contributor"));
+						.indexOf(exports.read_cookie(
+							"contributor"));
 					if(start != -1) {
 						if(start != 0) {
-							data[obj_ref].side_approval = data[obj_ref].side_approval.substring(0, start) + 
-								data[obj_ref].side_approval.substring(start +
-									exports.read_cookie("contributor").length);
+							data[obj_ref].side_approval =
+								data[obj_ref].side_approval
+									.substring(0, start) + 
+								data[obj_ref].side_approval
+									.substring(start +
+										exports.read_cookie(
+											"contributor").length);
 						}
 						else {
-							data[obj_ref].side_approval = data[obj_ref].side_approval
-								.substring(exports.read_cookie("contributor").length + 1);
+							data[obj_ref].side_approval =
+								data[obj_ref].side_approval
+									.substring(exports.read_cookie(
+										"contributor").length + 1);
 						}
-						if(data[obj_ref].side_approval == "") { data[obj_ref].side_approval = {}; }
+						if(data[obj_ref].side_approval == "") {
+							data[obj_ref].side_approval = {};
+						}
 					}
 				}
 			}
@@ -1176,19 +1408,24 @@ define(function() {
 		});
 		$(".garbage").on("click", function(e) {
 			e.preventDefault();
-			var holder = $(this).attr("id").split("_"),
+			var holder = $(this).attr("id")
+				.split("_"),
 				obj_ref = data.findIndex(function(iter) { 
 					if(type == "Subjects") {
-						return iter.sid == parseInt(holder[2]);
+						return iter.sid ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Topics") {
-						return iter.tid == parseInt(holder[2]);
+						return iter.tid ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Sections") {
-						return iter.section_id == parseInt(holder[2]);
+						return iter.section_id ==
+							parseInt(holder[2]);
 					}
 					else if(type == "Examples") {
-						return iter.eid == parseInt(holder[2]);
+						return iter.eid ==
+							parseInt(holder[2]);
 					}
 				});
 			data = data.slice(0, obj_ref)
@@ -1253,60 +1490,117 @@ define(function() {
 		data.sort(function(a, b) { return a.order - b.order; });
 		$.get("/pages/dist/modal-min.html").done(function(content) {
 			$("body").append(content);
-			$("#popup_title").text(type).css("text-align", "center");
-			$("#popup_submit").text("Save Changes").removeClass("modal-close");
+			$("#popup_title").text(type)
+				.css("text-align", "center");
+			$("#popup_submit").text("Save Changes")
+				.removeClass("modal-close");
 			$("#popup_modal_footer")
 				.append($("<a>").attr("id", "popup_add")
-					.addClass("waves-effect waves-blue btn-flat").text("Add"))
+					.addClass("waves-effect waves-blue btn-flat")
+					.text("Add"))
 				.append($("<a>").attr("id", "popup_exit")
-					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-			$.get("/pages/dist/sidenav-change-min.html").done(function(table) {
-				var statement = "Below you will find all current " + type.toLowerCase() + " which can be renamed" + 
-					" and reorganized. Furthermore, as a contributor you can approve a subject so that it will be" + 
-					" available to users on the client side, or similarly disapprove if you feel that there is" + 
-					" something wrong with it. With this design, a subject will appear on the client side only" +
-					" when enough contributors have given approval. To change the approval of a subject simply" + 
-					" click on the checkmark and note that the green color indicates an approval from you." + 
-					" Likewise the system also allows for a " + type.toLowerCase().substring(0, type.length - 1) +
-					" to be deleted from the database when enough contributors have given approval for it.<br><br>" +
-					"Lastly for any " + type.toLowerCase().substring(0, type.length - 1) + " that has just been added," +
-					" you remove it without having to exit and clicking back by clicking on the trash can icon."
+					.addClass("modal-close waves-effect waves-blue btn-flat")
+					.text("Exit"));
+			$.get("/pages/dist/sidenav-change-min.html")
+				.done(function(table) {
+				var statement = "Below you will find all current " +
+					type.toLowerCase() + " which can be renamed" + 
+					" and reorganized. Furthermore, as a" +
+					" contributor you can approve a subject" +
+					" so that it will be available to users" +
+					" on the client side, or similarly" +
+					" disapprove if you feel that there is" + 
+					" something wrong with it. With this" +
+					" design, a subject will appear on" +
+					" the client side only when enough" +
+					" contributors have given approval." +
+					" To change the approval of a subject" +
+					" simply click on the checkmark and" +
+					" note that the green color indicates" +
+					" an approval from you. Likewise the" +
+					" system also allows for a " +
+					type.toLowerCase().substring(0, type.length - 1) +
+					" to be deleted from the database when" +
+					" enough contributors have given approval" +
+					" for it.<br><br>Lastly for any " +
+					type.toLowerCase().substring(0, type.length - 1) +
+					" that has just been added, you remove it" +
+					" without having to exit and clicking back" +
+					" by clicking on the trash can icon."
 				$("#popup_body").html(statement).append(table);
 				data.forEach(function(elem) {
 					var addon = -1;
-					if(type == "Subjects") { addon = elem.sid; }
-					else if(type == "Topics") { addon = elem.tid; }
-					else if(type == "Sections") { addon = elem.section_id; }
-					else if(type == "Examples") { addon = elem.eid; }
-					var item_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
-						item_name = $("<td>").text(elem.clean_name).attr("contentEditable", "true")
-							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
+					if(type == "Subjects") {
+						addon = elem.sid;
+					}
+					else if(type == "Topics") {
+						addon = elem.tid;
+					}
+					else if(type == "Sections") {
+						addon = elem.section_id;
+					}
+					else if(type == "Examples") {
+						addon = elem.eid;
+					}
+					var item_tr = $("<tr>").attr("id", type.toLowerCase()
+							+ "_tr_" + addon),
+						item_name = $("<td>").text(elem.clean_name)
+							.addClass("field")
+							.attr({
+								contentEditable: "true",
+								id: type.toLowerCase() + "_td_" + addon
+							}),
 						item_move = $("<td>").css("text-align", "center")
-							.append($("<a>").attr("id", type.toLowerCase() + "_up_" + addon).addClass("arrow")
-								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_up")))
-							.append($("<a>").attr("id", type.toLowerCase() + "_down_" + addon).addClass("arrow")
-								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
-						item_approve = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_check_" + addon)
-								.addClass("approve center").append($("<i>").addClass("material-icons").text("check_circle"))),
-						item_delete = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_delete_" + addon)
-								.addClass("del center").append($("<i>").addClass("material-icons").text("cancel")));
-					item_tr.append(item_name).append(item_move).append(item_approve).append(item_delete);
+							.append($("<a>").attr("id", type.toLowerCase()
+								+ "_up_" + addon).addClass("arrow")
+								.css("cursor", "pointer")
+								.append($("<i>").addClass("material-icons")
+									.text("keyboard_arrow_up")))
+							.append($("<a>").attr("id", type.toLowerCase()
+								+ "_down_" + addon).addClass("arrow")
+								.css("cursor", "pointer")
+								.append($("<i>").addClass("material-icons")
+									.text("keyboard_arrow_down"))),
+						item_approve = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", type.toLowerCase()
+									+ "_check_" + addon)
+								.addClass("approve center")
+								.append($("<i>").addClass("material-icons")
+									.text("check_circle"))),
+						item_delete = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", type.toLowerCase()
+									+ "_delete_" + addon)
+								.addClass("del center")
+								.append($("<i>").addClass("material-icons")
+									.text("cancel")));
+					item_tr.append(item_name, item_move,
+						item_approve, item_delete);
 					$("#sidenav_table_body").append(item_tr);
 					if(typeof elem.side_approval != "object" && 
-						elem.side_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
-						$("#" + type.toLowerCase() + "_check_" + addon).css("color", "green");
+						elem.side_approval.split(",").some(function(iter) {
+							return iter == exports.read_cookie("contributor");
+						})) {
+						$("#" + type.toLowerCase() + "_check_" + addon)
+							.css("color", "green");
 					}
 					else {
-						$("#" + type.toLowerCase() + "_check_" + addon).css("color", "red");
+						$("#" + type.toLowerCase() + "_check_" + addon)
+							.css("color", "red");
 					}
 					if(typeof elem.del_approval != "object" && 
-						elem.del_approval.split(",").some(function(iter) { return iter == exports.read_cookie("contributor"); })) {
-						$("#" + type.toLowerCase() + "_delete_" + addon).css("color", "green");
+						elem.del_approval.split(",").some(function(iter) {
+							return iter == exports.read_cookie("contributor");
+						})) {
+						$("#" + type.toLowerCase() + "_delete_" + addon)
+							.css("color", "green");
 					}
 					else {
-						$("#" + type.toLowerCase() + "_delete_" + addon).css("color", "red");
+						$("#" + type.toLowerCase() + "_delete_" + addon)
+							.css("color", "red");
 					}
 				});
 				$(".modal-trigger").leanModal({
@@ -1336,69 +1630,126 @@ define(function() {
 						inp_cpy = exports.copy(input),
 						dat_cpy = exports.copy(data);
 					if(type == "Subjects") {
-						lhs = inp_cpy.length != 0 ? inp_cpy.sort(function(a, b) { 
-							return b.sid - a.sid; 
-						})[0].sid + 1 : 1,
-						rhs = dat_cpy.length != 0 ? dat_cpy.sort(function(a, b) { 
-							return b.sid - a.sid; 
-						})[0].sid + 1 : 1;
+						lhs = inp_cpy.length != 0
+							? inp_cpy.sort(function(a, b) { 
+								return b.sid - a.sid; 
+							})[0].sid + 1
+							: 1,
+						rhs = dat_cpy.length != 0
+							? dat_cpy.sort(function(a, b) { 
+								return b.sid - a.sid; 
+							})[0].sid + 1
+							: 1;
 					}
 					else if(type == "Topics") {
-						lhs = inp_cpy.length != 0 ? inp_cpy.sort(function(a, b) { 
-							return b.tid - a.tid; 
-						})[0].tid + 1 : 1,
-						rhs = dat_cpy.length != 0 ? dat_cpy.sort(function(a, b) { 
-							return b.tid - a.tid; 
-						})[0].tid + 1 : 1;
+						lhs = inp_cpy.length != 0
+							? inp_cpy.sort(function(a, b) { 
+								return b.tid - a.tid; 
+							})[0].tid + 1
+							: 1,
+						rhs = dat_cpy.length != 0
+							? dat_cpy.sort(function(a, b) { 
+								return b.tid - a.tid; 
+							})[0].tid + 1
+							: 1;
 					}
 					else if(type == "Sections") {
-						lhs = inp_cpy.length != 0 ? inp_cpy.sort(function(a, b) { 
-							return b.section_id - a.section_id; 
-						})[0].section_id + 1 : 1,
-						rhs = dat_cpy.length != 0 ? dat_cpy.sort(function(a, b) { 
-							return b.section_id - a.section_id; 
-						})[0].section_id + 1 : 1;
+						lhs = inp_cpy.length != 0
+							? inp_cpy.sort(function(a, b) { 
+								return b.section_id - a.section_id; 
+							})[0].section_id + 1
+							: 1,
+						rhs = dat_cpy.length != 0
+							? dat_cpy.sort(function(a, b) { 
+								return b.section_id - a.section_id; 
+							})[0].section_id + 1
+							: 1;
 					}
 					else if(type == "Examples") {
-						lhs = inp_cpy.length != 0 ? inp_cpy.sort(function(a, b) { 
-							return b.eid - a.eid; 
-						})[0].eid + 1 : 1,
-						rhs = dat_cpy.length != 0 ? dat_cpy.sort(function(a, b) { 
-							return b.eid - a.eid; 
-						})[0].eid + 1 : 1;
+						lhs = inp_cpy.length != 0
+							? inp_cpy.sort(function(a, b) { 
+								return b.eid - a.eid; 
+							})[0].eid + 1
+							: 1,
+						rhs = dat_cpy.length != 0
+							? dat_cpy.sort(function(a, b) { 
+								return b.eid - a.eid; 
+							})[0].eid + 1
+							: 1;
 					}
 					addon = Math.max(lhs, rhs);
-					var new_tr = $("<tr>").attr("id", type.toLowerCase() + "_tr_" + addon),
-						new_name = $("<td>").text("New " + type.substring(0, type.length - 1)).attr("contentEditable", "true")
-							.attr("id", type.toLowerCase() + "_td_" + addon).addClass("field"),
+					var new_tr = $("<tr>").attr("id",
+							type.toLowerCase() + "_tr_" + addon),
+						new_name = $("<td>").text("New "
+							+ type.substring(0, type.length - 1))
+							.addClass("field")
+							.attr({
+								contentEditable: "true",
+								id: type.toLowerCase() +
+									"_td_" + addon
+							}),
 						new_move = $("<td>").css("text-align", "center")
-							.append($("<a>").attr("id", type.toLowerCase() + "_up_" + addon).addClass("arrow")
-								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_up")))
-							.append($("<a>").attr("id", type.toLowerCase() + "_down_" + addon).addClass("arrow")
-								.css("cursor", "pointer").append($("<i>").addClass("material-icons").text("keyboard_arrow_down"))),
-						new_approve = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_check_" + addon)
-								.addClass("approve center").css("color", "red").append($("<i>")
-									.addClass("material-icons").text("check_circle"))),
-						new_delete = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_delete_" + addon)
-								.addClass("del center").css("color", "red").append($("<i>")
-									.addClass("material-icons").text("cancel"))),
-						new_garbage = $("<td>").css("text-align", "center").append($("<a>")
-								.css("cursor", "pointer").attr("id", type.toLowerCase() + "_garbage_" + addon)
-								.addClass("garbage center").css("color", "red").append($("<i>")
-									.addClass("material-icons").text("delete_sweep")));
-					if(data.every(function(elem) { return elem.created == 0 })) {
-						$("#sidenav_table_head").find("tr").append($("<th>").attr("id", "garbage_head").text("Remove"));
+							.append($("<a>").attr("id",
+								type.toLowerCase() + "_up_" + addon)
+								.addClass("arrow")
+								.css("cursor", "pointer")
+								.append($("<i>").addClass("material-icons")
+									.text("keyboard_arrow_up")))
+							.append($("<a>").attr("id",
+								type.toLowerCase() + "_down_" + addon)
+								.addClass("arrow")
+								.css("cursor", "pointer")
+								.append($("<i>").addClass("material-icons")
+									.text("keyboard_arrow_down"))),
+						new_approve = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", type.toLowerCase()
+									+ "_check_" + addon)
+								.addClass("approve center")
+								.css("color", "red")
+								.append($("<i>")
+									.addClass("material-icons")
+									.text("check_circle"))),
+						new_delete = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", type.toLowerCase()
+									+ "_delete_" + addon)
+								.addClass("del center")
+								.css("color", "red")
+								.append($("<i>")
+									.addClass("material-icons")
+									.text("cancel"))),
+						new_garbage = $("<td>").css("text-align", "center")
+							.append($("<a>")
+								.css("cursor", "pointer")
+								.attr("id", type.toLowerCase() +
+									"_garbage_" + addon)
+								.addClass("garbage center")
+								.css("color", "red")
+								.append($("<i>")
+									.addClass("material-icons")
+									.text("delete_sweep")));
+					if(data.every(function(elem) {
+						return elem.created == 0
+					})) {
+						$("#sidenav_table_head").find("tr")
+							.append($("<th>").attr("id", "garbage_head")
+								.text("Remove"));
 					}
-					new_tr.append(new_name, new_move, new_approve, new_delete, new_garbage);
+					new_tr.append(new_name, new_move,
+						new_approve, new_delete, new_garbage);
 					$("#sidenav_table_body").append(new_tr);
-					data.length == 0 ? order = 1 : order = data[data.length - 1].order + 1;
+					data.length == 0 ? order = 1
+						: order = data[data.length - 1].order + 1;
 					if(type == "Subjects") {
 						data.push({
 							sid: addon,
-							clean_name: "New " + type.substring(0, type.length - 1),
-							sname: "New_" + type.substring(0, type.length - 1),
+							clean_name: "New " +
+								type.substring(0, type.length - 1),
+							sname: "New_" +
+								type.substring(0, type.length - 1),
 							order: order,
 							topics: [],
 							side_approval: {},
@@ -1411,8 +1762,10 @@ define(function() {
 						data.push({
 							tid: addon,
 							sid: container_id,
-							clean_name: "New " + type.substring(0, type.length - 1),
-							tname: "New_" + type.substring(0, type.length - 1),
+							clean_name: "New " +
+								type.substring(0, type.length - 1),
+							tname: "New_" +
+								type.substring(0, type.length - 1),
 							order: order,
 							sections: [],
 							side_approval: {},
@@ -1425,8 +1778,10 @@ define(function() {
 						data.push({
 							section_id: addon,
 							tid: container_id,
-							clean_name: "New " + type.substring(0, type.length - 1),
-							section_name: "New_" + type.substring(0, type.length - 1),
+							clean_name: "New " +
+								type.substring(0, type.length - 1),
+							section_name: "New_" +
+								type.substring(0, type.length - 1),
 							order: order,
 							examples: [],
 							side_approval: {},
@@ -1439,8 +1794,10 @@ define(function() {
 						data.push({
 							eid: addon,
 							section_id: container_id,
-							clean_name: "New " + type.substring(0, type.length - 1),
-							ename: "New_" + type.substring(0, type.length - 1),
+							clean_name: "New " +
+								type.substring(0, type.length - 1),
+							ename: "New_" +
+								type.substring(0, type.length - 1),
 							order: order,
 							side_approval: {},
 							del_approval: {},
@@ -1455,29 +1812,64 @@ define(function() {
 				$("#popup_submit").click(function(event) {
 					event.preventDefault();
 					var statement = "";
-					$.get("/api/cms/count/contributors").done(function(num) {
-						const validation = Math.ceil(Math.log(parseInt(num)));
+					$.get("/api/cms/count/contributors")
+						.done(function(num) {
+						const validation = 
+							Math.ceil(Math.log(parseInt(num)));
 						$("#popup_submit").remove();
-						$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-							.addClass("modal-close waves-effect waves-blue btn-flat").text("Ok"));
+						$("#popup_modal_footer").append($("<a>")
+							.attr("id", "popup_submit")
+							.addClass("modal-close waves-effect waves-blue btn-flat")
+							.text("Ok"));
 						data.forEach(function(iter) {
 							var id = -1,
 								ref = -1,
 								name = "";
-							if(type == "Subjects") { id = iter.sid; name = iter.sname; ref = "undefined"; }
-							else if(type == "Topics") { id = iter.tid; name = iter.tname; ref = iter.sid; }
-							else if(type == "Sections") { id = iter.section_id; name = iter.section_name; ref = iter.tid; }
-							else if(type == "Examples") { id = iter.eid; name = iter.ename; ref = iter.section_id; }
-							if(typeof iter.del_approval != "object" && iter.del_approval.split(",").length >= validation) {
-								$.post("/api/delete/" + type.toLowerCase().substring(0, type.length - 1) + "/", {param: id})
+							if(type == "Subjects") {
+								id = iter.sid;
+								name = iter.sname;
+								ref = "undefined";
+							}
+							else if(type == "Topics") {
+								id = iter.tid;
+								name = iter.tname;
+								ref = iter.sid;
+							}
+							else if(type == "Sections") {
+								id = iter.section_id;
+								name = iter.section_name;
+								ref = iter.tid;
+							}
+							else if(type == "Examples") {
+								id = iter.eid;
+								name = iter.ename;
+								ref = iter.section_id;
+							}
+							if(typeof iter.del_approval !="object" &&
+								iter.del_approval.split(",")
+								.length >= validation) {
+								$.post("/api/delete/" +
+									type.toLowerCase().substring(0,
+										type.length - 1) + "/",
+									{param: id})
 								.fail(function(xhr, status, error) {
-									console.log("Deleting the " + type.toLowerCase().substring(0, type.length - 1) +
-										"with id " + id + " failed with the error: " + error);
+									console.log("Deleting the " +
+										type.toLowerCase().substring(0,
+											type.length - 1) +
+										"with id " + id +
+										" failed with the error: " +
+										error);
 								});
 							}
 							else {
-								if(typeof iter.del_approval == "object" || iter.del_approval == "") { iter.del_approval = "0"; }
-								if(typeof iter.side_approval == "object" || iter.side_approval == "") { iter.side_approval = "0"; }
+								if(typeof iter.del_approval == "object" ||
+									iter.del_approval == "") {
+									iter.del_approval = "0";
+								}
+								if(typeof iter.side_approval == "object" ||
+									iter.side_approval == "") {
+									iter.side_approval = "0";
+								}
 								var obj = {
 									param: id,
 									ref: ref,
@@ -1505,26 +1897,36 @@ define(function() {
 									else if(type == "Examples") {
 										statement += "example/";
 									}
-									$.post(statement, obj).fail(function() {
+									$.post(statement, obj)
+										.fail(function() {
 										$("#popup_title").text("Database Issue");
 										if(type == "Subjects") {
-											$("#popup_body").text("There was an issue uploading the new subject(s) to the database!");
+											$("#popup_body").text("There was" +
+												" an issue uploading the new" +
+												" subject(s) to the database!");
 										}
 										else if(type == "Topics") {
-											$("#popup_body").text("There was an issue uploading the new topic(s) to the database!");
+											$("#popup_body").text("There was" +
+												" an issue uploading the new" +
+												" topic(s) to the database!");
 										}
 										else if(type == "Sections") {
-											$("#popup_body").text("There was an issue uploading the new section(s) to the database!");
+											$("#popup_body").text("There was" +
+												" an issue uploading the new" +
+												" section(s) to the database!");
 										}
 										else if(type == "Examples") {
-											$("#popup_body").text("There was an issue uploading the new example(s) to the database!");
+											$("#popup_body").text("There was" +
+												" an issue uploading the new" +
+												" example(s) to the database!");
 										}
 										$("#popup_exit").remove();
 										$("#popup_add").remove();
-										$("#popup_submit").text("Ok").click(function(e) {
-											e.preventDefault();
-											location.reload();
-											$(window).scrollTop(0);
+										$("#popup_submit").text("Ok")
+											.click(function(e) {
+												e.preventDefault();
+												location.reload();
+												$(window).scrollTop(0);
 										});
 									});
 								}
@@ -1545,31 +1947,42 @@ define(function() {
 									$.post(statement, obj).fail(function() {
 										$("#popup_title").text("Database Issue");
 										if(type == "Subjects") {
-											$("#popup_body").text("There was an issue uploading the subject changes to the database!");
+											$("#popup_body").text("There was an" +
+												" issue uploading the subject" +
+												" changes to the database!");
 										}
 										else if(type == "Topics") {
-											$("#popup_body").text("There was an issue uploading the topic changes to the database!");
+											$("#popup_body").text("There was an" +
+												" issue uploading the topic" +
+												" changes to the database!");
 										}
 										else if(type == "Sections") {
-											$("#popup_body").text("There was an issue uploading the section changes to the database!");
+											$("#popup_body").text("There was an" +
+												" issue uploading the section" +
+												" changes to the database!");
 										}
 										else if(type == "Examples") {
-											$("#popup_body").text("There was an issue uploading the example changes to the database!");
+											$("#popup_body").text("There was an" +
+												" issue uploading the example" +
+												" changes to the database!");
 										}
 										$("#popup_exit").remove();
 										$("#popup_add").remove();
-										$("#popup_submit").text("Ok").click(function(e) {
-											e.preventDefault();
-											location.reload();
-											$(window).scrollTop(0);
+										$("#popup_submit").text("Ok")
+											.click(function(e) {
+												e.preventDefault();
+												location.reload();
+												$(window).scrollTop(0);
 										});
 									});
 								}
 							}
 						});
 					}).done(function() {
-						$("#popup_title").text("Changes Saved").css("text-align", "center");
-						$("#popup_body").text("All changes have been saved to the database!");
+						$("#popup_title").text("Changes Saved")
+							.css("text-align", "center");
+						$("#popup_body").text("All changes have" +
+							" been saved to the database!");
 						$("#popup_exit").remove();
 						$("#popup_add").remove();
 						$("#popup_submit").click(function(e) {
@@ -1594,14 +2007,19 @@ define(function() {
 
 	*/
 	exports.profile_modal = function(email) {
-		$.get("/pages/dist/contributor-profile-min.html").done(function(content) {
-			$("#popup_title").text("Profile").css("text-align", "center");
+		$.get("/pages/dist/contributor-profile-min.html")
+			.done(function(content) {
+			$("#popup_title").text("Profile")
+				.css("text-align", "center");
 			$("#popup_submit").text("Save Changes");
 			$("#popup_body").append(content);
 			$("#popup_submit").removeClass("modal-close");
-			$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
-				.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-			$.post("/api/cms/contributor/profile/", {email: email}).done(function(information) {
+			$("#popup_modal_footer").append($("<a>")
+				.attr("id", "popup_exit")
+				.addClass("modal-close waves-effect waves-blue btn-flat")
+				.text("Exit"));
+			$.post("/api/cms/contributor/profile/", {email: email})
+				.done(function(information) {
 				$("#first_name_cms").val(information.first_name);
 				$("#last_name_cms").val(information.last_name);
 				$("#question_cms").val(information.question);
@@ -1615,7 +2033,8 @@ define(function() {
 				$("select").material_select();
 				$("#popup_control").click();
 				$("#popup").keypress(function(event) {
-				    if(event.keyCode === 10 || event.keyCode === 13) {
+				    if(event.keyCode === 10 ||
+				    	event.keyCode === 13) {
 				        event.preventDefault();
 				    }
 				});
@@ -1627,31 +2046,48 @@ define(function() {
 				});
 				$("#popup_submit").click(function(event) {
 					event.preventDefault();
-					var fname = $("#first_name_cms").val()[0].toUpperCase() + $("#first_name_cms").val().slice(1).toLowerCase(),
-						lname = $("#last_name_cms").val()[0].toUpperCase() + $("#last_name_cms").val().slice(1).toLowerCase(),
-						question = (parseInt($("#question_cms")[0].options.selectedIndex) + 1),
+					var fname = $("#first_name_cms").val()[0].toUpperCase() +
+							$("#first_name_cms").val().slice(1).toLowerCase(),
+						lname = $("#last_name_cms").val()[0].toUpperCase() +
+							$("#last_name_cms").val().slice(1).toLowerCase(),
+						question = (parseInt($("#question_cms")[0]
+							.options.selectedIndex) + 1),
 						answer = $("#answer_cms").val(),
 						new_password = $("#password_cms").val();
-					$.get("/pages/dist/change-confirmation-min.html").done(function(material) {
+					$.get("/pages/dist/change-confirmation-min.html")
+						.done(function(material) {
 						if($("#password_cms").val().length == 0) {
-							$("#popup_title").text("Profile Changes").css("text-align", "center");
-							$("#popup_body").text("Please confirm the changes provided by providing your password:")
+							$("#popup_title").text("Profile Changes")
+								.css("text-align", "center");
+							$("#popup_body").text("Please confirm" +
+								" the changes provided by providing" +
+								" your password:")
 								.append(material);
 							$("#popup_submit").remove();
 							$("#popup_exit").remove();
-							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-								.addClass("waves-effect waves-blue btn-flat").text("Confirm")).append($("<a>")
-									.attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat")
+							$("#popup_modal_footer").append($("<a>")
+								.attr("id", "popup_submit")
+								.addClass("waves-effect waves-blue btn-flat")
+								.text("Confirm"))
+								.append($("<a>")
+									.attr("id", "popup_exit")
+									.addClass("modal-close waves-effect waves-blue btn-flat")
 									.text("Exit"));
-							$("#new_password_confirm").closest(".row").remove();
-							$("#old_password_label").text("Password");
-							$("#popup_submit").css("pointer-events", "none");
+							$("#new_password_confirm")
+								.closest(".row").remove();
+							$("#old_password_label")
+								.text("Password");
+							$("#popup_submit")
+								.css("pointer-events", "none");
 							$("#old_password_confirm").on("input", function() {
-								if($("#old_password_confirm").val().length > 0) {
-									$("#popup_submit").css("pointer-events", "auto");
+								if($("#old_password_confirm").val()
+									.length > 0) {
+									$("#popup_submit")
+										.css("pointer-events", "auto");
 								}
 								else {
-									$("#popup_submit").css("pointer-events", "none");
+									$("#popup_submit")
+										.css("pointer-events", "none");
 								}
 							});
 							$("#popup_exit").click(function(e) {
@@ -1662,17 +2098,26 @@ define(function() {
 							});
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
-								$.post("/api/cms/check/login/", {email: email, passwd: $("#old_password_confirm").val()})
-									.done(function(result) {
-									$("#popup_submit").addClass("modal-close");
+								$.post("/api/cms/check/login/", {
+									email: email,
+									passwd: $("#old_password_confirm").val()
+								}).done(function(result) {
+									$("#popup_submit")
+										.addClass("modal-close");
 									$("#popup_exit").remove();
 									if(result[0] == "Wrong Password") {
-										$("#popup_title").text("Password Issue");
+										$("#popup_title")
+											.text("Password Issue");
 										$("#popup_submit").remove();
 										$("#popup_exit").remove();
-										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-											.addClass("waves-effect waves-blue btn-flat").text("Exit"));
-										$("#popup_body").text("The password you provided did not match the one in the database!");
+										$("#popup_modal_footer")
+											.append($("<a>")
+												.attr("id", "popup_submit")
+												.addClass("waves-effect waves-blue btn-flat")
+												.text("Exit"));
+										$("#popup_body").text("The password" +
+											" you provided did not match" +
+											" the one in the database!");
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
 											$(".lean-overlay").remove();
@@ -1680,13 +2125,20 @@ define(function() {
 											$("#popup_control").remove();
 										});
 									}
-									else if(fname.length == 0 || /[^a-zA-Z]/.test(fname)) {
-										$("#popup_title").text("First Name Issue");
+									else if(fname.length == 0 ||
+										/[^a-zA-Z]/.test(fname)) {
+										$("#popup_title")
+											.text("First Name Issue");
 										$("#popup_submit").remove();
 										$("#popup_exit").remove();
-										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-											.addClass("waves-effect waves-blue btn-flat").text("Exit"));
-										$("#popup_body").text("The first name cannot be left empty or contain an invalid character!");
+										$("#popup_modal_footer")
+											.append($("<a>")
+												.attr("id", "popup_submit")
+												.addClass("waves-effect waves-blue btn-flat")
+												.text("Exit"));
+										$("#popup_body").text("The first name" +
+											" cannot be left empty or contain" +
+											" an invalid character!");
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
 											$(".lean-overlay").remove();
@@ -1694,13 +2146,20 @@ define(function() {
 											$("#popup_control").remove();
 										});
 									}
-									else if(lname.length == 0 || /[^a-zA-Z]/.test(lname)) {
-										$("#popup_title").text("Last Name Issue");
+									else if(lname.length == 0 ||
+										/[^a-zA-Z]/.test(lname)) {
+										$("#popup_title")
+											.text("Last Name Issue");
 										$("#popup_submit").remove();
 										$("#popup_exit").remove();
-										$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-											.addClass("waves-effect waves-blue btn-flat").text("Exit"));
-										$("#popup_body").text("The last name cannot be left empty or contain an invalid character!");
+										$("#popup_modal_footer")
+											.append($("<a>")
+												.attr("id", "popup_submit")
+												.addClass("waves-effect waves-blue btn-flat")
+												.text("Exit"));
+										$("#popup_body").text("The last name" +
+											" cannot be left empty or" +
+											" contain an invalid character!");
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
 											$(".lean-overlay").remove();
@@ -1717,12 +2176,18 @@ define(function() {
 											answer: answer
 										}).done(function(result) {
 										 	if(result == "1") {
-												$("#popup_title").text("Confirmation");
+												$("#popup_title")
+													.text("Confirmation");
 												$("#popup_submit").remove();
 												$("#popup_exit").remove();
-												$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-													.addClass("waves-effect waves-blue btn-flat").text("Exit"));
-												$("#popup_body").text("The changes you provided have been implemented!");
+												$("#popup_modal_footer")
+													.append($("<a>")
+														.attr("id", "popup_submit")
+														.addClass("waves-effect waves-blue btn-flat")
+														.text("Exit"));
+												$("#popup_body").text("The changes" +
+													" you provided have" +
+													" been implemented!");
 												$("#popup_submit").click(function(e) {
 													e.preventDefault();
 													$(".lean-overlay").remove();
@@ -1731,12 +2196,17 @@ define(function() {
 												});
 											}
 											else {
-												$("#popup_title").text("Database Issue");
+												$("#popup_title")
+													.text("Database Issue");
 												$("#popup_submit").remove();
 												$("#popup_exit").remove();
-												$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-													.addClass("waves-effect waves-blue btn-flat").text("Exit"));
-												$("#popup_body").text("The changes you provided had trouble" + 
+												$("#popup_modal_footer")
+													.append($("<a>")
+														.attr("id", "popup_submit")
+														.addClass("waves-effect waves-blue btn-flat")
+														.text("Exit"));
+												$("#popup_body").text("The changes" +
+													" you provided had trouble" + 
 													" being uploaded to the database!");
 												$("#popup_submit").click(function(e) {
 													e.preventDefault();
@@ -1750,30 +2220,48 @@ define(function() {
 								});
 							});
 						}
-						else if(exports.password_check($("#password_cms").val())) {
-							$("#popup_title").text("Profile Changes").css("text-align", "center");
-							$("#popup_body").text("Please confirm the changes provided by providing both the old and new passwords:")
+						else if(exports.password_check(
+							$("#password_cms").val())) {
+							$("#popup_title").text("Profile Changes")
+								.css("text-align", "center");
+							$("#popup_body").text("Please confirm" +
+								" the changes provided by" +
+								" providing both the old" +
+								" and new passwords:")
 								.append(material);
 							$("#popup_submit").remove();
 							$("#popup_exit").remove();
-							$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-								.addClass("waves-effect waves-blue btn-flat").text("Confirm")).append($("<a>")
-									.attr("id", "popup_exit").addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-							$("#popup_submit").css("pointer-events", "none");
+							$("#popup_modal_footer")
+								.append($("<a>")
+									.attr("id", "popup_submit")
+									.addClass("waves-effect waves-blue btn-flat")
+									.text("Confirm"))
+								.append($("<a>")
+									.attr("id", "popup_exit")
+									.addClass("modal-close waves-effect waves-blue btn-flat")
+									.text("Exit"));
+							$("#popup_submit")
+								.css("pointer-events", "none");
 							$("#old_password_confirm").on("input", function() {
-								if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
-									$("#popup_submit").css("pointer-events", "auto");
+								if($("#old_password_confirm").val().length > 0 &&
+									$("#new_password_confirm").val().length > 0) {
+									$("#popup_submit")
+										.css("pointer-events", "auto");
 								}
 								else {
-									$("#popup_submit").css("pointer-events", "none");
+									$("#popup_submit")
+										.css("pointer-events", "none");
 								}
 							});
 							$("#new_password_confirm").on("input", function() {
-								if($("#old_password_confirm").val().length > 0 && $("#new_password_confirm").val().length > 0) {
-									$("#popup_submit").css("pointer-events", "auto");
+								if($("#old_password_confirm").val().length > 0 &&
+									$("#new_password_confirm").val().length > 0) {
+									$("#popup_submit")
+										.css("pointer-events", "auto");
 								}
 								else {
-									$("#popup_submit").css("pointer-events", "none");
+									$("#popup_submit")
+										.css("pointer-events", "none");
 								}
 							});
 							$("#popup_exit").click(function(e) {
@@ -1785,13 +2273,20 @@ define(function() {
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
 								if(new_password != $("#new_password_confirm").val()) {
-									$("#popup_title").text("Password Issue");
+									$("#popup_title")
+										.text("Password Issue");
 									$("#popup_submit").remove();
 									$("#popup_exit").remove();
-									$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-										.addClass("waves-effect waves-blue btn-flat").text("Exit"));
-									$("#popup_body").text("The new password provided" + 
-										" for confirmation does not match the previous password change!");
+									$("#popup_modal_footer")
+										.append($("<a>")
+											.attr("id", "popup_submit")
+											.addClass("waves-effect waves-blue btn-flat")
+											.text("Exit"));
+									$("#popup_body").text("The new" +
+										" password provided for" +
+										" confirmation does not" +
+										" match the previous" +
+										" password change!");
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
 										$(".lean-overlay").remove();
@@ -1800,16 +2295,25 @@ define(function() {
 									});
 								}
 								else {
-									$.post("/api/cms/check/login/", {email: email, passwd: $("#old_password_confirm").val()})
-										.done(function(result) {
+									$.post("/api/cms/check/login/", {
+										email: email,
+										passwd: $("#old_password_confirm").val()
+									}).done(function(result) {
 										if(result[0] == "Wrong Password") {
-											$("#popup_title").text("Password Issue");
+											$("#popup_title")
+												.text("Password Issue");
 											$("#popup_submit").remove();
 											$("#popup_exit").remove();
-											$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-												.addClass("waves-effect waves-blue btn-flat").text("Exit"));
-											$("#popup_body").text("The old password provided for confirmation" + 
-												" does not match the one in the database!");
+											$("#popup_modal_footer")
+												.append($("<a>")
+													.attr("id", "popup_submit")
+													.addClass("waves-effect waves-blue btn-flat")
+													.text("Exit"));
+											$("#popup_body").text("The old" +
+												" password provided for" +
+												" confirmation does not" +
+												" match the one in the" +
+												" database!");
 											$("#popup_submit").click(function(e) {
 												e.preventDefault();
 												$(".lean-overlay").remove();
@@ -1826,19 +2330,24 @@ define(function() {
 												answer: answer
 											}).done(function(result) {
 											 	if(result == "1") {
-													$.post("/api/cms/contributor/change/password/", {
+													$.post("/api/cms/contributor/change" +
+														"/password/", {
 														email: email,
 														password: new_password
 													}).done(function(result) {
 													 	if(result == "1") {
-															$("#popup_title").text("Confirmation");
+															$("#popup_title")
+																.text("Confirmation");
 															$("#popup_submit").remove();
 															$("#popup_exit").remove();
-															$("#popup_modal_footer").append($("<a>")
-																.attr("id", "popup_submit")
-																.addClass("waves-effect waves-blue btn-flat")
-																.text("Exit"));
-															$("#popup_body").text("The changes you provided have been implemented!");
+															$("#popup_modal_footer")
+																.append($("<a>")
+																	.attr("id", "popup_submit")
+																	.addClass("waves-effect waves-blue btn-flat")
+																	.text("Exit"));
+															$("#popup_body").text("The" +
+																" changes you provided" +
+																" have been implemented!");
 															$("#popup_submit").click(function(e) {
 																e.preventDefault();
 																$(".lean-overlay").remove();
@@ -1847,15 +2356,19 @@ define(function() {
 															});
 														}
 														else {
-															$("#popup_title").text("Database Issue");
+															$("#popup_title")
+																.text("Database Issue");
 															$("#popup_submit").remove();
 															$("#popup_exit").remove();
-															$("#popup_modal_footer").append($("<a>")
-																.attr("id", "popup_submit")
-																.addClass("waves-effect waves-blue btn-flat")
-																.text("Exit"));
-															$("#popup_body").text("The changes you provided" + 
-																" had trouble being uploaded to the database!");
+															$("#popup_modal_footer")
+																.append($("<a>")
+																	.attr("id", "popup_submit")
+																	.addClass("waves-effect waves-blue btn-flat")
+																	.text("Exit"));
+															$("#popup_body").text("The" +
+																" changes you provided" + 
+																" had trouble being" +
+																" uploaded to the database!");
 															$("#popup_submit").click(function(e) {
 																e.preventDefault();
 																$(".lean-overlay").remove();
@@ -1866,15 +2379,19 @@ define(function() {
 													});
 												}
 												else {
-													$("#popup_title").text("Database Issue");
+													$("#popup_title")
+														.text("Database Issue");
 													$("#popup_submit").remove();
 													$("#popup_exit").remove();
-													$("#popup_modal_footer").append($("<a>")
-														.attr("id", "popup_submit")
-														.addClass("waves-effect waves-blue btn-flat")
-														.text("Exit"));
-													$("#popup_body").text("The changes you provided" + 
-														" had trouble being uploaded to the database!");
+													$("#popup_modal_footer")
+														.append($("<a>")
+															.attr("id", "popup_submit")
+															.addClass("waves-effect waves-blue btn-flat")
+															.text("Exit"));
+													$("#popup_body").text("The" +
+														" changes you provided" + 
+														" had trouble being" +
+														" uploaded to the database!");
 													$("#popup_submit").click(function(e) {
 														e.preventDefault();
 														$(".lean-overlay").remove();
@@ -1889,12 +2406,18 @@ define(function() {
 							});
 						}
 						else {
-							$("#popup_title").text("Password Issue");
+							$("#popup_title")
+								.text("Password Issue");
 							$("#popup_submit").remove();
 							$("#popup_exit").remove();
-							$("#popup_modal_footer").append($("<a>")
-								.attr("id", "popup_submit").addClass("waves-effect waves-blue btn-flat").text("Exit"));
-							$("#popup_body").text("The new password does not meet the minimum security requirements!");
+							$("#popup_modal_footer")
+								.append($("<a>")
+									.attr("id", "popup_submit")
+									.addClass("waves-effect waves-blue btn-flat")
+									.text("Exit"));
+							$("#popup_body").text("The new password" +
+								" does not meet the minimum security" +
+								" requirements!");
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
 								$(".lean-overlay").remove();
@@ -1926,20 +2449,27 @@ define(function() {
 		$(".lean-overlay").remove();
 		$("#popup").remove();
 		$("#popup_control").remove();
-		$.get("/pages/dist/modal-min.html").done(function(content) {
+		$.get("/pages/dist/modal-min.html")
+			.done(function(content) {
 			$("body").append(content);
 			$("#popup_title").text("Login Issue");
 			if(issue == 0) {
-				$("#popup_body").text("It seems you are not currently signed" + 
-					" into the content management system. Please login first!");
+				$("#popup_body").text("It seems" +
+					" you are not currently signed" + 
+					" into the content management" +
+					" system. Please login first!");
 			}
 			else if(issue == 1) {
-				$("#popup_body").text("Your current session has expired. To" + 
-					" continue using the system please login again!");
+				$("#popup_body").text("Your current" +
+					" session has expired. To" + 
+					" continue using the system" +
+					" please login again!");
 			}
 			else if(issue == 2) {
-				$("#popup_body").text("You are already logged in! Click the" + 
-					" button below to redirect to the content management system.");
+				$("#popup_body").text("You are" +
+					" already logged in! Click the" + 
+					" button below to redirect to" +
+					" the content management system.");
 			}
 			$(".modal-trigger").leanModal({
 				dismissible: false,
@@ -1949,7 +2479,8 @@ define(function() {
 			});
 			$("#popup_control").click();
 			$("#popup").keypress(function(event) {
-			    if(event.keyCode === 10 || event.keyCode === 13) {
+			    if(event.keyCode === 10 ||
+			    	event.keyCode === 13) {
 			        event.preventDefault();
 			    }
 			});
@@ -1975,7 +2506,8 @@ define(function() {
 
 	*/
 	exports.modal = function(issue, router, obj) {
-		$.get("/pages/dist/modal-min.html").done(function(content) {
+		$.get("/pages/dist/modal-min.html")
+			.done(function(content) {
 			$("body").append(content);
 			$(".modal-trigger").leanModal({
 				dismissible: false,
@@ -1984,13 +2516,18 @@ define(function() {
 				outDuration: 1000
 			});
 			$("body").on("keypress", function(event) {
-			    if(event.which === 10 || event.which === 13) {
+			    if(event.which === 10 ||
+			    	event.which === 13) {
 			        return false;
 			    }
 			});
 			if(issue == 0) {
-				$("#popup_title").text("Email Issue");
-				$("#popup_body").text("There was an issue parsing the email you provided. Please try again!");
+				$("#popup_title")
+					.text("Email Issue");
+				$("#popup_body").text("There was" +
+					" an issue parsing the email" +
+					" you provided. Please try" +
+					" again!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2000,9 +2537,12 @@ define(function() {
 				});
 			}
 			else if(issue == 1) {
-				$("#popup_title").text("Registration Issue");
-				$("#popup_body").text("The email you provided does not exist in the database." + 
-					" Please provide another email!");
+				$("#popup_title")
+					.text("Registration Issue");
+				$("#popup_body").text("The email" +
+					" you provided does not exist" +
+					" in the database. Please" +
+					" provide another email!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2012,9 +2552,17 @@ define(function() {
 				});
 			}
 			else if(issue == 2) {
-				$("#popup_title").text("Password Issue");
-				$("#popup_body").text("The password must be at least eight characters long while" + 
-					" containing at least one number, one lowercase letter, and one uppercase letter. Please try again!");
+				$("#popup_title")
+					.text("Password Issue");
+				$("#popup_body").text("The" +
+					" password must be at" +
+					" least eight characters" +
+					" long while containing" +
+					" at least one number," +
+					" one lowercase letter," +
+					" and one uppercase" +
+					" letter. Please try" +
+					" again!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2024,8 +2572,12 @@ define(function() {
 				});
 			}
 			else if(issue == 3) {
-				$("#popup_title").text("Database Issue");
-				$("#popup_body").text("There was a problem connecting to the database!");
+				$("#popup_title")
+					.text("Database Issue");
+				$("#popup_body").text("There" +
+					" was a problem" +
+					" connecting to the" +
+					" database!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2035,8 +2587,14 @@ define(function() {
 				});
 			}
 			else if(issue == 4) {
-				$("#popup_title").text("Email Issue");
-				$("#popup_body").text("The email you provided does not exist in the database. Please provide another email!");
+				$("#popup_title")
+					.text("Email Issue");
+				$("#popup_body").text("The" +
+					" email you provided" +
+					" does not exist in" +
+					" the database." +
+					" Please provide" +
+					" another email!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2046,8 +2604,13 @@ define(function() {
 				});
 			}
 			else if(issue == 5) {
-				$("#popup_title").text("Password Issue");
-				$("#popup_body").text("The password you provided does not match the one in the database. Please try again!");
+				$("#popup_title")
+					.text("Password Issue");
+				$("#popup_body").text("The" +
+					" password you provided" +
+					" does not match the one" +
+					" in the database." +
+					" Please try again!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2057,8 +2620,14 @@ define(function() {
 				});
 			}
 			else if(issue == 6) {
-				$("#popup_title").text("Registration Issue");
-				$("#popup_body").text("The email you provided already exists in the database. Please provide another email!");
+				$("#popup_title")
+					.text("Registration Issue");
+				$("#popup_body").text("The" +
+					" email you provided" +
+					" already exists in" +
+					" the database." +
+					" Please provide" +
+					" another email!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2068,8 +2637,12 @@ define(function() {
 				});
 			}
 			else if(issue == 7) {
-				$("#popup_title").text("Password Issue");
-				$("#popup_body").text("The passwords you provided did not match. Please try again!");
+				$("#popup_title")
+					.text("Password Issue");
+				$("#popup_body").text("The" +
+					" passwords you provided" +
+					" did not match." +
+					" Please try again!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2079,8 +2652,14 @@ define(function() {
 				});
 			}
 			else if(issue == 8) {
-				$("#popup_title").text("Name Issue");
-				$("#popup_body").text("The first name cannot be left empty and must contain strictly letters. Please try again!");
+				$("#popup_title")
+					.text("Name Issue");
+				$("#popup_body").text("The" +
+					" first name cannot be" +
+					" left empty and must" +
+					" contain strictly" +
+					" letters. Please" +
+					" try again!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2090,8 +2669,14 @@ define(function() {
 				});
 			}
 			else if(issue == 9) {
-				$("#popup_title").text("Name Issue");
-				$("#popup_body").text("The last name cannot be left empty and must contain strictly letters. Please try again!");
+				$("#popup_title")
+					.text("Name Issue");
+				$("#popup_body").text("The" +
+					" last name cannot be" +
+					" left empty and must" +
+					" contain strictly" +
+					" letters. Please" +
+					" try again!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2101,8 +2686,13 @@ define(function() {
 				});
 			}
 			else if(issue == 10) {
-				$("#popup_title").text("Security Question Issue");
-				$("#popup_body").text("The answer to the chosen security question cannot be left empty. Please try again!");
+				$("#popup_title")
+					.text("Security Question Issue");
+				$("#popup_body").text("The" +
+					" answer to the chosen" +
+					" security question" +
+					" cannot be left empty." +
+					" Please try again!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2112,8 +2702,12 @@ define(function() {
 				});
 			}
 			else if(issue == 11) {
-				$("#popup_title").text("Contributor Submission Issue");
-				$("#popup_body").text("There was an issue processing the submission to the database!");
+				$("#popup_title")
+					.text("Contributor Submission Issue");
+				$("#popup_body").text("There" +
+					" was an issue processing" +
+					" the submission to the" +
+					" database!");
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2123,15 +2717,27 @@ define(function() {
 				});
 			}
 			else if(issue == 12) {
-				var statement = "Thanks for submitting an application to become a " 
-					+ "contributor on manualmath! The design of the content management " 
-					+ "system requires a majority approval from a committee of five top " 
-					+ "ranking members including the administrator to become a contributor. " 
-					+ "Deliberations can take a while, but you can definitely expect a " 
-					+ "response within a week.";
-				$("#popup_title").text("Contributor Submission").css("text-align", "center");
-				$("#popup_body").text(statement).append($("<br><br>")).append($("<div>")
-					.text("- " + obj.first_name + " " + obj.last_name).css("text-align", "right"));
+				var statement = "Thanks for" +
+					" submitting an application" +
+					" to become a contributor" +
+					" on manualmath! The design" +
+					" of the content management" +
+					" system requires a majority" +
+					" approval from a committee" +
+					" of five top ranking members" +
+					" including the administrator" +
+					" to become a contributor." +
+					" Deliberations can take a" +
+					" while, but you can definitely" +
+					" expect a response within a week.";
+				$("#popup_title")
+					.text("Contributor Submission")
+					.css("text-align", "center");
+				$("#popup_body").text(statement)
+					.append($("<br><br>"), ($("<div>")
+						.text("- " + obj.first_name +
+							" " + obj.last_name)
+						.css("text-align", "right")));
 				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
@@ -2142,13 +2748,20 @@ define(function() {
 				});
 			}
 			else if(issue == 13) {
-				var statement = "By continuing you are agreeing to manualmath's use of cookies to store session information.";
+				var statement = "By continuing" +
+					" you are agreeing to" +
+					" manualmath's use of" +
+					" cookies to store session" +
+					" information.";
 				$("#popup_submit").removeClass("modal-close");
-				$("#popup_title").text("Login Confirmation").css("text-align", "center");
+				$("#popup_title").text("Login Confirmation")
+					.css("text-align", "center");
 				$("#popup_body").text(statement);
 				$("#popup_submit").text("Continue");
-				$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
-					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+				$("#popup_modal_footer").append($("<a>")
+					.attr("id", "popup_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat")
+					.text("Exit"));
 				$("#popup_control").click();
 				$("#popup_exit").click(function(e) {
 					e.preventDefault();
@@ -2164,23 +2777,37 @@ define(function() {
 						$(".lean-overlay").remove();
 						$("#popup").remove();
 						$("#popup_control").remove();
-						$.post("/api/cms/live/add/", {email: $("#login_email").val()}).done(function(result) {
+						$.post("/api/cms/live/add/",
+							{email: $("#login_email").val()})
+						.done(function(result) {
 							if(result == 1) {
-								exports.write_cookie("contributor", $("#login_email").val(), 60);
+								exports.write_cookie("contributor",
+									$("#login_email").val(), 60);
 								router.navigate("cms", {reload: true});
 							}
-							else { console.log("There was an issue adding the contributor to the list of live sessions!"); }
+							else {
+								console.log("There was an" +
+									" issue adding the contributor" +
+									" to the list of live sessions!");
+							}
 						});
 					}
 					else {
-						$("#popup_title").text("Contributor Status").css("text-align", "center");
-						$("#popup_body").text("Your account has not been approved by manualmath's committee yet!");
+						$("#popup_title")
+							.text("Contributor Status")
+							.css("text-align", "center");
+						$("#popup_body").text("Your account" +
+							" has not been approved by" +
+							" manualmath's committee yet!");
 						$("#popup_submit").remove();
 						$("#popup_exit").remove();
-						$("#popup_modal_footer").append($("<a>").attr("id", "popup_submit")
-							.addClass("modal-close waves-effect waves-blue btn-flat").text("Ok"));
-						
-						$("#login_input input").each(function() { $(this).val(""); });
+						$("#popup_modal_footer").append($("<a>")
+							.attr("id", "popup_submit")
+							.addClass("modal-close waves-effect waves-blue btn-flat")
+							.text("Ok"));
+						$("#login_input input").each(function() {
+							$(this).val("");
+						});
 						Materialize.updateTextFields();
 						$("#popup_submit").click(function(e) {
 							e.preventDefault();
@@ -2195,22 +2822,32 @@ define(function() {
 				});
 			}
 			else if(issue == 14) {
-				$.get("/pages/dist/password-recovery-min.html").done(function(material) {
+				$.get("/pages/dist/password-recovery-min.html")
+					.done(function(material) {
 					$("#popup_title").text("Password Recovery");
-					$("#popup_body").text("Please answer the security question associated to the account:")
+					$("#popup_body").text("Please answer" +
+						" the security question associated" +
+						" to the account:")
 						.append(material);
-					$("#ques").val($("#question option:selected").text());
-					$("#popup_submit").text("Continue").removeClass("modal-close");
-					$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
-						.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
+					$("#ques").val($("#question option:selected")
+						.text());
+					$("#popup_submit").text("Continue")
+						.removeClass("modal-close");
+					$("#popup_modal_footer").append($("<a>")
+						.attr("id", "popup_exit")
+						.addClass("modal-close waves-effect waves-blue btn-flat")
+						.text("Exit"));
 					$("#popup_control").click();
-					$("#popup_submit").css("pointer-events", "none");
+					$("#popup_submit")
+						.css("pointer-events", "none");
 					$("#forgotten").on("input", function() {
 						if($("#forgotten").val().length == 0) {
-							$("#popup_submit").css("pointer-events", "none");
+							$("#popup_submit")
+								.css("pointer-events", "none");
 						}
 						else {
-							$("#popup_submit").css("pointer-events", "auto");
+							$("#popup_submit")
+								.css("pointer-events", "auto");
 						}
 					});
 					$("#popup_exit").click(function(e) {
@@ -2229,23 +2866,33 @@ define(function() {
 							answer: $("#forgotten").val()
 						}).done(function(result) {
 							if(result == 1) {
-								$.get("/pages/dist/password-change-min.html").done(function(result) {
+								$.get("/pages/dist/password-change-min.html")
+									.done(function(result) {
 									$("#popup_title").text("Password Reset");
-									$("#popup_body").text("Please provide a new password:").append(result);
+									$("#popup_body")
+										.text("Please provide a new password:")
+										.append(result);
 									$("#popup_exit").remove();
 									$("#popup_submit").remove();
 									$("#popup_modal_footer")
-										.append($("<a>").attr("id", "popup_submit")
-											.addClass("modal-close waves-effect waves-blue btn-flat").text("Continue"))
-										.append($("<a>").attr("id", "popup_exit")
-											.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-									$("#popup_submit").css("pointer-events", "none");
+										.append($("<a>")
+											.attr("id", "popup_submit")
+											.addClass("modal-close waves-effect waves-blue btn-flat")
+											.text("Continue"))
+										.append($("<a>")
+											.attr("id", "popup_exit")
+											.addClass("modal-close waves-effect waves-blue btn-flat")
+											.text("Exit"));
+									$("#popup_submit")
+										.css("pointer-events", "none");
 									$("#newpass").on("input", function() {
 										if($("#newpass").val().length == 0) {
-											$("#popup_submit").css("pointer-events", "none");
+											$("#popup_submit")
+												.css("pointer-events", "none");
 										}
 										else {
-											$("#popup_submit").css("pointer-events", "auto");
+											$("#popup_submit")
+												.css("pointer-events", "auto");
 										}
 									});
 									$("#popup_exit").click(function() {
@@ -2258,7 +2905,8 @@ define(function() {
 										$("body").off();
 									});
 									$("body").on("keypress", function(event) {
-									    if(event.which === 10 || event.which === 13) {
+									    if(event.which === 10 ||
+									    	event.which === 13) {
 									        return false;
 									    }
 									});
@@ -2268,14 +2916,19 @@ define(function() {
 										if(exports.password_check($("#newpass").val())) {
 											$.post("/api/cms/contributor/change/password/", {
 												email: $("#login_email").val(),
-												password: encodeURIComponent($("#newpass").val())
+												password: encodeURIComponent(
+													$("#newpass").val())
 											}).done(function() {
-												$("#popup_title").text("Password Changed");
-												$("#popup_body").text("You may now login with the new password!");
+												$("#popup_title")
+													.text("Password Changed");
+												$("#popup_body").text("You" +
+													" may now login with" +
+													" the new password!");
 												$("#popup_exit").remove();
 												$("#popup_submit").remove();
 												$("#popup_modal_footer")
-													.append($("<a>").attr("id", "popup_submit")
+													.append($("<a>")
+														.attr("id", "popup_submit")
 														.addClass("modal-close waves-effect waves-blue btn-flat")
 														.text("Continue"));
 												$("#popup_submit").click(function(e) {
@@ -2290,14 +2943,22 @@ define(function() {
 											});
 										}
 										else {
-											$("#popup_title").text("Password Issue");
-											$("#popup_body").text("The password must be at least eight characters" + 
-												" long while containing at least one number, one lowercase letter," + 
-												" and one uppercase letter. Please try again!");
+											$("#popup_title")
+												.text("Password Issue");
+											$("#popup_body").text("The" +
+												" password must be at" +
+												" least eight characters" + 
+												" long while containing" +
+												" at least one number," +
+												" one lowercase letter," + 
+												" and one uppercase" +
+												" letter. Please try" +
+												" again!");
 											$("#popup_exit").remove();
 											$("#popup_submit").remove();
 											$("#popup_modal_footer")
-												.append($("<a>").attr("id", "popup_submit")
+												.append($("<a>")
+													.attr("id", "popup_submit")
 													.addClass("modal-close waves-effect waves-blue btn-flat")
 													.text("Ok"));
 											$("#popup_submit").click(function(e) {
@@ -2314,18 +2975,24 @@ define(function() {
 								});
 							}
 							else {
-								$("#popup_title").text("Password Recovery").css("text-align", "left");
-								$("#popup_body").text("You provided the wrong answer to the security question!");
+								$("#popup_title")
+									.text("Password Recovery")
+									.css("text-align", "left");
+								$("#popup_body").text("You" +
+									" provided the wrong" +
+									" answer to the" +
+									" security question!");
 								$("#popup_exit").remove();
 								$("body").off();
-								$("#popup_submit").text("Ok").click(function(e) {
-									e.preventDefault();
-									$(".lean-overlay").remove();
-									$("#popup").remove();
-									$("#popup_control").remove();
-									$("#login_click").click();
-									$(window).scrollTop(0);
-									$("body").off();
+								$("#popup_submit").text("Ok")
+									.click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("#login_click").click();
+										$(window).scrollTop(0);
+										$("body").off();
 								});
 							}
 						});
@@ -2377,7 +3044,10 @@ define(function() {
 			The right hand side object
 
 	*/
-	exports.compare_object_order = function(lhs, rhs) { return lhs.order < rhs.order ? -1 : 1; };
+	exports.compare_object_order = function(lhs, rhs) {
+		return lhs.order < rhs.order
+			? -1 : 1;
+		};
 
 	/*
 
@@ -2390,12 +3060,20 @@ define(function() {
 
 	*/
 	exports.get_all = function() {
-		var urls = Array.prototype.slice.call(arguments),
-			promises = urls.map(function(url) { return $.get(url); }),
+		var urls = Array.prototype.slice
+			.call(arguments),
+			promises = urls.map(function(url) {
+				return $.get(url);
+			}),
 			def = $.Deferred();
-		$.when.apply($, promises).done(function() {
-			var responses = Array.prototype.slice.call(arguments);
-			def.resolve.apply(def, responses.map(function(res) { return res[0]; }));
+		$.when.apply($, promises)
+			.done(function() {
+			var responses = Array.prototype.slice
+				.call(arguments);
+			def.resolve.apply(def,
+				responses.map(function(res) {
+					return res[0];
+			}));
 		});
 		return def.promise();
 	};
@@ -2477,11 +3155,15 @@ define(function() {
 
 	*/
 	exports.rgba_to_hex = function(orig) {
-		var rgb = orig.replace(/\s/g,"").match(/^rgba?\((\d+),(\d+),(\d+)/i);
+		var rgb = orig.replace(/\s/g,"")
+			.match(/^rgba?\((\d+),(\d+),(\d+)/i);
 		return (rgb && rgb.length === 4) ? "#" +
-		  	("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-		  	("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-		  	("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : orig;
+		  	("0" + parseInt(rgb[1],10)
+		  		.toString(16)).slice(-2) +
+		  	("0" + parseInt(rgb[2],10)
+		  		.toString(16)).slice(-2) +
+		  	("0" + parseInt(rgb[3],10)
+		  		.toString(16)).slice(-2) : orig;
 	};
 
 	/*
@@ -2495,8 +3177,11 @@ define(function() {
 
 	*/
 	exports.handle_logo_link = function(page) { 
-		page == "about" ? $(".logo-cls").css("pointer-events", "none")
-			: $(".logo-cls").css("pointer-events", ""); 
+		page == "about"
+			? $(".logo-cls")
+				.css("pointer-events", "none")
+			: $(".logo-cls")
+				.css("pointer-events", ""); 
 	};
 
 	/*
@@ -2508,16 +3193,22 @@ define(function() {
 	exports.handle_li_coloring = function() {
 		$("#nav-mobile li").each(function() {
 			if($(this).hasClass("active")) {
-				$(this).css("background-color", "#4693ec");
-				$(this).find("a").css("color", "white");
+				$(this)
+					.css("background-color", "#4693ec");
+				$(this).find("a")
+					.css("color", "white");
 			}
 			else {
 				if($(this).css("background-color")) {
-					if(exports.rgba_to_hex($(this).css("background-color")) == "#4693ec") {
+					if(exports.rgba_to_hex
+						($(this).css("background-color")) == "#4693ec") {
 						window.innerWidth < 992
-							? $(this).css("background-color", "white")
-							: $(this).css("background-color", "");
-						$(this).find("a").css("color", "#444");
+							? $(this)
+								.css("background-color", "white")
+							: $(this)
+								.css("background-color", "");
+						$(this).find("a")
+							.css("color", "#444");
 					}
 				}
 			}
@@ -2558,17 +3249,23 @@ define(function() {
 		var width = 0,
 			screen_width = exports.width_func(),
 			mobile = exports.is_mobile();
-		if(screen_width >= 992) { width = 350; }
-		else if(screen_width < 992 && screen_width > 400) {
+		if(screen_width >= 992) {
+			width = 350;
+		}
+		else if(screen_width < 992
+			&& screen_width > 400) {
 			width = screen_width * .75;
 		}
-		else { width = screen_width * .72; }
+		else {
+			width = screen_width * .72;
+		}
 		$(".button-collapse").sideNav({
 			"menuWidth": width,
 			"closeOnClick": true
 		});
 		if(screen_width < 992 || mobile) {
-			$(".button-collapse").sideNav("hide");
+			$(".button-collapse")
+				.sideNav("hide");
 		}
 	};
 
@@ -2600,25 +3297,34 @@ define(function() {
 	exports.handle_button = function(cms) {
 		if(cms == 1) {
 			$("#latex .solution_display i").off();
-			$("#latex .solution_display i").on("click", function(defaultevent) {
+			$("#latex .solution_display i")
+				.on("click", function(defaultevent) {
 				defaultevent.preventDefault();
 				$(this).text() == "add"
-					? $(this).parent().parent().next(".cont_div").fadeIn(300) 
-					: $(this).parent().parent().next(".cont_div").fadeOut(300);
-				$(this).text() == "add" ? $(this).text("remove")
+					? $(this).parent().parent()
+						.next(".cont_div").fadeIn(300) 
+					: $(this).parent().parent()
+						.next(".cont_div").fadeOut(300);
+				$(this).text() == "add"
+					? $(this).text("remove")
 					: $(this).text("add");
 			});
 		}
 		else {
 			$("#latex .show_solution").off();
-			$("#latex .show_solution").on("click", function(defaultevent) {
+			$("#latex .show_solution")
+				.on("click", function(defaultevent) {
 				defaultevent.preventDefault();
 				$(this).find(".solution_display i").text() == "add"
-					? $(this).parent().find(".cont_div").fadeIn(300) 
-					: $(this).parent().find(".cont_div").fadeOut(300);
+					? $(this).parent()
+						.find(".cont_div").fadeIn(300) 
+					: $(this).parent()
+						.find(".cont_div").fadeOut(300);
 				$(this).find(".solution_display i").text() == "add"
-					? $(this).find(".solution_display i").text("remove") 
-					: $(this).find(".solution_display i").text("add");
+					? $(this).find(".solution_display i")
+						.text("remove") 
+					: $(this).find(".solution_display i")
+						.text("add");
 			});
 		}
 	};
@@ -2632,12 +3338,20 @@ define(function() {
 	exports.handle_orientation = function() {
 		$(window).on("orientationchange", function() {
 			var orientation = screen.msOrientation ||
-				(screen.orientation || screen.mozOrientation || {}).type,
+				(screen.orientation ||
+					screen.mozOrientation ||
+					{}).type,
 				val = exports.height_func(),
 				width = -1;
-			if(val >= 992) { width = 350; }
-			else if(val < 992 && val > 400) { width = val * .75; }
-			else { width = val * .72; }
+			if(val >= 992) {
+				width = 350;
+			}
+			else if(val < 992 && val > 400) {
+				width = val * .75;
+			}
+			else {
+				width = val * .72;
+			}
 			$("#nav-mobile").css("width", width);
 		});
 	};
@@ -2658,49 +3372,78 @@ define(function() {
 			An object representing the current section
 
 	*/
-	exports.handle_breadcrumbs = function(page, obj, subject, topic, section, example) {
+	exports.handle_breadcrumbs = function(page, obj, subject,
+		topic, section, example) {
 		$("#breadcrumbs").remove();
 		if(exports.width_func() < 992) {
 			if(page == "subject") {
-				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(subject.clean_name)
+				obj.before($("<div>")
+					.addClass("col s1")
+					.attr("id", "breadcrumbs"));
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(subject.clean_name)
 						.css("display", "inline-block")));
 			}
 			else if(page == "topic") {
-				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(subject.clean_name)
+				obj.before($("<div>")
+					.addClass("col s1")
+					.attr("id", "breadcrumbs"));
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(subject.clean_name)
 						.css("display", "inline-block")));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(topic.clean_name)
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(topic.clean_name)
 						.css("display", "inline-block")));
 			}
 			else if(page == "section") {
-				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(subject.clean_name)
+				obj.before($("<div>")
+					.addClass("col s1")
+					.attr("id", "breadcrumbs"));
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(subject.clean_name)
 						.css("display", "inline-block")));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(topic.clean_name)
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(topic.clean_name)
 						.css("display", "inline-block")));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(section.clean_name)
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(section.clean_name)
 						.css("display", "inline-block")));
 			}
 			else if(page == "example") {
-				obj.before($("<div>").addClass("col s1").attr("id", "breadcrumbs"));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(subject.clean_name)
+				obj.before($("<div>")
+					.addClass("col s1")
+					.attr("id", "breadcrumbs"));
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(subject.clean_name)
 						.css("display", "inline-block")));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(topic.clean_name)
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(topic.clean_name)
 						.css("display", "inline-block")));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(section.clean_name)
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(section.clean_name)
 						.css("display", "inline-block")));
-				$("#breadcrumbs").append($("<li>").addClass("breadcrumb")
-					.append($("<div>").text(example.clean_name)
+				$("#breadcrumbs").append($("<li>")
+					.addClass("breadcrumb")
+					.append($("<div>")
+						.text(example.clean_name)
 						.css("display", "inline-block")));
 			}
 			$(".breadcrumb:not(:first)").toggleClass("changed");
@@ -2719,7 +3462,8 @@ define(function() {
 	*/
 	exports.mobile_breadcrumbs = function(page) {
 		if(page == "topic") {
-			$(".breadcrumb.changed").css("display", "inline-flex");
+			$(".breadcrumb.changed")
+				.css("display", "inline-flex");
 		}
 	};
 
@@ -2730,7 +3474,8 @@ define(function() {
 	
 	*/
 	exports.hide_mathjax_span = function() {
-		$("#latex .MathJax").first().css("display", "none");
+		$("#latex .MathJax").first()
+			.css("display", "none");
 	};
 
 	/*
@@ -2749,33 +3494,45 @@ define(function() {
 			An object representing the current section
 
 	*/
-	exports.handle_desktop_title = function(page, subject, topic, section) {
+	exports.handle_desktop_title = function(page,
+		subject, topic, section) {
 		if(exports.width_func() >= 992) {
 			$("#desktop_title").empty();
 			if(page == "about") {
-				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+				$("#desktop_title").append($("<a>")
+					.addClass("breadcrumb")
 					.text("About"));
 			}
 			else if(page == "subject") {
-				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+				$("#desktop_title").append($("<a>")
+					.addClass("breadcrumb")
 					.text(subject.clean_name));
 			}
 			else if(page == "topic") {
-				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+				$("#desktop_title").append($("<a>")
+					.addClass("breadcrumb")
 					.text(subject.clean_name));
-				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+				$("#desktop_title").append($("<a>")
+					.addClass("breadcrumb")
 					.text(topic.clean_name));
 			}
 			else if(page == "section") {
-				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+				$("#desktop_title").append($("<a>")
+					.addClass("breadcrumb")
 					.text(subject.clean_name));
-				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+				$("#desktop_title").append($("<a>")
+					.addClass("breadcrumb")
 					.text(topic.clean_name));
-				$("#desktop_title").append($("<a>").addClass("breadcrumb")
+				$("#desktop_title").append($("<a>")
+					.addClass("breadcrumb")
 					.text(section.clean_name));
 			}
-			else { console.log("No such page exists: " + page); }
-			$(".breadcrumb:not(:first)").toggleClass("changed");
+			else {
+				console.log("No such page" +
+					" exists: " + page);
+			}
+			$(".breadcrumb:not(:first)")
+				.toggleClass("changed");
 		}
 	};
 
@@ -2840,29 +3597,45 @@ define(function() {
 				exports.session_modal(router, "login", 0);
 			}
 			else {
-				var cookie = exports.read_cookie("contributor");
-				$.post("/api/cms/live/check/", {email: cookie}).done(function(result) {
+				var cookie = 
+					exports.read_cookie("contributor");
+				$.post("/api/cms/live/check/",
+					{email: cookie})
+				.done(function(result) {
 					if(result == "") {
-						$.post("/api/cms/live/add/", {email: cookie}).done(function(result) {
+						$.post("/api/cms/live/add/",
+							{email: cookie})
+						.done(function(result) {
 							if(result == 1) {
-								exports.write_cookie("contributor", cookie, 60);
+								exports.write_cookie(
+									"contributor", cookie, 60);
 							}
 							else {
-								console.log("There was an issue adding" + 
-									" the contributor to the list of live sessions!");
+								console.log("There was an" +
+									" issue adding" + 
+									" the contributor" +
+									" to the list of" +
+									" live sessions!");
 							}
 						});
 					}
 				});
-				exports.listen_cookie_change("contributor", function() {
+				exports.listen_cookie_change(
+					"contributor", function() {
 					if(exports.read_cookie("contributor") == "") {
-						$.post("/api/cms/live/remove", {email: cookie}).done(function(result) {
+						$.post("/api/cms/live/remove",
+							{email: cookie})
+						.done(function(result) {
 							if(result == 1) {
-								exports.session_modal(router, "login", 1);
+								exports.session_modal(
+									router, "login", 1);
 							}
 							else {
-								console.log("There was an issue removing" + 
-									" the contributor from the list of live sessions!");
+								console.log("There was an" +
+									" issue removing" + 
+									" the contributor" +
+									" from the list" +
+									" of live sessions!");
 							}
 						});
 					}
@@ -2875,8 +3648,10 @@ define(function() {
 					    data: {email: cookie}
 					});
 				});
-				$.get("/pages/dist/main-min.html").done(function(content) {
-					$(document.body).empty().append(content);
+				$.get("/pages/dist/main-min.html")
+					.done(function(content) {
+					$(document.body).empty()
+						.append(content);
 					$("#logo").attr("id", "logo_cms");
 					callback();
 				});
@@ -2910,10 +3685,14 @@ define(function() {
 		$(".toggle").on("click", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
-			var item = $(this).parents().prev().clone()
-				.children().remove().end().text();
-			var ref = data.title_cms.findIndex(function(elem) {
-				return elem.split("_hidden")[0] == item;
+			var item = $(this).parents()
+				.prev().clone()
+				.children().remove()
+				.end().text();
+			var ref = data.title_cms
+				.findIndex(function(elem) {
+					return elem.split("_hidden")[0]
+						== item;
 			});
 			if($(this).text() == "toggle_off") {
 				$(this).text("toggle_on");
@@ -2942,7 +3721,8 @@ define(function() {
 			e.preventDefault();
 			var obj = $(this).parent().parent().parent()
 				.find(".cont_div .latex_body").first();
-			$.get("/pages/dist/modal-min.html").done(function(content) {
+			$.get("/pages/dist/modal-min.html")
+				.done(function(content) {
 				$("body").append(content);
 				$(".modal-trigger").leanModal({
 					dismissible: false,
@@ -2951,46 +3731,76 @@ define(function() {
 					outDuration: 1000
 				});
 				$("body").on("keypress", function(event) {
-				    if(event.which === 10 || event.which === 13) {
+				    if(event.which === 10 ||
+				    	event.which === 13) {
 				        return false;
 				    }
 				});
 				$("#popup_title").text("Add List");
-				$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
-					.addClass("modal-close waves-effect waves-blue btn-flat").text("Exit"));
-				$.get("/pages/dist/list-form-min.html").done(function(form) {
+				$("#popup_modal_footer").append($("<a>"
+					.attr("id", "popup_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat")
+					.text("Exit")));
+				$.get("/pages/dist/list-form-min.html")
+					.done(function(form) {
 					$("#popup_body").append(form);
 					$("#popup_submit").css("pointer-events", "none");
 					$("#popup_control").click();
 					$("#unordered").on("change", function() {
 						if($(this)[0].checked) {
-							$("#popup_submit").css("pointer-events", "none");
+							$("#popup_submit")
+								.css("pointer-events", "none");
 							$("#ordered-options").remove();
-							var par = $("<p>").attr("id", "unordered-options")
-								.text("Choose the style:"),
-								label = $("<label>").addClass("list-label"),
-								input_disc = $("<input>").addClass("with-gap")
-									.attr({type: "radio", value: "disc", name: "unordered"}),
-								span_disc = $("<span>").addClass("black-text")
+							var par = $("<p>")
+									.attr("id", "unordered-options")
+									.text("Choose the style:"),
+								label = $("<label>")
+									.addClass("list-label"),
+								input_disc = $("<input>")
+									.addClass("with-gap")
+									.attr({
+										type: "radio",
+										value: "disc",
+										name: "unordered"
+									}),
+								span_disc = $("<span>")
+									.addClass("black-text")
 									.text("Disc"),
-								input_circle = $("<input>").addClass("with-gap")
-									.attr({type: "radio", value: "circle", name: "unordered"}),
-								span_circle = $("<span>").addClass("black-text")
+								input_circle = $("<input>")
+									.addClass("with-gap")
+									.attr({
+										type: "radio",
+										value: "circle",
+										name: "unordered"
+									}),
+								span_circle = $("<span>")
+									.addClass("black-text")
 									.text("Circle"),
-								input_square = $("<input>").addClass("with-gap")
-									.attr({type: "radio", value: "square", name: "unordered"}),
-								span_square = $("<span>").addClass("black-text")
+								input_square = $("<input>")
+									.addClass("with-gap")
+									.attr({
+										type: "radio",
+										value: "square",
+										name: "unordered"
+									}),
+								span_square = $("<span>")
+									.addClass("black-text")
 									.text("Square");
-							label.append(input_disc, span_disc, input_circle, span_circle,
-								input_square, span_square);
+							label.append(input_disc,
+								span_disc, input_circle,
+								span_circle, input_square,
+								span_square);
 							par.append(label);
 							$("#list-form").append(par);
-							$('input:radio[name="unordered"]').on("change", function() {
+							$('input:radio[name="unordered"]')
+								.on("change", function() {
 								if($(this)[0].checked) {
-									$("#popup_submit").css("pointer-events", "auto");
+									$("#popup_submit")
+										.css("pointer-events", "auto");
 								}
 								else {
-									$("#popup_submit").css("pointer-events", "none");
+									$("#popup_submit")
+										.css("pointer-events", "none");
 								}
 							});
 						}
@@ -3000,43 +3810,80 @@ define(function() {
 					});
 					$("#ordered").on("change", function() {
 						if($(this)[0].checked) {
-							$("#popup_submit").css("pointer-events", "none");
+							$("#popup_submit")
+								.css("pointer-events", "none");
 							$("#unordered-options").remove();
-							var par = $("<p>").attr("id", "ordered-options")
-								.text("Choose the ordering style:"),
-								label = $("<label>").addClass("list-label"),
-								input_number = $("<input>").addClass("with-gap")
-								.attr({type: "radio", value: "1", name: "ordered"}),
-								span_number = $("<span>").addClass("black-text").text("Numbered"),
-								input_uppercaseLetter = $("<input>").addClass("with-gap")
-								.attr({type: "radio", value: "A", name: "ordered"}),
-								span_uppercaseLetter = $("<span>").addClass("black-text")
+							var par = $("<p>")
+									.attr("id", "ordered-options")
+									.text("Choose the ordering style:"),
+								label = $("<label>")
+									.addClass("list-label"),
+								input_number = $("<input>")
+									.addClass("with-gap")
+									.attr({
+										type: "radio",
+										value: "1",
+										name: "ordered"
+									}),
+								span_number = $("<span>")
+									.addClass("black-text")
+									.text("Numbered"),
+								input_uppercaseLetter = $("<input>")
+									.addClass("with-gap")
+									.attr({
+										type: "radio",
+										value: "A",
+										name: "ordered"
+									}),
+								span_uppercaseLetter = $("<span>")
+									.addClass("black-text")
 									.text("Uppercase Letters"),
-								input_lowercaseLetter = $("<input>").addClass("with-gap")
-								.attr({type: "radio", value: "a", name: "ordered"}),
-								span_lowercaseLetter = $("<span>").addClass("black-text")
+								input_lowercaseLetter = $("<input>")
+									.addClass("with-gap")
+									.attr({
+										type: "radio",
+										value: "a",
+										name: "ordered"
+									}),
+								span_lowercaseLetter = $("<span>")
+									.addClass("black-text")
 									.text("Lowercase Letters"),
-								input_uppercaseRoman = $("<input>").addClass("with-gap")
-								.attr({type: "radio", value: "I", name: "ordered"}),
-								span_uppercaseRoman = $("<span>").addClass("black-text")
+								input_uppercaseRoman = $("<input>")
+									.addClass("with-gap")
+									.attr({
+										type: "radio",
+										value: "I",
+										name: "ordered"
+									}),
+								span_uppercaseRoman = $("<span>")
+									.addClass("black-text")
 									.text("Uppercase Roman Numbers"),
-								input_lowercaseRoman = $("<input>").addClass("with-gap")
-								.attr({type: "radio", value: "i", name: "ordered"}),
-								span_lowercaseRoman = $("<span>").addClass("black-text")
+								input_lowercaseRoman = $("<input>")
+									.addClass("with-gap")
+									.attr({
+										type: "radio",
+										value: "i",
+										name: "ordered"
+									}),
+								span_lowercaseRoman = $("<span>")
+									.addClass("black-text")
 									.text("Lowercase Roman Numbers");
-							label.append(input_number, span_number, input_uppercaseLetter,
-								span_uppercaseLetter, input_lowercaseLetter,
-								span_lowercaseLetter, input_uppercaseRoman,
-								span_uppercaseRoman, input_lowercaseRoman,
-								span_lowercaseRoman);
+							label.append(input_number, span_number,
+								input_uppercaseLetter, span_uppercaseLetter,
+								input_lowercaseLetter, span_lowercaseLetter,
+								input_uppercaseRoman, span_uppercaseRoman,
+								input_lowercaseRoman, span_lowercaseRoman);
 							par.append(label);
 							$("#popup_body").append(par);
-							$('input:radio[name="ordered"]').on("change", function() {
+							$('input:radio[name="ordered"]')
+								.on("change", function() {
 								if($(this)[0].checked) {
-									$("#popup_submit").css("pointer-events", "auto");
+									$("#popup_submit")
+										.css("pointer-events", "auto");
 								}
 								else {
-									$("#popup_submit").css("pointer-events", "none");
+									$("#popup_submit")
+										.css("pointer-events", "none");
 								}
 							});
 						}
@@ -3053,33 +3900,45 @@ define(function() {
 					$("#popup_submit").click(function(e) {
 						e.preventDefault();
 						var type = $('input:radio[name="ordering"]:checked').val(),
-							style = type == "0" ? $('input:radio[name="unordered"]:checked').val()
+							style = type == "0"
+								? $('input:radio[name="unordered"]:checked').val()
 								: $('input:radio[name="ordered"]:checked').val();
 						if(type == "0") {
-							obj.append($("<div>").addClass("latex_equation")
+							obj.append($("<div>")
+								.addClass("latex_equation")
 								.attr("contentEditable", "false")
-								.append($("<div>").addClass("table-buttons")
-									.append($("<a>").addClass("waves-effect waves-light btn plus-bullet")
+								.append($("<div>")
+									.addClass("table-buttons")
+									.append($("<a>")
+										.addClass("waves-effect waves-light btn plus-bullet")
 										.text("Bullet").attr("contentEditable", "false")
 										.append($("<i>").addClass("material-icons right")
 											.text("add")))
-									.append($("<a>").addClass("waves-effect waves-light btn minus-bullet")
+									.append($("<a>")
+										.addClass("waves-effect waves-light btn minus-bullet")
 										.text("Bullet").attr("contentEditable", "false")
 										.append($("<i>").addClass("material-icons right")
 											.text("remove"))),
 								$("<ul>").css("list-style-position", "inside")
 									.append($("<li>").attr("contentEditable", "true")
-										.css({"list-style-type": style, "text-align": "left"}))), "<br>");
+										.css({
+											"list-style-type": style,
+											"text-align": "left"
+							}))), "<br>");
 						}
 						else if(type == "1") {
-							obj.append($("<div>").addClass("latex_equation")
+							obj.append($("<div>")
+								.addClass("latex_equation")
 								.attr("contentEditable", "false")
-								.append($("<div>").addClass("table-buttons")
-									.append($("<a>").addClass("waves-effect waves-light btn plus-bullet")
+								.append($("<div>")
+									.addClass("table-buttons")
+									.append($("<a>")
+										.addClass("waves-effect waves-light btn plus-bullet")
 										.text("Bullet").attr("contentEditable", "false")
 										.append($("<i>").addClass("material-icons right")
 											.text("add")))
-									.append($("<a>").addClass("waves-effect waves-light btn minus-bullet")
+									.append($("<a>")
+										.addClass("waves-effect waves-light btn minus-bullet")
 										.text("Bullet").attr("contentEditable", "false")
 										.append($("<i>").addClass("material-icons right")
 											.text("remove"))),
@@ -3094,7 +3953,8 @@ define(function() {
 						$(".plus-bullet").click(function(e) {
 							e.preventDefault();
 							if(type == "0") {
-								$(this).parent().next().append($("<li>").css({
+								$(this).parent().next()
+									.append($("<li>").css({
 									"list-style-type": style,
 									"text-align": "left"
 								}).attr("contentEditable", "true"));
@@ -3111,11 +3971,13 @@ define(function() {
 							var children = $(this).parent()
 								.next().children();
 							if(children.length - 1 == 0) {
-								$(this).parent().parent().remove();
+								$(this).parent()
+									.parent().remove();
 							}
 							else {
 								$(this).parent().next()
-									.children().last().remove();
+									.children().last()
+									.remove();
 							}
 						});
 					});
@@ -3124,17 +3986,26 @@ define(function() {
 		});
 		$(".add-math").on("click", function(e) {
 			e.preventDefault();
-			var obj = $(this).parent().parent().parent()
-				.find(".cont_div .latex_body").first();
-			obj.append($("<div>").addClass("latex_equation")
+			var obj = $(this).parent()
+				.parent().parent()
+				.find(".cont_div .latex_body")
+				.first();
+			obj.append($("<div>")
+				.addClass("latex_equation")
 				.text("$\\eqalign{New Equation}$"));
 		});
 		$(".add-image").on("click", function(e) {
 			e.preventDefault();
-			$("body").append($("<input>").css("display", "none")
-				.attr({id: "file", type: "file"}));
-			var obj = $(this).parent().parent().parent()
-				.find(".cont_div .latex_body").first();
+			$("body").append($("<input>")
+				.css("display", "none")
+				.attr({
+					id: "file",
+					type: "file"
+				}));
+			var obj = $(this).parent()
+				.parent().parent()
+				.find(".cont_div .latex_body")
+				.first();
 			$("#file").click();
 			$("#file").on("change", function() {
 				var file = $("#file")[0].files[0],
@@ -3142,7 +4013,8 @@ define(function() {
 				reader.addEventListener("load", function () {
 					exports.resize_image(reader.result, 400, 400,
 						function(scaled_data) {
-				  		obj.append($("<div>").addClass("latex_equation")
+				  		obj.append($("<div>")
+				  			.addClass("latex_equation")
 							.append($("<img>").attr({
 								src: scaled_data,
 								alt: "Math Image"
@@ -3157,43 +4029,71 @@ define(function() {
 		});
 		$(".add-table").on("click", function(e) {
 			e.preventDefault();
-			var obj = $(this).parent().parent().parent()
-				.find(".cont_div .latex_body").first();
-			obj.append($("<div>").addClass("latex_equation").append($("<div>")
-				.addClass("table-buttons")
-				.append($("<a>").addClass("waves-effect waves-light btn add-row")
-					.text("Row").attr("contentEditable", "false").append($("<i>")
-						.addClass("material-icons right").text("add")))
-				.append($("<a>").addClass("waves-effect waves-light btn remove-row")
-					.text("Row").attr("contentEditable", "false").append($("<i>")
-						.addClass("material-icons right").text("remove")))
-				.append($("<a>").addClass("waves-effect waves-light btn add-column")
-					.text("Column").attr("contentEditable", "false").append($("<i>")
-						.addClass("material-icons right").text("add")))
-				.append($("<a>").addClass("waves-effect waves-light btn remove-column")
-					.text("Column").attr("contentEditable", "false").append($("<i>")
-						.addClass("material-icons right").text("remove"))), $("<table>")
-							.append($("<tbody>").append($("<tr>").append($("<td>"))))), "<br>");
+			var obj = $(this).parent()
+				.parent().parent()
+				.find(".cont_div .latex_body")
+				.first();
+			obj.append($("<div>")
+				.addClass("latex_equation")
+				.append($("<div>")
+					.addClass("table-buttons")
+					.append($("<a>")
+						.addClass("waves-effect waves-light btn add-row")
+						.text("Row")
+						.attr("contentEditable", "false")
+						.append($("<i>")
+							.addClass("material-icons right")
+							.text("add")))
+					.append($("<a>")
+						.addClass("waves-effect waves-light btn remove-row")
+						.text("Row")
+						.attr("contentEditable", "false")
+						.append($("<i>")
+							.addClass("material-icons right")
+							.text("remove")))
+					.append($("<a>")
+						.addClass("waves-effect waves-light btn add-column")
+						.text("Column")
+						.attr("contentEditable", "false")
+						.append($("<i>")
+							.addClass("material-icons right")
+							.text("add")))
+					.append($("<a>")
+						.addClass("waves-effect waves-light btn remove-column")
+						.text("Column")
+						.attr("contentEditable", "false")
+						.append($("<i>")
+							.addClass("material-icons right")
+							.text("remove"))), $("<table>")
+								.append($("<tbody>")
+									.append($("<tr>")
+										.append($("<td>"))))), "<br>");
 			$(".add-row").off();
 			$(".add-column").off();
 			$(".remove-row").off();
 			$(".remove-column").off();
 			$(".add-row").on("click", function(e) {
 				e.preventDefault();
-				var count = $(this).parent().next().find("tbody")
-					.first().children().first().find("td").length,
+				var count = $(this).parent()
+					.next().find("tbody")
+					.first().children()
+					.first().find("td").length,
 					cont = $("<tr>");
 				for(var i = 0; i < count; i++) {
 					cont.append($("<td>"));
 				}
-				$(this).parent().next().find("tbody")
-					.first().append(cont);
+				$(this).parent().next()
+					.find("tbody")
+					.first()
+					.append(cont);
 			});
 			$(".add-column").on("click", function(e) {
 				e.preventDefault();
-				$(this).parent().next().find("tbody")
-					.children().each(function() {
-					$(this).append($("<td>"));
+				$(this).parent()
+					.next().find("tbody")
+					.children()
+					.each(function() {
+						$(this).append($("<td>"));
 				});
 			});
 			$(".remove-row").on("click", function(e) {
@@ -3203,38 +4103,47 @@ define(function() {
 					.first().children();
 				list.last().remove();
 				if(list.length - 1 == 0) {
-					$(this).parent().parent().remove();
+					$(this).parent()
+						.parent().remove();
 				}
 			});
 			$(".remove-column").on("click", function(e) {
 				e.preventDefault();
 				var list = $(this).parent()
-					.next().find("tbody").children();
+					.next().find("tbody")
+					.children();
 				list.each(function() {
-					$(this).children().last().remove();
+					$(this).children()
+					.last().remove();
 				});
-				if(list.first().children().length == 0) {
-					$(this).parent().parent().remove();
+				if(list.first()
+					.children().length == 0) {
+					$(this).parent()
+						.parent().remove();
 				}
 			});
 		});
 		$(".add-row").on("click", function(e) {
 			e.preventDefault();
-			var count = $(this).parent().next()
-				.find("tbody").first().children()
+			var count = $(this).parent()
+				.next().find("tbody")
+				.first().children()
 				.first().find("td").length,
 				cont = $("<tr>");
 			for(var i = 0; i < count; i++) {
 				cont.append($("<td>"));
 			}
-			$(this).parent().next().find("tbody")
+			$(this).parent()
+				.next().find("tbody")
 				.first().append(cont);
 		});
 		$(".add-column").on("click", function(e) {
 			e.preventDefault();
-			$(this).parent().next().find("tbody")
-				.children().each(function() {
-				$(this).append($("<td>"));
+			$(this).parent()
+				.next().find("tbody")
+				.children()
+				.each(function() {
+					$(this).append($("<td>"));
 			});
 		});
 		$(".remove-row").on("click", function(e) {
@@ -3244,25 +4153,33 @@ define(function() {
 				.first().children();
 			list.last().remove();
 			if(list.length - 1 == 0) {
-				$(this).parent().parent().remove();
+				$(this).parent()
+					.parent().remove();
 			}
 		});
 		$(".remove-column").on("click", function(e) {
 			e.preventDefault();
-			var list = $(this).parent().next()
-				.find("tbody").children();
+			var list = $(this).parent()
+				.next().find("tbody")
+				.children();
 			list.each(function() {
-				$(this).children().last().remove();
+				$(this).children()
+					.last().remove();
 			});
-			if(list.first().children().length == 0) {
-				$(this).parent().parent().remove();
+			if(list.first()
+				.children().length == 0) {
+				$(this).parent()
+					.parent().remove();
 			}
 		});
 		$(".add-link").on("click", function(e) {
 			e.preventDefault();
-			var obj = $(this).parent().parent().parent()
-				.find(".cont_div .latex_body").first();
-			$.get("/pages/dist/modal-min.html").done(function(content) {
+			var obj = $(this).parent()
+				.parent().parent()
+				.find(".cont_div .latex_body")
+				.first();
+			$.get("/pages/dist/modal-min.html")
+				.done(function(content) {
 				$("body").append(content);
 				$(".modal-trigger").leanModal({
 					dismissible: false,
@@ -3271,36 +4188,44 @@ define(function() {
 					outDuration: 1000
 				});
 				$("body").on("keypress", function(event) {
-				    if(event.which === 10 || event.which === 13) {
+				    if(event.which === 10 ||
+				    	event.which === 13) {
 				        return false;
 				    }
 				});
 				$("#popup_title").text("Add Link");
-				$("#popup_modal_footer").append($("<a>").attr("id", "popup_exit")
+				$("#popup_modal_footer").append($("<a>")
+					.attr("id", "popup_exit")
 					.addClass("modal-close waves-effect waves-blue btn-flat")
 					.text("Exit"));
-				$.get("/pages/dist/add-link-min.html").done(function(form) {
+				$.get("/pages/dist/add-link-min.html")
+					.done(function(form) {
 					$("#popup_body").append(form);
-					$("#popup_submit").css("pointer-events", "none");
+					$("#popup_submit")
+						.css("pointer-events", "none");
 					$("#popup_control").click();
 					$("#link-text").on("input", function() {
 						if($("#link-text").val().length > 0
 							&& $("#link-url").val().length > 0
 							&& exports.valid_url($("#link-url").val())) {
-							$("#popup_submit").css("pointer-events", "auto");
+							$("#popup_submit")
+								.css("pointer-events", "auto");
 						}
 						else {
-							$("#popup_submit").css("pointer-events", "none");
+							$("#popup_submit")
+								.css("pointer-events", "none");
 						}
 					});
 					$("#link-url").on("input", function() {
 						if($("#link-text").val().length > 0
 							&& $("#link-url").val().length > 0
 							&& exports.valid_url($("#link-url").val())) {
-							$("#popup_submit").css("pointer-events", "auto");
+							$("#popup_submit")
+								.css("pointer-events", "auto");
 						}
 						else {
-							$("#popup_submit").css("pointer-events", "none");
+							$("#popup_submit")
+								.css("pointer-events", "none");
 						}
 					});
 					$("#popup_exit").click(function(e) {
@@ -3311,11 +4236,12 @@ define(function() {
 					});
 					$("#popup_submit").click(function(e) {
 						e.preventDefault();
-						obj.append($("<a>").addClass("content-link")
+						obj.append($("<a>")
+							.addClass("content-link")
 							.text($("#link-text").val()).attr({
-							href: "//" + $("#link-url").val(),
-							target: "_blank",
-							rel: "noreferrer"
+								href: "//" + $("#link-url").val(),
+								target: "_blank",
+								rel: "noreferrer"
 						}));
 						$(".lean-overlay").remove();
 						$("#popup").remove();
@@ -3326,16 +4252,22 @@ define(function() {
 		});
 		$(".del-box").on("click", function(e) {
 			e.preventDefault();
-			$(this).parent().parent().children().each(function(index) {
-				if($(this).attr("data-position") == "top") {
-					$("#" + $(this).attr("data-tooltip-id")).remove();
+			$(this).parent().parent()
+				.children().each(function(index) {
+				if($(this).attr("data-position")
+					== "top") {
+					$("#" + $(this)
+						.attr("data-tooltip-id")).remove();
 				}
 			});
 			$(this).parent().parent().parent().remove();
 			if($("#latex .accordion").length == 0) {
-				$("#latex").append($("<div>").addClass("accordion")
-					.append($("<div>").addClass("show_solution")
-						.text("NO CONTENT HERE!").css("pointer-events", "none")));
+				$("#latex").append($("<div>")
+					.addClass("accordion")
+					.append($("<div>")
+						.addClass("show_solution")
+						.text("NO CONTENT HERE!")
+						.css("pointer-events", "none")));
 			}
 		});
 	};
@@ -3372,18 +4304,23 @@ define(function() {
 			An object representing the current example
 
 	*/
-	exports.latex_cms = function(page, cookie, router, links, subjects, topics,
-		sections, examples, subject, topic, section, example) {
+	exports.latex_cms = function(page, cookie, router, links,
+		subjects, topics, sections, examples, subject, topic,
+		section, example) {
 		$("body").css("background", "#e0e0e0");
 		$("title").text("Content Management System");
 		$("main").empty();
-		$("main").append($("<div>").attr("id", "latex"));
-		$.get("/pages/dist/edit-bar-min.html").done(function(bar) {
+		$("main").append($("<div>")
+			.attr("id", "latex"));
+		$.get("/pages/dist/edit-bar-min.html")
+			.done(function(bar) {
 			$("#latex").append(bar);
 			var statement = "/api/",
 				db_id = -1,
 				ref = -1;
-			if(page == "about") { statement += "cms/about/data"; }
+			if(page == "about") {
+				statement += "cms/about/data";
+			}
 			else if(page == "subject") {
 				statement += "subject/data/cms";
 				db_id = subject.sid;
@@ -3400,44 +4337,66 @@ define(function() {
 				statement += "example/data/cms";
 				db_id = example.eid;
 				ref = section.section_id; }
-			$.post(statement, {param: db_id}).done(function(data) {
+			$.post(statement, {param: db_id})
+				.done(function(data) {
 				data.title = data.title != null 
-					? exports.replace_all(decodeURIComponent(data.title),
-						"APOSTROPHE", "'").split("-----") : [""];
+					? exports.replace_all(
+						decodeURIComponent(data.title),
+						"APOSTROPHE", "'").split("-----")
+					: [""];
 				data.content = data.content != null 
-					? exports.replace_all(decodeURIComponent(data.content),
-						"APOSTROPHE", "'").split("-----") : [""];
+					? exports.replace_all(
+						decodeURIComponent(data.content),
+						"APOSTROPHE", "'").split("-----")
+					: [""];
 				data.title_cms = data.title_cms != null 
-					? exports.replace_all(decodeURIComponent(data.title_cms),
-						"APOSTROPHE", "'").split("-----") : [""];
+					? exports.replace_all(
+						decodeURIComponent(data.title_cms),
+						"APOSTROPHE", "'").split("-----")
+					: [""];
 				data.content_cms = data.content_cms != null 
-					? exports.replace_all(decodeURIComponent(data.content_cms),
-						"APOSTROPHE", "'").split("-----") : [""];
+					? exports.replace_all(
+						decodeURIComponent(data.content_cms),
+						"APOSTROPHE", "'").split("-----")
+					: [""];
 				if(page == "about") {
-					$("#latex").append($("<div>").attr("id", "main_message")
-						.addClass("box_message").append($("<h1>")
-							.text(data.heading_cms).css("margin-top", "-60px")));
+					$("#latex").append($("<div>")
+						.attr("id", "main_message")
+						.addClass("box_message")
+						.append($("<h1>")
+							.text(data.heading_cms)
+							.css("margin-top", "-60px")));
 				}
 				var i = 0;
 				for(; i >= 0; i++) {
-					if(data.title_cms[i] == null || data.title_cms[i] == "") {
+					if(data.title_cms[i] == null ||
+						data.title_cms[i] == "") {
 						break;
 					}
 					var cont_div = "",
-						title = data.title_cms[i].split("_")[0],
-						accordion = $("<div>").addClass("accordion"),
-						show_solution = $("<div>").addClass("show_solution")
+						title = data.title_cms[i]
+							.split("_")[0],
+						accordion = $("<div>")
+							.addClass("accordion"),
+						show_solution = $("<div>")
+							.addClass("show_solution")
 							.text(title),
-						span = $("<span>").addClass("solution_display"),
-						latex_body = $("<div>").addClass("latex_body");
+						span = $("<span>")
+							.addClass("solution_display"),
+						latex_body = $("<div>")
+							.addClass("latex_body");
 					if(data.title_cms[i].split("_hidden").length == 1) {
-						cont_div = $("<div>").addClass("cont_div");
-						span.append($("<i>").addClass("material-icons")
+						cont_div = $("<div>")
+							.addClass("cont_div");
+						span.append($("<i>")
+							.addClass("material-icons")
 							.text("remove"));
 					}
 					else {
-						cont_div = $("<div>").addClass("cont_div hidden_div");
-						span.append($("<i>").addClass("material-icons")
+						cont_div = $("<div>")
+							.addClass("cont_div hidden_div");
+						span.append($("<i>")
+							.addClass("material-icons")
 							.text("add"));
 					}	
 					latex_body.append(data.content_cms[i]);
@@ -3449,66 +4408,95 @@ define(function() {
 				}
 				if(i == 0) {
 					$("#latex").append($("<div>")
-						.addClass("accordion").append($("<div>")
-							.addClass("show_solution").text("NO CONTENT HERE!")
+						.addClass("accordion")
+						.append($("<div>")
+							.addClass("show_solution")
+							.text("NO CONTENT HERE!")
 							.css("pointer-events", "none")));
 				}
-				$(".table-buttons").css("display", "none");
-				exports.handle_breadcrumbs(page, $(".accordion").first(),
-					subject, topic, section, example);
+				$(".table-buttons")
+					.css("display", "none");
+				exports.handle_breadcrumbs(page,
+					$(".accordion").first(), subject,
+					topic, section, example);
 				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 				exports.handle_button();
-				if(data.cms_approval != null && 
-					data.cms_approval.split(",").some(function(elem) {
+				if(data.cms_approval != null &&
+					data.cms_approval.split(",")
+					.some(function(elem) {
 						return elem == cookie;
 					})) {
-					$("#approve").css("color", "green");
+					$("#approve")
+						.css("color", "green");
 				}
 				else {
-					$("#approve").css("color", "red");
+					$("#approve")
+						.css("color", "red");
 				}
 				$(".tooltipped").tooltip();
 				$("#approve").click(function(e) {
 					e.preventDefault();
-					if(exports.rgba_to_hex($("#approve").css("color")) == "#ff0000") {
+					if(exports.rgba_to_hex(
+						$("#approve").css("color")) == "#ff0000") {
 						$("#approve").css("color", "green");
 						if(data.cms_approval == null) {
 							data.cms_approval = cookie;
 						}
 						else {
-							data.cms_approval += "," + cookie;
+							data.cms_approval +=
+								"," + cookie;
 						}
 					}
 					else {
 						$("#approve").css("color", "red");
-						var pos = data.cms_approval.indexOf(cookie);
+						var pos = data.cms_approval
+							.indexOf(cookie);
 						if(pos == 0) {
-							data.cms_approval = data.cms_approval.substring(cookie.length + 2);
+							data.cms_approval = data.cms_approval
+								.substring(cookie.length + 2);
 						}
 						else {
-							data.cms_approval = data.cms_approval.substring(0, pos - 1) +
-								data.cms_approval.substring(pos + cookie.length);
+							data.cms_approval = 
+								data.cms_approval
+									.substring(0, pos - 1) +
+								data.cms_approval
+									.substring(pos +
+										cookie.length);
 						}
 					}
-					if(data.cms_approval == "") { data.cms_approval = null; }
+					if(data.cms_approval == "") {
+						data.cms_approval = null;
+					}
 				});
-				$("#add-box").css("pointer-events", "none");
-				$("#cms-version").css("pointer-events", "none");
+				$("#add-box")
+					.css("pointer-events", "none");
+				$("#cms-version")
+					.css("pointer-events", "none");
 				$("#live-version").click(function(e) {
 					e.preventDefault();
-					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
-						if(page == "about") { data.heading_cms = $("#edit_title").text(); }
+					if(exports.rgba_to_hex(
+						$("#edit").closest("li")
+						.css("background-color"))
+						== "#008cc3") {
+						if(page == "about") {
+							data.heading_cms =
+								$("#edit_title").text();
+						}
 						if($(".latex_body").length != 0) {
 							$(".latex_body").each(function(index) {
 								var arr_title = [],
 									arr_body = [];
 								$(".show_solution").each(function(index) {
-									var title = $(this).children().first().clone()
-										.children().remove().end().text();
-									$(this).children().children().each(function(index) {
+									var title = $(this).children()
+										.first().clone()
+										.children().remove()
+										.end().text();
+									$(this).children()
+										.children().each(function(index) {
 										if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_off") {
-											arr_title.push(title + "_hidden");
+											arr_title.push(title +
+												"_hidden");
 										}
 										else if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_on") {
@@ -3516,7 +4504,8 @@ define(function() {
 										}
 									});
 									$(this).siblings().each(function(index) {
-										arr_body.push($(this).children()[0].innerHTML);
+										arr_body.push(
+											$(this).children()[0].innerHTML);
 									});
 								});
 								data.title_cms = arr_title;
@@ -3528,32 +4517,51 @@ define(function() {
 							data.content_cms = [""];
 						}
 					}
-					if(exports.rgba_to_hex($("#live-version").closest("li").css("background-color")) != "#008cc3") {
+					if(exports.rgba_to_hex(
+						$("#live-version").closest("li")
+						.css("background-color")) != "#008cc3") {
 						var controller = $("#bar-div").detach();
-						$("#latex").empty().append(controller);
+						$("#latex").empty()
+							.append(controller);
 						if(page == "about") {
-							$("#latex").append($("<div>").attr("id", "main_message")
-								.addClass("box_message").append($("<h1>")
-									.text(data.heading).css("margin-top", "-60px")));
+							$("#latex").append($("<div>")
+								.attr("id", "main_message")
+								.addClass("box_message")
+								.append($("<h1>")
+									.text(data.heading)
+									.css("margin-top", "-60px")));
 						}
 						var j = 0;
 						for(; j >= 0; j++) {
-							if(data.title[j] == null || data.title[j] == "") { break; }
+							if(data.title[j] == null ||
+								data.title[j] == "") {
+								break;
+							}
 							var cont_div = "",
-								title = data.title[j].split("_")[0],
-								accordion = $("<div>").addClass("accordion"),
-								show_solution = $("<div>").addClass("show_solution")
+								title = data.title[j]
+									.split("_")[0],
+								accordion = $("<div>")
+									.addClass("accordion"),
+								show_solution = $("<div>")
+									.addClass("show_solution")
 									.text(title),
-								span = $("<span>").addClass("solution_display"),
-								latex_body = $("<div>").addClass("latex_body");
-							if(data.title[j].split("_").length == 1) {
-								cont_div = $("<div>").addClass("cont_div");
-								span.append($("<i>").addClass("material-icons")
+								span = $("<span>")
+									.addClass("solution_display"),
+								latex_body = $("<div>")
+									.addClass("latex_body");
+							if(data.title[j].split("_")
+								.length == 1) {
+								cont_div = $("<div>")
+									.addClass("cont_div");
+								span.append($("<i>")
+									.addClass("material-icons")
 									.text("remove"));
 							}
 							else {
-								cont_div = $("<div>").addClass("cont_div hidden_div");
-								span.append($("<i>").addClass("material-icons")
+								cont_div = $("<div>")
+									.addClass("cont_div hidden_div");
+								span.append($("<i>")
+									.addClass("material-icons")
 									.text("add"));
 							}	
 							latex_body.append(data.content[j]);
@@ -3565,37 +4573,57 @@ define(function() {
 						}
 						if(j == 0) {
 							$("#latex").append($("<div>")
-								.addClass("accordion").append($("<div>")
-									.addClass("show_solution").text("NO CONTENT HERE!")
+								.addClass("accordion")
+								.append($("<div>")
+									.addClass("show_solution")
+									.text("NO CONTENT HERE!")
 									.css("pointer-events", "none")));
 						}
-						$(".table-buttons").css("display", "none");
-						$("#add-box").css("pointer-events", "none");
-						$("#live-version").css("pointer-events", "none")
-							.closest("li").css("background-color", "#008cc3");
-						$("#cms-version").css("pointer-events", "auto")
-							.closest("li").css("background-color", "");
-						$("#edit").css("pointer-events", "auto")
-							.closest("li").css("background-color", "");
+						$(".table-buttons")
+							.css("display", "none");
+						$("#add-box")
+							.css("pointer-events", "none");
+						$("#live-version")
+							.css("pointer-events", "none")
+							.closest("li")
+							.css("background-color", "#008cc3");
+						$("#cms-version")
+							.css("pointer-events", "auto")
+							.closest("li")
+							.css("background-color", "");
+						$("#edit")
+							.css("pointer-events", "auto")
+							.closest("li")
+							.css("background-color", "");
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						exports.handle_button();
 					}
 				});
 				$("#cms-version").click(function(e) {
 					e.preventDefault();
-					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
-						if(page == "about") { data.heading_cms = $("#edit_title").text(); }
+					if(exports.rgba_to_hex(
+						$("#edit").closest("li")
+						.css("background-color"))
+						== "#008cc3") {
+						if(page == "about") {
+							data.heading_cms =
+								$("#edit_title").text();
+						}
 						if($(".latex_body").length != 0) {
 							$(".latex_body").each(function(index) {
 								var arr_title = [],
 									arr_body = [];
 								$(".show_solution").each(function(index) {
-									var title = $(this).children().first().clone()
-										.children().remove().end().text();
-									$(this).children().children().each(function(index) {
+									var title = $(this).children()
+										.first().clone()
+										.children().remove()
+										.end().text();
+									$(this).children()
+										.children().each(function(index) {
 										if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_off") {
-											arr_title.push(title + "_hidden");
+											arr_title.push(title
+												+ "_hidden");
 										}
 										else if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_on") {
@@ -3603,7 +4631,8 @@ define(function() {
 										}
 									});
 									$(this).siblings().each(function(index) {
-										arr_body.push($(this).children()[0].innerHTML);
+										arr_body.push(
+											$(this).children()[0].innerHTML);
 									});
 								});
 								data.title_cms = arr_title;
@@ -3615,32 +4644,52 @@ define(function() {
 							data.content_cms = [""];
 						}
 					}
-					if(exports.rgba_to_hex($("#cms-version").closest("li").css("background-color")) != "#008cc3") {
+					if(exports.rgba_to_hex(
+						$("#cms-version").closest("li")
+						.css("background-color"))
+						!= "#008cc3") {
 						var controller = $("#bar-div").detach();
-						$("#latex").empty().append(controller);
+						$("#latex").empty()
+							.append(controller);
 						if(page == "about") {
-							$("#latex").append($("<div>").attr("id", "main_message")
-								.addClass("box_message").append($("<h1>")
-									.text(data.heading_cms).css("margin-top", "-60px")));
+							$("#latex").append($("<div>")
+								.attr("id", "main_message")
+								.addClass("box_message")
+								.append($("<h1>")
+									.text(data.heading_cms)
+									.css("margin-top", "-60px")));
 						}
 						var j = 0;
 						for(; j >= 0; j++) {
-							if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
+							if(data.title_cms[j] == null ||
+								data.title_cms[j] == "") {
+								break;
+							}
 							var cont_div = "",
-								title = data.title_cms[j].split("_")[0],
-								accordion = $("<div>").addClass("accordion"),
-								show_solution = $("<div>").addClass("show_solution")
+								title = data.title_cms[j]
+									.split("_")[0],
+								accordion = $("<div>")
+									.addClass("accordion"),
+								show_solution = $("<div>")
+									.addClass("show_solution")
 									.text(title),
-								span = $("<span>").addClass("solution_display"),
-								latex_body = $("<div>").addClass("latex_body");
-							if(data.title_cms[j].split("_").length == 1) {
-								cont_div = $("<div>").addClass("cont_div");
-								span.append($("<i>").addClass("material-icons")
+								span = $("<span>")
+									.addClass("solution_display"),
+								latex_body = $("<div>")
+									.addClass("latex_body");
+							if(data.title_cms[j]
+								.split("_").length == 1) {
+								cont_div = $("<div>")
+									.addClass("cont_div");
+								span.append($("<i>")
+									.addClass("material-icons")
 									.text("remove"));
 							}
 							else {
-								cont_div = $("<div>").addClass("cont_div hidden_div");
-								span.append($("<i>").addClass("material-icons")
+								cont_div = $("<div>")
+									.addClass("cont_div hidden_div");
+								span.append($("<i>")
+									.addClass("material-icons")
 									.text("add"));
 							}		
 							latex_body.append(data.content_cms[j]);
@@ -3652,111 +4701,197 @@ define(function() {
 						}
 						if(j == 0) {
 							$("#latex").append($("<div>")
-								.addClass("accordion").append($("<div>")
-									.addClass("show_solution").text("NO CONTENT HERE!")
+								.addClass("accordion")
+								.append($("<div>")
+									.addClass("show_solution")
+									.text("NO CONTENT HERE!")
 									.css("pointer-events", "none")));
 						}
-						$(".table-buttons").css("display", "none");
-						$("#add-box").css("pointer-events", "none");
-						$("#cms-version").css("pointer-events", "none")
-							.closest("li").css("background-color", "#008cc3");
-						$("#live-version").css("pointer-events", "auto")
-							.closest("li").css("background-color", "");
-						$("#edit").css("pointer-events", "auto")
-							.closest("li").css("background-color", "");
+						$(".table-buttons")
+							.css("display", "none");
+						$("#add-box")
+							.css("pointer-events", "none");
+						$("#cms-version")
+							.css("pointer-events", "none")
+							.closest("li")
+							.css("background-color", "#008cc3");
+						$("#live-version")
+							.css("pointer-events", "auto")
+							.closest("li")
+							.css("background-color", "");
+						$("#edit")
+							.css("pointer-events", "auto")
+							.closest("li")
+							.css("background-color", "");
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 						exports.handle_button();
 					}
 				});
-				var titleComparison = data.title_cms.join("-----"),
-					contentComparison = data.content_cms.join("-----");
+				var titleComparison = 
+						data.title_cms.join("-----"),
+					contentComparison = 
+						data.content_cms.join("-----");
 				$("#edit").click(function(e) {
 					e.preventDefault();
-					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) != "#008cc3") {
-						var controller = $("#bar-div").detach();
-						$("#latex").empty().append(controller);
+					if(exports.rgba_to_hex(
+						$("#edit").closest("li")
+						.css("background-color"))
+						!= "#008cc3") {
+						var controller = 
+							$("#bar-div").detach();
+						$("#latex").empty()
+							.append(controller);
 						if(page == "about") {
 							$("#latex").append($("<div>")
-								.attr("id", "main_message").addClass("box_message")
-								.append($("<h1>").text(data.heading_cms)
+								.attr("id", "main_message")
+								.addClass("box_message")
+								.append($("<h1>")
+									.text(data.heading_cms)
 									.css("margin-top", "-60px")
-									.attr({contentEditable: "true", id: "edit_title"})));
+									.attr({
+										contentEditable: "true",
+										id: "edit_title"
+							})));
 						}
 						var j = 0;
 						for(; j >= 0; j++) {
-							if(data.title_cms[j] == null || data.title_cms[j] == "") { break; }
+							if(data.title_cms[j] == null ||
+								data.title_cms[j] == "") {
+								break;
+							}
 							var cont_div = "",
-								title = data.title_cms[j].split("_")[0],
-								accordion = $("<div>").addClass("accordion"),
-								show_solution = $("<div>").addClass("show_solution")
-									.append($("<div>").addClass("tog-title")
-										.attr("contentEditable", "true").text(title)),
-								span = $("<span>").addClass("solution_display"),
-								span_toggle = $("<span>").addClass("solution_toggle")
-									.attr("data-position", "top")
-									.attr("data-tooltip", "Toggle the Display"),
-								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
-									.append($("<i>").addClass("material-icons add-math")
-										.text("border_color")).attr("data-position", "top")
-									.attr("data-tooltip", "Insert Math Box Below"),
-								span_image = $("<span>").addClass("solution_img add-image-tooltipped")
-									.append($("<i>").addClass("material-icons add-image").text("image"))
-									.attr("data-position", "top")
-									.attr("data-tooltip", "Insert Image Below"),
-								span_table = $("<span>").addClass("solution_table add-table-tooltipped")
-									.append($("<i>").addClass("material-icons add-table")
-										.text("table_chart")).attr("data-position", "top")
-									.attr("data-tooltip", "Insert Table Below"),
-								span_link = $("<span>").addClass("solution_link add-link-tooltipped")
-									.append($("<i>").addClass("material-icons add-link")
-										.text("link")).attr("data-position", "top")
-									.attr("data-tooltip", "Insert Link Below"),
-								span_bullet = $("<span>").addClass("solution_bullet add-bullet-tooltipped")
-									.append($("<i>").addClass("material-icons add-bullet")
-										.text("list")).attr("data-position", "top")
-									.attr("data-tooltip", "Insert List Below"),
-								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
-									.append($("<i>").addClass("material-icons del-box")
-										.text("delete_sweep")).attr("data-position", "top")
-									.attr("data-tooltip", "Delete Box Below"),
-								latex_body = $("<div>").addClass("latex_body");
+								title = data.title_cms[j]
+									.split("_")[0],
+								accordion = $("<div>")
+									.addClass("accordion"),
+								show_solution = $("<div>")
+									.addClass("show_solution")
+									.append($("<div>")
+										.addClass("tog-title")
+										.attr("contentEditable", "true")
+										.text(title)),
+								span = $("<span>")
+									.addClass("solution_display"),
+								span_toggle = $("<span>")
+									.addClass("solution_toggle")
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Toggle the Display"
+									}),
+								span_box = $("<span>")
+									.addClass("solution_box add-math-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-math")
+										.text("border_color"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Math Box Below"
+									}),
+								span_image = $("<span>")
+									.addClass("solution_img add-image-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-image")
+										.text("image"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Image Below"
+									}),
+								span_table = $("<span>")
+									.addClass("solution_table add-table-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-table")
+										.text("table_chart"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Table Below"
+									}),
+								span_link = $("<span>")
+									.addClass("solution_link add-link-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-link")
+										.text("link"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Link Below"
+									}),
+								span_bullet = $("<span>")
+									.addClass("solution_bullet add-bullet-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-bullet")
+										.text("list"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert List Below"
+									}),
+								span_del = $("<span>")
+									.addClass("solution_del del-box-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons del-box")
+										.text("delete_sweep"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Delete Box Below"
+									}),
+								latex_body = $("<div>")
+									.addClass("latex_body");
 							if(data.title_cms[j].split("_").length == 1) {
-								cont_div = $("<div>").addClass("cont_div");
-								span.append($("<i>").addClass("material-icons").text("remove"));
+								cont_div = $("<div>")
+									.addClass("cont_div");
+								span.append($("<i>")
+									.addClass("material-icons")
+									.text("remove"));
 								span_toggle.append($("<i>")
-									.addClass("material-icons toggle").text("toggle_on"));
+									.addClass("material-icons toggle")
+									.text("toggle_on"));
 							}
 							else {
-								cont_div = $("<div>").addClass("cont_div hidden_div");
-								span.append($("<i>").addClass("material-icons").text("add"));
+								cont_div = $("<div>")
+									.addClass("cont_div hidden_div");
+								span.append($("<i>")
+									.addClass("material-icons")
+									.text("add"));
 								span_toggle.append($("<i>")
-									.addClass("material-icons toggle").text("toggle_off"));
+									.addClass("material-icons toggle")
+									.text("toggle_off"));
 							}	
 							latex_body.append(data.content_cms[j]);
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_table, span_image, span_bullet,
-								span_link, span_del, span_toggle, span);
+							show_solution.append(span_box,
+								span_table, span_image, span_bullet,
+								span_link, span_del, span_toggle,
+								span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
 						}
 						if(j == 0) {
 							$("#latex").append($("<div>")
-								.addClass("accordion").append($("<div>")
-								.addClass("show_solution").text("NO CONTENT HERE!")
-								.css("pointer-events", "none")));
+								.addClass("accordion")
+								.append($("<div>")
+									.addClass("show_solution")
+									.text("NO CONTENT HERE!")
+									.css("pointer-events", "none")));
 						}
-						$("#add-box").css("pointer-events", "auto");
-						$("#edit").css("pointer-events", "none")
-							.closest("li").css("background-color", "#008cc3");
-						$("#live-version").css("pointer-events", "auto")
-							.closest("li").css("background-color", "");
-						$("#cms-version").css("pointer-events", "auto")
-							.closest("li").css("background-color", "");
-						$(".latex_body").attr("contentEditable", "true");
+						$("#add-box")
+							.css("pointer-events", "auto");
+						$("#edit")
+							.css("pointer-events", "none")
+							.closest("li")
+							.css("background-color", "#008cc3");
+						$("#live-version")
+							.css("pointer-events", "auto")
+							.closest("li")
+							.css("background-color", "");
+						$("#cms-version")
+							.css("pointer-events", "auto")
+							.closest("li")
+							.css("background-color", "");
+						$(".latex_body")
+							.attr("contentEditable", "true");
 						$(".latex_body").keydown(function(e) {
 						    if(e.keyCode === 13) {
-						    	document.execCommand("insertHTML", false, "<br><br>");
+						    	document.execCommand(
+						    		"insertHTML", false, "<br><br>");
 						    	return false;
 						    }
 						});
@@ -3772,56 +4907,105 @@ define(function() {
 						$("#add-box").on("click", function(e) {
 							e.preventDefault();
 							if($(".accordion").length == 1 && 
-								$(".accordion .show_solution").text() == "NO CONTENT HERE!") {
+								$(".accordion .show_solution").text()
+								== "NO CONTENT HERE!") {
 								$(".accordion").remove();
 							}
 							var cont_div = "",
-								accordion = $("<div>").addClass("accordion"),
-								show_solution = $("<div>").addClass("show_solution")
-									.append($("<div>").addClass("tog-title")
-										.attr("contentEditable", "true").text("New Title")),
-								span = $("<span>").addClass("solution_display"),
-								span_toggle = $("<span>").addClass("solution_toggle")
-									.attr("data-position", "top")
-									.attr("data-tooltip", "Toggle the Display"),
-								span_box = $("<span>").addClass("solution_box add-math-tooltipped")
-									.append($("<i>").addClass("material-icons add-math")
-										.text("border_color")).attr("data-position", "top")
-									.attr("data-tooltip", "Insert Math Box Below"),
-								span_image = $("<span>").addClass("solution_img add-image-tooltipped")
-									.append($("<i>").addClass("material-icons add-image")
-										.text("image")).attr("data-position", "top")
-									.attr("data-tooltip", "Insert Image Below"),
-								span_table = $("<span>").addClass("solution_table add-table-tooltipped")
-									.append($("<i>").addClass("material-icons add-table")
-										.text("table_chart")).attr("data-position", "top")
-									.attr("data-tooltip", "Insert Table Below"),
-								span_link = $("<span>").addClass("solution_link add-link-tooltipped")
-									.append($("<i>").addClass("material-icons add-link")
-										.text("link")).attr("data-position", "top")
-									.attr("data-tooltip", "Insert Link Below"),
-								span_bullet = $("<span>").addClass("solution_bullet add-bullet-tooltipped")
-									.append($("<i>").addClass("material-icons add-bullet")
-										.text("list")).attr("data-position", "top")
-									.attr("data-tooltip", "Insert List Below"),
-								span_del = $("<span>").addClass("solution_del del-box-tooltipped")
-									.append($("<i>").addClass("material-icons del-box")
-										.text("delete_sweep")).attr("data-position", "top")
-									.attr("data-tooltip", "Delete Box Below"),
-								latex_body = $("<div>").addClass("latex_body").text("New Content"),
-								cont_div = $("<div>").addClass("cont_div");
-							span.append($("<i>").addClass("material-icons").text("remove"));
+								accordion = $("<div>")
+									.addClass("accordion"),
+								show_solution = $("<div>")
+									.addClass("show_solution")
+									.append($("<div>")
+										.addClass("tog-title")
+										.attr("contentEditable", "true")
+										.text("New Title")),
+								span = $("<span>")
+									.addClass("solution_display"),
+								span_toggle = $("<span>")
+									.addClass("solution_toggle")
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Toggle the Display"
+									}),
+								span_box = $("<span>")
+									.addClass("solution_box add-math-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-math")
+										.text("border_color"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Math Box Below"
+									}),
+								span_image = $("<span>")
+									.addClass("solution_img add-image-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-image")
+										.text("image"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Image Below"
+									}),
+								span_table = $("<span>")
+									.addClass("solution_table add-table-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-table")
+										.text("table_chart"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Table Below"
+									}),
+								span_link = $("<span>")
+									.addClass("solution_link add-link-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-link")
+										.text("link"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Link Below"
+									}),
+								span_bullet = $("<span>")
+									.addClass("solution_bullet add-bullet-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons add-bullet")
+										.text("list"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert List Below"
+									}),
+								span_del = $("<span>")
+									.addClass("solution_del del-box-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons del-box")
+										.text("delete_sweep"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Delete Box Below"
+									}),
+								latex_body = $("<div>")
+									.addClass("latex_body")
+									.text("New Content"),
+								cont_div = $("<div>")
+									.addClass("cont_div");
+							span.append($("<i>")
+								.addClass("material-icons")
+								.text("remove"));
 							span_toggle.append($("<i>")
-								.addClass("material-icons toggle").text("toggle_on"));
+								.addClass("material-icons toggle")
+								.text("toggle_on"));
 							cont_div.append(latex_body);
-							show_solution.append(span_box, span_table, span_image, span_bullet,
-								span_link, span_del, span_toggle, span);
+							show_solution.append(span_box,
+								span_table, span_image,
+								span_bullet, span_link,
+								span_del, span_toggle,
+								span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
 							data.title_cms.push("New Title");
 							data.content_cms.push("New Content");
-							$(".latex_body").attr("contentEditable", "true");
+							$(".latex_body")
+								.attr("contentEditable", "true");
 							exports.handle_button(1);
 							exports.latex_cms_links(data);
 							document.height = Math.max(
@@ -3837,19 +5021,29 @@ define(function() {
 				});
 				$("#save").click(function(e) {
 					e.preventDefault();
-					if(exports.rgba_to_hex($("#edit").closest("li").css("background-color")) == "#008cc3") {
-						if(page == "about") { data.heading_cms = $("#edit_title").text(); }
+					if(exports.rgba_to_hex(
+						$("#edit").closest("li")
+						.css("background-color"))
+						== "#008cc3") {
+						if(page == "about") {
+							data.heading_cms =
+								$("#edit_title").text();
+						}
 						if($(".latex_body").length != 0) {
 							$(".latex_body").each(function(index) {
 								var arr_title = [],
 									arr_body = [];
 								$(".show_solution").each(function(index) {
-									var title = $(this).children().first().clone()
-										.children().remove().end().text();
-									$(this).children().children().each(function(index) {
+									var title = $(this).children()
+										.first().clone()
+										.children().remove()
+										.end().text();
+									$(this).children()
+										.children().each(function(index) {
 										if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_off") {
-											arr_title.push(title + "_hidden");
+											arr_title.push(title
+												+ "_hidden");
 										}
 										else if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_on") {
@@ -3857,7 +5051,8 @@ define(function() {
 										}
 									});
 									$(this).siblings().each(function(index) {
-										arr_body.push($(this).children()[0].innerHTML);
+										arr_body.push(
+											$(this).children()[0].innerHTML);
 									});
 								});
 								data.title_cms = arr_title;
@@ -3869,7 +5064,8 @@ define(function() {
 							data.content_cms = [""];
 						}
 					}
-					$.get("/pages/dist/modal-min.html").done(function(content) {
+					$.get("/pages/dist/modal-min.html")
+						.done(function(content) {
 						$("body").append(content);
 						$(".modal-trigger").leanModal({
 							dismissible: false,
@@ -3877,76 +5073,115 @@ define(function() {
 							inDuration: 1000,
 							outDuration: 1000
 						});
-						$.get("/api/cms/count/contributors").done(function(num) {
-							const validation = Math.ceil(Math.log(parseInt(num)));
-							data.title_cms = data.title_cms.map(function(elem) {
-								return elem.split("\\$").map(function(iter, index) {
-									if(index % 2 == 0) {
-										return exports.replace_all(iter
-											.replace(/\\/g, "%5C"), "'", "APOSTROPHE");
-									}
-									else { return iter; }
+						$.get("/api/cms/count/contributors")
+							.done(function(num) {
+							const validation = 
+								Math.ceil(Math.log(parseInt(num)));
+							data.title_cms = data.title_cms
+								.map(function(elem) {
+									return elem.split("\\$")
+										.map(function(iter, index) {
+										if(index % 2 == 0) {
+											return exports.replace_all(iter
+												.replace(/\\/g, "%5C"),
+												"'", "APOSTROPHE");
+										}
+										else { return iter; }
 								}).join("\$");
 							});
-							data.content_cms = data.content_cms.map(function(elem) {
-								return elem.split("\\$").map(function(iter, index) {
-									if(index % 2 == 0) {
-										return exports.replace_all(iter
-											.replace(/\\/g, "%5C"), "'", "APOSTROPHE");
-									}
-									else { return iter; }
+							data.content_cms = data.content_cms
+								.map(function(elem) {
+									return elem.split("\\$")
+										.map(function(iter, index) {
+										if(index % 2 == 0) {
+											return exports.replace_all(iter
+												.replace(/\\/g, "%5C"),
+												"'", "APOSTROPHE");
+										}
+										else { return iter; }
 								}).join("\$");
 							});
-							if(data.cms_approval != null && data.cms_approval != ""
-								&& titleComparison === data.title_cms.join("-----")
-								&& contentComparison === data.content_cms.join("-----")
-								&& data.cms_approval.split(",").length >= validation) {
+							if(data.cms_approval != null
+								&& data.cms_approval != ""
+								&& titleComparison ===
+									data.title_cms.join("-----")
+								&& contentComparison ===
+									data.content_cms.join("-----")
+								&& data.cms_approval
+									.split(",").length >= validation) {
 								data.title = data.title_cms;
-								data.content = data.content_cms.map(function(elem) {
-									var filter = exports.replace_all(elem, '<div class="table-buttons">' +
-										'<a class="waves-effect waves-light btn add-row"' +
-										' contenteditable="false">Row<i class="material-icons' +
-										' right">add</i></a><a class="waves-effect waves-light' +
-										' btn remove-row" contenteditable="false">Row<i' +
-										' class="material-icons right">remove</i></a><a' +
-										' class="waves-effect waves-light btn add-column"' +
-										' contenteditable="false">Column<i class="material-icons' +
-										' right">add</i></a><a class="waves-effect waves-light btn' +
-										' remove-column" contenteditable="false">Column<i class=' +
-										'"material-icons right">remove</i></a></div>', "");
-									return exports.replace_all(filter, '<div class="table-buttons">' +
-										'<a class="waves-effect waves-light btn plus-bullet"' +
-										' contenteditable="false">Bullet<i class="material-icons' +
-										' right">add</i></a><a class="waves-effect waves-light' +
-										' btn minus-bullet" contenteditable="false">Bullet' +
-										'<i class="material-icons right">remove</i></a></div>', "");
+								data.content = data.content_cms
+									.map(function(elem) {
+									var filter = exports.replace_all(elem, 
+										'<div class="table-buttons">' +
+										'<a class="waves-effect' +
+										' waves-light btn add-row"' +
+										' contenteditable="false">' +
+										'Row<i class="material-icons' +
+										' right">add</i></a><a class' +
+										'="waves-effect waves-light' +
+										' btn remove-row" ' +
+										'contenteditable="false">Row<i' +
+										' class="material-icons right' +
+										'">remove</i></a><a class=' +
+										'"waves-effect waves-light' +
+										' btn add-column"' +
+										' contenteditable="false">' +
+										'Column<i class="material-icons' +
+										' right">add</i></a><a class=' +
+										'"waves-effect waves-light btn' +
+										' remove-column" ' +
+										'contenteditable="false">Column' +
+										'<i class="material-icons right' +
+										'">remove</i></a></div>', "");
+									return exports.replace_all(filter,
+										'<div class="table-buttons">' +
+										'<a class="waves-effect ' +
+										'waves-light btn plus-bullet"' +
+										' contenteditable="false">' +
+										'Bullet<i class="material-icons' +
+										' right">add</i></a><a class=' +
+										'"waves-effect waves-light' +
+										' btn minus-bullet" ' +
+										'contenteditable="false">Bullet' +
+										'<i class="material-icons ' +
+										'right">remove</i></a></div>', "");
 								});
 								data.heading = data.heading_cms;
 								data.cms_approval = 0;
 							}
 							else {
-								if(!(titleComparison === data.title_cms.join("-----") &&
-									contentComparison === data.content_cms.join("-----"))) {
-									data.cms_approval !== null && data.cms_approval.indexOf(cookie) != -1
+								if(!(titleComparison ===
+									data.title_cms.join("-----") &&
+									contentComparison ===
+									data.content_cms.join("-----"))) {
+									data.cms_approval !== null &&
+										data.cms_approval.indexOf(cookie) != -1
 										? data.cms_approval = cookie
 										: data.cms_approval = "";
 								}
-								data.title = data.title.map(function(elem) {
-									return elem.split("\\$").map(function(iter, index) {
-										if(index % 2 == 0) {
-											return exports.replace_all(iter
-												.replace(/\\/g, "%5C"), "'", "APOSTROPHE");
-										}
-										else { return iter; }
+								data.title = data.title
+									.map(function(elem) {
+										return elem.split("\\$")
+											.map(function(iter, index) {
+											if(index % 2 == 0) {
+												return exports.replace_all(iter
+													.replace(/\\/g, "%5C"),
+													"'", "APOSTROPHE");
+											}
+											else { return iter; }
 									}).join("\$");
 								});
-								data.content = data.content.map(function(elem) {
-									return elem.split("\\$").map(function(iter, index) {
-										if(index % 2 == 0) {
-											return exports.replace_all(iter
-												.replace(/\\/g, "%5C"), "'", "APOSTROPHE");
-										}
-										else { return iter; }
+								data.content = data.content
+									.map(function(elem) {
+										return elem.split("\\$")
+											.map(function(iter, index) {
+											if(index % 2 == 0) {
+												return exports.replace_all(iter
+													.replace(/\\/g, "%5C"),
+													"'", "APOSTROPHE");
+											}
+											else { return iter; }
 									}).join("\$");
 								});
 							}
@@ -3955,34 +5190,55 @@ define(function() {
 								ref: ref,
 								name: "undefined",
 								order: "undefined",
-								title: data.title.join("-----") != "" 
-									? data.title.join("-----") : "0",
-								content: data.content.join("-----") != "" 
-									? data.content.join("-----") : "0",
+								title: data.title.join("-----") 
+									!= "" 
+									? data.title.join("-----")
+									: "0",
+								content: data.content.join("-----") 
+									!= "" 
+									? data.content.join("-----")
+									: "0",
 								side_approval: "undefined",
-								cms_approval: data.cms_approval != "" 
+								cms_approval: data.cms_approval 
+									!= "" 
 									&& data.cms_approval != null 
-									? data.cms_approval : "0",
+									? data.cms_approval
+									: "0",
 								del_approval: "undefined",
-								title_cms: data.title_cms.join("-----") != "" 
-									? data.title_cms.join("-----") : "0",
-								content_cms: data.content_cms.join("-----") != "" 
-									? data.content_cms.join("-----") : "0"
+								title_cms: data.title_cms
+									.join("-----") != "" 
+									? data.title_cms.join("-----")
+									: "0",
+								content_cms: data.content_cms
+									.join("-----") != "" 
+									? data.content_cms.join("-----")
+									: "0"
 							};
 							statement = "/api/change/";
-							if(page == "subject") { statement += "subject/"; }
-							else if(page == "topic") { statement += "topic/"; }
-							else if(page == "section") { statement += "section/"; }
-							else if(page == "example") { statement += "example/"; }
+							if(page == "subject") {
+								statement += "subject/";
+							}
+							else if(page == "topic") {
+								statement += "topic/";
+							}
+							else if(page == "section") {
+								statement += "section/";
+							}
+							else if(page == "example") {
+								statement += "example/";
+							}
 							else if(page == "about") {
 								statement = "/api/cms/about/change/";
 								obj.heading = data.heading;
 								obj.heading_cms = data.heading_cms;
 							}
-							$.post(statement, obj).fail(function() {
+							$.post(statement, obj)
+								.fail(function() {
 								$("#popup_title").text("Database Issue");
-								$("#popup_body").text("There was an issue" + 
-									" uploading the content changes to the database!");
+								$("#popup_body").text("There was" +
+									" an issue uploading the" +
+									" content changes to the" +
+									" database!");
 								$("#popup_control").click();
 								$("#popup_submit").click(function(e) {
 									e.preventDefault();
@@ -3992,8 +5248,9 @@ define(function() {
 								});
 							}).done(function() {
 								$("#popup_title").text("Changes Saved");
-								$("#popup_body").text("All changes to the content" + 
-									" have been saved to the database!");
+								$("#popup_body").text("All changes" +
+									" to the content have been" +
+									" saved to the database!");
 								$("#popup_control").click();
 								$("#popup_submit").click(function(e) {
 									e.preventDefault();
@@ -4004,7 +5261,8 @@ define(function() {
 						});
 					});
 				});
-				$.get("/pages/dist/button-min.html").done(function(button) {
+				$.get("/pages/dist/button-min.html")
+					.done(function(button) {
 					$("body").append(button);
 					exports.committee(cookie, function() {
 						exports.handle_logo_link(page);
@@ -4024,43 +5282,57 @@ define(function() {
 							exports.handle_desktop_title("topic",
 								subject, topic);
 						}
-						else if(page == "section" || page == "example") {
+						else if(page == "section"
+							|| page == "example") {
 							exports.handle_desktop_title("section",
 								subject, topic, section);
 						}
-						$("#bar-nav").css("width", "100%");
-						$("#bar").css("width", $("#latex").width());
+						$("#bar-nav")
+							.css("width", "100%");
+						$("#bar").css("width",
+							$("#latex").width());
 						$("#live-version").parent("li")
 							.css("margin-left", "25px");
-						$("#save").parent("li").css("margin-right", "25px");
-						$("#cms-version").closest("li")
-							.css("background-color", "#008cc3");
+						$("#save").parent("li")
+							.css("margin-right", "25px");
+						$("#cms-version")
+							.closest("li")
+							.css("background-color",
+								"#008cc3");
 						if(page == "about") {
-							$("#subjects_change").click(function(e) {
-								e.preventDefault();
-								exports.sidenav_modal("Subjects",
-									subjects);
+							$("#subjects_change")
+								.click(function(e) {
+									e.preventDefault();
+									exports.sidenav_modal(
+										"Subjects", subjects);
 							});
 						}
 						else if(page == "subject") {
-							$("#topics_change").click(function(e) {
-								e.preventDefault();
-								exports.sidenav_modal("Topics",
-									topics, subject.sid);
+							$("#topics_change")
+								.click(function(e) {
+									e.preventDefault();
+									exports.sidenav_modal(
+										"Topics", topics,
+										subject.sid);
 							});
 						}
 						else if(page == "topic") {
-							$("#sections_change").click(function(e) {
-								e.preventDefault();
-								exports.sidenav_modal("Sections",
-									sections, topic.tid);
+							$("#sections_change")
+								.click(function(e) {
+									e.preventDefault();
+									exports.sidenav_modal(
+										"Sections", sections,
+										topic.tid);
 							});
 						}
-						else if(page == "section" || page == "example") {
-							$("#examples_change").click(function(e) {
-								e.preventDefault();
-								exports.sidenav_modal("Examples",
-									examples, section.section_id);
+						else if(page == "section"
+							|| page == "example") {
+							$("#examples_change")
+								.click(function(e) {
+									e.preventDefault();
+									exports.sidenav_modal(
+										"Examples", examples,
+										section.section_id);
 							});
 						}
 						document.height = Math.max(
@@ -4072,19 +5344,22 @@ define(function() {
 		          		);
 						$(window).on("resize", function() {
 							if(page == "about") {
-								exports.handle_desktop_title("about");
+								exports.handle_desktop_title(
+									"about");
 							}
 							else if(page == "subject") {
-								exports.handle_desktop_title("subject",
-									subject);
+								exports.handle_desktop_title(
+									"subject", subject);
 							}
 							else if(page == "topic") {
-								exports.handle_desktop_title("topic",
-									subject, topic);
+								exports.handle_desktop_title(
+									"topic", subject, topic);
 							}
-							else if(page == "section" || page == "example") {
-								exports.handle_desktop_title("section",
-									subject, topic, section);
+							else if(page == "section"
+								|| page == "example") {
+								exports.handle_desktop_title(
+									"section", subject, topic,
+									section);
 							}
 							if(exports.width_func() < 992) {
 								$("#logo").css({
@@ -4098,16 +5373,22 @@ define(function() {
 									"right": ""
 								});
 							}
-							exports.handle_breadcrumbs(page, $(".accordion").first(),
-								subject, topic, section, example);
+							exports.handle_breadcrumbs(page,
+								$(".accordion").first(), subject,
+								topic, section, example);
 							exports.handle_dividers(page);
 							var width = 0,
 								screen_width = exports.width_func();
-							if(screen_width >= 992) { width = 350; }
-							else if(screen_width < 992 && screen_width > 400) {
+							if(screen_width >= 992) {
+								width = 350;
+							}
+							else if(screen_width < 992
+								&& screen_width > 400) {
 								width = screen_width * .75;
 							}
-							else { width = screen_width * .72; }
+							else {
+								width = screen_width * .72;
+							}
 							$("#nav-mobile").css("width", width);
 						});
 					});
@@ -4127,8 +5408,10 @@ define(function() {
 
 	*/
 	exports.initial_client = function(callback) {
-		$.get("/pages/dist/main-min.html").done(function(content) {
-			$(document.body).empty().append(content);
+		$.get("/pages/dist/main-min.html")
+			.done(function(content) {
+			$(document.body).empty()
+				.append(content);
 			callback();
 		});
 	};
@@ -4163,11 +5446,13 @@ define(function() {
 			An object representing the current example
 
 	*/
-	exports.latex = function(page, router, links, subjects, topics,
-		sections, examples, subject, topic, section, example) {
+	exports.latex = function(page, router, links,
+		subjects, topics, sections, examples, subject,
+		topic, section, example) {
 		$("body").css("background", "#e0e0e0");
 		$("main").empty();
-		$("main").append($("<div>").attr("id", "latex"));
+		$("main").append($("<div>")
+			.attr("id", "latex"));
 		var statement = "/api/",
 			db_id = -1;
 		if(page == "about") { 
@@ -4175,61 +5460,91 @@ define(function() {
 			$("title").text("About");
 		}
 		else if(page == "subject") { 
-			statement += "subject/data/client";
+			statement +=
+				"subject/data/client";
 			db_id = subject.sid;
-			$("title").text(subject.clean_name);
+			$("title")
+				.text(subject.clean_name);
 		}
 		else if(page == "topic") { 
-			statement += "topic/data/client";
+			statement +=
+				"topic/data/client";
 			db_id = topic.tid;
-			$("title").text(subject.clean_name +
-				" - " + topic.clean_name);
+			$("title")
+				.text(subject.clean_name +
+					" - " +
+					topic.clean_name);
 		}
 		else if(page == "section") { 
-			statement += "section/data/client";
+			statement +=
+				"section/data/client";
 			db_id = section.section_id;
-			$("title").text(subject.clean_name +
-				" - " + topic.clean_name + 
-				" - " + section.clean_name);
+			$("title")
+				.text(subject.clean_name +
+					" - " +
+					topic.clean_name + 
+					" - " +
+					section.clean_name);
 		}
 		else if(page == "example") { 
-			statement += "example/data/client";
+			statement +=
+				"example/data/client";
 			db_id = example.eid;
-			$("title").text(subject.clean_name +
-				" - " + topic.clean_name + 
-				" - " + section.clean_name);
+			$("title")
+				.text(subject.clean_name +
+					" - " +
+					topic.clean_name + 
+					" - " +
+					section.clean_name);
 		}
-		$.post(statement, {"param": db_id}).done(function(data) {
+		$.post(statement, {"param": db_id})
+			.done(function(data) {
 			data.title = data.title != null
-				? decodeURIComponent(data.title).split("-----")
+				? decodeURIComponent(
+					data.title).split("-----")
 				: [""];
 			data.content = data.content != null
-				? decodeURIComponent(data.content).split("-----")
+				? decodeURIComponent(
+					data.content).split("-----")
 				: [""];
 			if(page == "about") {
 				$("#latex").append($("<div>")
 					.attr("id", "main_message")
 					.addClass("box_message")
-					.append($("<h1>").text(data.heading)));
+					.append($("<h1>")
+						.text(data.heading)));
 			}
 			var i = 0;
 			for(; i >= 0; i++) {
-				if(data.title[i] == null || data.title[i] == "") { break; }
+				if(data.title[i] == null ||
+					data.title[i] == "") {
+					break;
+				}
 				var cont_div = "",
-					title = data.title[i].split("_")[0],
-					accordion = $("<div>").addClass("accordion"),
-					show_solution = $("<div>").addClass("show_solution")
+					title = data.title[i]
+						.split("_")[0],
+					accordion = $("<div>")
+						.addClass("accordion"),
+					show_solution = $("<div>")
+						.addClass("show_solution")
 						.text(title),
-					span = $("<span>").addClass("solution_display"),
-					latex_body = $("<div>").addClass("latex_body");
-				if(data.title[i].split("_hidden").length == 1) {
-					cont_div = $("<div>").addClass("cont_div");
-					span.append($("<i>").addClass("material-icons")
+					span = $("<span>")
+						.addClass("solution_display"),
+					latex_body = $("<div>")
+						.addClass("latex_body");
+				if(data.title[i].split("_hidden").length
+					== 1) {
+					cont_div = $("<div>")
+						.addClass("cont_div");
+					span.append($("<i>")
+						.addClass("material-icons")
 						.text("remove"));
 				}
 				else {
-					cont_div = $("<div>").addClass("cont_div hidden_div");
-					span.append($("<i>").addClass("material-icons")
+					cont_div = $("<div>")
+						.addClass("cont_div hidden_div");
+					span.append($("<i>")
+						.addClass("material-icons")
 						.text("add"));
 				}	
 				latex_body.append(data.content[i]);
@@ -4241,51 +5556,60 @@ define(function() {
 			}
 			if(i == 0) {
 				$("#latex").append($("<div>")
-					.addClass("accordion").append($("<div>")
-						.addClass("show_solution").text("NO CONTENT HERE!")
+					.addClass("accordion")
+					.append($("<div>")
+						.addClass("show_solution")
+						.text("NO CONTENT HERE!")
 						.css("pointer-events", "none")));
 			}
-			exports.handle_breadcrumbs(page, $(".accordion").first(),
-				subject, topic, section, example);
+			exports.handle_breadcrumbs(page,
+				$(".accordion").first(), subject,
+				topic, section, example);
 			MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 			exports.handle_button();
 			exports.handle_logo_link(page);
 			exports.handle_logo();
 			exports.handle_li_coloring();
-			links.handle_links(router, subjects, topics,
-				sections, examples);
+			links.handle_links(router, subjects,
+				topics, sections, examples);
 			exports.handle_orientation();
 			if(page == "about") {
-				exports.handle_desktop_title("about");
+				exports.handle_desktop_title(
+					"about");
 			}
 			else if(page == "subject") {
-				exports.handle_desktop_title("subject",
-					subject);
+				exports.handle_desktop_title(
+					"subject", subject);
 			}
 			else if(page == "topic") {
-				exports.handle_desktop_title("topic",
-					subject, topic);
+				exports.handle_desktop_title(
+					"topic", subject, topic);
 			}
-			else if(page == "section" || page == "example") {
-				exports.handle_desktop_title("section",
-					subject, topic, section);
+			else if(page == "section" ||
+				page == "example") {
+				exports.handle_desktop_title(
+					"section", subject, topic,
+					section);
 			}
 			$("body").css("overflow", "auto");
 			$(window).on("resize", function() {
 				if(page == "about") {
-					exports.handle_desktop_title("about");
+					exports.handle_desktop_title(
+						"about");
 				}
 				else if(page == "subject") {
-					exports.handle_desktop_title("subject",
-						subject);
+					exports.handle_desktop_title(
+						"subject", subject);
 				}
 				else if(page == "topic") {
-					exports.handle_desktop_title("topic",
-						subject, topic);
+					exports.handle_desktop_title(
+						"topic", subject, topic);
 				}
-				else if(page == "section" || page == "example") {
-					exports.handle_desktop_title("section",
-						subject, topic, section);
+				else if(page == "section" ||
+					page == "example") {
+					exports.handle_desktop_title(
+						"section", subject, topic,
+						section);
 				}
 				if(exports.width_func() < 992) {
 					$("#logo").css({
@@ -4299,16 +5623,21 @@ define(function() {
 						"right": ""
 					});
 				}
-				exports.handle_breadcrumbs(page, $(".accordion").first(),
-					subject, topic, section, example);
+				exports.handle_breadcrumbs(page,
+					$(".accordion").first(), subject,
+					topic, section, example);
 				exports.handle_dividers(page);
 				var width = 0,
 					screen_width = exports.width_func();
-				if(screen_width >= 992) { width = 350; }
+				if(screen_width >= 992) {
+					width = 350;
+				}
 				else if(screen_width < 992 && screen_width > 400) {
 					width = screen_width * .75;
 				}
-				else { width = screen_width * .72; }
+				else {
+					width = screen_width * .72;
+				}
 				$("#nav-mobile").css("width", width);
 			});
 		});
