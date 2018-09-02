@@ -4182,7 +4182,8 @@ define(function() {
 		$(".arrow-up").on("click", function(e) {
 			e.preventDefault();
 			var box = $(this).parent().parent().parent();
-			if(box.prev().attr("id") != "bar-div") {
+			if(box.prev().attr("id") != "bar-div"
+				&& box.prev().attr("id") != "main_message") {
 				var above = box.prev();
 				box.detach();
 				above.before(box);
@@ -6034,7 +6035,7 @@ define(function() {
 															section_name: 
 																section.section_name, 
 															current_page_name: 
-																section.section_name
+																example.ename
 													});
 												}
 												else {
@@ -6047,7 +6048,7 @@ define(function() {
 															section_name: 
 																section.section_name, 
 															current_page_name: 
-																section.section_name
+																example.ename
 													});
 												}
 											}
@@ -6060,7 +6061,7 @@ define(function() {
 														section_name: 
 															section.section_name, 
 														current_page_name: 
-															section.section_name
+															example.ename
 												});
 											}
 										}
@@ -6074,7 +6075,7 @@ define(function() {
 													section_name: 
 														section.section_name, 
 													current_page_name: 
-														section.section_name
+														example.ename
 											});
 										}
 										// router.navigate("subjectEdit." +
