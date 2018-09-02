@@ -97,15 +97,20 @@ exports.add_api_routes = (app, pool) => {
 								if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 								else {
 									if(container.length != 0) {
+										topicStatement = "DELETE FROM topic WHERE tid IN (";
 										container.forEach((iter, iterIndex) => {
-											topicStatement += "DELETE FROM topic WHERE tid=" + iter.tid + ";";
+											iterIndex == container.length - 1
+												? topicStatement += iter.tid + ")"
+												: topicStatement += iter.tid + ",";
 											pool.query("SELECT section_id FROM section WHERE tid=" + iter.tid, (err, holder) => {
 												if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 												else {
 													if(holder.length != 0) {
+														sectionStatement = "DELETE FROM section WHERE section_id IN (";
 														holder.forEach((elem, elemIndex) => {
-															sectionStatement += "DELETE FROM section WHERE section_id="
-																+ elem.section_id + ";";
+															elemIndex == holder.length - 1
+																? sectionStatement += elem.section_id + ")"
+																: sectionStatement += elem.section_id + ",";
 															pool.query("SELECT eid FROM example WHERE section_id="
 																+ elem.section_id, (err, collection) => {
 																if(err) {
@@ -115,9 +120,11 @@ exports.add_api_routes = (app, pool) => {
 																else {
 																	if(collection.length != 0) {
 																		exampleStatement = "";
-																		collection.forEach(item => {
-																			exampleStatement += "DELETE FROM example WHERE eid="
-																				+ item.eid + ";";
+																		exampleStatement = "DELETE FROM example WHERE eid IN (";
+																		collection.forEach((item, pos) => {
+																			pos == collection.length - 1
+																				? exampleStatement += item.eid + ")"
+																				: exampleStatement += item.eid + ",";
 																		});
 																		pool.query(exampleStatement, err => {
 																			if(err) { 
@@ -197,28 +204,19 @@ exports.add_api_routes = (app, pool) => {
 														});
 													}
 													else {
-														if(elemIndex >= holder.length - 1 
-															&& iterIndex >= container.length - 1) {
-															pool.query(sectionStatement, err => {
+														if(iterIndex >= container.length - 1) {
+															pool.query(topicStatement, err => {
 																if(err) {
 																	console.error("Error Connecting: " + err.stack);
 																	response.send("0");
 																}
 																else {
-																	pool.query(topicStatement, err => {
-																		if(err) {
+																	pool.query("DELETE FROM subject WHERE sid=" + param, err => {
+																		if(err) { 
 																			console.error("Error Connecting: " + err.stack);
 																			response.send("0");
 																		}
-																		else {
-																			pool.query("DELETE FROM subject WHERE sid=" + param, err => {
-																				if(err) { 
-																					console.error("Error Connecting: " + err.stack);
-																					response.send("0");
-																				}
-																				else { response.send("1"); }
-																			});
-																		}
+																		else { response.send("1"); }
 																	});
 																}
 															});
@@ -250,14 +248,20 @@ exports.add_api_routes = (app, pool) => {
 								if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 								else {
 									if(container.length != 0) {
+										sectionStatement = "DELETE FROM section WHERE section_id IN (";
 										container.forEach((iter, iterIndex) => {
-											sectionStatement += "DELETE FROM section WHERE section_id=" + iter.section_id + ";";
+											iterIndex == container.length - 1
+												? sectionStatement += iter.section_id + ")"
+												: sectionStatement += iter.section_id + ",";
 											pool.query("SELECT eid FROM example WHERE section_id=" + iter.section_id, (err, holder) => {
 												if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 												else {
 													if(holder.length != 0) {
-														holder.forEach(elem => {
-															exampleStatement += "DELETE FROM example WHERE eid=" + elem.eid + ";";
+														exampleStatement = "DELETE FROM example WHERE eid IN (";
+														holder.forEach((elem, pos) => {
+															pos == holder.length - 1
+																? exampleStatement += iter.eid + ")"
+																: exampleStatement += iter.eid + ",";
 														});
 														pool.query(exampleStatement, err => {
 															if(err) {
@@ -330,8 +334,11 @@ exports.add_api_routes = (app, pool) => {
 								if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
 								else {
 									if(container.length != 0) {
-										container.forEach(iter => {
-											exampleStatement += "DELETE FROM example WHERE eid=" + iter.eid + ";";
+										exampleStatement = "DELETE FROM example WHERE eid IN (";
+										container.forEach((iter, iterIndex) => {
+											iterIndex == container.length - 1
+												? exampleStatement += iter.eid + ")"
+												: exampleStatement += iter.eid + ",";
 										});
 										pool.query(exampleStatement, err => {
 											if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
