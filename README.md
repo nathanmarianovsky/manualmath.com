@@ -21,6 +21,7 @@
     - [Getting the Content of the About Page for Client (POST)](#getting-the-content-of-the-about-page-for-client-post)
     - [Changing the Content of the About Page (POST)](#changing-the-content-of-the-about-page-post)
     - [Getting the Content of any Subject, Topic, Section, or Example (POST)](#getting-the-content-of-any-subject-topic-section-or-example-post)
+    - [Getting the Content of any Subject, Topic, Section, or Example for Client (POST)](#getting-the-content-of-any-subject-topic-section-or-example-for-client-post)
     - [Adding & Changing the Content of any Subject, Topic, Section, or Example (POST)](#adding--changing-the-content-of-any-subject-topic-section-or-example-post)
     - [Deleting any Subject, Topic, Section, or Example (POST)](#deleting-any-subject-topic-section-or-example-post)
     - [Adding a Contributor (POST)](#adding-a-contributor-post)
@@ -193,7 +194,7 @@ where you would be required to provide the JSON data that has the parameters:
 ### Getting the Content of any Subject, Topic, Section, or Example (POST)
 To get the content of the requested item you would call on:
 ```
-localhost/api/:obj/data
+localhost/api/:obj/data/cms
 ```
 where "obj" represents what we want to get which can be one of four things:
 * subject
@@ -203,6 +204,20 @@ where "obj" represents what we want to get which can be one of four things:
 alongside the JSON data that requires the parameter:
 * param
 which is the id of the object.
+
+### Getting the Content of any Subject, Topic, Section, or Example for Client (POST)
+To get the content of the requested item you would call on:
+```
+localhost/api/:obj/data/client
+```
+where "obj" represents what we want to get which can be one of four things:
+* subject
+* topic
+* section
+* example
+alongside the JSON data that requires the parameter:
+* param
+which is the id of the object. The difference between this and the previous call is that this does not grab the cms information for the client side as it is unnecessary.
 
 ### Adding & Changing the Content of any Subject, Topic, Section, or Example (POST)
 To add or change the content of the requested item you would call on:

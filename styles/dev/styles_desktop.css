@@ -1,6 +1,10 @@
 /* Styles for desktop screens */
 @media only screen and (min-width : 992px) {
-	/* All CSS properties related to anything belonging to the menu */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the menu
+	*/
 	body .drag-target {
 		display: none;
 		visibility: hidden;
@@ -8,7 +12,11 @@
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
-	/* All CSS properties related to anything belonging to the top nav(s) */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the top nav(s)
+	*/
 	.page_title {
 		font-size: 13px;
 	}

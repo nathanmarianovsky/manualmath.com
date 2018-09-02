@@ -9,7 +9,11 @@ body {
 
 
 
-/* Pushes the main content from the left to give space to the menu */
+/*
+	Pushes the main content from
+	the left to give space to
+	the menu
+*/
 main {
   	padding-left: 350px;
   	background: #e0e0e0;
@@ -32,7 +36,11 @@ main {
 
 
 
-/* All CSS properties related to anything belonging to the top nav(s) */
+/*
+	All CSS properties related
+	to anything belonging to
+	the top nav(s)
+*/
 nav {
 	height: 64px;
 	line-height: 64px;
@@ -118,7 +126,11 @@ nav {
 
 
 
-/* All CSS properties related to anything belonging to the menu */
+/*
+	All CSS properties related
+	to anything belonging to
+	the menu
+*/
 #nav-mobile {
 	overflow-x: hidden;
 	top: 64px;
@@ -150,7 +162,11 @@ nav {
 
 
 
-/* All CSS properties related to anything belonging to the about page */
+/*
+	All CSS properties related
+	to anything belonging to
+	the about page
+*/
 .box_message {
 	margin: 20px auto 50px auto;
 	font-size: 15px;
@@ -179,11 +195,6 @@ nav {
 	margin: 0 0 0 30px;
 }
 
-#open_source {
-	padding-left: 4px;
-	color: inherit;
-}
-
 #about_page {
 	margin-top: 100px;
 }
@@ -194,7 +205,13 @@ nav {
 
 
 
-/* All CSS properties related to anything belonging to any subject, topic, section, and example page */
+/*
+	All CSS properties related
+	to anything belonging to
+	any subject, topic,
+	section, and example
+	page
+*/
 #latex {
 	margin-top: 64px;
 	width: 100%;
@@ -296,7 +313,10 @@ nav {
 
 
 
-/* All CSS properties related to the cms login page */
+/*
+	All CSS properties related
+	to the cms login page
+*/
 .login {
 	background: #e0e0e0;
     border-radius: 2.5cm;
@@ -358,7 +378,8 @@ nav {
 	width: 100% !important;
 	border: solid #000000 5px;
     height: 70px;
-    background: linear-gradient(to right, #4693ec 50%, #e0e0e0 50%);
+    background: linear-gradient(to right,
+    	#4693ec 50%, #e0e0e0 50%);
     top: -5px;
     margin: auto;
     border-top-right-radius: 2100px 1600px;
@@ -432,7 +453,10 @@ nav {
 
 
 
-/* All CSS properties related to the modals */
+/*
+	All CSS properties related
+	to the modals
+*/
 #template_issue, #status_issue, #popup {
 	height: 500px;
 	border-radius: 0.5cm;
@@ -450,7 +474,10 @@ nav {
 
 
 
-/* All CSS properties related to the cms fixed action button */
+/*
+	All CSS properties related to
+	the cms fixed action button
+*/
 #drop_up {
 	background: #1163a9;
 }
@@ -461,7 +488,10 @@ nav {
 
 
 
-/* All CSS properties related to the cms sidenav modal */
+/*
+	All CSS properties related
+	to the cms sidenav modal
+*/
 #sidenav_table_head th {
 	text-align: center;
 }
@@ -472,14 +502,20 @@ nav {
 
 
 
-/* All CSS properties related to the cms committee modal */
+/*
+	All CSS properties related
+	to the cms committee modal
+*/
 #committee_table_head th {
 	text-align: center;
 }
 
 
 
-/* All CSS properties related to the cms edit bar */
+/*
+	All CSS properties related
+	to the cms edit bar
+*/
 #bar {
 	display: flex;
 	justify-content: space-between;

@@ -1,4 +1,5 @@
-define(["dist/functions-min", "materialize"], function(functions, Materialize) {
+define(["dist/functions-min", "materialize"],
+	function(functions, Materialize) {
 	var exports = {};
 
 	/*
@@ -19,27 +20,40 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 			An array containing all of the examples
 
 	*/
-	exports.handle_links = function(router, subjects, topics, sections, examples) {
+	exports.handle_links = function(router, subjects,
+		topics, sections, examples, titleComparison,
+		contentComparison, cmsObj) {
 		$("button").click(function(e) {
 			e.preventDefault();
 			var statement = "";
-			if($(this).attr("id") == "login_button") {
-				if(functions.validate($("#login_email").val())) {
-					$.post("/api/cms/check/email/", {email: $("#login_email").val()}).done(function(result) {
+			if($(this).attr("id") ==
+				"login_button") {
+				if(functions.validate(
+					$("#login_email").val())) {
+					$.post("/api/cms/check/email/", {
+						email: $("#login_email").val()
+					}).done(function(result) {
 						if(result.length == 1) {
-							if(functions.password_check($("#login_password").val())) {
+							if(functions.password_check(
+								$("#login_password").val())) {
 								$.post("/api/cms/check/login/", {
 									email: $("#login_email").val(),
-									passwd: encodeURIComponent($("#login_password").val())
+									passwd: encodeURIComponent(
+										$("#login_password").val())
 								}).done(function(obj) {
 									if(typeof(obj[0]) == "object") {
-										functions.modal(13, router, obj);
+										functions.modal(13,
+											router, obj);
 									}
-									else if(typeof(obj[0]) == "string") {
-										if(obj[0] == "Wrong Password") {
+									else if(typeof(obj[0])
+										== "string") {
+										if(obj[0] ==
+											"Wrong Password") {
 											functions.modal(5);
 										}
-										else { functions.modal(4); }
+										else {
+											functions.modal(4);
+										}
 									}
 									else { functions.modal(3); }
 								});
@@ -52,33 +66,60 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				else { functions.modal(0); }
 			}
 			else if($(this).attr("id") == "register_button") {
-				if(functions.validate($("#email").val())) {
-					$.post("/api/cms/check/email/", {email: $("#email").val()}).done(function(result) {
+				if(functions.validate(
+					$("#email").val())) {
+					$.post("/api/cms/check/email/", {
+						email: $("#email").val()
+					}).done(function(result) {
 						if(result.length == 0) {
-							if(functions.password_check($("#password").val()) && 
-								$("#password").val() == $("#password-confirm").val()) {
-								if($("#first_name").val().trim().length > 0 && 
-									!/[^a-zA-Z]/.test($("#first_name").val())) {
-									if($("#last_name").val().trim().length > 0 && 
-										!/[^a-zA-Z]/.test($("#last_name").val())) {
-										if($("#answer").val().trim().length > 0) {
-											var first = $("#first_name").val()[0].toUpperCase() + 
-													$("#first_name").val().slice(1).toLowerCase(),
-												last =  $("#last_name").val()[0].toUpperCase() + 
-													$("#last_name").val().slice(1).toLowerCase();
+							if(functions.password_check(
+								$("#password").val()) && 
+								$("#password").val() == 
+								$("#password-confirm").val()) {
+								if($("#first_name").val()
+									.trim().length > 0 && 
+									!/[^a-zA-Z]/.test(
+										$("#first_name").val())) {
+									if($("#last_name").val()
+										.trim().length > 0 && 
+										!/[^a-zA-Z]/.test(
+											$("#last_name").val())) {
+										if($("#answer").val()
+											.trim().length > 0) {
+											var first = $("#first_name")
+													.val()[0]
+													.toUpperCase() + 
+													$("#first_name")
+														.val()
+														.slice(1)
+														.toLowerCase(),
+												last = $("#last_name")
+													.val()[0]
+													.toUpperCase() + 
+													$("#last_name")
+														.val()
+														.slice(1)
+														.toLowerCase();
 											var obj = {
 												fname: first,
 												lname: last,
 												email: $("#email").val(),
-												passwd: encodeURIComponent($("#password").val()),
-												question: $("#question")[0].options.selectedIndex,
+												passwd: encodeURIComponent(
+													$("#password").val()),
+												question: $("#question")[0]
+													.options.selectedIndex,
 												answer: $("#answer").val()
 											};
-											$.post("/api/cms/contributor/add", obj).done(function() {
-												$.post("/api/cms/admin/info/").done(function(obj) {
-													functions.modal(12, router, obj);
+											$.post("/api/cms/contributor/add", obj)
+												.done(function() {
+												$.post("/api/cms/admin/info/")
+													.done(function(obj) {
+													functions.modal(12,
+														router, obj);
 												});
-											}).fail(function() { functions.modal(11); });
+											}).fail(function() {
+												functions.modal(11);
+											});
 										}
 										else { functions.modal(10); }
 									}
@@ -86,7 +127,8 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 								}
 								else { functions.modal(8); }
 							}
-							else if(!functions.password_check($("#password").val())) {
+							else if(!functions.password_check(
+								$("#password").val())) {
 								functions.modal(2);
 							}
 							else { functions.modal(7); }
@@ -105,15 +147,25 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				router.navigate("about");
 			}
 			else if(id == "logo_cms") {
-				router.navigate("cms");
+				if(titleComparison === cmsObj.title_cms.join("-----")
+					&& contentComparison ===
+					cmsObj.content_cms.join("-----")) {
+					router.navigate("cms");
+				}
+				else {
+					functions.warning_modal(router, "cms");
+				}
 			}
 			else if(id == "login_click") {
 				$("#register_input").hide(400);
 				$("#login_input").show(400);
 				$("#container").css("height", "400px");
-				$("#login_heading").css("background", "linear-gradient(to right, #4693ec 50%, #e0e0e0 50%)");
+				$("#login_heading").css("background",
+					"linear-gradient(to right, #4693ec" +
+					" 50%, #e0e0e0 50%)");
 				$("html").css("height", "850px");
-				$("#register_input input").each(function() { $(this).val(""); });
+				$("#register_input input")
+					.each(function() { $(this).val(""); });
 				$("#question").val(1);
 				$("select").material_select();
 				Materialize.updateTextFields();
@@ -122,55 +174,79 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 				$("#login_input").hide(400);
 				$("#register_input").show(400);
 				$("#container").css("height", "810px");
-				$("#login_heading").css("background", "linear-gradient(to left, #4693ec 50%, #e0e0e0 50%)");
+				$("#login_heading").css("background",
+					"linear-gradient(to left, #4693ec" +
+					" 50%, #e0e0e0 50%)");
 				$("html").css("height", "1250px");
-				$("#login_input input").each(function() { $(this).val(""); });
+				$("#login_input input")
+					.each(function() { $(this).val(""); });
 				Materialize.updateTextFields();
 			}
 			else if(id == "logout") {
 				$("#drop_up").click();
-				var cookie = functions.read_cookie("contributor");
-				$.post("/api/cms/live/remove/", {email: cookie}).done(function(result) {
+				var cookie = functions.read_cookie(
+					"contributor");
+				$.post("/api/cms/live/remove/", {
+					email: cookie
+				}).done(function(result) {
 					if(result == 1) {
-						functions.delete_cookie("contributor");
+						functions.delete_cookie(
+							"contributor");
 					}
-					else { console.log("There was an issue removing the contributor from the list of live sessions!"); }
+					else {
+						console.log("There was" +
+							" an issue removing" +
+							" the contributor" +
+							" from the list of" +
+							" live sessions!");
+					}
 				});
 			}
 			else if(id == "profile") {
 				$("#drop_up").click();
-				var cookie = functions.read_cookie("contributor");
-				$.get("/pages/dist/modal-min.html").done(function(result) {
+				var cookie = functions.read_cookie(
+					"contributor");
+				$.get("/pages/dist/modal-min.html")
+					.done(function(result) {
 					$("body").append(result);
 					functions.profile_modal(cookie);
 				});
 			}
 			else if(id == "committee") {
 				$("#drop_up").click();
-				$.get("/pages/dist/modal-min.html").done(function(result) {
+				$.get("/pages/dist/modal-min.html")
+					.done(function(result) {
 					$("body").append(result);
 					functions.committee_modal();
 				});
 			}
 			else if(id == "ranking") {
 				$("#drop_up").click();
-				$.get("/pages/dist/modal-min.html").done(function(result) {
+				$.get("/pages/dist/modal-min.html")
+					.done(function(result) {
 					$("body").append(result);
 					functions.ranking_modal();
 				});
 			}
 			else if(id == "decision") {
 				$("#drop_up").click();
-				$.get("/pages/dist/modal-min.html").done(function(result) {
+				$.get("/pages/dist/modal-min.html")
+					.done(function(result) {
 					$("body").append(result);
 					functions.decision_modal();
 				});
 			}
 			else if(id == "forgot") {
-				if(functions.validate($("#login_email").val())) {
-					$.post("/api/cms/contributor/security/", {email: $("#login_email").val()})
-						.done(function(content) {
-						$("#question")[0].options.selectedIndex = parseInt(content);
+				if(functions.validate(
+					$("#login_email").val())) {
+					$.post("/api/cms/contributor" +
+						"/security/", {
+							email: $("#login_email")
+								.val()
+						}).done(function(content) {
+						$("#question")[0].options
+							.selectedIndex
+							= parseInt(content);
 						functions.modal(14);
 					});
 				}
@@ -185,15 +261,20 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 					if(holder.length > 1) {
 						var id_num = holder[1];
 					}
-					if(id_string == "subjects" && holder[1] != "change") {
-						var subject = subjects.filter(function(iter) {
-							return iter.sid == id_num;
+					if(id_string == "subjects"
+						&& holder[1] != "change") {
+						var subject = subjects
+							.filter(function(iter) {
+								return iter.sid ==
+									id_num;
 						})[0];
 						if(holder[2] != "cms") {
-							router.navigate("subject", {sname: subject.sname});
+							router.navigate("subject",
+								{sname: subject.sname});
 						}
 						else {
-							router.navigate("subjectEdit", {sname: subject.sname});
+							router.navigate("subjectEdit",
+								{sname: subject.sname});
 						}
 					}
 					else if(id_string == "subjectnav") {
@@ -204,134 +285,202 @@ define(["dist/functions-min", "materialize"], function(functions, Materialize) {
 							router.navigate("cms");
 						}
 					}
-					else if(id_string == "topics" & holder[1] != "change") {
-						var topic = topics.filter(function(iter) {
-							return iter.tid == id_num;
+					else if(id_string == "topics"
+						&& holder[1] != "change") {
+						var topic = topics
+							.filter(function(iter) {
+								return iter.tid ==
+									id_num;
 						})[0],
-							subject = subjects.filter(function(iter) {
-							return iter.sid == topic.sid;
+							subject = subjects
+								.filter(function(iter) {
+									return iter.sid ==
+										topic.sid;
 						})[0];
 						if(holder[2] != "cms") {
-							router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});						
+							router.navigate("subject.topic", {
+								sname: subject.sname,
+								tname: topic.tname
+							});						
 						}
 						else {
-							router.navigate("subjectEdit.topicEdit", {sname: subject.sname, tname: topic.tname});						
+							router.navigate("subjectEdit.topicEdit", {
+								sname: subject.sname,
+								tname: topic.tname
+							});						
 						}
 					}
 					else if(id_string == "topicnav") {
-						var topic = topics.filter(function(iter) {
-							return iter.tid == id_num;
+						var topic = topics
+							.filter(function(iter) {
+								return iter.tid ==
+									id_num;
 						})[0],
-							subject = subjects.filter(function(iter) {
-							return iter.sid == topic.sid;
+							subject = subjects
+								.filter(function(iter) {
+									return iter.sid ==
+										topic.sid;
 						})[0];
 						if(holder[2] != "cms") {
-							router.navigate("subject", {sname: subject.sname});
+							router.navigate("subject",
+								{sname: subject.sname});
 						}
 						else {
-							router.navigate("subjectEdit", {sname: subject.sname});
+							router.navigate("subjectEdit",
+								{sname: subject.sname});
 						}
 					}
-					else if(id_string == "sections" && holder[1] != "change") {
-						var section = sections.filter(function(iter) {
-							return iter.section_id == id_num;
+					else if(id_string == "sections"
+						&& holder[1] != "change") {
+						var section = sections
+							.filter(function(iter) {
+								return iter.section_id ==
+									id_num;
 						})[0],
-							topic = topics.filter(function(iter) {
-							return iter.tid == section.tid;
+							topic = topics
+								.filter(function(iter) {
+									return iter.tid ==
+										section.tid;
 						})[0],
-							subject = subjects.filter(function(iter) {
-							return iter.sid == topic.sid;
+							subject = subjects
+								.filter(function(iter) {
+									return iter.sid ==
+										topic.sid;
 						})[0];
 						if(holder[2] != "cms") {
-							router.navigate("subject.topic.section.current_page", {
+							router.navigate("subject." +
+								"topic.section." +
+								"current_page", {
 								sname: subject.sname, 
 								tname: topic.tname, 
 								section_name: 
 								section.section_name, 
-								current_page_name: section.section_name
+								current_page_name: 
+									section.section_name
 							});					
 						}
 						else {
-							router.navigate("subjectEdit.topicEdit.sectionEdit.current_pageEdit", {
+							router.navigate("subjectEdit." +
+								"topicEdit.sectionEdit." +
+								"current_pageEdit", {
 								sname: subject.sname, 
 								tname: topic.tname, 
 								section_name: 
 								section.section_name, 
-								current_page_name: section.section_name
+								current_page_name: 
+									section.section_name
 							});					
 						}
 					}
 					else if(id_string == "sectionnav") {
-						var section = sections.filter(function(iter) {
-							return iter.section_id == id_num;
+						var section = sections
+							.filter(function(iter) {
+								return iter.section_id ==
+									id_num;
 						})[0],
-							topic = topics.filter(function(iter) {
-							return iter.tid == section.tid;
+							topic = topics
+								.filter(function(iter) {
+									return iter.tid ==
+										section.tid;
 						})[0],
-							subject = subjects.filter(function(iter) {
-							return iter.sid == topic.sid;
+							subject = subjects
+								.filter(function(iter) {
+									return iter.sid ==
+										topic.sid;
 						})[0];
 						if(holder[2] != "cms") {
-							router.navigate("subject.topic", {sname: subject.sname, tname: topic.tname});
+							router.navigate("subject.topic", {
+								sname: subject.sname,
+								tname: topic.tname
+							});
 						}
 						else {
-							router.navigate("subjectEdit.topicEdit", {sname: subject.sname, tname: topic.tname});
+							router.navigate("subjectEdit.topicEdit", {
+								sname: subject.sname,
+								tname: topic.tname
+							});
 						}
 					}
 					else if(id_string == "sectionname") {
-						var section = sections.filter(function(iter) {
-							return iter.section_id == id_num;
+						var section = sections
+							.filter(function(iter) {
+								return iter.section_id ==
+									id_num;
 						})[0],
-							topic = topics.filter(function(iter) {
-							return iter.tid == section.tid;
+							topic = topics
+								.filter(function(iter) {
+									return iter.tid ==
+										section.tid;
 						})[0],
-							subject = subjects.filter(function(iter) {
-							return iter.sid == topic.sid;
+							subject = subjects
+								.filter(function(iter) {
+									return iter.sid ==
+										topic.sid;
 						})[0];
 						if(holder[2] != "cms") {
-							router.navigate("subject.topic.section.current_page", { 
+							router.navigate("subject.topic." +
+								"section.current_page", { 
 								sname: subject.sname, 
 								tname: topic.tname, 
 								section_name: section.section_name, 
-								current_page_name: section.section_name
+								current_page_name:
+									section.section_name
 							});
 						}
 						else {
-							router.navigate("subjectEdit.topicEdit.sectionEdit.current_pageEdit", { 
+							router.navigate("subjectEdit.topicEdit." +
+								"sectionEdit.current_pageEdit", { 
 								sname: subject.sname, 
 								tname: topic.tname, 
 								section_name: section.section_name, 
-								current_page_name: section.section_name
+								current_page_name:
+									section.section_name
 							});
 						}
 					}
-					else if(id_string == "examples" && holder[1] != "change") {
-						var example = examples.filter(function(iter) {
-							return iter.eid == id_num;
+					else if(id_string == "examples"
+						&& holder[1] != "change") {
+						var example = examples
+							.filter(function(iter) {
+								return iter.eid ==
+									id_num;
 						})[0],
-							section = sections.filter(function(iter) {
-							return iter.section_id == example.section_id;
+							section = sections
+								.filter(function(iter) {
+									return iter.section_id ==
+										example.section_id;
 						})[0],
-							topic = topics.filter(function(iter) {
-							return iter.tid == section.tid;
+							topic = topics
+								.filter(function(iter) {
+									return iter.tid ==
+										section.tid;
 						})[0],
-							subject = subjects.filter(function(iter) {
-							return iter.sid == topic.sid;
+							subject = subjects
+								.filter(function(iter) {
+									return iter.sid ==
+									topic.sid;
 						})[0];
 						if(holder[2] != "cms") {
-							router.navigate("subject.topic.section.current_page", { 
+							router.navigate("subject.topic." +
+								"section.current_page", { 
 								sname: subject.sname, 
 								tname: topic.tname, 
-								section_name: section.section_name, 
-								current_page_name: example.ename
+								section_name:
+									section.section_name, 
+								current_page_name:
+									example.ename
 							});
 						}
 						else {
-							router.navigate("subjectEdit.topicEdit.sectionEdit.current_pageEdit", { 
+							router.navigate("subjectEdit." +
+								"topicEdit.sectionEdit." +
+								"current_pageEdit", { 
 								sname: subject.sname, 
 								tname: topic.tname, 
-								section_name: section.section_name, 
-								current_page_name: example.ename
+								section_name:
+									section.section_name, 
+								current_page_name:
+									example.ename
 							});
 						}
 					}

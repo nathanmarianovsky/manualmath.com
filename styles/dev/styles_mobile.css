@@ -1,6 +1,9 @@
 /* Styles for all mobile screens */
 @media only screen and (max-width : 991px) {
-	/* Pushes the main content from the left and top */
+	/*
+		Pushes the main content from the left
+		and top
+	*/
 	main {
 		padding-left: 0;
 		padding-top: 60px;
@@ -18,7 +21,11 @@
 
 
 
-	/* All CSS properties related to anything belonging to the top nav(s) */
+	/*
+		All CSS properties related 
+		to anything belonging to
+		the top nav(s)
+	*/
 	#first_top_nav {
 		box-shadow: none;
 		height: 56px;
@@ -89,7 +96,11 @@
 
 	
 
-	/* All CSS properties related to anything belonging to the menu */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the menu
+	*/
 	.nav-wrapper {
 		text-align: center;
 	}
@@ -123,7 +134,12 @@
 
 
 
-	/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the about page, any subject
+		page, and any topic page
+	*/
 	.box_message {
 		margin: 0px auto 50px auto;
 		width: 90%;
@@ -143,7 +159,11 @@
 
 
 
-	/* All CSS properties related to anything belonging to the latex page */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the latex page
+	*/
 	#latex {
 		margin-top: -4px;
 		width: 100%;
@@ -155,13 +175,15 @@
 
 
 
-	/* All CSS properties belonging to all pages */
+	/*
+		All CSS properties belonging
+		to all pages
+	*/
 	.latex_equation table {
 		width: 100%;
 	}
 
 	.breadcrumb.changed:before {
-	    /*content: "\E5CC";*/
 	    content: none;
 	    color: rgba(0,0,0,0.87);
 	    vertical-align: top;
@@ -189,9 +211,17 @@
 
 
 
-/* Styles for screens with minimum and maximum widths of 750px and 991px respectively */
+/*
+	Styles for screens with minimum and
+	maximum widths of 750px and 991px
+	respectively
+*/
 @media only screen and (min-width : 750px) and (max-width: 991px) {
-	/* All CSS properties related to anything belonging to the top nav(s) */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the top nav(s)
+	*/
 	.page_title {
 		font-size: 20px;
 	}
@@ -206,7 +236,11 @@
 
 
 
-	/* All CSS properties related to anything belonging to the menu */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the menu
+	*/
 	#nav-mobile {
 		top: 56px;
 	}
@@ -218,7 +252,11 @@
 
 
 
-	/* All CSS properties related to anything belonging to the about page */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the about page
+	*/
 	#about_page .latex_equation table {
 		font-size: 15px;
 	}
@@ -236,7 +274,12 @@
 	}
 
 
-	/* All CSS properties related to anything belonging to any subject, topic, section, and example page */
+	/* 
+		All CSS properties related
+		to anything belonging to
+		any subject, topic,
+		section, and example page
+	*/
 	#latex {
 		font-size: 20px;
 	}
@@ -261,9 +304,17 @@
 
 
 
-/* Styles for screens with minimum and maximum widths of 550px and 749px respectively */
+/*
+	Styles for screens with minimum and
+	maximum widths of 550px and 749px
+	respectively
+*/
 @media only screen and (min-width : 550px) and (max-width: 749px) {
-	/* All CSS properties related to anything belonging to the top nav(s) */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the top nav(s)
+	*/
 	.page_title {
 		font-size: 25px;
 	}
@@ -274,7 +325,11 @@
 
 
 
-	/* All CSS properties related to anything belonging to the menu */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the menu
+	*/
 	#nav-mobile {
 		top: 56px;
 	}
@@ -291,7 +346,13 @@
 
 
 
-	/* All CSS properties related to anything belonging to the about page, any subject page, and any topic page */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the about page, any
+		subject page, and any
+		topic page
+	*/
 	#about_page .latex_equation table{
 		font-size: 14px;
 	}
@@ -306,7 +367,11 @@
 
 
 
-	/* All CSS properties related to anything belonging to the latex page */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the latex page
+	*/
 	#latex {
 		font-size: 15px;
 	}
@@ -322,9 +387,17 @@
 
 
 
-/* Styles for screens with minimum and maximum widths of 400px and 549px respectively */
+/*
+	Styles for screens with minimum and
+	maximum widths of 400px and 549px
+	respectively
+*/
 @media only screen and (min-width : 400px) and (max-width: 549px) {
-	/* All CSS properties related to anything belonging to the top nav(s) */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the top nav(s)
+	*/
 	.page_title {
 		font-size: 20px;
 	}
@@ -335,7 +408,11 @@
 
 
 
-	/* All CSS properties related to anything belonging to the menu */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the menu
+	*/
 	#nav-mobile {
 		top: 56px;
 	}
@@ -352,14 +429,23 @@
 
 
 
-	/* All CSS properties related to anything belonging to the about page */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the about page
+	*/
 	#about_page .latex_equation table {
 		font-size: 12px;
 	}
 
 
 
-	/* All CSS properties related to anything belonging to any subject, topic, section, and example page */
+	/*
+		All CSS properties related
+		to anything belonging to
+		any subject, topic,
+		section, and example page
+	*/
 	#latex {
 		font-size: 20px;
 	}
@@ -379,9 +465,16 @@
 
 
 
-/* Styles for screens with a maximum widths of 399px */
+/*
+	Styles for screens with a
+	maximum width of 399px
+*/
 @media only screen and (max-width: 399px) {
-	/* All CSS properties related to anything belonging to the top nav(s) */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the top nav(s)
+	*/
 	.page_title {
 		font-size: 15px;
 	}
@@ -392,7 +485,11 @@
 
 
 
-	/* All CSS properties related to anything belonging to the menu */
+	/*
+		All CSS properties related
+		to anything belonging to
+		the menu
+	*/
 	#nav-mobile {
 		top: 56px;
 	}
@@ -413,14 +510,23 @@
 
 
 
-	/* All CSS properties related to anything belonging to the about page */
-	#about_page .latex_equation table{
+	/*
+		All CSS properties related
+		to anything belonging to
+		the about page
+	*/
+	#about_page .latex_equation table {
 		font-size: 10px;
 	}
 
 
 
-	/* All CSS properties related to anything belonging to any subject, topic, section, and example page */
+	/*
+		All CSS properties related
+		to anything belonging to
+		any subject, topic,
+		section, and example page
+	*/
 	#latex {
 		font-size: 18px;
 	}
