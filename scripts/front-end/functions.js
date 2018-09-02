@@ -4,7 +4,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Adds and removes dividers in the sidenav as the screen is resized.
+	Adds and removes dividers in the sidenav as
+	the screen is resized.
 
 	Parameters:
 		page: The name of the page currently set
@@ -58,7 +59,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Replaces all instances of a substring inside of a given string.
+	Replaces all instances of a substring inside of
+	a given string.
 
 	Parameters:
 		str: 
@@ -66,7 +68,8 @@ define(function() {
 		find:
 			The substring which is to be replaced
 		replace:
-			The string which will replace the substring
+			The string which will replace the
+			substring
 
 	*/
 	exports.replace_all = function(str, find, replace) {
@@ -98,7 +101,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Checks if a string meets the requirements to be a password.
+	Checks if a string meets the requirements
+	to be a password.
 
 	Parameters:
 		str: 
@@ -121,7 +125,8 @@ define(function() {
 		value:
 			Cookie value
 		minutes:
-			Number of minutes til cookie expiration
+			Number of minutes til
+			cookie expiration
 
 	*/
 	exports.write_cookie = function(name, value, minutes) {
@@ -180,7 +185,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Listens for a change in the cookie with the given name.
+	Listens for a change in the cookie with the
+	given name.
 
 	Parameters:
 		name: 
@@ -260,7 +266,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Adds a committee option to the fixed action button.
+	Adds a committee option to the fixed
+	action button.
 
 	Parameters:
 		email: 
@@ -302,7 +309,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the decision modal for the administrator.
+	Handles the decision modal for
+	the administrator.
 
 	*/
 	exports.decision_modal = function() {
@@ -532,7 +540,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the ranking modal for committee members excluding the administrator.
+	Handles the ranking modal for committee members
+	excluding the administrator.
 
 	*/
 	exports.ranking_modal = function() {
@@ -556,21 +565,27 @@ define(function() {
 				" approval or disapproval which will be indicated by" +
 				" a green color."
 			$("#popup_body").text(statement).append(content);
-			$.post("/api/cms/contributors/nonmember").done(function(contributors) {
-				var list = contributors.map(function(elem, index) {
-					elem.num = index;
-					elem.edited = 0;
-					return elem;
+			$.post("/api/cms/contributors/nonmember")
+				.done(function(contributors) {
+				var list = contributors
+					.map(function(elem, index) {
+						elem.num = index;
+						elem.edited = 0;
+						return elem;
 				});
 				$("#committee_table_head").find("tr th").last()
 					.text("Disapprove");
 				list.forEach(function(elem) {
 					var item_tr = $("<tr>"),
-						item_fname = $("<td>").text(elem.first_name),
-						item_lname = $("<td>").text(elem.last_name),
-						item_email = $("<td>").text(elem.email)
+						item_fname = $("<td>")
+							.text(elem.first_name),
+						item_lname = $("<td>")
+							.text(elem.last_name),
+						item_email = $("<td>")
+							.text(elem.email)
 							.css("text-align", "center"),
-						item_approve = $("<td>").css("text-align", "center")
+						item_approve = $("<td>")
+							.css("text-align", "center")
 							.append($("<a>")
 								.css("cursor", "pointer")
 								.attr("id", "approve_" + elem.num)
@@ -578,7 +593,8 @@ define(function() {
 								.append($("<i>")
 									.addClass("material-icons")
 									.text("thumb_up"))),
-						item_disapprove = $("<td>").css("text-align", "center")
+						item_disapprove = $("<td>")
+							.css("text-align", "center")
 							.append($("<a>")
 								.css("cursor", "pointer")
 								.attr("id", "disapprove_" + elem.num)
@@ -1087,7 +1103,8 @@ define(function() {
 
 	Parameters:
 		data:
-			An array of the objects representing the current data
+			An array of the objects representing
+			the current data
 
 	*/
 	exports.sidenav_modal_name_check = function(data) {
@@ -1114,9 +1131,11 @@ define(function() {
 
 	Parameters:
 		type: 
-			A reference to the type of data being handled
+			A reference to the type of data
+			being handled
 		data:
-			An array of the objects representing the type of data
+			An array of the objects
+			representing the type of data
 
 	*/
 	exports.sidenav_modal_links = function(type, data) {
@@ -1442,13 +1461,17 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the sidenav modal that adds and changes data.
+	Handles the sidenav modal that adds
+	and changes data.
 
 	Parameters:
 		type: 
-			A reference to the type of data being handled
+			A reference to the type of
+			data being handled
 		data:
-			An array of the objects representing the type of data
+			An array of the objects
+			representing the type
+			of data
 
 	*/
 	exports.sidenav_modal = function(type, input, container_id) {
@@ -1999,7 +2022,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles all of the modal changes for the cms contributor profile.
+	Handles all of the modal changes for the cms
+	contributor profile.
 
 	Parameters:
 		email: 
@@ -2434,15 +2458,19 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the session modal for a live contributor.
+	Handles the session modal for a
+	live contributor.
 
 	Parameters:
 		router: 
-			Object representing the router of the app
+			Object representing the
+			router of the app
 		page:
-			The page to which the router will navigate
+			The page to which the
+			router will navigate
 		issue:
-			Integer corresponding to the scenario
+			Integer corresponding
+			to the scenario
 
 	*/
 	exports.session_modal = function(router, page, issue) {
@@ -2494,15 +2522,19 @@ define(function() {
 	/*
 
 	Purpose:
-	Changes the modal content as needed and displays it.
+	Changes the modal content as needed
+	and displays it.
 
 	Parameters:
 		type: 
-			Referencing which modal is to be used
+			Referencing which modal is
+			to be used
 		issue:
-			A number referencing the necessary case
+			A number referencing the
+			necessary case
 		obj:
-			An object obtained from a get/post request
+			An object obtained from a
+			get/post request
 
 	*/
 	exports.modal = function(issue, router, obj) {
@@ -3044,13 +3076,16 @@ define(function() {
 	/*
 
 	Purpose:
-	Compares two objects based on their order property.
+	Compares two objects based on
+	their order property.
 
 	Parameters:
 		lhs: 
-			The left hand side object
+			The left hand side
+			object
 		rhs: 
-			The right hand side object
+			The right hand side
+			object
 
 	*/
 	exports.compare_object_order = function(lhs, rhs) {
@@ -3090,7 +3125,9 @@ define(function() {
 	/*
 
 	Purpose:
-	Creates the necessary association of all the subjects, topics, sections, and examples.
+	Creates the necessary association of
+	all the subjects, topics, sections,
+	and examples.
 
 	Parameters:
 		subjects: 
@@ -3133,8 +3170,11 @@ define(function() {
 	/*
 
 	Purpose:
-	Once all of subjects, topics, sections, and examples are associated this function
-	will change the order within the arrays based on the order property from the database.
+	Once all of subjects, topics, sections,
+	and examples are associated this function
+	will change the order within the arrays
+	based on the order property from the
+	database.
 
 	Parameters:
 		subjects: 
@@ -3178,11 +3218,13 @@ define(function() {
 	/*
 
 	Purpose:
-	Takes away the pointer events associated to the logo link on the about page.
+	Takes away the pointer events associated
+	to the logo link on the about page.
 
 	Parameters:
 		page: 
-			The name of the page currently set
+			The name of the page currently
+			set
 
 	*/
 	exports.handle_logo_link = function(page) { 
@@ -3196,7 +3238,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the coloring of the li tags on the example_side_nav.
+	Handles the coloring of the li tags on
+	the example_side_nav.
 
 	*/
 	exports.handle_li_coloring = function() {
@@ -3251,7 +3294,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the side nav for different screens.
+	Handles the side nav for
+	different screens.
 
 	*/
 	exports.handle_side_nav = function() {
@@ -3281,7 +3325,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Moves the logo all the way to the right on a mobile view.
+	Moves the logo all the way to
+	the right on a mobile view.
 
 	*/
 	exports.handle_logo = function() {
@@ -3296,11 +3341,13 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the button functionality for "Show Proof" and "Show Solution".
+	Handles the button functionality for
+	"Show Proof" and "Show Solution".
 
 	Parameters:
 		page: 
-			The name of the page currently set
+			The name of the page
+			currently set
 
 	*/
 	exports.handle_button = function(cms) {
@@ -3341,7 +3388,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the mobile logo placement on an orientation change.
+	Handles the mobile logo placement
+	on an orientation change.
 
 	*/
 	exports.handle_orientation = function() {
@@ -3372,13 +3420,17 @@ define(function() {
 
 	Parameters:
 		page: 
-			The name of the page currently set
+			The name of the page
+			currently set
 		subject: 
-			An object representing the current subject
+			An object representing
+			the current subject
 		topic: 
-			An object representing the current topic
+			An object representing
+			the current topic
 		section: 
-			An object representing the current section
+			An object representing
+			the current section
 
 	*/
 	exports.handle_breadcrumbs = function(page, obj, subject,
@@ -3463,11 +3515,13 @@ define(function() {
 	/*
 
 	Purpose:
-	Makes sure that the breadcrumbs on the topic page allign correctly.
+	Makes sure that the breadcrumbs on
+	the topic page allign correctly.
 
 	Parameters:
 		page: 
-			The name of the page currently set
+			The name of the page
+			currently set
 
 	*/
 	exports.mobile_breadcrumbs = function(page) {
@@ -3480,17 +3534,22 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the generation of breadcrumbs for the desktop title.
+	Handles the generation of breadcrumbs
+	for the desktop title.
 
 	Parameters:
 		page: 
-			The name of the page currently set
+			The name of the page
+			currently set
 		subject: 
-			An object representing the current subject
+			An object representing the
+			current subject
 		topic: 
-			An object representing the current topic
+			An object representing the
+			current topic
 		section: 
-			An object representing the current section
+			An object representing the
+			current section
 
 	*/
 	exports.handle_desktop_title = function(page,
@@ -3538,7 +3597,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Determines whether the current device is mobile or not.
+	Determines whether the current
+	device is mobile or not.
 
 	*/
 	exports.is_mobile = function() {
@@ -3581,11 +3641,70 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the initial load of any cms page.
+	Handles the modal that warns
+	a contributor about leaving
+	a page with unsaved changes.
 
 	Parameters:
 		router:
-			An object representing the router
+			An object representing
+			the router
+		page: 
+			The page to navigate to
+
+	*/
+	exports.warning_modal = function(router, page, obj) {
+		$.get("/pages/dist/modal-min.html")
+			.done(function(content) {
+			$("body").append(content);
+			$(".modal-trigger").leanModal({
+				dismissible: false,
+				opacity: 2,
+				inDuration: 1000,
+				outDuration: 1000
+			});
+			$("body").on("keypress", function(event) {
+			    if(event.which === 10 ||
+			    	event.which === 13) {
+			        return false;
+			    }
+			});
+			$("#popup_modal_footer").append($("<a>")
+				.attr("id", "popup_exit")
+				.addClass("modal-close waves-effect waves-blue btn-flat")
+				.text("Exit"));
+			$("#popup_title")
+				.text("Warning");
+			$("#popup_body").text("You are about" +
+				" to leave a page with unsaved" +
+				" changes!");
+			$("#popup_control").click();
+			$("#popup_exit").click(function(e) {
+				e.preventDefault();
+				$(".lean-overlay").remove();
+				$("#popup").remove();
+				$("#popup_control").remove();
+			});
+			$("#popup_submit").click(function(e) {
+				e.preventDefault();
+				$(".lean-overlay").remove();
+				$("#popup").remove();
+				$("#popup_control").remove();
+				router.navigate(page, obj);
+			});
+		});
+	};
+
+	/*
+
+	Purpose:
+	Handles the initial load of any
+	cms page.
+
+	Parameters:
+		router:
+			An object representing
+			the router
 		callback: 
 			A function callback
 
@@ -3665,7 +3784,9 @@ define(function() {
 
 	Parameters:
 		data: 
-			An array of objects representing the current set of data
+			An array of objects
+			representing the current
+			set of data
 
 	*/
 	exports.latex_cms_links = function(data) {
@@ -4274,33 +4395,47 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the loading of all content for the cms pages.
+	Handles the loading of all content
+	for the cms pages.
 
 	Parameters:
 		page: 
-			The name of the page currently set
+			The name of the page
+			currently set
 		cookie:
-			A browser cookie representing the live session of a contributor
+			A browser cookie
+			representing the live
+			session of a contributor
 		router:
-			An object representing the router
+			An object representing
+			the router
 		links:
-			An object that handles all links on a page
+			An object that handles
+			all links on a page
 		subjects:
-			An array of all subjects in the database
+			An array of all subjects
+			in the database
 		topics:
-			An array of all topics in the database
+			An array of all topics
+			in the database
 		sections:
-			An array of all sections in the database
+			An array of all sections
+			in the database
 		examples:
-			An array of all examples in the database
+			An array of all examples
+			in the database
 		subject: 
-			An object representing the current subject
+			An object representing
+			the current subject
 		topic: 
-			An object representing the current topic
+			An object representing
+			the current topic
 		section: 
-			An object representing the current section
+			An object representing
+			the current section
 		example:
-			An object representing the current example
+			An object representing
+			the current example
 
 	*/
 	exports.latex_cms = function(page, cookie, router, links,
@@ -4726,10 +4861,21 @@ define(function() {
 						exports.handle_button();
 					}
 				});
-				var titleComparison = 
-						data.title_cms.join("-----"),
-					contentComparison = 
-						data.content_cms.join("-----");
+				var titleComparison =
+						exports.replace_all(data.title_cms.join("-----")
+							.replace(/\\/g, "%5C"),
+							"'", "APOSTROPHE"),
+					contentComparison =
+						exports.replace_all(data.content_cms.join("-----")
+							.replace(/\\/g, "%5C"),
+							"'", "APOSTROPHE"),
+					headingComparison = undefined;
+				if(data.heading_cms !== undefined) {
+					headingComparison =
+						exports.replace_all(data.heading_cms
+							.replace(/\\/g, "%5C"),
+							"'", "APOSTROPHE");
+				}
 				$("#edit").click(function(e) {
 					e.preventDefault();
 					if(exports.rgba_to_hex(
@@ -5269,6 +5415,599 @@ define(function() {
 						exports.handle_li_coloring();
 						links.handle_links(router, subjects,
 							topics, sections, examples);
+						function compareTo(obj) {
+							var arr = [];
+							arr.push(obj.title_cms
+								.map(function(elem) {
+									return elem.split("\\$")
+										.map(function(iter, index) {
+										if(index % 2 == 0) {
+											return exports.replace_all(iter
+												.replace(/\\/g, "%5C"),
+												"'", "APOSTROPHE");
+										}
+										else { return iter; }
+								}).join("\$");
+							}));
+							arr.push(obj.content_cms
+								.map(function(elem) {
+									return elem.split("\\$")
+										.map(function(iter, index) {
+										if(index % 2 == 0) {
+											return exports.replace_all(iter
+												.replace(/\\/g, "%5C"),
+												"'", "APOSTROPHE");
+										}
+										else { return iter; }
+								}).join("\$");
+							}));
+							if(obj.heading_cms !== undefined) {
+								arr.push([obj.heading_cms]
+									.map(function(elem) {
+										return elem.split("\\$")
+											.map(function(iter, index) {
+											if(index % 2 == 0) {
+												return exports.replace_all(iter
+													.replace(/\\/g, "%5C"),
+													"'", "APOSTROPHE");
+											}
+											else { return iter; }
+									}).join("\$");
+								}));
+							}
+							return arr;
+						}
+						$("a").click(function(e) {
+							e.preventDefault();
+							if(exports.rgba_to_hex(
+								$("#edit").closest("li")
+								.css("background-color"))
+								== "#008cc3") {
+								if(page == "about") {
+									data.heading_cms =
+										$("#edit_title").text();
+								}
+								if($(".latex_body").length != 0) {
+									$(".latex_body").each(function(index) {
+										var arr_title = [],
+											arr_body = [];
+										$(".show_solution").each(function(index) {
+											var title = $(this).children()
+												.first().clone()
+												.children().remove()
+												.end().text();
+											$(this).children()
+												.children().each(function(index) {
+												if($(this).hasClass("toggle") &&
+													$(this).text() == "toggle_off") {
+													arr_title.push(title +
+														"_hidden");
+												}
+												else if($(this).hasClass("toggle") &&
+													$(this).text() == "toggle_on") {
+													arr_title.push(title);
+												}
+											});
+											$(this).siblings().each(function(index) {
+												arr_body.push(
+													$(this).children()[0].innerHTML);
+											});
+										});
+										data.title_cms = arr_title;
+										data.content_cms = arr_body;
+									});
+								}
+								else {
+									data.title_cms = [""];
+									data.content_cms = [""];
+								}
+							}
+							var id = $(this).attr("id"),
+								cont = compareTo(data);
+							if(id == "logo_cms") {
+								if(titleComparison === cont[0].join("-----")
+									&& contentComparison ===
+									cont[1].join("-----")) {
+									if(headingComparison !== undefined) {
+										if(headingComparison ===
+											cont[2].join("-----")) {
+											router.navigate("cms");
+										}
+										else {
+											exports.warning_modal(router, "cms");
+										}
+									}
+									else {
+										router.navigate("cms");
+									}
+								}
+								else {
+									exports.warning_modal(router, "cms");
+								}
+							}
+							else {
+								if(id) {
+									var holder = id.split("_"),
+										id_string = holder[0];
+									if(holder.length > 1) {
+										var id_num = holder[1];
+									}
+									if(id_string == "subjects"
+										&& holder[1] != "change"
+										&& holder[2] == "cms") {
+										var subject = subjects
+											.filter(function(iter) {
+												return iter.sid ==
+													id_num;
+										})[0];
+										if(titleComparison ===
+											cont[0].join("-----")
+											&& contentComparison ===
+											cont[1].join("-----")) {
+											if(headingComparison !== undefined) {
+												if(headingComparison ===
+													cont[2].join("-----")) {
+													router.navigate("subjectEdit",
+														{sname: subject.sname});
+												}
+												else {
+													exports.warning_modal(router,
+														"subjectEdit",
+														{sname: subject.sname});
+												}
+											}
+											else {
+												router.navigate("subjectEdit",
+													{sname: subject.sname});
+											}
+										}
+										else {
+											exports.warning_modal(router,
+												"subjectEdit",
+												{sname: subject.sname});
+										}
+									}
+									else if(id_string == "subjectnav"
+										&& holder[1] == "cms") {
+										if(titleComparison ===
+											cont[0].join("-----")
+											&& contentComparison ===
+											cont[1].join("-----")) {
+											if(headingComparison !== undefined) {
+												if(headingComparison ===
+													cont[2].join("-----")) {
+													router.navigate("cms");
+												}
+												else {
+													exports.warning_modal(router,
+														"cms");
+												}
+											}
+											else {
+												router.navigate("cms");
+											}
+										}
+										else {
+											exports.warning_modal(router,
+												"cms");
+										}
+										// router.navigate("cms");
+									}
+									else if(id_string == "topics"
+										&& holder[1] != "change"
+										&& holder[2] == "cms") {
+										var topic = topics
+											.filter(function(iter) {
+												return iter.tid ==
+													id_num;
+										})[0],
+											subject = subjects
+												.filter(function(iter) {
+													return iter.sid ==
+														topic.sid;
+										})[0];
+										if(titleComparison ===
+											cont[0].join("-----")
+											&& contentComparison ===
+											cont[1].join("-----")) {
+											if(headingComparison !== undefined) {
+												if(headingComparison ===
+													cont[2].join("-----")) {
+													router.navigate("subjectEdit.topicEdit", {
+														sname: subject.sname,
+														tname: topic.tname
+													});
+												}
+												else {
+													exports.warning_modal(router,
+														"subjectEdit.topicEdit", {
+															sname: subject.sname,
+															tname: topic.tname
+													});
+												}
+											}
+											else {
+												router.navigate("subjectEdit.topicEdit", {
+													sname: subject.sname,
+													tname: topic.tname
+												});
+											}
+										}
+										else {
+											exports.warning_modal(router,
+												"subjectEdit.topicEdit", {
+													sname: subject.sname,
+													tname: topic.tname
+											});
+										}
+										// router.navigate("subjectEdit.topicEdit", {
+										// 	sname: subject.sname,
+										// 	tname: topic.tname
+										// });	
+									}
+									else if(id_string == "topicnav"
+										&& holder[2] == "cms") {
+										var topic = topics
+											.filter(function(iter) {
+												return iter.tid ==
+													id_num;
+										})[0],
+											subject = subjects
+												.filter(function(iter) {
+													return iter.sid ==
+														topic.sid;
+										})[0];
+										if(titleComparison ===
+											cont[0].join("-----")
+											&& contentComparison ===
+											cont[1].join("-----")) {
+											if(headingComparison !== undefined) {
+												if(headingComparison ===
+													cont[2].join("-----")) {
+													router.navigate("subjectEdit",
+														{sname: subject.sname});
+												}
+												else {
+													exports.warning_modal(router,
+														"subjectEdit",
+														{sname: subject.sname});
+												}
+											}
+											else {
+												router.navigate("subjectEdit",
+													{sname: subject.sname});
+											}
+										}
+										else {
+											exports.warning_modal(router,
+												"subjectEdit",
+												{sname: subject.sname});
+										}
+										// router.navigate("subjectEdit",
+										// 	{sname: subject.sname});
+									}
+									else if(id_string == "sections"
+										&& holder[1] != "change"
+										&& holder[2] == "cms") {
+										var section = sections
+											.filter(function(iter) {
+												return iter.section_id ==
+													id_num;
+										})[0],
+											topic = topics
+												.filter(function(iter) {
+													return iter.tid ==
+														section.tid;
+										})[0],
+											subject = subjects
+												.filter(function(iter) {
+													return iter.sid ==
+														topic.sid;
+										})[0];
+										if(titleComparison ===
+											cont[0].join("-----")
+											&& contentComparison ===
+											cont[1].join("-----")) {
+											if(headingComparison !== undefined) {
+												if(headingComparison ===
+													cont[2].join("-----")) {
+													router.navigate("subjectEdit." +
+														"topicEdit.sectionEdit." +
+														"current_pageEdit", {
+															sname: subject.sname, 
+															tname: topic.tname, 
+															section_name: 
+															section.section_name, 
+															current_page_name: 
+																section.section_name
+													});
+												}
+												else {
+													exports.warning_modal(router,
+														"subjectEdit." +
+														"topicEdit.sectionEdit." +
+														"current_pageEdit", {
+															sname: subject.sname, 
+															tname: topic.tname, 
+															section_name: 
+															section.section_name, 
+															current_page_name: 
+																section.section_name
+													});
+												}
+											}
+											else {
+												router.navigate("subjectEdit." +
+													"topicEdit.sectionEdit." +
+													"current_pageEdit", {
+														sname: subject.sname, 
+														tname: topic.tname, 
+														section_name: 
+														section.section_name, 
+														current_page_name: 
+															section.section_name
+												});
+											}
+										}
+										else {
+											exports.warning_modal(router,
+												"subjectEdit." +
+												"topicEdit.sectionEdit." +
+												"current_pageEdit", {
+													sname: subject.sname, 
+													tname: topic.tname, 
+													section_name: 
+													section.section_name, 
+													current_page_name: 
+														section.section_name
+											});
+										}
+										// router.navigate("subjectEdit." +
+										// 	"topicEdit.sectionEdit." +
+										// 	"current_pageEdit", {
+										// 	sname: subject.sname, 
+										// 	tname: topic.tname, 
+										// 	section_name: 
+										// 	section.section_name, 
+										// 	current_page_name: 
+										// 		section.section_name
+										// });
+									}
+									else if(id_string == "sectionnav"
+										&& holder[2] == "cms") {
+										var section = sections
+											.filter(function(iter) {
+												return iter.section_id ==
+													id_num;
+										})[0],
+											topic = topics
+												.filter(function(iter) {
+													return iter.tid ==
+														section.tid;
+										})[0],
+											subject = subjects
+												.filter(function(iter) {
+													return iter.sid ==
+														topic.sid;
+										})[0];
+										if(titleComparison ===
+											cont[0].join("-----")
+											&& contentComparison ===
+											cont[1].join("-----")) {
+											if(headingComparison !== undefined) {
+												if(headingComparison ===
+													cont[2].join("-----")) {
+													router.navigate("subjectEdit.topicEdit", {
+														sname: subject.sname,
+														tname: topic.tname
+													});
+												}
+												else {
+													exports.warning_modal(router,
+														"subjectEdit.topicEdit", {
+															sname: subject.sname, 
+															tname: topic.tname
+													});
+												}
+											}
+											else {
+												router.navigate("subjectEdit.topicEdit", {
+													sname: subject.sname,
+													tname: topic.tname
+												});
+											}
+										}
+										else {
+											exports.warning_modal(router,
+												"subjectEdit.topicEdit", {
+													sname: subject.sname, 
+													tname: topic.tname
+											});
+										}
+										// router.navigate("subjectEdit.topicEdit", {
+										// 	sname: subject.sname,
+										// 	tname: topic.tname
+										// });
+									}
+									else if(id_string == "sectionname"
+										&& holder[2] == "cms") {
+										var section = sections
+											.filter(function(iter) {
+												return iter.section_id ==
+													id_num;
+										})[0],
+											topic = topics
+												.filter(function(iter) {
+													return iter.tid ==
+														section.tid;
+										})[0],
+											subject = subjects
+												.filter(function(iter) {
+													return iter.sid ==
+														topic.sid;
+										})[0];
+										if(titleComparison ===
+											cont[0].join("-----")
+											&& contentComparison ===
+											cont[1].join("-----")) {
+											if(headingComparison !== undefined) {
+												if(headingComparison ===
+													cont[2].join("-----")) {
+													router.navigate("subjectEdit." +
+														"topicEdit.sectionEdit." +
+														"current_pageEdit", {
+															sname: subject.sname, 
+															tname: topic.tname, 
+															section_name: 
+																section.section_name, 
+															current_page_name: 
+																section.section_name
+													});
+												}
+												else {
+													exports.warning_modal(router,
+														"subjectEdit." +
+														"topicEdit.sectionEdit." +
+														"current_pageEdit", {
+															sname: subject.sname, 
+															tname: topic.tname, 
+															section_name: 
+																section.section_name, 
+															current_page_name: 
+																section.section_name
+													});
+												}
+											}
+											else {
+												router.navigate("subjectEdit." +
+													"topicEdit.sectionEdit." +
+													"current_pageEdit", {
+														sname: subject.sname, 
+														tname: topic.tname, 
+														section_name: 
+															section.section_name, 
+														current_page_name: 
+															section.section_name
+												});
+											}
+										}
+										else {
+											exports.warning_modal(router,
+												"subjectEdit." +
+												"topicEdit.sectionEdit." +
+												"current_pageEdit", {
+													sname: subject.sname, 
+													tname: topic.tname, 
+													section_name: 
+														section.section_name, 
+													current_page_name: 
+														section.section_name
+											});
+										}
+										// router.navigate("subjectEdit.topicEdit." +
+										// 	"sectionEdit.current_pageEdit", { 
+										// 	sname: subject.sname, 
+										// 	tname: topic.tname, 
+										// 	section_name: section.section_name, 
+										// 	current_page_name:
+										// 		section.section_name
+										// });
+									}
+									else if(id_string == "examples"
+										&& holder[1] != "change"
+										&& holder[2] == "cms") {
+										var example = examples
+											.filter(function(iter) {
+												return iter.eid ==
+													id_num;
+										})[0],
+											section = sections
+												.filter(function(iter) {
+													return iter.section_id ==
+														example.section_id;
+										})[0],
+											topic = topics
+												.filter(function(iter) {
+													return iter.tid ==
+														section.tid;
+										})[0],
+											subject = subjects
+												.filter(function(iter) {
+													return iter.sid ==
+													topic.sid;
+										})[0];
+										if(titleComparison ===
+											cont[0].join("-----")
+											&& contentComparison ===
+											cont[1].join("-----")) {
+											if(headingComparison !== undefined) {
+												if(headingComparison ===
+													cont[2].join("-----")) {
+													router.navigate("subjectEdit." +
+														"topicEdit.sectionEdit." +
+														"current_pageEdit", {
+															sname: subject.sname, 
+															tname: topic.tname, 
+															section_name: 
+																section.section_name, 
+															current_page_name: 
+																section.section_name
+													});
+												}
+												else {
+													exports.warning_modal(router,
+														"subjectEdit." +
+														"topicEdit.sectionEdit." +
+														"current_pageEdit", {
+															sname: subject.sname, 
+															tname: topic.tname, 
+															section_name: 
+																section.section_name, 
+															current_page_name: 
+																section.section_name
+													});
+												}
+											}
+											else {
+												router.navigate("subjectEdit." +
+													"topicEdit.sectionEdit." +
+													"current_pageEdit", {
+														sname: subject.sname, 
+														tname: topic.tname, 
+														section_name: 
+															section.section_name, 
+														current_page_name: 
+															section.section_name
+												});
+											}
+										}
+										else {
+											exports.warning_modal(router,
+												"subjectEdit." +
+												"topicEdit.sectionEdit." +
+												"current_pageEdit", {
+													sname: subject.sname, 
+													tname: topic.tname, 
+													section_name: 
+														section.section_name, 
+													current_page_name: 
+														section.section_name
+											});
+										}
+										// router.navigate("subjectEdit." +
+										// 	"topicEdit.sectionEdit." +
+										// 	"current_pageEdit", { 
+										// 	sname: subject.sname, 
+										// 	tname: topic.tname, 
+										// 	section_name:
+										// 		section.section_name, 
+										// 	current_page_name:
+										// 		example.ename
+										// });
+									}
+								}
+							}
+						});
 						exports.handle_orientation();
 						if(page == "about") {
 							exports.handle_desktop_title("about");
@@ -5399,7 +6138,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the initial load of any client page.
+	Handles the initial load of
+	any client page.
 
 	Parameters:
 		callback: 
@@ -5418,31 +6158,43 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the loading of all content for the client pages.
+	Handles the loading of all content
+	for the client pages.
 
 	Parameters:
 		page: 
-			The name of the page currently set
+			The name of the page
+			currently set
 		router:
-			An object representing the router
+			An object representing
+			the router
 		links:
-			An object that handles all links on a page
+			An object that handles
+			all links on a page
 		subjects:
-			An array of all subjects in the database
+			An array of all subjects
+			in the database
 		topics:
-			An array of all topics in the database
+			An array of all topics
+			in the database
 		sections:
-			An array of all sections in the database
+			An array of all sections
+			in the database
 		examples:
-			An array of all examples in the database
+			An array of all examples
+			in the database
 		subject: 
-			An object representing the current subject
+			An object representing
+			the current subject
 		topic: 
-			An object representing the current topic
+			An object representing
+			the current topic
 		section: 
-			An object representing the current section
+			An object representing
+			the current section
 		example:
-			An object representing the current example
+			An object representing
+			the current example
 
 	*/
 	exports.latex = function(page, router, links,

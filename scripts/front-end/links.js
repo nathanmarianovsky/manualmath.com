@@ -21,8 +21,7 @@ define(["dist/functions-min", "materialize"],
 
 	*/
 	exports.handle_links = function(router, subjects,
-		topics, sections, examples, titleComparison,
-		contentComparison, cmsObj) {
+		topics, sections, examples) {
 		$("button").click(function(e) {
 			e.preventDefault();
 			var statement = "";
@@ -146,16 +145,6 @@ define(["dist/functions-min", "materialize"],
 			if(id == "about" || id == "logo") {
 				router.navigate("about");
 			}
-			else if(id == "logo_cms") {
-				if(titleComparison === cmsObj.title_cms.join("-----")
-					&& contentComparison ===
-					cmsObj.content_cms.join("-----")) {
-					router.navigate("cms");
-				}
-				else {
-					functions.warning_modal(router, "cms");
-				}
-			}
 			else if(id == "login_click") {
 				$("#register_input").hide(400);
 				$("#login_input").show(400);
@@ -272,17 +261,10 @@ define(["dist/functions-min", "materialize"],
 							router.navigate("subject",
 								{sname: subject.sname});
 						}
-						else {
-							router.navigate("subjectEdit",
-								{sname: subject.sname});
-						}
 					}
 					else if(id_string == "subjectnav") {
 						if(holder[1] != "cms") {
 							router.navigate("about");
-						}
-						else {
-							router.navigate("cms");
 						}
 					}
 					else if(id_string == "topics"
@@ -303,12 +285,6 @@ define(["dist/functions-min", "materialize"],
 								tname: topic.tname
 							});						
 						}
-						else {
-							router.navigate("subjectEdit.topicEdit", {
-								sname: subject.sname,
-								tname: topic.tname
-							});						
-						}
 					}
 					else if(id_string == "topicnav") {
 						var topic = topics
@@ -323,10 +299,6 @@ define(["dist/functions-min", "materialize"],
 						})[0];
 						if(holder[2] != "cms") {
 							router.navigate("subject",
-								{sname: subject.sname});
-						}
-						else {
-							router.navigate("subjectEdit",
 								{sname: subject.sname});
 						}
 					}
@@ -359,18 +331,6 @@ define(["dist/functions-min", "materialize"],
 									section.section_name
 							});					
 						}
-						else {
-							router.navigate("subjectEdit." +
-								"topicEdit.sectionEdit." +
-								"current_pageEdit", {
-								sname: subject.sname, 
-								tname: topic.tname, 
-								section_name: 
-								section.section_name, 
-								current_page_name: 
-									section.section_name
-							});					
-						}
 					}
 					else if(id_string == "sectionnav") {
 						var section = sections
@@ -390,12 +350,6 @@ define(["dist/functions-min", "materialize"],
 						})[0];
 						if(holder[2] != "cms") {
 							router.navigate("subject.topic", {
-								sname: subject.sname,
-								tname: topic.tname
-							});
-						}
-						else {
-							router.navigate("subjectEdit.topicEdit", {
 								sname: subject.sname,
 								tname: topic.tname
 							});
@@ -420,16 +374,6 @@ define(["dist/functions-min", "materialize"],
 						if(holder[2] != "cms") {
 							router.navigate("subject.topic." +
 								"section.current_page", { 
-								sname: subject.sname, 
-								tname: topic.tname, 
-								section_name: section.section_name, 
-								current_page_name:
-									section.section_name
-							});
-						}
-						else {
-							router.navigate("subjectEdit.topicEdit." +
-								"sectionEdit.current_pageEdit", { 
 								sname: subject.sname, 
 								tname: topic.tname, 
 								section_name: section.section_name, 
@@ -463,18 +407,6 @@ define(["dist/functions-min", "materialize"],
 						if(holder[2] != "cms") {
 							router.navigate("subject.topic." +
 								"section.current_page", { 
-								sname: subject.sname, 
-								tname: topic.tname, 
-								section_name:
-									section.section_name, 
-								current_page_name:
-									example.ename
-							});
-						}
-						else {
-							router.navigate("subjectEdit." +
-								"topicEdit.sectionEdit." +
-								"current_pageEdit", { 
 								sname: subject.sname, 
 								tname: topic.tname, 
 								section_name:
