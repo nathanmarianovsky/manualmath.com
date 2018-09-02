@@ -3698,6 +3698,65 @@ define(function() {
 	/*
 
 	Purpose:
+	Returns an array of values
+	which the original heading_cms,
+	title_cms, and content_cms
+	can be compared to.
+
+	Parameters:
+		obj:
+			An object representing
+			the current set of data
+			including any recent
+			changes
+
+	*/
+	exports.compareTo = function(obj) {
+		var arr = [];
+		arr.push(obj.title_cms
+			.map(function(elem) {
+				return elem.split("\\$")
+					.map(function(iter, index) {
+					if(index % 2 == 0) {
+						return exports.replace_all(iter
+							.replace(/\\/g, "%5C"),
+							"'", "APOSTROPHE");
+					}
+					else { return iter; }
+			}).join("\$");
+		}));
+		arr.push(obj.content_cms
+			.map(function(elem) {
+				return elem.split("\\$")
+					.map(function(iter, index) {
+					if(index % 2 == 0) {
+						return exports.replace_all(iter
+							.replace(/\\/g, "%5C"),
+							"'", "APOSTROPHE");
+					}
+					else { return iter; }
+			}).join("\$");
+		}));
+		if(obj.heading_cms !== undefined) {
+			arr.push([obj.heading_cms]
+				.map(function(elem) {
+					return elem.split("\\$")
+						.map(function(iter, index) {
+						if(index % 2 == 0) {
+							return exports.replace_all(iter
+								.replace(/\\/g, "%5C"),
+								"'", "APOSTROPHE");
+						}
+						else { return iter; }
+				}).join("\$");
+			}));
+		}
+		return arr;
+	};
+
+	/*
+
+	Purpose:
 	Handles the initial load of any
 	cms page.
 
@@ -3797,11 +3856,31 @@ define(function() {
 		$(".add-table").off();
 		$(".add-link").off();
 		$(".add-bullet").off();
+		$(".arrow-up").off();
+		$(".arrow-down").off();
 		$(".add-row").off();
 		$(".add-column").off();
 		$(".remove-row").off();
 		$(".remove-column").off();
 		$("#latex .solution_display").off();
+		$(".solution_toggle").tooltip("destroy");
+		$(".del-box-tooltipped").tooltip("destroy");
+		$(".add-math-tooltipped").tooltip("destroy");
+		$(".add-image-tooltipped").tooltip("destroy");
+		$(".add-table-tooltipped").tooltip("destroy");
+		$(".add-link-tooltipped").tooltip("destroy");
+		$(".add-bullet-tooltipped").tooltip("destroy");
+		$(".arrow-up-tooltipped").tooltip("destroy");
+		$(".arrow-down-tooltipped").tooltip("destroy");
+		$(".solution_toggle").tooltip();
+		$(".del-box-tooltipped").tooltip();
+		$(".add-math-tooltipped").tooltip();
+		$(".add-image-tooltipped").tooltip();
+		$(".add-table-tooltipped").tooltip();
+		$(".add-link-tooltipped").tooltip();
+		$(".add-bullet-tooltipped").tooltip();
+		$(".arrow-up-tooltipped").tooltip();
+		$(".arrow-down-tooltipped").tooltip();
 		$(".toggle").on("click", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -3823,20 +3902,6 @@ define(function() {
 				data.title_cms[ref] += "_hidden";
 			}
 		});
-		$(".solution_toggle").tooltip("destroy");
-		$(".del-box-tooltipped").tooltip("destroy");
-		$(".add-math-tooltipped").tooltip("destroy");
-		$(".add-image-tooltipped").tooltip("destroy");
-		$(".add-table-tooltipped").tooltip("destroy");
-		$(".add-link-tooltipped").tooltip("destroy");
-		$(".add-bullet-tooltipped").tooltip("destroy");
-		$(".solution_toggle").tooltip();
-		$(".del-box-tooltipped").tooltip();
-		$(".add-math-tooltipped").tooltip();
-		$(".add-image-tooltipped").tooltip();
-		$(".add-table-tooltipped").tooltip();
-		$(".add-link-tooltipped").tooltip();
-		$(".add-bullet-tooltipped").tooltip();
 		$(".add-bullet").on("click", function(e) {
 			e.preventDefault();
 			var obj = $(this).parent().parent().parent()
@@ -4113,6 +4178,24 @@ define(function() {
 			obj.append($("<div>")
 				.addClass("latex_equation")
 				.text("$\\eqalign{New Equation}$"));
+		});
+		$(".arrow-up").on("click", function(e) {
+			e.preventDefault();
+			var box = $(this).parent().parent().parent();
+			if(box.prev().attr("id") != "bar-div") {
+				var above = box.prev();
+				box.detach();
+				above.before(box);
+			}
+		});
+		$(".arrow-down").on("click", function(e) {
+			e.preventDefault();
+			var box = $(this).parent().parent().parent();
+			if(box.next().length != 0) {
+				var below = box.next();
+				box.detach();
+				below.after(box);
+			}
 		});
 		$(".add-image").on("click", function(e) {
 			e.preventDefault();
@@ -4968,6 +5051,24 @@ define(function() {
 										"data-position": "top",
 										"data-tooltip": "Insert List Below"
 									}),
+								span_arrow_up = $("<span>")
+									.addClass("solution_arrow_up arrow-up-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons arrow-up")
+										.text("arrow_upward"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Move Up"
+									}),
+								span_arrow_down = $("<span>")
+									.addClass("solution_arrow_down arrow-down-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons arrow-down")
+										.text("arrow_downward"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Move Down"
+									}),
 								span_del = $("<span>")
 									.addClass("solution_del del-box-tooltipped")
 									.append($("<i>")
@@ -5003,8 +5104,10 @@ define(function() {
 							cont_div.append(latex_body);
 							show_solution.append(span_box,
 								span_table, span_image, span_bullet,
-								span_link, span_del, span_toggle,
-								span);
+								span_link, span_del,
+								span_arrow_up,
+								span_arrow_down,
+								span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
@@ -5047,6 +5150,8 @@ define(function() {
 						$(".add-table-tooltipped").tooltip();
 						$(".add-link-tooltipped").tooltip();
 						$(".add-bullet-tooltipped").tooltip();
+						$(".arrow-up-tooltipped").tooltip();
+						$(".arrow-down-tooltipped").tooltip();
 						exports.handle_button(1);
 						$("#add-box").off("click");
 						$("#add-box").on("click", function(e) {
@@ -5118,6 +5223,24 @@ define(function() {
 										"data-position": "top",
 										"data-tooltip": "Insert List Below"
 									}),
+								span_arrow_up = $("<span>")
+									.addClass("solution_arrow_up arrow-up-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons arrow-up")
+										.text("arrow_upward"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Move Up"
+									}),
+								span_arrow_down = $("<span>")
+									.addClass("solution_arrow_down arrow-down-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons arrow-down")
+										.text("arrow_downward"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Move Down"
+									}),
 								span_del = $("<span>")
 									.addClass("solution_del del-box-tooltipped")
 									.append($("<i>")
@@ -5142,6 +5265,8 @@ define(function() {
 							show_solution.append(span_box,
 								span_table, span_image,
 								span_bullet, span_link,
+								span_arrow_up,
+								span_arrow_down,
 								span_del, span_toggle,
 								span);
 							accordion.append(show_solution);
@@ -5415,48 +5540,6 @@ define(function() {
 						exports.handle_li_coloring();
 						links.handle_links(router, subjects,
 							topics, sections, examples);
-						function compareTo(obj) {
-							var arr = [];
-							arr.push(obj.title_cms
-								.map(function(elem) {
-									return elem.split("\\$")
-										.map(function(iter, index) {
-										if(index % 2 == 0) {
-											return exports.replace_all(iter
-												.replace(/\\/g, "%5C"),
-												"'", "APOSTROPHE");
-										}
-										else { return iter; }
-								}).join("\$");
-							}));
-							arr.push(obj.content_cms
-								.map(function(elem) {
-									return elem.split("\\$")
-										.map(function(iter, index) {
-										if(index % 2 == 0) {
-											return exports.replace_all(iter
-												.replace(/\\/g, "%5C"),
-												"'", "APOSTROPHE");
-										}
-										else { return iter; }
-								}).join("\$");
-							}));
-							if(obj.heading_cms !== undefined) {
-								arr.push([obj.heading_cms]
-									.map(function(elem) {
-										return elem.split("\\$")
-											.map(function(iter, index) {
-											if(index % 2 == 0) {
-												return exports.replace_all(iter
-													.replace(/\\/g, "%5C"),
-													"'", "APOSTROPHE");
-											}
-											else { return iter; }
-									}).join("\$");
-								}));
-							}
-							return arr;
-						}
 						$("a").click(function(e) {
 							e.preventDefault();
 							if(exports.rgba_to_hex(
@@ -5503,7 +5586,7 @@ define(function() {
 								}
 							}
 							var id = $(this).attr("id"),
-								cont = compareTo(data);
+								cont = exports.compareTo(data);
 							if(id == "logo_cms") {
 								if(titleComparison === cont[0].join("-----")
 									&& contentComparison ===

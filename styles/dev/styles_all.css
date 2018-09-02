@@ -532,7 +532,9 @@ nav {
 .solution_toggle, .solution_del,
 .solution_img, .solution_table,
 .solution_box, .solution_link,
-.solution_bullet {
+.solution_bullet,
+.solution_arrow_up,
+.solution_arrow_down {
 	position: absolute;
     top: -10px;
     font-size: 40px;
@@ -548,24 +550,32 @@ nav {
     right: 150px;
 }
 
-.solution_link {
+.solution_arrow_up {
 	right: 200px;
 }
 
-.solution_bullet {
+.solution_arrow_down {
 	right: 250px;
 }
 
+.solution_link {
+	right: 300px;
+}
+
+.solution_bullet {
+	right: 350px;
+}
+
 .solution_img {
-    right: 300px;
+    right: 400px;
 }
 
 .solution_table {
-    right: 350px;
+    right: 450px;
 }
 
 .solution_box {
-    right: 400px;
+    right: 500px;
 }
 
 .table-buttons {
