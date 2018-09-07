@@ -13,6 +13,7 @@
     - [Navigating the CMS Bar](#navigating-the-cms-bar)
     - [Editing a Page](#editing-a-page)
     - [Editing the Sidenav](#editing-the-sidenav)
+    - [Floating Action Button](#floating-action-button)
 - [Styling](#styling)
 - [Front-End Functionality](#front-end-functionality)
 - [Using the API](#using-the-api)
@@ -39,7 +40,7 @@
     - [Getting List of Unapproved Contributors (POST)](#getting-list-of-unapproved-contributors-post)
     - [Getting List of Non-Committee Members (POST)](#getting-list-of-non-committee-members-post)
     - [Recording a Contributor's Live Session (POST)](#recording-a-contributors-live-session-post)
-    - [Checking if a Contributor's is Live (POST)](#checking-if-a-contributors-is-live-post)
+    - [Checking if a Contributor is Live (POST)](#checking-if-a-contributors-is-live-post)
     - [Removing a Contributor's Live Session (POST)](#removing-a-contributors-live-session-post)
     - [Checking the Existence of an Email (POST)](#checking-the-existence-of-an-email-post)
     - [Checking Login Credentials (POST)](#checking-login-credentials-post)
@@ -49,7 +50,7 @@
     - [Counting the Number of Contributors (GET)](#counting-the-number-of-contributors-get)
     - [Counting the Number of Committee Members (GET)](#counting-the-number-of-committee-members-get)
 - [Running the Server](#running-the-server)
-    - [Apache Server](#apache-server)
+    - [Apache Server (DEPRECATED)](#apache-server-deprecated)
     - [NodeJS Server](#nodejs-server)
 - [Future Plans](#future-plans)
 - [License](#license)
@@ -390,7 +391,7 @@ localhost/api/cms/live/add
 alongside the JSON data that requires the parameter:
 * email
 
-### Checking if a Contributor's is Live (POST)
+### Checking if a Contributor is Live (POST)
 To check if a contributor is currently live you would call on:
 ```
 localhost/api/cms/live/check
@@ -462,7 +463,7 @@ localhost/api/cms/count/committee
 ```
 
 # Running the Server
-### Apache Server (Deprecated)
+### Apache Server (DEPRECATED)
 Prior to running you need to modify the following code at "/api/config.php":
 ```php
 $mysql_hostname = "";
