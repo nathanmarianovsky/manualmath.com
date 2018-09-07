@@ -3863,26 +3863,16 @@ define(function() {
 		$(".remove-row").off();
 		$(".remove-column").off();
 		$(".note-box").off();
-		$("#latex .solution_display").off();
-		$(".solution_toggle").tooltip("destroy");
-		$(".del-box-tooltipped").tooltip("destroy");
-		$(".add-math-tooltipped").tooltip("destroy");
-		$(".add-image-tooltipped").tooltip("destroy");
-		$(".add-table-tooltipped").tooltip("destroy");
-		$(".add-link-tooltipped").tooltip("destroy");
-		$(".add-bullet-tooltipped").tooltip("destroy");
-		$(".arrow-up-tooltipped").tooltip("destroy");
-		$(".arrow-down-tooltipped").tooltip("destroy");
-		$(".solution_toggle").tooltip();
-		$(".del-box-tooltipped").tooltip();
-		$(".add-math-tooltipped").tooltip();
-		$(".add-image-tooltipped").tooltip();
-		$(".add-table-tooltipped").tooltip();
-		$(".add-link-tooltipped").tooltip();
-		$(".add-bullet-tooltipped").tooltip();
-		$(".arrow-up-tooltipped").tooltip();
-		$(".arrow-down-tooltipped").tooltip();
-		$(".note-box-tooltipped").tooltip();
+		$(".solution_display").off();
+		$(".show_solution").each(function(index) {
+			$(this).find("span").each(function(index) {
+				if($(this).attr("data-position") == "top") {
+					$("#" + $(this).attr("data-tooltip-id"))
+						.remove();
+				}
+			});
+		});
+		$(".edit-tooltipped").tooltip();
 		$(".toggle").on("click", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -4710,6 +4700,8 @@ define(function() {
 					.css("pointer-events", "none");
 				$("#live-version").click(function(e) {
 					e.preventDefault();
+					$("#" + $(this).attr("data-tooltip-id"))
+						.css("display", "none");
 					if(exports.rgba_to_hex(
 						$("#edit").closest("li")
 						.css("background-color"))
@@ -4837,6 +4829,8 @@ define(function() {
 				});
 				$("#cms-version").click(function(e) {
 					e.preventDefault();
+					$("#" + $(this).attr("data-tooltip-id"))
+						.css("display", "none");
 					if(exports.rgba_to_hex(
 						$("#edit").closest("li")
 						.css("background-color"))
@@ -4980,6 +4974,8 @@ define(function() {
 				}
 				$("#edit").click(function(e) {
 					e.preventDefault();
+					$("#" + $(this).attr("data-tooltip-id"))
+						.css("display", "none");
 					if(exports.rgba_to_hex(
 						$("#edit").closest("li")
 						.css("background-color"))
@@ -5020,13 +5016,13 @@ define(function() {
 								span = $("<span>")
 									.addClass("solution_display"),
 								span_toggle = $("<span>")
-									.addClass("solution_toggle")
+									.addClass("solution_toggle edit-tooltipped")
 									.attr({
 										"data-position": "top",
-										"data-tooltip": "Toggle the Display"
+										"data-tooltip": "Toggle Box Display"
 									}),
 								span_box = $("<span>")
-									.addClass("solution_box add-math-tooltipped")
+									.addClass("solution_box edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-math")
 										.text("border_color"))
@@ -5035,7 +5031,7 @@ define(function() {
 										"data-tooltip": "Insert Math Box Below"
 									}),
 								span_image = $("<span>")
-									.addClass("solution_img add-image-tooltipped")
+									.addClass("solution_img edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-image")
 										.text("image"))
@@ -5044,7 +5040,7 @@ define(function() {
 										"data-tooltip": "Insert Image Below"
 									}),
 								span_table = $("<span>")
-									.addClass("solution_table add-table-tooltipped")
+									.addClass("solution_table edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-table")
 										.text("table_chart"))
@@ -5053,7 +5049,7 @@ define(function() {
 										"data-tooltip": "Insert Table Below"
 									}),
 								span_link = $("<span>")
-									.addClass("solution_link add-link-tooltipped")
+									.addClass("solution_link edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-link")
 										.text("link"))
@@ -5062,7 +5058,7 @@ define(function() {
 										"data-tooltip": "Insert Link Below"
 									}),
 								span_bullet = $("<span>")
-									.addClass("solution_bullet add-bullet-tooltipped")
+									.addClass("solution_bullet edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-bullet")
 										.text("list"))
@@ -5071,7 +5067,7 @@ define(function() {
 										"data-tooltip": "Insert List Below"
 									}),
 								span_arrow_up = $("<span>")
-									.addClass("solution_arrow_up arrow-up-tooltipped")
+									.addClass("solution_arrow_up edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons arrow-up")
 										.text("arrow_upward"))
@@ -5080,7 +5076,7 @@ define(function() {
 										"data-tooltip": "Move Up"
 									}),
 								span_arrow_down = $("<span>")
-									.addClass("solution_arrow_down arrow-down-tooltipped")
+									.addClass("solution_arrow_down edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons arrow-down")
 										.text("arrow_downward"))
@@ -5089,22 +5085,22 @@ define(function() {
 										"data-tooltip": "Move Down"
 									}),
 								span_del = $("<span>")
-									.addClass("solution_del del-box-tooltipped")
+									.addClass("solution_del edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons del-box")
 										.text("delete_sweep"))
 									.attr({
 										"data-position": "top",
-										"data-tooltip": "Delete Box Below"
+										"data-tooltip": "Delete Box"
 									}),
 								span_note = $("<span>")
-									.addClass("solution_note note-box-tooltipped")
+									.addClass("solution_note edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons note-box")
 										.text("chat_bubble"))
 									.attr({
 										"data-position": "top",
-										"data-tooltip": "Insert Comment"
+										"data-tooltip": "Insert Comment Below"
 									}),
 								latex_body = $("<div>")
 									.addClass("latex_body");
@@ -5171,16 +5167,7 @@ define(function() {
 						    	return false;
 						    }
 						});
-						$(".solution_toggle").tooltip();
-						$(".del-box-tooltipped").tooltip();
-						$(".add-math-tooltipped").tooltip();
-						$(".add-image-tooltipped").tooltip();
-						$(".add-table-tooltipped").tooltip();
-						$(".add-link-tooltipped").tooltip();
-						$(".add-bullet-tooltipped").tooltip();
-						$(".arrow-up-tooltipped").tooltip();
-						$(".arrow-down-tooltipped").tooltip();
-						$(".note-box-tooltipped").tooltip();
+						$(".edit-tooltipped").tooltip();
 						exports.handle_button(1);
 						$("#add-box").off("click");
 						$("#add-box").on("click", function(e) {
@@ -5202,13 +5189,13 @@ define(function() {
 								span = $("<span>")
 									.addClass("solution_display"),
 								span_toggle = $("<span>")
-									.addClass("solution_toggle")
+									.addClass("solution_toggle edit-tooltipped")
 									.attr({
 										"data-position": "top",
-										"data-tooltip": "Toggle the Display"
+										"data-tooltip": "Toggle Box Display"
 									}),
 								span_box = $("<span>")
-									.addClass("solution_box add-math-tooltipped")
+									.addClass("solution_box edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-math")
 										.text("border_color"))
@@ -5217,7 +5204,7 @@ define(function() {
 										"data-tooltip": "Insert Math Box Below"
 									}),
 								span_image = $("<span>")
-									.addClass("solution_img add-image-tooltipped")
+									.addClass("solution_img edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-image")
 										.text("image"))
@@ -5226,7 +5213,7 @@ define(function() {
 										"data-tooltip": "Insert Image Below"
 									}),
 								span_table = $("<span>")
-									.addClass("solution_table add-table-tooltipped")
+									.addClass("solution_table edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-table")
 										.text("table_chart"))
@@ -5235,7 +5222,7 @@ define(function() {
 										"data-tooltip": "Insert Table Below"
 									}),
 								span_link = $("<span>")
-									.addClass("solution_link add-link-tooltipped")
+									.addClass("solution_link edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-link")
 										.text("link"))
@@ -5244,7 +5231,7 @@ define(function() {
 										"data-tooltip": "Insert Link Below"
 									}),
 								span_bullet = $("<span>")
-									.addClass("solution_bullet add-bullet-tooltipped")
+									.addClass("solution_bullet edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons add-bullet")
 										.text("list"))
@@ -5253,7 +5240,7 @@ define(function() {
 										"data-tooltip": "Insert List Below"
 									}),
 								span_arrow_up = $("<span>")
-									.addClass("solution_arrow_up arrow-up-tooltipped")
+									.addClass("solution_arrow_up edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons arrow-up")
 										.text("arrow_upward"))
@@ -5262,7 +5249,7 @@ define(function() {
 										"data-tooltip": "Move Up"
 									}),
 								span_arrow_down = $("<span>")
-									.addClass("solution_arrow_down arrow-down-tooltipped")
+									.addClass("solution_arrow_down edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons arrow-down")
 										.text("arrow_downward"))
@@ -5271,22 +5258,22 @@ define(function() {
 										"data-tooltip": "Move Down"
 									}),
 								span_del = $("<span>")
-									.addClass("solution_del del-box-tooltipped")
+									.addClass("solution_del edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons del-box")
 										.text("delete_sweep"))
 									.attr({
 										"data-position": "top",
-										"data-tooltip": "Delete Box Below"
+										"data-tooltip": "Delete Box"
 									}),
 								span_note = $("<span>")
-									.addClass("solution_note note-box-tooltipped")
+									.addClass("solution_note edit-tooltipped")
 									.append($("<i>")
 										.addClass("material-icons note-box")
 										.text("chat_bubble"))
 									.attr({
 										"data-position": "top",
-										"data-tooltip": "Insert Comment"
+										"data-tooltip": "Insert Comment Below"
 									}),
 								latex_body = $("<div>")
 									.addClass("latex_body")
