@@ -534,7 +534,8 @@ nav {
 .solution_box, .solution_link,
 .solution_bullet,
 .solution_arrow_up,
-.solution_arrow_down {
+.solution_arrow_down,
+.solution_note {
 	position: absolute;
     top: -10px;
     font-size: 40px;
@@ -558,24 +559,28 @@ nav {
 	right: 250px;
 }
 
-.solution_link {
+.solution_note {
 	right: 300px;
 }
 
-.solution_bullet {
+.solution_link {
 	right: 350px;
 }
 
-.solution_img {
-    right: 400px;
+.solution_bullet {
+	right: 400px;
 }
 
-.solution_table {
+.solution_img {
     right: 450px;
 }
 
-.solution_box {
+.solution_table {
     right: 500px;
+}
+
+.solution_box {
+    right: 550px;
 }
 
 .table-buttons {
@@ -610,4 +615,16 @@ nav {
 	position: inherit;
 	left: 0px;
 	visibility: visible;
+}
+
+.note-row {
+	width: 75%;
+}
+
+.note-col {
+	width: 100% !important;
+}
+
+.card-panel {
+	background-color: #FFBF67 !important;
 }

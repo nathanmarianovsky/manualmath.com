@@ -3862,6 +3862,7 @@ define(function() {
 		$(".add-column").off();
 		$(".remove-row").off();
 		$(".remove-column").off();
+		$(".note-box").off();
 		$("#latex .solution_display").off();
 		$(".solution_toggle").tooltip("destroy");
 		$(".del-box-tooltipped").tooltip("destroy");
@@ -3881,6 +3882,7 @@ define(function() {
 		$(".add-bullet-tooltipped").tooltip();
 		$(".arrow-up-tooltipped").tooltip();
 		$(".arrow-down-tooltipped").tooltip();
+		$(".note-box-tooltipped").tooltip();
 		$(".toggle").on("click", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -4168,6 +4170,22 @@ define(function() {
 					});
 				});
 			});
+		});
+		$(".note-box").on("click", function(e) {
+			e.preventDefault();
+			var row = $("<div>").addClass("row note-row")
+					.attr("contentEditable", "false"),
+				col = $("<div>").addClass("col s12 m5 note-col"),
+				panel = $("<div>").addClass("card-panel"),
+				span = $("<span>").addClass("black-text")
+					.attr("contentEditable", "true")
+					.text("New Note");
+			panel.text(" ").append(span);
+			col.append(panel);
+			row.append(col);
+			$(this).parent().parent().next()
+				.find(".latex_body").first()
+				.append(row, "<br>");
 		});
 		$(".add-math").on("click", function(e) {
 			e.preventDefault();
@@ -5079,6 +5097,15 @@ define(function() {
 										"data-position": "top",
 										"data-tooltip": "Delete Box Below"
 									}),
+								span_note = $("<span>")
+									.addClass("solution_note note-box-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons note-box")
+										.text("chat_bubble"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Comment"
+									}),
 								latex_body = $("<div>")
 									.addClass("latex_body");
 							if(data.title_cms[j].split("_").length == 1) {
@@ -5105,7 +5132,7 @@ define(function() {
 							cont_div.append(latex_body);
 							show_solution.append(span_box,
 								span_table, span_image, span_bullet,
-								span_link, span_del,
+								span_link, span_note, span_del,
 								span_arrow_up,
 								span_arrow_down,
 								span_toggle, span);
@@ -5153,6 +5180,7 @@ define(function() {
 						$(".add-bullet-tooltipped").tooltip();
 						$(".arrow-up-tooltipped").tooltip();
 						$(".arrow-down-tooltipped").tooltip();
+						$(".note-box-tooltipped").tooltip();
 						exports.handle_button(1);
 						$("#add-box").off("click");
 						$("#add-box").on("click", function(e) {
@@ -5251,6 +5279,15 @@ define(function() {
 										"data-position": "top",
 										"data-tooltip": "Delete Box Below"
 									}),
+								span_note = $("<span>")
+									.addClass("solution_note note-box-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons note-box")
+										.text("chat_bubble"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert Comment"
+									}),
 								latex_body = $("<div>")
 									.addClass("latex_body")
 									.text("New Content"),
@@ -5266,6 +5303,7 @@ define(function() {
 							show_solution.append(span_box,
 								span_table, span_image,
 								span_bullet, span_link,
+								span_note,
 								span_arrow_up,
 								span_arrow_down,
 								span_del, span_toggle,
@@ -5384,27 +5422,42 @@ define(function() {
 								data.content = data.content_cms
 									.map(function(elem) {
 									var filter = exports.replace_all(elem, 
-										'<div class="table-buttons">' +
-										'<a class="waves-effect' +
-										' waves-light btn add-row"' +
-										' contenteditable="false">' +
-										'Row<i class="material-icons' +
-										' right">add</i></a><a class' +
-										'="waves-effect waves-light' +
-										' btn remove-row" ' +
-										'contenteditable="false">Row<i' +
-										' class="material-icons right' +
-										'">remove</i></a><a class=' +
-										'"waves-effect waves-light' +
-										' btn add-column"' +
-										' contenteditable="false">' +
-										'Column<i class="material-icons' +
-										' right">add</i></a><a class=' +
-										'"waves-effect waves-light btn' +
-										' remove-column" ' +
-										'contenteditable="false">Column' +
-										'<i class="material-icons right' +
-										'">remove</i></a></div>', "");
+											'<div class="table-buttons">' +
+											'<a class="waves-effect' +
+											' waves-light btn add-row"' +
+											' contenteditable="false">' +
+											'Row<i class="material-icons' +
+											' right">add</i></a><a class' +
+											'="waves-effect waves-light' +
+											' btn remove-row" ' +
+											'contenteditable="false">' +
+											'Row<i class="material-' +
+											'icons right">remove</i>' +
+											'</a><a class="waves-' +
+											'effect waves-light btn' +
+											' add-column" content' +
+											'editable="false">Column' +
+											'<i class="material-icons' +
+											' right">add</i></a><a' +
+											' class="waves-effect' +
+											' waves-light btn remove' +
+											'-column" contenteditable' +
+											'="false">Column<i class' +
+											'="material-icons right' +
+											'">remove</i></a></div>', ""),
+										reg = new RegExp('<div class' +
+											'="row note-row" content' +
+											'editable="false"><div' +
+											' class="col s12 m5' +
+											' note-col"><div ' +
+											'class="card-panel' +
+											'"> <span class=' +
+											'"black-text"' +
+											' contenteditable' +
+											'="true">.*<\/span' +
+											'><\/div><\/div><\/div>');
+									filter = exports.replace_all(filter,
+										reg, "");
 									return exports.replace_all(filter,
 										'<div class="table-buttons">' +
 										'<a class="waves-effect ' +
