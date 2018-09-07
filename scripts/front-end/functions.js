@@ -277,27 +277,42 @@ define(function() {
 	exports.committee = function(email, callback) {
 		$.post("/api/cms/committee/check/", {email: email}).done(function(check) {
 			if(check >= 1) {
-				var group = $("<a>").attr("id", "committee")
-					.addClass("btn-floating")
-					.css("background", "#00b8ff")
+				var group = $("<a>").css("background", "#00b8ff")
+					.addClass("btn-floating button-tooltipped")
 					.append($("<i>").addClass("material-icons")
-						.text("group_work"));
+						.text("group_work"))
+					.attr({
+						"id": "committee",
+						"data-position": "left",
+						"data-tooltip": "Committee Approvals"
+					});
 			}
 			if(check == 1) {
-				var ranking = $("<a>").attr("id", "ranking")
-					.addClass("btn-floating")
-					.css("background", "#00b8ff")
+				var ranking = $("<a>").css("background", "#00b8ff")
+					.addClass("btn-floating button-tooltipped")
 					.append($("<i>").addClass("material-icons")
-						.text("thumbs_up_down"));
-				$("#profile").closest("li").before($("<li>").append(ranking),
+						.text("thumbs_up_down"))
+					.attr({
+						"id": "ranking",
+						"data-position": "left",
+						"data-tooltip": "Contributor Approvals"
+					});
+				$("#profile").closest("li").before(
+					$("<li>").append(ranking),
 					$("<li>").append(group));
 			}
 			else if(check == 2) {
-				var decision = $("<a>").attr("id", "decision")
-					.addClass("btn-floating").css("background", "#00b8ff")
+				var decision = $("<a>").css("background", "#00b8ff")
+					.addClass("btn-floating button-tooltipped")
 					.append($("<i>").addClass("material-icons")
-						.text("group"));
-				$("#profile").closest("li").before($("<li>").append(decision),
+						.text("group"))
+					.attr({
+						"id": "decision",
+						"data-position": "left",
+						"data-tooltip": "Administrator Privileges"
+					});
+				$("#profile").closest("li").before(
+					$("<li>").append(decision),
 					$("<li>").append(group));
 			}
 		}).done(function() { callback(); });
@@ -3204,14 +3219,14 @@ define(function() {
 
 	*/
 	exports.rgba_to_hex = function(orig) {
-		var rgb = orig.replace(/\s/g,"")
+		var rgb = orig.replace(/\s/g, "")
 			.match(/^rgba?\((\d+),(\d+),(\d+)/i);
 		return (rgb && rgb.length === 4) ? "#" +
-		  	("0" + parseInt(rgb[1],10)
+		  	("0" + parseInt(rgb[1], 10)
 		  		.toString(16)).slice(-2) +
-		  	("0" + parseInt(rgb[2],10)
+		  	("0" + parseInt(rgb[2], 10)
 		  		.toString(16)).slice(-2) +
-		  	("0" + parseInt(rgb[3],10)
+		  	("0" + parseInt(rgb[3], 10)
 		  		.toString(16)).slice(-2) : orig;
 	};
 
@@ -3718,8 +3733,9 @@ define(function() {
 				return elem.split("\\$")
 					.map(function(iter, index) {
 					if(index % 2 == 0) {
-						return exports.replace_all(iter
-							.replace(/\\/g, "%5C"),
+						return exports.replace_all(
+							exports.replace_all(iter,
+								"\\\\", "%5C"),
 							"'", "APOSTROPHE");
 					}
 					else { return iter; }
@@ -3730,8 +3746,9 @@ define(function() {
 				return elem.split("\\$")
 					.map(function(iter, index) {
 					if(index % 2 == 0) {
-						return exports.replace_all(iter
-							.replace(/\\/g, "%5C"),
+						return exports.replace_all(
+							exports.replace_all(iter,
+								"\\\\", "%5C"),
 							"'", "APOSTROPHE");
 					}
 					else { return iter; }
@@ -3743,8 +3760,9 @@ define(function() {
 					return elem.split("\\$")
 						.map(function(iter, index) {
 						if(index % 2 == 0) {
-							return exports.replace_all(iter
-								.replace(/\\/g, "%5C"),
+							return exports.replace_all(
+								exports.replace_all(iter,
+									"\\\\", "%5C"),
 								"'", "APOSTROPHE");
 						}
 						else { return iter; }
@@ -4958,18 +4976,18 @@ define(function() {
 					}
 				});
 				var titleComparison =
-						exports.replace_all(data.title_cms.join("-----")
-							.replace(/\\/g, "%5C"),
+						exports.replace_all(exports.replace_all(data
+							.title_cms.join("-----"), "\\\\", "%5C"),
 							"'", "APOSTROPHE"),
 					contentComparison =
-						exports.replace_all(data.content_cms.join("-----")
-							.replace(/\\/g, "%5C"),
+						exports.replace_all(exports.replace_all(data
+							.content_cms.join("-----"), "\\\\", "%5C"),
 							"'", "APOSTROPHE"),
 					headingComparison = undefined;
 				if(data.heading_cms !== undefined) {
 					headingComparison =
-						exports.replace_all(data.heading_cms
-							.replace(/\\/g, "%5C"),
+						exports.replace_all(exports.replace_all(data
+							.heading_cms, "\\\\", "%5C"),
 							"'", "APOSTROPHE");
 				}
 				$("#edit").click(function(e) {
@@ -5378,8 +5396,9 @@ define(function() {
 									return elem.split("\\$")
 										.map(function(iter, index) {
 										if(index % 2 == 0) {
-											return exports.replace_all(iter
-												.replace(/\\/g, "%5C"),
+											return exports.replace_all(
+												exports.replace_all(iter,
+													"\\\\", "%5C"),
 												"'", "APOSTROPHE");
 										}
 										else { return iter; }
@@ -5390,8 +5409,9 @@ define(function() {
 									return elem.split("\\$")
 										.map(function(iter, index) {
 										if(index % 2 == 0) {
-											return exports.replace_all(iter
-												.replace(/\\/g, "%5C"),
+											return exports.replace_all(
+												exports.replace_all(iter,
+													"\\\\", "%5C"),
 												"'", "APOSTROPHE");
 										}
 										else { return iter; }
@@ -5476,8 +5496,9 @@ define(function() {
 										return elem.split("\\$")
 											.map(function(iter, index) {
 											if(index % 2 == 0) {
-												return exports.replace_all(iter
-													.replace(/\\/g, "%5C"),
+												return exports.replace_all(
+													exports.replace_all(iter,
+														"\\\\", "%5C"),
 													"'", "APOSTROPHE");
 											}
 											else { return iter; }
@@ -5488,8 +5509,9 @@ define(function() {
 										return elem.split("\\$")
 											.map(function(iter, index) {
 											if(index % 2 == 0) {
-												return exports.replace_all(iter
-													.replace(/\\/g, "%5C"),
+												return exports.replace_all(
+													exports.replace_all(iter,
+														"\\\\", "%5C"),
 													"'", "APOSTROPHE");
 											}
 											else { return iter; }
@@ -5581,6 +5603,7 @@ define(function() {
 						exports.handle_li_coloring();
 						links.handle_links(router, subjects,
 							topics, sections, examples);
+						$(".button-tooltipped").tooltip();
 						$("a").click(function(e) {
 							e.preventDefault();
 							if(exports.rgba_to_hex(
