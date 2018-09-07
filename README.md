@@ -106,7 +106,7 @@ provides all of the functionality to:
 * add a box with an associated title and body of content (only available in the edit view)
 * approve the current changes to the content so as to push it live to the client side
 * save any changes to the database permanently
-It is important to note that any changes made on a page are not pushed to the database unless the save button is explicitly clicked. Moreover, for current changes to be pushed onto the client side the system uses a logarithmic scaling based on the number of active contributors to determine how many approvals are needed.
+It is important to note that any changes made on a page are not pushed to the database unless the save button is explicitly clicked. Moreover, for current changes to be pushed onto the client side the system uses a logarithmic scaling based on the number of active contributors to determine how many approvals are needed. If changes are made to the content of the page all previous approvals are reset by design to ensure that contributors do not provide approvals for content they may not have necessarily seen. 
 
 ### Editing a Page
 Under the edit mode you can take a page with a clean slate and add a box using the cms-bar to obtain:
@@ -119,10 +119,13 @@ You can add as many boxes as your heart desires with each having the capability 
 * edit the title and body content by directly clicking on the text
 * add inline mathematical text by invoking the dollar sign delimiters, i.e. $\sum\limits_{n=0}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}$ (same as Latex)
 * add a centered mathematical environment that supports a multiline format with alignment $\eqalign{2x + 2y &= 1 \\ 3x - 7y &= 5}$ (same as Latex)
-* add a table that can be dynamically changed by inserting/removing rows and columns as needed
+* add a centered table that can be dynamically changed by inserting/removing rows and columns as needed
 * add a centered image
 * add a list (both ordered and unordered available)
 * add a link
+* add a note strictly for other contributors (will not appear on client side)
+* move the selected box down
+* move the selected box up
 * delete itself
 * toggle the display (this determines if the box will be hidden by default or not)
 * show and hide the box content
@@ -134,13 +137,21 @@ Every page will have a button located at the top of the sidenav:
     <img src="/img/cms-nav.png">
 </p>
 
-where subjects, topics, sections, or examples can be added (depending on where you are located). Upon clicking you will something similar to:
+where subjects, topics, sections, or examples can be added (depending on where you are located). Upon clicking you will find something similar to:
 
 <p align="center">
     <img src="/img/cms-nav-modal.png">
 </p>
 
 It is here that new subjects, topics, sections, and examples can be added with the capability, like the current iterms, to have their names and order edited. Furthermore, each will have an associated approval and disapproval that functions in exactly the same manner as the content approval system. Therefore, an item will only be pushed to the client nav or deleted all together when the necessary number of approvals are given. It is important to note that like the content editing mode, any changes made to the sidenav are only pushed to the database when the button is explicitly clicked.
+
+### Floating Action Button
+At the bottom right of each page you will find the button which provides the following functionality:
+* logout as a contributor
+* update profile information
+* approve/disapprove incoming contributors (only for committee members and administrator)
+* provide an opinion on current non-committee members as to whether they should join the committee or not (only for committee members)
+* add/remove a contributor from the committee and delete a contributor from the system (administrator only)
 
 
 # Styling
@@ -451,7 +462,7 @@ localhost/api/cms/count/committee
 ```
 
 # Running the Server
-### Apache Server
+### Apache Server (Deprecated)
 Prior to running you need to modify the following code at "/api/config.php":
 ```php
 $mysql_hostname = "";
@@ -537,12 +548,12 @@ the server has officially been launched and is listening on the port you provide
 
 # Future Plans
 * Add the subjects (these represent the main ones of interest, over time the list may evolve):
- * Precalculus
- * Integral Calculus
- * Linear Algebra
- * Vector Calculus
- * Complex Variables
- * Probability
+    * Precalculus
+    * Integral Calculus
+    * Linear Algebra
+    * Vector Calculus
+    * Complex Variables
+    * Probability
 
 # License
 Located at "LICENSE.md".
