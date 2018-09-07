@@ -2824,18 +2824,33 @@ define(function() {
 						$(".lean-overlay").remove();
 						$("#popup").remove();
 						$("#popup_control").remove();
-						$.post("/api/cms/live/add/",
+						$.post("/api/cms/live/check/",
 							{email: $("#login_email").val()})
-						.done(function(result) {
-							if(result == 1) {
+						.done(function(presence) {
+							if(presence == "") {
+								$.post("/api/cms/live/add/",
+									{email: $("#login_email").val()})
+								.done(function(result) {
+									if(result == 1) {
+										exports.write_cookie(
+											"contributor",
+											$("#login_email").val(),
+											60);
+										router.navigate("cms",
+											{reload: true});
+									}
+									else {
+										console.log("There was an" +
+											" issue adding the" +
+											" contributor to the" +
+											" list of live sessions!");
+									}
+								});
+							}
+							else {
 								exports.write_cookie("contributor",
 									$("#login_email").val(), 60);
 								router.navigate("cms", {reload: true});
-							}
-							else {
-								console.log("There was an" +
-									" issue adding the contributor" +
-									" to the list of live sessions!");
 							}
 						});
 					}
