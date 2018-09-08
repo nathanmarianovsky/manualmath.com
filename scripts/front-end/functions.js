@@ -4219,7 +4219,8 @@ define(function() {
 				.first();
 			obj.append($("<div>")
 				.addClass("latex_equation")
-				.text("$\\eqalign{New Equation}$"));
+				.text("$\\eqalign{New Equation}$"),
+					"<br>");
 		});
 		$(".arrow-up").on("click", function(e) {
 			e.preventDefault();
@@ -4264,7 +4265,7 @@ define(function() {
 							.append($("<img>").attr({
 								src: scaled_data,
 								alt: "Math Image"
-						})));
+						})), "<br>");
 					});
 					$("#file").remove();
 		  		}, false);
