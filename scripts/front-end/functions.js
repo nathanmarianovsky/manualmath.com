@@ -92,8 +92,9 @@ define(function() {
 			key = undefined;
 		output = Array.isArray(obj) ? [] : {};
 		for(key in obj) {
-		   v = obj[key];
-		   output[key] = (typeof v === "object") ? exports.copy(v) : v;
+		   	v = obj[key];
+		   	output[key] = (typeof v === "object")
+		   		? exports.copy(v) : v;
 		}
 		return output;
 	};
@@ -4256,7 +4257,7 @@ define(function() {
 				var file = $("#file")[0].files[0],
 					reader  = new FileReader();
 				reader.addEventListener("load", function () {
-					exports.resize_image(reader.result, 400, 400,
+					exports.resize_image(reader.result, 500, 500,
 						function(scaled_data) {
 				  		obj.append($("<div>")
 				  			.addClass("latex_equation")
@@ -5677,66 +5678,25 @@ define(function() {
 										decodeURIComponent(comparison.content_cms),
 										"APOSTROPHE", "'").split("-----")
 									: [""];
-								if(exports.rgba_to_hex($("#edit").closest("li")
-									.css("background-color")) == "#008cc3") {
-									if(page == "about") {
-										data.heading_cms =
-											$("#edit_title").text();
-									}
-									if($(".latex_body").length != 0) {
-										$(".latex_body").each(function(index) {
-											var arr_title = [],
-												arr_body = [];
-											$(".show_solution").each(function(index) {
-												var title = $(this).children()
-													.first().clone()
-													.children().remove()
-													.end().text();
-												$(this).children()
-													.children().each(function(index) {
-													if($(this).hasClass("toggle") &&
-														$(this).text() == "toggle_off") {
-														arr_title.push(title
-															+ "_hidden");
-													}
-													else if($(this).hasClass("toggle") &&
-														$(this).text() == "toggle_on") {
-														arr_title.push(title);
-													}
-												});
-												$(this).siblings().each(function(index) {
-													arr_body.push(
-														$(this).children()[0].innerHTML);
-												});
-											});
-											data.title_cms = arr_title;
-											data.content_cms = arr_body;
-										});
-									}
-									else {
-										data.title_cms = [""];
-										data.content_cms = [""];
-									}
-								}
 								if(page == "about") {
 									comparison.heading_cms = comparison.heading_cms != null 
 										? exports.replace_all(
 											decodeURIComponent(comparison.heading_cms),
 											"APOSTROPHE", "'")
 										: "";
-									if(comparison.heading_cms != data.heading_cms ||
+									if(comparison.heading_cms != headingComparison ||
 										comparison.title_cms.join("-----") !=
-										data.title_cms.join("-----") ||
+										titleComparison ||
 										comparison.content_cms.join("-----") !=
-										data.content_cms.join("-----")) {
+										contentComparison) {
 										exports.update_modal();
 									}
 								}
 								else {
 									if(comparison.title_cms.join("-----") !=
-										data.title_cms.join("-----") ||
+										titleComparison ||
 										comparison.content_cms.join("-----") !=
-										data.content_cms.join("-----")) {
+										contentComparison) {
 										exports.update_modal();
 									}
 								}
