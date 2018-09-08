@@ -1894,7 +1894,7 @@ define(function() {
 									console.log("Deleting the " +
 										type.toLowerCase().substring(0,
 											type.length - 1) +
-										"with id " + id +
+										" with id " + id +
 										" failed with the error: " +
 										error);
 								});

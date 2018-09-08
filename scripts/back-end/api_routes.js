@@ -3,17 +3,29 @@ var exports = {},
 
 // Adds all of the API routes
 exports.add_api_routes = (app, pool) => {
-	// The API method to get the content of the landing page for the client side
+	/*
+		The API method to get the content of the landing page
+		for the client side
+	*/
 	app.post("/api/about/client", (request, response) => {
-		pool.query("SELECT heading,title,content FROM about", (err, result) => {
-			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+		pool.query("SELECT heading,title,content" +
+			" FROM about", (err, result) => {
+			if(err) {
+				console.error("Error Connecting: " + err.stack);
+				response.send("0");
+			}
 			else {
-				if(result.length == 0) { response.send("0"); }
+				if(result.length == 0) {
+					response.send("0");
+				}
 				else {
-					var heading_str = result[0].heading != null ? result[0].heading : "",
-						title_str = result[0].title != null ? result[0].title : "",
+					var heading_str = result[0].heading != null 
+							? result[0].heading : "",
+						title_str = result[0].title != null 
+							? result[0].title : "",
 						content_str = result[0].content != null 
-							? new Buffer(result[0].content, "binary").toString() : "";
+							? new Buffer(result[0].content,
+								"binary").toString() : "";
 					response.send({
 						heading: heading_str,
 						title: title_str,
@@ -24,7 +36,10 @@ exports.add_api_routes = (app, pool) => {
 		});
 	});
 	
-	// The API methods to get the data corresponding to any particular subject, topic, section, or example
+	/*
+		The API methods to get the data corresponding to
+		any particular subject, topic, section, or example
+	*/
 	app.post("/api/:want/data/:side", (request, response) => {
 		var want = request.params.want,
 			side = request.params.side,
@@ -32,7 +47,8 @@ exports.add_api_routes = (app, pool) => {
 			statement = "";
 		// response.set("Cache-Control", "public, max-age=864000000");
 		if(side == "client" || side == "cms") {
-			side == "cms" ? statement = "SELECT title,content,title_cms,content_cms,cms_approval FROM "
+			side == "cms" ? statement = "SELECT title,content" +
+				",title_cms,content_cms,cms_approval FROM "
 				: statement = "SELECT title,content FROM ";
 			if(want == "subject") {
 				statement += "subject WHERE sid=";
@@ -46,18 +62,24 @@ exports.add_api_routes = (app, pool) => {
 			else if(want == "example") {
 				statement += "example WHERE eid=";
 			}
-			if(want == "subject" || want == "topic" || want == "section" || want == "example") {
+			if(want == "subject" || want == "topic"
+				|| want == "section" || want == "example") {
 				statement += param;
 				pool.query(statement, (err, results) => {
-					if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					if(err) { console.error("Error Connecting: " +
+						err.stack); response.send("0"); }
 					if(results.length != 0) {
-						var title_str = results[0].title != null ? results[0].title : "",
-							content_str = results[0].content != null 
-								? new Buffer(results[0].content, "binary").toString() : "";
+						var title_str = results[0].title != null
+								? results[0].title : "",
+							content_str = results[0].content != null
+								? new Buffer(results[0].content,
+									"binary").toString() : "";
 						if(side != "client") {
-							var title_str_cms = results[0].title_cms != null ? results[0].title_cms : "",
-								content_str_cms = results[0].content_cms != null 
-									? new Buffer(results[0].content_cms, "binary").toString() : "";
+							var title_str_cms = results[0].title_cms != null
+									? results[0].title_cms : "",
+								content_str_cms = results[0].content_cms != null
+									? new Buffer(results[0].content_cms,
+										"binary").toString() : "";
 						}
 						var obj = {
 							title: title_str,
@@ -66,35 +88,56 @@ exports.add_api_routes = (app, pool) => {
 						if(side != "client") {
 							obj.title_cms = title_str_cms;
 							obj.content_cms = content_str_cms;
-							obj.cms_approval = results[0].cms_approval;
+							obj.cms_approval =
+								results[0].cms_approval;
 						}
 						response.send(obj);
 					}
-					else { response.send("Cannot find an object with the given id!"); }
+					else {
+						response.send("Cannot find an object" +
+							" with the given id!");
+					}
 				});
 			}
-			else { response.send("This object whose file you want does not seem to exist in the database!"); }
+			else {
+				response.send("This object whose data you" +
+					" want does not seem to exist in the database!");
+			}
 		}
 		else {
 			response.send("No such API request exists!")
 		}
 	});
 
-	// The API method to delete the data corresponding to a particular subject, topic, section, or example
+	/*
+		The API method to delete the data corresponding to
+		a particular subject, topic, section, or example
+	*/
 	app.post("/api/delete/:obj", (request, response) => {
 		var	obj = request.params.obj,
 			param = request.body.param,
 			topicStatement = "",
 			sectionStatement = "",
 			exampleStatement = "";
-		if(obj == "subject" || obj == "topic" || obj == "section" || obj == "example") {
+		if(obj == "subject" || obj == "topic"
+			|| obj == "section" || obj == "example") {
 			if(!isNaN(param)) {
 				if(obj == "subject") {
-					pool.query("SELECT sid FROM subject", (err, results) => {
-						if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+					pool.query("SELECT sid FROM subject",
+						(err, results) => {
+						if(err) {
+							console.error("Error Connecting: " +
+								err.stack);
+							response.send("0");
+						}
 						if(results.some(elem => elem.sid == param)) { 
-							pool.query("SELECT tid FROM topic WHERE sid=" + param, (err, container) => {
-								if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							pool.query("SELECT tid FROM topic WHERE sid="
+								+ param, (err, container) => {
+								if(err) {
+									console.error("Error Connecting: " +
+										err.stack);
+									response.send("0");
+								}
 								else {
 									if(container.length != 0) {
 										topicStatement = "DELETE FROM topic WHERE tid IN (";
@@ -102,57 +145,90 @@ exports.add_api_routes = (app, pool) => {
 											iterIndex == container.length - 1
 												? topicStatement += iter.tid + ")"
 												: topicStatement += iter.tid + ",";
-											pool.query("SELECT section_id FROM section WHERE tid=" + iter.tid, (err, holder) => {
-												if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+											pool.query("SELECT section_id FROM section WHERE tid="
+												+ iter.tid, (err, holder) => {
+												if(err) {
+													console.error("Error Connecting: " +
+														err.stack);
+													response.send("0");
+												}
 												else {
 													if(holder.length != 0) {
-														sectionStatement = "DELETE FROM section WHERE section_id IN (";
+														if(sectionStatement == "") {
+															sectionStatement = "DELETE FROM" +
+																" section WHERE section_id IN (";
+														}
 														holder.forEach((elem, elemIndex) => {
-															elemIndex == holder.length - 1
-																? sectionStatement += elem.section_id + ")"
-																: sectionStatement += elem.section_id + ",";
+															if(elemIndex == holder.length - 1) {
+																sectionStatement +=
+																	elem.section_id;
+															}
+															else {
+																var last = sectionStatement[sectionStatement.length - 1];
+																if(last != "," && last != "(") {
+																	sectionStatement += ",";
+																}
+																sectionStatement +=
+																	elem.section_id + ",";
+															}
 															pool.query("SELECT eid FROM example WHERE section_id="
 																+ elem.section_id, (err, collection) => {
 																if(err) {
-																	console.error("Error Connecting: " + err.stack);
+																	console.error("Error Connecting: " +
+																		err.stack);
 																	response.send("0");
 																}
 																else {
 																	if(collection.length != 0) {
-																		exampleStatement = "";
-																		exampleStatement = "DELETE FROM example WHERE eid IN (";
+																		if(exampleStatement == "") {
+																			exampleStatement = "DELETE " +
+																				"FROM example WHERE eid IN (";
+																		}
 																		collection.forEach((item, pos) => {
-																			pos == collection.length - 1
-																				? exampleStatement += item.eid + ")"
-																				: exampleStatement += item.eid + ",";
-																		});
-																		pool.query(exampleStatement, err => {
-																			if(err) { 
-																				console.error("Error Connecting: " + err.stack);
-																				response.send("0");
+																			if(pos == collection.length - 1) {
+																				exampleStatement +=
+																					item.eid;
 																			}
 																			else {
-																				if(elemIndex >= holder.length - 1 
-																					&& iterIndex >= container.length - 1) {
+																				var char = exampleStatement[exampleStatement.length - 1];
+																				if(char != "," && char != "(") {
+																					exampleStatement += ",";
+																				}
+																				exampleStatement +=
+																					item.eid + ",";
+																			}
+																		});
+
+																		if(elemIndex >= holder.length - 1 
+																			&& iterIndex >= container.length - 1) {
+																			exampleStatement += ")";
+																			pool.query(exampleStatement, err => {
+																				if(err) { 
+																					console.error("Error Connecting: " +
+																						err.stack);
+																					response.send("0");
+																				}
+																				else {
+																					sectionStatement += ")";
 																					pool.query(sectionStatement, err => {
 																						if(err) { 
-																							console.error("Error Connecting: "
-																								+ err.stack);
+																							console.error("Error Connecting: " +
+																								err.stack);
 																							response.send("0");
 																						}
 																						else {
 																							pool.query(topicStatement, err => {
 																								if(err) { 
-																									console.error("Error Connecting: "
-																										+ err.stack);
+																									console.error("Error Connecting: " +
+																										err.stack);
 																									response.send("0");
 																								}
 																								else {
 																									pool.query("DELETE FROM subject WHERE sid="
 																										+ param, err => {
 																										if(err) {
-																											console.error("Error Connecting: "
-																												+ err.stack);
+																											console.error("Error Connecting: " +
+																												err.stack);
 																											response.send("0");
 																										}
 																										else {
@@ -164,39 +240,92 @@ exports.add_api_routes = (app, pool) => {
 																						}
 																					});
 																				}
-																			}
-																		});
+																			});
+																		}
 																	}
 																	else {
 																		if(elemIndex >= holder.length - 1 
 																			&& iterIndex >= container.length - 1) {
-																			pool.query(sectionStatement, err => {
-																				if(err) {
-																					console.error("Error Connecting: "
-																						+ err.stack);
-																					response.send("0");
-																				}
-																				else {
-																					pool.query(topicStatement, err => {
-																						if(err) {
-																							console.error("Error Connecting: "
-																								+ err.stack);
-																							response.send("0");
-																						}
-																						else {
-																							pool.query("DELETE FROM subject WHERE sid="
-																								+ param, err => {
-																								if(err) { 
-																									console.error("Error Connecting: "
-																										+ err.stack);
-																									response.send("0");
-																								}
-																								else { response.send("1"); }
-																							});
-																						}
-																					});
-																				}
-																			});
+																			if(exampleStatement != "") {
+																				exampleStatement += ")";
+																				pool.query(exampleStatement, err => {
+																					if(err) {
+																						console.error("Error Connecting: " +
+																							err.stack);
+																						response.send("0");
+																					}
+																					else {
+																						sectionStatement += ")";
+																						pool.query(sectionStatement, err => {
+																							if(err) {
+																								console.error("Error Connecting: " +
+																									err.stack);
+																								response.send("0");
+																							}
+																							else {
+																								pool.query(topicStatement, err => {
+																									if(err) {
+																										console.error(
+																											"Error Connecting: " +
+																											err.stack);
+																										response.send("0");
+																									}
+																									else {
+																										pool.query("DELETE FROM" +
+																											" subject WHERE sid=" +
+																											param, err => {
+																											if(err) { 
+																												console.error(
+																													"Error Connecting: " +
+																													err.stack);
+																												response.send("0");
+																											}
+																											else {
+																												response.send("1");
+																											}
+																										});
+																									}
+																								});
+																							}
+																						});
+																					}
+																				});
+																			}
+																			else {
+																				sectionStatement += ")";
+																				pool.query(sectionStatement, err => {
+																					if(err) {
+																						console.error(
+																							"Error Connecting: " +
+																							err.stack);
+																						response.send("0");
+																					}
+																					else {
+																						pool.query(topicStatement, err => {
+																							if(err) {
+																								console.error(
+																									"Error Connecting: " +
+																									err.stack);
+																								response.send("0");
+																							}
+																							else {
+																								pool.query("DELETE FROM subject" +
+																									" WHERE sid=" + param, err => {
+																									if(err) { 
+																										console.error(
+																											"Error Connecting: " +
+																											err.stack);
+																										response.send("0");
+																									}
+																									else {
+																										response.send("1");
+																									}
+																								});
+																							}
+																						});
+																					}
+																				});
+																			}
 																		}
 																	}
 																}
@@ -205,21 +334,109 @@ exports.add_api_routes = (app, pool) => {
 													}
 													else {
 														if(iterIndex >= container.length - 1) {
-															pool.query(topicStatement, err => {
-																if(err) {
-																	console.error("Error Connecting: " + err.stack);
-																	response.send("0");
-																}
-																else {
-																	pool.query("DELETE FROM subject WHERE sid=" + param, err => {
-																		if(err) { 
-																			console.error("Error Connecting: " + err.stack);
+															if(exampleStatement != "") {
+																exampleStatement += ")";
+																pool.query(exampleStatement, err => {
+																	if(err) {
+																		console.error("Error Connecting: " +
+																			err.stack);
+																		response.send("0");
+																	}
+																	else {
+																		sectionStatement += ")";
+																		pool.query(sectionStatement, err => {
+																			if(err) {
+																				console.error("Error Connecting: " +
+																					err.stack);
+																				response.send("0");
+																			}
+																			else {
+																				pool.query(topicStatement, err => {
+																					if(err) {
+																						console.error(
+																							"Error Connecting: " +
+																							err.stack);
+																						response.send("0");
+																					}
+																					else {
+																						pool.query("DELETE FROM subject" +
+																							" WHERE sid=" + param, err => {
+																							if(err) { 
+																								console.error(
+																									"Error Connecting: " +
+																									err.stack);
+																								response.send("0");
+																							}
+																							else {
+																								response.send("1");
+																							}
+																						});
+																					}
+																				});
+																			}
+																		});
+																	}
+																});
+															}
+															else {
+																if(sectionStatement != "") {
+																	sectionStatement += ")";
+																	pool.query(sectionStatement, err => {
+																		if(err) {
+																			console.error(
+																				"Error Connecting: " +
+																				err.stack);
 																			response.send("0");
 																		}
-																		else { response.send("1"); }
+																		else {
+																			pool.query(topicStatement, err => {
+																				if(err) {
+																					console.error(
+																						"Error Connecting: " +
+																						err.stack);
+																					response.send("0");
+																				}
+																				else {
+																					pool.query("DELETE FROM subject" +
+																						" WHERE sid=" + param, err => {
+																						if(err) { 
+																							console.error(
+																								"Error Connecting: " +
+																								err.stack);
+																							response.send("0");
+																						}
+																						else {
+																							response.send("1");
+																						}
+																					});
+																				}
+																			});
+																		}
 																	});
 																}
-															});
+																else {
+																	pool.query(topicStatement, err => {
+																		if(err) {
+																			console.error("Error Connecting: " +
+																				err.stack);
+																			response.send("0");
+																		}
+																		else {
+																			pool.query("DELETE FROM subject WHERE sid=" +
+																				param, err => {
+																				if(err) { 
+																					console.error("Error Connecting: " +
+																						err.stack);
+																					response.send("0");
+																				}
+																				else {
+																					response.send("1");
+																				}
+																			});
+																		}
+																	});
+																}
+															}
 														}
 													}
 												}
@@ -228,7 +445,10 @@ exports.add_api_routes = (app, pool) => {
 									}
 									else {
 										pool.query("DELETE FROM subject WHERE sid=" + param, err => {
-											if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+											if(err) {
+												console.error("Error Connecting: " + err.stack);
+												response.send("0");
+											}
 											else { response.send("1"); }
 										});
 									}
@@ -236,76 +456,156 @@ exports.add_api_routes = (app, pool) => {
 							});
 						}
 						else {
-							response.send("There does not exist a subject in the database with the given sid!");
+							response.send("There does not exist a subject in the database with" +
+								" the given sid!");
 						}
 					});
 				}
 				else if(obj == "topic") {
 					pool.query("SELECT tid FROM topic", (err, results) => {
-						if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+						if(err) {
+							console.error("Error Connecting: " +
+								err.stack);
+							response.send("0");
+						}
 						if(results.some(elem => elem.tid == param)) {
-							pool.query("SELECT section_id FROM section WHERE tid=" + param, (err, container) => {
-								if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							pool.query("SELECT section_id FROM section WHERE tid=" +
+								param, (err, container) => {
+								if(err) {
+									console.error("Error Connecting: " +
+										err.stack);
+									response.send("0");
+								}
 								else {
 									if(container.length != 0) {
-										sectionStatement = "DELETE FROM section WHERE section_id IN (";
+										sectionStatement = "DELETE FROM section" +
+											" WHERE section_id IN (";
 										container.forEach((iter, iterIndex) => {
 											iterIndex == container.length - 1
 												? sectionStatement += iter.section_id + ")"
 												: sectionStatement += iter.section_id + ",";
-											pool.query("SELECT eid FROM example WHERE section_id=" + iter.section_id, (err, holder) => {
-												if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+											pool.query("SELECT eid FROM example WHERE section_id=" +
+												iter.section_id, (err, holder) => {
+												if(err) {
+													console.error("Error Connecting: " +
+														err.stack);
+													response.send("0");
+												}
 												else {
 													if(holder.length != 0) {
-														exampleStatement = "DELETE FROM example WHERE eid IN (";
+														if(exampleStatement == "") {
+															exampleStatement = "DELETE FROM" +
+																" example WHERE eid IN (";
+														}
 														holder.forEach((elem, pos) => {
-															pos == holder.length - 1
-																? exampleStatement += iter.eid + ")"
-																: exampleStatement += iter.eid + ",";
-														});
-														pool.query(exampleStatement, err => {
-															if(err) {
-																console.error("Error Connecting: " + err.stack);
-																response.send("0");
+															if(pos == holder.length - 1) {
+																exampleStatement +=
+																	elem.eid;
 															}
 															else {
-																if(iterIndex >= container.length - 1) {
+																var char = exampleStatement[exampleStatement.length - 1];
+																if(char != "," && char != "(") {
+																	exampleStatement += ",";
+																}
+																exampleStatement +=
+																	elem.eid + ",";
+															}
+														});
+														if(iterIndex >= container.length - 1) {
+															exampleStatement += ")";
+															pool.query(exampleStatement, err => {
+																if(err) {
+																	console.error(
+																		"Error Connecting: " +
+																		err.stack);
+																	response.send("0");
+																}
+																else {
 																	pool.query(sectionStatement, err => {
 																		if(err) {
-																			console.error("Error Connecting: " + err.stack);
+																			console.error(
+																				"Error Connecting: " +
+																				err.stack);
 																			response.send("0");
 																		}
 																		else {
-																			pool.query("DELETE FROM topic WHERE tid=" + param, err => {
+																			pool.query("DELETE FROM topic WHERE tid=" +
+																				param, err => {
 																				if(err) {
-																					console.error("Error Connecting: " + err.stack);
+																					console.error(
+																						"Error Connecting: " +
+																						err.stack);
 																					response.send("0");
 																				}
-																				else { response.send("1"); }
+																				else {
+																					response.send("1");
+																				}
 																			});
 																		}
 																	});
 																}
-															}
-														});
+															});
+														}
 													}
 													else {
 														if(iterIndex >= container.length - 1) {
-															pool.query(sectionStatement, err => {
-																if(err) {
-																	console.error("Error Connecting: " + err.stack);
-																	response.send("0");
-																}
-																else {
-																	pool.query("DELETE FROM topic WHERE tid=" + param, err => {
-																		if(err) {
-																			console.error("Error Connecting: " + err.stack);
-																			response.send("0");
-																		}
-																		else { response.send("1"); }
-																	});
-																}
-															});
+															if(exampleStatement != "") {
+																exampleStatement += ")";
+																pool.query(exampleStatement, err => {
+																	if(err) {
+																		console.error(
+																			"Error Connecting: " +
+																			err.stack);
+																		response.send("0");
+																	}
+																	else {
+																		pool.query(sectionStatement, err => {
+																			if(err) {
+																				console.error(
+																					"Error Connecting: " +
+																					err.stack);
+																				response.send("0");
+																			}
+																			else {
+																				pool.query("DELETE FROM topic WHERE tid=" +
+																					param, err => {
+																					if(err) {
+																						console.error(
+																							"Error Connecting: " +
+																							err.stack);
+																						response.send("0");
+																					}
+																					else {
+																						response.send("1");
+																					}
+																				});
+																			}
+																		});
+																	}
+																});
+															}
+															else {
+																pool.query(sectionStatement, err => {
+																	if(err) {
+																		console.error("Error Connecting: " +
+																			err.stack);
+																		response.send("0");
+																	}
+																	else {
+																		pool.query("DELETE FROM topic WHERE tid=" +
+																			param, err => {
+																			if(err) {
+																				console.error("Error Connecting: " +
+																					err.stack);
+																				response.send("0");
+																			}
+																			else {
+																				response.send("1");
+																			}
+																		});
+																	}
+																});
+															}
 														}
 													}
 												}
@@ -314,67 +614,113 @@ exports.add_api_routes = (app, pool) => {
 									}
 									else {
 										pool.query("DELETE FROM topic WHERE tid=" + param, err => {
-											if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-											else { response.send("1"); }
+											if(err) {
+												console.error("Error Connecting: " + err.stack);
+												response.send("0");
+											}
+											else {
+												response.send("1");
+											}
 										});
 									}
 								}
 							});
 						}
 						else {
-							response.send("There does not exist a topic in the database with the given tid!");
+							response.send("There does not exist a topic in the database with" +
+								" the given tid!");
 						}
 					});
 				}
 				else if(obj == "section") {
 					pool.query("SELECT section_id FROM section", (err, results) => {
-						if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+						if(err) {
+							console.error("Error Connecting: " + err.stack);
+							response.send("0");
+						}
 						if(results.some(elem => elem.section_id == param)) { 
-							pool.query("SELECT eid FROM example WHERE section_id=" + param, (err, container) => {
-								if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+							pool.query("SELECT eid FROM example WHERE section_id=" +
+								param, (err, container) => {
+								if(err) {
+									console.error("Error Connecting: " +
+										err.stack);
+									response.send("0");
+								}
 								else {
 									if(container.length != 0) {
-										exampleStatement = "DELETE FROM example WHERE eid IN (";
+										exampleStatement = "DELETE FROM" +
+											" example WHERE eid IN (";
 										container.forEach((iter, iterIndex) => {
 											iterIndex == container.length - 1
 												? exampleStatement += iter.eid + ")"
 												: exampleStatement += iter.eid + ",";
 										});
 										pool.query(exampleStatement, err => {
-											if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+											if(err) {
+												console.error("Error Connecting: " +
+													err.stack);
+												response.send("0");
+											}
 											else {
-												pool.query("DELETE FROM section WHERE section_id=" + param, err => {
-													if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-													else { response.send("1"); }
+												pool.query("DELETE FROM section WHERE section_id=" +
+													param, err => {
+													if(err) {
+														console.error("Error Connecting: " +
+															err.stack);
+														response.send("0");
+													}
+													else {
+														response.send("1");
+													}
 												});
 											}
 										});
 									}
 									else {
-										pool.query("DELETE FROM section WHERE section_id=" + param, err => {
-											if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-											else { response.send("1"); }
+										pool.query("DELETE FROM section WHERE section_id=" +
+											param, err => {
+											if(err) {
+												console.error("Error Connecting: " +
+													err.stack);
+												response.send("0");
+											}
+											else {
+												response.send("1");
+											}
 										});
 									}
 								}
 							});
 						}
 						else {
-							response.send("There does not exist a section in the database with the given section_id!");
+							response.send("There does not exist a section in the" +
+								" database with the given section_id!");
 						}
 					});
 				}
 				else if(obj == "example") {
 					pool.query("SELECT eid FROM example", (err, results) => {
-						if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+						if(err) {
+							console.error("Error Connecting: " +
+								err.stack);
+							response.send("0");
+						}
 						if(results.some(elem => elem.eid == param)) { 
-							pool.query("DELETE FROM example WHERE eid=" + param, err => {
-								if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-								else { response.send("1"); }
+							pool.query("DELETE FROM example WHERE eid=" +
+								param, err => {
+								if(err) {
+									console.error("Error Connecting: " +
+										err.stack);
+									response.send("0");
+								}
+								else {
+									response.send("1");
+								}
 							});
 						}
 						else {
-							response.send("There does not exist an example in the database with the given eid!");
+							response.send("There does not exist an" +
+								" example in the database with the given eid!");
 						}
 					});
 				}
@@ -386,8 +732,10 @@ exports.add_api_routes = (app, pool) => {
 		}
 	});
 
-	// The API method to add or change the data corresponding to any particular
-	// subject, topic, section, or example
+	/*
+		The API method to add or change the data corresponding
+		to any particular subject, topic, section, or example
+	*/
 	app.post("/api/:operation/:type", (request, response) => {
 		var operation = request.params.operation
 			type = request.params.type,
@@ -408,82 +756,149 @@ exports.add_api_routes = (app, pool) => {
 			if(operation == "change") {
 				if(!isNaN(param)) {
 					statement = "UPDATE " 
-					if(type == "subject") { statement += "subject SET "; }
-					else if(type == "topic") { statement += "topic SET "; }
-					else if(type == "section") { statement += "section SET "; }
-					else if(type == "example") { statement += "example SET "; }
+					if(type == "subject") {
+						statement += "subject SET ";
+					}
+					else if(type == "topic") {
+						statement += "topic SET ";
+					}
+					else if(type == "section") {
+						statement += "section SET ";
+					}
+					else if(type == "example") {
+						statement += "example SET ";
+					}
 					if(ref !== "undefined") {
-						if(type == "topic") { statement += "sid='"; }
-						else if(type == "section") { statement += "tid='"; }
-						else if(type == "example") { statement += "section_id='"; }
+						if(type == "topic") {
+							statement += "sid='";
+						}
+						else if(type == "section") {
+							statement += "tid='";
+						}
+						else if(type == "example") {
+							statement += "section_id='";
+						}
 						statement += ref + "'";
 					}
 					if(name !== "undefined") {
-						if(statement[statement.length - 1] != " ") { statement += ","; }
-						if(type == "subject") { statement += "sname='"; }
-						else if(type == "topic") { statement += "tname='"; }
-						else if(type == "section") { statement += "section_name='"; }
-						else if(type == "example") { statement += "ename='"; }
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
+						if(type == "subject") {
+							statement += "sname='";
+						}
+						else if(type == "topic") {
+							statement += "tname='";
+						}
+						else if(type == "section") {
+							statement += "section_name='";
+						}
+						else if(type == "example") {
+							statement += "ename='";
+						}
 						statement += name + "'";
 					}
 					if(order !== "undefined") {
-						if(statement[statement.length - 1] != " ") { statement += ","; }
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
 						statement += "`order`='" + order + "'";
 					}
 					if(title !== "undefined") {
-						if(statement[statement.length - 1] != " ") { statement += ","; }
-						title != "0" ? statement += "title='" + title + "'" 
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
+						title != "0"
+							? statement += "title='" + title + "'" 
 							: statement += "title=NULL";
 					}
 					if(content !== "undefined") {
-						if(statement[statement.length - 1] != " ") { statement += ","; }
-						content != "0" ? statement += "content='" + content + "'" 
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
+						content != "0"
+							? statement += "content='" + content + "'" 
 							: statement += "content=NULL";
 					}
 					if(side_approval !== "undefined") {
-						if(statement[statement.length - 1] != " ") { statement += ","; }
-						side_approval != "0" ? statement += "side_approval='" + side_approval + "'" 
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
+						side_approval != "0"
+							? statement += "side_approval='" + side_approval + "'" 
 							: statement += "side_approval=NULL";
 					}
 					if(cms_approval !== "undefined") {
-						if(statement[statement.length - 1] != " ") { statement += ","; }
-						cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
+						cms_approval != "0"
+							? statement += "cms_approval='" + cms_approval + "'" 
 							: statement += "cms_approval=NULL";
 					}
 					if(del_approval !== "undefined") {
-						if(statement[statement.length - 1] != " ") { statement += ","; }
-						del_approval != "0" ? statement += "del_approval='" + del_approval + "'" 
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
+						del_approval != "0"
+							? statement += "del_approval='" + del_approval + "'" 
 							: statement += "del_approval=NULL";
 					}
 					if(title_cms !== "undefined") {
-						if(statement[statement.length - 1] != " ") { statement += ","; }
-						title_cms != "0" ? statement += "title_cms='" + title_cms + "'" 
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
+						title_cms != "0"
+							? statement += "title_cms='" + title_cms + "'" 
 							: statement += "title_cms=NULL";
 					}
 					if(content_cms !== "undefined") {
-						if(statement[statement.length - 1] != " ") { statement += ","; }
-						content_cms != "0" ? statement += "content_cms='" + content_cms + "'" 
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
+						content_cms != "0"
+							? statement += "content_cms='" + content_cms + "'" 
 							: statement += "content_cms=NULL";
 					}
-					if(type == "subject") { statement += " WHERE sid=" + param; }
-					else if(type == "topic") { statement += " WHERE tid=" + param; }
-					else if(type == "section") { statement += " WHERE section_id=" + param; }
-					else if(type == "example") { statement += " WHERE eid=" + param; }
+					if(type == "subject") {
+						statement += " WHERE sid=" + param;
+					}
+					else if(type == "topic") {
+						statement += " WHERE tid=" + param;
+					}
+					else if(type == "section") {
+						statement += " WHERE section_id=" + param;
+					}
+					else if(type == "example") {
+						statement += " WHERE eid=" + param;
+					}
 				}
 				else { response.send("The section_id provided is invalid!"); }
 			}
 			else if(operation == "add") {
 				if(!isNaN(param)) {
 					statement = "INSERT INTO " 
-					if(type == "subject") { statement += "subject (sid,sname,`order`"; }
-					else if(type == "topic") { statement += "topic (tid,sid,tname,`order`"; }
-					else if(type == "section") { statement += "section (section_id,tid,section_name,`order`"; }
-					else if(type == "example") { statement += "example (eid,section_id,ename,`order`"; }
 					if(type == "subject") {
-						ending = " VALUES ('" + param + "','" + name + "','" + order + "'";
+						statement += "subject (sid,sname,`order`";
+					}
+					else if(type == "topic") {
+						statement += "topic (tid,sid,tname,`order`";
+					}
+					else if(type == "section") {
+						statement += "section (section_id,tid,section_name,`order`";
+					}
+					else if(type == "example") {
+						statement += "example (eid,section_id,ename,`order`";
+					}
+					if(type == "subject") {
+						ending = " VALUES ('" + param +
+							"','" + name + "','" +
+							order + "'";
 					}
 					else {
-						ending = " VALUES ('" + param + "','" + ref + "','" + name + "','" + order + "'";
+						ending = " VALUES ('" + param +
+							"','" + ref + "','" + name +
+							"','" + order + "'";
 					}
 					if(title !== "undefined") {
 						statement += ",title";
@@ -499,7 +914,8 @@ exports.add_api_routes = (app, pool) => {
 							ending += ",NULL";
 						}
 						else {
-							ending += ",'" + side_approval + "'";
+							ending += ",'" +
+								side_approval + "'";
 						}
 					}
 					if(cms_approval !== "undefined") {
@@ -508,7 +924,8 @@ exports.add_api_routes = (app, pool) => {
 							ending += ",NULL";
 						}
 						else {
-							ending += ",'" + cms_approval + "'";
+							ending += ",'" +
+								cms_approval + "'";
 						}
 					}
 					if(del_approval !== "undefined") {
@@ -517,7 +934,8 @@ exports.add_api_routes = (app, pool) => {
 							ending += ",NULL";
 						}
 						else {
-							ending += ",'" + del_approval + "'";
+							ending += ",'" +
+								del_approval + "'";
 						}
 					}
 					if(title_cms !== "undefined") {
@@ -534,8 +952,13 @@ exports.add_api_routes = (app, pool) => {
 				else { response.send("The id provided is invalid!"); }
 			}
 			pool.query(statement, err => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-				else { response.send("1"); }
+				if(err) {
+					console.error("Error Connecting: " + err.stack);
+					response.send("0");
+				}
+				else {
+					response.send("1");
+				}
 			});
 		}
 		else {
@@ -543,26 +966,42 @@ exports.add_api_routes = (app, pool) => {
 		}
 	});
 
-	// The API methods to check the existence of a given email and check login credentials
+	/*
+		The API methods to check the existence of
+		a given email and check login credentials
+	*/
 	app.post("/api/cms/check/:param", (request, response) => {
 		var param = request.params.param,
 			email = request.body.email,
 			statement = "";
 		if(param == "login" || param == "email") {
 			if(param == "login") {
-				statement = "SELECT status,password FROM contributors WHERE email='" + email + "'";
+				statement = "SELECT status," +
+					"password FROM contributors" +
+					" WHERE email='" + email + "'";
 			}
 			else if(param == "email") {
-				statement = "SELECT email,status FROM contributors WHERE email='" + email + "'";
+				statement = "SELECT email,status" +
+					" FROM contributors WHERE" +
+					" email='" + email + "'";
 			}
 			pool.query(statement, (err, result) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
 				else {
 					if(param == "login") {
 						var passwd = request.body.passwd;
 						if(result.length > 0) {
-							if(bcrypt.compareSync(passwd, result[0].password)) {
-								response.send([{email: email, password: passwd, status: result[0].status}]);
+							if(bcrypt.compareSync(passwd,
+								result[0].password)) {
+								response.send([{
+									email: email,
+									password: passwd,
+									status: result[0].status
+								}]);
 							}
 							else {
 								response.send(["Wrong Password"]);
@@ -573,7 +1012,11 @@ exports.add_api_routes = (app, pool) => {
 						}
 					}
 					else if(param == "email") {
-						result.length > 0 ? response.send([{email: result[0].email, status: result[0].status}])
+						result.length > 0
+							? response.send([{
+								email: result[0].email,
+								status: result[0].status
+							}])
 							: response.send([]);
 					}
 				}
@@ -584,21 +1027,35 @@ exports.add_api_routes = (app, pool) => {
 		}
 	});
 
-	// The API method to check the answer of a security question
+	/*
+		The API method to check the answer of
+		a security question
+	*/
 	app.post("/api/cms/contributor/check/security", (request, response) => {
 		var email = request.body.email,
 			answer = request.body.answer,
-			statement = "SELECT answer FROM contributors WHERE email='" + email + "'";
+			statement = "SELECT answer FROM" +
+				" contributors WHERE email='" +
+				email + "'";
 		pool.query(statement, (err, content) => {
-			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			if(err) {
+				console.error("Error Connecting: " +
+					err.stack);
+				response.send("0");
+			}
 			else { 
-				bcrypt.compareSync(answer, content[0].answer) ? response.send("1") : response.send("0");
+				bcrypt.compareSync(answer, content[0].answer)
+					? response.send("1")
+					: response.send("0");
 			}
 		});
 	});
 
-	// The API methods to change a contributor's profile information, password,
-	// status, approval, and rank approval 
+	/*
+		The API methods to change a contributor's
+		profile information, password,
+		status, approval, and rank approval
+	*/ 
 	app.post("/api/cms/contributor/change/:param", (request, response) => {
 		var param = request.params.param,
 			email = request.body.email,
@@ -610,19 +1067,21 @@ exports.add_api_routes = (app, pool) => {
 					lname = request.body.lname,
 					question = request.body.question,
 					answer = request.body.answer;
-				statement = "UPDATE contributors SET first_name='" + fname +
-					"', last_name='" + lname + "', question=" + question + ", answer='" +
-					(answer !== undefined ? bcrypt.hashSync(answer, 10) : "undefined") +
+				statement = "UPDATE contributors SET first_name='" +
+					fname + "', last_name='" + lname + "', question=" +
+					question + ", answer='" + (answer !== undefined
+						? bcrypt.hashSync(answer, 10)
+						: "undefined") +
 					"' WHERE email='"+ email + "'";
 			}
 			else if(param == "password") {
 				var password = request.body.password;
-				statement = "UPDATE contributors SET password='" +
-					bcrypt.hashSync(password, 10) + "' WHERE email='" +
-					email + "'";
+				statement = "UPDATE contributors" +
+					" SET password='" + bcrypt.hashSync(password, 10) +
+					"' WHERE email='" + email + "'";
 			}
 			else if(param == "status") {
-				var value = request.body.status,
+				var value = request.body.status;
 				statement = "UPDATE contributors SET status=" +
 					value + " WHERE email='" + email + "'";
 			}
@@ -640,15 +1099,22 @@ exports.add_api_routes = (app, pool) => {
 				var rank_approval = request.body.rank_approval,
 					rank_disapproval = request.body.rank_disapproval;
 				statement = "UPDATE contributors SET rank_approval=";
-				rank_approval == "0" ? statement += "NULL, rank_disapproval=" 
-					: statement += "'" + rank_approval + "', rank_disapproval=";
+				rank_approval == "0"
+					? statement += "NULL, rank_disapproval=" 
+					: statement += "'" + rank_approval +
+						"', rank_disapproval=";
 				rank_disapproval == "0" ? statement += "NULL " 
 					: statement += "'" + rank_disapproval + "' ";
 				statement += "WHERE email='" + email + "'";
 			}
 			pool.query(statement, err => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-				else { response.send("1"); }
+				if(err) {
+					console.error("Error Connecting: " + err.stack);
+					response.send("0");
+				}
+				else {
+					response.send("1");
+				}
 			});
 		}
 		else {
@@ -662,29 +1128,40 @@ exports.add_api_routes = (app, pool) => {
 		var param = request.params.param,
 			email = request.body.email,
 			statement = "";
-		if(param == "add" || param == "remove" || param == "profile" || param == "security") {
+		if(param == "add" || param == "remove" ||
+			param == "profile" || param == "security") {
 			if(param == "add") {
 				var fname = request.body.fname,
 					lname = request.body.lname,
 					passwd = request.body.passwd,
 					question = request.body.question,
 					answer = request.body.answer;
-				statement = "INSERT INTO contributors (email,first_name,last_name,password,status" +
-				",question,answer,rank) VALUES ('" + email + "','" + fname + "','" + lname + "','" +
-				bcrypt.hashSync(passwd, 10) + "'," + 0 + "," + question + ",'" +
-				bcrypt.hashSync(answer, 10) + "','contributor')";
+				statement = "INSERT INTO contributors" +
+				" (email,first_name,last_name,password,status" +
+				",question,answer,rank) VALUES ('" +
+				email + "','" + fname + "','" + lname + "','" +
+				bcrypt.hashSync(passwd, 10) + "'," + 0 + "," +
+				question + ",'" + bcrypt.hashSync(answer, 10) +
+				"','contributor')";
 			}
 			else if(param == "remove") {
-				statement = "DELETE FROM contributors WHERE email='" + email + "'";
+				statement = "DELETE FROM contributors WHERE" +
+					" email='" + email + "'";
 			}
 			else if(param == "profile") {
-				statement = "SELECT first_name,last_name,question FROM contributors WHERE email='" + email + "'";
+				statement = "SELECT first_name,last_name," +
+					"question FROM contributors WHERE email='" +
+					email + "'";
 			}
 			else if(param == "security") {
-				statement = "SELECT question FROM contributors WHERE email='" + email + "'";
+				statement = "SELECT question FROM contributors" +
+					" WHERE email='" + email + "'";
 			}
 			pool.query(statement, (err, result) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " + err.stack);
+					response.send("0");
+				}
 				else {
 					if(param == "add" || param == "remove") {
 						response.send("1");
@@ -697,7 +1174,8 @@ exports.add_api_routes = (app, pool) => {
 						}); 
 					}
 					else if(param == "security") {
-						response.send(result[0].question.toString());
+						response.send(result[0].question
+							.toString());
 					}
 				}
 			});
@@ -707,29 +1185,48 @@ exports.add_api_routes = (app, pool) => {
 		}
 	});
 
-	// The API methods to record a contributor's session, remove a contributor's session,
-	// and check if a contributor is live
+	/*
+		The API methods to record a contributor's session,
+		remove a contributor's session, and check if a
+		contributor is live
+	*/
 	app.post("/api/cms/live/:param", (request, response) => {
 		var param = request.params.param,
 			email = request.body.email,
 			statement = "";
-		if(param == "check" || param == "add" || param == "remove") {
+		if(param == "check" || param == "add"
+			|| param == "remove") {
 			if(param == "check") {
-				statement = "SELECT email FROM `contributor-sessions` WHERE email='" + email + "'";
+				statement = "SELECT email FROM" +
+					" `contributor-sessions` WHERE" +
+					" email='" + email + "'";
 			}
 			else if(param == "add") {
-				statement = "INSERT INTO `contributor-sessions` (email) VALUES ('" + email + "')";
+				statement = "INSERT INTO" +
+					" `contributor-sessions`" +
+					" (email) VALUES ('" +
+					email + "')";
 			}
 			else if(param == "remove") {
-				statement = "DELETE FROM `contributor-sessions` WHERE email='" + email + "'";
+				statement = "DELETE FROM " +
+					"`contributor-sessions`" +
+					" WHERE email='" +
+					email + "'";
 			}
 			pool.query(statement, (err, result) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
 				else {
 					if(param == "check") {
-						result.length == 1 ? response.send(result[0].email) : response.send("");
+						result.length == 1
+							? response.send(result[0].email)
+							: response.send("");
 					}
-					else if(param == "add" || param == "remove") {
+					else if(param == "add"
+						|| param == "remove") {
 						response.send("1");
 					}
 				}
@@ -740,25 +1237,39 @@ exports.add_api_routes = (app, pool) => {
 		}
 	});
 
-	// The API methods to add, check, and remove a contributor from the committee
+	/*
+		The API methods to add, check, and remove a
+		contributor from the committee
+	*/
 	app.post("/api/cms/committee/:param", (request, response) => {
 		var param = request.params.param,
 			email = request.body.email,
 			statement = "";
-		if(param == "add" || param == "check" || param == "remove") {
+		if(param == "add" || param == "check"
+			|| param == "remove") {
 			if(param == "add") {
-				statement = "UPDATE contributors SET rank='com-member' WHERE email='" + email + "'";
+				statement = "UPDATE contributors" +
+					" SET rank='com-member' WHERE" +
+					" email='" + email + "'";
 			}
 			else if(param == "check") {
-				statement = "SELECT rank FROM contributors WHERE email='" + email + "'";
+				statement = "SELECT rank FROM" +
+					" contributors WHERE email='" +
+					email + "'";
 			}
 			else if(param == "remove") {
-				statement = "UPDATE contributors SET rank='contributor' WHERE email='" + email + "'";
+				statement = "UPDATE contributors" +
+					" SET rank='contributor' WHERE" +
+					" email='" + email + "'";
 			}
 			pool.query(statement, (err, result) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
 				else {
-					if(param == "add" || param == "remove") {
+					if(param == "add" ||param == "remove") {
 						response.send("1");
 					}
 					else if(param == "check") {
@@ -778,35 +1289,56 @@ exports.add_api_routes = (app, pool) => {
 		}
 	});
 
-	// The API methods to get the unapproved contributors, non-committee contributors, and 
-	// all contributors besides the administrator
+	/*
+		The API methods to get the unapproved contributors,
+		non-committee contributors, and  all contributors
+		besides the administrator
+	*/
 	app.post("/api/cms/contributors/:param", (request, response) => {
 		var param = request.params.param;
-		if(param == "unapproved" || param == "nonmember" || param == "data") {
+		if(param == "unapproved" || param == "nonmember"
+			|| param == "data") {
 			if(param == "unapproved") {
-				statement = "SELECT email,first_name,last_name,approval,del FROM contributors WHERE status=0";
+				statement = "SELECT email,first_name" +
+					",last_name,approval,del FROM" +
+					" contributors WHERE status=0";
 			}
 			else if(param == "nonmember") {
-				statement = "SELECT email,first_name,last_name,rank_approval,rank_disapproval" +
-					" FROM contributors WHERE status=1 AND rank='contributor'";
+				statement = "SELECT email,first_name" +
+					",last_name,rank_approval," +
+					"rank_disapproval FROM" +
+					" contributors WHERE status=1" +
+					" AND rank='contributor'";
 			}
 			else if(param == "data") {
-				statement = "SELECT email,first_name,last_name,rank,rank_approval,rank_disapproval" +
-					" FROM contributors WHERE status=1 AND rank!='admin'";
+				statement = "SELECT email,first_name" +
+					",last_name,rank,rank_approval" +
+					",rank_disapproval FROM" +
+					" contributors WHERE status=1" +
+					" AND rank!='admin'";
 			}
 			pool.query(statement, (err, result) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
 				else {
-					if(result.length == 0) { response.send([]); }
+					if(result.length == 0) {
+						response.send([]);
+					}
 					else {
 						var container = [];
 						if(param == "unapproved") {
 							result.forEach(iter => {
 								container.push({
 									email: iter.email,
-									first_name: iter.first_name,
-									last_name: iter.last_name,
-									approval: iter.approval,
+									first_name:
+										iter.first_name,
+									last_name:
+										iter.last_name,
+									approval:
+										iter.approval,
 									del: iter.del,
 								});
 							});
@@ -816,10 +1348,14 @@ exports.add_api_routes = (app, pool) => {
 							result.forEach(iter => {
 								container.push({
 									email: iter.email,
-									first_name: iter.first_name,
-									last_name: iter.last_name,
-									rank_approval: iter.rank_approval,
-									rank_disapproval: iter.rank_disapproval
+									first_name:
+										iter.first_name,
+									last_name:
+										iter.last_name,
+									rank_approval:
+										iter.rank_approval,
+									rank_disapproval:
+										iter.rank_disapproval
 								});
 							});
 							response.send(container);
@@ -827,12 +1363,17 @@ exports.add_api_routes = (app, pool) => {
 						else if(param == "data") {
 							result.forEach(iter => {
 								container.push({
-									email: iter.email,
-									first_name: iter.first_name,
-									last_name: iter.last_name,
+									email:
+										iter.email,
+									first_name:
+										iter.first_name,
+									last_name:
+										iter.last_name,
 									rank: iter.rank,
-									rank_approval: iter.rank_approval,
-									rank_disapproval: iter.rank_disapproval
+									rank_approval:
+										iter.rank_approval,
+									rank_disapproval:
+										iter.rank_disapproval
 								});
 							});
 							response.send(container);
@@ -846,7 +1387,10 @@ exports.add_api_routes = (app, pool) => {
 		}
 	});
 
-	// The API methods to change and get the content of the landing page
+	/*
+		The API methods to change and get the
+		content of the landing page
+	*/
 	app.post("/api/cms/about/:param", (request, response) => {
 		var param = request.params.param,
 			statement = "";
@@ -861,38 +1405,65 @@ exports.add_api_routes = (app, pool) => {
 					cms_approval = request.body.cms_approval;
 				statement = "UPDATE about SET ";
 				if(heading !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					heading != "0" ? statement += "heading='" + heading + "'" 
+					if(statement[statement.length - 1] != " ") {
+						statement += ",";
+					}
+					heading != "0"
+						? statement += "heading='" +
+							heading + "'" 
 						: statement += "heading=NULL";
 				}
 				if(title !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					title != "0" ? statement += "title='" + title + "'" 
+					if(statement[statement.length - 1] != " ") {
+						statement += ",";
+					}
+					title != "0"
+						? statement += "title='" +
+							title + "'" 
 						: statement += "title=NULL";
 				}
 				if(content !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					content != "0" ? statement += "content='" + content + "'" 
+					if(statement[statement.length - 1] != " ") {
+						statement += ",";
+					}
+					content != "0"
+						? statement += "content='" +
+							content + "'" 
 						: statement += "content=NULL";
 				}
 				if(cms_approval !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					cms_approval != "0" ? statement += "cms_approval='" + cms_approval + "'" 
+					if(statement[statement.length - 1] != " ") {
+						statement += ",";
+					}
+					cms_approval != "0"
+						? statement += "cms_approval='" +
+							cms_approval + "'" 
 						: statement += "cms_approval=NULL";
 				}
 				if(heading_cms !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					heading_cms != "0" ? statement += "heading_cms='" + heading_cms + "'" 
+					if(statement[statement.length - 1] != " ") {
+						statement += ","; }
+					heading_cms != "0"
+						? statement += "heading_cms='" +
+							heading_cms + "'" 
 						: statement += "heading_cms=NULL";
 				}
 				if(title_cms !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					title_cms != "0" ? statement += "title_cms='" + title_cms + "'" 
+					if(statement[statement.length - 1] != " ") {
+						statement += ",";
+					}
+					title_cms != "0"
+						? statement += "title_cms='" +
+							title_cms + "'" 
 						: statement += "title_cms=NULL";
 				}
 				if(content_cms !== "undefined") {
-					if(statement[statement.length - 1] != " ") { statement += ","; }
-					content_cms != "0" ? statement += "content_cms='" + content_cms + "'" 
+					if(statement[statement.length - 1] != " ") {
+						statement += ",";
+					}
+					content_cms != "0"
+						? statement += "content_cms='" +
+							content_cms + "'" 
 						: statement += "content_cms=NULL";
 				}
 			}
@@ -900,26 +1471,48 @@ exports.add_api_routes = (app, pool) => {
 				statement = "SELECT * FROM about";
 			}
 			pool.query(statement, (err, result) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
 				else {
-					if(result.length == 0) { response.send("0"); }
-					else if(param == "change") { response.send("1"); }
+					if(result.length == 0) {
+						response.send("0");
+					}
+					else if(param == "change") {
+						response.send("1");
+					}
 					else if(param == "data") {
-						var heading_str = result[0].heading != null ? result[0].heading : "",
-							heading_str_cms = result[0].heading_cms != null ? result[0].heading_cms : "",
-							title_str = result[0].title != null ? result[0].title : "",
-							title_str_cms = result[0].title_cms != null ? result[0].title_cms : "",
+						var heading_str = result[0].heading
+								!= null ? result[0].heading : "",
+							heading_str_cms = result[0].heading_cms
+								!= null ? result[0].heading_cms : "",
+							title_str = result[0].title != null
+								? result[0].title : "",
+							title_str_cms = result[0].title_cms
+								!= null ? result[0].title_cms : "",
 							content_str = result[0].content != null 
-								? new Buffer(result[0].content, "binary").toString() : "",
-							content_str_cms = result[0].content_cms != null 
-								? new Buffer(result[0].content_cms, "binary").toString() : ""; 
+								? new Buffer(result[0].content,
+									"binary").toString()
+								: "",
+							content_str_cms = result[0].content_cms
+								!= null  ? new Buffer(result[0].content_cms,
+									"binary").toString()
+								: ""; 
 						response.send({
-							heading: heading_str,
-							title: title_str,
-							content: content_str,
-							heading_cms: heading_str_cms,
-							title_cms: title_str_cms,
-							content_cms: content_str_cms
+							heading:
+								heading_str,
+							title:
+								title_str,
+							content:
+								content_str,
+							heading_cms:
+								heading_str_cms,
+							title_cms:
+								title_str_cms,
+							content_cms:
+								content_str_cms
 						});
 					}
 				}
@@ -930,77 +1523,129 @@ exports.add_api_routes = (app, pool) => {
 		}
 	});
 
-	// The API method to get the administrator information
+	/*
+		The API method to get the administrator
+		information
+	*/
 	app.post("/api/cms/admin/info", (request, response) => {
-		var statement = "SELECT email,first_name,last_name FROM contributors WHERE rank='admin'";
+		var statement = "SELECT email,first_name" +
+			",last_name FROM contributors WHERE" +
+			" rank='admin'";
 		pool.query(statement, (err, results) => {
-			if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+			if(err) {
+				console.error("Error Connecting: " +
+					err.stack);
+				response.send("0");
+			}
 			else {
 				response.send({
-					first_name: results[0].first_name, 
-					last_name: results[0].last_name, 
-					email: results[0].email
+					first_name:
+						results[0].first_name, 
+					last_name:
+						results[0].last_name, 
+					email:
+						results[0].email
 				});
 			}
 		});
 	});
 
-	// The API methods to get all subjects, topics, sections, or examples
+	/*
+		The API methods to get all subjects,
+		topics, sections, or examples
+	*/
 	app.get("/api/:objects", (request, response) => {
 		var objects = request.params.objects,
 			statement = "";
 		// response.set('Cache-Control', 'public, max-age=864000000');
 		if(objects == "subjects") {
-			statement = "SELECT sid,sname,`order`,side_approval,del_approval," +
-				"cms_approval FROM subject ORDER BY `order` ASC";
+			statement = "SELECT sid,sname," +
+				"`order`,side_approval," +
+				"del_approval,cms_approval" +
+				" FROM subject ORDER BY" +
+				" `order` ASC";
 			pool.query(statement, (err, results) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
 				results.forEach(subject => {
 					subject.topics = [];
-					subject.clean_name = subject.sname.replace(/_/g, " ")
-						.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
-						.replace(/COLON/g, ":").replace(/COMMA/g, ",");
+					subject.clean_name = subject.sname
+						.replace(/_/g, " ")
+						.replace(/AND/g, "-")
+						.replace(/APOSTROPHE/g, "'")
+						.replace(/COLON/g, ":")
+						.replace(/COMMA/g, ",");
 				});
 				response.send(results);
 			});
 		}
 		else if(objects == "topics") {
-			statement = "SELECT sid,tid,tname,`order`,side_approval,del_approval," +
-				"cms_approval FROM topic";
+			statement = "SELECT sid,tid,tname" +
+				",`order`,side_approval," +
+				"del_approval,cms_approval" +
+				" FROM topic";
 			pool.query(statement, (err, results) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
 				results.forEach(topic => {
 					topic.sections = [];
-					topic.clean_name = topic.tname.replace(/_/g, " ")
-						.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
-						.replace(/COLON/g, ":").replace(/COMMA/g, ",");
+					topic.clean_name = topic.tname
+						.replace(/_/g, " ")
+						.replace(/AND/g, "-")
+						.replace(/APOSTROPHE/g, "'")
+						.replace(/COLON/g, ":")
+						.replace(/COMMA/g, ",");
 				});
 				response.send(results);
 			});
 		}
 		else if(objects == "sections") {
-			statement = "SELECT section_id,tid,section_name,`order`,side_approval," +
-				"del_approval,cms_approval FROM section";
+			statement = "SELECT section_id,tid" +
+				",section_name,`order`," +
+				"side_approval,del_approval" +
+				",cms_approval FROM section";
 			pool.query(statement, (err, results) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
 				results.forEach(section => {
 					section.examples = [];
-					section.clean_name = section.section_name.replace(/_/g, " ")
-						.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
-						.replace(/COLON/g, ":").replace(/COMMA/g, ",");
+					section.clean_name = section.section_name
+						.replace(/_/g, " ")
+						.replace(/AND/g, "-")
+						.replace(/APOSTROPHE/g, "'")
+						.replace(/COLON/g, ":")
+						.replace(/COMMA/g, ",");
 				});
 				response.send(results);
 			});
 		}
 		else if(objects == "examples") {
-			statement = "SELECT eid,ename,section_id,`order`,side_approval," +
-				"del_approval,cms_approval FROM example";
+			statement = "SELECT eid,ename," +
+				"section_id,`order`," +
+				"side_approval,del_approval" +
+				",cms_approval FROM example";
 			pool.query(statement, (err, results) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
 				results.forEach(example => {
-					example.clean_name = example.ename.replace(/_/g, " ")
-						.replace(/AND/g, "-").replace(/APOSTROPHE/g, "'")
-						.replace(/COLON/g, ":").replace(/COMMA/g, ",");
+					example.clean_name = example.ename
+						.replace(/_/g, " ")
+						.replace(/AND/g, "-")
+						.replace(/APOSTROPHE/g, "'")
+						.replace(/COLON/g, ":")
+						.replace(/COMMA/g, ",");
 				});
 				response.send(results);
 			});
@@ -1008,22 +1653,42 @@ exports.add_api_routes = (app, pool) => {
 		else { response.send("No such API request exists!"); }
 	});
 
-	// The API methods to count the number of contributors and committee members
+	/*
+		The API methods to count the number of
+		contributors and committee members
+	*/
 	app.get("/api/cms/count/:param", (request, response) => {
 		var type = request.params.param,
 			statement = "";
 		if(type == "contributors") {
-			statement = "SELECT email FROM contributors WHERE status=1";
+			statement = "SELECT email FROM" +
+				" contributors WHERE status=1";
 			pool.query(statement, (err, result) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-				else { response.send((result.length).toString()); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
+				else {
+					response.send((result.length)
+						.toString());
+				}
 			});
 		}
 		else if(type == "committee") {
-			statement = "SELECT email FROM contributors WHERE rank='com-member'";
+			statement = "SELECT email FROM" +
+				" contributors WHERE" +
+				" rank='com-member'";
 			pool.query(statement, (err, result) => {
-				if(err) { console.error("Error Connecting: " + err.stack); response.send("0"); }
-				else { response.send((result.length + 1).toString()); }
+				if(err) {
+					console.error("Error Connecting: " +
+						err.stack);
+					response.send("0");
+				}
+				else {
+					response.send((result.length + 1)
+						.toString());
+				}
 			});
 		}
 		else { response.send("No such API request exists!"); }
