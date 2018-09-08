@@ -5662,23 +5662,23 @@ define(function() {
 								comparison.title = comparison.title != null 
 									? exports.replace_all(
 										decodeURIComponent(comparison.title),
-										"APOSTROPHE", "'").split("-----")
-									: [""];
+										"APOSTROPHE", "'")
+									: "";
 								comparison.content = comparison.content != null 
 									? exports.replace_all(
 										decodeURIComponent(comparison.content),
-										"APOSTROPHE", "'").split("-----")
-									: [""];
+										"APOSTROPHE", "'")
+									: "";
 								comparison.title_cms = comparison.title_cms != null 
 									? exports.replace_all(
 										decodeURIComponent(comparison.title_cms),
-										"APOSTROPHE", "'").split("-----")
-									: [""];
+										"APOSTROPHE", "'")
+									: "";
 								comparison.content_cms = comparison.content_cms != null 
 									? exports.replace_all(
 										decodeURIComponent(comparison.content_cms),
-										"APOSTROPHE", "'").split("-----")
-									: [""];
+										"APOSTROPHE", "'")
+									: "";
 								if(page == "about") {
 									comparison.heading_cms = comparison.heading_cms != null 
 										? exports.replace_all(

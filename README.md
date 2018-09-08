@@ -14,6 +14,7 @@
     - [Editing a Page](#editing-a-page)
     - [Editing the Sidenav](#editing-the-sidenav)
     - [Floating Action Button](#floating-action-button)
+    - [Listeners](#listeners)
 - [Styling](#styling)
 - [Front-End Functionality](#front-end-functionality)
 - [Using the API](#using-the-api)
@@ -153,6 +154,11 @@ At the bottom right of each page you will find the button which provides the fol
 * approve/disapprove incoming contributors (only for committee members and administrator)
 * provide an opinion on current non-committee members as to whether they should join the committee or not (only for committee members)
 * add/remove a contributor from the committee and delete a contributor from the system (administrator only)
+
+### Listeners
+* The system constantly listens to a cookie change so as to detect a contributor's session. After an hour of inactivity a user will be navigated back to the login page so as to provide the necessary credentials once more.
+* If a contributor tries to leave a page with unsaved changes, the system will prompt the contributor asking if they are sure about leaving the page (this excludes a page exit or reload).
+* If another contributor has pushed new changes to the database on the current page, the system will prompt the contributor stating that the database has new content (checks every five minutes).
 
 
 # Styling
