@@ -145,7 +145,7 @@ where subjects, topics, sections, or examples can be added (depending on where y
     <img src="/img/cms-nav-modal.png">
 </p>
 
-It is here that new subjects, topics, sections, and examples can be added with the capability, like the current iterms, to have their names and order edited. Furthermore, each will have an associated approval and disapproval that functions in exactly the same manner as the content approval system. Therefore, an item will only be pushed to the client nav or deleted all together when the necessary number of approvals are given. It is important to note that like the content editing mode, any changes made to the sidenav are only pushed to the database when the button is explicitly clicked.
+It is here that new subjects, topics, sections, and examples can be added with the capability, like the current items, to have their names and order edited. Furthermore, each will have an associated approval and disapproval that functions in exactly the same manner as the content approval system. Therefore, an item will only be pushed to the client nav or deleted all together when the necessary number of approvals are given. It is important to note that like the content editing mode, any changes made to the sidenav are only pushed to the database when the button is explicitly clicked.
 
 ### Floating Action Button
 At the bottom right of each page you will find the button which provides the following functionality:

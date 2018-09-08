@@ -5685,19 +5685,18 @@ define(function() {
 											decodeURIComponent(comparison.heading_cms),
 											"APOSTROPHE", "'")
 										: "";
-									if(comparison.heading_cms != headingComparison ||
-										comparison.title_cms != titleComparison ||
-										comparison.content_cms != contentComparison) {
+									if(comparison.heading_cms != decodeURIComponent(headingComparison) ||
+										comparison.title_cms != decodeURIComponent(titleComparison) ||
+										comparison.content_cms != decodeURIComponent(contentComparison)) {
 										exports.update_modal();
 									}
 								}
 								else {
-									if(comparison.title_cms != titleComparison ||
-										comparison.content_cms != contentComparison) {
+									if(comparison.title_cms != decodeURIComponent(titleComparison) ||
+										comparison.content_cms != decodeURIComponent(contentComparison)) {
 										exports.update_modal();
 									}
 								}
-
 							});
 						}, 1000 * 60 * 5);
 						exports.listen_cookie_change("contributor", function() {
