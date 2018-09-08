@@ -4,8 +4,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Adds and removes dividers in the sidenav as
-	the screen is resized.
+		Adds and removes dividers in the sidenav as
+		the screen is resized.
 
 	Parameters:
 		page: The name of the page currently set
@@ -30,7 +30,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Rescales a given data url.
+		Rescales a given data url.
 
 	Parameters:
 		url: 
@@ -59,8 +59,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Replaces all instances of a substring inside of
-	a given string.
+		Replaces all instances of a substring inside of
+		a given string.
 
 	Parameters:
 		str: 
@@ -79,7 +79,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Returns a deep copy of an object.
+		Returns a deep copy of an object.
 
 	Parameters:
 		obj: 
@@ -101,8 +101,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Checks if a string meets the requirements
-	to be a password.
+		Checks if a string meets the requirements
+		to be a password.
 
 	Parameters:
 		str: 
@@ -117,7 +117,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Creates a cookie.
+		Creates a cookie.
 
 	Parameters:
 		name: 
@@ -144,7 +144,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Reads a cookie's value with the given name.
+		Reads a cookie's value with the given name.
 
 	Parameters:
 		name: 
@@ -171,7 +171,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Deletes a cookie by changing the max-age.
+		Deletes a cookie by changing the max-age.
 
 	Parameters:
 		name: 
@@ -185,8 +185,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Listens for a change in the cookie with the
-	given name.
+		Listens for a change in the cookie with the
+		given name.
 
 	Parameters:
 		name: 
@@ -213,7 +213,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the modal for a screen resize.
+		Handles the modal for a screen resize.
 
 	Parameters:
 		callback: 
@@ -266,8 +266,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Adds a committee option to the fixed
-	action button.
+		Adds a committee option to the fixed
+		action button.
 
 	Parameters:
 		email: 
@@ -324,8 +324,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the decision modal for
-	the administrator.
+		Handles the decision modal for
+		the administrator.
 
 	*/
 	exports.decision_modal = function() {
@@ -555,8 +555,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the ranking modal for committee members
-	excluding the administrator.
+		Handles the ranking modal for committee members
+		excluding the administrator.
 
 	*/
 	exports.ranking_modal = function() {
@@ -838,7 +838,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the committee modal.
+		Handles the committee modal.
 
 	*/
 	exports.committee_modal = function() {
@@ -1114,7 +1114,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the name checks of the sidenav modal.
+		Handles the name checks of the sidenav modal.
 
 	Parameters:
 		data:
@@ -1142,7 +1142,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles all clicks for the sidenav modal.
+		Handles all clicks for the sidenav modal.
 
 	Parameters:
 		type: 
@@ -1476,8 +1476,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the sidenav modal that adds
-	and changes data.
+		Handles the sidenav modal that adds
+		and changes data.
 
 	Parameters:
 		type: 
@@ -2037,8 +2037,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles all of the modal changes for the cms
-	contributor profile.
+		Handles all of the modal changes for the cms
+		contributor profile.
 
 	Parameters:
 		email: 
@@ -2473,8 +2473,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the session modal for a
-	live contributor.
+		Handles the session modal for a
+		live contributor.
 
 	Parameters:
 		router: 
@@ -2537,8 +2537,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Changes the modal content as needed
-	and displays it.
+		Changes the modal content as needed
+		and displays it.
 
 	Parameters:
 		type: 
@@ -3067,7 +3067,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Validates a given email.
+		Validates a given email.
 
 	Parameters:
 		email: 
@@ -3088,7 +3088,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Validates a given URL.
+		Validates a given URL.
 
 	Parameters:
 		url: 
@@ -3106,8 +3106,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Compares two objects based on
-	their order property.
+		Compares two objects based on
+		their order property.
 
 	Parameters:
 		lhs: 
@@ -3126,7 +3126,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the API calls.
+		Handles the API calls.
 
 	Parameters:
 		arguments: 
@@ -3155,9 +3155,9 @@ define(function() {
 	/*
 
 	Purpose:
-	Creates the necessary association of
-	all the subjects, topics, sections,
-	and examples.
+		Creates the necessary association of
+		all the subjects, topics, sections,
+		and examples.
 
 	Parameters:
 		subjects: 
@@ -3200,11 +3200,11 @@ define(function() {
 	/*
 
 	Purpose:
-	Once all of subjects, topics, sections,
-	and examples are associated this function
-	will change the order within the arrays
-	based on the order property from the
-	database.
+		Once all of subjects, topics, sections,
+		and examples are associated this function
+		will change the order within the arrays
+		based on the order property from the
+		database.
 
 	Parameters:
 		subjects: 
@@ -3226,7 +3226,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Converts rgb/rgba colors codes to hex.
+		Converts rgb/rgba colors codes to hex.
 
 	Parameters:
 		orig: 
@@ -3248,8 +3248,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Takes away the pointer events associated
-	to the logo link on the about page.
+		Takes away the pointer events associated
+		to the logo link on the about page.
 
 	Parameters:
 		page: 
@@ -3268,8 +3268,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the coloring of the li tags on
-	the example_side_nav.
+		Handles the coloring of the li tags on
+		the example_side_nav.
 
 	*/
 	exports.handle_li_coloring = function() {
@@ -3300,7 +3300,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Returns the screen width.
+		Returns the screen width.
 
 	*/
 	exports.width_func = function() {
@@ -3312,7 +3312,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Returns the screen height.
+		Returns the screen height.
 
 	*/
 	exports.height_func = function() {
@@ -3324,8 +3324,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the side nav for
-	different screens.
+		Handles the side nav for
+		different screens.
 
 	*/
 	exports.handle_side_nav = function() {
@@ -3355,8 +3355,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Moves the logo all the way to
-	the right on a mobile view.
+		Moves the logo all the way to
+		the right on a mobile view.
 
 	*/
 	exports.handle_logo = function() {
@@ -3371,8 +3371,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the button functionality for
-	"Show Proof" and "Show Solution".
+		Handles the button functionality for
+		"Show Proof" and "Show Solution".
 
 	Parameters:
 		page: 
@@ -3418,8 +3418,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the mobile logo placement
-	on an orientation change.
+		Handles the mobile logo placement
+		on an orientation change.
 
 	*/
 	exports.handle_orientation = function() {
@@ -3446,7 +3446,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the generation of breadcrumbs.
+		Handles the generation of breadcrumbs.
 
 	Parameters:
 		page: 
@@ -3545,8 +3545,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Makes sure that the breadcrumbs on
-	the topic page allign correctly.
+		Makes sure that the breadcrumbs on
+		the topic page allign correctly.
 
 	Parameters:
 		page: 
@@ -3564,8 +3564,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the generation of breadcrumbs
-	for the desktop title.
+		Handles the generation of breadcrumbs
+		for the desktop title.
 
 	Parameters:
 		page: 
@@ -3627,8 +3627,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Determines whether the current
-	device is mobile or not.
+		Determines whether the current
+		device is mobile or not.
 
 	*/
 	exports.is_mobile = function() {
@@ -3671,9 +3671,9 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the modal that warns
-	a contributor about leaving
-	a page with unsaved changes.
+		Handles the modal that warns
+		a contributor about leaving
+		a page with unsaved changes.
 
 	Parameters:
 		router:
@@ -3728,10 +3728,10 @@ define(function() {
 	/*
 
 	Purpose:
-	Returns an array of values
-	which the original heading_cms,
-	title_cms, and content_cms
-	can be compared to.
+		Returns an array of values
+		which the original heading_cms,
+		title_cms, and content_cms
+		can be compared to.
 
 	Parameters:
 		obj:
@@ -3790,8 +3790,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the initial load of any
-	cms page.
+		Handles the initial load of any
+		cms page.
 
 	Parameters:
 		router:
@@ -3872,7 +3872,7 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the cms box links.
+		Handles the cms box links.
 
 	Parameters:
 		data: 
@@ -4520,8 +4520,43 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the loading of all content
-	for the cms pages.
+		Handles the modal that informs a
+		contributor when another contributor
+		has pushed new content into the
+		database.
+
+	*/
+	exports.update_modal = function() {
+		$.get("/pages/dist/modal-min.html").done(function(content) {
+			$("body").append(content);
+			$(".modal-trigger").leanModal({
+				dismissible: false,
+				opacity: 2,
+				inDuration: 1000,
+				outDuration: 1000
+			});
+			$("#popup_title").text("Database Update");
+			$("#popup_body").text("In the last five" +
+				" minutes another contributor has" +
+				" updated the content of the" +
+				" current page. To see the new" +
+				" changes you have to refresh" +
+				" the page.");
+			$("#popup_control").click();
+			$("#popup_submit").click(function(e) {
+				e.preventDefault();
+				$(".lean-overlay").remove();
+				$("#popup").remove();
+				$("#popup_control").remove();
+			});
+		});
+	};
+
+	/*
+
+	Purpose:
+		Handles the loading of all content
+		for the cms pages.
 
 	Parameters:
 		page: 
@@ -5562,25 +5597,25 @@ define(function() {
 									? data.content_cms.join("-----")
 									: "0"
 							};
-							statement = "/api/change/";
+							var call = "/api/change/";
 							if(page == "subject") {
-								statement += "subject/";
+								call += "subject/";
 							}
 							else if(page == "topic") {
-								statement += "topic/";
+								call += "topic/";
 							}
 							else if(page == "section") {
-								statement += "section/";
+								call += "section/";
 							}
 							else if(page == "example") {
-								statement += "example/";
+								call += "example/";
 							}
 							else if(page == "about") {
-								statement = "/api/cms/about/change/";
+								call = "/api/cms/about/change/";
 								obj.heading = data.heading;
 								obj.heading_cms = data.heading_cms;
 							}
-							$.post(statement, obj)
+							$.post(call, obj)
 								.fail(function() {
 								$("#popup_title").text("Database Issue");
 								$("#popup_body").text("There was" +
@@ -5619,6 +5654,103 @@ define(function() {
 						links.handle_links(router, subjects,
 							topics, sections, examples);
 						$(".button-tooltipped").tooltip();
+
+
+
+						setInterval(function() {
+							$.post(statement, {param: db_id})
+								.done(function(comparison) {
+								comparison.title = comparison.title != null 
+									? exports.replace_all(
+										decodeURIComponent(comparison.title),
+										"APOSTROPHE", "'").split("-----")
+									: [""];
+								comparison.content = comparison.content != null 
+									? exports.replace_all(
+										decodeURIComponent(comparison.content),
+										"APOSTROPHE", "'").split("-----")
+									: [""];
+								comparison.title_cms = comparison.title_cms != null 
+									? exports.replace_all(
+										decodeURIComponent(comparison.title_cms),
+										"APOSTROPHE", "'").split("-----")
+									: [""];
+								comparison.content_cms = comparison.content_cms != null 
+									? exports.replace_all(
+										decodeURIComponent(comparison.content_cms),
+										"APOSTROPHE", "'").split("-----")
+									: [""];
+								if(exports.rgba_to_hex($("#edit").closest("li")
+									.css("background-color")) == "#008cc3") {
+									if(page == "about") {
+										data.heading_cms =
+											$("#edit_title").text();
+									}
+									if($(".latex_body").length != 0) {
+										$(".latex_body").each(function(index) {
+											var arr_title = [],
+												arr_body = [];
+											$(".show_solution").each(function(index) {
+												var title = $(this).children()
+													.first().clone()
+													.children().remove()
+													.end().text();
+												$(this).children()
+													.children().each(function(index) {
+													if($(this).hasClass("toggle") &&
+														$(this).text() == "toggle_off") {
+														arr_title.push(title
+															+ "_hidden");
+													}
+													else if($(this).hasClass("toggle") &&
+														$(this).text() == "toggle_on") {
+														arr_title.push(title);
+													}
+												});
+												$(this).siblings().each(function(index) {
+													arr_body.push(
+														$(this).children()[0].innerHTML);
+												});
+											});
+											data.title_cms = arr_title;
+											data.content_cms = arr_body;
+										});
+									}
+									else {
+										data.title_cms = [""];
+										data.content_cms = [""];
+									}
+								}
+								if(page == "about") {
+									comparison.heading_cms = comparison.heading_cms != null 
+										? exports.replace_all(
+											decodeURIComponent(comparison.heading_cms),
+											"APOSTROPHE", "'")
+										: "";
+									if(comparison.heading_cms != data.heading_cms ||
+										comparison.title_cms.join("-----") !=
+										data.title_cms.join("-----") ||
+										comparison.content_cms.join("-----") !=
+										data.content_cms.join("-----")) {
+										exports.update_modal();
+									}
+								}
+								else {
+									console.log(comparison);
+									console.log(data);
+									if(comparison.title_cms.join("-----") !=
+										data.title_cms.join("-----") ||
+										comparison.content_cms.join("-----") !=
+										data.content_cms.join("-----")) {
+										exports.update_modal();
+									}
+								}
+
+							});
+						}, 1000 * 60 * 5);
+
+
+
 						$("a").click(function(e) {
 							e.preventDefault();
 							if(exports.rgba_to_hex(
@@ -6300,8 +6432,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the initial load of
-	any client page.
+		Handles the initial load of
+		any client page.
 
 	Parameters:
 		callback: 
@@ -6320,8 +6452,8 @@ define(function() {
 	/*
 
 	Purpose:
-	Handles the loading of all content
-	for the client pages.
+		Handles the loading of all content
+		for the client pages.
 
 	Parameters:
 		page: 
