@@ -5686,18 +5686,14 @@ define(function() {
 											"APOSTROPHE", "'")
 										: "";
 									if(comparison.heading_cms != headingComparison ||
-										comparison.title_cms.join("-----") !=
-										titleComparison ||
-										comparison.content_cms.join("-----") !=
-										contentComparison) {
+										comparison.title_cms != titleComparison ||
+										comparison.content_cms != contentComparison) {
 										exports.update_modal();
 									}
 								}
 								else {
-									if(comparison.title_cms.join("-----") !=
-										titleComparison ||
-										comparison.content_cms.join("-----") !=
-										contentComparison) {
+									if(comparison.title_cms != titleComparison ||
+										comparison.content_cms != contentComparison) {
 										exports.update_modal();
 									}
 								}
