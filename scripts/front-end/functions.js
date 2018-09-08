@@ -5654,10 +5654,7 @@ define(function() {
 						links.handle_links(router, subjects,
 							topics, sections, examples);
 						$(".button-tooltipped").tooltip();
-
-
-
-						setInterval(function() {
+						var interval = setInterval(function() {
 							$.post(statement, {param: db_id})
 								.done(function(comparison) {
 								comparison.title = comparison.title != null 
@@ -5736,8 +5733,6 @@ define(function() {
 									}
 								}
 								else {
-									console.log(comparison);
-									console.log(data);
 									if(comparison.title_cms.join("-----") !=
 										data.title_cms.join("-----") ||
 										comparison.content_cms.join("-----") !=
@@ -5748,9 +5743,11 @@ define(function() {
 
 							});
 						}, 1000 * 60 * 5);
-
-
-
+						exports.listen_cookie_change("contributor", function() {
+							if(exports.read_cookie("contributor") == "") {
+								clearInterval(interval);
+							}
+						});
 						$("a").click(function(e) {
 							e.preventDefault();
 							if(exports.rgba_to_hex(
@@ -5885,7 +5882,6 @@ define(function() {
 											exports.warning_modal(router,
 												"cms");
 										}
-										// router.navigate("cms");
 									}
 									else if(id_string == "topics"
 										&& holder[1] != "change"
@@ -5934,10 +5930,6 @@ define(function() {
 													tname: topic.tname
 											});
 										}
-										// router.navigate("subjectEdit.topicEdit", {
-										// 	sname: subject.sname,
-										// 	tname: topic.tname
-										// });	
 									}
 									else if(id_string == "topicnav"
 										&& holder[2] == "cms") {
@@ -5977,8 +5969,6 @@ define(function() {
 												"subjectEdit",
 												{sname: subject.sname});
 										}
-										// router.navigate("subjectEdit",
-										// 	{sname: subject.sname});
 									}
 									else if(id_string == "sections"
 										&& holder[1] != "change"
@@ -6056,16 +6046,6 @@ define(function() {
 														section.section_name
 											});
 										}
-										// router.navigate("subjectEdit." +
-										// 	"topicEdit.sectionEdit." +
-										// 	"current_pageEdit", {
-										// 	sname: subject.sname, 
-										// 	tname: topic.tname, 
-										// 	section_name: 
-										// 	section.section_name, 
-										// 	current_page_name: 
-										// 		section.section_name
-										// });
 									}
 									else if(id_string == "sectionnav"
 										&& holder[2] == "cms") {
@@ -6118,10 +6098,6 @@ define(function() {
 													tname: topic.tname
 											});
 										}
-										// router.navigate("subjectEdit.topicEdit", {
-										// 	sname: subject.sname,
-										// 	tname: topic.tname
-										// });
 									}
 									else if(id_string == "sectionname"
 										&& holder[2] == "cms") {
@@ -6198,14 +6174,6 @@ define(function() {
 														section.section_name
 											});
 										}
-										// router.navigate("subjectEdit.topicEdit." +
-										// 	"sectionEdit.current_pageEdit", { 
-										// 	sname: subject.sname, 
-										// 	tname: topic.tname, 
-										// 	section_name: section.section_name, 
-										// 	current_page_name:
-										// 		section.section_name
-										// });
 									}
 									else if(id_string == "examples"
 										&& holder[1] != "change"
@@ -6288,16 +6256,6 @@ define(function() {
 														example.ename
 											});
 										}
-										// router.navigate("subjectEdit." +
-										// 	"topicEdit.sectionEdit." +
-										// 	"current_pageEdit", { 
-										// 	sname: subject.sname, 
-										// 	tname: topic.tname, 
-										// 	section_name:
-										// 		section.section_name, 
-										// 	current_page_name:
-										// 		example.ename
-										// });
 									}
 								}
 							}
