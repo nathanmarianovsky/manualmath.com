@@ -27,7 +27,7 @@ define(["dist/functions-min"], function(functions) {
 			An array of all the subjects
 
 	*/
-	exports.subject_side_nav = function(subjects, cms, min) {
+	exports.subject_side_nav = function(subjects, cms) {
 		var sidenav = $(".side-nav"),
 			results = [];
 		sidenav.empty();
@@ -45,9 +45,9 @@ define(["dist/functions-min"], function(functions) {
 			sidenav.append(change_li
 				.append(change_link));
 		}
+		console.log(subjects);
 		results = subjects.map(function(subject) {
-			if(cms == 0 && subject.side_approval !== null
-				&& subject.side_approval.split(",").length >= min) {
+			if(cms == 0 && subject.status == 1) {
 				var subjectli = $("<li>")
 						.addClass("no-padding")
 						.attr("id", "subjects_li" + subject.sid),
@@ -104,7 +104,7 @@ define(["dist/functions-min"], function(functions) {
 			the current subject
 
 	*/
-	exports.topic_side_nav = function(subject, cms, min) {
+	exports.topic_side_nav = function(subject, cms) {
 		var	sidenav = $(".side-nav"),
 			subjectli = $("<li>")
 				.addClass("no-padding")
@@ -140,8 +140,7 @@ define(["dist/functions-min"], function(functions) {
 				.append(change_link));
 		}
 		results = subject.topics.map(function(topic) {
-			if(cms == 0 && topic.side_approval !== null
-				&& topic.side_approval.split(",").length >= min) {
+			if(cms == 0 && topic.status == 1) {
 				var topicli = $("<li>")
 						.addClass("no-padding")
 						.attr("id", "topics_li" + topic.tid),
@@ -201,7 +200,7 @@ define(["dist/functions-min"], function(functions) {
 			the current topic
 
 	*/
-	exports.section_side_nav = function(topic, subject, cms, min) {
+	exports.section_side_nav = function(topic, subject, cms) {
 		var sidenav = $(".side-nav"),
 			topicli = $("<li>")
 				.addClass("no-padding")
@@ -238,8 +237,7 @@ define(["dist/functions-min"], function(functions) {
 				.append(change_link));
 		}
 		results = topic.sections.map(function(section) {
-			if(cms == 0 && section.side_approval !== null
-				&& section.side_approval.split(",").length >= min) {
+			if(cms == 0 && section.status == 1) {
 				var sectionli = $("<li>")
 						.addClass("no-padding")
 						.attr("id", "sections_li" + section.section_id),
@@ -301,7 +299,7 @@ define(["dist/functions-min"], function(functions) {
 			the current section
 
 	*/
-	exports.example_side_nav = function(section, topic, cms, min) {
+	exports.example_side_nav = function(section, topic, cms) {
 		var sidenav = $(".side-nav"),
 			link = $("<a>")
 				.addClass("collapsible-header bold menu_items")
@@ -353,8 +351,7 @@ define(["dist/functions-min"], function(functions) {
 				$("<li>").addClass("divider"))
 			: sidenav.append(sectionname);
 		results = section.examples.map(function(example) {
-			if(cms == 0 && example.side_approval !== null
-				&& example.side_approval.split(",").length >= min) {
+			if(cms == 0 && example.status == 1) {
 				var exampleli = $("<li>")
 						.addClass("no-padding")
 						.attr("id", "examples_li" + example.eid),
@@ -411,55 +408,52 @@ define(["dist/functions-min"], function(functions) {
 	*/
 	exports.driver = function(page, cms, param1, param2,
 		callback) {
-		$.get("/api/cms/count/contributors")
-			.done(function(num) {
-			const validation =
-				Math.ceil(Math.log(parseInt(num)));
-			if(page == "about") {
-				exports.subject_side_nav(param1,
-					cms, validation);
-			}
-			else if(page == "subject") {
-				exports.topic_side_nav(param1,
-					cms, validation);
-			}
-			else {
-				if(typeof param2 !== "undefined"
-					&& param2 !== null) {
-					if(page == "topic") {
-						exports.section_side_nav(
-							param1, param2, cms,
-							validation);
-					}
-					else if(page == "section") {
-						$(".side-nav li").each(function() {
-							if(typeof $(this).attr("id")
-								!== typeof undefined
-								&& $(this).attr("id")
-								!== false) {
-								if($(this).attr("id")
-									.split("_")[0]
-									== "topic") {
-									exports.example_side_nav(
-										param1, param2, cms,
-										validation);
-								}
+		// $.get("/api/cms/count/contributors")
+		// 	.done(function(num) {
+		// 	const validation =
+		// 		Math.ceil(Math.log(parseInt(num)));
+		if(page == "about") {
+			exports.subject_side_nav(param1, cms);
+		}
+		else if(page == "subject") {
+			exports.topic_side_nav(param1, cms);
+		}
+		else {
+			if(typeof param2 !== "undefined"
+				&& param2 !== null) {
+				if(page == "topic") {
+					exports.section_side_nav(
+						param1, param2, cms);
+				}
+				else if(page == "section") {
+					$(".side-nav li").each(function() {
+						if(typeof $(this).attr("id")
+							!== typeof undefined
+							&& $(this).attr("id")
+							!== false) {
+							if($(this).attr("id")
+								.split("_")[0]
+								== "topic") {
+								exports.example_side_nav(
+									param1, param2, cms);
 							}
-						});
-						if($(".side-nav").is(":empty") ||
-							$(".side-nav").children()
-							.length == 1) { 
-							exports.example_side_nav(
-								param1, param2, cms,
-								validation); 
 						}
+					});
+					if($(".side-nav").is(":empty") ||
+						$(".side-nav").children()
+						.length == 1) { 
+						exports.example_side_nav(
+							param1, param2, cms); 
 					}
 				}
 			}
-		}).done(function() {
-			functions.handle_side_nav();
-			callback();
-		});
+		}
+		functions.handle_side_nav();
+		callback();
+		// }).done(function() {
+		// 	functions.handle_side_nav();
+		// 	callback();
+		// });
 	};
 
 	return exports;

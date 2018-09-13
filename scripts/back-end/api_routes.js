@@ -750,6 +750,7 @@ exports.add_api_routes = (app, pool) => {
 			del_approval = request.body.del_approval,
 			title_cms = request.body.title_cms,
 			content_cms = request.body.content_cms,
+			status = request.body.status,
 			statement = "",
 			ending = "";
 		if(operation == "change" || operation == "add") {
@@ -803,6 +804,12 @@ exports.add_api_routes = (app, pool) => {
 							statement += ",";
 						}
 						statement += "`order`='" + order + "'";
+					}
+					if(status !== "undefined") {
+						if(statement[statement.length - 1] != " ") {
+							statement += ",";
+						}
+						statement += "status=" + status;
 					}
 					if(title !== "undefined") {
 						if(statement[statement.length - 1] != " ") {
@@ -907,6 +914,10 @@ exports.add_api_routes = (app, pool) => {
 					if(content !== "undefined") {
 						statement += ",content";
 						ending += ",'" + content + "'";
+					}
+					if(status !== "undefined") {
+						statement += ",status";
+						ending += "," + status;
 					}
 					if(side_approval !== "undefined") {
 						statement += ",side_approval";
@@ -1561,8 +1572,8 @@ exports.add_api_routes = (app, pool) => {
 		if(objects == "subjects") {
 			statement = "SELECT sid,sname," +
 				"`order`,side_approval," +
-				"del_approval,cms_approval" +
-				" FROM subject ORDER BY" +
+				"del_approval,cms_approval," +
+				"status FROM subject ORDER BY" +
 				" `order` ASC";
 			pool.query(statement, (err, results) => {
 				if(err) {
@@ -1585,8 +1596,8 @@ exports.add_api_routes = (app, pool) => {
 		else if(objects == "topics") {
 			statement = "SELECT sid,tid,tname" +
 				",`order`,side_approval," +
-				"del_approval,cms_approval" +
-				" FROM topic";
+				"del_approval,cms_approval," +
+				"status FROM topic";
 			pool.query(statement, (err, results) => {
 				if(err) {
 					console.error("Error Connecting: " +
@@ -1609,7 +1620,7 @@ exports.add_api_routes = (app, pool) => {
 			statement = "SELECT section_id,tid" +
 				",section_name,`order`," +
 				"side_approval,del_approval" +
-				",cms_approval FROM section";
+				",cms_approval,status FROM section";
 			pool.query(statement, (err, results) => {
 				if(err) {
 					console.error("Error Connecting: " +
@@ -1632,7 +1643,7 @@ exports.add_api_routes = (app, pool) => {
 			statement = "SELECT eid,ename," +
 				"section_id,`order`," +
 				"side_approval,del_approval" +
-				",cms_approval FROM example";
+				",cms_approval,status FROM example";
 			pool.query(statement, (err, results) => {
 				if(err) {
 					console.error("Error Connecting: " +

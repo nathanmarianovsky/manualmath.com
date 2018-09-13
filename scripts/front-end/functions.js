@@ -1421,7 +1421,7 @@ define(function() {
 						if(start != 0) {
 							data[obj_ref].side_approval =
 								data[obj_ref].side_approval
-									.substring(0, start) + 
+									.substring(0, start - 1) + 
 								data[obj_ref].side_approval
 									.substring(start +
 										exports.read_cookie(
@@ -1471,6 +1471,7 @@ define(function() {
 			})) {
 				$("#garbage_head").remove();
 			}
+			exports.sidenav_modal_name_check(data);
 		});
 	};
 
@@ -1922,6 +1923,13 @@ define(function() {
 									title_cms: "undefined",
 									content_cms: "undefined"
 								};
+								if(iter.status == 0) {
+									iter.side_approval.split(",").length >= validation
+										? obj.status = 1 : obj.status = 0;
+								}
+								else {
+									obj.status = 1;
+								}
 								if(iter.created == 1) {
 									statement = "/api/add/";
 									if(type == "Subjects") {
@@ -4530,6 +4538,9 @@ define(function() {
 	*/
 	exports.update_modal = function() {
 		$.get("/pages/dist/modal-min.html").done(function(content) {
+			$(".lean-overlay").remove();
+			$("#popup").remove();
+			$("#popup_control").remove();
 			$("body").append(content);
 			$(".modal-trigger").leanModal({
 				dismissible: false,
@@ -4765,9 +4776,9 @@ define(function() {
 					}
 				});
 				$("#add-box")
-					.css("pointer-events", "none");
+					.css("cursor", "default");
 				$("#cms-version")
-					.css("pointer-events", "none");
+					.css("cursor", "default");
 				$("#live-version").click(function(e) {
 					e.preventDefault();
 					$("#" + $(this).attr("data-tooltip-id"))
@@ -4877,20 +4888,18 @@ define(function() {
 									.text("NO CONTENT HERE!")
 									.css("pointer-events", "none")));
 						}
-						$(".table-buttons")
-							.css("display", "none");
 						$("#add-box")
-							.css("pointer-events", "none");
+							.css("cursor", "default");
 						$("#live-version")
-							.css("pointer-events", "none")
+							.css("cursor", "default")
 							.closest("li")
 							.css("background-color", "#008cc3");
 						$("#cms-version")
-							.css("pointer-events", "auto")
+							.css("cursor", "pointer")
 							.closest("li")
 							.css("background-color", "");
 						$("#edit")
-							.css("pointer-events", "auto")
+							.css("cursor", "pointer")
 							.closest("li")
 							.css("background-color", "");
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
@@ -5010,17 +5019,17 @@ define(function() {
 						$(".table-buttons")
 							.css("display", "none");
 						$("#add-box")
-							.css("pointer-events", "none");
+							.css("cursor", "default");
 						$("#cms-version")
-							.css("pointer-events", "none")
+							.css("cursor", "default")
 							.closest("li")
 							.css("background-color", "#008cc3");
 						$("#live-version")
-							.css("pointer-events", "auto")
+							.css("cursor", "pointer")
 							.closest("li")
 							.css("background-color", "");
 						$("#edit")
-							.css("pointer-events", "auto")
+							.css("cursor", "pointer")
 							.closest("li")
 							.css("background-color", "");
 						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
@@ -5215,17 +5224,17 @@ define(function() {
 									.css("pointer-events", "none")));
 						}
 						$("#add-box")
-							.css("pointer-events", "auto");
+							.css("cursor", "pointer");
 						$("#edit")
-							.css("pointer-events", "none")
+							.css("cursor", "default")
 							.closest("li")
 							.css("background-color", "#008cc3");
 						$("#live-version")
-							.css("pointer-events", "auto")
+							.css("cursor", "pointer")
 							.closest("li")
 							.css("background-color", "");
 						$("#cms-version")
-							.css("pointer-events", "auto")
+							.css("cursor", "pointer")
 							.closest("li")
 							.css("background-color", "");
 						$(".latex_body")
@@ -5685,15 +5694,25 @@ define(function() {
 											decodeURIComponent(comparison.heading_cms),
 											"APOSTROPHE", "'")
 										: "";
-									if(comparison.heading_cms != decodeURIComponent(headingComparison) ||
-										comparison.title_cms != decodeURIComponent(titleComparison) ||
-										comparison.content_cms != decodeURIComponent(contentComparison)) {
+									if(comparison.heading_cms != exports.replace_all(
+											decodeURIComponent(headingComparison),
+											"APOSTROPHE", "'") ||
+										comparison.title_cms != exports.replace_all(
+											decodeURIComponent(titleComparison),
+											"APOSTROPHE", "'") ||
+										comparison.content_cms != exports.replace_all(
+											decodeURIComponent(contentComparison),
+											"APOSTROPHE", "'")) {
 										exports.update_modal();
 									}
 								}
 								else {
-									if(comparison.title_cms != decodeURIComponent(titleComparison) ||
-										comparison.content_cms != decodeURIComponent(contentComparison)) {
+									if(comparison.title_cms != exports.replace_all(
+											decodeURIComponent(titleComparison),
+											"APOSTROPHE", "'") ||
+										comparison.content_cms != exports.replace_all(
+											decodeURIComponent(contentComparison),
+											"APOSTROPHE", "'")) {
 										exports.update_modal();
 									}
 								}
