@@ -1176,19 +1176,39 @@ define(function() {
 					iter.clean_name = $("#" +
 						type.toLowerCase() + "_td_" + id)
 						.text();
-					var str = exports.replace_all($("#" +
-						type.toLowerCase() + "_td_" +
-						id).text(), " ", "_");
-					str = exports.replace_all(str,
-						"-", "AND");
-					str = exports.replace_all(str,
-						"'", "APOSTROPHE");
-					str = exports.replace_all(str,
-						"\"", "QUOTE");
-					str = exports.replace_all(str,
-						":", "COLON");
-					str = exports.replace_all(str,
-						",", "COMMA");
+					var str = iter.clean_name
+						.replace(/ /g, "x20")
+						.replace(/!/g, "x21")
+						.replace(/"/g, "x22")
+						.replace(/#/g, "x23")
+						.replace(/\$/g, "x24")
+						.replace(/%/g, "x25")
+						.replace(/&/g, "x26")
+						.replace(/'/g, "x27")
+						.replace(/\(/g, "x28")
+						.replace(/\)/g, "x29")
+						.replace(/\*/g, "x2A")
+						.replace(/\+/g, "x2B")
+						.replace(/,/g, "x2C")
+						.replace(/-/g, "x2D")
+						.replace(/\./g, "x2E")
+						.replace(/\//g, "x2F")
+						.replace(/:/g, "x3A")
+						.replace(/\;/g, "x3B")
+						.replace(/</g, "x3C")
+						.replace(/=/g, "x3D")
+						.replace(/>/g, "x3E")
+						.replace(/\?/g, "x3F")
+						.replace(/@/g, "x40")
+						.replace(/\[/g, "x5B")
+						.replace(/\\/g, "x5C")
+						.replace(/\]/g, "x5D")
+						.replace(/\^/g, "x5E")
+						.replace(/_/g, "x5F")
+						.replace(/\{/g, "x7B")
+						.replace(/\|/g, "x7C")
+						.replace(/\}/g, "x7D")
+
 					if(type == "Subjects") {
 						iter.sname = str;
 					}
@@ -1788,7 +1808,7 @@ define(function() {
 							sid: addon,
 							clean_name: "New " +
 								type.substring(0, type.length - 1),
-							sname: "New_" +
+							sname: "Newx20" +
 								type.substring(0, type.length - 1),
 							order: order,
 							topics: [],
@@ -1804,7 +1824,7 @@ define(function() {
 							sid: container_id,
 							clean_name: "New " +
 								type.substring(0, type.length - 1),
-							tname: "New_" +
+							tname: "Newx20" +
 								type.substring(0, type.length - 1),
 							order: order,
 							sections: [],
@@ -1820,7 +1840,7 @@ define(function() {
 							tid: container_id,
 							clean_name: "New " +
 								type.substring(0, type.length - 1),
-							section_name: "New_" +
+							section_name: "Newx20" +
 								type.substring(0, type.length - 1),
 							order: order,
 							examples: [],
@@ -1836,7 +1856,7 @@ define(function() {
 							section_id: container_id,
 							clean_name: "New " +
 								type.substring(0, type.length - 1),
-							ename: "New_" +
+							ename: "Newx20" +
 								type.substring(0, type.length - 1),
 							order: order,
 							side_approval: {},
@@ -3756,26 +3776,14 @@ define(function() {
 			.map(function(elem) {
 				return elem.split("\\$")
 					.map(function(iter, index) {
-					if(index % 2 == 0) {
-						return exports.replace_all(
-							exports.replace_all(iter,
-								"\\\\", "%5C"),
-							"'", "APOSTROPHE");
-					}
-					else { return iter; }
+						return iter;
 			}).join("\$");
 		}));
 		arr.push(obj.content_cms
 			.map(function(elem) {
 				return elem.split("\\$")
 					.map(function(iter, index) {
-					if(index % 2 == 0) {
-						return exports.replace_all(
-							exports.replace_all(iter,
-								"\\\\", "%5C"),
-							"'", "APOSTROPHE");
-					}
-					else { return iter; }
+						return iter;
 			}).join("\$");
 		}));
 		if(obj.heading_cms !== undefined) {
@@ -3783,13 +3791,7 @@ define(function() {
 				.map(function(elem) {
 					return elem.split("\\$")
 						.map(function(iter, index) {
-						if(index % 2 == 0) {
-							return exports.replace_all(
-								exports.replace_all(iter,
-									"\\\\", "%5C"),
-								"'", "APOSTROPHE");
-						}
-						else { return iter; }
+							return iter;
 				}).join("\$");
 			}));
 		}
@@ -4647,24 +4649,20 @@ define(function() {
 			$.post(statement, {param: db_id})
 				.done(function(data) {
 				data.title = data.title != null 
-					? exports.replace_all(
-						decodeURIComponent(data.title),
-						"APOSTROPHE", "'").split("-----")
+					? decodeURIComponent(data.title)
+						.split("-----")
 					: [""];
 				data.content = data.content != null 
-					? exports.replace_all(
-						decodeURIComponent(data.content),
-						"APOSTROPHE", "'").split("-----")
+					? decodeURIComponent(data.content)
+						.split("-----")
 					: [""];
 				data.title_cms = data.title_cms != null 
-					? exports.replace_all(
-						decodeURIComponent(data.title_cms),
-						"APOSTROPHE", "'").split("-----")
+					? decodeURIComponent(data.title_cms)
+						.split("-----")
 					: [""];
 				data.content_cms = data.content_cms != null 
-					? exports.replace_all(
-						decodeURIComponent(data.content_cms),
-						"APOSTROPHE", "'").split("-----")
+					? decodeURIComponent(data.content_cms)
+						.split("-----")
 					: [""];
 				if(page == "about") {
 					$("#latex").append($("<div>")
@@ -4726,7 +4724,6 @@ define(function() {
 				exports.handle_breadcrumbs(page,
 					$(".accordion").first(), subject,
 					topic, section, example);
-				MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 				exports.handle_button();
 				if(data.cms_approval != null &&
 					data.cms_approval.split(",")
@@ -4902,7 +4899,7 @@ define(function() {
 							.css("cursor", "pointer")
 							.closest("li")
 							.css("background-color", "");
-						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "body"]);
 						exports.handle_button();
 					}
 				});
@@ -5032,24 +5029,18 @@ define(function() {
 							.css("cursor", "pointer")
 							.closest("li")
 							.css("background-color", "");
-						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
+						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "body"]);
 						exports.handle_button();
 					}
 				});
 				var titleComparison =
-						exports.replace_all(exports.replace_all(data
-							.title_cms.join("-----"), "\\\\", "%5C"),
-							"'", "APOSTROPHE"),
+						data.title_cms.join("-----"),
 					contentComparison =
-						exports.replace_all(exports.replace_all(data
-							.content_cms.join("-----"), "\\\\", "%5C"),
-							"'", "APOSTROPHE"),
+						data.content_cms.join("-----"),
 					headingComparison = undefined;
 				if(data.heading_cms !== undefined) {
 					headingComparison =
-						exports.replace_all(exports.replace_all(data
-							.heading_cms, "\\\\", "%5C"),
-							"'", "APOSTROPHE");
+						data.heading_cms;
 				}
 				$("#edit").click(function(e) {
 					e.preventDefault();
@@ -5459,8 +5450,8 @@ define(function() {
 										if(index % 2 == 0) {
 											return exports.replace_all(
 												exports.replace_all(iter,
-													"\\\\", "%5C"),
-												"'", "APOSTROPHE");
+													"\\\\", "\\\\x5C"),
+												"'", "\\\\x27");
 										}
 										else { return iter; }
 								}).join("\$");
@@ -5472,8 +5463,8 @@ define(function() {
 										if(index % 2 == 0) {
 											return exports.replace_all(
 												exports.replace_all(iter,
-													"\\\\", "%5C"),
-												"'", "APOSTROPHE");
+													"\\\\", "\\\\x5C"),
+												"'", "\\\\x27");
 										}
 										else { return iter; }
 								}).join("\$");
@@ -5559,8 +5550,8 @@ define(function() {
 											if(index % 2 == 0) {
 												return exports.replace_all(
 													exports.replace_all(iter,
-														"\\\\", "%5C"),
-													"'", "APOSTROPHE");
+														"\\\\", "\\\\x5C"),
+													"'", "\\\\x27");
 											}
 											else { return iter; }
 									}).join("\$");
@@ -5572,8 +5563,8 @@ define(function() {
 											if(index % 2 == 0) {
 												return exports.replace_all(
 													exports.replace_all(iter,
-														"\\\\", "%5C"),
-													"'", "APOSTROPHE");
+														"\\\\", "\\\\x5C"),
+													"'", "\\\\x27");
 											}
 											else { return iter; }
 									}).join("\$");
@@ -5669,50 +5660,35 @@ define(function() {
 							$.post(statement, {param: db_id})
 								.done(function(comparison) {
 								comparison.title = comparison.title != null 
-									? exports.replace_all(
-										decodeURIComponent(comparison.title),
-										"APOSTROPHE", "'")
+									? decodeURIComponent(comparison.title)
 									: "";
 								comparison.content = comparison.content != null 
-									? exports.replace_all(
-										decodeURIComponent(comparison.content),
-										"APOSTROPHE", "'")
+									? decodeURIComponent(comparison.content)
 									: "";
 								comparison.title_cms = comparison.title_cms != null 
-									? exports.replace_all(
-										decodeURIComponent(comparison.title_cms),
-										"APOSTROPHE", "'")
+									? decodeURIComponent(comparison.title_cms)
 									: "";
 								comparison.content_cms = comparison.content_cms != null 
-									? exports.replace_all(
-										decodeURIComponent(comparison.content_cms),
-										"APOSTROPHE", "'")
+									? decodeURIComponent(comparison.content_cms)
 									: "";
 								if(page == "about") {
 									comparison.heading_cms = comparison.heading_cms != null 
-										? exports.replace_all(
-											decodeURIComponent(comparison.heading_cms),
-											"APOSTROPHE", "'")
+										? decodeURIComponent(comparison.heading_cms)
 										: "";
-									if(comparison.heading_cms != exports.replace_all(
-											decodeURIComponent(headingComparison),
-											"APOSTROPHE", "'") ||
-										comparison.title_cms != exports.replace_all(
-											decodeURIComponent(titleComparison),
-											"APOSTROPHE", "'") ||
-										comparison.content_cms != exports.replace_all(
-											decodeURIComponent(contentComparison),
-											"APOSTROPHE", "'")) {
+									if(comparison.heading_cms !=
+											headingComparison ||
+										comparison.title_cms !=
+											titleComparison ||
+										comparison.content_cms !=
+											contentComparison) {
 										exports.update_modal();
 									}
 								}
 								else {
-									if(comparison.title_cms != exports.replace_all(
-											decodeURIComponent(titleComparison),
-											"APOSTROPHE", "'") ||
-										comparison.content_cms != exports.replace_all(
-											decodeURIComponent(contentComparison),
-											"APOSTROPHE", "'")) {
+									if(comparison.title_cms !=
+											titleComparison ||
+										comparison.content_cms !=
+											contentComparison) {
 										exports.update_modal();
 									}
 								}
@@ -6252,6 +6228,7 @@ define(function() {
 							exports.handle_desktop_title("section",
 								subject, topic, section);
 						}
+						MathJax.Hub.Queue(["Typeset", MathJax.Hub, "body"]);
 						$("#bar-nav")
 							.css("width", "100%");
 						$("#bar").css("width",
@@ -6543,7 +6520,6 @@ define(function() {
 			exports.handle_breadcrumbs(page,
 				$(".accordion").first(), subject,
 				topic, section, example);
-			MathJax.Hub.Queue(["Typeset", MathJax.Hub, "main"]);
 			exports.handle_button();
 			exports.handle_logo_link(page);
 			exports.handle_logo();
@@ -6569,6 +6545,7 @@ define(function() {
 					"section", subject, topic,
 					section);
 			}
+			MathJax.Hub.Queue(["Typeset", MathJax.Hub, "body"]);
 			$("body").css("overflow", "auto");
 			$(window).on("resize", function() {
 				if(page == "about") {

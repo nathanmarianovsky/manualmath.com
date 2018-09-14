@@ -45,7 +45,6 @@ define(["dist/functions-min"], function(functions) {
 			sidenav.append(change_li
 				.append(change_link));
 		}
-		console.log(subjects);
 		results = subjects.map(function(subject) {
 			if(cms == 0 && subject.status == 1) {
 				var subjectli = $("<li>")

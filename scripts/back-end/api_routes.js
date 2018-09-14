@@ -1,6 +1,42 @@
 var exports = {},
 	bcrypt = require("bcryptjs");
 
+// Escape all special characters
+exports.cleanName = str => {
+	return str
+		.replace(/x20/g, " ")
+		.replace(/x21/g, "!")
+		.replace(/x22/g, "\"")
+		.replace(/x23/g, "#")
+		.replace(/x24/g, "$")
+		.replace(/x25/g, "%")
+		.replace(/x26/g, "&")
+		.replace(/x27/g, "'")
+		.replace(/x28/g, "(")
+		.replace(/x29/g, ")")
+		.replace(/x2A/g, "*")
+		.replace(/x2B/g, "+")
+		.replace(/x2C/g, ",")
+		.replace(/x2D/g, "-")
+		.replace(/x2E/g, ".")
+		.replace(/x2F/g, "/")
+		.replace(/x3A/g, ":")
+		.replace(/x3B/g, ";")
+		.replace(/x3C/g, "<")
+		.replace(/x3D/g, "=")
+		.replace(/x3E/g, ">")
+		.replace(/x3F/g, "?")
+		.replace(/x40/g, "@")
+		.replace(/x5B/g, "[")
+		.replace(/x5C/g, "\\")
+		.replace(/x5D/g, "]")
+		.replace(/x5E/g, "^")
+		.replace(/x5F/g, "_")
+		.replace(/x7B/g, "{")
+		.replace(/x7C/g, "|")
+		.replace(/x7D/g, "}");
+};
+
 // Adds all of the API routes
 exports.add_api_routes = (app, pool) => {
 	/*
@@ -1583,12 +1619,8 @@ exports.add_api_routes = (app, pool) => {
 				}
 				results.forEach(subject => {
 					subject.topics = [];
-					subject.clean_name = subject.sname
-						.replace(/_/g, " ")
-						.replace(/AND/g, "-")
-						.replace(/APOSTROPHE/g, "'")
-						.replace(/COLON/g, ":")
-						.replace(/COMMA/g, ",");
+					subject.clean_name =
+						exports.cleanName(subject.sname);
 				});
 				response.send(results);
 			});
@@ -1606,12 +1638,8 @@ exports.add_api_routes = (app, pool) => {
 				}
 				results.forEach(topic => {
 					topic.sections = [];
-					topic.clean_name = topic.tname
-						.replace(/_/g, " ")
-						.replace(/AND/g, "-")
-						.replace(/APOSTROPHE/g, "'")
-						.replace(/COLON/g, ":")
-						.replace(/COMMA/g, ",");
+					topic.clean_name =
+						exports.cleanName(topic.tname);
 				});
 				response.send(results);
 			});
@@ -1629,12 +1657,8 @@ exports.add_api_routes = (app, pool) => {
 				}
 				results.forEach(section => {
 					section.examples = [];
-					section.clean_name = section.section_name
-						.replace(/_/g, " ")
-						.replace(/AND/g, "-")
-						.replace(/APOSTROPHE/g, "'")
-						.replace(/COLON/g, ":")
-						.replace(/COMMA/g, ",");
+					section.clean_name =
+						exports.cleanName(section.section_name);
 				});
 				response.send(results);
 			});
@@ -1651,12 +1675,8 @@ exports.add_api_routes = (app, pool) => {
 					response.send("0");
 				}
 				results.forEach(example => {
-					example.clean_name = example.ename
-						.replace(/_/g, " ")
-						.replace(/AND/g, "-")
-						.replace(/APOSTROPHE/g, "'")
-						.replace(/COLON/g, ":")
-						.replace(/COMMA/g, ",");
+					example.clean_name =
+						exports.cleanName(example.ename);
 				});
 				response.send(results);
 			});
