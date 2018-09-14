@@ -1169,8 +1169,11 @@ exports.add_api_routes = (app, pool) => {
 		}
 	});
 
-	// The API methods to remove a contributor, add a contributor, grab a contributor's profile,
-	// and grab a contributor's security question
+	/*
+		The API methods to remove a contributor,
+		add a contributor, grab a contributor's profile,
+		and grab a contributor's security question
+	*/
 	app.post("/api/cms/contributor/:param", (request, response) => {
 		var param = request.params.param,
 			email = request.body.email,

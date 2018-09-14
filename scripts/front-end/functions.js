@@ -3774,7 +3774,7 @@ define(function() {
 		var arr = [];
 		arr.push(obj.title_cms
 			.map(function(elem) {
-				return elem.split("\\$")
+				return elem.replace(/_/g, "x5F").split("\\$")
 					.map(function(iter, index) {
 						return iter;
 			}).join("\$");
@@ -4650,6 +4650,7 @@ define(function() {
 				.done(function(data) {
 				data.title = data.title != null 
 					? decodeURIComponent(data.title)
+						.replace(/_/g, "x5F")
 						.split("-----")
 					: [""];
 				data.content = data.content != null 
@@ -4658,6 +4659,7 @@ define(function() {
 					: [""];
 				data.title_cms = data.title_cms != null 
 					? decodeURIComponent(data.title_cms)
+						.replace(/_/g, "x5F")
 						.split("-----")
 					: [""];
 				data.content_cms = data.content_cms != null 
@@ -4679,7 +4681,8 @@ define(function() {
 						break;
 					}
 					var cont_div = "",
-						title = data.title_cms[i]
+						title = exports.replace_all(
+							data.title_cms[i], "x5F", "_")
 							.split("_")[0],
 						accordion = $("<div>")
 							.addClass("accordion"),
@@ -4690,7 +4693,9 @@ define(function() {
 							.addClass("solution_display"),
 						latex_body = $("<div>")
 							.addClass("latex_body");
-					if(data.title_cms[i].split("_hidden").length == 1) {
+					if(exports.replace_all(
+						data.title_cms[i], "x5F", "_")
+						.split("_").length == 1) {
 						cont_div = $("<div>")
 							.addClass("cont_div");
 						span.append($("<i>")
@@ -4725,7 +4730,8 @@ define(function() {
 					$(".accordion").first(), subject,
 					topic, section, example);
 				exports.handle_button();
-				if(data.cms_approval != null &&
+				if(data.cms_approval !== undefined &&
+					data.cms_approval !== null &&
 					data.cms_approval.split(",")
 					.some(function(elem) {
 						return elem == cookie;
@@ -4743,10 +4749,11 @@ define(function() {
 					if(exports.rgba_to_hex(
 						$("#approve").css("color")) == "#ff0000") {
 						$("#approve").css("color", "green");
-						if(data.cms_approval == null) {
+						if(data.cms_approval !== undefined &&
+							data.cms_approval == null) {
 							data.cms_approval = cookie;
 						}
-						else {
+						else if(data.cms_approval !== undefined) {
 							data.cms_approval +=
 								"," + cookie;
 						}
@@ -4801,12 +4808,14 @@ define(function() {
 										.children().each(function(index) {
 										if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_off") {
-											arr_title.push(title +
+											arr_title.push(exports.replace_all(
+												title, "_", "x5F") +
 												"_hidden");
 										}
 										else if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_on") {
-											arr_title.push(title);
+											arr_title.push(exports.replace_all(
+												title, "_", "x5F"));
 										}
 									});
 									$(this).siblings().each(function(index) {
@@ -4844,7 +4853,8 @@ define(function() {
 								break;
 							}
 							var cont_div = "",
-								title = data.title[j]
+								title = exports.replace_all(
+									data.title[j], "x5F", "_")
 									.split("_")[0],
 								accordion = $("<div>")
 									.addClass("accordion"),
@@ -4855,8 +4865,9 @@ define(function() {
 									.addClass("solution_display"),
 								latex_body = $("<div>")
 									.addClass("latex_body");
-							if(data.title[j].split("_")
-								.length == 1) {
+							if(exports.replace_all(
+								data.title[j], "x5F", "_")
+								.split("_").length == 1) {
 								cont_div = $("<div>")
 									.addClass("cont_div");
 								span.append($("<i>")
@@ -4928,12 +4939,14 @@ define(function() {
 										.children().each(function(index) {
 										if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_off") {
-											arr_title.push(title
+											arr_title.push(exports.replace_all(
+												title, "_", "x5F")
 												+ "_hidden");
 										}
 										else if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_on") {
-											arr_title.push(title);
+											arr_title.push(exports.replace_all(
+												title, "_", "x5F"));
 										}
 									});
 									$(this).siblings().each(function(index) {
@@ -4972,7 +4985,8 @@ define(function() {
 								break;
 							}
 							var cont_div = "",
-								title = data.title_cms[j]
+								title = exports.replace_all(
+									data.title_cms[j], "x5F", "_")
 									.split("_")[0],
 								accordion = $("<div>")
 									.addClass("accordion"),
@@ -4983,7 +4997,8 @@ define(function() {
 									.addClass("solution_display"),
 								latex_body = $("<div>")
 									.addClass("latex_body");
-							if(data.title_cms[j]
+							if(exports.replace_all(
+								data.title_cms[j], "x5F", "_")
 								.split("_").length == 1) {
 								cont_div = $("<div>")
 									.addClass("cont_div");
@@ -5073,7 +5088,8 @@ define(function() {
 								break;
 							}
 							var cont_div = "",
-								title = data.title_cms[j]
+								title = exports.replace_all(
+									data.title_cms[j], "x5F", "_")
 									.split("_")[0],
 								accordion = $("<div>")
 									.addClass("accordion"),
@@ -5174,7 +5190,9 @@ define(function() {
 									}),
 								latex_body = $("<div>")
 									.addClass("latex_body");
-							if(data.title_cms[j].split("_").length == 1) {
+							if(exports.replace_all(
+								data.title_cms[j], "x5F", "_")
+								.split("_").length == 1) {
 								cont_div = $("<div>")
 									.addClass("cont_div");
 								span.append($("<i>")
@@ -5408,12 +5426,14 @@ define(function() {
 										.children().each(function(index) {
 										if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_off") {
-											arr_title.push(title
+											arr_title.push(exports.replace_all(
+												title, "_", "x5F")
 												+ "_hidden");
 										}
 										else if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_on") {
-											arr_title.push(title);
+											arr_title.push(exports.replace_all(
+												title, "_", "x5F"));
 										}
 									});
 									$(this).siblings().each(function(index) {
@@ -5450,8 +5470,8 @@ define(function() {
 										if(index % 2 == 0) {
 											return exports.replace_all(
 												exports.replace_all(iter,
-													"\\\\", "\\\\x5C"),
-												"'", "\\\\x27");
+													"\\\\", "%5C"),
+												"'", "%27");
 										}
 										else { return iter; }
 								}).join("\$");
@@ -5463,18 +5483,21 @@ define(function() {
 										if(index % 2 == 0) {
 											return exports.replace_all(
 												exports.replace_all(iter,
-													"\\\\", "\\\\x5C"),
-												"'", "\\\\x27");
+													"\\\\", "%5C"),
+												"'", "%27");
 										}
 										else { return iter; }
 								}).join("\$");
 							});
-							if(data.cms_approval != null
+							if(data.cms_approval !== undefined
+								&& data.cms_approval !== null
 								&& data.cms_approval != ""
 								&& titleComparison ===
-									data.title_cms.join("-----")
+									decodeURIComponent(data.title_cms
+										.join("-----"))
 								&& contentComparison ===
-									data.content_cms.join("-----")
+									decodeURIComponent(data.content_cms
+										.join("-----"))
 								&& data.cms_approval
 									.split(",").length >= validation) {
 								data.title = data.title_cms;
@@ -5535,10 +5558,13 @@ define(function() {
 							}
 							else {
 								if(!(titleComparison ===
-									data.title_cms.join("-----") &&
+									decodeURIComponent(data.title_cms
+										.join("-----")) &&
 									contentComparison ===
-									data.content_cms.join("-----"))) {
-									data.cms_approval !== null &&
+									decodeURIComponent(data.content_cms
+										.join("-----")))) {
+									data.cms_approval !== undefined &&
+										data.cms_approval !== null &&
 										data.cms_approval.indexOf(cookie) != -1
 										? data.cms_approval = cookie
 										: data.cms_approval = "";
@@ -5550,8 +5576,8 @@ define(function() {
 											if(index % 2 == 0) {
 												return exports.replace_all(
 													exports.replace_all(iter,
-														"\\\\", "\\\\x5C"),
-													"'", "\\\\x27");
+														"\\\\", "%5C"),
+													"'", "%27");
 											}
 											else { return iter; }
 									}).join("\$");
@@ -5563,8 +5589,8 @@ define(function() {
 											if(index % 2 == 0) {
 												return exports.replace_all(
 													exports.replace_all(iter,
-														"\\\\", "\\\\x5C"),
-													"'", "\\\\x27");
+														"\\\\", "%5C"),
+													"'", "%27");
 											}
 											else { return iter; }
 									}).join("\$");
@@ -5575,6 +5601,7 @@ define(function() {
 								ref: ref,
 								name: "undefined",
 								order: "undefined",
+								status: "undefined",
 								title: data.title.join("-----") 
 									!= "" 
 									? data.title.join("-----")
@@ -5584,9 +5611,9 @@ define(function() {
 									? data.content.join("-----")
 									: "0",
 								side_approval: "undefined",
-								cms_approval: data.cms_approval 
-									!= "" 
-									&& data.cms_approval != null 
+								cms_approval: data.cms_approval != "" 
+									&& data.cms_approval !== undefined
+									&& data.cms_approval !== null 
 									? data.cms_approval
 									: "0",
 								del_approval: "undefined",
