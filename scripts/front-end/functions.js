@@ -4680,10 +4680,15 @@ define(function() {
 						data.title_cms[i] == "") {
 						break;
 					}
+					console.log(data.title_cms[i]);
 					var cont_div = "",
-						title = exports.replace_all(
-							data.title_cms[i], "x5F", "_")
-							.split("_")[0],
+						title = data.title_cms[i].split("x5F")
+							.filter(function(elem) {
+								return elem != "hidden";
+							}).join("_"),
+						// title = exports.replace_all(
+						// 	data.title_cms[i], "x5F", "_")
+						// 	.split("_")[0],
 						accordion = $("<div>")
 							.addClass("accordion"),
 						show_solution = $("<div>")
@@ -4693,9 +4698,10 @@ define(function() {
 							.addClass("solution_display"),
 						latex_body = $("<div>")
 							.addClass("latex_body");
-					if(exports.replace_all(
-						data.title_cms[i], "x5F", "_")
-						.split("_").length == 1) {
+					if(data.title_cms[i].split("x5F")
+						.filter(function(elem) {
+							return elem == "hidden";
+						}).length == 0) {
 						cont_div = $("<div>")
 							.addClass("cont_div");
 						span.append($("<i>")
@@ -4810,7 +4816,7 @@ define(function() {
 											$(this).text() == "toggle_off") {
 											arr_title.push(exports.replace_all(
 												title, "_", "x5F") +
-												"_hidden");
+												"x5Fhidden");
 										}
 										else if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_on") {
@@ -4852,10 +4858,12 @@ define(function() {
 								data.title[j] == "") {
 								break;
 							}
+							console.log(data.title_cms[j]);
 							var cont_div = "",
-								title = exports.replace_all(
-									data.title[j], "x5F", "_")
-									.split("_")[0],
+								title = data.title[j].split("x5F")
+									.filter(function(elem) {
+										return elem != "hidden";
+									}).join("_"),
 								accordion = $("<div>")
 									.addClass("accordion"),
 								show_solution = $("<div>")
@@ -4865,9 +4873,10 @@ define(function() {
 									.addClass("solution_display"),
 								latex_body = $("<div>")
 									.addClass("latex_body");
-							if(exports.replace_all(
-								data.title[j], "x5F", "_")
-								.split("_").length == 1) {
+							if(data.title[j].split("x5F")
+								.filter(function(elem) {
+									return elem == "hidden";
+								}).length == 0) {
 								cont_div = $("<div>")
 									.addClass("cont_div");
 								span.append($("<i>")
@@ -4941,7 +4950,7 @@ define(function() {
 											$(this).text() == "toggle_off") {
 											arr_title.push(exports.replace_all(
 												title, "_", "x5F")
-												+ "_hidden");
+												+ "x5Fhidden");
 										}
 										else if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_on") {
@@ -4984,10 +4993,12 @@ define(function() {
 								data.title_cms[j] == "") {
 								break;
 							}
+							console.log(data.title_cms[j]);
 							var cont_div = "",
-								title = exports.replace_all(
-									data.title_cms[j], "x5F", "_")
-									.split("_")[0],
+								title = data.title_cms[j].split("x5F")
+									.filter(function(elem) {
+										return elem != "hidden";
+									}).join("_"),
 								accordion = $("<div>")
 									.addClass("accordion"),
 								show_solution = $("<div>")
@@ -4997,9 +5008,10 @@ define(function() {
 									.addClass("solution_display"),
 								latex_body = $("<div>")
 									.addClass("latex_body");
-							if(exports.replace_all(
-								data.title_cms[j], "x5F", "_")
-								.split("_").length == 1) {
+							if(data.title_cms[j].split("x5F")
+								.filter(function(elem) {
+									return elem == "hidden";
+								}).length == 0) {
 								cont_div = $("<div>")
 									.addClass("cont_div");
 								span.append($("<i>")
@@ -5087,10 +5099,12 @@ define(function() {
 								data.title_cms[j] == "") {
 								break;
 							}
+							console.log(data.title_cms[j]);
 							var cont_div = "",
-								title = exports.replace_all(
-									data.title_cms[j], "x5F", "_")
-									.split("_")[0],
+								title = data.title_cms[j].split("x5F")
+									.filter(function(elem) {
+										return elem != "hidden";
+									}).join("_"),
 								accordion = $("<div>")
 									.addClass("accordion"),
 								show_solution = $("<div>")
@@ -5190,9 +5204,10 @@ define(function() {
 									}),
 								latex_body = $("<div>")
 									.addClass("latex_body");
-							if(exports.replace_all(
-								data.title_cms[j], "x5F", "_")
-								.split("_").length == 1) {
+							if(data.title_cms[j].split("x5F")
+								.filter(function(elem) {
+									return elem == "hidden";
+								}).length == 0) {
 								cont_div = $("<div>")
 									.addClass("cont_div");
 								span.append($("<i>")
@@ -5428,7 +5443,7 @@ define(function() {
 											$(this).text() == "toggle_off") {
 											arr_title.push(exports.replace_all(
 												title, "_", "x5F")
-												+ "_hidden");
+												+ "x5Fhidden");
 										}
 										else if($(this).hasClass("toggle") &&
 											$(this).text() == "toggle_on") {
@@ -5705,7 +5720,8 @@ define(function() {
 									if(comparison.heading_cms !=
 											headingComparison ||
 										comparison.title_cms !=
-											titleComparison ||
+											exports.replace_all(
+												titleComparison, "x5F", "_") ||
 										comparison.content_cms !=
 											contentComparison) {
 										exports.update_modal();
@@ -5713,7 +5729,8 @@ define(function() {
 								}
 								else {
 									if(comparison.title_cms !=
-											titleComparison ||
+											exports.replace_all(
+												titleComparison, "x5F", "_") ||
 										comparison.content_cms !=
 											contentComparison) {
 										exports.update_modal();
@@ -6503,8 +6520,10 @@ define(function() {
 					break;
 				}
 				var cont_div = "",
-					title = data.title[i]
-						.split("_")[0],
+					title = data.title[i].split("x5F")
+						.filter(function(elem) {
+							return elem != "hidden";
+						}).join("_"),
 					accordion = $("<div>")
 						.addClass("accordion"),
 					show_solution = $("<div>")
@@ -6514,8 +6533,10 @@ define(function() {
 						.addClass("solution_display"),
 					latex_body = $("<div>")
 						.addClass("latex_body");
-				if(data.title[i].split("_hidden").length
-					== 1) {
+				if(data.title[i].split("x5F")
+					.filter(function(elem) {
+						return elem == "hidden";
+					}).length == 0) {
 					cont_div = $("<div>")
 						.addClass("cont_div");
 					span.append($("<i>")
