@@ -211,6 +211,57 @@ define(function() {
 	    }, 100);
 	};
 
+
+
+
+	/*
+
+	Purpose:
+		Handles the missing approvals modal.
+
+	Parameters:
+		callback: 
+			Function callback
+
+	*/
+	exports.approvals_modal = function(subjects, topics,
+		sections, examples) {
+		$(".modal-trigger").leanModal({
+			dismissible: false,
+			opacity: 2,
+			inDuration: 1000,
+			outDuration: 1000
+		});
+		$("#popup_title").text("Missing Approvals");
+		var statement = "Below you will find all" +
+			" subjects, topics, sections, and "
+		$("#popup_body").text(statement);
+		$("#popup_control").click();
+		if(exports.width_func() < 992) { message(); }
+		else { counter++; callback(); }
+		$(window).on("resize", function() {
+			$("body").css({width: "100%", overflow: "auto"});
+			$("#bar").css("width", $("#latex").width());
+			if(exports.width_func() < 992) {
+				message();
+			}
+			if(exports.read_cookie("contributor") == "") {
+				exports.session_modal(router, "login", 0);
+			}
+			else {
+				$(".lean-overlay").remove();
+				$("#popup").remove();
+				$("#popup_control").remove();
+				if(counter == 0) { counter++; callback(); }
+			}
+		});
+	};
+
+
+
+
+
+
 	/*
 
 	Purpose:
@@ -298,7 +349,7 @@ define(function() {
 						"data-position": "left",
 						"data-tooltip": "Contributor Approvals"
 					});
-				$("#profile").closest("li").before(
+				$("#missing-approvals").closest("li").before(
 					$("<li>").append(ranking),
 					$("<li>").append(group));
 			}
@@ -312,7 +363,7 @@ define(function() {
 						"data-position": "left",
 						"data-tooltip": "Administrator Privileges"
 					});
-				$("#profile").closest("li").before(
+				$("#missing-approvals").closest("li").before(
 					$("<li>").append(decision),
 					$("<li>").append(group));
 			}
@@ -1511,551 +1562,566 @@ define(function() {
 			of data
 
 	*/
-	exports.sidenav_modal = function(type, input, container_id) {
-		var data = [];
+	exports.sidenav_modal = function(type, container_id) {
+		var data = [],
+			statement = "";
 		if(type == "Subjects") {
-			data = (exports.copy(input)).map(function(elem) { 
-				elem.edited = 0;
-				elem.created = 0;
-				return elem; 
-			});
+			statement = "/api/subjects";
 		}
 		else if(type == "Topics") {
-			data = (exports.copy(input)).filter(function(iter) {
-				return iter.sid == container_id
-			}).map(function(elem) { 
-				elem.edited = 0;
-				elem.created = 0;
-				return elem; 
-			});
+			statement = "/api/topics";
 		}
 		else if(type == "Sections") {
-			data = (exports.copy(input)).filter(function(iter) {
-				return iter.tid == container_id
-			}).map(function(elem) { 
-				elem.edited = 0;
-				elem.created = 0;
-				return elem; 
-			});
+			statement = "/api/sections";
 		}
 		else if(type == "Examples") {
-			data = (exports.copy(input)).filter(function(iter) {
-				return iter.section_id == container_id
-			}).map(function(elem) { 
-				elem.edited = 0;
-				elem.created = 0;
-				return elem; 
-			});
+			statement = "/api/examples";
 		}
-		data.sort(function(a, b) { return a.order - b.order; });
-		$.get("/pages/dist/modal-min.html").done(function(content) {
-			$("body").append(content);
-			$("#popup_title").text(type)
-				.css("text-align", "center");
-			$("#popup_submit").text("Save Changes")
-				.removeClass("modal-close");
-			$("#popup_modal_footer")
-				.append($("<a>").attr("id", "popup_add")
-					.addClass("waves-effect waves-blue btn-flat")
-					.text("Add"))
-				.append($("<a>").attr("id", "popup_exit")
-					.addClass("modal-close waves-effect waves-blue btn-flat")
-					.text("Exit"));
-			$.get("/pages/dist/sidenav-change-min.html")
-				.done(function(table) {
-				var statement = "Below you will find all current " +
-					type.toLowerCase() + " which can be renamed" + 
-					" and reorganized. Furthermore, as a" +
-					" contributor you can approve a subject" +
-					" so that it will be available to users" +
-					" on the client side, or similarly" +
-					" disapprove if you feel that there is" + 
-					" something wrong with it. With this" +
-					" design, a subject will appear on" +
-					" the client side only when enough" +
-					" contributors have given approval." +
-					" To change the approval of a subject" +
-					" simply click on the checkmark and" +
-					" note that the green color indicates" +
-					" an approval from you. Likewise the" +
-					" system also allows for a " +
-					type.toLowerCase().substring(0, type.length - 1) +
-					" to be deleted from the database when" +
-					" enough contributors have given approval" +
-					" for it.<br><br>Lastly for any " +
-					type.toLowerCase().substring(0, type.length - 1) +
-					" that has just been added, you remove it" +
-					" without having to exit and clicking back" +
-					" by clicking on the trash can icon."
-				$("#popup_body").html(statement).append(table);
-				data.forEach(function(elem) {
-					var addon = -1;
-					if(type == "Subjects") {
-						addon = elem.sid;
-					}
-					else if(type == "Topics") {
-						addon = elem.tid;
-					}
-					else if(type == "Sections") {
-						addon = elem.section_id;
-					}
-					else if(type == "Examples") {
-						addon = elem.eid;
-					}
-					var item_tr = $("<tr>").attr("id", type.toLowerCase()
-							+ "_tr_" + addon),
-						item_name = $("<td>").text(elem.clean_name)
-							.addClass("field")
-							.attr({
-								contentEditable: "true",
-								id: type.toLowerCase() + "_td_" + addon
-							}),
-						item_move = $("<td>").css("text-align", "center")
-							.append($("<a>").attr("id", type.toLowerCase()
-								+ "_up_" + addon).addClass("arrow")
-								.css("cursor", "pointer")
-								.append($("<i>").addClass("material-icons")
-									.text("keyboard_arrow_up")))
-							.append($("<a>").attr("id", type.toLowerCase()
-								+ "_down_" + addon).addClass("arrow")
-								.css("cursor", "pointer")
-								.append($("<i>").addClass("material-icons")
-									.text("keyboard_arrow_down"))),
-						item_approve = $("<td>").css("text-align", "center")
-							.append($("<a>")
-								.css("cursor", "pointer")
-								.attr("id", type.toLowerCase()
-									+ "_check_" + addon)
-								.addClass("approve center")
-								.append($("<i>").addClass("material-icons")
-									.text("check_circle"))),
-						item_delete = $("<td>").css("text-align", "center")
-							.append($("<a>")
-								.css("cursor", "pointer")
-								.attr("id", type.toLowerCase()
-									+ "_delete_" + addon)
-								.addClass("del center")
-								.append($("<i>").addClass("material-icons")
-									.text("cancel")));
-					item_tr.append(item_name, item_move,
-						item_approve, item_delete);
-					$("#sidenav_table_body").append(item_tr);
-					if(typeof elem.side_approval != "object" && 
-						elem.side_approval.split(",").some(function(iter) {
-							return iter == exports.read_cookie("contributor");
+		$.get(statement).done(function(all) {
+			if(type == "Subjects") {
+				data = all.map(function(elem) { 
+					elem.edited = 0;
+					elem.created = 0;
+					return elem; 
+				});
+			}
+			else if(type == "Topics") {
+				data = all.filter(function(iter) {
+					return iter.sid == container_id
+				}).map(function(elem) { 
+					elem.edited = 0;
+					elem.created = 0;
+					return elem; 
+				});
+			}
+			else if(type == "Sections") {
+				data = all.filter(function(iter) {
+					return iter.tid == container_id
+				}).map(function(elem) { 
+					elem.edited = 0;
+					elem.created = 0;
+					return elem; 
+				});
+			}
+			else if(type == "Examples") {
+				data = all.filter(function(iter) {
+					return iter.section_id == container_id
+				}).map(function(elem) { 
+					elem.edited = 0;
+					elem.created = 0;
+					return elem; 
+				});
+			}
+			data.sort(function(a, b) { return a.order - b.order; });
+			$.get("/pages/dist/modal-min.html").done(function(content) {
+				$("body").append(content);
+				$("#popup_title").text(type)
+					.css("text-align", "center");
+				$("#popup_submit").text("Save Changes")
+					.removeClass("modal-close");
+				$("#popup_modal_footer")
+					.append($("<a>").attr("id", "popup_add")
+						.addClass("waves-effect waves-blue btn-flat")
+						.text("Add"))
+					.append($("<a>").attr("id", "popup_exit")
+						.addClass("modal-close waves-effect waves-blue btn-flat")
+						.text("Exit"));
+				$.get("/pages/dist/sidenav-change-min.html")
+					.done(function(table) {
+					var statement = "Below you will find all current " +
+						type.toLowerCase() + " which can be renamed" + 
+						" and reorganized. Furthermore, as a" +
+						" contributor you can approve a subject" +
+						" so that it will be available to users" +
+						" on the client side, or similarly" +
+						" disapprove if you feel that there is" + 
+						" something wrong with it. With this" +
+						" design, a subject will appear on" +
+						" the client side only when enough" +
+						" contributors have given approval." +
+						" To change the approval of a subject" +
+						" simply click on the checkmark and" +
+						" note that the green color indicates" +
+						" an approval from you. Likewise the" +
+						" system also allows for a " +
+						type.toLowerCase().substring(0, type.length - 1) +
+						" to be deleted from the database when" +
+						" enough contributors have given approval" +
+						" for it.<br><br>Lastly for any " +
+						type.toLowerCase().substring(0, type.length - 1) +
+						" that has just been added, you remove it" +
+						" without having to exit and clicking back" +
+						" by clicking on the trash can icon."
+					$("#popup_body").html(statement).append(table);
+					data.forEach(function(elem) {
+						var addon = -1;
+						if(type == "Subjects") {
+							addon = elem.sid;
+						}
+						else if(type == "Topics") {
+							addon = elem.tid;
+						}
+						else if(type == "Sections") {
+							addon = elem.section_id;
+						}
+						else if(type == "Examples") {
+							addon = elem.eid;
+						}
+						var item_tr = $("<tr>").attr("id", type.toLowerCase()
+								+ "_tr_" + addon),
+							item_name = $("<td>").text(elem.clean_name)
+								.addClass("field")
+								.attr({
+									contentEditable: "true",
+									id: type.toLowerCase() + "_td_" + addon
+								}),
+							item_move = $("<td>").css("text-align", "center")
+								.append($("<a>").attr("id", type.toLowerCase()
+									+ "_up_" + addon).addClass("arrow")
+									.css("cursor", "pointer")
+									.append($("<i>").addClass("material-icons")
+										.text("keyboard_arrow_up")))
+								.append($("<a>").attr("id", type.toLowerCase()
+									+ "_down_" + addon).addClass("arrow")
+									.css("cursor", "pointer")
+									.append($("<i>").addClass("material-icons")
+										.text("keyboard_arrow_down"))),
+							item_approve = $("<td>").css("text-align", "center")
+								.append($("<a>")
+									.css("cursor", "pointer")
+									.attr("id", type.toLowerCase()
+										+ "_check_" + addon)
+									.addClass("approve center")
+									.append($("<i>").addClass("material-icons")
+										.text("check_circle"))),
+							item_delete = $("<td>").css("text-align", "center")
+								.append($("<a>")
+									.css("cursor", "pointer")
+									.attr("id", type.toLowerCase()
+										+ "_delete_" + addon)
+									.addClass("del center")
+									.append($("<i>").addClass("material-icons")
+										.text("cancel")));
+						item_tr.append(item_name, item_move,
+							item_approve, item_delete);
+						$("#sidenav_table_body").append(item_tr);
+						if(typeof elem.side_approval != "object" && 
+							elem.side_approval.split(",").some(function(iter) {
+								return iter == exports.read_cookie("contributor");
+							})) {
+							$("#" + type.toLowerCase() + "_check_" + addon)
+								.css("color", "green");
+						}
+						else {
+							$("#" + type.toLowerCase() + "_check_" + addon)
+								.css("color", "red");
+						}
+						if(typeof elem.del_approval != "object" && 
+							elem.del_approval.split(",").some(function(iter) {
+								return iter == exports.read_cookie("contributor");
+							})) {
+							$("#" + type.toLowerCase() + "_delete_" + addon)
+								.css("color", "green");
+						}
+						else {
+							$("#" + type.toLowerCase() + "_delete_" + addon)
+								.css("color", "red");
+						}
+					});
+					$(".modal-trigger").leanModal({
+						dismissible: false,
+						opacity: 2,
+						inDuration: 1000,
+						outDuration: 1000
+					});
+					$("#popup_control").click();
+					$("#popup").keypress(function(event) {
+					    if(event.keyCode === 10 || event.keyCode === 13) {
+					        event.preventDefault();
+					    }
+					});
+					$("#popup_exit").click(function(event) {
+						event.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+					});
+					$("#popup_add").click(function(e) {
+						e.preventDefault();
+						var addon = -1,
+							order = -1,
+							lhs = -1,
+							rhs = -1,
+							inp_cpy = exports.copy(all),
+							dat_cpy = exports.copy(data);
+						if(type == "Subjects") {
+							lhs = inp_cpy.length != 0
+								? inp_cpy.sort(function(a, b) { 
+									return b.sid - a.sid; 
+								})[0].sid + 1
+								: 1,
+							rhs = dat_cpy.length != 0
+								? dat_cpy.sort(function(a, b) { 
+									return b.sid - a.sid; 
+								})[0].sid + 1
+								: 1;
+						}
+						else if(type == "Topics") {
+							lhs = inp_cpy.length != 0
+								? inp_cpy.sort(function(a, b) { 
+									return b.tid - a.tid; 
+								})[0].tid + 1
+								: 1,
+							rhs = dat_cpy.length != 0
+								? dat_cpy.sort(function(a, b) { 
+									return b.tid - a.tid; 
+								})[0].tid + 1
+								: 1;
+						}
+						else if(type == "Sections") {
+							lhs = inp_cpy.length != 0
+								? inp_cpy.sort(function(a, b) { 
+									return b.section_id - a.section_id; 
+								})[0].section_id + 1
+								: 1,
+							rhs = dat_cpy.length != 0
+								? dat_cpy.sort(function(a, b) { 
+									return b.section_id - a.section_id; 
+								})[0].section_id + 1
+								: 1;
+						}
+						else if(type == "Examples") {
+							lhs = inp_cpy.length != 0
+								? inp_cpy.sort(function(a, b) { 
+									return b.eid - a.eid; 
+								})[0].eid + 1
+								: 1,
+							rhs = dat_cpy.length != 0
+								? dat_cpy.sort(function(a, b) { 
+									return b.eid - a.eid; 
+								})[0].eid + 1
+								: 1;
+						}
+						addon = Math.max(lhs, rhs);
+						var new_tr = $("<tr>").attr("id",
+								type.toLowerCase() + "_tr_" + addon),
+							new_name = $("<td>").text("New "
+								+ type.substring(0, type.length - 1))
+								.addClass("field")
+								.attr({
+									contentEditable: "true",
+									id: type.toLowerCase() +
+										"_td_" + addon
+								}),
+							new_move = $("<td>").css("text-align", "center")
+								.append($("<a>").attr("id",
+									type.toLowerCase() + "_up_" + addon)
+									.addClass("arrow")
+									.css("cursor", "pointer")
+									.append($("<i>").addClass("material-icons")
+										.text("keyboard_arrow_up")))
+								.append($("<a>").attr("id",
+									type.toLowerCase() + "_down_" + addon)
+									.addClass("arrow")
+									.css("cursor", "pointer")
+									.append($("<i>").addClass("material-icons")
+										.text("keyboard_arrow_down"))),
+							new_approve = $("<td>").css("text-align", "center")
+								.append($("<a>")
+									.css("cursor", "pointer")
+									.attr("id", type.toLowerCase()
+										+ "_check_" + addon)
+									.addClass("approve center")
+									.css("color", "red")
+									.append($("<i>")
+										.addClass("material-icons")
+										.text("check_circle"))),
+							new_delete = $("<td>").css("text-align", "center")
+								.append($("<a>")
+									.css("cursor", "pointer")
+									.attr("id", type.toLowerCase()
+										+ "_delete_" + addon)
+									.addClass("del center")
+									.css("color", "red")
+									.append($("<i>")
+										.addClass("material-icons")
+										.text("cancel"))),
+							new_garbage = $("<td>").css("text-align", "center")
+								.append($("<a>")
+									.css("cursor", "pointer")
+									.attr("id", type.toLowerCase() +
+										"_garbage_" + addon)
+									.addClass("garbage center")
+									.css("color", "red")
+									.append($("<i>")
+										.addClass("material-icons")
+										.text("delete_sweep")));
+						if(data.every(function(elem) {
+							return elem.created == 0
 						})) {
-						$("#" + type.toLowerCase() + "_check_" + addon)
-							.css("color", "green");
-					}
-					else {
-						$("#" + type.toLowerCase() + "_check_" + addon)
-							.css("color", "red");
-					}
-					if(typeof elem.del_approval != "object" && 
-						elem.del_approval.split(",").some(function(iter) {
-							return iter == exports.read_cookie("contributor");
-						})) {
-						$("#" + type.toLowerCase() + "_delete_" + addon)
-							.css("color", "green");
-					}
-					else {
-						$("#" + type.toLowerCase() + "_delete_" + addon)
-							.css("color", "red");
-					}
-				});
-				$(".modal-trigger").leanModal({
-					dismissible: false,
-					opacity: 2,
-					inDuration: 1000,
-					outDuration: 1000
-				});
-				$("#popup_control").click();
-				$("#popup").keypress(function(event) {
-				    if(event.keyCode === 10 || event.keyCode === 13) {
-				        event.preventDefault();
-				    }
-				});
-				$("#popup_exit").click(function(event) {
-					event.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-				$("#popup_add").click(function(e) {
-					e.preventDefault();
-					var addon = -1,
-						order = -1,
-						lhs = -1,
-						rhs = -1,
-						inp_cpy = exports.copy(input),
-						dat_cpy = exports.copy(data);
-					if(type == "Subjects") {
-						lhs = inp_cpy.length != 0
-							? inp_cpy.sort(function(a, b) { 
-								return b.sid - a.sid; 
-							})[0].sid + 1
-							: 1,
-						rhs = dat_cpy.length != 0
-							? dat_cpy.sort(function(a, b) { 
-								return b.sid - a.sid; 
-							})[0].sid + 1
-							: 1;
-					}
-					else if(type == "Topics") {
-						lhs = inp_cpy.length != 0
-							? inp_cpy.sort(function(a, b) { 
-								return b.tid - a.tid; 
-							})[0].tid + 1
-							: 1,
-						rhs = dat_cpy.length != 0
-							? dat_cpy.sort(function(a, b) { 
-								return b.tid - a.tid; 
-							})[0].tid + 1
-							: 1;
-					}
-					else if(type == "Sections") {
-						lhs = inp_cpy.length != 0
-							? inp_cpy.sort(function(a, b) { 
-								return b.section_id - a.section_id; 
-							})[0].section_id + 1
-							: 1,
-						rhs = dat_cpy.length != 0
-							? dat_cpy.sort(function(a, b) { 
-								return b.section_id - a.section_id; 
-							})[0].section_id + 1
-							: 1;
-					}
-					else if(type == "Examples") {
-						lhs = inp_cpy.length != 0
-							? inp_cpy.sort(function(a, b) { 
-								return b.eid - a.eid; 
-							})[0].eid + 1
-							: 1,
-						rhs = dat_cpy.length != 0
-							? dat_cpy.sort(function(a, b) { 
-								return b.eid - a.eid; 
-							})[0].eid + 1
-							: 1;
-					}
-					addon = Math.max(lhs, rhs);
-					var new_tr = $("<tr>").attr("id",
-							type.toLowerCase() + "_tr_" + addon),
-						new_name = $("<td>").text("New "
-							+ type.substring(0, type.length - 1))
-							.addClass("field")
-							.attr({
-								contentEditable: "true",
-								id: type.toLowerCase() +
-									"_td_" + addon
-							}),
-						new_move = $("<td>").css("text-align", "center")
-							.append($("<a>").attr("id",
-								type.toLowerCase() + "_up_" + addon)
-								.addClass("arrow")
-								.css("cursor", "pointer")
-								.append($("<i>").addClass("material-icons")
-									.text("keyboard_arrow_up")))
-							.append($("<a>").attr("id",
-								type.toLowerCase() + "_down_" + addon)
-								.addClass("arrow")
-								.css("cursor", "pointer")
-								.append($("<i>").addClass("material-icons")
-									.text("keyboard_arrow_down"))),
-						new_approve = $("<td>").css("text-align", "center")
-							.append($("<a>")
-								.css("cursor", "pointer")
-								.attr("id", type.toLowerCase()
-									+ "_check_" + addon)
-								.addClass("approve center")
-								.css("color", "red")
-								.append($("<i>")
-									.addClass("material-icons")
-									.text("check_circle"))),
-						new_delete = $("<td>").css("text-align", "center")
-							.append($("<a>")
-								.css("cursor", "pointer")
-								.attr("id", type.toLowerCase()
-									+ "_delete_" + addon)
-								.addClass("del center")
-								.css("color", "red")
-								.append($("<i>")
-									.addClass("material-icons")
-									.text("cancel"))),
-						new_garbage = $("<td>").css("text-align", "center")
-							.append($("<a>")
-								.css("cursor", "pointer")
-								.attr("id", type.toLowerCase() +
-									"_garbage_" + addon)
-								.addClass("garbage center")
-								.css("color", "red")
-								.append($("<i>")
-									.addClass("material-icons")
-									.text("delete_sweep")));
-					if(data.every(function(elem) {
-						return elem.created == 0
-					})) {
-						$("#sidenav_table_head").find("tr")
-							.append($("<th>").attr("id", "garbage_head")
-								.text("Remove"));
-					}
-					new_tr.append(new_name, new_move,
-						new_approve, new_delete, new_garbage);
-					$("#sidenav_table_body").append(new_tr);
-					data.length == 0 ? order = 1
-						: order = data[data.length - 1].order + 1;
-					if(type == "Subjects") {
-						data.push({
-							sid: addon,
-							clean_name: "New " +
-								type.substring(0, type.length - 1),
-							sname: "Newx20" +
-								type.substring(0, type.length - 1),
-							order: order,
-							topics: [],
-							side_approval: {},
-							del_approval: {},
-							edited: 0,
-							created: 1
-						});
-					}
-					else if(type == "Topics") {
-						data.push({
-							tid: addon,
-							sid: container_id,
-							clean_name: "New " +
-								type.substring(0, type.length - 1),
-							tname: "Newx20" +
-								type.substring(0, type.length - 1),
-							order: order,
-							sections: [],
-							side_approval: {},
-							del_approval: {},
-							edited: 0,
-							created: 1
-						});
-					}
-					else if(type == "Sections") {
-						data.push({
-							section_id: addon,
-							tid: container_id,
-							clean_name: "New " +
-								type.substring(0, type.length - 1),
-							section_name: "Newx20" +
-								type.substring(0, type.length - 1),
-							order: order,
-							examples: [],
-							side_approval: {},
-							del_approval: {},
-							edited: 0,
-							created: 1
-						});
-					}
-					else if(type == "Examples") {
-						data.push({
-							eid: addon,
-							section_id: container_id,
-							clean_name: "New " +
-								type.substring(0, type.length - 1),
-							ename: "Newx20" +
-								type.substring(0, type.length - 1),
-							order: order,
-							side_approval: {},
-							del_approval: {},
-							edited: 0,
-							created: 1
-						});
-					}
+							$("#sidenav_table_head").find("tr")
+								.append($("<th>").attr("id", "garbage_head")
+									.text("Remove"));
+						}
+						new_tr.append(new_name, new_move,
+							new_approve, new_delete, new_garbage);
+						$("#sidenav_table_body").append(new_tr);
+						data.length == 0 ? order = 1
+							: order = data[data.length - 1].order + 1;
+						if(type == "Subjects") {
+							data.push({
+								sid: addon,
+								clean_name: "New " +
+									type.substring(0, type.length - 1),
+								sname: "Newx20" +
+									type.substring(0, type.length - 1),
+								order: order,
+								topics: [],
+								side_approval: {},
+								del_approval: {},
+								edited: 0,
+								created: 1
+							});
+						}
+						else if(type == "Topics") {
+							data.push({
+								tid: addon,
+								sid: container_id,
+								clean_name: "New " +
+									type.substring(0, type.length - 1),
+								tname: "Newx20" +
+									type.substring(0, type.length - 1),
+								order: order,
+								sections: [],
+								side_approval: {},
+								del_approval: {},
+								edited: 0,
+								created: 1
+							});
+						}
+						else if(type == "Sections") {
+							data.push({
+								section_id: addon,
+								tid: container_id,
+								clean_name: "New " +
+									type.substring(0, type.length - 1),
+								section_name: "Newx20" +
+									type.substring(0, type.length - 1),
+								order: order,
+								examples: [],
+								side_approval: {},
+								del_approval: {},
+								edited: 0,
+								created: 1
+							});
+						}
+						else if(type == "Examples") {
+							data.push({
+								eid: addon,
+								section_id: container_id,
+								clean_name: "New " +
+									type.substring(0, type.length - 1),
+								ename: "Newx20" +
+									type.substring(0, type.length - 1),
+								order: order,
+								side_approval: {},
+								del_approval: {},
+								edited: 0,
+								created: 1
+							});
+						}
+						exports.sidenav_modal_links(type, data);
+						exports.sidenav_modal_name_check(data);
+					});
 					exports.sidenav_modal_links(type, data);
-					exports.sidenav_modal_name_check(data);
-				});
-				exports.sidenav_modal_links(type, data);
-				$("#popup_submit").click(function(event) {
-					event.preventDefault();
-					var statement = "";
-					$.get("/api/cms/count/contributors")
-						.done(function(num) {
-						const validation = 
-							Math.ceil(Math.log(parseInt(num)));
-						$("#popup_submit").remove();
-						$("#popup_modal_footer").append($("<a>")
-							.attr("id", "popup_submit")
-							.addClass("modal-close waves-effect waves-blue btn-flat")
-							.text("Ok"));
-						data.forEach(function(iter) {
-							var id = -1,
-								ref = -1,
-								name = "";
-							if(type == "Subjects") {
-								id = iter.sid;
-								name = iter.sname;
-								ref = "undefined";
-							}
-							else if(type == "Topics") {
-								id = iter.tid;
-								name = iter.tname;
-								ref = iter.sid;
-							}
-							else if(type == "Sections") {
-								id = iter.section_id;
-								name = iter.section_name;
-								ref = iter.tid;
-							}
-							else if(type == "Examples") {
-								id = iter.eid;
-								name = iter.ename;
-								ref = iter.section_id;
-							}
-							if(typeof iter.del_approval !="object" &&
-								iter.del_approval.split(",")
-								.length >= validation) {
-								$.post("/api/delete/" +
-									type.toLowerCase().substring(0,
-										type.length - 1) + "/",
-									{param: id})
-								.fail(function(xhr, status, error) {
-									console.log("Deleting the " +
+					$("#popup_submit").click(function(event) {
+						event.preventDefault();
+						var statement = "";
+						$.get("/api/cms/count/contributors")
+							.done(function(num) {
+							const validation = 
+								Math.ceil(Math.log(parseInt(num)));
+							$("#popup_submit").remove();
+							$("#popup_modal_footer").append($("<a>")
+								.attr("id", "popup_submit")
+								.addClass("modal-close waves-effect waves-blue btn-flat")
+								.text("Ok"));
+							data.forEach(function(iter) {
+								var id = -1,
+									ref = -1,
+									name = "";
+								if(type == "Subjects") {
+									id = iter.sid;
+									name = iter.sname;
+									ref = "undefined";
+								}
+								else if(type == "Topics") {
+									id = iter.tid;
+									name = iter.tname;
+									ref = iter.sid;
+								}
+								else if(type == "Sections") {
+									id = iter.section_id;
+									name = iter.section_name;
+									ref = iter.tid;
+								}
+								else if(type == "Examples") {
+									id = iter.eid;
+									name = iter.ename;
+									ref = iter.section_id;
+								}
+								if(typeof iter.del_approval !="object" &&
+									iter.del_approval.split(",")
+									.length >= validation) {
+									$.post("/api/delete/" +
 										type.toLowerCase().substring(0,
-											type.length - 1) +
-										" with id " + id +
-										" failed with the error: " +
-										error);
-								});
-							}
-							else {
-								if(typeof iter.del_approval == "object" ||
-									iter.del_approval == "") {
-									iter.del_approval = "0";
-								}
-								if(typeof iter.side_approval == "object" ||
-									iter.side_approval == "") {
-									iter.side_approval = "0";
-								}
-								var obj = {
-									param: id,
-									ref: ref,
-									name: name,
-									order: iter.order,
-									title: "undefined",
-									content: "undefined",
-									side_approval: iter.side_approval,
-									cms_approval: "undefined",
-									del_approval: iter.del_approval,
-									title_cms: "undefined",
-									content_cms: "undefined"
-								};
-								if(iter.status == 0) {
-									iter.side_approval.split(",").length >= validation
-										? obj.status = 1 : obj.status = 0;
+											type.length - 1) + "/",
+										{param: id})
+									.fail(function(xhr, status, error) {
+										console.log("Deleting the " +
+											type.toLowerCase().substring(0,
+												type.length - 1) +
+											" with id " + id +
+											" failed with the error: " +
+											error);
+									});
 								}
 								else {
-									obj.status = 1;
-								}
-								if(iter.created == 1) {
-									statement = "/api/add/";
-									if(type == "Subjects") {
-										statement += "subject/";
+									if(typeof iter.del_approval == "object" ||
+										iter.del_approval == "") {
+										iter.del_approval = "0";
 									}
-									else if(type == "Topics") {
-										statement += "topic/";
+									if(typeof iter.side_approval == "object" ||
+										iter.side_approval == "") {
+										iter.side_approval = "0";
 									}
-									else if(type == "Sections") {
-										statement += "section/";
+									var obj = {
+										param: id,
+										ref: ref,
+										name: name,
+										order: iter.order,
+										title: "undefined",
+										content: "undefined",
+										side_approval: iter.side_approval,
+										cms_approval: "undefined",
+										del_approval: iter.del_approval,
+										title_cms: "undefined",
+										content_cms: "undefined"
+									};
+									if(iter.status == 0) {
+										iter.side_approval.split(",").length >= validation
+											? obj.status = 1 : obj.status = 0;
 									}
-									else if(type == "Examples") {
-										statement += "example/";
+									else {
+										obj.status = 1;
 									}
-									$.post(statement, obj)
-										.fail(function() {
-										$("#popup_title").text("Database Issue");
+									if(iter.created == 1) {
+										statement = "/api/add/";
 										if(type == "Subjects") {
-											$("#popup_body").text("There was" +
-												" an issue uploading the new" +
-												" subject(s) to the database!");
+											statement += "subject/";
 										}
 										else if(type == "Topics") {
-											$("#popup_body").text("There was" +
-												" an issue uploading the new" +
-												" topic(s) to the database!");
+											statement += "topic/";
 										}
 										else if(type == "Sections") {
-											$("#popup_body").text("There was" +
-												" an issue uploading the new" +
-												" section(s) to the database!");
+											statement += "section/";
 										}
 										else if(type == "Examples") {
-											$("#popup_body").text("There was" +
-												" an issue uploading the new" +
-												" example(s) to the database!");
+											statement += "example/";
 										}
-										$("#popup_exit").remove();
-										$("#popup_add").remove();
-										$("#popup_submit").text("Ok")
-											.click(function(e) {
-												e.preventDefault();
-												location.reload();
-												$(window).scrollTop(0);
+										$.post(statement, obj)
+											.fail(function() {
+											$("#popup_title").text("Database Issue");
+											if(type == "Subjects") {
+												$("#popup_body").text("There was" +
+													" an issue uploading the new" +
+													" subject(s) to the database!");
+											}
+											else if(type == "Topics") {
+												$("#popup_body").text("There was" +
+													" an issue uploading the new" +
+													" topic(s) to the database!");
+											}
+											else if(type == "Sections") {
+												$("#popup_body").text("There was" +
+													" an issue uploading the new" +
+													" section(s) to the database!");
+											}
+											else if(type == "Examples") {
+												$("#popup_body").text("There was" +
+													" an issue uploading the new" +
+													" example(s) to the database!");
+											}
+											$("#popup_exit").remove();
+											$("#popup_add").remove();
+											$("#popup_submit").text("Ok")
+												.click(function(e) {
+													e.preventDefault();
+													location.reload();
+													$(window).scrollTop(0);
+											});
 										});
-									});
-								}
-								if(iter.edited == 1 && iter.created == 0) {
-									statement = "/api/change/";
-									if(type == "Subjects") {
-										statement += "subject/";
 									}
-									else if(type == "Topics") {
-										statement += "topic/";
-									}
-									else if(type == "Sections") {
-										statement += "section/";
-									}
-									else if(type == "Examples") {
-										statement += "example/";
-									}
-									$.post(statement, obj).fail(function() {
-										$("#popup_title").text("Database Issue");
+									if(iter.edited == 1 && iter.created == 0) {
+										statement = "/api/change/";
 										if(type == "Subjects") {
-											$("#popup_body").text("There was an" +
-												" issue uploading the subject" +
-												" changes to the database!");
+											statement += "subject/";
 										}
 										else if(type == "Topics") {
-											$("#popup_body").text("There was an" +
-												" issue uploading the topic" +
-												" changes to the database!");
+											statement += "topic/";
 										}
 										else if(type == "Sections") {
-											$("#popup_body").text("There was an" +
-												" issue uploading the section" +
-												" changes to the database!");
+											statement += "section/";
 										}
 										else if(type == "Examples") {
-											$("#popup_body").text("There was an" +
-												" issue uploading the example" +
-												" changes to the database!");
+											statement += "example/";
 										}
-										$("#popup_exit").remove();
-										$("#popup_add").remove();
-										$("#popup_submit").text("Ok")
-											.click(function(e) {
-												e.preventDefault();
-												location.reload();
-												$(window).scrollTop(0);
+										$.post(statement, obj).fail(function() {
+											$("#popup_title").text("Database Issue");
+											if(type == "Subjects") {
+												$("#popup_body").text("There was an" +
+													" issue uploading the subject" +
+													" changes to the database!");
+											}
+											else if(type == "Topics") {
+												$("#popup_body").text("There was an" +
+													" issue uploading the topic" +
+													" changes to the database!");
+											}
+											else if(type == "Sections") {
+												$("#popup_body").text("There was an" +
+													" issue uploading the section" +
+													" changes to the database!");
+											}
+											else if(type == "Examples") {
+												$("#popup_body").text("There was an" +
+													" issue uploading the example" +
+													" changes to the database!");
+											}
+											$("#popup_exit").remove();
+											$("#popup_add").remove();
+											$("#popup_submit").text("Ok")
+												.click(function(e) {
+													e.preventDefault();
+													location.reload();
+													$(window).scrollTop(0);
+											});
 										});
-									});
+									}
 								}
-							}
-						});
-					}).done(function() {
-						$("#popup_title").text("Changes Saved")
-							.css("text-align", "center");
-						$("#popup_body").text("All changes have" +
-							" been saved to the database!");
-						$("#popup_exit").remove();
-						$("#popup_add").remove();
-						$("#popup_submit").click(function(e) {
-							e.preventDefault();
-							location.reload();
-							$(window).scrollTop(0);
+							});
+						}).done(function() {
+							$("#popup_title").text("Changes Saved")
+								.css("text-align", "center");
+							$("#popup_body").text("All changes have" +
+								" been saved to the database!");
+							$("#popup_exit").remove();
+							$("#popup_add").remove();
+							$("#popup_submit").click(function(e) {
+								e.preventDefault();
+								location.reload();
+								$(window).scrollTop(0);
+							});
 						});
 					});
 				});
@@ -4680,7 +4746,6 @@ define(function() {
 						data.title_cms[i] == "") {
 						break;
 					}
-					console.log(data.title_cms[i]);
 					var cont_div = "",
 						title = data.title_cms[i].split("x5F")
 							.filter(function(elem) {
@@ -4858,7 +4923,6 @@ define(function() {
 								data.title[j] == "") {
 								break;
 							}
-							console.log(data.title_cms[j]);
 							var cont_div = "",
 								title = data.title[j].split("x5F")
 									.filter(function(elem) {
@@ -4993,7 +5057,6 @@ define(function() {
 								data.title_cms[j] == "") {
 								break;
 							}
-							console.log(data.title_cms[j]);
 							var cont_div = "",
 								title = data.title_cms[j].split("x5F")
 									.filter(function(elem) {
@@ -5064,10 +5127,32 @@ define(function() {
 						data.title_cms.join("-----"),
 					contentComparison =
 						data.content_cms.join("-----"),
-					headingComparison = undefined;
+					headingComparison = undefined,
+					approvalComparison = [],
+					ind = -1;
 				if(data.heading_cms !== undefined) {
 					headingComparison =
 						data.heading_cms;
+				}
+				if(data.cms_approval !== null) {
+					approvalComparison.push(data.cms_approval)
+					ind = data.cms_approval.indexOf(cookie);
+				}
+				if(ind == -1) {
+					if(data.cms_approval === null) {
+						approvalComparison.push(cookie);
+					}
+					else {
+						approvalComparison.push(
+							data.cms_approval +
+							"," + cookie);
+					}
+				}
+				else {
+					approvalComparison.push(data.cms_approval
+						.substring(0, ind - 1) +
+						data.cms_approval.substring(ind +
+							cookie.length));
 				}
 				$("#edit").click(function(e) {
 					e.preventDefault();
@@ -5099,7 +5184,6 @@ define(function() {
 								data.title_cms[j] == "") {
 								break;
 							}
-							console.log(data.title_cms[j]);
 							var cont_div = "",
 								title = data.title_cms[j].split("x5F")
 									.filter(function(elem) {
@@ -5720,24 +5804,28 @@ define(function() {
 									if(comparison.heading_cms !=
 											headingComparison ||
 										comparison.title_cms !=
-											exports.replace_all(
-												titleComparison, "x5F", "_") ||
+											titleComparison ||
 										comparison.content_cms !=
-											contentComparison) {
+											contentComparison ||
+										!approvalComparison.some(function(elem) {
+											return elem == comparison.cms_approval;
+										})) {
 										exports.update_modal();
 									}
 								}
 								else {
 									if(comparison.title_cms !=
-											exports.replace_all(
-												titleComparison, "x5F", "_") ||
+											titleComparison ||
 										comparison.content_cms !=
-											contentComparison) {
+											contentComparison ||
+										!approvalComparison.some(function(elem) {
+											return elem == comparison.cms_approval;
+										})) {
 										exports.update_modal();
 									}
 								}
 							});
-						}, 1000 * 60 * 5);
+						}, 1000 * 60 * (1/6));
 						exports.listen_cookie_change("contributor", function() {
 							if(exports.read_cookie("contributor") == "") {
 								clearInterval(interval);
@@ -6290,7 +6378,7 @@ define(function() {
 								.click(function(e) {
 									e.preventDefault();
 									exports.sidenav_modal(
-										"Subjects", subjects);
+										"Subjects");
 							});
 						}
 						else if(page == "subject") {
@@ -6298,8 +6386,7 @@ define(function() {
 								.click(function(e) {
 									e.preventDefault();
 									exports.sidenav_modal(
-										"Topics", topics,
-										subject.sid);
+										"Topics", subject.sid);
 							});
 						}
 						else if(page == "topic") {
@@ -6307,8 +6394,7 @@ define(function() {
 								.click(function(e) {
 									e.preventDefault();
 									exports.sidenav_modal(
-										"Sections", sections,
-										topic.tid);
+										"Sections", topic.tid);
 							});
 						}
 						else if(page == "section"
@@ -6317,8 +6403,8 @@ define(function() {
 								.click(function(e) {
 									e.preventDefault();
 									exports.sidenav_modal(
-										"Examples", examples,
-										section.section_id);
+										"Examples", section
+											.section_id);
 							});
 						}
 						document.height = Math.max(

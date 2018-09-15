@@ -209,6 +209,15 @@ define(["dist/functions-min", "materialize"],
 					functions.committee_modal();
 				});
 			}
+			else if(id == "missing-approvals") {
+				$("#drop_up").click();
+				$.get("/pages/dist/modal-min.html")
+					.done(function(result) {
+					$("body").append(result);
+					functions.approvals_modal(subjects,
+						topics, sections, examples);
+				});
+			}
 			else if(id == "ranking") {
 				$("#drop_up").click();
 				$.get("/pages/dist/modal-min.html")

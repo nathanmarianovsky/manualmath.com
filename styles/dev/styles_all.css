@@ -482,7 +482,8 @@ nav {
 	background: #1163a9;
 }
 
-#profile, #logout {
+#profile, #logout,
+#missing-approvals {
 	background: #00b8ff;
 }
 

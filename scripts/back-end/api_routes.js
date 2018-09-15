@@ -1562,7 +1562,9 @@ exports.add_api_routes = (app, pool) => {
 							title_cms:
 								title_str_cms,
 							content_cms:
-								content_str_cms
+								content_str_cms,
+							cms_approval:
+								result[0].cms_approval
 						});
 					}
 				}
