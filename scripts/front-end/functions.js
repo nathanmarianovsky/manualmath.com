@@ -304,10 +304,7 @@ define(function() {
 					topicItem = $("<td>")
 						.attr("id", "topicContainer_" +
 							topic.tid + "_" + subject.sid)
-						.css({
-							"cursor": "pointer",
-							"padding-left": "40px"
-						})
+						.css("padding-left", "40px")
 						.append(topicName),
 					topicApproval = $("<td>")
 						.css({
@@ -354,10 +351,7 @@ define(function() {
 							.attr("id", "sectionContainer_" +
 								section.section_id + "_" +
 								topic.tid + "_" + subject.sid)
-							.css({
-								"cursor": "pointer",
-								"padding-left": "80px"
-							})
+							.css("padding-left", "80px")
 							.append(sectionName),
 						sectionApproval = $("<td>")
 							.css({
@@ -1857,7 +1851,8 @@ define(function() {
 	*/
 	exports.sidenav_modal = function(type, container_id) {
 		var data = [],
-			statement = "";
+			statement = "",
+			cookie = exports.read_cookie("contributor");
 		if(type == "Subjects") {
 			statement = "/api/subjects";
 		}
@@ -2000,7 +1995,7 @@ define(function() {
 						$("#sidenav_table_body").append(item_tr);
 						if(typeof elem.side_approval != "object" && 
 							elem.side_approval.split(",").some(function(iter) {
-								return iter == exports.read_cookie("contributor");
+								return iter == cookie;
 							})) {
 							$("#" + type.toLowerCase() + "_check_" + addon)
 								.css("color", "green");
@@ -2011,7 +2006,7 @@ define(function() {
 						}
 						if(typeof elem.del_approval != "object" && 
 							elem.del_approval.split(",").some(function(iter) {
-								return iter == exports.read_cookie("contributor");
+								return iter == cookie;
 							})) {
 							$("#" + type.toLowerCase() + "_delete_" + addon)
 								.css("color", "green");
@@ -2173,7 +2168,8 @@ define(function() {
 								side_approval: {},
 								del_approval: {},
 								edited: 0,
-								created: 1
+								created: 1,
+								status: 0
 							});
 						}
 						else if(type == "Topics") {
@@ -2189,7 +2185,8 @@ define(function() {
 								side_approval: {},
 								del_approval: {},
 								edited: 0,
-								created: 1
+								created: 1,
+								status: 0
 							});
 						}
 						else if(type == "Sections") {
@@ -2205,7 +2202,8 @@ define(function() {
 								side_approval: {},
 								del_approval: {},
 								edited: 0,
-								created: 1
+								created: 1,
+								status: 0
 							});
 						}
 						else if(type == "Examples") {
@@ -2220,7 +2218,8 @@ define(function() {
 								side_approval: {},
 								del_approval: {},
 								edited: 0,
-								created: 1
+								created: 1,
+								status: 0
 							});
 						}
 						exports.sidenav_modal_links(type, data);
@@ -2301,8 +2300,11 @@ define(function() {
 										title_cms: "undefined",
 										content_cms: "undefined"
 									};
-									if(iter.status == 0) {
-										iter.side_approval.split(",").length >= validation
+									if(iter.status == 0 && typeof
+										iter.side_approval !== "object") {
+										iter.side_approval != "0" &&
+											iter.side_approval.split(",").length 
+												>= validation
 											? obj.status = 1 : obj.status = 0;
 									}
 									else {
@@ -2353,6 +2355,38 @@ define(function() {
 													location.reload();
 													$(window).scrollTop(0);
 											});
+										}).done(function() {
+											$.post("/api/log/want/" +
+												type.toLowerCase()
+												.substring(0, type.length - 1),
+												{id: id}).done(function(log) {
+												if(log === null) { log = ""; }
+												var now = new Date()
+														.toLocaleString("en-US",
+															{timeZone: "UTC"}),
+													change = "The " + type.toLowerCase()
+														.substring(0, type.length - 1) +
+														" " + iter.clean_name + " was " +
+														"officially created by the " +
+														"contributor " + cookie + ".";
+												if(log != "") {
+													log += "-----";
+												}
+												log += now + "_____" + change;
+												if(iter.status == 0 && obj.status == 1) {
+													change = "The " + type.toLowerCase()
+														.substring(0, type.length - 1) +
+														" " + iter.clean_name + " has " +
+														"gained permanent sidenav approval.";
+													log += "-----" + now + "_____" + change;
+												}
+												$.post("/api/log/change/" +
+													type.toLowerCase()
+													.substring(0, type.length - 1), {
+														id: id,
+														log: log
+												});
+											});
 										});
 									}
 									if(iter.edited == 1 && iter.created == 0) {
@@ -2398,6 +2432,39 @@ define(function() {
 													e.preventDefault();
 													location.reload();
 													$(window).scrollTop(0);
+											});
+										}).done(function() {
+											$.post("/api/log/want/" +
+												type.toLowerCase()
+												.substring(0, type.length - 1),
+												{id: id}).done(function(log) {
+												if(log === null) { log = ""; }
+												var now = new Date()
+														.toLocaleString("en-US",
+															{timeZone: "UTC"}),
+													change = "The " + type.toLowerCase()
+														.substring(0, type.length - 1) +
+														" " + iter.clean_name + " had " +
+														"its sidenav information " +
+														"edited by the contributor " +
+														cookie + ".";
+												if(log != "") {
+													log += "-----";
+												}
+												log += now + "_____" + change;
+												if(iter.status == 0 && obj.status == 1) {
+													change = "The " + type.toLowerCase()
+														.substring(0, type.length - 1) +
+														" " + iter.clean_name + " has " +
+														"gained permanent sidenav approval.";
+													log += "-----" + now + "_____" + change;
+												}
+												$.post("/api/log/change/" +
+													type.toLowerCase()
+													.substring(0, type.length - 1), {
+														id: id,
+														log: log
+												});
 											});
 										});
 									}
@@ -5044,9 +5111,6 @@ define(function() {
 							.filter(function(elem) {
 								return elem != "hidden";
 							}).join("_"),
-						// title = exports.replace_all(
-						// 	data.title_cms[i], "x5F", "_")
-						// 	.split("_")[0],
 						accordion = $("<div>")
 							.addClass("accordion"),
 						show_solution = $("<div>")
@@ -5108,6 +5172,65 @@ define(function() {
 						.css("color", "red");
 				}
 				$(".tooltipped").tooltip();
+
+				$("#log").click(function(e) {
+					e.preventDefault();
+					$.get("/pages/dist/modal-min.html")
+						.done(function(result) {
+						$("body").append(result);
+						$(".modal-trigger").leanModal({
+							dismissible: false,
+							opacity: 2,
+							inDuration: 1000,
+							outDuration: 1000
+						});
+						$("#popup_title").text("History of Current Page")
+							.css("text-align", "center");
+						$.post("/api/log/want/" + page, {id: db_id})
+							.done(function(log) {
+							if(log !== null && log != "") {
+								var lines = log.split("-----"),
+									table = $("<table>"),
+									tableHead = $("<thead>"),
+									tableBody = $("<tbody>"),
+									headTR = $("<tr>"),
+									dateItem = $("<th>").text("Date")
+										.css("text-align", "center"),
+									timeItem = $("<th>").text("Time (UTC)")
+										.css("text-align", "center"),
+									commentItem = $("<th>").text("Changes")
+										.css("text-align", "center");
+								lines.forEach(function(elem) {
+									var container = elem.split("_____"),
+										date = container[0]
+											.split(",")[0],
+										time = container[0]
+											.split(",")[1].trim(),
+										current = $("<tr>").append(
+											$("<td>").text(date)
+												.css("text-align", "center"),
+											$("<td>").text(time)
+												.css("text-align", "center"),
+											$("<td>").text(container[1])
+										)
+										tableBody.append(current);
+								});
+								headTR.append(dateItem, timeItem, commentItem);
+								tableHead.append(headTR);
+								table.append(tableHead, tableBody);
+								$("#popup_body").append(table);
+							}
+							$("#popup_control").click();
+							$("#popup_submit").click(function(e) {
+								e.preventDefault();
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+							});
+						});
+					});
+				});
+
 				$("#approve").click(function(e) {
 					e.preventDefault();
 					if(exports.rgba_to_hex(
@@ -5947,6 +6070,31 @@ define(function() {
 								});
 								data.heading = data.heading_cms;
 								data.cms_approval = 0;
+								$.post("/api/log/want/" + page,
+									{id: db_id}).done(function(log) {
+									if(log === null) { log = ""; }
+									var now = new Date()
+											.toLocaleString("en-US",
+												{timeZone: "UTC"}),
+										change = "The system just pushed" +
+											" the cms content of the ";
+									if(page == "about") {
+										change += "about page";
+									}
+									else {
+										change += page + " " +
+											subject.clean_name;
+									}
+									change += " to the client side."
+									if(log != "") {
+										log += "-----";
+									}
+									log += now + "_____" + change;
+									$.post("/api/log/change/" + page, {
+											id: db_id,
+											log: log
+									});
+								});
 							}
 							else {
 								if(!(titleComparison ===
@@ -6051,15 +6199,52 @@ define(function() {
 									$("#popup_control").remove();
 								});
 							}).done(function() {
-								$("#popup_title").text("Changes Saved");
-								$("#popup_body").text("All changes" +
-									" to the content have been" +
-									" saved to the database!");
-								$("#popup_control").click();
-								$("#popup_submit").click(function(e) {
-									e.preventDefault();
-									location.reload();
-									$(window).scrollTop(0);
+								$.post("/api/log/want/" + page,
+									{id: db_id}).done(function(log) {
+									var cont = exports.compareTo(data);
+									if(titleComparison !==
+											cont[0].join("-----")
+										|| contentComparison !==
+											cont[1].join("-----")
+										|| (headingComparison !==
+											undefined &&
+											headingComparison !==
+											cont[2].join("-----"))) {
+										if(log === null) { log = ""; }
+										var now = new Date()
+												.toLocaleString("en-US",
+													{timeZone: "UTC"}),
+											change = "The ";
+										if(page == "about") {
+											change += "about page";
+										}
+										else {
+											change += page + " " +
+												subject.clean_name;
+										}
+										change += " had its cms content" +
+											" edited by the contributor " +
+											cookie + ".";
+										if(log != "") {
+											log += "-----";
+										}
+										log += now + "_____" + change;
+										$.post("/api/log/change/" + page, {
+												id: db_id,
+												log: log
+										});
+									}
+								}).done(function() {
+									$("#popup_title").text("Changes Saved");
+									$("#popup_body").text("All changes" +
+										" to the content have been" +
+										" saved to the database!");
+									$("#popup_control").click();
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										location.reload();
+										$(window).scrollTop(0);
+									});
 								});
 							});
 						});

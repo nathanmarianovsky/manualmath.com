@@ -71,6 +71,98 @@ exports.add_api_routes = (app, pool) => {
 			}
 		});
 	});
+
+	/*
+		The API method to get and change the log of any
+		subject, topic, section, or example
+	*/
+	app.post("/api/log/:operation/:object", (request, response) => {
+		var object = request.params.object,
+			operation = request.params.operation,
+			id = request.body.id,
+			log = request.body.log,
+			statement = "";
+		if(operation == "want" || operation == "change") {
+			if(operation == "want") {
+				statement = "SELECT log FROM ";
+				if(object == "about" || object == "subject" ||
+					object == "topic" || object == "section" ||
+					object == "example") {
+					if(object == "about") {
+						statement += "about WHERE id=0";
+					}
+					else if(object == "subject") {
+						statement += "subject WHERE sid=" + id;
+					}
+					else if(object == "topic") {
+						statement += "topic WHERE tid=" + id;
+					}
+					else if(object == "section") {
+						statement += "section WHERE section_id=" + id;
+					}
+					else if(object == "example") {
+						statement += "example WHERE eid=" + id;
+					}
+					pool.query(statement, (err, result) => {
+						if(err) {
+							console.error("Error Connecting: " +
+								err.stack);
+							response.send("0");
+						}
+						else {
+							response.send(result[0].log);
+						}
+					});
+				}
+				else {
+					response.send("No such API request exists!");
+				}
+			}
+			else {
+				statement = "UPDATE ";
+				if(object == "about" || object == "subject" ||
+					object == "topic" || object == "section" ||
+					object == "example") {
+					if(object == "about") {
+						statement += "about SET log='" +
+							log + "' WHERE id=0";
+					}
+					else if(object == "subject") {
+						statement += "subject SET log='" +
+							log + "' WHERE sid=" + id;
+					}
+					else if(object == "topic") {
+						statement += "topic SET log='" +
+							log + "' WHERE tid=" + id;
+					}
+					else if(object == "section") {
+						statement += "section SET log='" +
+							log + "' WHERE section_id=" + id;
+					}
+					else if(object == "example") {
+						statement += "example SET log='" +
+							log + "' WHERE eid=" + id;
+					}
+					pool.query(statement, (err, result) => {
+						if(err) {
+							console.error("Error Connecting: " +
+								err.stack);
+							response.send("0");
+						}
+						else {
+							response.send("1");
+						}
+					});
+				}
+				else {
+					response.send("No such API request exists!");
+				}
+			}
+		}
+		else {
+			response.send("No such API request exists!");
+		}
+	});
 	
 	/*
 		The API methods to get the data corresponding to
