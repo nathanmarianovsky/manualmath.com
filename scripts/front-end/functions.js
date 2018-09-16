@@ -224,43 +224,327 @@ define(function() {
 			Function callback
 
 	*/
-	exports.approvals_modal = function(subjects, topics,
-		sections, examples) {
+	exports.approvals_modal = function(subjects) {
+		var cookie = exports.read_cookie("contributor");
 		$(".modal-trigger").leanModal({
 			dismissible: false,
 			opacity: 2,
 			inDuration: 1000,
 			outDuration: 1000
 		});
-		$("#popup_title").text("Missing Approvals");
+		$("#popup_title").text("Missing Approvals")
+			.css("text-align", "center");
 		var statement = "Below you will find all" +
-			" subjects, topics, sections, and "
-		$("#popup_body").text(statement);
-		$("#popup_control").click();
-		if(exports.width_func() < 992) { message(); }
-		else { counter++; callback(); }
-		$(window).on("resize", function() {
-			$("body").css({width: "100%", overflow: "auto"});
-			$("#bar").css("width", $("#latex").width());
-			if(exports.width_func() < 992) {
-				message();
+			" subjects, topics, sections, and" +
+			" examples that require your approval" +
+			" currently. It is important to note" +
+			" that once changes have been pushed" +
+			" to the client side, the content" +
+			" approval is reset as any new changes" +
+			" cannot obtain your approval prior to" +
+			" viewing.";
+		var table = $("<table>"),
+			tableHead = $("<thead>"),
+			tableBody = $("<tbody>"),
+			headTR = $("<tr>"),
+			item = $("<th>").text("Item")
+				.css("text-align", "center"),
+			approval = $("<th>")
+				.text("Current Content Approval")
+				.css("text-align", "center");
+		subjects.forEach(function(subject) {
+			var subjectContainer = $("<tr>"),
+				subjectName = $("<span>")
+					.text(subject.clean_name),
+				subjectItem = $("<td>")
+					.attr("id", "subjectContainer_" +
+						subject.sid)
+					.append(subjectName),
+				subjectApproval = $("<td>")
+					.css({
+						"text-align": "center",
+						"pointer-events": "none"
+					});
+			if(subject.topics.length > 0) {
+				subjectItem.css("cursor", "pointer");
+				subjectName.append($("<a>")
+					.addClass("right")
+					.append($("<i>")
+						.addClass("material-icons controller")
+						.text("add")
+						.css("color", "black")));
 			}
-			if(exports.read_cookie("contributor") == "") {
-				exports.session_modal(router, "login", 0);
+			if(subject.cms_approval === null ||
+				!subject.cms_approval.split(",")
+					.some(function(elem) {
+						return elem == cookie;
+			})) {
+				subjectApproval.append($("<i>")
+					.addClass("material-icons")
+					.text("check_circle")
+					.css("color", "red"));
 			}
 			else {
-				$(".lean-overlay").remove();
-				$("#popup").remove();
-				$("#popup_control").remove();
-				if(counter == 0) { counter++; callback(); }
+				subjectApproval.append($("<i>")
+					.addClass("material-icons")
+					.text("check_circle")
+					.css("color", "green"));
+			}
+			subjectContainer.append(subjectItem,
+				subjectApproval);
+			tableBody.append(subjectContainer);
+			subject.topics.forEach(function(topic) {
+				var topicContainer = $("<tr>").hide(),
+					topicName = $("<span>")
+						.text(topic.clean_name)
+						.css({
+							"list-style-type": "square",
+							"display": "list-item"
+						}),
+					topicItem = $("<td>")
+						.attr("id", "topicContainer_" +
+							topic.tid + "_" + subject.sid)
+						.css({
+							"cursor": "pointer",
+							"padding-left": "40px"
+						})
+						.append(topicName),
+					topicApproval = $("<td>")
+						.css({
+							"text-align": "center",
+							"pointer-events": "none"
+						});
+				if(topic.sections.length > 0) {
+					topicItem.css("cursor", "pointer");
+					topicName.append($("<a>")
+						.addClass("right")
+						.append($("<i>")
+							.addClass("material-icons controller")
+							.text("add")
+							.css("color", "black")));
+				}
+				if(topic.cms_approval === null ||
+					!topic.cms_approval.split(",")
+						.some(function(elem) {
+							return elem == cookie;
+				})) {
+					topicApproval.append($("<i>")
+						.addClass("material-icons")
+						.text("check_circle")
+						.css("color", "red"));
+				}
+				else {
+					topicApproval.append($("<i>")
+						.addClass("material-icons")
+						.text("check_circle")
+						.css("color", "green"));
+				}
+				topicContainer.append(topicItem,
+					topicApproval);
+				tableBody.append(topicContainer);
+				topic.sections.forEach(function(section) {
+					var sectionContainer = $("<tr>").hide(),
+						sectionName = $("<span>")
+							.text(section.clean_name)
+							.css({
+								"list-style-type": "disc",
+								"display": "list-item"
+							}),
+						sectionItem = $("<td>")
+							.attr("id", "sectionContainer_" +
+								section.section_id + "_" +
+								topic.tid + "_" + subject.sid)
+							.css({
+								"cursor": "pointer",
+								"padding-left": "80px"
+							})
+							.append(sectionName),
+						sectionApproval = $("<td>")
+							.css({
+								"text-align": "center",
+								"pointer-events": "none"
+							});
+					if(section.examples.length > 0) {
+						sectionItem.css("cursor", "pointer");
+						sectionName.append($("<a>")
+							.addClass("right")
+							.append($("<i>")
+								.addClass("material-icons controller")
+								.text("add")
+								.css("color", "black")));
+					}
+					if(section.cms_approval === null ||
+						!section.cms_approval.split(",")
+							.some(function(elem) {
+								return elem == cookie;
+					})) {
+						sectionApproval.append($("<i>")
+							.addClass("material-icons")
+							.text("check_circle")
+							.css("color", "red"));
+					}
+					else {
+						sectionApproval.append($("<i>")
+							.addClass("material-icons")
+							.text("check_circle")
+							.css("color", "green"));
+					}
+					sectionContainer.append(sectionItem,
+						sectionApproval);
+					tableBody.append(sectionContainer);
+					section.examples.forEach(function(example) {
+						var exampleContainer = $("<tr>").hide(),
+							exampleItem = $("<td>")
+								.attr("id", "exampleContainer_" +
+									example.eid + "_" +
+									section.section_id + "_" +
+									topic.tid + "_" + subject.sid)
+								.css("padding-left", "120px")
+								.append($("<span>")
+									.text(example.clean_name)
+									.css({
+										"list-style-type": "circle",
+										"display": "list-item"
+									})),
+							exampleApproval = $("<td>")
+								.css({
+									"text-align": "center",
+									"pointer-events": "none"
+								});
+						if(example.cms_approval === null ||
+							!example.cms_approval.split(",")
+								.some(function(elem) {
+									return elem == cookie;
+						})) {
+							exampleApproval.append($("<i>")
+								.addClass("material-icons")
+								.text("check_circle")
+								.css("color", "red"));
+						}
+						else {
+							exampleApproval.append($("<i>")
+								.addClass("material-icons")
+								.text("check_circle")
+								.css("color", "green"));
+						}
+						exampleContainer.append(exampleItem,
+							exampleApproval);
+						tableBody.append(exampleContainer);
+					});
+				});
+			});
+		});
+		headTR.append(item, approval);
+		tableHead.append(headTR);
+		table.append(tableHead, tableBody);
+		$("#popup_body").text(statement)
+			.append(table);
+		MathJax.Hub.Queue(["Typeset", MathJax.Hub, "#popup"]);
+		$("#popup_control").click();
+		$("#popup_submit").click(function(e) {
+			e.preventDefault();
+			$(".lean-overlay").remove();
+			$("#popup").remove();
+			$("#popup_control").remove();
+		});
+		$("td").click(function(e) {
+			e.preventDefault();
+			var holder = $(this).attr("id")
+				.split("_");
+			if(holder[0] == "subjectContainer") {
+				var obj = subjects.filter(function(elem) {
+						return elem.sid == parseInt(holder[1]);
+					})[0],
+					test = $(this).find(".controller").first();
+				if(test.text() == "add") {
+					test.text("remove");
+					obj.topics.forEach(function(iter) {
+						$("#topicContainer_" + iter.tid +
+							"_" + holder[1]).parent()
+							.show();
+					});
+				}
+				else if(test.text() == "remove") {
+					test.text("add");
+					obj.topics.forEach(function(iter) {
+						$("#topicContainer_" + iter.tid +
+							"_" + holder[1]).parent()
+							.hide();
+						iter.sections.forEach(function(item) {
+							$("#sectionContainer_" + item.section_id +
+								"_" + iter.tid + "_" + holder[1]).parent()
+								.hide();
+							item.examples.forEach(function(tmp) {
+								$("#exampleContainer_" + tmp.eid +
+									"_" + item.section_id +
+									"_" + iter.tid + "_" +
+									holder[1]).parent()
+									.hide();
+							});
+						});
+					});
+				}
+			}
+			else if(holder[0] == "topicContainer") {
+				var obj = subjects.filter(function(elem) {
+						return elem.sid == parseInt(holder[2]);
+					})[0].topics.filter(function(elem) {
+						return elem.tid == parseInt(holder[1]);
+					})[0],
+					test = $(this).find(".controller").first();
+				if(test.text() == "add") {
+					test.text("remove");
+					obj.sections.forEach(function(iter) {
+						$("#sectionContainer_" + iter.section_id +
+							"_" + holder[1] + "_" + holder[2]).parent()
+							.show();
+					});
+				}
+				else if(test.text() == "remove") {
+					test.text("add");
+					obj.sections.forEach(function(item) {
+						$("#sectionContainer_" + item.section_id +
+							"_" + holder[1] + "_" + holder[2]).parent()
+							.hide();
+						item.examples.forEach(function(tmp) {
+							$("#exampleContainer_" + tmp.eid + "_" +
+								item.section_id + "_" + holder[1] +
+								"_" + holder[2]).parent()
+								.hide();
+						});
+					});
+				}
+			}
+			else if(holder[0] == "sectionContainer") {
+				var obj = subjects.filter(function(elem) {
+						return elem.sid == parseInt(holder[3]);
+					})[0].topics.filter(function(elem) {
+						return elem.tid == parseInt(holder[2]);
+					})[0].sections.filter(function(elem) {
+						return elem.section_id == parseInt(holder[1]);
+					})[0],
+					test = $(this).find(".controller").first();
+				if(test.text() == "add") {
+					test.text("remove");
+					obj.examples.forEach(function(iter) {
+						$("#exampleContainer_" + iter.eid +
+							"_" + holder[1] + "_" + holder[2] +
+							"_" + holder[3]).parent()
+							.show();
+					});
+				}
+				else if(test.text() == "remove") {
+					test.text("add");
+					obj.examples.forEach(function(tmp) {
+						$("#exampleContainer_" + tmp.eid + "_" +
+							holder[1] + "_" + holder[2] +
+							"_" + holder[3]).parent()
+							.hide();
+					});
+				}
 			}
 		});
 	};
-
-
-
-
-
 
 	/*
 
@@ -5140,7 +5424,7 @@ define(function() {
 				}
 				if(ind == -1) {
 					if(data.cms_approval === null) {
-						approvalComparison.push(cookie);
+						approvalComparison.push(null, cookie);
 					}
 					else {
 						approvalComparison.push(
@@ -5803,7 +6087,9 @@ define(function() {
 										: "";
 									if(comparison.heading_cms !=
 											headingComparison ||
-										comparison.title_cms !=
+										exports.replace_all(
+											comparison.title_cms,
+											"_", "x5F") !=
 											titleComparison ||
 										comparison.content_cms !=
 											contentComparison ||
@@ -5814,8 +6100,8 @@ define(function() {
 									}
 								}
 								else {
-									if(comparison.title_cms !=
-											titleComparison ||
+									if(exports.replace_all(comparison.title_cms,
+										"_", "x5F") != titleComparison ||
 										comparison.content_cms !=
 											contentComparison ||
 										!approvalComparison.some(function(elem) {
@@ -5825,7 +6111,7 @@ define(function() {
 									}
 								}
 							});
-						}, 1000 * 60 * (1/6));
+						}, 1000 * 60 * 5);
 						exports.listen_cookie_change("contributor", function() {
 							if(exports.read_cookie("contributor") == "") {
 								clearInterval(interval);
