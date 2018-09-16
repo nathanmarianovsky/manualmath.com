@@ -214,8 +214,7 @@ define(["dist/functions-min", "materialize"],
 				$.get("/pages/dist/modal-min.html")
 					.done(function(result) {
 					$("body").append(result);
-					functions.approvals_modal(subjects,
-						topics, sections, examples);
+					functions.approvals_modal(subjects);
 				});
 			}
 			else if(id == "ranking") {

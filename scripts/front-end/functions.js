@@ -470,10 +470,16 @@ define(function() {
 						$("#topicContainer_" + iter.tid +
 							"_" + holder[1]).parent()
 							.hide();
+						$("#topicContainer_" + iter.tid +
+							"_" + holder[1]).find(".controller")
+							.first().text("add");
 						iter.sections.forEach(function(item) {
 							$("#sectionContainer_" + item.section_id +
 								"_" + iter.tid + "_" + holder[1]).parent()
 								.hide();
+							$("#sectionContainer_" + item.section_id +
+								"_" + iter.tid + "_" + holder[1])
+								.find(".controller").first().text("add");
 							item.examples.forEach(function(tmp) {
 								$("#exampleContainer_" + tmp.eid +
 									"_" + item.section_id +
@@ -506,6 +512,9 @@ define(function() {
 						$("#sectionContainer_" + item.section_id +
 							"_" + holder[1] + "_" + holder[2]).parent()
 							.hide();
+						$("#sectionContainer_" + item.section_id +
+							"_" + holder[1] + "_" + holder[2])
+							.find(".controller").first().text("add");
 						item.examples.forEach(function(tmp) {
 							$("#exampleContainer_" + tmp.eid + "_" +
 								item.section_id + "_" + holder[1] +
