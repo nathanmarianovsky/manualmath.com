@@ -562,43 +562,87 @@ define(function() {
 	exports.resize_modal = function(callback) {
 		var counter = 0;
 		function message() {
-			$(".lean-overlay").remove();
-			$("#popup").remove();
-			$("#popup_control").remove();
-			$.get("/pages/dist/modal-min.html").done(function(content) {
-				$("body").append(content);
-				$(".modal-trigger").leanModal({
-					dismissible: false,
-					opacity: 2,
-					inDuration: 1000,
-					outDuration: 1000
+			if($("#popup").length == 0) {
+				$.get("/pages/dist/modal-min.html").done(function(content) {
+					$("body").append(content);
+					$(".modal-trigger").leanModal({
+						dismissible: false,
+						opacity: 2,
+						inDuration: 1000,
+						outDuration: 1000
+					});
+					$("#popup_submit").remove();
+					$("#popup_title").text("Size Issue");
+					var statement = "By design the content management system cannot" +
+						" operate on a screen less than 992 pixels. Please increase" +
+						" the width of the browser to continue working."
+					$("#popup_body").text(statement);
+					$("#popup_control").click();
 				});
-				$("#popup_submit").remove();
-				$("#popup_title").text("Size Issue");
-				var statement = "By design the content management system cannot" +
-					" operate on a screen less than 992 pixels. Please increase" +
-					" the width of the browser to continue working."
-				$("#popup_body").text(statement);
-				$("#popup_control").click();
-			});
+			}
+			else {
+				var popup = $("#popup"),
+					popup_control = $("#popup_control"),
+					overlay = $(".lean-overlay");
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+					$("body").append(popup_control,
+						popup, overlay);
+					$("#popup_submit").remove();
+					$("#popup_title").text("Size Issue");
+					var statement = "By design the content management system cannot" +
+						" operate on a screen less than 992 pixels. Please increase" +
+						" the width of the browser to continue working."
+					$("#popup_body").text(statement);
+					// $(".modal-trigger").leanModal({
+					// 	dismissible: false,
+					// 	opacity: 2,
+					// 	inDuration: 1000,
+					// 	outDuration: 1000
+					// });
+			}
+			// $(".lean-overlay").remove();
+			// $("#popup").remove();
+			// $("#popup_control").remove();
+			// $.get("/pages/dist/modal-min.html").done(function(content) {
+			// 	$("body").append(content);
+			// 	$(".modal-trigger").leanModal({
+			// 		dismissible: false,
+			// 		opacity: 2,
+			// 		inDuration: 1000,
+			// 		outDuration: 1000
+			// 	});
+			// 	$("#popup_submit").remove();
+			// 	$("#popup_title").text("Size Issue");
+			// 	var statement = "By design the content management system cannot" +
+			// 		" operate on a screen less than 992 pixels. Please increase" +
+			// 		" the width of the browser to continue working."
+			// 	$("#popup_body").text(statement);
+			// 	$("#popup_control").click();
+			// });
 		};
 		if(exports.width_func() < 992) { message(); }
-		else { counter++; callback(); }
+		else { callback(); counter++; }
 		$(window).on("resize", function() {
 			$("body").css({width: "100%", overflow: "auto"});
 			$("#bar").css("width", $("#latex").width());
 			if(exports.width_func() < 992) {
 				message();
 			}
-			if(exports.read_cookie("contributor") == "") {
-				exports.session_modal(router, "login", 0);
-			}
-			else {
+			else if(counter == 0 && exports.width_func() >= 992) {
 				$(".lean-overlay").remove();
 				$("#popup").remove();
 				$("#popup_control").remove();
-				if(counter == 0) { counter++; callback(); }
+				callback();
+				counter++;
 			}
+			// else {
+			// 	$(".lean-overlay").remove();
+			// 	$("#popup").remove();
+			// 	$("#popup_control").remove();
+			// 	if(counter == 0) { counter++; callback(); }
+			// }
 		});
 	};
 
@@ -2023,466 +2067,533 @@ define(function() {
 						outDuration: 1000
 					});
 					$("#popup_control").click();
-					$("#popup").keypress(function(event) {
-					    if(event.keyCode === 10 || event.keyCode === 13) {
-					        event.preventDefault();
-					    }
-					});
-					$("#popup_exit").click(function(event) {
-						event.preventDefault();
-						$(".lean-overlay").remove();
-						$("#popup").remove();
-						$("#popup_control").remove();
-					});
-					$("#popup_add").click(function(e) {
-						e.preventDefault();
-						var addon = -1,
-							order = -1,
-							lhs = -1,
-							rhs = -1,
-							inp_cpy = exports.copy(all),
-							dat_cpy = exports.copy(data);
-						if(type == "Subjects") {
-							lhs = inp_cpy.length != 0
-								? inp_cpy.sort(function(a, b) { 
-									return b.sid - a.sid; 
-								})[0].sid + 1
-								: 1,
-							rhs = dat_cpy.length != 0
-								? dat_cpy.sort(function(a, b) { 
-									return b.sid - a.sid; 
-								})[0].sid + 1
-								: 1;
-						}
-						else if(type == "Topics") {
-							lhs = inp_cpy.length != 0
-								? inp_cpy.sort(function(a, b) { 
-									return b.tid - a.tid; 
-								})[0].tid + 1
-								: 1,
-							rhs = dat_cpy.length != 0
-								? dat_cpy.sort(function(a, b) { 
-									return b.tid - a.tid; 
-								})[0].tid + 1
-								: 1;
-						}
-						else if(type == "Sections") {
-							lhs = inp_cpy.length != 0
-								? inp_cpy.sort(function(a, b) { 
-									return b.section_id - a.section_id; 
-								})[0].section_id + 1
-								: 1,
-							rhs = dat_cpy.length != 0
-								? dat_cpy.sort(function(a, b) { 
-									return b.section_id - a.section_id; 
-								})[0].section_id + 1
-								: 1;
-						}
-						else if(type == "Examples") {
-							lhs = inp_cpy.length != 0
-								? inp_cpy.sort(function(a, b) { 
-									return b.eid - a.eid; 
-								})[0].eid + 1
-								: 1,
-							rhs = dat_cpy.length != 0
-								? dat_cpy.sort(function(a, b) { 
-									return b.eid - a.eid; 
-								})[0].eid + 1
-								: 1;
-						}
-						addon = Math.max(lhs, rhs);
-						var new_tr = $("<tr>").attr("id",
-								type.toLowerCase() + "_tr_" + addon),
-							new_name = $("<td>").text("New "
-								+ type.substring(0, type.length - 1))
-								.addClass("field")
-								.attr({
-									contentEditable: "true",
-									id: type.toLowerCase() +
-										"_td_" + addon
-								}),
-							new_move = $("<td>").css("text-align", "center")
-								.append($("<a>").attr("id",
-									type.toLowerCase() + "_up_" + addon)
-									.addClass("arrow")
-									.css("cursor", "pointer")
-									.append($("<i>").addClass("material-icons")
-										.text("keyboard_arrow_up")))
-								.append($("<a>").attr("id",
-									type.toLowerCase() + "_down_" + addon)
-									.addClass("arrow")
-									.css("cursor", "pointer")
-									.append($("<i>").addClass("material-icons")
-										.text("keyboard_arrow_down"))),
-							new_approve = $("<td>").css("text-align", "center")
-								.append($("<a>")
-									.css("cursor", "pointer")
-									.attr("id", type.toLowerCase()
-										+ "_check_" + addon)
-									.addClass("approve center")
-									.css("color", "red")
-									.append($("<i>")
-										.addClass("material-icons")
-										.text("check_circle"))),
-							new_delete = $("<td>").css("text-align", "center")
-								.append($("<a>")
-									.css("cursor", "pointer")
-									.attr("id", type.toLowerCase()
-										+ "_delete_" + addon)
-									.addClass("del center")
-									.css("color", "red")
-									.append($("<i>")
-										.addClass("material-icons")
-										.text("cancel"))),
-							new_garbage = $("<td>").css("text-align", "center")
-								.append($("<a>")
-									.css("cursor", "pointer")
-									.attr("id", type.toLowerCase() +
-										"_garbage_" + addon)
-									.addClass("garbage center")
-									.css("color", "red")
-									.append($("<i>")
-										.addClass("material-icons")
-										.text("delete_sweep")));
-						if(data.every(function(elem) {
-							return elem.created == 0
-						})) {
-							$("#sidenav_table_head").find("tr")
-								.append($("<th>").attr("id", "garbage_head")
-									.text("Remove"));
-						}
-						new_tr.append(new_name, new_move,
-							new_approve, new_delete, new_garbage);
-						$("#sidenav_table_body").append(new_tr);
-						data.length == 0 ? order = 1
-							: order = data[data.length - 1].order + 1;
-						if(type == "Subjects") {
-							data.push({
-								sid: addon,
-								clean_name: "New " +
-									type.substring(0, type.length - 1),
-								sname: "Newx20" +
-									type.substring(0, type.length - 1),
-								order: order,
-								topics: [],
-								side_approval: {},
-								del_approval: {},
-								edited: 0,
-								created: 1,
-								status: 0
-							});
-						}
-						else if(type == "Topics") {
-							data.push({
-								tid: addon,
-								sid: container_id,
-								clean_name: "New " +
-									type.substring(0, type.length - 1),
-								tname: "Newx20" +
-									type.substring(0, type.length - 1),
-								order: order,
-								sections: [],
-								side_approval: {},
-								del_approval: {},
-								edited: 0,
-								created: 1,
-								status: 0
-							});
-						}
-						else if(type == "Sections") {
-							data.push({
-								section_id: addon,
-								tid: container_id,
-								clean_name: "New " +
-									type.substring(0, type.length - 1),
-								section_name: "Newx20" +
-									type.substring(0, type.length - 1),
-								order: order,
-								examples: [],
-								side_approval: {},
-								del_approval: {},
-								edited: 0,
-								created: 1,
-								status: 0
-							});
-						}
-						else if(type == "Examples") {
-							data.push({
-								eid: addon,
-								section_id: container_id,
-								clean_name: "New " +
-									type.substring(0, type.length - 1),
-								ename: "Newx20" +
-									type.substring(0, type.length - 1),
-								order: order,
-								side_approval: {},
-								del_approval: {},
-								edited: 0,
-								created: 1,
-								status: 0
-							});
-						}
+					var popup = $("#popup"),
+						popup_control = $("#popup_control"),
+						overlay = $(".lean-overlay");
+					function caller(type, container_id, all, data) {
+						$("#popup").keypress(function(event) {
+						    if(event.keyCode === 10 || event.keyCode === 13) {
+						        event.preventDefault();
+						    }
+						});
+						$("#popup_exit").click(function(event) {
+							event.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+						});
+						$("#popup_add").click(function(e) {
+							e.preventDefault();
+							var addon = -1,
+								order = -1,
+								lhs = -1,
+								rhs = -1,
+								inp_cpy = exports.copy(all),
+								dat_cpy = exports.copy(data);
+							if(type == "Subjects") {
+								lhs = inp_cpy.length != 0
+									? inp_cpy.sort(function(a, b) { 
+										return b.sid - a.sid; 
+									})[0].sid + 1
+									: 1,
+								rhs = dat_cpy.length != 0
+									? dat_cpy.sort(function(a, b) { 
+										return b.sid - a.sid; 
+									})[0].sid + 1
+									: 1;
+							}
+							else if(type == "Topics") {
+								lhs = inp_cpy.length != 0
+									? inp_cpy.sort(function(a, b) { 
+										return b.tid - a.tid; 
+									})[0].tid + 1
+									: 1,
+								rhs = dat_cpy.length != 0
+									? dat_cpy.sort(function(a, b) { 
+										return b.tid - a.tid; 
+									})[0].tid + 1
+									: 1;
+							}
+							else if(type == "Sections") {
+								lhs = inp_cpy.length != 0
+									? inp_cpy.sort(function(a, b) { 
+										return b.section_id - a.section_id; 
+									})[0].section_id + 1
+									: 1,
+								rhs = dat_cpy.length != 0
+									? dat_cpy.sort(function(a, b) { 
+										return b.section_id - a.section_id; 
+									})[0].section_id + 1
+									: 1;
+							}
+							else if(type == "Examples") {
+								lhs = inp_cpy.length != 0
+									? inp_cpy.sort(function(a, b) { 
+										return b.eid - a.eid; 
+									})[0].eid + 1
+									: 1,
+								rhs = dat_cpy.length != 0
+									? dat_cpy.sort(function(a, b) { 
+										return b.eid - a.eid; 
+									})[0].eid + 1
+									: 1;
+							}
+							addon = Math.max(lhs, rhs);
+							var new_tr = $("<tr>").attr("id",
+									type.toLowerCase() + "_tr_" + addon),
+								new_name = $("<td>").text("New "
+									+ type.substring(0, type.length - 1))
+									.addClass("field")
+									.attr({
+										contentEditable: "true",
+										id: type.toLowerCase() +
+											"_td_" + addon
+									}),
+								new_move = $("<td>").css("text-align", "center")
+									.append($("<a>").attr("id",
+										type.toLowerCase() + "_up_" + addon)
+										.addClass("arrow")
+										.css("cursor", "pointer")
+										.append($("<i>").addClass("material-icons")
+											.text("keyboard_arrow_up")))
+									.append($("<a>").attr("id",
+										type.toLowerCase() + "_down_" + addon)
+										.addClass("arrow")
+										.css("cursor", "pointer")
+										.append($("<i>").addClass("material-icons")
+											.text("keyboard_arrow_down"))),
+								new_approve = $("<td>").css("text-align", "center")
+									.append($("<a>")
+										.css("cursor", "pointer")
+										.attr("id", type.toLowerCase()
+											+ "_check_" + addon)
+										.addClass("approve center")
+										.css("color", "red")
+										.append($("<i>")
+											.addClass("material-icons")
+											.text("check_circle"))),
+								new_delete = $("<td>").css("text-align", "center")
+									.append($("<a>")
+										.css("cursor", "pointer")
+										.attr("id", type.toLowerCase()
+											+ "_delete_" + addon)
+										.addClass("del center")
+										.css("color", "red")
+										.append($("<i>")
+											.addClass("material-icons")
+											.text("cancel"))),
+								new_garbage = $("<td>").css("text-align", "center")
+									.append($("<a>")
+										.css("cursor", "pointer")
+										.attr("id", type.toLowerCase() +
+											"_garbage_" + addon)
+										.addClass("garbage center")
+										.css("color", "red")
+										.append($("<i>")
+											.addClass("material-icons")
+											.text("delete_sweep")));
+							if(data.every(function(elem) {
+								return elem.created == 0
+							})) {
+								$("#sidenav_table_head").find("tr")
+									.append($("<th>").attr("id", "garbage_head")
+										.text("Remove"));
+							}
+							new_tr.append(new_name, new_move,
+								new_approve, new_delete, new_garbage);
+							$("#sidenav_table_body").append(new_tr);
+							data.length == 0 ? order = 1
+								: order = data[data.length - 1].order + 1;
+							if(type == "Subjects") {
+								data.push({
+									sid: addon,
+									clean_name: "New " +
+										type.substring(0, type.length - 1),
+									sname: "Newx20" +
+										type.substring(0, type.length - 1),
+									order: order,
+									topics: [],
+									side_approval: {},
+									del_approval: {},
+									edited: 0,
+									created: 1,
+									status: 0
+								});
+							}
+							else if(type == "Topics") {
+								data.push({
+									tid: addon,
+									sid: container_id,
+									clean_name: "New " +
+										type.substring(0, type.length - 1),
+									tname: "Newx20" +
+										type.substring(0, type.length - 1),
+									order: order,
+									sections: [],
+									side_approval: {},
+									del_approval: {},
+									edited: 0,
+									created: 1,
+									status: 0
+								});
+							}
+							else if(type == "Sections") {
+								data.push({
+									section_id: addon,
+									tid: container_id,
+									clean_name: "New " +
+										type.substring(0, type.length - 1),
+									section_name: "Newx20" +
+										type.substring(0, type.length - 1),
+									order: order,
+									examples: [],
+									side_approval: {},
+									del_approval: {},
+									edited: 0,
+									created: 1,
+									status: 0
+								});
+							}
+							else if(type == "Examples") {
+								data.push({
+									eid: addon,
+									section_id: container_id,
+									clean_name: "New " +
+										type.substring(0, type.length - 1),
+									ename: "Newx20" +
+										type.substring(0, type.length - 1),
+									order: order,
+									side_approval: {},
+									del_approval: {},
+									edited: 0,
+									created: 1,
+									status: 0
+								});
+							}
+							exports.sidenav_modal_links(type, data);
+							exports.sidenav_modal_name_check(data);
+						});
 						exports.sidenav_modal_links(type, data);
-						exports.sidenav_modal_name_check(data);
-					});
-					exports.sidenav_modal_links(type, data);
-					$("#popup_submit").click(function(event) {
-						event.preventDefault();
-						var statement = "";
-						$.get("/api/cms/count/contributors")
-							.done(function(num) {
-							const validation = 
-								Math.ceil(Math.log(parseInt(num)));
-							$("#popup_submit").remove();
-							$("#popup_modal_footer").append($("<a>")
-								.attr("id", "popup_submit")
-								.addClass("modal-close waves-effect waves-blue btn-flat")
-								.text("Ok"));
-							data.forEach(function(iter) {
-								var id = -1,
-									ref = -1,
-									name = "";
-								if(type == "Subjects") {
-									id = iter.sid;
-									name = iter.sname;
-									ref = "undefined";
-								}
-								else if(type == "Topics") {
-									id = iter.tid;
-									name = iter.tname;
-									ref = iter.sid;
-								}
-								else if(type == "Sections") {
-									id = iter.section_id;
-									name = iter.section_name;
-									ref = iter.tid;
-								}
-								else if(type == "Examples") {
-									id = iter.eid;
-									name = iter.ename;
-									ref = iter.section_id;
-								}
-								if(typeof iter.del_approval !="object" &&
-									iter.del_approval.split(",")
-									.length >= validation) {
-									$.post("/api/delete/" +
-										type.toLowerCase().substring(0,
-											type.length - 1) + "/",
-										{param: id})
-									.fail(function(xhr, status, error) {
-										console.log("Deleting the " +
+						$("#popup_submit").click(function(event) {
+							event.preventDefault();
+							var statement = "";
+							$.get("/api/cms/count/contributors")
+								.done(function(num) {
+								const validation = 
+									Math.ceil(Math.log(parseInt(num)));
+								$("#popup_submit").remove();
+								$("#popup_modal_footer").append($("<a>")
+									.attr("id", "popup_submit")
+									.addClass("modal-close waves-effect waves-blue btn-flat")
+									.text("Ok"));
+								data.forEach(function(iter) {
+									var id = -1,
+										ref = -1,
+										name = "";
+									if(type == "Subjects") {
+										id = iter.sid;
+										name = iter.sname;
+										ref = "undefined";
+									}
+									else if(type == "Topics") {
+										id = iter.tid;
+										name = iter.tname;
+										ref = iter.sid;
+									}
+									else if(type == "Sections") {
+										id = iter.section_id;
+										name = iter.section_name;
+										ref = iter.tid;
+									}
+									else if(type == "Examples") {
+										id = iter.eid;
+										name = iter.ename;
+										ref = iter.section_id;
+									}
+									if(typeof iter.del_approval !="object" &&
+										iter.del_approval.split(",")
+										.length >= validation) {
+										$.post("/api/delete/" +
 											type.toLowerCase().substring(0,
-												type.length - 1) +
-											" with id " + id +
-											" failed with the error: " +
-											error);
-									});
-								}
-								else {
-									if(typeof iter.del_approval == "object" ||
-										iter.del_approval == "") {
-										iter.del_approval = "0";
-									}
-									if(typeof iter.side_approval == "object" ||
-										iter.side_approval == "") {
-										iter.side_approval = "0";
-									}
-									var obj = {
-										param: id,
-										ref: ref,
-										name: name,
-										order: iter.order,
-										title: "undefined",
-										content: "undefined",
-										side_approval: iter.side_approval,
-										cms_approval: "undefined",
-										del_approval: iter.del_approval,
-										title_cms: "undefined",
-										content_cms: "undefined"
-									};
-									if(iter.status == 0 && typeof
-										iter.side_approval !== "object") {
-										iter.side_approval != "0" &&
-											iter.side_approval.split(",").length 
-												>= validation
-											? obj.status = 1 : obj.status = 0;
+												type.length - 1) + "/",
+											{param: id})
+										.fail(function(xhr, status, error) {
+											console.log("Deleting the " +
+												type.toLowerCase().substring(0,
+													type.length - 1) +
+												" with id " + id +
+												" failed with the error: " +
+												error);
+										});
 									}
 									else {
-										obj.status = 1;
-									}
-									if(iter.created == 1) {
-										statement = "/api/add/";
-										if(type == "Subjects") {
-											statement += "subject/";
+										if(typeof iter.del_approval == "object" ||
+											iter.del_approval == "") {
+											iter.del_approval = "0";
 										}
-										else if(type == "Topics") {
-											statement += "topic/";
+										if(typeof iter.side_approval == "object" ||
+											iter.side_approval == "") {
+											iter.side_approval = "0";
 										}
-										else if(type == "Sections") {
-											statement += "section/";
+										var obj = {
+											param: id,
+											ref: ref,
+											name: name,
+											order: iter.order,
+											title: "undefined",
+											content: "undefined",
+											side_approval: iter.side_approval,
+											cms_approval: "undefined",
+											del_approval: iter.del_approval,
+											title_cms: "undefined",
+											content_cms: "undefined"
+										};
+										if(iter.status == 0 && typeof
+											iter.side_approval !== "object") {
+											iter.side_approval != "0" &&
+												iter.side_approval.split(",").length 
+													>= validation
+												? obj.status = 1 : obj.status = 0;
 										}
-										else if(type == "Examples") {
-											statement += "example/";
+										else {
+											obj.status = 1;
 										}
-										$.post(statement, obj)
-											.fail(function() {
-											$("#popup_title").text("Database Issue");
+										if(iter.created == 1) {
+											statement = "/api/add/";
 											if(type == "Subjects") {
-												$("#popup_body").text("There was" +
-													" an issue uploading the new" +
-													" subject(s) to the database!");
+												statement += "subject/";
 											}
 											else if(type == "Topics") {
-												$("#popup_body").text("There was" +
-													" an issue uploading the new" +
-													" topic(s) to the database!");
+												statement += "topic/";
 											}
 											else if(type == "Sections") {
-												$("#popup_body").text("There was" +
-													" an issue uploading the new" +
-													" section(s) to the database!");
+												statement += "section/";
 											}
 											else if(type == "Examples") {
-												$("#popup_body").text("There was" +
-													" an issue uploading the new" +
-													" example(s) to the database!");
+												statement += "example/";
 											}
-											$("#popup_exit").remove();
-											$("#popup_add").remove();
-											$("#popup_submit").text("Ok")
-												.click(function(e) {
-													e.preventDefault();
-													location.reload();
-													$(window).scrollTop(0);
-											});
-										}).done(function() {
-											$.post("/api/log/want/" +
-												type.toLowerCase()
-												.substring(0, type.length - 1),
-												{id: id}).done(function(log) {
-												if(log === null) { log = ""; }
-												var now = new Date()
-														.toLocaleString("en-US",
-															{timeZone: "UTC"}),
-													change = "The " + type.toLowerCase()
-														.substring(0, type.length - 1) +
-														" " + iter.clean_name + " was " +
-														"officially created by the " +
-														"contributor " + cookie + ".";
-												if(log != "") {
-													log += "-----";
+											$.post(statement, obj)
+												.fail(function() {
+												$("#popup_title").text("Database Issue");
+												if(type == "Subjects") {
+													$("#popup_body").text("There was" +
+														" an issue uploading the new" +
+														" subject(s) to the database!");
 												}
-												log += now + "_____" + change;
-												if(iter.status == 0 && obj.status == 1) {
-													change = "The " + type.toLowerCase()
-														.substring(0, type.length - 1) +
-														" " + iter.clean_name + " has " +
-														"gained permanent sidenav approval.";
-													log += "-----" + now + "_____" + change;
+												else if(type == "Topics") {
+													$("#popup_body").text("There was" +
+														" an issue uploading the new" +
+														" topic(s) to the database!");
 												}
-												$.post("/api/log/change/" +
+												else if(type == "Sections") {
+													$("#popup_body").text("There was" +
+														" an issue uploading the new" +
+														" section(s) to the database!");
+												}
+												else if(type == "Examples") {
+													$("#popup_body").text("There was" +
+														" an issue uploading the new" +
+														" example(s) to the database!");
+												}
+												$("#popup_exit").remove();
+												$("#popup_add").remove();
+												var popup = $("#popup"),
+													popup_control = $("#popup_control"),
+													overlay = $(".lean-overlay");
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("body").append(popup_control,
+															popup, overlay);
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															location.reload();
+															$(window).scrollTop(0);
+														});
+													}
+												});
+												$("#popup_submit").text("Ok")
+													.click(function(e) {
+														e.preventDefault();
+														location.reload();
+														$(window).scrollTop(0);
+												});
+											}).done(function() {
+												$.post("/api/log/want/" +
 													type.toLowerCase()
-													.substring(0, type.length - 1), {
-														id: id,
-														log: log
+													.substring(0, type.length - 1),
+													{id: id}).done(function(log) {
+													if(log === null) { log = ""; }
+													var now = new Date()
+															.toLocaleString("en-US",
+																{timeZone: "UTC"}),
+														change = "The " + type.toLowerCase()
+															.substring(0, type.length - 1) +
+															" " + iter.clean_name + " was " +
+															"officially created by the " +
+															"contributor " + cookie + ".";
+													if(log != "") {
+														log += "-----";
+													}
+													log += now + "_____" + change;
+													if(iter.status == 0 && obj.status == 1) {
+														change = "The " + type.toLowerCase()
+															.substring(0, type.length - 1) +
+															" " + iter.clean_name + " has " +
+															"gained permanent sidenav approval.";
+														log += "-----" + now + "_____" + change;
+													}
+													$.post("/api/log/change/" +
+														type.toLowerCase()
+														.substring(0, type.length - 1), {
+															id: id,
+															log: log
+													});
 												});
 											});
-										});
-									}
-									if(iter.edited == 1 && iter.created == 0) {
-										statement = "/api/change/";
-										if(type == "Subjects") {
-											statement += "subject/";
 										}
-										else if(type == "Topics") {
-											statement += "topic/";
-										}
-										else if(type == "Sections") {
-											statement += "section/";
-										}
-										else if(type == "Examples") {
-											statement += "example/";
-										}
-										$.post(statement, obj).fail(function() {
-											$("#popup_title").text("Database Issue");
+										if(iter.edited == 1 && iter.created == 0) {
+											statement = "/api/change/";
 											if(type == "Subjects") {
-												$("#popup_body").text("There was an" +
-													" issue uploading the subject" +
-													" changes to the database!");
+												statement += "subject/";
 											}
 											else if(type == "Topics") {
-												$("#popup_body").text("There was an" +
-													" issue uploading the topic" +
-													" changes to the database!");
+												statement += "topic/";
 											}
 											else if(type == "Sections") {
-												$("#popup_body").text("There was an" +
-													" issue uploading the section" +
-													" changes to the database!");
+												statement += "section/";
 											}
 											else if(type == "Examples") {
-												$("#popup_body").text("There was an" +
-													" issue uploading the example" +
-													" changes to the database!");
+												statement += "example/";
 											}
-											$("#popup_exit").remove();
-											$("#popup_add").remove();
-											$("#popup_submit").text("Ok")
-												.click(function(e) {
-													e.preventDefault();
-													location.reload();
-													$(window).scrollTop(0);
-											});
-										}).done(function() {
-											$.post("/api/log/want/" +
-												type.toLowerCase()
-												.substring(0, type.length - 1),
-												{id: id}).done(function(log) {
-												if(log === null) { log = ""; }
-												var now = new Date()
-														.toLocaleString("en-US",
-															{timeZone: "UTC"}),
-													change = "The " + type.toLowerCase()
-														.substring(0, type.length - 1) +
-														" " + iter.clean_name + " had " +
-														"its sidenav information " +
-														"edited by the contributor " +
-														cookie + ".";
-												if(log != "") {
-													log += "-----";
+											$.post(statement, obj).fail(function() {
+												$("#popup_title").text("Database Issue");
+												if(type == "Subjects") {
+													$("#popup_body").text("There was an" +
+														" issue uploading the subject" +
+														" changes to the database!");
 												}
-												log += now + "_____" + change;
-												if(iter.status == 0 && obj.status == 1) {
-													change = "The " + type.toLowerCase()
-														.substring(0, type.length - 1) +
-														" " + iter.clean_name + " has " +
-														"gained permanent sidenav approval.";
-													log += "-----" + now + "_____" + change;
+												else if(type == "Topics") {
+													$("#popup_body").text("There was an" +
+														" issue uploading the topic" +
+														" changes to the database!");
 												}
-												$.post("/api/log/change/" +
+												else if(type == "Sections") {
+													$("#popup_body").text("There was an" +
+														" issue uploading the section" +
+														" changes to the database!");
+												}
+												else if(type == "Examples") {
+													$("#popup_body").text("There was an" +
+														" issue uploading the example" +
+														" changes to the database!");
+												}
+												$("#popup_exit").remove();
+												$("#popup_add").remove();
+												var popup = $("#popup"),
+													popup_control = $("#popup_control"),
+													overlay = $(".lean-overlay");
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("body").append(popup_control,
+															popup, overlay);
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															location.reload();
+															$(window).scrollTop(0);
+														});
+													}
+												});
+												$("#popup_submit").text("Ok")
+													.click(function(e) {
+														e.preventDefault();
+														location.reload();
+														$(window).scrollTop(0);
+												});
+											}).done(function() {
+												$.post("/api/log/want/" +
 													type.toLowerCase()
-													.substring(0, type.length - 1), {
-														id: id,
-														log: log
+													.substring(0, type.length - 1),
+													{id: id}).done(function(log) {
+													if(log === null) { log = ""; }
+													var now = new Date()
+															.toLocaleString("en-US",
+																{timeZone: "UTC"}),
+														change = "The " + type.toLowerCase()
+															.substring(0, type.length - 1) +
+															" " + iter.clean_name + " had " +
+															"its sidenav information " +
+															"edited by the contributor " +
+															cookie + ".";
+													if(log != "") {
+														log += "-----";
+													}
+													log += now + "_____" + change;
+													if(iter.status == 0 && obj.status == 1) {
+														change = "The " + type.toLowerCase()
+															.substring(0, type.length - 1) +
+															" " + iter.clean_name + " has " +
+															"gained permanent sidenav approval.";
+														log += "-----" + now + "_____" + change;
+													}
+													$.post("/api/log/change/" +
+														type.toLowerCase()
+														.substring(0, type.length - 1), {
+															id: id,
+															log: log
+													});
 												});
 											});
+										}
+									}
+								});
+							}).done(function() {
+								$("#popup_title").text("Changes Saved")
+									.css("text-align", "center");
+								$("#popup_body").text("All changes have" +
+									" been saved to the database!");
+								$("#popup_exit").remove();
+								$("#popup_add").remove();
+								var popup = $("#popup"),
+									popup_control = $("#popup_control"),
+									overlay = $(".lean-overlay");
+								$(window).on("resize", function() {
+									if(exports.width_func() >= 992) {
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("body").append(popup_control,
+											popup, overlay);
+										$("#popup_submit").click(function(e) {
+											e.preventDefault();
+											location.reload();
+											$(window).scrollTop(0);
 										});
 									}
-								}
-							});
-						}).done(function() {
-							$("#popup_title").text("Changes Saved")
-								.css("text-align", "center");
-							$("#popup_body").text("All changes have" +
-								" been saved to the database!");
-							$("#popup_exit").remove();
-							$("#popup_add").remove();
-							$("#popup_submit").click(function(e) {
-								e.preventDefault();
-								location.reload();
-								$(window).scrollTop(0);
+								});
+								$("#popup_submit").click(function(e) {
+									e.preventDefault();
+									location.reload();
+									$(window).scrollTop(0);
+								});
 							});
 						});
+					}
+					caller(type, container_id, all, data);
+					$(window).on("resize", function() {
+						if(exports.width_func() >= 992) {
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							$("body").append(popup_control,
+								popup, overlay);
+							caller(type, container_id, all, data);
+						}
 					});
 				});
 			});
@@ -2985,6 +3096,53 @@ define(function() {
 			$("#popup_submit").click(function(e) {
 				e.preventDefault();
 				router.navigate(page, {reload: true});
+			});
+			var popup = $("#popup"),
+				popup_control = $("#popup_control"),
+				overlay = $(".lean-overlay");
+			$(window).on("resize", function() {
+				if(exports.width_func() >= 992) {
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+					popup.css({
+						opacity: "1",
+						transform: "scaleX(1)",
+						top: "10%"
+					});
+					overlay.css("opacity", "2");
+					$("body").append(popup_control,
+						popup, overlay);
+					$("#popup_title").text("Login Issue");
+						if(issue == 0) {
+							$("#popup_body").text("It seems" +
+								" you are not currently signed" + 
+								" into the content management" +
+								" system. Please login first!");
+						}
+						else if(issue == 1) {
+							$("#popup_body").text("Your current" +
+								" session has expired. To" + 
+								" continue using the system" +
+								" please login again!");
+						}
+						else if(issue == 2) {
+							$("#popup_body").text("You are" +
+								" already logged in! Click the" + 
+								" button below to redirect to" +
+								" the content management system.");
+						}
+					if($("#popup_modal_footer").children().length == 0) {
+						$("#popup_modal_footer").append($("<a>")
+							.addClass("modal-close waves-effect waves-blue btn-flat")
+							.attr("id", "popup_submit")
+							.text("Ok"));
+					}
+					$("#popup_submit").click(function(e) {
+						e.preventDefault();
+						router.navigate(page, {reload: true});
+					});
+				}
 			});
 		});
 	};
@@ -4164,6 +4322,30 @@ define(function() {
 				" to leave a page with unsaved" +
 				" changes!");
 			$("#popup_control").click();
+			var popup = $("#popup"),
+				popup_control = $("#popup_control"),
+				overlay = $(".lean-overlay");
+			$(window).on("resize", function() {
+				if(exports.width_func() >= 992) {
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+					$("body").append(popup_control,
+						popup, overlay);
+					$("#popup_exit").click(function(e) {
+						e.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+					});
+					$("#popup_submit").click(function(e) {
+						e.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+					});
+				}
+			});
 			$("#popup_exit").click(function(e) {
 				e.preventDefault();
 				$(".lean-overlay").remove();
@@ -4240,7 +4422,8 @@ define(function() {
 	*/
 	exports.initial_cms = function(router, callback) {
 		exports.resize_modal(function() {
-			if(exports.read_cookie("contributor") == "") {
+			if(exports.read_cookie("contributor") == "" &&
+				exports.width_func() >= 992) {
 				exports.session_modal(router, "login", 0);
 			}
 			else {
@@ -5221,6 +5404,24 @@ define(function() {
 								$("#popup_body").append(table);
 							}
 							$("#popup_control").click();
+							var popup = $("#popup"),
+								popup_control = $("#popup_control"),
+								overlay = $(".lean-overlay");
+							$(window).on("resize", function() {
+								if(exports.width_func() >= 992) {
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									$("body").append(popup_control,
+										popup, overlay);
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+									});
+								}
+							});
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
 								$(".lean-overlay").remove();
@@ -6192,11 +6393,29 @@ define(function() {
 									" content changes to the" +
 									" database!");
 								$("#popup_control").click();
+								var popup = $("#popup"),
+									popup_control = $("#popup_control"),
+									overlay = $(".lean-overlay");
 								$("#popup_submit").click(function(e) {
 									e.preventDefault();
 									$(".lean-overlay").remove();
 									$("#popup").remove();
 									$("#popup_control").remove();
+								});
+								$(window).on("resize", function() {
+									if(exports.width_func() >= 992) {
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("body").append(popup_control,
+											popup, overlay);
+										$("#popup_submit").click(function(e) {
+											e.preventDefault();
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+										});
+									}
 								});
 							}).done(function() {
 								$.post("/api/log/want/" + page,
@@ -6205,7 +6424,7 @@ define(function() {
 									if(titleComparison !==
 											cont[0].join("-----")
 										|| contentComparison !==
-											cont[1].join("-----")
+											decodeURIComponent(cont[1].join("-----"))
 										|| (headingComparison !==
 											undefined &&
 											headingComparison !==
@@ -6240,10 +6459,28 @@ define(function() {
 										" to the content have been" +
 										" saved to the database!");
 									$("#popup_control").click();
+									var popup = $("#popup"),
+										popup_control = $("#popup_control"),
+										overlay = $(".lean-overlay");
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
 										location.reload();
 										$(window).scrollTop(0);
+									});
+									$(window).on("resize", function() {
+										if(exports.width_func() >= 992) {
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											$("body").append(popup_control,
+												popup, overlay);
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+											});
+										}
 									});
 								});
 							});
@@ -6361,7 +6598,7 @@ define(function() {
 							if(id == "logo_cms") {
 								if(titleComparison === cont[0].join("-----")
 									&& contentComparison ===
-									cont[1].join("-----")) {
+									decodeURIComponent(cont[1].join("-----"))) {
 									if(headingComparison !== undefined) {
 										if(headingComparison ===
 											cont[2].join("-----")) {
