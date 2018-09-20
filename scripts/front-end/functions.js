@@ -435,6 +435,143 @@ define(function() {
 			.append(table);
 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, "#popup"]);
 		$("#popup_control").click();
+		var popup = $("#popup")[0].outerHTML,
+			popup_control = $("#popup_control")[0].outerHTML,
+			overlay = $(".lean-overlay")[0].outerHTML;
+		$(window).on("resize", function() {
+			if(exports.width_func() >= 992) {
+				$(".lean-overlay").remove();
+				$("#popup").remove();
+				$("#popup_control").remove();
+				var controlWrap = $("<div>").html(popup_control),
+					popupWrap = $("<div>").html(popup),
+					overlayWrap = $("<div>").html(overlay);
+				$("body").append(controlWrap.children().first(),
+					popupWrap.children().first(),
+					overlayWrap.children().first());
+				$("#popup").css({
+					opacity: "1",
+					transform: "scaleX(1)",
+					top: "10%"
+				});
+				$(".lean-overlay").css("opacity", "2");
+				$("#popup_submit").click(function(e) {
+					e.preventDefault();
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+				});
+				$("td").click(function(e) {
+					e.preventDefault();
+					var holder = $(this).attr("id")
+						.split("_");
+					if(holder[0] == "subjectContainer") {
+						var obj = subjects.filter(function(elem) {
+								return elem.sid == parseInt(holder[1]);
+							})[0],
+							test = $(this).find(".controller").first();
+						if(test.text() == "add") {
+							test.text("remove");
+							obj.topics.forEach(function(iter) {
+								$("#topicContainer_" + iter.tid +
+									"_" + holder[1]).parent()
+									.show();
+							});
+						}
+						else if(test.text() == "remove") {
+							test.text("add");
+							obj.topics.forEach(function(iter) {
+								$("#topicContainer_" + iter.tid +
+									"_" + holder[1]).parent()
+									.hide();
+								$("#topicContainer_" + iter.tid +
+									"_" + holder[1]).find(".controller")
+									.first().text("add");
+								iter.sections.forEach(function(item) {
+									$("#sectionContainer_" + item.section_id +
+										"_" + iter.tid + "_" + holder[1]).parent()
+										.hide();
+									$("#sectionContainer_" + item.section_id +
+										"_" + iter.tid + "_" + holder[1])
+										.find(".controller").first().text("add");
+									item.examples.forEach(function(tmp) {
+										$("#exampleContainer_" + tmp.eid +
+											"_" + item.section_id +
+											"_" + iter.tid + "_" +
+											holder[1]).parent()
+											.hide();
+									});
+								});
+							});
+						}
+					}
+					else if(holder[0] == "topicContainer") {
+						var obj = subjects.filter(function(elem) {
+								return elem.sid == parseInt(holder[2]);
+							})[0].topics.filter(function(elem) {
+								return elem.tid == parseInt(holder[1]);
+							})[0],
+							test = $(this).find(".controller").first();
+						if(test.text() == "add") {
+							test.text("remove");
+							obj.sections.forEach(function(iter) {
+								$("#sectionContainer_" + iter.section_id +
+									"_" + holder[1] + "_" + holder[2]).parent()
+									.show();
+							});
+						}
+						else if(test.text() == "remove") {
+							test.text("add");
+							obj.sections.forEach(function(item) {
+								$("#sectionContainer_" + item.section_id +
+									"_" + holder[1] + "_" + holder[2]).parent()
+									.hide();
+								$("#sectionContainer_" + item.section_id +
+									"_" + holder[1] + "_" + holder[2])
+									.find(".controller").first().text("add");
+								item.examples.forEach(function(tmp) {
+									$("#exampleContainer_" + tmp.eid + "_" +
+										item.section_id + "_" + holder[1] +
+										"_" + holder[2]).parent()
+										.hide();
+								});
+							});
+						}
+					}
+					else if(holder[0] == "sectionContainer") {
+						var obj = subjects.filter(function(elem) {
+								return elem.sid == parseInt(holder[3]);
+							})[0].topics.filter(function(elem) {
+								return elem.tid == parseInt(holder[2]);
+							})[0].sections.filter(function(elem) {
+								return elem.section_id == parseInt(holder[1]);
+							})[0],
+							test = $(this).find(".controller").first();
+						if(test.text() == "add") {
+							test.text("remove");
+							obj.examples.forEach(function(iter) {
+								$("#exampleContainer_" + iter.eid +
+									"_" + holder[1] + "_" + holder[2] +
+									"_" + holder[3]).parent()
+									.show();
+							});
+						}
+						else if(test.text() == "remove") {
+							test.text("add");
+							obj.examples.forEach(function(tmp) {
+								$("#exampleContainer_" + tmp.eid + "_" +
+									holder[1] + "_" + holder[2] +
+									"_" + holder[3]).parent()
+									.hide();
+							});
+						}
+					}
+					popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
+				});
+			}
+		});
 		$("#popup_submit").click(function(e) {
 			e.preventDefault();
 			$(".lean-overlay").remove();
@@ -546,6 +683,9 @@ define(function() {
 					});
 				}
 			}
+			popup = $("#popup")[0].outerHTML,
+			popup_control = $("#popup_control")[0].outerHTML,
+			overlay = $(".lean-overlay")[0].outerHTML;
 		});
 	};
 
@@ -561,6 +701,7 @@ define(function() {
 	*/
 	exports.resize_modal = function(callback) {
 		var counter = 0;
+		console.log(callback);
 		function message() {
 			if($("#popup").length == 0) {
 				$.get("/pages/dist/modal-min.html").done(function(content) {
@@ -581,49 +722,40 @@ define(function() {
 				});
 			}
 			else {
-				var popup = $("#popup"),
-					popup_control = $("#popup_control"),
-					overlay = $(".lean-overlay");
+				var popupSidenav = $("#popup"),
+					popup_controlSidenav = $("#popup_control"),
+					overlaySidenav = $(".lean-overlay");
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
-					$("body").append(popup_control,
-						popup, overlay);
-					$("#popup_submit").remove();
+					$("body").append(popup_controlSidenav,
+						popupSidenav, overlaySidenav);
+					popupSidenav.find(".modal-content").first().children().each(function(index) {
+						if(index > 1) {
+							$(this).remove();
+						}
+					});
 					$("#popup_title").text("Size Issue");
+					$("#popup_modal_footer").empty();
 					var statement = "By design the content management system cannot" +
 						" operate on a screen less than 992 pixels. Please increase" +
 						" the width of the browser to continue working."
-					$("#popup_body").text(statement);
-					// $(".modal-trigger").leanModal({
-					// 	dismissible: false,
-					// 	opacity: 2,
-					// 	inDuration: 1000,
-					// 	outDuration: 1000
-					// });
+					$("#popup_body").empty().text(statement);
+					$("#popup").css({
+						opacity: "1",
+						transform: "scaleX(1)",
+						top: "10%"
+					});
+					$(".lean-overlay").css("opacity", "2");
 			}
-			// $(".lean-overlay").remove();
-			// $("#popup").remove();
-			// $("#popup_control").remove();
-			// $.get("/pages/dist/modal-min.html").done(function(content) {
-			// 	$("body").append(content);
-			// 	$(".modal-trigger").leanModal({
-			// 		dismissible: false,
-			// 		opacity: 2,
-			// 		inDuration: 1000,
-			// 		outDuration: 1000
-			// 	});
-			// 	$("#popup_submit").remove();
-			// 	$("#popup_title").text("Size Issue");
-			// 	var statement = "By design the content management system cannot" +
-			// 		" operate on a screen less than 992 pixels. Please increase" +
-			// 		" the width of the browser to continue working."
-			// 	$("#popup_body").text(statement);
-			// 	$("#popup_control").click();
-			// });
 		};
 		if(exports.width_func() < 992) { message(); }
-		else { callback(); counter++; }
+		else {
+			if(callback !== undefined) {
+				callback();
+			}
+			counter++;
+		}
 		$(window).on("resize", function() {
 			$("body").css({width: "100%", overflow: "auto"});
 			$("#bar").css("width", $("#latex").width());
@@ -634,15 +766,16 @@ define(function() {
 				$(".lean-overlay").remove();
 				$("#popup").remove();
 				$("#popup_control").remove();
-				callback();
+				if(callback !== undefined) {
+					callback();
+				}
 				counter++;
 			}
-			// else {
-			// 	$(".lean-overlay").remove();
-			// 	$("#popup").remove();
-			// 	$("#popup_control").remove();
-			// 	if(counter == 0) { counter++; callback(); }
-			// }
+			else {
+				$(".lean-overlay").remove();
+				$("#popup").remove();
+				$("#popup_control").remove();
+			}
 		});
 	};
 
@@ -822,6 +955,9 @@ define(function() {
 						$("#delete_" + holder[1]).css("color", "red");
 						list[obj_ref].deleted = 0;
 					}
+					popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
 				});
 				$(".rank-up-contributor").on("click", function(e) {
 					e.preventDefault();
@@ -839,6 +975,9 @@ define(function() {
 						$("#rank_up_" + holder[2]).css("color", "red");
 						list[obj_ref].rank_up = 0;
 					}
+					popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
 				});
 				$(".rank-down-contributor").on("click", function(e) {
 					e.preventDefault();
@@ -856,6 +995,9 @@ define(function() {
 						$("#rank_down_" + holder[2]).css("color", "red");
 						list[obj_ref].rank_down = 0;
 					}
+					popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
 				});
 				$("#popup_submit").text("Save Changes").click(function(e) {
 					e.preventDefault();
@@ -866,6 +1008,11 @@ define(function() {
 							$.post("/api/cms/contributor/remove/",
 								{email: iter.email})
 								.fail(function() {
+								$("#popup").find(".modal-content").first().children().each(function(index) {
+									if(index > 1) {
+										$(this).remove();
+									}
+								});
 								$("#popup_title").text("Database Issue");
 								$("#popup_body").text("There was an issue" +
 									" deleting contributor(s) from the" +
@@ -884,6 +1031,11 @@ define(function() {
 							$.post("/api/cms/committee/add",
 								{email: iter.email})
 								.fail(function() {
+								$("#popup").find(".modal-content").first().children().each(function(index) {
+									if(index > 1) {
+										$(this).remove();
+									}
+								});
 								$("#popup_title").text("Database Issue");
 								$("#popup_body").text("There was an issue" +
 									" ranking up contributo(r) in the" +
@@ -902,6 +1054,11 @@ define(function() {
 							$.post("/api/cms/committee/remove",
 								{email: iter.email})
 								.fail(function() {
+								$("#popup").find(".modal-content").first().children().each(function(index) {
+									if(index > 1) {
+										$(this).remove();
+									}
+								});
 								$("#popup_title").text("Database Issue");
 								$("#popup_body").text("There was an issue" +
 									" ranking down contributo(r) in the" +
@@ -917,6 +1074,11 @@ define(function() {
 							});
 						}
 					});
+					$("#popup").find(".modal-content").first().children().each(function(index) {
+						if(index > 1) {
+							$(this).remove();
+						}
+					});
 					$("#popup_title").text("Changes Saved")
 						.css("text-align", "center");
 					$("#popup_body").text("All contributor changes have" +
@@ -928,6 +1090,185 @@ define(function() {
 						$("#popup_control").remove();
 						$(window).scrollTop(0);
 					});
+				});
+				var popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
+				$(window).on("resize", function() {
+					if(exports.width_func() >= 992) {
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						var controlWrap = $("<div>").html(popup_control),
+							popupWrap = $("<div>").html(popup),
+							overlayWrap = $("<div>").html(overlay);
+						$("body").append(controlWrap.children().first(),
+							popupWrap.children().first(),
+							overlayWrap.children().first());
+						$("#popup").css({
+							opacity: "1",
+							transform: "scaleX(1)",
+							top: "10%"
+						});
+						$(".lean-overlay").css("opacity", "2");
+						$("#popup_exit").click(function(e) {
+							e.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+						});
+						$(".delete-contributor").on("click", function(e) {
+							e.preventDefault();
+							var holder = $(this).attr("id").split("_"),
+								obj_ref = list.findIndex(function(iter) { 
+									return iter.num == holder[1];
+								});
+							if(exports.rgba_to_hex($("#delete_" +
+								holder[1]).css("color")) == "#ff0000") {
+								$("#delete_" + holder[1]).css("color", "green");
+								list[obj_ref].deleted = 1;
+							}
+							else {
+								$("#delete_" + holder[1]).css("color", "red");
+								list[obj_ref].deleted = 0;
+							}
+							popup = $("#popup")[0].outerHTML,
+							popup_control = $("#popup_control")[0].outerHTML,
+							overlay = $(".lean-overlay")[0].outerHTML;
+						});
+						$(".rank-up-contributor").on("click", function(e) {
+							e.preventDefault();
+							var holder = $(this).attr("id").split("_"),
+								obj_ref = list.findIndex(function(iter) { 
+									return iter.num == holder[2];
+								});
+							if(exports.rgba_to_hex($("#rank_up_" +
+								holder[2]).css("color")) == "#ff0000") {
+								$("#rank_up_" + holder[2]).css("color", "green");
+								$("#rank_down_" + holder[2]).css("color", "red");
+								list[obj_ref].rank_up = 1;
+							}
+							else {
+								$("#rank_up_" + holder[2]).css("color", "red");
+								list[obj_ref].rank_up = 0;
+							}
+							popup = $("#popup")[0].outerHTML,
+							popup_control = $("#popup_control")[0].outerHTML,
+							overlay = $(".lean-overlay")[0].outerHTML;
+						});
+						$(".rank-down-contributor").on("click", function(e) {
+							e.preventDefault();
+							var holder = $(this).attr("id").split("_"),
+								obj_ref = list.findIndex(function(iter) { 
+									return iter.num == holder[2];
+								});
+							if(exports.rgba_to_hex($("#rank_down_" +
+								holder[2]).css("color")) == "#ff0000") {
+								$("#rank_down_" + holder[2]).css("color", "green");
+								$("#rank_up_" + holder[2]).css("color", "red");
+								list[obj_ref].rank_down = 1;
+							}
+							else {
+								$("#rank_down_" + holder[2]).css("color", "red");
+								list[obj_ref].rank_down = 0;
+							}
+							popup = $("#popup")[0].outerHTML,
+							popup_control = $("#popup_control")[0].outerHTML,
+							overlay = $(".lean-overlay")[0].outerHTML;
+						});
+						$("#popup_submit").text("Save Changes").click(function(e) {
+							e.preventDefault();
+							$("#popup_exit").remove();
+							$("#popup_submit").addClass("modal-close");
+							list.forEach(function(iter) {
+								if(iter.deleted == 1) {
+									$.post("/api/cms/contributor/remove/",
+										{email: iter.email})
+										.fail(function() {
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
+										$("#popup_title").text("Database Issue");
+										$("#popup_body").text("There was an issue" +
+											" deleting contributor(s) from the" +
+											" database!");
+										$("#popup_submit").text("Ok")
+											.click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$(window).scrollTop(0);
+										});
+									});
+								}
+								else if(iter.deleted == 0 && iter.rank_up == 1) {
+									$.post("/api/cms/committee/add",
+										{email: iter.email})
+										.fail(function() {
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
+										$("#popup_title").text("Database Issue");
+										$("#popup_body").text("There was an issue" +
+											" ranking up contributo(r) in the" +
+											" database!");
+										$("#popup_submit").text("Ok")
+											.click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$(window).scrollTop(0);
+										});
+									});
+								}
+								else if(iter.deleted == 0 && iter.rank_down == 1) {
+									$.post("/api/cms/committee/remove",
+										{email: iter.email})
+										.fail(function() {
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
+										$("#popup_title").text("Database Issue");
+										$("#popup_body").text("There was an issue" +
+											" ranking down contributo(r) in the" +
+											" database!");
+										$("#popup_submit").text("Ok")
+											.click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$(window).scrollTop(0);
+										});
+									});
+								}
+							});
+							$("#popup").find(".modal-content").first().children().each(function(index) {
+								if(index > 1) {
+									$(this).remove();
+								}
+							});
+							$("#popup_title").text("Changes Saved")
+								.css("text-align", "center");
+							$("#popup_body").text("All contributor changes have" +
+								" been saved to the database!");
+							$("#popup_submit").text("Ok").click(function(e) {
+								e.preventDefault();
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+								$(window).scrollTop(0);
+							});
+						});
+					}
 				});
 			});
 		});
@@ -1305,6 +1646,359 @@ define(function() {
 					}
 				});
 				$("#popup_control").click();
+				var popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
+				$(window).on("resize", function() {
+					if(exports.width_func() >= 992) {
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						var controlWrap = $("<div>").html(popup_control),
+							popupWrap = $("<div>").html(popup),
+							overlayWrap = $("<div>").html(overlay);
+						$("body").append(controlWrap.children().first(),
+							popupWrap.children().first(),
+							overlayWrap.children().first());
+						$("#popup").css({
+							opacity: "1",
+							transform: "scaleX(1)",
+							top: "10%"
+						});
+						$(".lean-overlay").css("opacity", "2");
+						$("#popup_exit").click(function(e) {
+							e.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+						});
+						$(".del-contributor").on("click", function(e) {
+							e.preventDefault();
+							var holder = $(this).attr("id").split("_"),
+								obj_ref = list.findIndex(function(iter) { 
+									return iter.num == holder[1];
+								});
+							if(exports.rgba_to_hex($("#delete_" +
+								holder[1]).css("color")) == "#ff0000") {
+								$("#delete_" + holder[1]).css("color", "green");
+								if(list[obj_ref].del == null) { 
+									list[obj_ref].del =
+										exports.read_cookie("contributor"); 
+								}
+								else {
+									list[obj_ref].del += "," +
+										exports.read_cookie("contributor");
+								}
+							}
+							else {
+								$("#delete_" + holder[1]).css("color", "red");
+								if(list[obj_ref].del != null) { 
+									var start = list[obj_ref].del
+										.indexOf(exports.read_cookie("contributor")); 
+									if(start != -1) {
+										if(start != 0) {
+											list[obj_ref].del = 
+												list[obj_ref].del.substring(0, start) + 
+												list[obj_ref].del.substring(start +
+													exports.read_cookie(
+														"contributor").length);
+										}
+										else {
+											list[obj_ref].del = list[obj_ref].del
+												.substring(exports.read_cookie(
+													"contributor").length + 1);
+										}
+										if(list[obj_ref].del == "") {
+											list[obj_ref].del = null;
+										}
+									}
+								}
+							}
+							list[obj_ref].edited = 1;
+							popup = $("#popup")[0].outerHTML,
+							popup_control = $("#popup_control")[0].outerHTML,
+							overlay = $(".lean-overlay")[0].outerHTML;
+						});
+						$(".approve-contributor").on("click", function(e) {
+							e.preventDefault();
+							var holder = $(this).attr("id").split("_"),
+								obj_ref = list.findIndex(function(iter) { 
+									return iter.num == holder[1];
+								});
+							if(exports.rgba_to_hex($("#check_" +
+								holder[1]).css("color")) == "#ff0000") {
+								$("#check_" + holder[1]).css("color", "green");
+								if(list[obj_ref].approval == null) { 
+									list[obj_ref].approval =
+										exports.read_cookie("contributor"); 
+								}
+								else {
+									list[obj_ref].approval += "," +
+										exports.read_cookie("contributor");
+									}
+							}
+							else {
+								$("#check_" + holder[1]).css("color", "red");
+								if(list[obj_ref].approval != null) { 
+									var start = list[obj_ref].approval
+										.indexOf(exports.read_cookie("contributor"));
+									if(start != -1) {
+										if(start != 0) {
+											list[obj_ref].approval =
+												list[obj_ref].approval
+													.substring(0, start) + 
+												list[obj_ref].approval
+													.substring(start +
+														exports.read_cookie(
+															"contributor").length);
+										}
+										else {
+											list[obj_ref].approval =
+												list[obj_ref].approval
+													.substring(exports.read_cookie(
+														"contributor").length + 1);
+										}
+										if(list[obj_ref].approval == "") {
+											list[obj_ref].approval = null;
+										}
+									}
+								}
+							}
+							list[obj_ref].edited = 1;
+							popup = $("#popup")[0].outerHTML,
+							popup_control = $("#popup_control")[0].outerHTML,
+							overlay = $(".lean-overlay")[0].outerHTML;
+						});
+						$("#popup_submit").text("Save Changes").click(function(e) {
+							e.preventDefault();
+							$("#popup_exit").remove();
+							$("#popup_submit").addClass("modal-close");
+							$.get("/api/cms/count/committee").done(function(num) {
+								const validation = Math.ceil((parseInt(num) + 1) / 2);
+								var statement = "";
+								list.forEach(function(iter) {
+									if(iter.del != null &&
+										iter.del.split(",").length >= validation) {
+										$.post("/api/cms/contributor/remove/",
+											{email: iter.email})
+											.fail(function() {
+											$("#popup").find(".modal-content").first().children().each(function(index) {
+												if(index > 1) {
+													$(this).remove();
+												}
+											});
+											$("#popup_title").text("Database Issue");
+											$("#popup_body").text("There was an" +
+												" issue deleting a contributor" +
+												" from the database!");
+											var popup = $("#popup")[0].outerHTML,
+												popup_control = $("#popup_control")[0].outerHTML,
+												overlay = $(".lean-overlay")[0].outerHTML;
+											$(window).on("resize", function() {
+												if(exports.width_func() >= 992) {
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													var controlWrap = $("<div>").html(popup_control),
+														popupWrap = $("<div>").html(popup),
+														overlayWrap = $("<div>").html(overlay);
+													$("body").append(controlWrap.children().first(),
+														popupWrap.children().first(),
+														overlayWrap.children().first());
+													$("#popup").css({
+														opacity: "1",
+														transform: "scaleX(1)",
+														top: "10%"
+													});
+													$(".lean-overlay").css("opacity", "2");
+													$("#popup_submit").text("Ok")
+														.click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$(window).scrollTop(0);
+													});
+												}
+											});
+											$("#popup_submit").text("Ok")
+												.click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$(window).scrollTop(0);
+											});
+										});
+									}
+									else if(iter.approval != null &&
+										iter.approval.split(",").length >= validation) {
+										$.post("/api/cms/contributor/change/status/",
+											{email: iter.email, status: 1})
+											.fail(function() {
+											$("#popup").find(".modal-content").first().children().each(function(index) {
+												if(index > 1) {
+													$(this).remove();
+												}
+											});
+											$("#popup_title").text("Database Issue");
+											$("#popup_body").text("There was an" +
+												" issue changing the status" +
+												" of a contributor in the database!");
+											var popup = $("#popup")[0].outerHTML,
+												popup_control = $("#popup_control")[0].outerHTML,
+												overlay = $(".lean-overlay")[0].outerHTML;
+											$(window).on("resize", function() {
+												if(exports.width_func() >= 992) {
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													var controlWrap = $("<div>").html(popup_control),
+														popupWrap = $("<div>").html(popup),
+														overlayWrap = $("<div>").html(overlay);
+													$("body").append(controlWrap.children().first(),
+														popupWrap.children().first(),
+														overlayWrap.children().first());
+													$("#popup").css({
+														opacity: "1",
+														transform: "scaleX(1)",
+														top: "10%"
+													});
+													$(".lean-overlay").css("opacity", "2");
+													$("#popup_submit").text("Ok")
+														.click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$(window).scrollTop(0);
+													});
+												}
+											});
+											$("#popup_submit").text("Ok")
+												.click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$(window).scrollTop(0);
+											});
+										});
+									}
+									else {
+										if(iter.edited == 1) {
+											$.post("/api/cms/contributor/change" +
+												"/approval/", {
+												email: iter.email,
+												approval: iter.approval == null
+													? "0" : iter.approval,
+												del: iter.del == null
+													? "0" : iter.del
+											}).fail(function() {
+												$("#popup").find(".modal-content").first().children().each(function(index) {
+													if(index > 1) {
+														$(this).remove();
+													}
+												});
+												$("#popup_title").text("Database Issue");
+												$("#popup_body").text("There was an" +
+													" issue uploading the" +
+													" contributor changes to" +
+													" the database!");
+												var popup = $("#popup")[0].outerHTML,
+													popup_control = $("#popup_control")[0].outerHTML,
+													overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").text("Ok")
+															.click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$(window).scrollTop(0);
+														});
+													}
+												});
+												$("#popup_submit").text("Ok")
+													.click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$(window).scrollTop(0);
+												});
+											});
+										}
+									}
+								});
+								$("#popup").find(".modal-content").first().children().each(function(index) {
+									if(index > 1) {
+										$(this).remove();
+									}
+								});
+								$("#popup_title").text("Changes Saved")
+									.css("text-align", "center");
+								$("#popup_body").text("All contributor" +
+									" changes have been saved" +
+									" to the database!");
+								var popup = $("#popup")[0].outerHTML,
+									popup_control = $("#popup_control")[0].outerHTML,
+									overlay = $(".lean-overlay")[0].outerHTML;
+								$(window).on("resize", function() {
+									if(exports.width_func() >= 992) {
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										var controlWrap = $("<div>").html(popup_control),
+											popupWrap = $("<div>").html(popup),
+											overlayWrap = $("<div>").html(overlay);
+										$("body").append(controlWrap.children().first(),
+											popupWrap.children().first(),
+											overlayWrap.children().first());
+										$("#popup").css({
+											opacity: "1",
+											transform: "scaleX(1)",
+											top: "10%"
+										});
+										$(".lean-overlay").css("opacity", "2");
+										$("#popup_submit").text("Ok")
+											.click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$(window).scrollTop(0);
+										});
+									}
+								});
+								$("#popup_submit").text("Ok")
+									.click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$(window).scrollTop(0);
+								});
+							});
+						});
+					}
+				});
 				$("#popup_exit").click(function(e) {
 					e.preventDefault();
 					$(".lean-overlay").remove();
@@ -1354,6 +2048,9 @@ define(function() {
 						}
 					}
 					list[obj_ref].edited = 1;
+					popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
 				});
 				$(".approve-contributor").on("click", function(e) {
 					e.preventDefault();
@@ -1401,6 +2098,9 @@ define(function() {
 						}
 					}
 					list[obj_ref].edited = 1;
+					popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
 				});
 				$("#popup_submit").text("Save Changes").click(function(e) {
 					e.preventDefault();
@@ -1415,10 +2115,45 @@ define(function() {
 								$.post("/api/cms/contributor/remove/",
 									{email: iter.email})
 									.fail(function() {
+									$("#popup").find(".modal-content").first().children().each(function(index) {
+										if(index > 1) {
+											$(this).remove();
+										}
+									});
 									$("#popup_title").text("Database Issue");
 									$("#popup_body").text("There was an" +
 										" issue deleting a contributor" +
 										" from the database!");
+									var popup = $("#popup")[0].outerHTML,
+										popup_control = $("#popup_control")[0].outerHTML,
+										overlay = $(".lean-overlay")[0].outerHTML;
+									$(window).on("resize", function() {
+										if(exports.width_func() >= 992) {
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											var controlWrap = $("<div>").html(popup_control),
+												popupWrap = $("<div>").html(popup),
+												overlayWrap = $("<div>").html(overlay);
+											$("body").append(controlWrap.children().first(),
+												popupWrap.children().first(),
+												overlayWrap.children().first());
+											$("#popup").css({
+												opacity: "1",
+												transform: "scaleX(1)",
+												top: "10%"
+											});
+											$(".lean-overlay").css("opacity", "2");
+											$("#popup_submit").text("Ok")
+												.click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$(window).scrollTop(0);
+											});
+										}
+									});
 									$("#popup_submit").text("Ok")
 										.click(function(e) {
 											e.preventDefault();
@@ -1434,10 +2169,45 @@ define(function() {
 								$.post("/api/cms/contributor/change/status/",
 									{email: iter.email, status: 1})
 									.fail(function() {
+									$("#popup").find(".modal-content").first().children().each(function(index) {
+										if(index > 1) {
+											$(this).remove();
+										}
+									});
 									$("#popup_title").text("Database Issue");
 									$("#popup_body").text("There was an" +
 										" issue changing the status" +
 										" of a contributor in the database!");
+									var popup = $("#popup")[0].outerHTML,
+										popup_control = $("#popup_control")[0].outerHTML,
+										overlay = $(".lean-overlay")[0].outerHTML;
+									$(window).on("resize", function() {
+										if(exports.width_func() >= 992) {
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											var controlWrap = $("<div>").html(popup_control),
+												popupWrap = $("<div>").html(popup),
+												overlayWrap = $("<div>").html(overlay);
+											$("body").append(controlWrap.children().first(),
+												popupWrap.children().first(),
+												overlayWrap.children().first());
+											$("#popup").css({
+												opacity: "1",
+												transform: "scaleX(1)",
+												top: "10%"
+											});
+											$(".lean-overlay").css("opacity", "2");
+											$("#popup_submit").text("Ok")
+												.click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$(window).scrollTop(0);
+											});
+										}
+									});
 									$("#popup_submit").text("Ok")
 										.click(function(e) {
 											e.preventDefault();
@@ -1458,11 +2228,46 @@ define(function() {
 										del: iter.del == null
 											? "0" : iter.del
 									}).fail(function() {
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
 										$("#popup_title").text("Database Issue");
 										$("#popup_body").text("There was an" +
 											" issue uploading the" +
 											" contributor changes to" +
 											" the database!");
+										var popup = $("#popup")[0].outerHTML,
+											popup_control = $("#popup_control")[0].outerHTML,
+											overlay = $(".lean-overlay")[0].outerHTML;
+										$(window).on("resize", function() {
+											if(exports.width_func() >= 992) {
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												var controlWrap = $("<div>").html(popup_control),
+													popupWrap = $("<div>").html(popup),
+													overlayWrap = $("<div>").html(overlay);
+												$("body").append(controlWrap.children().first(),
+													popupWrap.children().first(),
+													overlayWrap.children().first());
+												$("#popup").css({
+													opacity: "1",
+													transform: "scaleX(1)",
+													top: "10%"
+												});
+												$(".lean-overlay").css("opacity", "2");
+												$("#popup_submit").text("Ok")
+													.click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$(window).scrollTop(0);
+												});
+											}
+										});
 										$("#popup_submit").text("Ok")
 											.click(function(e) {
 												e.preventDefault();
@@ -1475,11 +2280,46 @@ define(function() {
 								}
 							}
 						});
+						$("#popup").find(".modal-content").first().children().each(function(index) {
+							if(index > 1) {
+								$(this).remove();
+							}
+						});
 						$("#popup_title").text("Changes Saved")
 							.css("text-align", "center");
 						$("#popup_body").text("All contributor" +
 							" changes have been saved" +
 							" to the database!");
+						var popup = $("#popup")[0].outerHTML,
+							popup_control = $("#popup_control")[0].outerHTML,
+							overlay = $(".lean-overlay")[0].outerHTML;
+						$(window).on("resize", function() {
+							if(exports.width_func() >= 992) {
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+								var controlWrap = $("<div>").html(popup_control),
+									popupWrap = $("<div>").html(popup),
+									overlayWrap = $("<div>").html(overlay);
+								$("body").append(controlWrap.children().first(),
+									popupWrap.children().first(),
+									overlayWrap.children().first());
+								$("#popup").css({
+									opacity: "1",
+									transform: "scaleX(1)",
+									top: "10%"
+								});
+								$(".lean-overlay").css("opacity", "2");
+								$("#popup_submit").text("Ok")
+									.click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$(window).scrollTop(0);
+								});
+							}
+						});
 						$("#popup_submit").text("Ok")
 							.click(function(e) {
 								e.preventDefault();
@@ -2067,9 +2907,9 @@ define(function() {
 						outDuration: 1000
 					});
 					$("#popup_control").click();
-					var popup = $("#popup"),
-						popup_control = $("#popup_control"),
-						overlay = $(".lean-overlay");
+					var popup = $("#popup")[0].outerHTML,
+						popup_control = $("#popup_control")[0].outerHTML,
+						overlay = $(".lean-overlay")[0].outerHTML;
 					function caller(type, container_id, all, data) {
 						$("#popup").keypress(function(event) {
 						    if(event.keyCode === 10 || event.keyCode === 13) {
@@ -2553,22 +3393,31 @@ define(function() {
 									}
 								});
 							}).done(function() {
+								$("#popup").find(".modal-content").first().children().each(function(index) {
+									if(index > 1) {
+										$(this).remove();
+									}
+								});
 								$("#popup_title").text("Changes Saved")
 									.css("text-align", "center");
 								$("#popup_body").text("All changes have" +
 									" been saved to the database!");
 								$("#popup_exit").remove();
 								$("#popup_add").remove();
-								var popup = $("#popup"),
-									popup_control = $("#popup_control"),
-									overlay = $(".lean-overlay");
+								var popup = $("#popup")[0].outerHTML,
+									popup_control = $("#popup_control")[0].outerHTML,
+									overlay = $(".lean-overlay")[0].outerHTML;
 								$(window).on("resize", function() {
 									if(exports.width_func() >= 992) {
 										$(".lean-overlay").remove();
 										$("#popup").remove();
 										$("#popup_control").remove();
-										$("body").append(popup_control,
-											popup, overlay);
+										var controlWrap = $("<div>").html(popup_control),
+											popupWrap = $("<div>").html(popup),
+											overlayWrap = $("<div>").html(overlay);
+										$("body").append(controlWrap.children().first(),
+											popupWrap.children().first(),
+											overlayWrap.children().first());
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
 											location.reload();
@@ -2590,8 +3439,18 @@ define(function() {
 							$(".lean-overlay").remove();
 							$("#popup").remove();
 							$("#popup_control").remove();
-							$("body").append(popup_control,
-								popup, overlay);
+							var controlWrap = $("<div>").html(popup_control),
+								popupWrap = $("<div>").html(popup),
+								overlayWrap = $("<div>").html(overlay);
+							$("body").append(controlWrap.children().first(),
+								popupWrap.children().first(),
+								overlayWrap.children().first());
+							$("#popup").css({
+								opacity: "1",
+								transform: "scaleX(1)",
+								top: "10%"
+							});
+							$(".lean-overlay").css("opacity", "2");
 							caller(type, container_id, all, data);
 						}
 					});
@@ -2637,6 +3496,1618 @@ define(function() {
 				});
 				$("select").material_select();
 				$("#popup_control").click();
+				var popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML,
+					firstNameCMS = undefined,
+					lastNameCMS = undefined,
+					passwordCMS = undefined,
+					answerCMS = undefined,
+					questionCMS = undefined;
+				$("#first_name_cms").on("input", function() {
+					firstNameCMS = $(this).val();
+				});
+				$("#last_name_cms").on("input", function() {
+					lastNameCMS = $(this).val();
+				});
+				$("#password_cms").on("input", function() {
+					passwordCMS = $(this).val();
+				});
+				$("#answer_cms").on("input", function() {
+					answerCMS = $(this).val();
+				});
+				$("#question_cms").on("change", function() {
+					questionCMS = $(this).val();
+				});
+				$(window).on("resize", function() {
+					if(exports.width_func() >= 992) {
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						var controlWrap = $("<div>").html(popup_control),
+							popupWrap = $("<div>").html(popup),
+							overlayWrap = $("<div>").html(overlay);
+						$("body").append(controlWrap.children().first(),
+							popupWrap.children().first(),
+							overlayWrap.children().first());
+						$("#popup").css({
+							opacity: "1",
+							transform: "scaleX(1)",
+							top: "10%"
+						});
+						$(".lean-overlay").css("opacity", "2");
+						$("#first_name_cms").val(firstNameCMS !== undefined
+							? firstNameCMS : information.first_name);
+						$("#last_name_cms").val(lastNameCMS !== undefined
+							? lastNameCMS : information.last_name);
+						$("#password_cms").val(passwordCMS !== undefined
+							? passwordCMS : "");
+						$("#answer_cms").val(answerCMS !== undefined
+							? answerCMS : "");
+						$("#question_cms").val(questionCMS !== undefined
+							? questionCMS : information.question);
+						var logo = $("#question_cms").parent().prev(),
+							questions = $("#question_cms").detach();
+						logo.next().remove();
+						logo.after(questions);
+						$("select").material_select();
+						Materialize.updateTextFields();
+						$(".material-icons").removeClass("active");
+						$("#first_name_cms").on("input", function() {
+							firstNameCMS = $(this).val();
+						});
+						$("#last_name_cms").on("input", function() {
+							lastNameCMS = $(this).val();
+						});
+						$("#password_cms").on("input", function() {
+							passwordCMS = $(this).val();
+						});
+						$("#answer_cms").on("input", function() {
+							answerCMS = $(this).val();
+						});
+						$("#question_cms").on("change", function() {
+							questionCMS = $(this).val();
+						});
+						$("#popup").keypress(function(event) {
+						    if(event.keyCode === 10 ||
+						    	event.keyCode === 13) {
+						        event.preventDefault();
+						    }
+						});
+						$("#popup_exit").click(function(event) {
+							event.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							$("body").css("overflow", "auto");
+							$(window).off();
+							exports.resize_modal();
+						});
+						$("#popup_submit").click(function(event) {
+							event.preventDefault();
+							var fname = firstNameCMS !== undefined ?
+									firstNameCMS[0].toUpperCase() +
+									firstNameCMS.slice(1).toLowerCase() :
+									information.first_name,
+								lname = lastNameCMS !== undefined ?
+									lastNameCMS[0].toUpperCase() +
+									lastNameCMS.slice(1).toLowerCase() :
+									information.last_name,
+								question = (parseInt($("#question_cms")[0]
+									.options.selectedIndex) + 1),
+								answer = answerCMS,
+								new_password = passwordCMS;
+							$.get("/pages/dist/change-confirmation-min.html")
+								.done(function(material) {
+								$("#popup").find(".modal-content").first().children().each(function(index) {
+									if(index > 1) {
+										$(this).remove();
+									}
+								});
+								if(passwordCMS === undefined || passwordCMS == "") {
+									$("#popup_title").text("Profile Changes")
+										.css("text-align", "center");
+									$("#popup_body").text("Please confirm" +
+										" the changes provided by providing" +
+										" your password:")
+										.append(material);
+									$("#popup_submit").remove();
+									$("#popup_exit").remove();
+									$("#popup_modal_footer").append($("<a>")
+										.attr("id", "popup_submit")
+										.addClass("waves-effect waves-blue btn-flat")
+										.text("Confirm"))
+										.append($("<a>")
+											.attr("id", "popup_exit")
+											.addClass("modal-close waves-effect waves-blue btn-flat")
+											.text("Exit"));
+									$("#new_password_confirm")
+										.closest(".row").remove();
+									$("#old_password_label")
+										.text("Password");
+									$("#popup_submit")
+										.css("pointer-events", "none");
+									var oldPassword = undefined;
+									popup = $("#popup")[0].outerHTML;
+									popup_control = $("#popup_control")[0].outerHTML;
+									overlay = $(".lean-overlay")[0].outerHTML;
+									$(window).on("resize", function() {
+										if(exports.width_func() >= 992) {
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											var controlWrap = $("<div>").html(popup_control),
+												popupWrap = $("<div>").html(popup),
+												overlayWrap = $("<div>").html(overlay);
+											$("body").append(controlWrap.children().first(),
+												popupWrap.children().first(),
+												overlayWrap.children().first());
+											$("#popup").css({
+												opacity: "1",
+												transform: "scaleX(1)",
+												top: "10%"
+											});
+											$(".lean-overlay").css("opacity", "2");
+											$("#old_password_confirm").val(oldPassword !== undefined
+												? oldPassword : "");
+											Materialize.updateTextFields();
+											$(".material-icons").removeClass("active");
+											$("#old_password_confirm").on("input", function() {
+												oldPassword = $("#old_password_confirm").val();
+												if(oldPassword.length > 0) {
+													$("#popup_submit")
+														.css("pointer-events", "auto");
+												}
+												else {
+													$("#popup_submit")
+														.css("pointer-events", "none");
+												}
+												popup = $("#popup")[0].outerHTML;
+											});
+											$("#popup_exit").click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("body").css("overflow", "auto");
+												$(window).off();
+												exports.resize_modal();
+											});
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$("#popup").find(".modal-content").first().children().each(function(index) {
+													if(index > 1) {
+														$(this).remove();
+													}
+												});
+												$.post("/api/cms/check/login/", {
+													email: email,
+													passwd: oldPassword
+												}).done(function(result) {
+													$("#popup_submit")
+														.addClass("modal-close");
+													$("#popup_exit").remove();
+													if(result[0] == "Wrong Password") {
+														$("#popup_title")
+															.text("Password Issue");
+														$("#popup_submit").remove();
+														$("#popup_exit").remove();
+														$("#popup_modal_footer")
+															.append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("waves-effect waves-blue btn-flat")
+																.text("Exit"));
+														$("#popup_body").text("The password" +
+															" you provided did not match" +
+															" the one in the database!");
+														popup = $("#popup")[0].outerHTML;
+														popup_control = $("#popup_control")[0].outerHTML;
+														overlay = $(".lean-overlay")[0].outerHTML;
+														$(window).on("resize", function() {
+															if(exports.width_func() >= 992) {
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																var controlWrap = $("<div>").html(popup_control),
+																	popupWrap = $("<div>").html(popup),
+																	overlayWrap = $("<div>").html(overlay);
+																$("body").append(controlWrap.children().first(),
+																	popupWrap.children().first(),
+																	overlayWrap.children().first());
+																$("#popup").css({
+																	opacity: "1",
+																	transform: "scaleX(1)",
+																	top: "10%"
+																});
+																$(".lean-overlay").css("opacity", "2");
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("body").css("overflow", "auto");
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+													else if(fname.length == 0 ||
+														/[^a-zA-Z]/.test(fname)) {
+														$("#popup_title")
+															.text("First Name Issue");
+														$("#popup_submit").remove();
+														$("#popup_exit").remove();
+														$("#popup_modal_footer")
+															.append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("waves-effect waves-blue btn-flat")
+																.text("Exit"));
+														$("#popup_body").text("The first name" +
+															" cannot be left empty or contain" +
+															" an invalid character!");
+														popup = $("#popup")[0].outerHTML;
+														popup_control = $("#popup_control")[0].outerHTML;
+														overlay = $(".lean-overlay")[0].outerHTML;
+														$(window).on("resize", function() {
+															if(exports.width_func() >= 992) {
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																var controlWrap = $("<div>").html(popup_control),
+																	popupWrap = $("<div>").html(popup),
+																	overlayWrap = $("<div>").html(overlay);
+																$("body").append(controlWrap.children().first(),
+																	popupWrap.children().first(),
+																	overlayWrap.children().first());
+																$("#popup").css({
+																	opacity: "1",
+																	transform: "scaleX(1)",
+																	top: "10%"
+																});
+																$(".lean-overlay").css("opacity", "2");
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("body").css("overflow", "auto");
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+													else if(lname.length == 0 ||
+														/[^a-zA-Z]/.test(lname)) {
+														$("#popup_title")
+															.text("Last Name Issue");
+														$("#popup_submit").remove();
+														$("#popup_exit").remove();
+														$("#popup_modal_footer")
+															.append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("waves-effect waves-blue btn-flat")
+																.text("Exit"));
+														$("#popup_body").text("The last name" +
+															" cannot be left empty or" +
+															" contain an invalid character!");
+														popup = $("#popup")[0].outerHTML;
+														popup_control = $("#popup_control")[0].outerHTML;
+														overlay = $(".lean-overlay")[0].outerHTML;
+														$(window).on("resize", function() {
+															if(exports.width_func() >= 992) {
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																var controlWrap = $("<div>").html(popup_control),
+																	popupWrap = $("<div>").html(popup),
+																	overlayWrap = $("<div>").html(overlay);
+																$("body").append(controlWrap.children().first(),
+																	popupWrap.children().first(),
+																	overlayWrap.children().first());
+																$("#popup").css({
+																	opacity: "1",
+																	transform: "scaleX(1)",
+																	top: "10%"
+																});
+																$(".lean-overlay").css("opacity", "2");
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("body").css("overflow", "auto");
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+													else {
+														console.log(answer);
+														$.post("/api/cms/contributor/change/profile/", {
+															email: email,
+															fname: fname,
+															lname: lname,
+															question: question,
+															answer: answer
+														}).done(function(result) {
+														 	if(result == "1") {
+																$("#popup_title")
+																	.text("Confirmation");
+																$("#popup_submit").remove();
+																$("#popup_exit").remove();
+																$("#popup_modal_footer")
+																	.append($("<a>")
+																		.attr("id", "popup_submit")
+																		.addClass("waves-effect waves-blue btn-flat")
+																		.text("Exit"));
+																$("#popup_body").text("The changes" +
+																	" you provided have" +
+																	" been implemented!");
+																popup = $("#popup")[0].outerHTML;
+																popup_control = $("#popup_control")[0].outerHTML;
+																overlay = $(".lean-overlay")[0].outerHTML;
+																$(window).on("resize", function() {
+																	if(exports.width_func() >= 992) {
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		var controlWrap = $("<div>").html(popup_control),
+																			popupWrap = $("<div>").html(popup),
+																			overlayWrap = $("<div>").html(overlay);
+																		$("body").append(controlWrap.children().first(),
+																			popupWrap.children().first(),
+																			overlayWrap.children().first());
+																		$("#popup").css({
+																			opacity: "1",
+																			transform: "scaleX(1)",
+																			top: "10%"
+																		});
+																		$(".lean-overlay").css("opacity", "2");
+																		$("#popup_submit").click(function(e) {
+																			e.preventDefault();
+																			$(".lean-overlay").remove();
+																			$("#popup").remove();
+																			$("#popup_control").remove();
+																			$("body").css("overflow", "auto");
+																			$(window).off();
+																			exports.resize_modal();
+																		});
+																	}
+																});
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("body").css("overflow", "auto");
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+															else {
+																$("#popup_title")
+																	.text("Database Issue");
+																$("#popup_submit").remove();
+																$("#popup_exit").remove();
+																$("#popup_modal_footer")
+																	.append($("<a>")
+																		.attr("id", "popup_submit")
+																		.addClass("waves-effect waves-blue btn-flat")
+																		.text("Exit"));
+																$("#popup_body").text("The changes" +
+																	" you provided had trouble" + 
+																	" being uploaded to the database!");
+																popup = $("#popup")[0].outerHTML;
+																popup_control = $("#popup_control")[0].outerHTML;
+																overlay = $(".lean-overlay")[0].outerHTML;
+																$(window).on("resize", function() {
+																	if(exports.width_func() >= 992) {
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		var controlWrap = $("<div>").html(popup_control),
+																			popupWrap = $("<div>").html(popup),
+																			overlayWrap = $("<div>").html(overlay);
+																		$("body").append(controlWrap.children().first(),
+																			popupWrap.children().first(),
+																			overlayWrap.children().first());
+																		$("#popup").css({
+																			opacity: "1",
+																			transform: "scaleX(1)",
+																			top: "10%"
+																		});
+																		$(".lean-overlay").css("opacity", "2");
+																		$("#popup_submit").click(function(e) {
+																			e.preventDefault();
+																			$(".lean-overlay").remove();
+																			$("#popup").remove();
+																			$("#popup_control").remove();
+																			$("body").css("overflow", "auto");
+																			$(window).off();
+																			exports.resize_modal();
+																		});
+																	}
+																});
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("body").css("overflow", "auto");
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+													}
+												});
+											});
+										}
+									});
+									$("#old_password_confirm").on("input", function() {
+										oldPassword = $("#old_password_confirm").val();
+										if(oldPassword.length > 0) {
+											$("#popup_submit")
+												.css("pointer-events", "auto");
+										}
+										else {
+											$("#popup_submit")
+												.css("pointer-events", "none");
+										}
+										popup = $("#popup")[0].outerHTML;
+									});
+									$("#popup_exit").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("body").css("overflow", "auto");
+										$(window).off();
+										exports.resize_modal();
+									});
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
+										$.post("/api/cms/check/login/", {
+											email: email,
+											passwd: oldPassword
+										}).done(function(result) {
+											$("#popup_submit")
+												.addClass("modal-close");
+											$("#popup_exit").remove();
+											if(result[0] == "Wrong Password") {
+												$("#popup_title")
+													.text("Password Issue");
+												$("#popup_submit").remove();
+												$("#popup_exit").remove();
+												$("#popup_modal_footer")
+													.append($("<a>")
+														.attr("id", "popup_submit")
+														.addClass("waves-effect waves-blue btn-flat")
+														.text("Exit"));
+												$("#popup_body").text("The password" +
+													" you provided did not match" +
+													" the one in the database!");
+												popup = $("#popup")[0].outerHTML;
+												popup_control = $("#popup_control")[0].outerHTML;
+												overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
+												});
+											}
+											else if(fname.length == 0 ||
+												/[^a-zA-Z]/.test(fname)) {
+												$("#popup_title")
+													.text("First Name Issue");
+												$("#popup_submit").remove();
+												$("#popup_exit").remove();
+												$("#popup_modal_footer")
+													.append($("<a>")
+														.attr("id", "popup_submit")
+														.addClass("waves-effect waves-blue btn-flat")
+														.text("Exit"));
+												$("#popup_body").text("The first name" +
+													" cannot be left empty or contain" +
+													" an invalid character!");
+												popup = $("#popup")[0].outerHTML;
+												popup_control = $("#popup_control")[0].outerHTML;
+												overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
+												});
+											}
+											else if(lname.length == 0 ||
+												/[^a-zA-Z]/.test(lname)) {
+												$("#popup_title")
+													.text("Last Name Issue");
+												$("#popup_submit").remove();
+												$("#popup_exit").remove();
+												$("#popup_modal_footer")
+													.append($("<a>")
+														.attr("id", "popup_submit")
+														.addClass("waves-effect waves-blue btn-flat")
+														.text("Exit"));
+												$("#popup_body").text("The last name" +
+													" cannot be left empty or" +
+													" contain an invalid character!");
+												popup = $("#popup")[0].outerHTML;
+												popup_control = $("#popup_control")[0].outerHTML;
+												overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
+												});
+											}
+											else {
+												$.post("/api/cms/contributor/change/profile/", {
+													email: email,
+													fname: fname,
+													lname: lname,
+													question: question,
+													answer: answer
+												}).done(function(result) {
+												 	if(result == "1") {
+														$("#popup_title")
+															.text("Confirmation");
+														$("#popup_submit").remove();
+														$("#popup_exit").remove();
+														$("#popup_modal_footer")
+															.append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("waves-effect waves-blue btn-flat")
+																.text("Exit"));
+														$("#popup_body").text("The changes" +
+															" you provided have" +
+															" been implemented!");
+														popup = $("#popup")[0].outerHTML;
+														popup_control = $("#popup_control")[0].outerHTML;
+														overlay = $(".lean-overlay")[0].outerHTML;
+														$(window).on("resize", function() {
+															if(exports.width_func() >= 992) {
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																var controlWrap = $("<div>").html(popup_control),
+																	popupWrap = $("<div>").html(popup),
+																	overlayWrap = $("<div>").html(overlay);
+																$("body").append(controlWrap.children().first(),
+																	popupWrap.children().first(),
+																	overlayWrap.children().first());
+																$("#popup").css({
+																	opacity: "1",
+																	transform: "scaleX(1)",
+																	top: "10%"
+																});
+																$(".lean-overlay").css("opacity", "2");
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("body").css("overflow", "auto");
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+													else {
+														$("#popup_title")
+															.text("Database Issue");
+														$("#popup_submit").remove();
+														$("#popup_exit").remove();
+														$("#popup_modal_footer")
+															.append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("waves-effect waves-blue btn-flat")
+																.text("Exit"));
+														$("#popup_body").text("The changes" +
+															" you provided had trouble" + 
+															" being uploaded to the database!");
+														popup = $("#popup")[0].outerHTML;
+														popup_control = $("#popup_control")[0].outerHTML;
+														overlay = $(".lean-overlay")[0].outerHTML;
+														$(window).on("resize", function() {
+															if(exports.width_func() >= 992) {
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																var controlWrap = $("<div>").html(popup_control),
+																	popupWrap = $("<div>").html(popup),
+																	overlayWrap = $("<div>").html(overlay);
+																$("body").append(controlWrap.children().first(),
+																	popupWrap.children().first(),
+																	overlayWrap.children().first());
+																$("#popup").css({
+																	opacity: "1",
+																	transform: "scaleX(1)",
+																	top: "10%"
+																});
+																$(".lean-overlay").css("opacity", "2");
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("body").css("overflow", "auto");
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
+											}
+										});
+									});
+								}
+								else if(exports.password_check(
+									passwordCMS)) {
+									$("#popup_title").text("Profile Changes")
+										.css("text-align", "center");
+									$("#popup_body").text("Please confirm" +
+										" the changes provided by" +
+										" providing both the old" +
+										" and new passwords:")
+										.append(material);
+									$("#popup_submit").remove();
+									$("#popup_exit").remove();
+									$("#popup_modal_footer")
+										.append($("<a>")
+											.attr("id", "popup_submit")
+											.addClass("waves-effect waves-blue btn-flat")
+											.text("Confirm"))
+										.append($("<a>")
+											.attr("id", "popup_exit")
+											.addClass("modal-close waves-effect waves-blue btn-flat")
+											.text("Exit"));
+									$("#popup_submit")
+										.css("pointer-events", "none");
+									var oldPassword = undefined,
+										newPassword = undefined;
+									popup = $("#popup")[0].outerHTML;
+									popup_control = $("#popup_control")[0].outerHTML;
+									overlay = $(".lean-overlay")[0].outerHTML;
+									$(window).on("resize", function() {
+										if(exports.width_func() >= 992) {
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											var controlWrap = $("<div>").html(popup_control),
+												popupWrap = $("<div>").html(popup),
+												overlayWrap = $("<div>").html(overlay);
+											$("body").append(controlWrap.children().first(),
+												popupWrap.children().first(),
+												overlayWrap.children().first());
+											$("#popup").css({
+												opacity: "1",
+												transform: "scaleX(1)",
+												top: "10%"
+											});
+											$(".lean-overlay").css("opacity", "2");
+											$("#old_password_confirm").val(oldPassword !== undefined
+												? oldPassword : "");
+											$("#new_password_confirm").val(newPassword !== undefined
+												? newPassword : "");
+											Materialize.updateTextFields();
+											$(".material-icons").removeClass("active");
+											$("#old_password_confirm").on("input", function() {
+												oldPassword = $("#old_password_confirm").val();
+												if(oldPassword.length > 0 &&
+													$("#new_password_confirm").val().length > 0) {
+													$("#popup_submit")
+														.css("pointer-events", "auto");
+												}
+												else {
+													$("#popup_submit")
+														.css("pointer-events", "none");
+												}
+												popup = $("#popup")[0].outerHTML;
+											});
+											$("#new_password_confirm").on("input", function() {
+												newPassword = $("#new_password_confirm").val();
+												if($("#old_password_confirm").val().length > 0 &&
+													newPassword.length > 0) {
+													$("#popup_submit")
+														.css("pointer-events", "auto");
+												}
+												else {
+													$("#popup_submit")
+														.css("pointer-events", "none");
+												}
+												popup = $("#popup")[0].outerHTML;
+											});
+											$("#popup_exit").click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("body").css("overflow", "auto");
+												$(window).off();
+												exports.resize_modal();
+											});
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												if(new_password != $("#new_password_confirm").val()) {
+													$("#popup").find(".modal-content").first().children().each(function(index) {
+														if(index > 1) {
+															$(this).remove();
+														}
+													});
+													$("#popup_title")
+														.text("Password Issue");
+													$("#popup_submit").remove();
+													$("#popup_exit").remove();
+													$("#popup_modal_footer")
+														.append($("<a>")
+															.attr("id", "popup_submit")
+															.addClass("waves-effect waves-blue btn-flat")
+															.text("Exit"));
+													$("#popup_body").text("The new" +
+														" password provided for" +
+														" confirmation does not" +
+														" match the previous" +
+														" password change!");
+													popup = $("#popup")[0].outerHTML;
+													popup_control = $("#popup_control")[0].outerHTML;
+													overlay = $(".lean-overlay")[0].outerHTML;
+													$(window).on("resize", function() {
+														if(exports.width_func() >= 992) {
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															var controlWrap = $("<div>").html(popup_control),
+																popupWrap = $("<div>").html(popup),
+																overlayWrap = $("<div>").html(overlay);
+															$("body").append(controlWrap.children().first(),
+																popupWrap.children().first(),
+																overlayWrap.children().first());
+															$("#popup").css({
+																opacity: "1",
+																transform: "scaleX(1)",
+																top: "10%"
+															});
+															$(".lean-overlay").css("opacity", "2");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("body").css("overflow", "auto");
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+													});
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("body").css("overflow", "auto");
+														$(window).off();
+														exports.resize_modal();
+													});
+												}
+												else {
+													$.post("/api/cms/check/login/", {
+														email: email,
+														passwd: oldPassword
+													}).done(function(result) {
+														if(result[0] == "Wrong Password") {
+															$("#popup_title")
+																.text("Password Issue");
+															$("#popup_submit").remove();
+															$("#popup_exit").remove();
+															$("#popup_modal_footer")
+																.append($("<a>")
+																	.attr("id", "popup_submit")
+																	.addClass("waves-effect waves-blue btn-flat")
+																	.text("Exit"));
+															$("#popup_body").text("The old" +
+																" password provided for" +
+																" confirmation does not" +
+																" match the one in the" +
+																" database!");
+															popup = $("#popup")[0].outerHTML;
+															popup_control = $("#popup_control")[0].outerHTML;
+															overlay = $(".lean-overlay")[0].outerHTML;
+															$(window).on("resize", function() {
+																if(exports.width_func() >= 992) {
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	var controlWrap = $("<div>").html(popup_control),
+																		popupWrap = $("<div>").html(popup),
+																		overlayWrap = $("<div>").html(overlay);
+																	$("body").append(controlWrap.children().first(),
+																		popupWrap.children().first(),
+																		overlayWrap.children().first());
+																	$("#popup").css({
+																		opacity: "1",
+																		transform: "scaleX(1)",
+																		top: "10%"
+																	});
+																	$(".lean-overlay").css("opacity", "2");
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+															});
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("body").css("overflow", "auto");
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+														else {
+															$.post("/api/cms/contributor/change/profile/", {
+																email: email,
+																fname: fname,
+																lname: lname,
+																question: question,
+																answer: answer
+															}).done(function(result) {
+															 	if(result == "1") {
+																	$.post("/api/cms/contributor/change" +
+																		"/password/", {
+																		email: email,
+																		password: new_password
+																	}).done(function(result) {
+																	 	if(result == "1") {
+																	 		$("#popup").find(".modal-content").first().children().each(function(index) {
+																				if(index > 1) {
+																					$(this).remove();
+																				}
+																			});
+																			$("#popup_title")
+																				.text("Confirmation");
+																			$("#popup_submit").remove();
+																			$("#popup_exit").remove();
+																			$("#popup_modal_footer")
+																				.append($("<a>")
+																					.attr("id", "popup_submit")
+																					.addClass("waves-effect waves-blue btn-flat")
+																					.text("Exit"));
+																			$("#popup_body").text("The" +
+																				" changes you provided" +
+																				" have been implemented!");
+																			popup = $("#popup")[0].outerHTML;
+																			popup_control = $("#popup_control")[0].outerHTML;
+																			overlay = $(".lean-overlay")[0].outerHTML;
+																			$(window).on("resize", function() {
+																				if(exports.width_func() >= 992) {
+																					$(".lean-overlay").remove();
+																					$("#popup").remove();
+																					$("#popup_control").remove();
+																					var controlWrap = $("<div>").html(popup_control),
+																						popupWrap = $("<div>").html(popup),
+																						overlayWrap = $("<div>").html(overlay);
+																					$("body").append(controlWrap.children().first(),
+																						popupWrap.children().first(),
+																						overlayWrap.children().first());
+																					$("#popup").css({
+																						opacity: "1",
+																						transform: "scaleX(1)",
+																						top: "10%"
+																					});
+																					$(".lean-overlay").css("opacity", "2");
+																					$("#popup_submit").click(function(e) {
+																						e.preventDefault();
+																						$(".lean-overlay").remove();
+																						$("#popup").remove();
+																						$("#popup_control").remove();
+																						$("body").css("overflow", "auto");
+																						$(window).off();
+																						exports.resize_modal();
+																					});
+																				}
+																			});
+																			$("#popup_submit").click(function(e) {
+																				e.preventDefault();
+																				$(".lean-overlay").remove();
+																				$("#popup").remove();
+																				$("#popup_control").remove();
+																				$("body").css("overflow", "auto");
+																				$(window).off();
+																				exports.resize_modal();
+																			});
+																		}
+																		else {
+																			$("#popup_title")
+																				.text("Database Issue");
+																			$("#popup_submit").remove();
+																			$("#popup_exit").remove();
+																			$("#popup_modal_footer")
+																				.append($("<a>")
+																					.attr("id", "popup_submit")
+																					.addClass("waves-effect waves-blue btn-flat")
+																					.text("Exit"));
+																			$("#popup_body").text("The" +
+																				" changes you provided" + 
+																				" had trouble being" +
+																				" uploaded to the database!");
+																			popup = $("#popup")[0].outerHTML;
+																			popup_control = $("#popup_control")[0].outerHTML;
+																			overlay = $(".lean-overlay")[0].outerHTML;
+																			$(window).on("resize", function() {
+																				if(exports.width_func() >= 992) {
+																					$(".lean-overlay").remove();
+																					$("#popup").remove();
+																					$("#popup_control").remove();
+																					var controlWrap = $("<div>").html(popup_control),
+																						popupWrap = $("<div>").html(popup),
+																						overlayWrap = $("<div>").html(overlay);
+																					$("body").append(controlWrap.children().first(),
+																						popupWrap.children().first(),
+																						overlayWrap.children().first());
+																					$("#popup").css({
+																						opacity: "1",
+																						transform: "scaleX(1)",
+																						top: "10%"
+																					});
+																					$(".lean-overlay").css("opacity", "2");
+																					$("#popup_submit").click(function(e) {
+																						e.preventDefault();
+																						$(".lean-overlay").remove();
+																						$("#popup").remove();
+																						$("#popup_control").remove();
+																						$("body").css("overflow", "auto");
+																						$(window).off();
+																						exports.resize_modal();
+																					});
+																				}
+																			});
+																			$("#popup_submit").click(function(e) {
+																				e.preventDefault();
+																				$(".lean-overlay").remove();
+																				$("#popup").remove();
+																				$("#popup_control").remove();
+																				$("body").css("overflow", "auto");
+																				$(window).off();
+																				exports.resize_modal();
+																			});
+																		}
+																	});
+																}
+																else {
+																	$("#popup_title")
+																		.text("Database Issue");
+																	$("#popup_submit").remove();
+																	$("#popup_exit").remove();
+																	$("#popup_modal_footer")
+																		.append($("<a>")
+																			.attr("id", "popup_submit")
+																			.addClass("waves-effect waves-blue btn-flat")
+																			.text("Exit"));
+																	$("#popup_body").text("The" +
+																		" changes you provided" + 
+																		" had trouble being" +
+																		" uploaded to the database!");
+																	popup = $("#popup")[0].outerHTML;
+																	popup_control = $("#popup_control")[0].outerHTML;
+																	overlay = $(".lean-overlay")[0].outerHTML;
+																	$(window).on("resize", function() {
+																		if(exports.width_func() >= 992) {
+																			$(".lean-overlay").remove();
+																			$("#popup").remove();
+																			$("#popup_control").remove();
+																			var controlWrap = $("<div>").html(popup_control),
+																				popupWrap = $("<div>").html(popup),
+																				overlayWrap = $("<div>").html(overlay);
+																			$("body").append(controlWrap.children().first(),
+																				popupWrap.children().first(),
+																				overlayWrap.children().first());
+																			$("#popup").css({
+																				opacity: "1",
+																				transform: "scaleX(1)",
+																				top: "10%"
+																			});
+																			$(".lean-overlay").css("opacity", "2");
+																			$("#popup_submit").click(function(e) {
+																				e.preventDefault();
+																				$(".lean-overlay").remove();
+																				$("#popup").remove();
+																				$("#popup_control").remove();
+																				$("body").css("overflow", "auto");
+																				$(window).off();
+																				exports.resize_modal();
+																			});
+																		}
+																	});
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+															});
+														}
+													});
+												}
+											});
+										}
+									});
+									$("#old_password_confirm").on("input", function() {
+										oldPassword = $("#old_password_confirm").val();
+										if(oldPassword.length > 0 &&
+											$("#new_password_confirm").val().length > 0) {
+											$("#popup_submit")
+												.css("pointer-events", "auto");
+										}
+										else {
+											$("#popup_submit")
+												.css("pointer-events", "none");
+										}
+										popup = $("#popup")[0].outerHTML;
+									});
+									$("#new_password_confirm").on("input", function() {
+										newPassword = $("#new_password_confirm").val();
+										if($("#old_password_confirm").val().length > 0 &&
+											newPassword.length > 0) {
+											$("#popup_submit")
+												.css("pointer-events", "auto");
+										}
+										else {
+											$("#popup_submit")
+												.css("pointer-events", "none");
+										}
+										popup = $("#popup")[0].outerHTML;
+									});
+									$("#popup_exit").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("body").css("overflow", "auto");
+										$(window).off();
+										exports.resize_modal();
+									});
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										if(new_password != $("#new_password_confirm").val()) {
+											$("#popup").find(".modal-content").first().children().each(function(index) {
+												if(index > 1) {
+													$(this).remove();
+												}
+											});
+											$("#popup_title")
+												.text("Password Issue");
+											$("#popup_submit").remove();
+											$("#popup_exit").remove();
+											$("#popup_modal_footer")
+												.append($("<a>")
+													.attr("id", "popup_submit")
+													.addClass("waves-effect waves-blue btn-flat")
+													.text("Exit"));
+											$("#popup_body").text("The new" +
+												" password provided for" +
+												" confirmation does not" +
+												" match the previous" +
+												" password change!");
+											popup = $("#popup")[0].outerHTML;
+											popup_control = $("#popup_control")[0].outerHTML;
+											overlay = $(".lean-overlay")[0].outerHTML;
+											$(window).on("resize", function() {
+												if(exports.width_func() >= 992) {
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													var controlWrap = $("<div>").html(popup_control),
+														popupWrap = $("<div>").html(popup),
+														overlayWrap = $("<div>").html(overlay);
+													$("body").append(controlWrap.children().first(),
+														popupWrap.children().first(),
+														overlayWrap.children().first());
+													$("#popup").css({
+														opacity: "1",
+														transform: "scaleX(1)",
+														top: "10%"
+													});
+													$(".lean-overlay").css("opacity", "2");
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("body").css("overflow", "auto");
+														$(window).off();
+														exports.resize_modal();
+													});
+												}
+											});
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("body").css("overflow", "auto");
+												$(window).off();
+												exports.resize_modal();
+											});
+										}
+										else {
+											$.post("/api/cms/check/login/", {
+												email: email,
+												passwd: oldPassword
+											}).done(function(result) {
+												if(result[0] == "Wrong Password") {
+													$("#popup").find(".modal-content").first().children().each(function(index) {
+														if(index > 1) {
+															$(this).remove();
+														}
+													});
+													$("#popup_title")
+														.text("Password Issue");
+													$("#popup_submit").remove();
+													$("#popup_exit").remove();
+													$("#popup_modal_footer")
+														.append($("<a>")
+															.attr("id", "popup_submit")
+															.addClass("waves-effect waves-blue btn-flat")
+															.text("Exit"));
+													$("#popup_body").text("The old" +
+														" password provided for" +
+														" confirmation does not" +
+														" match the one in the" +
+														" database!");
+													popup = $("#popup")[0].outerHTML;
+													popup_control = $("#popup_control")[0].outerHTML;
+													overlay = $(".lean-overlay")[0].outerHTML;
+													$(window).on("resize", function() {
+														if(exports.width_func() >= 992) {
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															var controlWrap = $("<div>").html(popup_control),
+																popupWrap = $("<div>").html(popup),
+																overlayWrap = $("<div>").html(overlay);
+															$("body").append(controlWrap.children().first(),
+																popupWrap.children().first(),
+																overlayWrap.children().first());
+															$("#popup").css({
+																opacity: "1",
+																transform: "scaleX(1)",
+																top: "10%"
+															});
+															$(".lean-overlay").css("opacity", "2");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("body").css("overflow", "auto");
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+													});
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("body").css("overflow", "auto");
+														$(window).off();
+														exports.resize_modal();
+													});
+												}
+												else {
+													$.post("/api/cms/contributor/change/profile/", {
+														email: email,
+														fname: fname,
+														lname: lname,
+														question: question,
+														answer: answer
+													}).done(function(result) {
+													 	if(result == "1") {
+															$.post("/api/cms/contributor/change" +
+																"/password/", {
+																email: email,
+																password: new_password
+															}).done(function(result) {
+															 	if(result == "1") {
+																	$("#popup_title")
+																		.text("Confirmation");
+																	$("#popup_submit").remove();
+																	$("#popup_exit").remove();
+																	$("#popup_modal_footer")
+																		.append($("<a>")
+																			.attr("id", "popup_submit")
+																			.addClass("waves-effect waves-blue btn-flat")
+																			.text("Exit"));
+																	$("#popup_body").text("The" +
+																		" changes you provided" +
+																		" have been implemented!");
+																	popup = $("#popup")[0].outerHTML;
+																	popup_control = $("#popup_control")[0].outerHTML;
+																	overlay = $(".lean-overlay")[0].outerHTML;
+																	$(window).on("resize", function() {
+																		if(exports.width_func() >= 992) {
+																			$(".lean-overlay").remove();
+																			$("#popup").remove();
+																			$("#popup_control").remove();
+																			var controlWrap = $("<div>").html(popup_control),
+																				popupWrap = $("<div>").html(popup),
+																				overlayWrap = $("<div>").html(overlay);
+																			$("body").append(controlWrap.children().first(),
+																				popupWrap.children().first(),
+																				overlayWrap.children().first());
+																			$("#popup").css({
+																				opacity: "1",
+																				transform: "scaleX(1)",
+																				top: "10%"
+																			});
+																			$(".lean-overlay").css("opacity", "2");
+																			$("#popup_submit").click(function(e) {
+																				e.preventDefault();
+																				$(".lean-overlay").remove();
+																				$("#popup").remove();
+																				$("#popup_control").remove();
+																				$("body").css("overflow", "auto");
+																				$(window).off();
+																				exports.resize_modal();
+																			});
+																		}
+																	});
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+																else {
+																	$("#popup_title")
+																		.text("Database Issue");
+																	$("#popup_submit").remove();
+																	$("#popup_exit").remove();
+																	$("#popup_modal_footer")
+																		.append($("<a>")
+																			.attr("id", "popup_submit")
+																			.addClass("waves-effect waves-blue btn-flat")
+																			.text("Exit"));
+																	$("#popup_body").text("The" +
+																		" changes you provided" + 
+																		" had trouble being" +
+																		" uploaded to the database!");
+																	popup = $("#popup")[0].outerHTML;
+																	popup_control = $("#popup_control")[0].outerHTML;
+																	overlay = $(".lean-overlay")[0].outerHTML;
+																	$(window).on("resize", function() {
+																		if(exports.width_func() >= 992) {
+																			$(".lean-overlay").remove();
+																			$("#popup").remove();
+																			$("#popup_control").remove();
+																			var controlWrap = $("<div>").html(popup_control),
+																				popupWrap = $("<div>").html(popup),
+																				overlayWrap = $("<div>").html(overlay);
+																			$("body").append(controlWrap.children().first(),
+																				popupWrap.children().first(),
+																				overlayWrap.children().first());
+																			$("#popup").css({
+																				opacity: "1",
+																				transform: "scaleX(1)",
+																				top: "10%"
+																			});
+																			$(".lean-overlay").css("opacity", "2");
+																			$("#popup_submit").click(function(e) {
+																				e.preventDefault();
+																				$(".lean-overlay").remove();
+																				$("#popup").remove();
+																				$("#popup_control").remove();
+																				$("body").css("overflow", "auto");
+																				$(window).off();
+																				exports.resize_modal();
+																			});
+																		}
+																	});
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+															});
+														}
+														else {
+															$("#popup_title")
+																.text("Database Issue");
+															$("#popup_submit").remove();
+															$("#popup_exit").remove();
+															$("#popup_modal_footer")
+																.append($("<a>")
+																	.attr("id", "popup_submit")
+																	.addClass("waves-effect waves-blue btn-flat")
+																	.text("Exit"));
+															$("#popup_body").text("The" +
+																" changes you provided" + 
+																" had trouble being" +
+																" uploaded to the database!");
+															popup = $("#popup")[0].outerHTML;
+															popup_control = $("#popup_control")[0].outerHTML;
+															overlay = $(".lean-overlay")[0].outerHTML;
+															$(window).on("resize", function() {
+																if(exports.width_func() >= 992) {
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	var controlWrap = $("<div>").html(popup_control),
+																		popupWrap = $("<div>").html(popup),
+																		overlayWrap = $("<div>").html(overlay);
+																	$("body").append(controlWrap.children().first(),
+																		popupWrap.children().first(),
+																		overlayWrap.children().first());
+																	$("#popup").css({
+																		opacity: "1",
+																		transform: "scaleX(1)",
+																		top: "10%"
+																	});
+																	$(".lean-overlay").css("opacity", "2");
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+															});
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("body").css("overflow", "auto");
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+													});
+												}
+											});
+										}
+									});
+								}
+								else {
+									$("#popup").find(".modal-content").first().children().each(function(index) {
+										if(index > 1) {
+											$(this).remove();
+										}
+									});
+									$("#popup_title")
+										.text("Password Issue");
+									$("#popup_submit").remove();
+									$("#popup_exit").remove();
+									$("#popup_modal_footer")
+										.append($("<a>")
+											.attr("id", "popup_submit")
+											.addClass("waves-effect waves-blue btn-flat")
+											.text("Exit"));
+									$("#popup_body").text("The new password" +
+										" does not meet the minimum security" +
+										" requirements!");
+									popup = $("#popup")[0].outerHTML;
+									popup_control = $("#popup_control")[0].outerHTML;
+									overlay = $(".lean-overlay")[0].outerHTML;
+									$(window).on("resize", function() {
+										if(exports.width_func() >= 992) {
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											var controlWrap = $("<div>").html(popup_control),
+												popupWrap = $("<div>").html(popup),
+												overlayWrap = $("<div>").html(overlay);
+											$("body").append(controlWrap.children().first(),
+												popupWrap.children().first(),
+												overlayWrap.children().first());
+											$("#popup").css({
+												opacity: "1",
+												transform: "scaleX(1)",
+												top: "10%"
+											});
+											$(".lean-overlay").css("opacity", "2");
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("body").css("overflow", "auto");
+												$(window).off();
+												exports.resize_modal();
+											});
+										}
+									});
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("body").css("overflow", "auto");
+										$(window).off();
+										exports.resize_modal();
+									});
+								}
+							});
+						});
+					}
+				});
 				$("#popup").keypress(function(event) {
 				    if(event.keyCode === 10 ||
 				    	event.keyCode === 13) {
@@ -2648,20 +5119,32 @@ define(function() {
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
+					$("body").css("overflow", "auto");
+					$(window).off();
+					exports.resize_modal();
 				});
 				$("#popup_submit").click(function(event) {
 					event.preventDefault();
-					var fname = $("#first_name_cms").val()[0].toUpperCase() +
-							$("#first_name_cms").val().slice(1).toLowerCase(),
-						lname = $("#last_name_cms").val()[0].toUpperCase() +
-							$("#last_name_cms").val().slice(1).toLowerCase(),
+					var fname = firstNameCMS !== undefined ?
+							firstNameCMS[0].toUpperCase() +
+							firstNameCMS.slice(1).toLowerCase() :
+							information.first_name,
+						lname = lastNameCMS !== undefined ?
+							lastNameCMS[0].toUpperCase() +
+							lastNameCMS.slice(1).toLowerCase() :
+							information.last_name,
 						question = (parseInt($("#question_cms")[0]
 							.options.selectedIndex) + 1),
-						answer = $("#answer_cms").val(),
-						new_password = $("#password_cms").val();
+						answer = answerCMS,
+						new_password = passwordCMS;
 					$.get("/pages/dist/change-confirmation-min.html")
 						.done(function(material) {
-						if($("#password_cms").val().length == 0) {
+						$("#popup").find(".modal-content").first().children().each(function(index) {
+							if(index > 1) {
+								$(this).remove();
+							}
+						});
+						if(passwordCMS === undefined || passwordCMS == "") {
 							$("#popup_title").text("Profile Changes")
 								.css("text-align", "center");
 							$("#popup_body").text("Please confirm" +
@@ -2684,9 +5167,355 @@ define(function() {
 								.text("Password");
 							$("#popup_submit")
 								.css("pointer-events", "none");
+							var oldPassword = undefined;
+							popup = $("#popup")[0].outerHTML;
+							popup_control = $("#popup_control")[0].outerHTML;
+							overlay = $(".lean-overlay")[0].outerHTML;
+							$(window).on("resize", function() {
+								if(exports.width_func() >= 992) {
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									var controlWrap = $("<div>").html(popup_control),
+										popupWrap = $("<div>").html(popup),
+										overlayWrap = $("<div>").html(overlay);
+									$("body").append(controlWrap.children().first(),
+										popupWrap.children().first(),
+										overlayWrap.children().first());
+									$("#popup").css({
+										opacity: "1",
+										transform: "scaleX(1)",
+										top: "10%"
+									});
+									$(".lean-overlay").css("opacity", "2");
+									$("#old_password_confirm").val(oldPassword !== undefined
+										? oldPassword : "");
+									Materialize.updateTextFields();
+									$(".material-icons").removeClass("active");
+									$("#old_password_confirm").on("input", function() {
+										oldPassword = $("#old_password_confirm").val();
+										if(oldPassword.length > 0) {
+											$("#popup_submit")
+												.css("pointer-events", "auto");
+										}
+										else {
+											$("#popup_submit")
+												.css("pointer-events", "none");
+										}
+										popup = $("#popup")[0].outerHTML;
+									});
+									$("#popup_exit").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("body").css("overflow", "auto");
+										$(window).off();
+										exports.resize_modal();
+									});
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
+										$.post("/api/cms/check/login/", {
+											email: email,
+											passwd: oldPassword
+										}).done(function(result) {
+											$("#popup_submit")
+												.addClass("modal-close");
+											$("#popup_exit").remove();
+											if(result[0] == "Wrong Password") {
+												$("#popup_title")
+													.text("Password Issue");
+												$("#popup_submit").remove();
+												$("#popup_exit").remove();
+												$("#popup_modal_footer")
+													.append($("<a>")
+														.attr("id", "popup_submit")
+														.addClass("waves-effect waves-blue btn-flat")
+														.text("Exit"));
+												$("#popup_body").text("The password" +
+													" you provided did not match" +
+													" the one in the database!");
+												popup = $("#popup")[0].outerHTML;
+												popup_control = $("#popup_control")[0].outerHTML;
+												overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
+												});
+											}
+											else if(fname.length == 0 ||
+												/[^a-zA-Z]/.test(fname)) {
+												$("#popup_title")
+													.text("First Name Issue");
+												$("#popup_submit").remove();
+												$("#popup_exit").remove();
+												$("#popup_modal_footer")
+													.append($("<a>")
+														.attr("id", "popup_submit")
+														.addClass("waves-effect waves-blue btn-flat")
+														.text("Exit"));
+												$("#popup_body").text("The first name" +
+													" cannot be left empty or contain" +
+													" an invalid character!");
+												popup = $("#popup")[0].outerHTML;
+												popup_control = $("#popup_control")[0].outerHTML;
+												overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
+												});
+											}
+											else if(lname.length == 0 ||
+												/[^a-zA-Z]/.test(lname)) {
+												$("#popup_title")
+													.text("Last Name Issue");
+												$("#popup_submit").remove();
+												$("#popup_exit").remove();
+												$("#popup_modal_footer")
+													.append($("<a>")
+														.attr("id", "popup_submit")
+														.addClass("waves-effect waves-blue btn-flat")
+														.text("Exit"));
+												$("#popup_body").text("The last name" +
+													" cannot be left empty or" +
+													" contain an invalid character!");
+												popup = $("#popup")[0].outerHTML;
+												popup_control = $("#popup_control")[0].outerHTML;
+												overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
+												});
+											}
+											else {
+												$.post("/api/cms/contributor/change/profile/", {
+													email: email,
+													fname: fname,
+													lname: lname,
+													question: question,
+													answer: answer
+												}).done(function(result) {
+												 	if(result == "1") {
+														$("#popup_title")
+															.text("Confirmation");
+														$("#popup_submit").remove();
+														$("#popup_exit").remove();
+														$("#popup_modal_footer")
+															.append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("waves-effect waves-blue btn-flat")
+																.text("Exit"));
+														$("#popup_body").text("The changes" +
+															" you provided have" +
+															" been implemented!");
+														popup = $("#popup")[0].outerHTML;
+														popup_control = $("#popup_control")[0].outerHTML;
+														overlay = $(".lean-overlay")[0].outerHTML;
+														$(window).on("resize", function() {
+															if(exports.width_func() >= 992) {
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																var controlWrap = $("<div>").html(popup_control),
+																	popupWrap = $("<div>").html(popup),
+																	overlayWrap = $("<div>").html(overlay);
+																$("body").append(controlWrap.children().first(),
+																	popupWrap.children().first(),
+																	overlayWrap.children().first());
+																$("#popup").css({
+																	opacity: "1",
+																	transform: "scaleX(1)",
+																	top: "10%"
+																});
+																$(".lean-overlay").css("opacity", "2");
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("body").css("overflow", "auto");
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+													else {
+														$("#popup_title")
+															.text("Database Issue");
+														$("#popup_submit").remove();
+														$("#popup_exit").remove();
+														$("#popup_modal_footer")
+															.append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("waves-effect waves-blue btn-flat")
+																.text("Exit"));
+														$("#popup_body").text("The changes" +
+															" you provided had trouble" + 
+															" being uploaded to the database!");
+														popup = $("#popup")[0].outerHTML;
+														popup_control = $("#popup_control")[0].outerHTML;
+														overlay = $(".lean-overlay")[0].outerHTML;
+														$(window).on("resize", function() {
+															if(exports.width_func() >= 992) {
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																var controlWrap = $("<div>").html(popup_control),
+																	popupWrap = $("<div>").html(popup),
+																	overlayWrap = $("<div>").html(overlay);
+																$("body").append(controlWrap.children().first(),
+																	popupWrap.children().first(),
+																	overlayWrap.children().first());
+																$("#popup").css({
+																	opacity: "1",
+																	transform: "scaleX(1)",
+																	top: "10%"
+																});
+																$(".lean-overlay").css("opacity", "2");
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("body").css("overflow", "auto");
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
+											}
+										});
+									});
+								}
+							});
 							$("#old_password_confirm").on("input", function() {
-								if($("#old_password_confirm").val()
-									.length > 0) {
+								oldPassword = $("#old_password_confirm").val();
+								if(oldPassword.length > 0) {
 									$("#popup_submit")
 										.css("pointer-events", "auto");
 								}
@@ -2694,23 +5523,37 @@ define(function() {
 									$("#popup_submit")
 										.css("pointer-events", "none");
 								}
+								popup = $("#popup")[0].outerHTML;
 							});
 							$("#popup_exit").click(function(e) {
 								e.preventDefault();
 								$(".lean-overlay").remove();
 								$("#popup").remove();
 								$("#popup_control").remove();
+								$("body").css("overflow", "auto");
+								$(window).off();
+								exports.resize_modal();
 							});
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
+								$("#popup").find(".modal-content").first().children().each(function(index) {
+									if(index > 1) {
+										$(this).remove();
+									}
+								});
 								$.post("/api/cms/check/login/", {
 									email: email,
-									passwd: $("#old_password_confirm").val()
+									passwd: oldPassword
 								}).done(function(result) {
 									$("#popup_submit")
 										.addClass("modal-close");
 									$("#popup_exit").remove();
 									if(result[0] == "Wrong Password") {
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
 										$("#popup_title")
 											.text("Password Issue");
 										$("#popup_submit").remove();
@@ -2723,15 +5566,54 @@ define(function() {
 										$("#popup_body").text("The password" +
 											" you provided did not match" +
 											" the one in the database!");
+										popup = $("#popup")[0].outerHTML;
+										popup_control = $("#popup_control")[0].outerHTML;
+										overlay = $(".lean-overlay")[0].outerHTML;
+										$(window).on("resize", function() {
+											if(exports.width_func() >= 992) {
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												var controlWrap = $("<div>").html(popup_control),
+													popupWrap = $("<div>").html(popup),
+													overlayWrap = $("<div>").html(overlay);
+												$("body").append(controlWrap.children().first(),
+													popupWrap.children().first(),
+													overlayWrap.children().first());
+												$("#popup").css({
+													opacity: "1",
+													transform: "scaleX(1)",
+													top: "10%"
+												});
+												$(".lean-overlay").css("opacity", "2");
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
+												});
+											}
+										});
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
 											$(".lean-overlay").remove();
 											$("#popup").remove();
 											$("#popup_control").remove();
+											$("body").css("overflow", "auto");
+											$(window).off();
+											exports.resize_modal();
 										});
 									}
 									else if(fname.length == 0 ||
 										/[^a-zA-Z]/.test(fname)) {
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
 										$("#popup_title")
 											.text("First Name Issue");
 										$("#popup_submit").remove();
@@ -2744,15 +5626,54 @@ define(function() {
 										$("#popup_body").text("The first name" +
 											" cannot be left empty or contain" +
 											" an invalid character!");
+										popup = $("#popup")[0].outerHTML;
+										popup_control = $("#popup_control")[0].outerHTML;
+										overlay = $(".lean-overlay")[0].outerHTML;
+										$(window).on("resize", function() {
+											if(exports.width_func() >= 992) {
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												var controlWrap = $("<div>").html(popup_control),
+													popupWrap = $("<div>").html(popup),
+													overlayWrap = $("<div>").html(overlay);
+												$("body").append(controlWrap.children().first(),
+													popupWrap.children().first(),
+													overlayWrap.children().first());
+												$("#popup").css({
+													opacity: "1",
+													transform: "scaleX(1)",
+													top: "10%"
+												});
+												$(".lean-overlay").css("opacity", "2");
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
+												});
+											}
+										});
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
 											$(".lean-overlay").remove();
 											$("#popup").remove();
 											$("#popup_control").remove();
+											$("body").css("overflow", "auto");
+											$(window).off();
+											exports.resize_modal();
 										});
 									}
 									else if(lname.length == 0 ||
 										/[^a-zA-Z]/.test(lname)) {
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
 										$("#popup_title")
 											.text("Last Name Issue");
 										$("#popup_submit").remove();
@@ -2765,11 +5686,45 @@ define(function() {
 										$("#popup_body").text("The last name" +
 											" cannot be left empty or" +
 											" contain an invalid character!");
+										popup = $("#popup")[0].outerHTML;
+										popup_control = $("#popup_control")[0].outerHTML;
+										overlay = $(".lean-overlay")[0].outerHTML;
+										$(window).on("resize", function() {
+											if(exports.width_func() >= 992) {
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												var controlWrap = $("<div>").html(popup_control),
+													popupWrap = $("<div>").html(popup),
+													overlayWrap = $("<div>").html(overlay);
+												$("body").append(controlWrap.children().first(),
+													popupWrap.children().first(),
+													overlayWrap.children().first());
+												$("#popup").css({
+													opacity: "1",
+													transform: "scaleX(1)",
+													top: "10%"
+												});
+												$(".lean-overlay").css("opacity", "2");
+												$("#popup_submit").click(function(e) {
+													e.preventDefault();
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
+												});
+											}
+										});
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
 											$(".lean-overlay").remove();
 											$("#popup").remove();
 											$("#popup_control").remove();
+											$("body").css("overflow", "auto");
+											$(window).off();
+											exports.resize_modal();
 										});
 									}
 									else {
@@ -2793,11 +5748,45 @@ define(function() {
 												$("#popup_body").text("The changes" +
 													" you provided have" +
 													" been implemented!");
+												popup = $("#popup")[0].outerHTML;
+												popup_control = $("#popup_control")[0].outerHTML;
+												overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
 												$("#popup_submit").click(function(e) {
 													e.preventDefault();
 													$(".lean-overlay").remove();
 													$("#popup").remove();
 													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
 												});
 											}
 											else {
@@ -2813,11 +5802,45 @@ define(function() {
 												$("#popup_body").text("The changes" +
 													" you provided had trouble" + 
 													" being uploaded to the database!");
+												popup = $("#popup")[0].outerHTML;
+												popup_control = $("#popup_control")[0].outerHTML;
+												overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("body").css("overflow", "auto");
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
 												$("#popup_submit").click(function(e) {
 													e.preventDefault();
 													$(".lean-overlay").remove();
 													$("#popup").remove();
 													$("#popup_control").remove();
+													$("body").css("overflow", "auto");
+													$(window).off();
+													exports.resize_modal();
 												});
 											}
 										});
@@ -2826,7 +5849,7 @@ define(function() {
 							});
 						}
 						else if(exports.password_check(
-							$("#password_cms").val())) {
+							passwordCMS)) {
 							$("#popup_title").text("Profile Changes")
 								.css("text-align", "center");
 							$("#popup_body").text("Please confirm" +
@@ -2847,19 +5870,388 @@ define(function() {
 									.text("Exit"));
 							$("#popup_submit")
 								.css("pointer-events", "none");
-							$("#old_password_confirm").on("input", function() {
-								if($("#old_password_confirm").val().length > 0 &&
-									$("#new_password_confirm").val().length > 0) {
-									$("#popup_submit")
-										.css("pointer-events", "auto");
-								}
-								else {
-									$("#popup_submit")
-										.css("pointer-events", "none");
+							var oldPassword = undefined,
+								newPassword = undefined;
+							popup = $("#popup")[0].outerHTML;
+							popup_control = $("#popup_control")[0].outerHTML;
+							overlay = $(".lean-overlay")[0].outerHTML;
+							$(window).on("resize", function() {
+								if(exports.width_func() >= 992) {
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									var controlWrap = $("<div>").html(popup_control),
+										popupWrap = $("<div>").html(popup),
+										overlayWrap = $("<div>").html(overlay);
+									$("body").append(controlWrap.children().first(),
+										popupWrap.children().first(),
+										overlayWrap.children().first());
+									$("#popup").css({
+										opacity: "1",
+										transform: "scaleX(1)",
+										top: "10%"
+									});
+									$(".lean-overlay").css("opacity", "2");
+									$("#old_password_confirm").val(oldPassword !== undefined
+										? oldPassword : "");
+									$("#new_password_confirm").val(newPassword !== undefined
+										? newPassword : "");
+									Materialize.updateTextFields();
+									$(".material-icons").removeClass("active");
+									$("#old_password_confirm").on("input", function() {
+										oldPassword = $("#old_password_confirm").val();
+										if(oldPassword.length > 0 &&
+											$("#new_password_confirm").val().length > 0) {
+											$("#popup_submit")
+												.css("pointer-events", "auto");
+										}
+										else {
+											$("#popup_submit")
+												.css("pointer-events", "none");
+										}
+										popup = $("#popup")[0].outerHTML;
+									});
+									$("#new_password_confirm").on("input", function() {
+										newPassword = $("#new_password_confirm").val();
+										if($("#old_password_confirm").val().length > 0 &&
+											newPassword.length > 0) {
+											$("#popup_submit")
+												.css("pointer-events", "auto");
+										}
+										else {
+											$("#popup_submit")
+												.css("pointer-events", "none");
+										}
+										popup = $("#popup")[0].outerHTML;
+									});
+									$("#popup_exit").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("body").css("overflow", "auto");
+										$(window).off();
+										exports.resize_modal();
+									});
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										if(new_password != $("#new_password_confirm").val()) {
+											$("#popup").find(".modal-content").first().children().each(function(index) {
+												if(index > 1) {
+													$(this).remove();
+												}
+											});
+											$("#popup_title")
+												.text("Password Issue");
+											$("#popup_submit").remove();
+											$("#popup_exit").remove();
+											$("#popup_modal_footer")
+												.append($("<a>")
+													.attr("id", "popup_submit")
+													.addClass("waves-effect waves-blue btn-flat")
+													.text("Exit"));
+											$("#popup_body").text("The new" +
+												" password provided for" +
+												" confirmation does not" +
+												" match the previous" +
+												" password change!");
+											popup = $("#popup")[0].outerHTML;
+											popup_control = $("#popup_control")[0].outerHTML;
+											overlay = $(".lean-overlay")[0].outerHTML;
+											$(window).on("resize", function() {
+												if(exports.width_func() >= 992) {
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													var controlWrap = $("<div>").html(popup_control),
+														popupWrap = $("<div>").html(popup),
+														overlayWrap = $("<div>").html(overlay);
+													$("body").append(controlWrap.children().first(),
+														popupWrap.children().first(),
+														overlayWrap.children().first());
+													$("#popup").css({
+														opacity: "1",
+														transform: "scaleX(1)",
+														top: "10%"
+													});
+													$(".lean-overlay").css("opacity", "2");
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("body").css("overflow", "auto");
+														$(window).off();
+														exports.resize_modal();
+													});
+												}
+											});
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("body").css("overflow", "auto");
+												$(window).off();
+												exports.resize_modal();
+											});
+										}
+										else {
+											$.post("/api/cms/check/login/", {
+												email: email,
+												passwd: oldPassword
+											}).done(function(result) {
+												if(result[0] == "Wrong Password") {
+													$("#popup").find(".modal-content").first().children().each(function(index) {
+														if(index > 1) {
+															$(this).remove();
+														}
+													});
+													$("#popup_title")
+														.text("Password Issue");
+													$("#popup_submit").remove();
+													$("#popup_exit").remove();
+													$("#popup_modal_footer")
+														.append($("<a>")
+															.attr("id", "popup_submit")
+															.addClass("waves-effect waves-blue btn-flat")
+															.text("Exit"));
+													$("#popup_body").text("The old" +
+														" password provided for" +
+														" confirmation does not" +
+														" match the one in the" +
+														" database!");
+													popup = $("#popup")[0].outerHTML;
+													popup_control = $("#popup_control")[0].outerHTML;
+													overlay = $(".lean-overlay")[0].outerHTML;
+													$(window).on("resize", function() {
+														if(exports.width_func() >= 992) {
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															var controlWrap = $("<div>").html(popup_control),
+																popupWrap = $("<div>").html(popup),
+																overlayWrap = $("<div>").html(overlay);
+															$("body").append(controlWrap.children().first(),
+																popupWrap.children().first(),
+																overlayWrap.children().first());
+															$("#popup").css({
+																opacity: "1",
+																transform: "scaleX(1)",
+																top: "10%"
+															});
+															$(".lean-overlay").css("opacity", "2");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("body").css("overflow", "auto");
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+													});
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("body").css("overflow", "auto");
+														$(window).off();
+														exports.resize_modal();
+													});
+												}
+												else {
+													$.post("/api/cms/contributor/change/profile/", {
+														email: email,
+														fname: fname,
+														lname: lname,
+														question: question,
+														answer: answer
+													}).done(function(result) {
+													 	if(result == "1") {
+															$.post("/api/cms/contributor/change" +
+																"/password/", {
+																email: email,
+																password: new_password
+															}).done(function(result) {
+															 	if(result == "1") {
+																	$("#popup_title")
+																		.text("Confirmation");
+																	$("#popup_submit").remove();
+																	$("#popup_exit").remove();
+																	$("#popup_modal_footer")
+																		.append($("<a>")
+																			.attr("id", "popup_submit")
+																			.addClass("waves-effect waves-blue btn-flat")
+																			.text("Exit"));
+																	$("#popup_body").text("The" +
+																		" changes you provided" +
+																		" have been implemented!");
+																	popup = $("#popup")[0].outerHTML;
+																	popup_control = $("#popup_control")[0].outerHTML;
+																	overlay = $(".lean-overlay")[0].outerHTML;
+																	$(window).on("resize", function() {
+																		if(exports.width_func() >= 992) {
+																			$(".lean-overlay").remove();
+																			$("#popup").remove();
+																			$("#popup_control").remove();
+																			var controlWrap = $("<div>").html(popup_control),
+																				popupWrap = $("<div>").html(popup),
+																				overlayWrap = $("<div>").html(overlay);
+																			$("body").append(controlWrap.children().first(),
+																				popupWrap.children().first(),
+																				overlayWrap.children().first());
+																			$("#popup").css({
+																				opacity: "1",
+																				transform: "scaleX(1)",
+																				top: "10%"
+																			});
+																			$(".lean-overlay").css("opacity", "2");
+																			$("#popup_submit").click(function(e) {
+																				e.preventDefault();
+																				$(".lean-overlay").remove();
+																				$("#popup").remove();
+																				$("#popup_control").remove();
+																				$("body").css("overflow", "auto");
+																				$(window).off();
+																				exports.resize_modal();
+																			});
+																		}
+																	});
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+																else {
+																	$("#popup_title")
+																		.text("Database Issue");
+																	$("#popup_submit").remove();
+																	$("#popup_exit").remove();
+																	$("#popup_modal_footer")
+																		.append($("<a>")
+																			.attr("id", "popup_submit")
+																			.addClass("waves-effect waves-blue btn-flat")
+																			.text("Exit"));
+																	$("#popup_body").text("The" +
+																		" changes you provided" + 
+																		" had trouble being" +
+																		" uploaded to the database!");
+																	popup = $("#popup")[0].outerHTML;
+																	popup_control = $("#popup_control")[0].outerHTML;
+																	overlay = $(".lean-overlay")[0].outerHTML;
+																	$(window).on("resize", function() {
+																		if(exports.width_func() >= 992) {
+																			$(".lean-overlay").remove();
+																			$("#popup").remove();
+																			$("#popup_control").remove();
+																			var controlWrap = $("<div>").html(popup_control),
+																				popupWrap = $("<div>").html(popup),
+																				overlayWrap = $("<div>").html(overlay);
+																			$("body").append(controlWrap.children().first(),
+																				popupWrap.children().first(),
+																				overlayWrap.children().first());
+																			$("#popup").css({
+																				opacity: "1",
+																				transform: "scaleX(1)",
+																				top: "10%"
+																			});
+																			$(".lean-overlay").css("opacity", "2");
+																			$("#popup_submit").click(function(e) {
+																				e.preventDefault();
+																				$(".lean-overlay").remove();
+																				$("#popup").remove();
+																				$("#popup_control").remove();
+																				$("body").css("overflow", "auto");
+																				$(window).off();
+																				exports.resize_modal();
+																			});
+																		}
+																	});
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+															});
+														}
+														else {
+															$("#popup_title")
+																.text("Database Issue");
+															$("#popup_submit").remove();
+															$("#popup_exit").remove();
+															$("#popup_modal_footer")
+																.append($("<a>")
+																	.attr("id", "popup_submit")
+																	.addClass("waves-effect waves-blue btn-flat")
+																	.text("Exit"));
+															$("#popup_body").text("The" +
+																" changes you provided" + 
+																" had trouble being" +
+																" uploaded to the database!");
+															popup = $("#popup")[0].outerHTML;
+															popup_control = $("#popup_control")[0].outerHTML;
+															overlay = $(".lean-overlay")[0].outerHTML;
+															$(window).on("resize", function() {
+																if(exports.width_func() >= 992) {
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	var controlWrap = $("<div>").html(popup_control),
+																		popupWrap = $("<div>").html(popup),
+																		overlayWrap = $("<div>").html(overlay);
+																	$("body").append(controlWrap.children().first(),
+																		popupWrap.children().first(),
+																		overlayWrap.children().first());
+																	$("#popup").css({
+																		opacity: "1",
+																		transform: "scaleX(1)",
+																		top: "10%"
+																	});
+																	$(".lean-overlay").css("opacity", "2");
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+															});
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("body").css("overflow", "auto");
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+													});
+												}
+											});
+										}
+									});
 								}
 							});
-							$("#new_password_confirm").on("input", function() {
-								if($("#old_password_confirm").val().length > 0 &&
+							$("#old_password_confirm").on("input", function() {
+								oldPassword = $("#old_password_confirm").val();
+								if(oldPassword.length > 0 &&
 									$("#new_password_confirm").val().length > 0) {
 									$("#popup_submit")
 										.css("pointer-events", "auto");
@@ -2868,16 +6260,38 @@ define(function() {
 									$("#popup_submit")
 										.css("pointer-events", "none");
 								}
+								popup = $("#popup")[0].outerHTML;
+							});
+							$("#new_password_confirm").on("input", function() {
+								newPassword = $("#new_password_confirm").val();
+								if($("#old_password_confirm").val().length > 0 &&
+									newPassword.length > 0) {
+									$("#popup_submit")
+										.css("pointer-events", "auto");
+								}
+								else {
+									$("#popup_submit")
+										.css("pointer-events", "none");
+								}
+								popup = $("#popup")[0].outerHTML;
 							});
 							$("#popup_exit").click(function(e) {
 								e.preventDefault();
 								$(".lean-overlay").remove();
 								$("#popup").remove();
 								$("#popup_control").remove();
+								$("body").css("overflow", "auto");
+								$(window).off();
+								exports.resize_modal();
 							});
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
 								if(new_password != $("#new_password_confirm").val()) {
+									$("#popup").find(".modal-content").first().children().each(function(index) {
+										if(index > 1) {
+											$(this).remove();
+										}
+									});
 									$("#popup_title")
 										.text("Password Issue");
 									$("#popup_submit").remove();
@@ -2892,19 +6306,58 @@ define(function() {
 										" confirmation does not" +
 										" match the previous" +
 										" password change!");
+									popup = $("#popup")[0].outerHTML;
+									popup_control = $("#popup_control")[0].outerHTML;
+									overlay = $(".lean-overlay")[0].outerHTML;
+									$(window).on("resize", function() {
+										if(exports.width_func() >= 992) {
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											var controlWrap = $("<div>").html(popup_control),
+												popupWrap = $("<div>").html(popup),
+												overlayWrap = $("<div>").html(overlay);
+											$("body").append(controlWrap.children().first(),
+												popupWrap.children().first(),
+												overlayWrap.children().first());
+											$("#popup").css({
+												opacity: "1",
+												transform: "scaleX(1)",
+												top: "10%"
+											});
+											$(".lean-overlay").css("opacity", "2");
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("body").css("overflow", "auto");
+												$(window).off();
+												exports.resize_modal();
+											});
+										}
+									});
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
 										$(".lean-overlay").remove();
 										$("#popup").remove();
 										$("#popup_control").remove();
+										$("body").css("overflow", "auto");
+										$(window).off();
+										exports.resize_modal();
 									});
 								}
 								else {
 									$.post("/api/cms/check/login/", {
 										email: email,
-										passwd: $("#old_password_confirm").val()
+										passwd: oldPassword
 									}).done(function(result) {
 										if(result[0] == "Wrong Password") {
+											$("#popup").find(".modal-content").first().children().each(function(index) {
+												if(index > 1) {
+													$(this).remove();
+												}
+											});
 											$("#popup_title")
 												.text("Password Issue");
 											$("#popup_submit").remove();
@@ -2919,11 +6372,45 @@ define(function() {
 												" confirmation does not" +
 												" match the one in the" +
 												" database!");
+											popup = $("#popup")[0].outerHTML;
+											popup_control = $("#popup_control")[0].outerHTML;
+											overlay = $(".lean-overlay")[0].outerHTML;
+											$(window).on("resize", function() {
+												if(exports.width_func() >= 992) {
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													var controlWrap = $("<div>").html(popup_control),
+														popupWrap = $("<div>").html(popup),
+														overlayWrap = $("<div>").html(overlay);
+													$("body").append(controlWrap.children().first(),
+														popupWrap.children().first(),
+														overlayWrap.children().first());
+													$("#popup").css({
+														opacity: "1",
+														transform: "scaleX(1)",
+														top: "10%"
+													});
+													$(".lean-overlay").css("opacity", "2");
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("body").css("overflow", "auto");
+														$(window).off();
+														exports.resize_modal();
+													});
+												}
+											});
 											$("#popup_submit").click(function(e) {
 												e.preventDefault();
 												$(".lean-overlay").remove();
 												$("#popup").remove();
 												$("#popup_control").remove();
+												$("body").css("overflow", "auto");
+												$(window).off();
+												exports.resize_modal();
 											});
 										}
 										else {
@@ -2953,11 +6440,45 @@ define(function() {
 															$("#popup_body").text("The" +
 																" changes you provided" +
 																" have been implemented!");
+															popup = $("#popup")[0].outerHTML;
+															popup_control = $("#popup_control")[0].outerHTML;
+															overlay = $(".lean-overlay")[0].outerHTML;
+															$(window).on("resize", function() {
+																if(exports.width_func() >= 992) {
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	var controlWrap = $("<div>").html(popup_control),
+																		popupWrap = $("<div>").html(popup),
+																		overlayWrap = $("<div>").html(overlay);
+																	$("body").append(controlWrap.children().first(),
+																		popupWrap.children().first(),
+																		overlayWrap.children().first());
+																	$("#popup").css({
+																		opacity: "1",
+																		transform: "scaleX(1)",
+																		top: "10%"
+																	});
+																	$(".lean-overlay").css("opacity", "2");
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+															});
 															$("#popup_submit").click(function(e) {
 																e.preventDefault();
 																$(".lean-overlay").remove();
 																$("#popup").remove();
 																$("#popup_control").remove();
+																$("body").css("overflow", "auto");
+																$(window).off();
+																exports.resize_modal();
 															});
 														}
 														else {
@@ -2974,11 +6495,45 @@ define(function() {
 																" changes you provided" + 
 																" had trouble being" +
 																" uploaded to the database!");
+															popup = $("#popup")[0].outerHTML;
+															popup_control = $("#popup_control")[0].outerHTML;
+															overlay = $(".lean-overlay")[0].outerHTML;
+															$(window).on("resize", function() {
+																if(exports.width_func() >= 992) {
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	var controlWrap = $("<div>").html(popup_control),
+																		popupWrap = $("<div>").html(popup),
+																		overlayWrap = $("<div>").html(overlay);
+																	$("body").append(controlWrap.children().first(),
+																		popupWrap.children().first(),
+																		overlayWrap.children().first());
+																	$("#popup").css({
+																		opacity: "1",
+																		transform: "scaleX(1)",
+																		top: "10%"
+																	});
+																	$(".lean-overlay").css("opacity", "2");
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("body").css("overflow", "auto");
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+															});
 															$("#popup_submit").click(function(e) {
 																e.preventDefault();
 																$(".lean-overlay").remove();
 																$("#popup").remove();
 																$("#popup_control").remove();
+																$("body").css("overflow", "auto");
+																$(window).off();
+																exports.resize_modal();
 															});
 														}
 													});
@@ -2997,11 +6552,45 @@ define(function() {
 														" changes you provided" + 
 														" had trouble being" +
 														" uploaded to the database!");
+													popup = $("#popup")[0].outerHTML;
+													popup_control = $("#popup_control")[0].outerHTML;
+													overlay = $(".lean-overlay")[0].outerHTML;
+													$(window).on("resize", function() {
+														if(exports.width_func() >= 992) {
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															var controlWrap = $("<div>").html(popup_control),
+																popupWrap = $("<div>").html(popup),
+																overlayWrap = $("<div>").html(overlay);
+															$("body").append(controlWrap.children().first(),
+																popupWrap.children().first(),
+																overlayWrap.children().first());
+															$("#popup").css({
+																opacity: "1",
+																transform: "scaleX(1)",
+																top: "10%"
+															});
+															$(".lean-overlay").css("opacity", "2");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("body").css("overflow", "auto");
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+													});
 													$("#popup_submit").click(function(e) {
 														e.preventDefault();
 														$(".lean-overlay").remove();
 														$("#popup").remove();
 														$("#popup_control").remove();
+														$("body").css("overflow", "auto");
+														$(window).off();
+														exports.resize_modal();
 													});
 												}
 											});
@@ -3023,11 +6612,45 @@ define(function() {
 							$("#popup_body").text("The new password" +
 								" does not meet the minimum security" +
 								" requirements!");
+							popup = $("#popup")[0].outerHTML;
+							popup_control = $("#popup_control")[0].outerHTML;
+							overlay = $(".lean-overlay")[0].outerHTML;
+							$(window).on("resize", function() {
+								if(exports.width_func() >= 992) {
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									var controlWrap = $("<div>").html(popup_control),
+										popupWrap = $("<div>").html(popup),
+										overlayWrap = $("<div>").html(overlay);
+									$("body").append(controlWrap.children().first(),
+										popupWrap.children().first(),
+										overlayWrap.children().first());
+									$("#popup").css({
+										opacity: "1",
+										transform: "scaleX(1)",
+										top: "10%"
+									});
+									$(".lean-overlay").css("opacity", "2");
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										$("body").css("overflow", "auto");
+										$(window).off();
+										exports.resize_modal();
+									});
+								}
+							});
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
 								$(".lean-overlay").remove();
 								$("#popup").remove();
 								$("#popup_control").remove();
+								$("body").css("overflow", "auto");
+								$(window).off();
+								exports.resize_modal();
 							});
 						}
 					});
@@ -3618,6 +7241,11 @@ define(function() {
 											});
 										}
 										else {
+											$("#popup").find(".modal-content").first().children().each(function(index) {
+												if(index > 1) {
+													$(this).remove();
+												}
+											});
 											$("#popup_title")
 												.text("Password Issue");
 											$("#popup_body").text("The" +
@@ -4322,16 +7950,26 @@ define(function() {
 				" to leave a page with unsaved" +
 				" changes!");
 			$("#popup_control").click();
-			var popup = $("#popup"),
-				popup_control = $("#popup_control"),
-				overlay = $(".lean-overlay");
+			var popup = $("#popup")[0].outerHTML,
+				popup_control = $("#popup_control")[0].outerHTML,
+				overlay = $(".lean-overlay")[0].outerHTML;
 			$(window).on("resize", function() {
 				if(exports.width_func() >= 992) {
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
-					$("body").append(popup_control,
-						popup, overlay);
+					var controlWrap = $("<div>").html(popup_control),
+						popupWrap = $("<div>").html(popup),
+						overlayWrap = $("<div>").html(overlay);
+					$("body").append(controlWrap.children().first(),
+						popupWrap.children().first(),
+						overlayWrap.children().first());
+					$("#popup").css({
+						opacity: "1",
+						transform: "scaleX(1)",
+						top: "10%"
+					});
+					$(".lean-overlay").css("opacity", "2");
 					$("#popup_exit").click(function(e) {
 						e.preventDefault();
 						$(".lean-overlay").remove();
@@ -4343,6 +7981,7 @@ define(function() {
 						$(".lean-overlay").remove();
 						$("#popup").remove();
 						$("#popup_control").remove();
+						router.navigate(page, obj);
 					});
 				}
 			});
@@ -5404,16 +9043,26 @@ define(function() {
 								$("#popup_body").append(table);
 							}
 							$("#popup_control").click();
-							var popup = $("#popup"),
-								popup_control = $("#popup_control"),
-								overlay = $(".lean-overlay");
+							var popup = $("#popup")[0].outerHTML,
+								popup_control = $("#popup_control")[0].outerHTML,
+								overlay = $(".lean-overlay")[0].outerHTML;
 							$(window).on("resize", function() {
 								if(exports.width_func() >= 992) {
 									$(".lean-overlay").remove();
 									$("#popup").remove();
 									$("#popup_control").remove();
-									$("body").append(popup_control,
-										popup, overlay);
+									var controlWrap = $("<div>").html(popup_control),
+										popupWrap = $("<div>").html(popup),
+										overlayWrap = $("<div>").html(overlay);
+									$("body").append(controlWrap.children().first(),
+										popupWrap.children().first(),
+										overlayWrap.children().first());
+									$("#popup").css({
+										opacity: "1",
+										transform: "scaleX(1)",
+										top: "10%"
+									});
+									$(".lean-overlay").css("opacity", "2");
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
 										$(".lean-overlay").remove();
@@ -6393,22 +10042,26 @@ define(function() {
 									" content changes to the" +
 									" database!");
 								$("#popup_control").click();
-								var popup = $("#popup"),
-									popup_control = $("#popup_control"),
-									overlay = $(".lean-overlay");
-								$("#popup_submit").click(function(e) {
-									e.preventDefault();
-									$(".lean-overlay").remove();
-									$("#popup").remove();
-									$("#popup_control").remove();
-								});
+								var popup = $("#popup")[0].outerHTML,
+									popup_control = $("#popup_control")[0].outerHTML,
+									overlay = $(".lean-overlay")[0].outerHTML;
 								$(window).on("resize", function() {
 									if(exports.width_func() >= 992) {
 										$(".lean-overlay").remove();
 										$("#popup").remove();
 										$("#popup_control").remove();
-										$("body").append(popup_control,
-											popup, overlay);
+										var controlWrap = $("<div>").html(popup_control),
+											popupWrap = $("<div>").html(popup),
+											overlayWrap = $("<div>").html(overlay);
+										$("body").append(controlWrap.children().first(),
+											popupWrap.children().first(),
+											overlayWrap.children().first());
+										$("#popup").css({
+											opacity: "1",
+											transform: "scaleX(1)",
+											top: "10%"
+										});
+										$(".lean-overlay").css("opacity", "2");
 										$("#popup_submit").click(function(e) {
 											e.preventDefault();
 											$(".lean-overlay").remove();
@@ -6416,6 +10069,12 @@ define(function() {
 											$("#popup_control").remove();
 										});
 									}
+								});
+								$("#popup_submit").click(function(e) {
+									e.preventDefault();
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
 								});
 							}).done(function() {
 								$.post("/api/log/want/" + page,
@@ -6459,28 +10118,37 @@ define(function() {
 										" to the content have been" +
 										" saved to the database!");
 									$("#popup_control").click();
-									var popup = $("#popup"),
-										popup_control = $("#popup_control"),
-										overlay = $(".lean-overlay");
-									$("#popup_submit").click(function(e) {
-										e.preventDefault();
-										location.reload();
-										$(window).scrollTop(0);
-									});
+									var popup = $("#popup")[0].outerHTML,
+										popup_control = $("#popup_control")[0].outerHTML,
+										overlay = $(".lean-overlay")[0].outerHTML;
 									$(window).on("resize", function() {
 										if(exports.width_func() >= 992) {
 											$(".lean-overlay").remove();
 											$("#popup").remove();
 											$("#popup_control").remove();
-											$("body").append(popup_control,
-												popup, overlay);
+											var controlWrap = $("<div>").html(popup_control),
+												popupWrap = $("<div>").html(popup),
+												overlayWrap = $("<div>").html(overlay);
+											$("body").append(controlWrap.children().first(),
+												popupWrap.children().first(),
+												overlayWrap.children().first());
+											$("#popup").css({
+												opacity: "1",
+												transform: "scaleX(1)",
+												top: "10%"
+											});
+											$(".lean-overlay").css("opacity", "2");
 											$("#popup_submit").click(function(e) {
 												e.preventDefault();
-												$(".lean-overlay").remove();
-												$("#popup").remove();
-												$("#popup_control").remove();
+												location.reload();
+												$(window).scrollTop(0);
 											});
 										}
+									});
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										location.reload();
+										$(window).scrollTop(0);
 									});
 								});
 							});
@@ -6542,7 +10210,7 @@ define(function() {
 									}
 								}
 							});
-						}, 1000 * 60 * 5);
+						}, 1000 * 60 * (1/6));
 						exports.listen_cookie_change("contributor", function() {
 							if(exports.read_cookie("contributor") == "") {
 								clearInterval(interval);
@@ -7174,9 +10842,21 @@ define(function() {
 							else if(screen_width < 992
 								&& screen_width > 400) {
 								width = screen_width * .75;
+								$("#popup").css({
+									opacity: "1",
+									transform: "scaleX(1)",
+									top: "10%"
+								});
+								$(".lean-overlay").css("opacity", "2");
 							}
 							else {
 								width = screen_width * .72;
+								$("#popup").css({
+									opacity: "1",
+									transform: "scaleX(1)",
+									top: "10%"
+								});
+								$(".lean-overlay").css("opacity", "2");
 							}
 							$("#nav-mobile").css("width", width);
 						});
