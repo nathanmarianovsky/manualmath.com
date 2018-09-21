@@ -243,7 +243,7 @@ define(["dist/functions-min", "materialize"],
 						}).done(function(content) {
 						$("#question")[0].options
 							.selectedIndex
-							= parseInt(content);
+							= parseInt(content) - 1;
 						functions.modal(14);
 					});
 				}

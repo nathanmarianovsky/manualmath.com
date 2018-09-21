@@ -1208,10 +1208,12 @@ exports.add_api_routes = (app, pool) => {
 					answer = request.body.answer;
 				statement = "UPDATE contributors SET first_name='" +
 					fname + "', last_name='" + lname + "', question=" +
-					question + ", answer='" + (answer !== undefined
-						? bcrypt.hashSync(answer, 10)
-						: "undefined") +
-					"' WHERE email='"+ email + "'";
+					question;  
+				if(answer !== "" && answer !== undefined) {
+					statement += ", answer='" +
+						bcrypt.hashSync(answer, 10) + "'";
+				}
+				statement += " WHERE email='"+ email + "'";
 			}
 			else if(param == "password") {
 				var password = request.body.password;

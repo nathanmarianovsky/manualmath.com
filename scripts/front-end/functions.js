@@ -211,9 +211,6 @@ define(function() {
 	    }, 100);
 	};
 
-
-
-
 	/*
 
 	Purpose:
@@ -460,6 +457,8 @@ define(function() {
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
+					$(window).off();
+					exports.resize_modal();
 				});
 				$("td").click(function(e) {
 					e.preventDefault();
@@ -577,6 +576,8 @@ define(function() {
 			$(".lean-overlay").remove();
 			$("#popup").remove();
 			$("#popup_control").remove();
+			$(window).off();
+			exports.resize_modal();
 		});
 		$("td").click(function(e) {
 			e.preventDefault();
@@ -701,7 +702,6 @@ define(function() {
 	*/
 	exports.resize_modal = function(callback) {
 		var counter = 0;
-		console.log(callback);
 		function message() {
 			if($("#popup").length == 0) {
 				$.get("/pages/dist/modal-min.html").done(function(content) {
@@ -834,9 +834,6 @@ define(function() {
 		}).done(function() { callback(); });
 	};
 
-
-
-
 	/*
 
 	Purpose:
@@ -939,6 +936,8 @@ define(function() {
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
+					$(window).off();
+					exports.resize_modal();
 				});
 				$(".delete-contributor").on("click", function(e) {
 					e.preventDefault();
@@ -1024,6 +1023,8 @@ define(function() {
 										$("#popup").remove();
 										$("#popup_control").remove();
 										$(window).scrollTop(0);
+										$(window).off();
+										exports.resize_modal();
 								});
 							});
 						}
@@ -1047,6 +1048,8 @@ define(function() {
 										$("#popup").remove();
 										$("#popup_control").remove();
 										$(window).scrollTop(0);
+										$(window).off();
+										exports.resize_modal();
 								});
 							});
 						}
@@ -1070,6 +1073,8 @@ define(function() {
 										$("#popup").remove();
 										$("#popup_control").remove();
 										$(window).scrollTop(0);
+										$(window).off();
+										exports.resize_modal();
 								});
 							});
 						}
@@ -1089,6 +1094,8 @@ define(function() {
 						$("#popup").remove();
 						$("#popup_control").remove();
 						$(window).scrollTop(0);
+						$(window).off();
+						exports.resize_modal();
 					});
 				});
 				var popup = $("#popup")[0].outerHTML,
@@ -1116,6 +1123,8 @@ define(function() {
 							$(".lean-overlay").remove();
 							$("#popup").remove();
 							$("#popup_control").remove();
+							$(window).off();
+							exports.resize_modal();
 						});
 						$(".delete-contributor").on("click", function(e) {
 							e.preventDefault();
@@ -1201,6 +1210,8 @@ define(function() {
 												$("#popup").remove();
 												$("#popup_control").remove();
 												$(window).scrollTop(0);
+												$(window).off();
+												exports.resize_modal();
 										});
 									});
 								}
@@ -1224,6 +1235,8 @@ define(function() {
 												$("#popup").remove();
 												$("#popup_control").remove();
 												$(window).scrollTop(0);
+												$(window).off();
+												exports.resize_modal();
 										});
 									});
 								}
@@ -1247,6 +1260,8 @@ define(function() {
 												$("#popup").remove();
 												$("#popup_control").remove();
 												$(window).scrollTop(0);
+												$(window).off();
+												exports.resize_modal();
 										});
 									});
 								}
@@ -1266,6 +1281,8 @@ define(function() {
 								$("#popup").remove();
 								$("#popup_control").remove();
 								$(window).scrollTop(0);
+								$(window).off();
+								exports.resize_modal();
 							});
 						});
 					}
@@ -1273,8 +1290,6 @@ define(function() {
 			});
 		});
 	};
-
-
 
 	/*
 
@@ -1369,6 +1384,8 @@ define(function() {
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
+					$(window).off();
+					exports.resize_modal();
 				});
 				$(".disapprove-contributor").on("click", function(e) {
 					e.preventDefault();
@@ -1539,6 +1556,8 @@ define(function() {
 										$("#popup").remove();
 										$("#popup_control").remove();
 										$(window).scrollTop(0);
+										$(window).off();
+										exports.resize_modal();
 								});
 							});
 						}
@@ -1553,6 +1572,8 @@ define(function() {
 						$("#popup").remove();
 						$("#popup_control").remove();
 						$(window).scrollTop(0);
+						$(window).off();
+						exports.resize_modal();
 					});
 				});
 			});
@@ -1671,6 +1692,8 @@ define(function() {
 							$(".lean-overlay").remove();
 							$("#popup").remove();
 							$("#popup_control").remove();
+							$(window).off();
+							exports.resize_modal();
 						});
 						$(".del-contributor").on("click", function(e) {
 							e.preventDefault();
@@ -1818,6 +1841,8 @@ define(function() {
 															$("#popup").remove();
 															$("#popup_control").remove();
 															$(window).scrollTop(0);
+															$(window).off();
+															exports.resize_modal();
 													});
 												}
 											});
@@ -1828,6 +1853,8 @@ define(function() {
 													$("#popup").remove();
 													$("#popup_control").remove();
 													$(window).scrollTop(0);
+													$(window).off();
+													exports.resize_modal();
 											});
 										});
 									}
@@ -1872,6 +1899,8 @@ define(function() {
 															$("#popup").remove();
 															$("#popup_control").remove();
 															$(window).scrollTop(0);
+															$(window).off();
+															exports.resize_modal();
 													});
 												}
 											});
@@ -1882,6 +1911,8 @@ define(function() {
 													$("#popup").remove();
 													$("#popup_control").remove();
 													$(window).scrollTop(0);
+													$(window).off();
+													exports.resize_modal();
 											});
 										});
 									}
@@ -1932,6 +1963,8 @@ define(function() {
 																$("#popup").remove();
 																$("#popup_control").remove();
 																$(window).scrollTop(0);
+																$(window).off();
+																exports.resize_modal();
 														});
 													}
 												});
@@ -1942,6 +1975,8 @@ define(function() {
 														$("#popup").remove();
 														$("#popup_control").remove();
 														$(window).scrollTop(0);
+														$(window).off();
+														exports.resize_modal();
 												});
 											});
 										}
@@ -1984,6 +2019,8 @@ define(function() {
 												$("#popup").remove();
 												$("#popup_control").remove();
 												$(window).scrollTop(0);
+												$(window).off();
+												exports.resize_modal();
 										});
 									}
 								});
@@ -1994,6 +2031,8 @@ define(function() {
 										$("#popup").remove();
 										$("#popup_control").remove();
 										$(window).scrollTop(0);
+										$(window).off();
+										exports.resize_modal();
 								});
 							});
 						});
@@ -2004,6 +2043,8 @@ define(function() {
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
+					$(window).off();
+					exports.resize_modal();
 				});
 				$(".del-contributor").on("click", function(e) {
 					e.preventDefault();
@@ -2151,6 +2192,8 @@ define(function() {
 													$("#popup").remove();
 													$("#popup_control").remove();
 													$(window).scrollTop(0);
+													$(window).off();
+													exports.resize_modal();
 											});
 										}
 									});
@@ -2161,6 +2204,8 @@ define(function() {
 											$("#popup").remove();
 											$("#popup_control").remove();
 											$(window).scrollTop(0);
+											$(window).off();
+											exports.resize_modal();
 									});
 								});
 							}
@@ -2205,6 +2250,8 @@ define(function() {
 													$("#popup").remove();
 													$("#popup_control").remove();
 													$(window).scrollTop(0);
+													$(window).off();
+													exports.resize_modal();
 											});
 										}
 									});
@@ -2215,6 +2262,8 @@ define(function() {
 											$("#popup").remove();
 											$("#popup_control").remove();
 											$(window).scrollTop(0);
+											$(window).off();
+											exports.resize_modal();
 									});
 								});
 							}
@@ -2265,6 +2314,8 @@ define(function() {
 														$("#popup").remove();
 														$("#popup_control").remove();
 														$(window).scrollTop(0);
+														$(window).off();
+														exports.resize_modal();
 												});
 											}
 										});
@@ -2275,6 +2326,8 @@ define(function() {
 												$("#popup").remove();
 												$("#popup_control").remove();
 												$(window).scrollTop(0);
+												$(window).off();
+												exports.resize_modal();
 										});
 									});
 								}
@@ -2317,6 +2370,8 @@ define(function() {
 										$("#popup").remove();
 										$("#popup_control").remove();
 										$(window).scrollTop(0);
+										$(window).off();
+										exports.resize_modal();
 								});
 							}
 						});
@@ -2327,6 +2382,8 @@ define(function() {
 								$("#popup").remove();
 								$("#popup_control").remove();
 								$(window).scrollTop(0);
+								$(window).off();
+								exports.resize_modal();
 						});
 					});
 				});
@@ -2910,530 +2967,9 @@ define(function() {
 					var popup = $("#popup")[0].outerHTML,
 						popup_control = $("#popup_control")[0].outerHTML,
 						overlay = $(".lean-overlay")[0].outerHTML;
-					function caller(type, container_id, all, data) {
-						$("#popup").keypress(function(event) {
-						    if(event.keyCode === 10 || event.keyCode === 13) {
-						        event.preventDefault();
-						    }
-						});
-						$("#popup_exit").click(function(event) {
-							event.preventDefault();
-							$(".lean-overlay").remove();
-							$("#popup").remove();
-							$("#popup_control").remove();
-						});
-						$("#popup_add").click(function(e) {
-							e.preventDefault();
-							var addon = -1,
-								order = -1,
-								lhs = -1,
-								rhs = -1,
-								inp_cpy = exports.copy(all),
-								dat_cpy = exports.copy(data);
-							if(type == "Subjects") {
-								lhs = inp_cpy.length != 0
-									? inp_cpy.sort(function(a, b) { 
-										return b.sid - a.sid; 
-									})[0].sid + 1
-									: 1,
-								rhs = dat_cpy.length != 0
-									? dat_cpy.sort(function(a, b) { 
-										return b.sid - a.sid; 
-									})[0].sid + 1
-									: 1;
-							}
-							else if(type == "Topics") {
-								lhs = inp_cpy.length != 0
-									? inp_cpy.sort(function(a, b) { 
-										return b.tid - a.tid; 
-									})[0].tid + 1
-									: 1,
-								rhs = dat_cpy.length != 0
-									? dat_cpy.sort(function(a, b) { 
-										return b.tid - a.tid; 
-									})[0].tid + 1
-									: 1;
-							}
-							else if(type == "Sections") {
-								lhs = inp_cpy.length != 0
-									? inp_cpy.sort(function(a, b) { 
-										return b.section_id - a.section_id; 
-									})[0].section_id + 1
-									: 1,
-								rhs = dat_cpy.length != 0
-									? dat_cpy.sort(function(a, b) { 
-										return b.section_id - a.section_id; 
-									})[0].section_id + 1
-									: 1;
-							}
-							else if(type == "Examples") {
-								lhs = inp_cpy.length != 0
-									? inp_cpy.sort(function(a, b) { 
-										return b.eid - a.eid; 
-									})[0].eid + 1
-									: 1,
-								rhs = dat_cpy.length != 0
-									? dat_cpy.sort(function(a, b) { 
-										return b.eid - a.eid; 
-									})[0].eid + 1
-									: 1;
-							}
-							addon = Math.max(lhs, rhs);
-							var new_tr = $("<tr>").attr("id",
-									type.toLowerCase() + "_tr_" + addon),
-								new_name = $("<td>").text("New "
-									+ type.substring(0, type.length - 1))
-									.addClass("field")
-									.attr({
-										contentEditable: "true",
-										id: type.toLowerCase() +
-											"_td_" + addon
-									}),
-								new_move = $("<td>").css("text-align", "center")
-									.append($("<a>").attr("id",
-										type.toLowerCase() + "_up_" + addon)
-										.addClass("arrow")
-										.css("cursor", "pointer")
-										.append($("<i>").addClass("material-icons")
-											.text("keyboard_arrow_up")))
-									.append($("<a>").attr("id",
-										type.toLowerCase() + "_down_" + addon)
-										.addClass("arrow")
-										.css("cursor", "pointer")
-										.append($("<i>").addClass("material-icons")
-											.text("keyboard_arrow_down"))),
-								new_approve = $("<td>").css("text-align", "center")
-									.append($("<a>")
-										.css("cursor", "pointer")
-										.attr("id", type.toLowerCase()
-											+ "_check_" + addon)
-										.addClass("approve center")
-										.css("color", "red")
-										.append($("<i>")
-											.addClass("material-icons")
-											.text("check_circle"))),
-								new_delete = $("<td>").css("text-align", "center")
-									.append($("<a>")
-										.css("cursor", "pointer")
-										.attr("id", type.toLowerCase()
-											+ "_delete_" + addon)
-										.addClass("del center")
-										.css("color", "red")
-										.append($("<i>")
-											.addClass("material-icons")
-											.text("cancel"))),
-								new_garbage = $("<td>").css("text-align", "center")
-									.append($("<a>")
-										.css("cursor", "pointer")
-										.attr("id", type.toLowerCase() +
-											"_garbage_" + addon)
-										.addClass("garbage center")
-										.css("color", "red")
-										.append($("<i>")
-											.addClass("material-icons")
-											.text("delete_sweep")));
-							if(data.every(function(elem) {
-								return elem.created == 0
-							})) {
-								$("#sidenav_table_head").find("tr")
-									.append($("<th>").attr("id", "garbage_head")
-										.text("Remove"));
-							}
-							new_tr.append(new_name, new_move,
-								new_approve, new_delete, new_garbage);
-							$("#sidenav_table_body").append(new_tr);
-							data.length == 0 ? order = 1
-								: order = data[data.length - 1].order + 1;
-							if(type == "Subjects") {
-								data.push({
-									sid: addon,
-									clean_name: "New " +
-										type.substring(0, type.length - 1),
-									sname: "Newx20" +
-										type.substring(0, type.length - 1),
-									order: order,
-									topics: [],
-									side_approval: {},
-									del_approval: {},
-									edited: 0,
-									created: 1,
-									status: 0
-								});
-							}
-							else if(type == "Topics") {
-								data.push({
-									tid: addon,
-									sid: container_id,
-									clean_name: "New " +
-										type.substring(0, type.length - 1),
-									tname: "Newx20" +
-										type.substring(0, type.length - 1),
-									order: order,
-									sections: [],
-									side_approval: {},
-									del_approval: {},
-									edited: 0,
-									created: 1,
-									status: 0
-								});
-							}
-							else if(type == "Sections") {
-								data.push({
-									section_id: addon,
-									tid: container_id,
-									clean_name: "New " +
-										type.substring(0, type.length - 1),
-									section_name: "Newx20" +
-										type.substring(0, type.length - 1),
-									order: order,
-									examples: [],
-									side_approval: {},
-									del_approval: {},
-									edited: 0,
-									created: 1,
-									status: 0
-								});
-							}
-							else if(type == "Examples") {
-								data.push({
-									eid: addon,
-									section_id: container_id,
-									clean_name: "New " +
-										type.substring(0, type.length - 1),
-									ename: "Newx20" +
-										type.substring(0, type.length - 1),
-									order: order,
-									side_approval: {},
-									del_approval: {},
-									edited: 0,
-									created: 1,
-									status: 0
-								});
-							}
-							exports.sidenav_modal_links(type, data);
-							exports.sidenav_modal_name_check(data);
-						});
-						exports.sidenav_modal_links(type, data);
-						$("#popup_submit").click(function(event) {
-							event.preventDefault();
-							var statement = "";
-							$.get("/api/cms/count/contributors")
-								.done(function(num) {
-								const validation = 
-									Math.ceil(Math.log(parseInt(num)));
-								$("#popup_submit").remove();
-								$("#popup_modal_footer").append($("<a>")
-									.attr("id", "popup_submit")
-									.addClass("modal-close waves-effect waves-blue btn-flat")
-									.text("Ok"));
-								data.forEach(function(iter) {
-									var id = -1,
-										ref = -1,
-										name = "";
-									if(type == "Subjects") {
-										id = iter.sid;
-										name = iter.sname;
-										ref = "undefined";
-									}
-									else if(type == "Topics") {
-										id = iter.tid;
-										name = iter.tname;
-										ref = iter.sid;
-									}
-									else if(type == "Sections") {
-										id = iter.section_id;
-										name = iter.section_name;
-										ref = iter.tid;
-									}
-									else if(type == "Examples") {
-										id = iter.eid;
-										name = iter.ename;
-										ref = iter.section_id;
-									}
-									if(typeof iter.del_approval !="object" &&
-										iter.del_approval.split(",")
-										.length >= validation) {
-										$.post("/api/delete/" +
-											type.toLowerCase().substring(0,
-												type.length - 1) + "/",
-											{param: id})
-										.fail(function(xhr, status, error) {
-											console.log("Deleting the " +
-												type.toLowerCase().substring(0,
-													type.length - 1) +
-												" with id " + id +
-												" failed with the error: " +
-												error);
-										});
-									}
-									else {
-										if(typeof iter.del_approval == "object" ||
-											iter.del_approval == "") {
-											iter.del_approval = "0";
-										}
-										if(typeof iter.side_approval == "object" ||
-											iter.side_approval == "") {
-											iter.side_approval = "0";
-										}
-										var obj = {
-											param: id,
-											ref: ref,
-											name: name,
-											order: iter.order,
-											title: "undefined",
-											content: "undefined",
-											side_approval: iter.side_approval,
-											cms_approval: "undefined",
-											del_approval: iter.del_approval,
-											title_cms: "undefined",
-											content_cms: "undefined"
-										};
-										if(iter.status == 0 && typeof
-											iter.side_approval !== "object") {
-											iter.side_approval != "0" &&
-												iter.side_approval.split(",").length 
-													>= validation
-												? obj.status = 1 : obj.status = 0;
-										}
-										else {
-											obj.status = 1;
-										}
-										if(iter.created == 1) {
-											statement = "/api/add/";
-											if(type == "Subjects") {
-												statement += "subject/";
-											}
-											else if(type == "Topics") {
-												statement += "topic/";
-											}
-											else if(type == "Sections") {
-												statement += "section/";
-											}
-											else if(type == "Examples") {
-												statement += "example/";
-											}
-											$.post(statement, obj)
-												.fail(function() {
-												$("#popup_title").text("Database Issue");
-												if(type == "Subjects") {
-													$("#popup_body").text("There was" +
-														" an issue uploading the new" +
-														" subject(s) to the database!");
-												}
-												else if(type == "Topics") {
-													$("#popup_body").text("There was" +
-														" an issue uploading the new" +
-														" topic(s) to the database!");
-												}
-												else if(type == "Sections") {
-													$("#popup_body").text("There was" +
-														" an issue uploading the new" +
-														" section(s) to the database!");
-												}
-												else if(type == "Examples") {
-													$("#popup_body").text("There was" +
-														" an issue uploading the new" +
-														" example(s) to the database!");
-												}
-												$("#popup_exit").remove();
-												$("#popup_add").remove();
-												var popup = $("#popup"),
-													popup_control = $("#popup_control"),
-													overlay = $(".lean-overlay");
-												$(window).on("resize", function() {
-													if(exports.width_func() >= 992) {
-														$(".lean-overlay").remove();
-														$("#popup").remove();
-														$("#popup_control").remove();
-														$("body").append(popup_control,
-															popup, overlay);
-														$("#popup_submit").click(function(e) {
-															e.preventDefault();
-															location.reload();
-															$(window).scrollTop(0);
-														});
-													}
-												});
-												$("#popup_submit").text("Ok")
-													.click(function(e) {
-														e.preventDefault();
-														location.reload();
-														$(window).scrollTop(0);
-												});
-											}).done(function() {
-												$.post("/api/log/want/" +
-													type.toLowerCase()
-													.substring(0, type.length - 1),
-													{id: id}).done(function(log) {
-													if(log === null) { log = ""; }
-													var now = new Date()
-															.toLocaleString("en-US",
-																{timeZone: "UTC"}),
-														change = "The " + type.toLowerCase()
-															.substring(0, type.length - 1) +
-															" " + iter.clean_name + " was " +
-															"officially created by the " +
-															"contributor " + cookie + ".";
-													if(log != "") {
-														log += "-----";
-													}
-													log += now + "_____" + change;
-													if(iter.status == 0 && obj.status == 1) {
-														change = "The " + type.toLowerCase()
-															.substring(0, type.length - 1) +
-															" " + iter.clean_name + " has " +
-															"gained permanent sidenav approval.";
-														log += "-----" + now + "_____" + change;
-													}
-													$.post("/api/log/change/" +
-														type.toLowerCase()
-														.substring(0, type.length - 1), {
-															id: id,
-															log: log
-													});
-												});
-											});
-										}
-										if(iter.edited == 1 && iter.created == 0) {
-											statement = "/api/change/";
-											if(type == "Subjects") {
-												statement += "subject/";
-											}
-											else if(type == "Topics") {
-												statement += "topic/";
-											}
-											else if(type == "Sections") {
-												statement += "section/";
-											}
-											else if(type == "Examples") {
-												statement += "example/";
-											}
-											$.post(statement, obj).fail(function() {
-												$("#popup_title").text("Database Issue");
-												if(type == "Subjects") {
-													$("#popup_body").text("There was an" +
-														" issue uploading the subject" +
-														" changes to the database!");
-												}
-												else if(type == "Topics") {
-													$("#popup_body").text("There was an" +
-														" issue uploading the topic" +
-														" changes to the database!");
-												}
-												else if(type == "Sections") {
-													$("#popup_body").text("There was an" +
-														" issue uploading the section" +
-														" changes to the database!");
-												}
-												else if(type == "Examples") {
-													$("#popup_body").text("There was an" +
-														" issue uploading the example" +
-														" changes to the database!");
-												}
-												$("#popup_exit").remove();
-												$("#popup_add").remove();
-												var popup = $("#popup"),
-													popup_control = $("#popup_control"),
-													overlay = $(".lean-overlay");
-												$(window).on("resize", function() {
-													if(exports.width_func() >= 992) {
-														$(".lean-overlay").remove();
-														$("#popup").remove();
-														$("#popup_control").remove();
-														$("body").append(popup_control,
-															popup, overlay);
-														$("#popup_submit").click(function(e) {
-															e.preventDefault();
-															location.reload();
-															$(window).scrollTop(0);
-														});
-													}
-												});
-												$("#popup_submit").text("Ok")
-													.click(function(e) {
-														e.preventDefault();
-														location.reload();
-														$(window).scrollTop(0);
-												});
-											}).done(function() {
-												$.post("/api/log/want/" +
-													type.toLowerCase()
-													.substring(0, type.length - 1),
-													{id: id}).done(function(log) {
-													if(log === null) { log = ""; }
-													var now = new Date()
-															.toLocaleString("en-US",
-																{timeZone: "UTC"}),
-														change = "The " + type.toLowerCase()
-															.substring(0, type.length - 1) +
-															" " + iter.clean_name + " had " +
-															"its sidenav information " +
-															"edited by the contributor " +
-															cookie + ".";
-													if(log != "") {
-														log += "-----";
-													}
-													log += now + "_____" + change;
-													if(iter.status == 0 && obj.status == 1) {
-														change = "The " + type.toLowerCase()
-															.substring(0, type.length - 1) +
-															" " + iter.clean_name + " has " +
-															"gained permanent sidenav approval.";
-														log += "-----" + now + "_____" + change;
-													}
-													$.post("/api/log/change/" +
-														type.toLowerCase()
-														.substring(0, type.length - 1), {
-															id: id,
-															log: log
-													});
-												});
-											});
-										}
-									}
-								});
-							}).done(function() {
-								$("#popup").find(".modal-content").first().children().each(function(index) {
-									if(index > 1) {
-										$(this).remove();
-									}
-								});
-								$("#popup_title").text("Changes Saved")
-									.css("text-align", "center");
-								$("#popup_body").text("All changes have" +
-									" been saved to the database!");
-								$("#popup_exit").remove();
-								$("#popup_add").remove();
-								var popup = $("#popup")[0].outerHTML,
-									popup_control = $("#popup_control")[0].outerHTML,
-									overlay = $(".lean-overlay")[0].outerHTML;
-								$(window).on("resize", function() {
-									if(exports.width_func() >= 992) {
-										$(".lean-overlay").remove();
-										$("#popup").remove();
-										$("#popup_control").remove();
-										var controlWrap = $("<div>").html(popup_control),
-											popupWrap = $("<div>").html(popup),
-											overlayWrap = $("<div>").html(overlay);
-										$("body").append(controlWrap.children().first(),
-											popupWrap.children().first(),
-											overlayWrap.children().first());
-										$("#popup_submit").click(function(e) {
-											e.preventDefault();
-											location.reload();
-											$(window).scrollTop(0);
-										});
-									}
-								});
-								$("#popup_submit").click(function(e) {
-									e.preventDefault();
-									location.reload();
-									$(window).scrollTop(0);
-								});
-							});
-						});
-					}
-					caller(type, container_id, all, data);
+
+
+
 					$(window).on("resize", function() {
 						if(exports.width_func() >= 992) {
 							$(".lean-overlay").remove();
@@ -3445,14 +2981,1225 @@ define(function() {
 							$("body").append(controlWrap.children().first(),
 								popupWrap.children().first(),
 								overlayWrap.children().first());
+							$("#popup").find(".modal-content").first().children().each(function(index) {
+								if(index > 1) {
+									$(this).remove();
+								}
+							});
+							$("#popup_body").append(table);
+							if(data.some(function(elem) {
+								return elem.created == 1
+							})) {
+								$("#sidenav_table_head").find("tr")
+									.append($("<th>").attr("id", "garbage_head")
+										.text("Remove"));
+							}
+							data.forEach(function(elem) {
+								var addon = -1;
+								if(type == "Subjects") {
+									addon = elem.sid;
+								}
+								else if(type == "Topics") {
+									addon = elem.tid;
+								}
+								else if(type == "Sections") {
+									addon = elem.section_id;
+								}
+								else if(type == "Examples") {
+									addon = elem.eid;
+								}
+								var item_tr = $("<tr>").attr("id", type.toLowerCase()
+										+ "_tr_" + addon),
+									item_name = $("<td>").text(elem.clean_name)
+										.addClass("field")
+										.attr({
+											contentEditable: "true",
+											id: type.toLowerCase() + "_td_" + addon
+										}),
+									item_move = $("<td>").css("text-align", "center")
+										.append($("<a>").attr("id", type.toLowerCase()
+											+ "_up_" + addon).addClass("arrow")
+											.css("cursor", "pointer")
+											.append($("<i>").addClass("material-icons")
+												.text("keyboard_arrow_up")))
+										.append($("<a>").attr("id", type.toLowerCase()
+											+ "_down_" + addon).addClass("arrow")
+											.css("cursor", "pointer")
+											.append($("<i>").addClass("material-icons")
+												.text("keyboard_arrow_down"))),
+									item_approve = $("<td>").css("text-align", "center")
+										.append($("<a>")
+											.css("cursor", "pointer")
+											.attr("id", type.toLowerCase()
+												+ "_check_" + addon)
+											.addClass("approve center")
+											.append($("<i>").addClass("material-icons")
+												.text("check_circle"))),
+									item_delete = $("<td>").css("text-align", "center")
+										.append($("<a>")
+											.css("cursor", "pointer")
+											.attr("id", type.toLowerCase()
+												+ "_delete_" + addon)
+											.addClass("del center")
+											.append($("<i>").addClass("material-icons")
+												.text("cancel")));
+								if(elem.created == 1) {
+									item_garbage = $("<td>").css("text-align", "center")
+										.append($("<a>")
+											.css("cursor", "pointer")
+											.attr("id", type.toLowerCase() +
+												"_garbage_" + addon)
+											.addClass("garbage center")
+											.css("color", "red")
+											.append($("<i>")
+												.addClass("material-icons")
+												.text("delete_sweep")));
+									item_tr.append(item_name, item_move,
+										item_approve, item_delete, item_garbage);
+								}
+								else {
+									item_tr.append(item_name, item_move,
+										item_approve, item_delete);
+								}
+								$("#sidenav_table_body").append(item_tr);
+								if(typeof elem.side_approval != "object" && 
+									elem.side_approval.split(",").some(function(iter) {
+										return iter == cookie;
+									})) {
+									$("#" + type.toLowerCase() + "_check_" + addon)
+										.css("color", "green");
+								}
+								else {
+									$("#" + type.toLowerCase() + "_check_" + addon)
+										.css("color", "red");
+								}
+								if(typeof elem.del_approval != "object" && 
+									elem.del_approval.split(",").some(function(iter) {
+										return iter == cookie;
+									})) {
+									$("#" + type.toLowerCase() + "_delete_" + addon)
+										.css("color", "green");
+								}
+								else {
+									$("#" + type.toLowerCase() + "_delete_" + addon)
+										.css("color", "red");
+								}
+							});
+							exports.sidenav_modal_name_check(data);
+							$(".modal-trigger").leanModal({
+								dismissible: false,
+								opacity: 2,
+								inDuration: 1000,
+								outDuration: 1000
+							});
 							$("#popup").css({
 								opacity: "1",
 								transform: "scaleX(1)",
 								top: "10%"
 							});
 							$(".lean-overlay").css("opacity", "2");
-							caller(type, container_id, all, data);
+							$("#popup").keypress(function(event) {
+							    if(event.keyCode === 10 || event.keyCode === 13) {
+							        event.preventDefault();
+							    }
+							});
+							$("#popup_exit").click(function(event) {
+								event.preventDefault();
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+								$(window).off();
+								exports.resize_modal();
+							});
+							$("#popup_add").click(function(e) {
+								e.preventDefault();
+								var addon = -1,
+									order = -1,
+									lhs = -1,
+									rhs = -1,
+									inp_cpy = exports.copy(all),
+									dat_cpy = exports.copy(data);
+								if(type == "Subjects") {
+									lhs = inp_cpy.length != 0
+										? inp_cpy.sort(function(a, b) { 
+											return b.sid - a.sid; 
+										})[0].sid + 1
+										: 1,
+									rhs = dat_cpy.length != 0
+										? dat_cpy.sort(function(a, b) { 
+											return b.sid - a.sid; 
+										})[0].sid + 1
+										: 1;
+								}
+								else if(type == "Topics") {
+									lhs = inp_cpy.length != 0
+										? inp_cpy.sort(function(a, b) { 
+											return b.tid - a.tid; 
+										})[0].tid + 1
+										: 1,
+									rhs = dat_cpy.length != 0
+										? dat_cpy.sort(function(a, b) { 
+											return b.tid - a.tid; 
+										})[0].tid + 1
+										: 1;
+								}
+								else if(type == "Sections") {
+									lhs = inp_cpy.length != 0
+										? inp_cpy.sort(function(a, b) { 
+											return b.section_id - a.section_id; 
+										})[0].section_id + 1
+										: 1,
+									rhs = dat_cpy.length != 0
+										? dat_cpy.sort(function(a, b) { 
+											return b.section_id - a.section_id; 
+										})[0].section_id + 1
+										: 1;
+								}
+								else if(type == "Examples") {
+									lhs = inp_cpy.length != 0
+										? inp_cpy.sort(function(a, b) { 
+											return b.eid - a.eid; 
+										})[0].eid + 1
+										: 1,
+									rhs = dat_cpy.length != 0
+										? dat_cpy.sort(function(a, b) { 
+											return b.eid - a.eid; 
+										})[0].eid + 1
+										: 1;
+								}
+								addon = Math.max(lhs, rhs);
+								var new_tr = $("<tr>").attr("id",
+										type.toLowerCase() + "_tr_" + addon),
+									new_name = $("<td>").text("New "
+										+ type.substring(0, type.length - 1))
+										.addClass("field")
+										.attr({
+											contentEditable: "true",
+											id: type.toLowerCase() +
+												"_td_" + addon
+										}),
+									new_move = $("<td>").css("text-align", "center")
+										.append($("<a>").attr("id",
+											type.toLowerCase() + "_up_" + addon)
+											.addClass("arrow")
+											.css("cursor", "pointer")
+											.append($("<i>").addClass("material-icons")
+												.text("keyboard_arrow_up")))
+										.append($("<a>").attr("id",
+											type.toLowerCase() + "_down_" + addon)
+											.addClass("arrow")
+											.css("cursor", "pointer")
+											.append($("<i>").addClass("material-icons")
+												.text("keyboard_arrow_down"))),
+									new_approve = $("<td>").css("text-align", "center")
+										.append($("<a>")
+											.css("cursor", "pointer")
+											.attr("id", type.toLowerCase()
+												+ "_check_" + addon)
+											.addClass("approve center")
+											.css("color", "red")
+											.append($("<i>")
+												.addClass("material-icons")
+												.text("check_circle"))),
+									new_delete = $("<td>").css("text-align", "center")
+										.append($("<a>")
+											.css("cursor", "pointer")
+											.attr("id", type.toLowerCase()
+												+ "_delete_" + addon)
+											.addClass("del center")
+											.css("color", "red")
+											.append($("<i>")
+												.addClass("material-icons")
+												.text("cancel"))),
+									new_garbage = $("<td>").css("text-align", "center")
+										.append($("<a>")
+											.css("cursor", "pointer")
+											.attr("id", type.toLowerCase() +
+												"_garbage_" + addon)
+											.addClass("garbage center")
+											.css("color", "red")
+											.append($("<i>")
+												.addClass("material-icons")
+												.text("delete_sweep")));
+								if(data.every(function(elem) {
+									return elem.created == 0
+								})) {
+									$("#sidenav_table_head").find("tr")
+										.append($("<th>").attr("id", "garbage_head")
+											.text("Remove"));
+								}
+								new_tr.append(new_name, new_move,
+									new_approve, new_delete, new_garbage);
+								$("#sidenav_table_body").append(new_tr);
+								data.length == 0 ? order = 1
+									: order = data[data.length - 1].order + 1;
+								if(type == "Subjects") {
+									data.push({
+										sid: addon,
+										clean_name: "New " +
+											type.substring(0, type.length - 1),
+										sname: "Newx20" +
+											type.substring(0, type.length - 1),
+										order: order,
+										topics: [],
+										side_approval: {},
+										del_approval: {},
+										edited: 0,
+										created: 1,
+										status: 0
+									});
+								}
+								else if(type == "Topics") {
+									data.push({
+										tid: addon,
+										sid: container_id,
+										clean_name: "New " +
+											type.substring(0, type.length - 1),
+										tname: "Newx20" +
+											type.substring(0, type.length - 1),
+										order: order,
+										sections: [],
+										side_approval: {},
+										del_approval: {},
+										edited: 0,
+										created: 1,
+										status: 0
+									});
+								}
+								else if(type == "Sections") {
+									data.push({
+										section_id: addon,
+										tid: container_id,
+										clean_name: "New " +
+											type.substring(0, type.length - 1),
+										section_name: "Newx20" +
+											type.substring(0, type.length - 1),
+										order: order,
+										examples: [],
+										side_approval: {},
+										del_approval: {},
+										edited: 0,
+										created: 1,
+										status: 0
+									});
+								}
+								else if(type == "Examples") {
+									data.push({
+										eid: addon,
+										section_id: container_id,
+										clean_name: "New " +
+											type.substring(0, type.length - 1),
+										ename: "Newx20" +
+											type.substring(0, type.length - 1),
+										order: order,
+										side_approval: {},
+										del_approval: {},
+										edited: 0,
+										created: 1,
+										status: 0
+									});
+								}
+								exports.sidenav_modal_links(type, data);
+								exports.sidenav_modal_name_check(data);
+							});
+							exports.sidenav_modal_links(type, data);
+							$("#popup_submit").click(function(event) {
+								event.preventDefault();
+								var statement = "";
+								$.get("/api/cms/count/contributors")
+									.done(function(num) {
+									const validation = 
+										Math.ceil(Math.log(parseInt(num)));
+									$("#popup_submit").remove();
+									$("#popup_modal_footer").append($("<a>")
+										.attr("id", "popup_submit")
+										.addClass("modal-close waves-effect waves-blue btn-flat")
+										.text("Ok"));
+									data.forEach(function(iter) {
+										var id = -1,
+											ref = -1,
+											name = "";
+										if(type == "Subjects") {
+											id = iter.sid;
+											name = iter.sname;
+											ref = "undefined";
+										}
+										else if(type == "Topics") {
+											id = iter.tid;
+											name = iter.tname;
+											ref = iter.sid;
+										}
+										else if(type == "Sections") {
+											id = iter.section_id;
+											name = iter.section_name;
+											ref = iter.tid;
+										}
+										else if(type == "Examples") {
+											id = iter.eid;
+											name = iter.ename;
+											ref = iter.section_id;
+										}
+										if(typeof iter.del_approval !="object" &&
+											iter.del_approval.split(",")
+											.length >= validation) {
+											$.post("/api/delete/" +
+												type.toLowerCase().substring(0,
+													type.length - 1) + "/",
+												{param: id})
+											.fail(function(xhr, status, error) {
+												console.log("Deleting the " +
+													type.toLowerCase().substring(0,
+														type.length - 1) +
+													" with id " + id +
+													" failed with the error: " +
+													error);
+											});
+										}
+										else {
+											if(typeof iter.del_approval == "object" ||
+												iter.del_approval == "") {
+												iter.del_approval = "0";
+											}
+											if(typeof iter.side_approval == "object" ||
+												iter.side_approval == "") {
+												iter.side_approval = "0";
+											}
+											var obj = {
+												param: id,
+												ref: ref,
+												name: name,
+												order: iter.order,
+												title: "undefined",
+												content: "undefined",
+												side_approval: iter.side_approval,
+												cms_approval: "undefined",
+												del_approval: iter.del_approval,
+												title_cms: "undefined",
+												content_cms: "undefined"
+											};
+											if(iter.status == 0 && typeof
+												iter.side_approval !== "object") {
+												iter.side_approval != "0" &&
+													iter.side_approval.split(",").length 
+														>= validation
+													? obj.status = 1 : obj.status = 0;
+											}
+											else {
+												obj.status = 1;
+											}
+											if(iter.created == 1) {
+												statement = "/api/add/";
+												if(type == "Subjects") {
+													statement += "subject/";
+												}
+												else if(type == "Topics") {
+													statement += "topic/";
+												}
+												else if(type == "Sections") {
+													statement += "section/";
+												}
+												else if(type == "Examples") {
+													statement += "example/";
+												}
+												$.post(statement, obj)
+													.fail(function() {
+													$("#popup_title").text("Database Issue");
+													if(type == "Subjects") {
+														$("#popup_body").text("There was" +
+															" an issue uploading the new" +
+															" subject(s) to the database!");
+													}
+													else if(type == "Topics") {
+														$("#popup_body").text("There was" +
+															" an issue uploading the new" +
+															" topic(s) to the database!");
+													}
+													else if(type == "Sections") {
+														$("#popup_body").text("There was" +
+															" an issue uploading the new" +
+															" section(s) to the database!");
+													}
+													else if(type == "Examples") {
+														$("#popup_body").text("There was" +
+															" an issue uploading the new" +
+															" example(s) to the database!");
+													}
+													$("#popup_exit").remove();
+													$("#popup_add").remove();
+													var popup = $("#popup")[0].outerHTML,
+														popup_control = $("#popup_control")[0].outerHTML,
+														overlay = $(".lean-overlay")[0].outerHTML;
+													$(window).on("resize", function() {
+														if(exports.width_func() >= 992) {
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															var controlWrap = $("<div>").html(popup_control),
+																popupWrap = $("<div>").html(popup),
+																overlayWrap = $("<div>").html(overlay);
+															$("body").append(controlWrap.children().first(),
+																popupWrap.children().first(),
+																overlayWrap.children().first());
+															$("#popup").css({
+																opacity: "1",
+																transform: "scaleX(1)",
+																top: "10%"
+															});
+															$(".lean-overlay").css("opacity", "2");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																location.reload();
+																$(window).scrollTop(0);
+															});
+														}
+													});
+													$("#popup_submit").text("Ok")
+														.click(function(e) {
+															e.preventDefault();
+															location.reload();
+															$(window).scrollTop(0);
+													});
+												}).done(function() {
+													$.post("/api/log/want/" +
+														type.toLowerCase()
+														.substring(0, type.length - 1),
+														{id: id}).done(function(log) {
+														if(log === null) { log = ""; }
+														var now = new Date()
+																.toLocaleString("en-US",
+																	{timeZone: "UTC"}),
+															change = "The " + type.toLowerCase()
+																.substring(0, type.length - 1) +
+																" " + iter.clean_name + " was " +
+																"officially created by the " +
+																"contributor " + cookie + ".";
+														if(log != "") {
+															log += "-----";
+														}
+														log += now + "_____" + change;
+														if(iter.status == 0 && obj.status == 1) {
+															change = "The " + type.toLowerCase()
+																.substring(0, type.length - 1) +
+																" " + iter.clean_name + " has " +
+																"gained permanent sidenav approval.";
+															log += "-----" + now + "_____" + change;
+														}
+														$.post("/api/log/change/" +
+															type.toLowerCase()
+															.substring(0, type.length - 1), {
+																id: id,
+																log: log
+														});
+													});
+												});
+											}
+											if(iter.edited == 1 && iter.created == 0) {
+												statement = "/api/change/";
+												if(type == "Subjects") {
+													statement += "subject/";
+												}
+												else if(type == "Topics") {
+													statement += "topic/";
+												}
+												else if(type == "Sections") {
+													statement += "section/";
+												}
+												else if(type == "Examples") {
+													statement += "example/";
+												}
+												$.post(statement, obj).fail(function() {
+													$("#popup_title").text("Database Issue");
+													if(type == "Subjects") {
+														$("#popup_body").text("There was an" +
+															" issue uploading the subject" +
+															" changes to the database!");
+													}
+													else if(type == "Topics") {
+														$("#popup_body").text("There was an" +
+															" issue uploading the topic" +
+															" changes to the database!");
+													}
+													else if(type == "Sections") {
+														$("#popup_body").text("There was an" +
+															" issue uploading the section" +
+															" changes to the database!");
+													}
+													else if(type == "Examples") {
+														$("#popup_body").text("There was an" +
+															" issue uploading the example" +
+															" changes to the database!");
+													}
+													$("#popup_exit").remove();
+													$("#popup_add").remove();
+													var popup = $("#popup")[0].outerHTML,
+														popup_control = $("#popup_control")[0].outerHTML,
+														overlay = $(".lean-overlay")[0].outerHTML;
+													$(window).on("resize", function() {
+														if(exports.width_func() >= 992) {
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															var controlWrap = $("<div>").html(popup_control),
+																popupWrap = $("<div>").html(popup),
+																overlayWrap = $("<div>").html(overlay);
+															$("body").append(controlWrap.children().first(),
+																popupWrap.children().first(),
+																overlayWrap.children().first());
+															$("#popup").css({
+																opacity: "1",
+																transform: "scaleX(1)",
+																top: "10%"
+															});
+															$(".lean-overlay").css("opacity", "2");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																location.reload();
+																$(window).scrollTop(0);
+															});
+														}
+													});
+													$("#popup_submit").text("Ok")
+														.click(function(e) {
+															e.preventDefault();
+															location.reload();
+															$(window).scrollTop(0);
+													});
+												}).done(function() {
+													$.post("/api/log/want/" +
+														type.toLowerCase()
+														.substring(0, type.length - 1),
+														{id: id}).done(function(log) {
+														if(log === null) { log = ""; }
+														var now = new Date()
+																.toLocaleString("en-US",
+																	{timeZone: "UTC"}),
+															change = "The " + type.toLowerCase()
+																.substring(0, type.length - 1) +
+																" " + iter.clean_name + " had " +
+																"its sidenav information " +
+																"edited by the contributor " +
+																cookie + ".";
+														if(log != "") {
+															log += "-----";
+														}
+														log += now + "_____" + change;
+														if(iter.status == 0 && obj.status == 1) {
+															change = "The " + type.toLowerCase()
+																.substring(0, type.length - 1) +
+																" " + iter.clean_name + " has " +
+																"gained permanent sidenav approval.";
+															log += "-----" + now + "_____" + change;
+														}
+														$.post("/api/log/change/" +
+															type.toLowerCase()
+															.substring(0, type.length - 1), {
+																id: id,
+																log: log
+														});
+													});
+												});
+											}
+										}
+									});
+								}).done(function() {
+									$("#popup").find(".modal-content").first().children().each(function(index) {
+										if(index > 1) {
+											$(this).remove();
+										}
+									});
+									$("#popup_title").text("Changes Saved")
+										.css("text-align", "center");
+									$("#popup_body").text("All changes have" +
+										" been saved to the database!");
+									$("#popup_exit").remove();
+									$("#popup_add").remove();
+									var popup = $("#popup")[0].outerHTML,
+										popup_control = $("#popup_control")[0].outerHTML,
+										overlay = $(".lean-overlay")[0].outerHTML;
+									$(window).on("resize", function() {
+										if(exports.width_func() >= 992) {
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											var controlWrap = $("<div>").html(popup_control),
+												popupWrap = $("<div>").html(popup),
+												overlayWrap = $("<div>").html(overlay);
+											$("body").append(controlWrap.children().first(),
+												popupWrap.children().first(),
+												overlayWrap.children().first());
+											$("#popup").css({
+												opacity: "1",
+												transform: "scaleX(1)",
+												top: "10%"
+											});
+											$(".lean-overlay").css("opacity", "2");
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												location.reload();
+												$(window).scrollTop(0);
+											});
+										}
+									});
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										location.reload();
+										$(window).scrollTop(0);
+									});
+								});
+							});
 						}
+					});
+
+
+
+					$("#popup").keypress(function(event) {
+					    if(event.keyCode === 10 || event.keyCode === 13) {
+					        event.preventDefault();
+					    }
+					});
+					$("#popup_exit").click(function(event) {
+						event.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						$(window).off();
+						exports.resize_modal();
+					});
+					$("#popup_add").click(function(e) {
+						e.preventDefault();
+						var addon = -1,
+							order = -1,
+							lhs = -1,
+							rhs = -1,
+							inp_cpy = exports.copy(all),
+							dat_cpy = exports.copy(data);
+						if(type == "Subjects") {
+							lhs = inp_cpy.length != 0
+								? inp_cpy.sort(function(a, b) { 
+									return b.sid - a.sid; 
+								})[0].sid + 1
+								: 1,
+							rhs = dat_cpy.length != 0
+								? dat_cpy.sort(function(a, b) { 
+									return b.sid - a.sid; 
+								})[0].sid + 1
+								: 1;
+						}
+						else if(type == "Topics") {
+							lhs = inp_cpy.length != 0
+								? inp_cpy.sort(function(a, b) { 
+									return b.tid - a.tid; 
+								})[0].tid + 1
+								: 1,
+							rhs = dat_cpy.length != 0
+								? dat_cpy.sort(function(a, b) { 
+									return b.tid - a.tid; 
+								})[0].tid + 1
+								: 1;
+						}
+						else if(type == "Sections") {
+							lhs = inp_cpy.length != 0
+								? inp_cpy.sort(function(a, b) { 
+									return b.section_id - a.section_id; 
+								})[0].section_id + 1
+								: 1,
+							rhs = dat_cpy.length != 0
+								? dat_cpy.sort(function(a, b) { 
+									return b.section_id - a.section_id; 
+								})[0].section_id + 1
+								: 1;
+						}
+						else if(type == "Examples") {
+							lhs = inp_cpy.length != 0
+								? inp_cpy.sort(function(a, b) { 
+									return b.eid - a.eid; 
+								})[0].eid + 1
+								: 1,
+							rhs = dat_cpy.length != 0
+								? dat_cpy.sort(function(a, b) { 
+									return b.eid - a.eid; 
+								})[0].eid + 1
+								: 1;
+						}
+						addon = Math.max(lhs, rhs);
+						var new_tr = $("<tr>").attr("id",
+								type.toLowerCase() + "_tr_" + addon),
+							new_name = $("<td>").text("New "
+								+ type.substring(0, type.length - 1))
+								.addClass("field")
+								.attr({
+									contentEditable: "true",
+									id: type.toLowerCase() +
+										"_td_" + addon
+								}),
+							new_move = $("<td>").css("text-align", "center")
+								.append($("<a>").attr("id",
+									type.toLowerCase() + "_up_" + addon)
+									.addClass("arrow")
+									.css("cursor", "pointer")
+									.append($("<i>").addClass("material-icons")
+										.text("keyboard_arrow_up")))
+								.append($("<a>").attr("id",
+									type.toLowerCase() + "_down_" + addon)
+									.addClass("arrow")
+									.css("cursor", "pointer")
+									.append($("<i>").addClass("material-icons")
+										.text("keyboard_arrow_down"))),
+							new_approve = $("<td>").css("text-align", "center")
+								.append($("<a>")
+									.css("cursor", "pointer")
+									.attr("id", type.toLowerCase()
+										+ "_check_" + addon)
+									.addClass("approve center")
+									.css("color", "red")
+									.append($("<i>")
+										.addClass("material-icons")
+										.text("check_circle"))),
+							new_delete = $("<td>").css("text-align", "center")
+								.append($("<a>")
+									.css("cursor", "pointer")
+									.attr("id", type.toLowerCase()
+										+ "_delete_" + addon)
+									.addClass("del center")
+									.css("color", "red")
+									.append($("<i>")
+										.addClass("material-icons")
+										.text("cancel"))),
+							new_garbage = $("<td>").css("text-align", "center")
+								.append($("<a>")
+									.css("cursor", "pointer")
+									.attr("id", type.toLowerCase() +
+										"_garbage_" + addon)
+									.addClass("garbage center")
+									.css("color", "red")
+									.append($("<i>")
+										.addClass("material-icons")
+										.text("delete_sweep")));
+						if(data.every(function(elem) {
+							return elem.created == 0
+						})) {
+							$("#sidenav_table_head").find("tr")
+								.append($("<th>").attr("id", "garbage_head")
+									.text("Remove"));
+						}
+						new_tr.append(new_name, new_move,
+							new_approve, new_delete, new_garbage);
+						$("#sidenav_table_body").append(new_tr);
+						data.length == 0 ? order = 1
+							: order = data[data.length - 1].order + 1;
+						if(type == "Subjects") {
+							data.push({
+								sid: addon,
+								clean_name: "New " +
+									type.substring(0, type.length - 1),
+								sname: "Newx20" +
+									type.substring(0, type.length - 1),
+								order: order,
+								topics: [],
+								side_approval: {},
+								del_approval: {},
+								edited: 0,
+								created: 1,
+								status: 0
+							});
+						}
+						else if(type == "Topics") {
+							data.push({
+								tid: addon,
+								sid: container_id,
+								clean_name: "New " +
+									type.substring(0, type.length - 1),
+								tname: "Newx20" +
+									type.substring(0, type.length - 1),
+								order: order,
+								sections: [],
+								side_approval: {},
+								del_approval: {},
+								edited: 0,
+								created: 1,
+								status: 0
+							});
+						}
+						else if(type == "Sections") {
+							data.push({
+								section_id: addon,
+								tid: container_id,
+								clean_name: "New " +
+									type.substring(0, type.length - 1),
+								section_name: "Newx20" +
+									type.substring(0, type.length - 1),
+								order: order,
+								examples: [],
+								side_approval: {},
+								del_approval: {},
+								edited: 0,
+								created: 1,
+								status: 0
+							});
+						}
+						else if(type == "Examples") {
+							data.push({
+								eid: addon,
+								section_id: container_id,
+								clean_name: "New " +
+									type.substring(0, type.length - 1),
+								ename: "Newx20" +
+									type.substring(0, type.length - 1),
+								order: order,
+								side_approval: {},
+								del_approval: {},
+								edited: 0,
+								created: 1,
+								status: 0
+							});
+						}
+						exports.sidenav_modal_links(type, data);
+						exports.sidenav_modal_name_check(data);
+					});
+					exports.sidenav_modal_links(type, data);
+					$("#popup_submit").click(function(event) {
+						event.preventDefault();
+						var statement = "";
+						$.get("/api/cms/count/contributors")
+							.done(function(num) {
+							const validation = 
+								Math.ceil(Math.log(parseInt(num)));
+							$("#popup_submit").remove();
+							$("#popup_modal_footer").append($("<a>")
+								.attr("id", "popup_submit")
+								.addClass("modal-close waves-effect waves-blue btn-flat")
+								.text("Ok"));
+							data.forEach(function(iter) {
+								var id = -1,
+									ref = -1,
+									name = "";
+								if(type == "Subjects") {
+									id = iter.sid;
+									name = iter.sname;
+									ref = "undefined";
+								}
+								else if(type == "Topics") {
+									id = iter.tid;
+									name = iter.tname;
+									ref = iter.sid;
+								}
+								else if(type == "Sections") {
+									id = iter.section_id;
+									name = iter.section_name;
+									ref = iter.tid;
+								}
+								else if(type == "Examples") {
+									id = iter.eid;
+									name = iter.ename;
+									ref = iter.section_id;
+								}
+								if(typeof iter.del_approval !="object" &&
+									iter.del_approval.split(",")
+									.length >= validation) {
+									$.post("/api/delete/" +
+										type.toLowerCase().substring(0,
+											type.length - 1) + "/",
+										{param: id})
+									.fail(function(xhr, status, error) {
+										console.log("Deleting the " +
+											type.toLowerCase().substring(0,
+												type.length - 1) +
+											" with id " + id +
+											" failed with the error: " +
+											error);
+									});
+								}
+								else {
+									if(typeof iter.del_approval == "object" ||
+										iter.del_approval == "") {
+										iter.del_approval = "0";
+									}
+									if(typeof iter.side_approval == "object" ||
+										iter.side_approval == "") {
+										iter.side_approval = "0";
+									}
+									var obj = {
+										param: id,
+										ref: ref,
+										name: name,
+										order: iter.order,
+										title: "undefined",
+										content: "undefined",
+										side_approval: iter.side_approval,
+										cms_approval: "undefined",
+										del_approval: iter.del_approval,
+										title_cms: "undefined",
+										content_cms: "undefined"
+									};
+									if(iter.status == 0 && typeof
+										iter.side_approval !== "object") {
+										iter.side_approval != "0" &&
+											iter.side_approval.split(",").length 
+												>= validation
+											? obj.status = 1 : obj.status = 0;
+									}
+									else {
+										obj.status = 1;
+									}
+									if(iter.created == 1) {
+										statement = "/api/add/";
+										if(type == "Subjects") {
+											statement += "subject/";
+										}
+										else if(type == "Topics") {
+											statement += "topic/";
+										}
+										else if(type == "Sections") {
+											statement += "section/";
+										}
+										else if(type == "Examples") {
+											statement += "example/";
+										}
+										$.post(statement, obj)
+											.fail(function() {
+											$("#popup_title").text("Database Issue");
+											if(type == "Subjects") {
+												$("#popup_body").text("There was" +
+													" an issue uploading the new" +
+													" subject(s) to the database!");
+											}
+											else if(type == "Topics") {
+												$("#popup_body").text("There was" +
+													" an issue uploading the new" +
+													" topic(s) to the database!");
+											}
+											else if(type == "Sections") {
+												$("#popup_body").text("There was" +
+													" an issue uploading the new" +
+													" section(s) to the database!");
+											}
+											else if(type == "Examples") {
+												$("#popup_body").text("There was" +
+													" an issue uploading the new" +
+													" example(s) to the database!");
+											}
+											$("#popup_exit").remove();
+											$("#popup_add").remove();
+											var popup = $("#popup")[0].outerHTML,
+												popup_control = $("#popup_control")[0].outerHTML,
+												overlay = $(".lean-overlay")[0].outerHTML;
+											$(window).on("resize", function() {
+												if(exports.width_func() >= 992) {
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													var controlWrap = $("<div>").html(popup_control),
+														popupWrap = $("<div>").html(popup),
+														overlayWrap = $("<div>").html(overlay);
+													$("body").append(controlWrap.children().first(),
+														popupWrap.children().first(),
+														overlayWrap.children().first());
+													$("#popup").css({
+														opacity: "1",
+														transform: "scaleX(1)",
+														top: "10%"
+													});
+													$(".lean-overlay").css("opacity", "2");
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														location.reload();
+														$(window).scrollTop(0);
+													});
+												}
+											});
+											$("#popup_submit").text("Ok")
+												.click(function(e) {
+													e.preventDefault();
+													location.reload();
+													$(window).scrollTop(0);
+											});
+										}).done(function() {
+											$.post("/api/log/want/" +
+												type.toLowerCase()
+												.substring(0, type.length - 1),
+												{id: id}).done(function(log) {
+												if(log === null) { log = ""; }
+												var now = new Date()
+														.toLocaleString("en-US",
+															{timeZone: "UTC"}),
+													change = "The " + type.toLowerCase()
+														.substring(0, type.length - 1) +
+														" " + iter.clean_name + " was " +
+														"officially created by the " +
+														"contributor " + cookie + ".";
+												if(log != "") {
+													log += "-----";
+												}
+												log += now + "_____" + change;
+												if(iter.status == 0 && obj.status == 1) {
+													change = "The " + type.toLowerCase()
+														.substring(0, type.length - 1) +
+														" " + iter.clean_name + " has " +
+														"gained permanent sidenav approval.";
+													log += "-----" + now + "_____" + change;
+												}
+												$.post("/api/log/change/" +
+													type.toLowerCase()
+													.substring(0, type.length - 1), {
+														id: id,
+														log: log
+												});
+											});
+										});
+									}
+									if(iter.edited == 1 && iter.created == 0) {
+										statement = "/api/change/";
+										if(type == "Subjects") {
+											statement += "subject/";
+										}
+										else if(type == "Topics") {
+											statement += "topic/";
+										}
+										else if(type == "Sections") {
+											statement += "section/";
+										}
+										else if(type == "Examples") {
+											statement += "example/";
+										}
+										$.post(statement, obj).fail(function() {
+											$("#popup_title").text("Database Issue");
+											if(type == "Subjects") {
+												$("#popup_body").text("There was an" +
+													" issue uploading the subject" +
+													" changes to the database!");
+											}
+											else if(type == "Topics") {
+												$("#popup_body").text("There was an" +
+													" issue uploading the topic" +
+													" changes to the database!");
+											}
+											else if(type == "Sections") {
+												$("#popup_body").text("There was an" +
+													" issue uploading the section" +
+													" changes to the database!");
+											}
+											else if(type == "Examples") {
+												$("#popup_body").text("There was an" +
+													" issue uploading the example" +
+													" changes to the database!");
+											}
+											$("#popup_exit").remove();
+											$("#popup_add").remove();
+											var popup = $("#popup")[0].outerHTML,
+												popup_control = $("#popup_control")[0].outerHTML,
+												overlay = $(".lean-overlay")[0].outerHTML;
+											$(window).on("resize", function() {
+												if(exports.width_func() >= 992) {
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													var controlWrap = $("<div>").html(popup_control),
+														popupWrap = $("<div>").html(popup),
+														overlayWrap = $("<div>").html(overlay);
+													$("body").append(controlWrap.children().first(),
+														popupWrap.children().first(),
+														overlayWrap.children().first());
+													$("#popup").css({
+														opacity: "1",
+														transform: "scaleX(1)",
+														top: "10%"
+													});
+													$(".lean-overlay").css("opacity", "2");
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														location.reload();
+														$(window).scrollTop(0);
+													});
+												}
+											});
+											$("#popup_submit").text("Ok")
+												.click(function(e) {
+													e.preventDefault();
+													location.reload();
+													$(window).scrollTop(0);
+											});
+										}).done(function() {
+											$.post("/api/log/want/" +
+												type.toLowerCase()
+												.substring(0, type.length - 1),
+												{id: id}).done(function(log) {
+												if(log === null) { log = ""; }
+												var now = new Date()
+														.toLocaleString("en-US",
+															{timeZone: "UTC"}),
+													change = "The " + type.toLowerCase()
+														.substring(0, type.length - 1) +
+														" " + iter.clean_name + " had " +
+														"its sidenav information " +
+														"edited by the contributor " +
+														cookie + ".";
+												if(log != "") {
+													log += "-----";
+												}
+												log += now + "_____" + change;
+												if(iter.status == 0 && obj.status == 1) {
+													change = "The " + type.toLowerCase()
+														.substring(0, type.length - 1) +
+														" " + iter.clean_name + " has " +
+														"gained permanent sidenav approval.";
+													log += "-----" + now + "_____" + change;
+												}
+												$.post("/api/log/change/" +
+													type.toLowerCase()
+													.substring(0, type.length - 1), {
+														id: id,
+														log: log
+												});
+											});
+										});
+									}
+								}
+							});
+						}).done(function() {
+							$("#popup").find(".modal-content").first().children().each(function(index) {
+								if(index > 1) {
+									$(this).remove();
+								}
+							});
+							$("#popup_title").text("Changes Saved")
+								.css("text-align", "center");
+							$("#popup_body").text("All changes have" +
+								" been saved to the database!");
+							$("#popup_exit").remove();
+							$("#popup_add").remove();
+							var popup = $("#popup")[0].outerHTML,
+								popup_control = $("#popup_control")[0].outerHTML,
+								overlay = $(".lean-overlay")[0].outerHTML;
+							$(window).on("resize", function() {
+								if(exports.width_func() >= 992) {
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									var controlWrap = $("<div>").html(popup_control),
+										popupWrap = $("<div>").html(popup),
+										overlayWrap = $("<div>").html(overlay);
+									$("body").append(controlWrap.children().first(),
+										popupWrap.children().first(),
+										overlayWrap.children().first());
+									$("#popup").css({
+										opacity: "1",
+										transform: "scaleX(1)",
+										top: "10%"
+									});
+									$(".lean-overlay").css("opacity", "2");
+									$("#popup_submit").click(function(e) {
+										e.preventDefault();
+										location.reload();
+										$(window).scrollTop(0);
+									});
+								}
+							});
+							$("#popup_submit").click(function(e) {
+								e.preventDefault();
+								location.reload();
+								$(window).scrollTop(0);
+							});
+						});
 					});
 				});
 			});
@@ -3852,7 +4599,6 @@ define(function() {
 														});
 													}
 													else {
-														console.log(answer);
 														$.post("/api/cms/contributor/change/profile/", {
 															email: email,
 															fname: fname,
@@ -6804,199 +7550,158 @@ define(function() {
 			        return false;
 			    }
 			});
-			if(issue == 0) {
-				$("#popup_title")
-					.text("Email Issue");
-				$("#popup_body").text("There was" +
-					" an issue parsing the email" +
-					" you provided. Please try" +
-					" again!");
+			if(issue <= 11) {
+				if(issue == 0) {
+					$("#popup_title")
+						.text("Email Issue");
+					$("#popup_body").text("There was" +
+						" an issue parsing the email" +
+						" you provided. Please try" +
+						" again!");
+				}
+				else if(issue == 1) {
+					$("#popup_title")
+						.text("Registration Issue");
+					$("#popup_body").text("The email" +
+						" you provided does not exist" +
+						" in the database. Please" +
+						" provide another email!");
+				}
+				else if(issue == 2) {
+					$("#popup_title")
+						.text("Password Issue");
+					$("#popup_body").text("The" +
+						" password must be at" +
+						" least eight characters" +
+						" long while containing" +
+						" at least one number," +
+						" one lowercase letter," +
+						" and one uppercase" +
+						" letter. Please try" +
+						" again!");
+				}
+				else if(issue == 3) {
+					$("#popup_title")
+						.text("Database Issue");
+					$("#popup_body").text("There" +
+						" was a problem" +
+						" connecting to the" +
+						" database!");
+				}
+				else if(issue == 4) {
+					$("#popup_title")
+						.text("Email Issue");
+					$("#popup_body").text("The" +
+						" email you provided" +
+						" does not exist in" +
+						" the database." +
+						" Please provide" +
+						" another email!");
+				}
+				else if(issue == 5) {
+					$("#popup_title")
+						.text("Password Issue");
+					$("#popup_body").text("The" +
+						" password you provided" +
+						" does not match the one" +
+						" in the database." +
+						" Please try again!");
+				}
+				else if(issue == 6) {
+					$("#popup_title")
+						.text("Registration Issue");
+					$("#popup_body").text("The" +
+						" email you provided" +
+						" already exists in" +
+						" the database." +
+						" Please provide" +
+						" another email!");
+				}
+				else if(issue == 7) {
+					$("#popup_title")
+						.text("Password Issue");
+					$("#popup_body").text("The" +
+						" passwords you provided" +
+						" did not match." +
+						" Please try again!");
+				}
+				else if(issue == 8) {
+					$("#popup_title")
+						.text("Name Issue");
+					$("#popup_body").text("The" +
+						" first name cannot be" +
+						" left empty and must" +
+						" contain strictly" +
+						" letters. Please" +
+						" try again!");
+				}
+				else if(issue == 9) {
+					$("#popup_title")
+						.text("Name Issue");
+					$("#popup_body").text("The" +
+						" last name cannot be" +
+						" left empty and must" +
+						" contain strictly" +
+						" letters. Please" +
+						" try again!");
+				}
+				else if(issue == 10) {
+					$("#popup_title")
+						.text("Security Question Issue");
+					$("#popup_body").text("The" +
+						" answer to the chosen" +
+						" security question" +
+						" cannot be left empty." +
+						" Please try again!");
+				}
+				else if(issue == 11) {
+					$("#popup_title")
+						.text("Contributor Submission Issue");
+					$("#popup_body").text("There" +
+						" was an issue processing" +
+						" the submission to the" +
+						" database!");
+				}
 				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
+				var popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
+				$(window).on("resize", function() {
+					if(exports.width_func() >= 992) {
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						var controlWrap = $("<div>").html(popup_control),
+							popupWrap = $("<div>").html(popup),
+							overlayWrap = $("<div>").html(overlay);
+						$("body").append(controlWrap.children().first(),
+							popupWrap.children().first(),
+							overlayWrap.children().first());
+						$("#popup").css({
+							opacity: "1",
+							transform: "scaleX(1)",
+							top: "10%"
+						});
+						$(".lean-overlay").css("opacity", "2");
+						$("#popup_submit").click(function(e) {
+							e.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							$("body").css("overflow", "auto");
+							$(window).off();
+							exports.resize_modal();
+						});
+					}
 				});
-			}
-			else if(issue == 1) {
-				$("#popup_title")
-					.text("Registration Issue");
-				$("#popup_body").text("The email" +
-					" you provided does not exist" +
-					" in the database. Please" +
-					" provide another email!");
-				$("#popup_control").click();
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 2) {
-				$("#popup_title")
-					.text("Password Issue");
-				$("#popup_body").text("The" +
-					" password must be at" +
-					" least eight characters" +
-					" long while containing" +
-					" at least one number," +
-					" one lowercase letter," +
-					" and one uppercase" +
-					" letter. Please try" +
-					" again!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 3) {
-				$("#popup_title")
-					.text("Database Issue");
-				$("#popup_body").text("There" +
-					" was a problem" +
-					" connecting to the" +
-					" database!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 4) {
-				$("#popup_title")
-					.text("Email Issue");
-				$("#popup_body").text("The" +
-					" email you provided" +
-					" does not exist in" +
-					" the database." +
-					" Please provide" +
-					" another email!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 5) {
-				$("#popup_title")
-					.text("Password Issue");
-				$("#popup_body").text("The" +
-					" password you provided" +
-					" does not match the one" +
-					" in the database." +
-					" Please try again!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 6) {
-				$("#popup_title")
-					.text("Registration Issue");
-				$("#popup_body").text("The" +
-					" email you provided" +
-					" already exists in" +
-					" the database." +
-					" Please provide" +
-					" another email!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 7) {
-				$("#popup_title")
-					.text("Password Issue");
-				$("#popup_body").text("The" +
-					" passwords you provided" +
-					" did not match." +
-					" Please try again!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 8) {
-				$("#popup_title")
-					.text("Name Issue");
-				$("#popup_body").text("The" +
-					" first name cannot be" +
-					" left empty and must" +
-					" contain strictly" +
-					" letters. Please" +
-					" try again!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 9) {
-				$("#popup_title")
-					.text("Name Issue");
-				$("#popup_body").text("The" +
-					" last name cannot be" +
-					" left empty and must" +
-					" contain strictly" +
-					" letters. Please" +
-					" try again!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 10) {
-				$("#popup_title")
-					.text("Security Question Issue");
-				$("#popup_body").text("The" +
-					" answer to the chosen" +
-					" security question" +
-					" cannot be left empty." +
-					" Please try again!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
-				});
-			}
-			else if(issue == 11) {
-				$("#popup_title")
-					.text("Contributor Submission Issue");
-				$("#popup_body").text("There" +
-					" was an issue processing" +
-					" the submission to the" +
-					" database!");
-				$("#popup_control").click();
-				$("#popup_submit").click(function(e) {
-					e.preventDefault();
-					$(".lean-overlay").remove();
-					$("#popup").remove();
-					$("#popup_control").remove();
+					$("body").css("overflow", "auto");
+					$(window).off();
+					exports.resize_modal();
 				});
 			}
 			else if(issue == 12) {
@@ -7022,12 +7727,47 @@ define(function() {
 							" " + obj.last_name)
 						.css("text-align", "right")));
 				$("#popup_control").click();
+				var popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
+				$(window).on("resize", function() {
+					if(exports.width_func() >= 992) {
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						var controlWrap = $("<div>").html(popup_control),
+							popupWrap = $("<div>").html(popup),
+							overlayWrap = $("<div>").html(overlay);
+						$("body").append(controlWrap.children().first(),
+							popupWrap.children().first(),
+							overlayWrap.children().first());
+						$("#popup").css({
+							opacity: "1",
+							transform: "scaleX(1)",
+							top: "10%"
+						});
+						$(".lean-overlay").css("opacity", "2");
+						$("#popup_submit").click(function(e) {
+							e.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							$("#login_click").click();
+							$("body").css("overflow", "auto");
+							$(window).off();
+							exports.resize_modal();
+						});
+					}
+				});
 				$("#popup_submit").click(function(e) {
 					e.preventDefault();
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
 					$("#login_click").click();
+					$("body").css("overflow", "auto");
+					$(window).off();
+					exports.resize_modal();
 				});
 			}
 			else if(issue == 13) {
@@ -7046,13 +7786,145 @@ define(function() {
 					.addClass("modal-close waves-effect waves-blue btn-flat")
 					.text("Exit"));
 				$("#popup_control").click();
+				var popup = $("#popup")[0].outerHTML,
+					popup_control = $("#popup_control")[0].outerHTML,
+					overlay = $(".lean-overlay")[0].outerHTML;
+				$(window).on("resize", function() {
+					if(exports.width_func() >= 992) {
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						var controlWrap = $("<div>").html(popup_control),
+							popupWrap = $("<div>").html(popup),
+							overlayWrap = $("<div>").html(overlay);
+						$("body").append(controlWrap.children().first(),
+							popupWrap.children().first(),
+							overlayWrap.children().first());
+						$("#popup").css({
+							opacity: "1",
+							transform: "scaleX(1)",
+							top: "10%"
+						});
+						$(".lean-overlay").css("opacity", "2");
+						$("#popup_exit").click(function(e) {
+							e.preventDefault();
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							$("#login_click").click();
+							$("body").css("overflow", "auto").off();
+							$(window).off();
+							exports.resize_modal();
+						});
+						$("#popup_submit").click(function() {
+							$("body").off();
+							if(obj[0].status == 1) {
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+								$.post("/api/cms/live/check/",
+									{email: $("#login_email").val()})
+								.done(function(presence) {
+									if(presence == "") {
+										$.post("/api/cms/live/add/",
+											{email: $("#login_email").val()})
+										.done(function(result) {
+											if(result == 1) {
+												exports.write_cookie(
+													"contributor",
+													$("#login_email").val(),
+													60);
+												router.navigate("cms",
+													{reload: true});
+											}
+											else {
+												console.log("There was an" +
+													" issue adding the" +
+													" contributor to the" +
+													" list of live sessions!");
+											}
+										});
+									}
+									else {
+										exports.write_cookie("contributor",
+											$("#login_email").val(), 60);
+										router.navigate("cms", {reload: true});
+									}
+								});
+							}
+							else {
+								$("#popup_title")
+									.text("Contributor Status")
+									.css("text-align", "center");
+								$("#popup_body").text("Your account" +
+									" has not been approved by" +
+									" manualmath's committee yet!");
+								$("#popup_submit").remove();
+								$("#popup_exit").remove();
+								$("#popup_modal_footer").append($("<a>")
+									.attr("id", "popup_submit")
+									.addClass("modal-close waves-effect waves-blue btn-flat")
+									.text("Ok"));
+								$("#login_input input").each(function() {
+									$(this).val("");
+								});
+								Materialize.updateTextFields();
+								popup = $("#popup")[0].outerHTML;
+								popup_control = $("#popup_control")[0].outerHTML;
+								overlay = $(".lean-overlay")[0].outerHTML;
+								$(window).on("resize", function() {
+									if(exports.width_func() >= 992) {
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										var controlWrap = $("<div>").html(popup_control),
+											popupWrap = $("<div>").html(popup),
+											overlayWrap = $("<div>").html(overlay);
+										$("body").append(controlWrap.children().first(),
+											popupWrap.children().first(),
+											overlayWrap.children().first());
+										$("#popup").css({
+											opacity: "1",
+											transform: "scaleX(1)",
+											top: "10%"
+										});
+										$(".lean-overlay").css("opacity", "2");
+										$("#popup_submit").click(function(e) {
+											e.preventDefault();
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											$(window).scrollTop(0);
+											$("body").css("overflow", "auto").off();
+											$(window).off();
+											exports.resize_modal();
+										});
+									}
+								});
+								$("#popup_submit").click(function(e) {
+									e.preventDefault();
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									$(window).scrollTop(0);
+									$("body").css("overflow", "auto").off();
+									$(window).off();
+									exports.resize_modal();
+								});
+							}
+							$("body").css({overflow: "inherit", width: "auto"});
+						});
+					}
+				});
 				$("#popup_exit").click(function(e) {
 					e.preventDefault();
 					$(".lean-overlay").remove();
 					$("#popup").remove();
 					$("#popup_control").remove();
 					$("#login_click").click();
-					$("body").off();
+					$("body").css("overflow", "auto").off();
+					$(window).off();
+					exports.resize_modal();
 				});
 				$("#popup_submit").click(function() {
 					$("body").off();
@@ -7107,13 +7979,47 @@ define(function() {
 							$(this).val("");
 						});
 						Materialize.updateTextFields();
+						popup = $("#popup")[0].outerHTML;
+						popup_control = $("#popup_control")[0].outerHTML;
+						overlay = $(".lean-overlay")[0].outerHTML;
+						$(window).on("resize", function() {
+							if(exports.width_func() >= 992) {
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+								var controlWrap = $("<div>").html(popup_control),
+									popupWrap = $("<div>").html(popup),
+									overlayWrap = $("<div>").html(overlay);
+								$("body").append(controlWrap.children().first(),
+									popupWrap.children().first(),
+									overlayWrap.children().first());
+								$("#popup").css({
+									opacity: "1",
+									transform: "scaleX(1)",
+									top: "10%"
+								});
+								$(".lean-overlay").css("opacity", "2");
+								$("#popup_submit").click(function(e) {
+									e.preventDefault();
+									$(".lean-overlay").remove();
+									$("#popup").remove();
+									$("#popup_control").remove();
+									$(window).scrollTop(0);
+									$("body").css("overflow", "auto").off();
+									$(window).off();
+									exports.resize_modal();
+								});
+							}
+						});
 						$("#popup_submit").click(function(e) {
 							e.preventDefault();
 							$(".lean-overlay").remove();
 							$("#popup").remove();
 							$("#popup_control").remove();
 							$(window).scrollTop(0);
-							$("body").off();
+							$("body").css("overflow", "auto").off();
+							$(window).off();
+							exports.resize_modal();
 						});
 					}
 					$("body").css({overflow: "inherit", width: "auto"});
@@ -7130,14 +8036,510 @@ define(function() {
 					$("#ques").val($("#question option:selected")
 						.text());
 					$("#popup_submit").text("Continue")
-						.removeClass("modal-close");
+						.removeClass("modal-close")
+						.css("pointer-events", "none");
 					$("#popup_modal_footer").append($("<a>")
 						.attr("id", "popup_exit")
 						.addClass("modal-close waves-effect waves-blue btn-flat")
 						.text("Exit"));
 					$("#popup_control").click();
-					$("#popup_submit")
-						.css("pointer-events", "none");
+					var popup = $("#popup")[0].outerHTML,
+						popup_control = $("#popup_control")[0].outerHTML,
+						overlay = $(".lean-overlay")[0].outerHTML;
+					$(window).on("resize", function() {
+						if(exports.width_func() >= 992) {
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							var controlWrap = $("<div>").html(popup_control),
+								popupWrap = $("<div>").html(popup),
+								overlayWrap = $("<div>").html(overlay);
+							$("body").append(controlWrap.children().first(),
+								popupWrap.children().first(),
+								overlayWrap.children().first());
+							$("#popup").css({
+								opacity: "1",
+								transform: "scaleX(1)",
+								top: "10%"
+							});
+							$(".lean-overlay").css("opacity", "2");
+							$("#ques").val($("#question option:selected")
+								.text());
+							$("#forgotten").on("input", function() {
+								if($("#forgotten").val().length == 0) {
+									$("#popup_submit")
+										.css("pointer-events", "none");
+								}
+								else {
+									$("#popup_submit")
+										.css("pointer-events", "auto");
+								}
+								popup = $("#popup")[0].outerHTML;
+							});
+							$("#popup_exit").click(function(e) {
+								e.preventDefault();
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+								$("#login_click").click();
+								$(window).scrollTop(0);
+								$("body").css("overflow", "auto").off();
+								$(window).off();
+								exports.resize_modal();
+							});
+							$("#popup_submit").click(function(e) {
+								e.preventDefault();
+								$.post("/api/cms/contributor/check/security/", {
+									email: $("#login_email").val(),
+									answer: $("#forgotten").val()
+								}).done(function(result) {
+									if(result == 1) {
+										$.get("/pages/dist/password-change-min.html")
+											.done(function(result) {
+											$("#popup").find(".modal-content").first().children().each(function(index) {
+												if(index > 1) {
+													$(this).remove();
+												}
+											});
+											$("#popup_title").text("Password Reset");
+											$("#popup_body")
+												.text("Please provide a new password:")
+												.append(result);
+											$("#popup_exit").remove();
+											$("#popup_submit").remove();
+											$("#popup_modal_footer")
+												.append($("<a>")
+													.attr("id", "popup_submit")
+													.addClass("modal-close waves-effect waves-blue btn-flat")
+													.text("Continue"))
+												.append($("<a>")
+													.attr("id", "popup_exit")
+													.addClass("modal-close waves-effect waves-blue btn-flat")
+													.text("Exit"));
+											$("#popup_submit")
+												.css("pointer-events", "none");
+											popup = $("#popup")[0].outerHTML;
+											popup_control = $("#popup_control")[0].outerHTML;
+											overlay = $(".lean-overlay")[0].outerHTML;
+											$(window).on("resize", function() {
+												if(exports.width_func() >= 992) {
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													var controlWrap = $("<div>").html(popup_control),
+														popupWrap = $("<div>").html(popup),
+														overlayWrap = $("<div>").html(overlay);
+													$("body").append(controlWrap.children().first(),
+														popupWrap.children().first(),
+														overlayWrap.children().first());
+													$("#popup").css({
+														opacity: "1",
+														transform: "scaleX(1)",
+														top: "10%"
+													});
+													$(".lean-overlay").css("opacity", "2");
+													$("#newpass").on("input", function() {
+														if($("#newpass").val().length == 0) {
+															$("#popup_submit")
+																.css("pointer-events", "none");
+														}
+														else {
+															$("#popup_submit")
+																.css("pointer-events", "auto");
+														}
+														popup = $("#popup")[0].outerHTML;
+													});
+													$("#popup_exit").click(function() {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("#login_click").click();
+														$(window).scrollTop(0);
+														$("body").css("overflow", "auto").off();
+														$(window).off();
+														exports.resize_modal();
+													});
+													$("body").on("keypress", function(event) {
+													    if(event.which === 10 ||
+													    	event.which === 13) {
+													        return false;
+													    }
+													});
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$("body").off();
+														if(exports.password_check($("#newpass").val())) {
+															$.post("/api/cms/contributor/change/password/", {
+																email: $("#login_email").val(),
+																password: encodeURIComponent(
+																	$("#newpass").val())
+															}).done(function() {
+																$("#popup_title")
+																	.text("Password Changed");
+																$("#popup_body").text("You" +
+																	" may now login with" +
+																	" the new password!");
+																$("#popup_exit").remove();
+																$("#popup_submit").remove();
+																$("#popup_modal_footer")
+																	.append($("<a>")
+																		.attr("id", "popup_submit")
+																		.addClass("modal-close waves-effect waves-blue btn-flat")
+																		.text("Continue"));
+																popup = $("#popup")[0].outerHTML;
+																popup_control = $("#popup_control")[0].outerHTML;
+																overlay = $(".lean-overlay")[0].outerHTML;
+																$(window).on("resize", function() {
+																	if(exports.width_func() >= 992) {
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		var controlWrap = $("<div>").html(popup_control),
+																			popupWrap = $("<div>").html(popup),
+																			overlayWrap = $("<div>").html(overlay);
+																		$("body").append(controlWrap.children().first(),
+																			popupWrap.children().first(),
+																			overlayWrap.children().first());
+																		$("#popup").css({
+																			opacity: "1",
+																			transform: "scaleX(1)",
+																			top: "10%"
+																		});
+																		$(".lean-overlay").css("opacity", "2");
+																		$("#popup_submit").click(function(e) {
+																			e.preventDefault();
+																			$(".lean-overlay").remove();
+																			$("#popup").remove();
+																			$("#popup_control").remove();
+																			$("#login_click").click();
+																			$(window).scrollTop(0);
+																			$("body").css("overflow", "auto").off();
+																			$(window).off();
+																			exports.resize_modal();
+																		});
+																	}
+																});
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("#login_click").click();
+																	$(window).scrollTop(0);
+																	$("body").css("overflow", "auto").off();
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															});
+														}
+														else {
+															$("#popup").find(".modal-content").first().children().each(function(index) {
+																if(index > 1) {
+																	$(this).remove();
+																}
+															});
+															$("#popup_title")
+																.text("Password Issue");
+															$("#popup_body").text("The" +
+																" password must be at" +
+																" least eight characters" + 
+																" long while containing" +
+																" at least one number," +
+																" one lowercase letter," + 
+																" and one uppercase" +
+																" letter. Please try" +
+																" again!");
+															$("#popup_exit").remove();
+															$("#popup_submit").remove();
+															$("#popup_modal_footer")
+																.append($("<a>")
+																	.attr("id", "popup_submit")
+																	.addClass("modal-close waves-effect waves-blue btn-flat")
+																	.text("Ok"));
+															popup = $("#popup")[0].outerHTML;
+															popup_control = $("#popup_control")[0].outerHTML;
+															overlay = $(".lean-overlay")[0].outerHTML;
+															$(window).on("resize", function() {
+																if(exports.width_func() >= 992) {
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	var controlWrap = $("<div>").html(popup_control),
+																		popupWrap = $("<div>").html(popup),
+																		overlayWrap = $("<div>").html(overlay);
+																	$("body").append(controlWrap.children().first(),
+																		popupWrap.children().first(),
+																		overlayWrap.children().first());
+																	$("#popup").css({
+																		opacity: "1",
+																		transform: "scaleX(1)",
+																		top: "10%"
+																	});
+																	$(".lean-overlay").css("opacity", "2");
+																	$("#popup_submit").click(function(e) {
+																		e.preventDefault();
+																		$(".lean-overlay").remove();
+																		$("#popup").remove();
+																		$("#popup_control").remove();
+																		$("#login_click").click();
+																		$(window).scrollTop(0);
+																		$("body").css("overflow", "auto").off();
+																		$(window).off();
+																		exports.resize_modal();
+																	});
+																}
+															});
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("#login_click").click();
+																$(window).scrollTop(0);
+																$("body").css("overflow", "auto").off();
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+													});
+												}
+											});
+											$("#newpass").on("input", function() {
+												if($("#newpass").val().length == 0) {
+													$("#popup_submit")
+														.css("pointer-events", "none");
+												}
+												else {
+													$("#popup_submit")
+														.css("pointer-events", "auto");
+												}
+												popup = $("#popup")[0].outerHTML;
+											});
+											$("#popup_exit").click(function() {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("#login_click").click();
+												$(window).scrollTop(0);
+												$("body").css("overflow", "auto").off();
+												$(window).off();
+												exports.resize_modal();
+											});
+											$("body").on("keypress", function(event) {
+											    if(event.which === 10 ||
+											    	event.which === 13) {
+											        return false;
+											    }
+											});
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$("body").off();
+												if(exports.password_check($("#newpass").val())) {
+													$.post("/api/cms/contributor/change/password/", {
+														email: $("#login_email").val(),
+														password: encodeURIComponent(
+															$("#newpass").val())
+													}).done(function() {
+														$("#popup_title")
+															.text("Password Changed");
+														$("#popup_body").text("You" +
+															" may now login with" +
+															" the new password!");
+														$("#popup_exit").remove();
+														$("#popup_submit").remove();
+														$("#popup_modal_footer")
+															.append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("modal-close waves-effect waves-blue btn-flat")
+																.text("Continue"));
+														popup = $("#popup")[0].outerHTML;
+														popup_control = $("#popup_control")[0].outerHTML;
+														overlay = $(".lean-overlay")[0].outerHTML;
+														$(window).on("resize", function() {
+															if(exports.width_func() >= 992) {
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																var controlWrap = $("<div>").html(popup_control),
+																	popupWrap = $("<div>").html(popup),
+																	overlayWrap = $("<div>").html(overlay);
+																$("body").append(controlWrap.children().first(),
+																	popupWrap.children().first(),
+																	overlayWrap.children().first());
+																$("#popup").css({
+																	opacity: "1",
+																	transform: "scaleX(1)",
+																	top: "10%"
+																});
+																$(".lean-overlay").css("opacity", "2");
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("#login_click").click();
+																	$(window).scrollTop(0);
+																	$("body").css("overflow", "auto").off();
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("#login_click").click();
+															$(window).scrollTop(0);
+															$("body").css("overflow", "auto").off();
+															$(window).off();
+															exports.resize_modal();
+														});
+													});
+												}
+												else {
+													$("#popup").find(".modal-content").first().children().each(function(index) {
+														if(index > 1) {
+															$(this).remove();
+														}
+													});
+													$("#popup_title")
+														.text("Password Issue");
+													$("#popup_body").text("The" +
+														" password must be at" +
+														" least eight characters" + 
+														" long while containing" +
+														" at least one number," +
+														" one lowercase letter," + 
+														" and one uppercase" +
+														" letter. Please try" +
+														" again!");
+													$("#popup_exit").remove();
+													$("#popup_submit").remove();
+													$("#popup_modal_footer")
+														.append($("<a>")
+															.attr("id", "popup_submit")
+															.addClass("modal-close waves-effect waves-blue btn-flat")
+															.text("Ok"));
+													popup = $("#popup")[0].outerHTML;
+													popup_control = $("#popup_control")[0].outerHTML;
+													overlay = $(".lean-overlay")[0].outerHTML;
+													$(window).on("resize", function() {
+														if(exports.width_func() >= 992) {
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															var controlWrap = $("<div>").html(popup_control),
+																popupWrap = $("<div>").html(popup),
+																overlayWrap = $("<div>").html(overlay);
+															$("body").append(controlWrap.children().first(),
+																popupWrap.children().first(),
+																overlayWrap.children().first());
+															$("#popup").css({
+																opacity: "1",
+																transform: "scaleX(1)",
+																top: "10%"
+															});
+															$(".lean-overlay").css("opacity", "2");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("#login_click").click();
+																$(window).scrollTop(0);
+																$("body").css("overflow", "auto").off();
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+													});
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("#login_click").click();
+														$(window).scrollTop(0);
+														$("body").css("overflow", "auto").off();
+														$(window).off();
+														exports.resize_modal();
+													});
+												}
+											});
+										});
+									}
+									else {
+										$("#popup").find(".modal-content").first().children().each(function(index) {
+											if(index > 1) {
+												$(this).remove();
+											}
+										});
+										$("#popup_title")
+											.text("Password Recovery")
+											.css("text-align", "left");
+										$("#popup_body").text("You" +
+											" provided the wrong" +
+											" answer to the" +
+											" security question!");
+										$("#popup_exit").remove();
+										$("body").off();
+										popup = $("#popup")[0].outerHTML;
+										popup_control = $("#popup_control")[0].outerHTML;
+										overlay = $(".lean-overlay")[0].outerHTML;
+										$(window).on("resize", function() {
+											if(exports.width_func() >= 992) {
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												var controlWrap = $("<div>").html(popup_control),
+													popupWrap = $("<div>").html(popup),
+													overlayWrap = $("<div>").html(overlay);
+												$("body").append(controlWrap.children().first(),
+													popupWrap.children().first(),
+													overlayWrap.children().first());
+												$("#popup").css({
+													opacity: "1",
+													transform: "scaleX(1)",
+													top: "10%"
+												});
+												$(".lean-overlay").css("opacity", "2");
+												$("#popup_submit").text("Ok")
+													.click(function(e) {
+													e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("#login_click").click();
+														$(window).scrollTop(0);
+														$("body").css("overflow", "auto")
+															.off();
+														$(window).off();
+														exports.resize_modal();
+												});
+											}
+										});
+										$("#popup_submit").text("Ok")
+											.click(function(e) {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("#login_click").click();
+												$(window).scrollTop(0);
+												$("body").css("overflow", "auto")
+													.off();
+												$(window).off();
+												exports.resize_modal();
+										});
+									}
+								});
+							});
+						}
+					});
 					$("#forgotten").on("input", function() {
 						if($("#forgotten").val().length == 0) {
 							$("#popup_submit")
@@ -7166,6 +8568,11 @@ define(function() {
 							if(result == 1) {
 								$.get("/pages/dist/password-change-min.html")
 									.done(function(result) {
+									$("#popup").find(".modal-content").first().children().each(function(index) {
+										if(index > 1) {
+											$(this).remove();
+										}
+									});
 									$("#popup_title").text("Password Reset");
 									$("#popup_body")
 										.text("Please provide a new password:")
@@ -7183,6 +8590,193 @@ define(function() {
 											.text("Exit"));
 									$("#popup_submit")
 										.css("pointer-events", "none");
+									popup = $("#popup")[0].outerHTML;
+									popup_control = $("#popup_control")[0].outerHTML;
+									overlay = $(".lean-overlay")[0].outerHTML;
+									$(window).on("resize", function() {
+										if(exports.width_func() >= 992) {
+											$(".lean-overlay").remove();
+											$("#popup").remove();
+											$("#popup_control").remove();
+											var controlWrap = $("<div>").html(popup_control),
+												popupWrap = $("<div>").html(popup),
+												overlayWrap = $("<div>").html(overlay);
+											$("body").append(controlWrap.children().first(),
+												popupWrap.children().first(),
+												overlayWrap.children().first());
+											$("#popup").css({
+												opacity: "1",
+												transform: "scaleX(1)",
+												top: "10%"
+											});
+											$(".lean-overlay").css("opacity", "2");
+											$("#newpass").on("input", function() {
+												if($("#newpass").val().length == 0) {
+													$("#popup_submit")
+														.css("pointer-events", "none");
+												}
+												else {
+													$("#popup_submit")
+														.css("pointer-events", "auto");
+												}
+												popup = $("#popup")[0].outerHTML;
+											});
+											$("#popup_exit").click(function() {
+												e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("#login_click").click();
+												$(window).scrollTop(0);
+												$("body").css("overflow", "auto").off();
+												$(window).off();
+												exports.resize_modal();
+											});
+											$("body").on("keypress", function(event) {
+											    if(event.which === 10 ||
+											    	event.which === 13) {
+											        return false;
+											    }
+											});
+											$("#popup_submit").click(function(e) {
+												e.preventDefault();
+												$("body").off();
+												if(exports.password_check($("#newpass").val())) {
+													$.post("/api/cms/contributor/change/password/", {
+														email: $("#login_email").val(),
+														password: encodeURIComponent(
+															$("#newpass").val())
+													}).done(function() {
+														$("#popup_title")
+															.text("Password Changed");
+														$("#popup_body").text("You" +
+															" may now login with" +
+															" the new password!");
+														$("#popup_exit").remove();
+														$("#popup_submit").remove();
+														$("#popup_modal_footer")
+															.append($("<a>")
+																.attr("id", "popup_submit")
+																.addClass("modal-close waves-effect waves-blue btn-flat")
+																.text("Continue"));
+														popup = $("#popup")[0].outerHTML;
+														popup_control = $("#popup_control")[0].outerHTML;
+														overlay = $(".lean-overlay")[0].outerHTML;
+														$(window).on("resize", function() {
+															if(exports.width_func() >= 992) {
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																var controlWrap = $("<div>").html(popup_control),
+																	popupWrap = $("<div>").html(popup),
+																	overlayWrap = $("<div>").html(overlay);
+																$("body").append(controlWrap.children().first(),
+																	popupWrap.children().first(),
+																	overlayWrap.children().first());
+																$("#popup").css({
+																	opacity: "1",
+																	transform: "scaleX(1)",
+																	top: "10%"
+																});
+																$(".lean-overlay").css("opacity", "2");
+																$("#popup_submit").click(function(e) {
+																	e.preventDefault();
+																	$(".lean-overlay").remove();
+																	$("#popup").remove();
+																	$("#popup_control").remove();
+																	$("#login_click").click();
+																	$(window).scrollTop(0);
+																	$("body").css("overflow", "auto").off();
+																	$(window).off();
+																	exports.resize_modal();
+																});
+															}
+														});
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("#login_click").click();
+															$(window).scrollTop(0);
+															$("body").css("overflow", "auto").off();
+															$(window).off();
+															exports.resize_modal();
+														});
+													});
+												}
+												else {
+													$("#popup").find(".modal-content").first().children().each(function(index) {
+														if(index > 1) {
+															$(this).remove();
+														}
+													});
+													$("#popup_title")
+														.text("Password Issue");
+													$("#popup_body").text("The" +
+														" password must be at" +
+														" least eight characters" + 
+														" long while containing" +
+														" at least one number," +
+														" one lowercase letter," + 
+														" and one uppercase" +
+														" letter. Please try" +
+														" again!");
+													$("#popup_exit").remove();
+													$("#popup_submit").remove();
+													$("#popup_modal_footer")
+														.append($("<a>")
+															.attr("id", "popup_submit")
+															.addClass("modal-close waves-effect waves-blue btn-flat")
+															.text("Ok"));
+													popup = $("#popup")[0].outerHTML;
+													popup_control = $("#popup_control")[0].outerHTML;
+													overlay = $(".lean-overlay")[0].outerHTML;
+													$(window).on("resize", function() {
+														if(exports.width_func() >= 992) {
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															var controlWrap = $("<div>").html(popup_control),
+																popupWrap = $("<div>").html(popup),
+																overlayWrap = $("<div>").html(overlay);
+															$("body").append(controlWrap.children().first(),
+																popupWrap.children().first(),
+																overlayWrap.children().first());
+															$("#popup").css({
+																opacity: "1",
+																transform: "scaleX(1)",
+																top: "10%"
+															});
+															$(".lean-overlay").css("opacity", "2");
+															$("#popup_submit").click(function(e) {
+																e.preventDefault();
+																$(".lean-overlay").remove();
+																$("#popup").remove();
+																$("#popup_control").remove();
+																$("#login_click").click();
+																$(window).scrollTop(0);
+																$("body").css("overflow", "auto").off();
+																$(window).off();
+																exports.resize_modal();
+															});
+														}
+													});
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("#login_click").click();
+														$(window).scrollTop(0);
+														$("body").css("overflow", "auto").off();
+														$(window).off();
+														exports.resize_modal();
+													});
+												}
+											});
+										}
+									});
 									$("#newpass").on("input", function() {
 										if($("#newpass").val().length == 0) {
 											$("#popup_submit")
@@ -7192,6 +8786,7 @@ define(function() {
 											$("#popup_submit")
 												.css("pointer-events", "auto");
 										}
+										popup = $("#popup")[0].outerHTML;
 									});
 									$("#popup_exit").click(function() {
 										e.preventDefault();
@@ -7200,7 +8795,9 @@ define(function() {
 										$("#popup_control").remove();
 										$("#login_click").click();
 										$(window).scrollTop(0);
-										$("body").off();
+										$("body").css("overflow", "auto").off();
+										$(window).off();
+										exports.resize_modal();
 									});
 									$("body").on("keypress", function(event) {
 									    if(event.which === 10 ||
@@ -7229,6 +8826,39 @@ define(function() {
 														.attr("id", "popup_submit")
 														.addClass("modal-close waves-effect waves-blue btn-flat")
 														.text("Continue"));
+												popup = $("#popup")[0].outerHTML;
+												popup_control = $("#popup_control")[0].outerHTML;
+												overlay = $(".lean-overlay")[0].outerHTML;
+												$(window).on("resize", function() {
+													if(exports.width_func() >= 992) {
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														var controlWrap = $("<div>").html(popup_control),
+															popupWrap = $("<div>").html(popup),
+															overlayWrap = $("<div>").html(overlay);
+														$("body").append(controlWrap.children().first(),
+															popupWrap.children().first(),
+															overlayWrap.children().first());
+														$("#popup").css({
+															opacity: "1",
+															transform: "scaleX(1)",
+															top: "10%"
+														});
+														$(".lean-overlay").css("opacity", "2");
+														$("#popup_submit").click(function(e) {
+															e.preventDefault();
+															$(".lean-overlay").remove();
+															$("#popup").remove();
+															$("#popup_control").remove();
+															$("#login_click").click();
+															$(window).scrollTop(0);
+															$("body").css("overflow", "auto").off();
+															$(window).off();
+															exports.resize_modal();
+														});
+													}
+												});
 												$("#popup_submit").click(function(e) {
 													e.preventDefault();
 													$(".lean-overlay").remove();
@@ -7236,7 +8866,9 @@ define(function() {
 													$("#popup_control").remove();
 													$("#login_click").click();
 													$(window).scrollTop(0);
-													$("body").off();
+													$("body").css("overflow", "auto").off();
+													$(window).off();
+													exports.resize_modal();
 												});
 											});
 										}
@@ -7264,6 +8896,39 @@ define(function() {
 													.attr("id", "popup_submit")
 													.addClass("modal-close waves-effect waves-blue btn-flat")
 													.text("Ok"));
+											popup = $("#popup")[0].outerHTML;
+											popup_control = $("#popup_control")[0].outerHTML;
+											overlay = $(".lean-overlay")[0].outerHTML;
+											$(window).on("resize", function() {
+												if(exports.width_func() >= 992) {
+													$(".lean-overlay").remove();
+													$("#popup").remove();
+													$("#popup_control").remove();
+													var controlWrap = $("<div>").html(popup_control),
+														popupWrap = $("<div>").html(popup),
+														overlayWrap = $("<div>").html(overlay);
+													$("body").append(controlWrap.children().first(),
+														popupWrap.children().first(),
+														overlayWrap.children().first());
+													$("#popup").css({
+														opacity: "1",
+														transform: "scaleX(1)",
+														top: "10%"
+													});
+													$(".lean-overlay").css("opacity", "2");
+													$("#popup_submit").click(function(e) {
+														e.preventDefault();
+														$(".lean-overlay").remove();
+														$("#popup").remove();
+														$("#popup_control").remove();
+														$("#login_click").click();
+														$(window).scrollTop(0);
+														$("body").css("overflow", "auto").off();
+														$(window).off();
+														exports.resize_modal();
+													});
+												}
+											});
 											$("#popup_submit").click(function(e) {
 												e.preventDefault();
 												$(".lean-overlay").remove();
@@ -7271,13 +8936,20 @@ define(function() {
 												$("#popup_control").remove();
 												$("#login_click").click();
 												$(window).scrollTop(0);
-												$("body").off();
+												$("body").css("overflow", "auto").off();
+												$(window).off();
+												exports.resize_modal();
 											});
 										}
 									});
 								});
 							}
 							else {
+								$("#popup").find(".modal-content").first().children().each(function(index) {
+									if(index > 1) {
+										$(this).remove();
+									}
+								});
 								$("#popup_title")
 									.text("Password Recovery")
 									.css("text-align", "left");
@@ -7287,6 +8959,41 @@ define(function() {
 									" security question!");
 								$("#popup_exit").remove();
 								$("body").off();
+								popup = $("#popup")[0].outerHTML;
+								popup_control = $("#popup_control")[0].outerHTML;
+								overlay = $(".lean-overlay")[0].outerHTML;
+								$(window).on("resize", function() {
+									if(exports.width_func() >= 992) {
+										$(".lean-overlay").remove();
+										$("#popup").remove();
+										$("#popup_control").remove();
+										var controlWrap = $("<div>").html(popup_control),
+											popupWrap = $("<div>").html(popup),
+											overlayWrap = $("<div>").html(overlay);
+										$("body").append(controlWrap.children().first(),
+											popupWrap.children().first(),
+											overlayWrap.children().first());
+										$("#popup").css({
+											opacity: "1",
+											transform: "scaleX(1)",
+											top: "10%"
+										});
+										$(".lean-overlay").css("opacity", "2");
+										$("#popup_submit").text("Ok")
+											.click(function(e) {
+											e.preventDefault();
+												$(".lean-overlay").remove();
+												$("#popup").remove();
+												$("#popup_control").remove();
+												$("#login_click").click();
+												$(window).scrollTop(0);
+												$("body").css("overflow", "auto")
+													.off();
+												$(window).off();
+												exports.resize_modal();
+										});
+									}
+								});
 								$("#popup_submit").text("Ok")
 									.click(function(e) {
 										e.preventDefault();
@@ -7295,7 +9002,10 @@ define(function() {
 										$("#popup_control").remove();
 										$("#login_click").click();
 										$(window).scrollTop(0);
-										$("body").off();
+										$("body").css("overflow", "auto")
+											.off();
+										$(window).off();
+										exports.resize_modal();
 								});
 							}
 						});
@@ -7975,13 +9685,19 @@ define(function() {
 						$(".lean-overlay").remove();
 						$("#popup").remove();
 						$("#popup_control").remove();
+						$("body").css("overflow", "auto");
+						$(window).off();
+						exports.resize_modal();
 					});
 					$("#popup_submit").click(function(e) {
 						e.preventDefault();
 						$(".lean-overlay").remove();
 						$("#popup").remove();
 						$("#popup_control").remove();
+						$(window).off();
+						exports.resize_modal();
 						router.navigate(page, obj);
+						$("body").css("overflow", "auto");
 					});
 				}
 			});
@@ -7990,13 +9706,19 @@ define(function() {
 				$(".lean-overlay").remove();
 				$("#popup").remove();
 				$("#popup_control").remove();
+				$("body").css("overflow", "auto");
+				$(window).off();
+				exports.resize_modal();
 			});
 			$("#popup_submit").click(function(e) {
 				e.preventDefault();
 				$(".lean-overlay").remove();
 				$("#popup").remove();
 				$("#popup_control").remove();
+				$(window).off();
+				exports.resize_modal();
 				router.navigate(page, obj);
+				$("body").css("overflow", "auto");
 			});
 		});
 	};
@@ -8806,11 +10528,45 @@ define(function() {
 				" changes you have to refresh" +
 				" the page.");
 			$("#popup_control").click();
+			var popup = $("#popup")[0].outerHTML,
+				popup_control = $("#popup_control")[0].outerHTML,
+				overlay = $(".lean-overlay")[0].outerHTML;
+			$(window).on("resize", function() {
+				if(exports.width_func() >= 992) {
+					$(".lean-overlay").remove();
+					$("#popup").remove();
+					$("#popup_control").remove();
+					var controlWrap = $("<div>").html(popup_control),
+						popupWrap = $("<div>").html(popup),
+						overlayWrap = $("<div>").html(overlay);
+					$("body").append(controlWrap.children().first(),
+						popupWrap.children().first(),
+						overlayWrap.children().first());
+					$("#popup").css({
+						opacity: "1",
+						transform: "scaleX(1)",
+						top: "10%"
+					});
+					$(".lean-overlay").css("opacity", "2");
+					$("#popup_submit").click(function(e) {
+						e.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						$("body").css("overflow", "auto");
+						$(window).off();
+						exports.resize_modal();
+					});
+				}
+			});
 			$("#popup_submit").click(function(e) {
 				e.preventDefault();
 				$(".lean-overlay").remove();
 				$("#popup").remove();
 				$("#popup_control").remove();
+				$("body").css("overflow", "auto");
+				$(window).off();
+				exports.resize_modal();
 			});
 		});
 	};
@@ -8994,7 +10750,6 @@ define(function() {
 						.css("color", "red");
 				}
 				$(".tooltipped").tooltip();
-
 				$("#log").click(function(e) {
 					e.preventDefault();
 					$.get("/pages/dist/modal-min.html")
@@ -9068,6 +10823,9 @@ define(function() {
 										$(".lean-overlay").remove();
 										$("#popup").remove();
 										$("#popup_control").remove();
+										$("body").css("overflow", "auto");
+										$(window).off();
+										exports.resize_modal();
 									});
 								}
 							});
@@ -9076,11 +10834,13 @@ define(function() {
 								$(".lean-overlay").remove();
 								$("#popup").remove();
 								$("#popup_control").remove();
+								$("body").css("overflow", "auto");
+								$(window).off();
+								exports.resize_modal();
 							});
 						});
 					});
 				});
-
 				$("#approve").click(function(e) {
 					e.preventDefault();
 					if(exports.rgba_to_hex(
@@ -10067,6 +11827,9 @@ define(function() {
 											$(".lean-overlay").remove();
 											$("#popup").remove();
 											$("#popup_control").remove();
+											$("body").css("overflow", "auto");
+											$(window).off();
+											exports.resize_modal();
 										});
 									}
 								});
@@ -10075,6 +11838,9 @@ define(function() {
 									$(".lean-overlay").remove();
 									$("#popup").remove();
 									$("#popup_control").remove();
+									$("body").css("overflow", "auto");
+									$(window).off();
+									exports.resize_modal();
 								});
 							}).done(function() {
 								$.post("/api/log/want/" + page,
@@ -10210,7 +11976,7 @@ define(function() {
 									}
 								}
 							});
-						}, 1000 * 60 * (1/6));
+						}, 1000 * 60 * 5);
 						exports.listen_cookie_change("contributor", function() {
 							if(exports.read_cookie("contributor") == "") {
 								clearInterval(interval);
