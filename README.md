@@ -7,6 +7,9 @@
 
 - [Setting Up](#setting-up)
 - [Configuring the Database](#configuring-the-database)
+- [Client System](#client-system)
+    - [Accessing the Client System](#accessing-the-client-system)
+    - [General Structure of a Page](#general-structure-of-a-page)
 - [Content Management System](#content-management-system)
     - [Accessing the CMS](#accessing-the-cms)
     - [General Structure of a Page](#general-structure-of-a-page)
@@ -22,9 +25,13 @@
     - [Getting the Content of the About Page (POST)](#getting-the-content-of-the-about-page-post)
     - [Getting the Content of the About Page for Client (POST)](#getting-the-content-of-the-about-page-for-client-post)
     - [Changing the Content of the About Page (POST)](#changing-the-content-of-the-about-page-post)
+    - [Getting the Log of the About Page (POST)](#getting-the-log-of-the-about-page-post)
+    - [Changing the Log of the About Page (POST)](#changing-the-log-of-the-about-page-post)
     - [Getting the Content of any Subject, Topic, Section, or Example (POST)](#getting-the-content-of-any-subject-topic-section-or-example-post)
     - [Getting the Content of any Subject, Topic, Section, or Example for Client (POST)](#getting-the-content-of-any-subject-topic-section-or-example-for-client-post)
     - [Adding & Changing the Content of any Subject, Topic, Section, or Example (POST)](#adding--changing-the-content-of-any-subject-topic-section-or-example-post)
+    - [Getting the Log of any Subject, Topic, Section, or Example (POST)](#getting-the-log-of-any-subject-topic-section-or-example-post)
+    - [Changing the Log of any Subject, Topic, Section, or Example (POST)](#changing-the-log-of-any-subject-topic-section-or-example-post)
     - [Deleting any Subject, Topic, Section, or Example (POST)](#deleting-any-subject-topic-section-or-example-post)
     - [Adding a Contributor (POST)](#adding-a-contributor-post)
     - [Deleting a Contributor (POST)](#deleting-a-contributor-post)
@@ -77,6 +84,20 @@ The database is setup according to the following ERR diagram:
 Example builds can be found over at "/content/db".
 
 
+# Client System
+### Accessing the Client System
+To access the system direct your browser to "localhost" where you will encounter:
+
+<p align="center">
+    <img width=500 height=500 src="/img/client.png">
+</p>
+
+All navigation is completely controlled by the sidenav which is hidden by default on mobile displays (and small screens).
+
+### General Structure of a Page
+The pages corresponding to the about page or any subject, topic, section, or example take on the same design. Besides the sidenav and top nav, each page also contains a primary region where all content is placed. This content is specifically broken into small boxes that each contain a title and associated content. Such a box may or may not be hidden by default, but by simply clicking on the strip containing the title, the content can be shown and hidden respectively. 
+
+
 # Content Management System
 ### Accessing the CMS
 To access the system direct your browser to "localhost/login" where you will encounter:
@@ -107,7 +128,9 @@ provides all of the functionality to:
 * edit the content of any subject, topic, section, or example
 * add a box with an associated title and body of content (only available in the edit view)
 * approve the current changes to the content so as to push it live to the client side
+* view the history of the current subject, topic, section, or example
 * save any changes to the database permanently
+
 It is important to note that any changes made on a page are not pushed to the database unless the save button is explicitly clicked. Moreover, for current changes to be pushed onto the client side the system uses a logarithmic scaling based on the number of active contributors to determine how many approvals are needed. If changes are made to the content of the page all previous approvals are reset by design to ensure that contributors do not provide approvals for content they may not have necessarily seen. 
 
 ### Editing a Page
@@ -145,12 +168,13 @@ where subjects, topics, sections, or examples can be added (depending on where y
     <img src="/img/cms-nav-modal.png">
 </p>
 
-It is here that new subjects, topics, sections, and examples can be added with the capability, like the current items, to have their names and order edited. Furthermore, each will have an associated approval and disapproval that functions in exactly the same manner as the content approval system. Therefore, an item will only be pushed to the client nav or deleted all together when the necessary number of approvals are given. It is important to note that like the content editing mode, any changes made to the sidenav are only pushed to the database when the button is explicitly clicked.
+It is here that new subjects, topics, sections, and examples can be added with the capability, like the current items, to have their names and order edited. Furthermore, each will have an associated approval and disapproval that functions in exactly the same manner as the content approval system. Therefore, an item will only be pushed to the client nav or deleted all together when the necessary number of approvals are given, both of which are permanent changes. It is important to note that like the content editing mode, any changes made to the sidenav are only pushed to the database when the button is explicitly clicked.
 
 ### Floating Action Button
 At the bottom right of each page you will find the button which provides the following functionality:
 * logout as a contributor
 * update profile information
+* see all subjects, topics, sections, and examples that are missing your content approval currently
 * approve/disapprove incoming contributors (only for committee members and administrator)
 * provide an opinion on current non-committee members as to whether they should join the committee or not (only for committee members)
 * add/remove a contributor from the committee and delete a contributor from the system (administrator only)
@@ -209,6 +233,25 @@ where you would be required to provide the JSON data that has the parameters:
 * content_cms
 * cms_approval
 
+### Getting the Log of the About Page (POST)
+To get the log of the about page you would call on:
+```
+localhost/api/want/about
+```
+alongside the JSON data that requires the parameter:
+* id
+which is the id of the object.
+
+### Changing the Log of the About Page (POST)
+To change the log of the about page you would call on:
+```
+localhost/api/change/about
+```
+alongside the JSON data that requires the parameters:
+* id
+* log
+where log represents the string containing all historical changes with splits based on "-----" (for events) and "_____" (for date and description). 
+
 ### Getting the Content of any Subject, Topic, Section, or Example (POST)
 To get the content of the requested item you would call on:
 ```
@@ -250,6 +293,35 @@ where "obj" represents what we want to work with which can be one of four things
 alongside the JSON data that requires the parameter:
 * param
 which is the id of the object.
+
+### Getting the Log of any Subject, Topic, Section, or Example (POST)
+To get the log of the requested item you would call on:
+```
+localhost/api/want/:obj
+```
+where "obj" represents what we want to work with which can be one of four things:
+* subject
+* topic
+* section
+* example
+alongside the JSON data that requires the parameter:
+* id
+which is the id of the object.
+
+### Changing the Log of any Subject, Topic, Section, or Example (POST)
+To change the log of the requested item you would call on:
+```
+localhost/api/change/:obj
+```
+where "obj" represents what we want to work with which can be one of four things:
+* subject
+* topic
+* section
+* example
+alongside the JSON data that requires the parameters:
+* id
+* log
+where log represents the string containing all historical changes with splits based on "-----" (for events) and "_____" (for date and description). 
 
 ### Deleting any Subject, Topic, Section, or Example (POST)
 To delete the requested item from the database you would call on:
