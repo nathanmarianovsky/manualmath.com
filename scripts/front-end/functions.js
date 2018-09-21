@@ -730,7 +730,9 @@ define(function() {
 					$("#popup_control").remove();
 					$("body").append(popup_controlSidenav,
 						popupSidenav, overlaySidenav);
-					popupSidenav.find(".modal-content").first().children().each(function(index) {
+					popupSidenav.find(".modal-content")
+						.first().children()
+						.each(function(index) {
 						if(index > 1) {
 							$(this).remove();
 						}
@@ -1007,7 +1009,9 @@ define(function() {
 							$.post("/api/cms/contributor/remove/",
 								{email: iter.email})
 								.fail(function() {
-								$("#popup").find(".modal-content").first().children().each(function(index) {
+								$("#popup").find(".modal-content")
+									.first().children()
+									.each(function(index) {
 									if(index > 1) {
 										$(this).remove();
 									}
@@ -1032,7 +1036,9 @@ define(function() {
 							$.post("/api/cms/committee/add",
 								{email: iter.email})
 								.fail(function() {
-								$("#popup").find(".modal-content").first().children().each(function(index) {
+								$("#popup").find(".modal-content")
+									.first().children()
+									.each(function(index) {
 									if(index > 1) {
 										$(this).remove();
 									}
@@ -1057,7 +1063,9 @@ define(function() {
 							$.post("/api/cms/committee/remove",
 								{email: iter.email})
 								.fail(function() {
-								$("#popup").find(".modal-content").first().children().each(function(index) {
+								$("#popup").find(".modal-content")
+									.first().children()
+									.each(function(index) {
 									if(index > 1) {
 										$(this).remove();
 									}
@@ -1079,7 +1087,9 @@ define(function() {
 							});
 						}
 					});
-					$("#popup").find(".modal-content").first().children().each(function(index) {
+					$("#popup").find(".modal-content")
+						.first().children()
+						.each(function(index) {
 						if(index > 1) {
 							$(this).remove();
 						}
@@ -1194,7 +1204,9 @@ define(function() {
 									$.post("/api/cms/contributor/remove/",
 										{email: iter.email})
 										.fail(function() {
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -1219,7 +1231,9 @@ define(function() {
 									$.post("/api/cms/committee/add",
 										{email: iter.email})
 										.fail(function() {
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -1244,7 +1258,9 @@ define(function() {
 									$.post("/api/cms/committee/remove",
 										{email: iter.email})
 										.fail(function() {
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -1266,7 +1282,9 @@ define(function() {
 									});
 								}
 							});
-							$("#popup").find(".modal-content").first().children().each(function(index) {
+							$("#popup").find(".modal-content")
+								.first().children()
+								.each(function(index) {
 								if(index > 1) {
 									$(this).remove();
 								}
@@ -1805,7 +1823,9 @@ define(function() {
 										$.post("/api/cms/contributor/remove/",
 											{email: iter.email})
 											.fail(function() {
-											$("#popup").find(".modal-content").first().children().each(function(index) {
+											$("#popup").find(".modal-content")
+												.first().children()
+												.each(function(index) {
 												if(index > 1) {
 													$(this).remove();
 												}
@@ -1863,7 +1883,9 @@ define(function() {
 										$.post("/api/cms/contributor/change/status/",
 											{email: iter.email, status: 1})
 											.fail(function() {
-											$("#popup").find(".modal-content").first().children().each(function(index) {
+											$("#popup").find(".modal-content")
+												.first().children()
+												.each(function(index) {
 												if(index > 1) {
 													$(this).remove();
 												}
@@ -1926,7 +1948,9 @@ define(function() {
 												del: iter.del == null
 													? "0" : iter.del
 											}).fail(function() {
-												$("#popup").find(".modal-content").first().children().each(function(index) {
+												$("#popup").find(".modal-content")
+													.first().children()
+													.each(function(index) {
 													if(index > 1) {
 														$(this).remove();
 													}
@@ -1982,7 +2006,9 @@ define(function() {
 										}
 									}
 								});
-								$("#popup").find(".modal-content").first().children().each(function(index) {
+								$("#popup").find(".modal-content")
+									.first().children()
+									.each(function(index) {
 									if(index > 1) {
 										$(this).remove();
 									}
@@ -2156,7 +2182,9 @@ define(function() {
 								$.post("/api/cms/contributor/remove/",
 									{email: iter.email})
 									.fail(function() {
-									$("#popup").find(".modal-content").first().children().each(function(index) {
+									$("#popup").find(".modal-content")
+										.first().children()
+										.each(function(index) {
 										if(index > 1) {
 											$(this).remove();
 										}
@@ -2214,7 +2242,9 @@ define(function() {
 								$.post("/api/cms/contributor/change/status/",
 									{email: iter.email, status: 1})
 									.fail(function() {
-									$("#popup").find(".modal-content").first().children().each(function(index) {
+									$("#popup").find(".modal-content")
+										.first().children()
+										.each(function(index) {
 										if(index > 1) {
 											$(this).remove();
 										}
@@ -2277,7 +2307,9 @@ define(function() {
 										del: iter.del == null
 											? "0" : iter.del
 									}).fail(function() {
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -2333,7 +2365,9 @@ define(function() {
 								}
 							}
 						});
-						$("#popup").find(".modal-content").first().children().each(function(index) {
+						$("#popup").find(".modal-content")
+							.first().children()
+							.each(function(index) {
 							if(index > 1) {
 								$(this).remove();
 							}
@@ -2981,7 +3015,9 @@ define(function() {
 							$("body").append(controlWrap.children().first(),
 								popupWrap.children().first(),
 								overlayWrap.children().first());
-							$("#popup").find(".modal-content").first().children().each(function(index) {
+							$("#popup").find(".modal-content")
+								.first().children()
+								.each(function(index) {
 								if(index > 1) {
 									$(this).remove();
 								}
@@ -3602,7 +3638,9 @@ define(function() {
 										}
 									});
 								}).done(function() {
-									$("#popup").find(".modal-content").first().children().each(function(index) {
+									$("#popup").find(".modal-content")
+										.first().children()
+										.each(function(index) {
 										if(index > 1) {
 											$(this).remove();
 										}
@@ -3649,9 +3687,6 @@ define(function() {
 							});
 						}
 					});
-
-
-
 					$("#popup").keypress(function(event) {
 					    if(event.keyCode === 10 || event.keyCode === 13) {
 					        event.preventDefault();
@@ -4156,7 +4191,9 @@ define(function() {
 								}
 							});
 						}).done(function() {
-							$("#popup").find(".modal-content").first().children().each(function(index) {
+							$("#popup").find(".modal-content")
+								.first().children()
+								.each(function(index) {
 								if(index > 1) {
 									$(this).remove();
 								}
@@ -4346,7 +4383,9 @@ define(function() {
 								new_password = passwordCMS;
 							$.get("/pages/dist/change-confirmation-min.html")
 								.done(function(material) {
-								$("#popup").find(".modal-content").first().children().each(function(index) {
+								$("#popup").find(".modal-content")
+									.first().children()
+									.each(function(index) {
 									if(index > 1) {
 										$(this).remove();
 									}
@@ -4422,7 +4461,9 @@ define(function() {
 											});
 											$("#popup_submit").click(function(e) {
 												e.preventDefault();
-												$("#popup").find(".modal-content").first().children().each(function(index) {
+												$("#popup").find(".modal-content")
+													.first().children()
+													.each(function(index) {
 													if(index > 1) {
 														$(this).remove();
 													}
@@ -4743,7 +4784,9 @@ define(function() {
 									});
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -5127,8 +5170,11 @@ define(function() {
 											});
 											$("#popup_submit").click(function(e) {
 												e.preventDefault();
-												if(new_password != $("#new_password_confirm").val()) {
-													$("#popup").find(".modal-content").first().children().each(function(index) {
+												if(new_password !=
+													$("#new_password_confirm").val()) {
+													$("#popup").find(".modal-content")
+														.first().children()
+														.each(function(index) {
 														if(index > 1) {
 															$(this).remove();
 														}
@@ -5264,7 +5310,9 @@ define(function() {
 																		password: new_password
 																	}).done(function(result) {
 																	 	if(result == "1") {
-																	 		$("#popup").find(".modal-content").first().children().each(function(index) {
+																	 		$("#popup").find(".modal-content")
+																	 			.first().children()
+																	 			.each(function(index) {
 																				if(index > 1) {
 																					$(this).remove();
 																				}
@@ -5478,8 +5526,11 @@ define(function() {
 									});
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
-										if(new_password != $("#new_password_confirm").val()) {
-											$("#popup").find(".modal-content").first().children().each(function(index) {
+										if(new_password !=
+											$("#new_password_confirm").val()) {
+											$("#popup").find(".modal-content")
+												.first().children()
+												.each(function(index) {
 												if(index > 1) {
 													$(this).remove();
 												}
@@ -5545,7 +5596,9 @@ define(function() {
 												passwd: oldPassword
 											}).done(function(result) {
 												if(result[0] == "Wrong Password") {
-													$("#popup").find(".modal-content").first().children().each(function(index) {
+													$("#popup").find(".modal-content")
+														.first().children()
+														.each(function(index) {
 														if(index > 1) {
 															$(this).remove();
 														}
@@ -5792,7 +5845,9 @@ define(function() {
 									});
 								}
 								else {
-									$("#popup").find(".modal-content").first().children().each(function(index) {
+									$("#popup").find(".modal-content")
+										.first().children()
+										.each(function(index) {
 										if(index > 1) {
 											$(this).remove();
 										}
@@ -5885,7 +5940,9 @@ define(function() {
 						new_password = passwordCMS;
 					$.get("/pages/dist/change-confirmation-min.html")
 						.done(function(material) {
-						$("#popup").find(".modal-content").first().children().each(function(index) {
+						$("#popup").find(".modal-content")
+							.first().children()
+							.each(function(index) {
 							if(index > 1) {
 								$(this).remove();
 							}
@@ -5961,7 +6018,9 @@ define(function() {
 									});
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -6282,7 +6341,9 @@ define(function() {
 							});
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
-								$("#popup").find(".modal-content").first().children().each(function(index) {
+								$("#popup").find(".modal-content")
+									.first().children()
+									.each(function(index) {
 									if(index > 1) {
 										$(this).remove();
 									}
@@ -6295,7 +6356,9 @@ define(function() {
 										.addClass("modal-close");
 									$("#popup_exit").remove();
 									if(result[0] == "Wrong Password") {
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -6355,7 +6418,9 @@ define(function() {
 									}
 									else if(fname.length == 0 ||
 										/[^a-zA-Z]/.test(fname)) {
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -6415,7 +6480,9 @@ define(function() {
 									}
 									else if(lname.length == 0 ||
 										/[^a-zA-Z]/.test(lname)) {
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -6682,7 +6749,9 @@ define(function() {
 									$("#popup_submit").click(function(e) {
 										e.preventDefault();
 										if(new_password != $("#new_password_confirm").val()) {
-											$("#popup").find(".modal-content").first().children().each(function(index) {
+											$("#popup").find(".modal-content")
+												.first().children()
+												.each(function(index) {
 												if(index > 1) {
 													$(this).remove();
 												}
@@ -6748,7 +6817,9 @@ define(function() {
 												passwd: oldPassword
 											}).done(function(result) {
 												if(result[0] == "Wrong Password") {
-													$("#popup").find(".modal-content").first().children().each(function(index) {
+													$("#popup").find(".modal-content")
+														.first().children()
+														.each(function(index) {
 														if(index > 1) {
 															$(this).remove();
 														}
@@ -7032,8 +7103,11 @@ define(function() {
 							});
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
-								if(new_password != $("#new_password_confirm").val()) {
-									$("#popup").find(".modal-content").first().children().each(function(index) {
+								if(new_password !=
+									$("#new_password_confirm").val()) {
+									$("#popup").find(".modal-content")
+										.first().children()
+										.each(function(index) {
 										if(index > 1) {
 											$(this).remove();
 										}
@@ -7099,7 +7173,9 @@ define(function() {
 										passwd: oldPassword
 									}).done(function(result) {
 										if(result[0] == "Wrong Password") {
-											$("#popup").find(".modal-content").first().children().each(function(index) {
+											$("#popup").find(".modal-content")
+												.first().children()
+												.each(function(index) {
 												if(index > 1) {
 													$(this).remove();
 												}
@@ -8096,7 +8172,9 @@ define(function() {
 									if(result == 1) {
 										$.get("/pages/dist/password-change-min.html")
 											.done(function(result) {
-											$("#popup").find(".modal-content").first().children().each(function(index) {
+											$("#popup").find(".modal-content")
+												.first().children()
+												.each(function(index) {
 												if(index > 1) {
 													$(this).remove();
 												}
@@ -8234,7 +8312,9 @@ define(function() {
 															});
 														}
 														else {
-															$("#popup").find(".modal-content").first().children().each(function(index) {
+															$("#popup").find(".modal-content")
+																.first().children()
+																.each(function(index) {
 																if(index > 1) {
 																	$(this).remove();
 																}
@@ -8401,7 +8481,9 @@ define(function() {
 													});
 												}
 												else {
-													$("#popup").find(".modal-content").first().children().each(function(index) {
+													$("#popup").find(".modal-content")
+														.first().children()
+														.each(function(index) {
 														if(index > 1) {
 															$(this).remove();
 														}
@@ -8473,7 +8555,9 @@ define(function() {
 										});
 									}
 									else {
-										$("#popup").find(".modal-content").first().children().each(function(index) {
+										$("#popup").find(".modal-content")
+											.first().children()
+											.each(function(index) {
 											if(index > 1) {
 												$(this).remove();
 											}
@@ -8568,7 +8652,9 @@ define(function() {
 							if(result == 1) {
 								$.get("/pages/dist/password-change-min.html")
 									.done(function(result) {
-									$("#popup").find(".modal-content").first().children().each(function(index) {
+									$("#popup").find(".modal-content")
+										.first().children()
+										.each(function(index) {
 										if(index > 1) {
 											$(this).remove();
 										}
@@ -8706,7 +8792,9 @@ define(function() {
 													});
 												}
 												else {
-													$("#popup").find(".modal-content").first().children().each(function(index) {
+													$("#popup").find(".modal-content")
+														.first().children()
+														.each(function(index) {
 														if(index > 1) {
 															$(this).remove();
 														}
@@ -8873,7 +8961,9 @@ define(function() {
 											});
 										}
 										else {
-											$("#popup").find(".modal-content").first().children().each(function(index) {
+											$("#popup").find(".modal-content")
+												.first().children()
+												.each(function(index) {
 												if(index > 1) {
 													$(this).remove();
 												}
@@ -8945,7 +9035,9 @@ define(function() {
 								});
 							}
 							else {
-								$("#popup").find(".modal-content").first().children().each(function(index) {
+								$("#popup").find(".modal-content")
+									.first().children()
+									.each(function(index) {
 									if(index > 1) {
 										$(this).remove();
 									}
