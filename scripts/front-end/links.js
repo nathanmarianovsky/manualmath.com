@@ -139,9 +139,13 @@ define(["dist/functions-min", "materialize"],
 			}
 		});
 
-		$("a").click(function(e) {
+		$("a").on("click", function(e) {
 			e.preventDefault();
 			var id = $(this).attr("id");
+			if($(this).hasClass("content-link")) {
+				$(this).off("click");
+				window.open($(this).attr("href"));
+			}
 			if(id == "about" || id == "logo") {
 				router.navigate("about");
 			}

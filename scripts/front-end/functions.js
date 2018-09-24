@@ -10890,6 +10890,7 @@ define(function() {
 								$("#popup_body").append(table);
 							}
 							$("#popup_control").click();
+							MathJax.Hub.Queue(["Typeset", MathJax.Hub, "popup"]);
 							var popup = $("#popup")[0].outerHTML,
 								popup_control = $("#popup_control")[0].outerHTML,
 								overlay = $(".lean-overlay")[0].outerHTML;
