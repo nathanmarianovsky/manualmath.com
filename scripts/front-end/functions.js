@@ -7909,7 +7909,7 @@ define(function() {
 												exports.write_cookie(
 													"contributor",
 													$("#login_email").val(),
-													60);
+													180);
 												router.navigate("cms",
 													{reload: true});
 											}
@@ -7923,7 +7923,7 @@ define(function() {
 									}
 									else {
 										exports.write_cookie("contributor",
-											$("#login_email").val(), 60);
+											$("#login_email").val(), 180);
 										router.navigate("cms", {reload: true});
 									}
 								});
@@ -8019,7 +8019,7 @@ define(function() {
 										exports.write_cookie(
 											"contributor",
 											$("#login_email").val(),
-											60);
+											180);
 										router.navigate("cms",
 											{reload: true});
 									}
@@ -8033,7 +8033,7 @@ define(function() {
 							}
 							else {
 								exports.write_cookie("contributor",
-									$("#login_email").val(), 60);
+									$("#login_email").val(), 180);
 								router.navigate("cms", {reload: true});
 							}
 						});
@@ -9891,7 +9891,7 @@ define(function() {
 						.done(function(result) {
 							if(result == 1) {
 								exports.write_cookie(
-									"contributor", cookie, 60);
+									"contributor", cookie, 180);
 							}
 							else {
 								console.log("There was an" +
@@ -10284,8 +10284,6 @@ define(function() {
 						});
 					});
 					$(window).on("resize", function() {
-						console.log(firstCheck);
-						console.log(secondCheck);
 						if(exports.width_func() >= 992) {
 							$(".lean-overlay").remove();
 							$("#popup").remove();
@@ -13120,6 +13118,15 @@ define(function() {
 							$("#nav-mobile").css("width", width);
 						});
 					});
+				});
+				$(document).click(function(event) {
+					event.stopImmediatePropagation();
+					if(event.which !== undefined) {
+						console.log("made it!!");
+						exports.delete_cookie("contributor");
+						exports.write_cookie("contributor",
+							cookie, 180);
+					}
 				});
 			});
 		});
