@@ -12421,7 +12421,7 @@ define(function() {
 						exports.handle_li_coloring();
 						links.handle_links(router, subjects,
 							topics, sections, examples);
-						$(".button-tooltipped").tooltip();
+						// $(".button-tooltipped").tooltip();
 						var interval = setInterval(function() {
 							$.post(statement, {param: db_id})
 								.done(function(comparison) {
@@ -13122,7 +13122,6 @@ define(function() {
 				$(document).click(function(event) {
 					event.stopImmediatePropagation();
 					if(event.which !== undefined) {
-						console.log("made it!!");
 						exports.delete_cookie("contributor");
 						exports.write_cookie("contributor",
 							cookie, 180);

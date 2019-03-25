@@ -146,6 +146,21 @@ define(["dist/functions-min", "materialize"],
 				$(this).off("click");
 				window.open($(this).attr("href"));
 			}
+			if(id == "drop_up") {
+				if($("#dev-btn").hasClass("active")) {
+					$("#dev-btn").children("ul").first()
+						.css("pointer-events", "none").children()
+						.each(function() {
+							$("#" + $(this).children("a").first()
+								.attr("data-tooltip-id")).remove();
+					});
+				}
+				else {
+					$("#dev-btn").children("ul").first()
+						.css("pointer-events", "initial");
+					$(".button-tooltipped").tooltip();
+				}
+			}
 			if(id == "about" || id == "logo") {
 				router.navigate("about");
 			}
@@ -177,6 +192,12 @@ define(["dist/functions-min", "materialize"],
 			}
 			else if(id == "logout") {
 				$("#drop_up").click();
+				$("#dev-btn").children("ul").first()
+					.css("pointer-events", "none").children()
+					.each(function() {
+						$("#" + $(this).children("a").first()
+							.attr("data-tooltip-id")).remove();
+				});
 				var cookie = functions.read_cookie(
 					"contributor");
 				$.post("/api/cms/live/remove/", {
@@ -197,6 +218,12 @@ define(["dist/functions-min", "materialize"],
 			}
 			else if(id == "profile") {
 				$("#drop_up").click();
+				$("#dev-btn").children("ul").first()
+					.css("pointer-events", "none").children()
+					.each(function() {
+						$("#" + $(this).children("a").first()
+							.attr("data-tooltip-id")).remove();
+				});
 				var cookie = functions.read_cookie(
 					"contributor");
 				$.get("/pages/dist/modal-min.html")
@@ -207,6 +234,12 @@ define(["dist/functions-min", "materialize"],
 			}
 			else if(id == "committee") {
 				$("#drop_up").click();
+				$("#dev-btn").children("ul").first()
+					.css("pointer-events", "none").children()
+					.each(function() {
+						$("#" + $(this).children("a").first()
+							.attr("data-tooltip-id")).remove();
+				});
 				$.get("/pages/dist/modal-min.html")
 					.done(function(result) {
 					$("body").append(result);
@@ -215,6 +248,12 @@ define(["dist/functions-min", "materialize"],
 			}
 			else if(id == "missing-approvals") {
 				$("#drop_up").click();
+				$("#dev-btn").children("ul").first()
+					.css("pointer-events", "none").children()
+					.each(function() {
+						$("#" + $(this).children("a").first()
+							.attr("data-tooltip-id")).remove();
+				});
 				$.get("/pages/dist/modal-min.html")
 					.done(function(result) {
 					$("body").append(result);
@@ -223,6 +262,12 @@ define(["dist/functions-min", "materialize"],
 			}
 			else if(id == "ranking") {
 				$("#drop_up").click();
+				$("#dev-btn").children("ul").first()
+					.css("pointer-events", "none").children()
+					.each(function() {
+						$("#" + $(this).children("a").first()
+							.attr("data-tooltip-id")).remove();
+				});
 				$.get("/pages/dist/modal-min.html")
 					.done(function(result) {
 					$("body").append(result);
@@ -231,6 +276,12 @@ define(["dist/functions-min", "materialize"],
 			}
 			else if(id == "decision") {
 				$("#drop_up").click();
+				$("#dev-btn").children("ul").first()
+					.css("pointer-events", "none").children()
+					.each(function() {
+						$("#" + $(this).children("a").first()
+							.attr("data-tooltip-id")).remove();
+				});
 				$.get("/pages/dist/modal-min.html")
 					.done(function(result) {
 					$("body").append(result);
