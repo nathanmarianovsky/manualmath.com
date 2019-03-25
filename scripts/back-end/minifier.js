@@ -153,7 +153,8 @@ exports.minify_html = (minify, mkdirp, fs) => {
 			"./pages/committee-table.html",
 			"./pages/edit-bar.html",
 			"./pages/add-link.html",
-			"./pages/list-form.html"
+			"./pages/bulleted-list-form.html",
+			"./pages/numbered-list-form.html"
 		],
 		tmp = [];
 	container.forEach(file => {

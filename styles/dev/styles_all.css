@@ -534,6 +534,7 @@ nav {
 .solution_img, .solution_table,
 .solution_box, .solution_link,
 .solution_bullet,
+.solution_numbered,
 .solution_arrow_up,
 .solution_arrow_down,
 .solution_note {
@@ -568,20 +569,24 @@ nav {
 	right: 350px;
 }
 
-.solution_bullet {
+.solution_numbered {
 	right: 400px;
 }
 
-.solution_img {
-    right: 450px;
+.solution_bullet {
+	right: 450px;
 }
 
-.solution_table {
+.solution_img {
     right: 500px;
 }
 
-.solution_box {
+.solution_table {
     right: 550px;
+}
+
+.solution_box {
+    right: 600px;
 }
 
 .table-buttons {

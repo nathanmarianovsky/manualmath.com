@@ -9961,7 +9961,8 @@ define(function() {
 		$(".del-box").off();
 		$(".add-table").off();
 		$(".add-link").off();
-		$(".add-bullet").off();
+		$(".format-list-bulleted").off();
+		$(".format-list-numbered").off();
 		$(".arrow-up").off();
 		$(".arrow-down").off();
 		$(".add-row").off();
@@ -10000,7 +10001,7 @@ define(function() {
 				data.title_cms[ref] += "_hidden";
 			}
 		});
-		$(".add-bullet").on("click", function(e) {
+		$(".format-list-bulleted").on("click", function(e) {
 			e.preventDefault();
 			var obj = $(this).parent().parent().parent()
 				.find(".cont_div .latex_body").first();
@@ -10019,12 +10020,12 @@ define(function() {
 				        return false;
 				    }
 				});
-				$("#popup_title").text("Add List");
+				$("#popup_title").text("Add Unordered List");
 				$("#popup_modal_footer").append($("<a>")
 					.attr("id", "popup_exit")
 					.addClass("modal-close waves-effect waves-blue btn-flat")
 					.text("Exit"));
-				$.get("/pages/dist/list-form-min.html")
+				$.get("/pages/dist/bulleted-list-form-min.html")
 					.done(function(form) {
 					$("#popup_body").append(form);
 					$("#popup_submit").css("pointer-events", "none");
@@ -10032,167 +10033,22 @@ define(function() {
 					var popup = $("#popup")[0].outerHTML,
 						popup_control = $("#popup_control")[0].outerHTML,
 						overlay = $(".lean-overlay")[0].outerHTML,
-						firstCheck = "",
-						secondCheck = "";
-					$("#unordered").on("change", function() {
+						firstCheck = "";
+					$("#popup_submit")
+						.css("pointer-events", "none");
+					$('input:radio[name="unordered"]')
+						.on("change", function() {
 						if($(this)[0].checked) {
 							$("#popup_submit")
-								.css("pointer-events", "none");
-							$("#ordered-options").remove();
-							var par = $("<p>")
-									.attr("id", "unordered-options")
-									.text("Choose the style:"),
-								label = $("<label>")
-									.addClass("list-label"),
-								input_disc = $("<input>")
-									.addClass("with-gap")
-									.attr({
-										type: "radio",
-										value: "disc",
-										name: "unordered"
-									}),
-								span_disc = $("<span>")
-									.addClass("black-text")
-									.text("Disc"),
-								input_circle = $("<input>")
-									.addClass("with-gap")
-									.attr({
-										type: "radio",
-										value: "circle",
-										name: "unordered"
-									}),
-								span_circle = $("<span>")
-									.addClass("black-text")
-									.text("Circle"),
-								input_square = $("<input>")
-									.addClass("with-gap")
-									.attr({
-										type: "radio",
-										value: "square",
-										name: "unordered"
-									}),
-								span_square = $("<span>")
-									.addClass("black-text")
-									.text("Square");
-							label.append(input_disc,
-								span_disc, input_circle,
-								span_circle, input_square,
-								span_square);
-							par.append(label);
-							$("#list-form").append(par);
-							secondCheck = "";
-							$('input:radio[name="unordered"]')
-								.on("change", function() {
-								if($(this)[0].checked) {
-									$("#popup_submit")
-										.css("pointer-events", "auto");
-									secondCheck = $(this).attr("value");
-								}
-								else {
-									$("#popup_submit")
-										.css("pointer-events", "none");
-								}
-							});
-							firstCheck = $(this).attr("id");
+								.css("pointer-events", "auto");
+							firstCheck = $(this).attr("value");
 						}
 						else {
-							$("#unordered-options").remove();
-							if(firstCheck == $(this).attr("id")) {
-								firstCheck = "";
-							}
-						}
-						popup = $("#popup")[0].outerHTML;
-					});
-					$("#ordered").on("change", function() {
-						if($(this)[0].checked) {
 							$("#popup_submit")
 								.css("pointer-events", "none");
-							$("#unordered-options").remove();
-							var par = $("<p>")
-									.attr("id", "ordered-options")
-									.text("Choose the ordering style:"),
-								label = $("<label>")
-									.addClass("list-label"),
-								input_number = $("<input>")
-									.addClass("with-gap")
-									.attr({
-										type: "radio",
-										value: "1",
-										name: "ordered"
-									}),
-								span_number = $("<span>")
-									.addClass("black-text")
-									.text("Numbered"),
-								input_uppercaseLetter = $("<input>")
-									.addClass("with-gap")
-									.attr({
-										type: "radio",
-										value: "A",
-										name: "ordered"
-									}),
-								span_uppercaseLetter = $("<span>")
-									.addClass("black-text")
-									.text("Uppercase Letters"),
-								input_lowercaseLetter = $("<input>")
-									.addClass("with-gap")
-									.attr({
-										type: "radio",
-										value: "a",
-										name: "ordered"
-									}),
-								span_lowercaseLetter = $("<span>")
-									.addClass("black-text")
-									.text("Lowercase Letters"),
-								input_uppercaseRoman = $("<input>")
-									.addClass("with-gap")
-									.attr({
-										type: "radio",
-										value: "I",
-										name: "ordered"
-									}),
-								span_uppercaseRoman = $("<span>")
-									.addClass("black-text")
-									.text("Uppercase Roman Numbers"),
-								input_lowercaseRoman = $("<input>")
-									.addClass("with-gap")
-									.attr({
-										type: "radio",
-										value: "i",
-										name: "ordered"
-									}),
-								span_lowercaseRoman = $("<span>")
-									.addClass("black-text")
-									.text("Lowercase Roman Numbers");
-							label.append(input_number, span_number,
-								input_uppercaseLetter, span_uppercaseLetter,
-								input_lowercaseLetter, span_lowercaseLetter,
-								input_uppercaseRoman, span_uppercaseRoman,
-								input_lowercaseRoman, span_lowercaseRoman);
-							par.append(label);
-							$("#list-form").append(par);
-							secondCheck = "";
-							$('input:radio[name="ordered"]')
-								.on("change", function() {
-								if($(this)[0].checked) {
-									$("#popup_submit")
-										.css("pointer-events", "auto");
-									secondCheck = $(this).attr("value");
-								}
-								else {
-									$("#popup_submit")
-										.css("pointer-events", "none");
-								}
-							});
-							firstCheck = $(this).attr("id");
 						}
-						else {
-							$("#ordered-options").remove();
-							if(firstCheck == $(this).attr("id")) {
-								firstCheck = "";
-							}
-						}
-						popup = $("#popup")[0].outerHTML;
 					});
+					popup = $("#popup")[0].outerHTML;
 					$("#popup_exit").click(function(e) {
 						e.preventDefault();
 						$(".lean-overlay").remove();
@@ -10201,72 +10057,42 @@ define(function() {
 					});
 					$("#popup_submit").click(function(e) {
 						e.preventDefault();
-						var type = $('input:radio[name="ordering"]:checked').val(),
-							style = type == "0"
-								? $('input:radio[name="unordered"]:checked').val()
-								: $('input:radio[name="ordered"]:checked').val();
-						if(type == "0") {
-							obj.append($("<div>")
-								.addClass("latex_equation")
-								.attr("contentEditable", "false")
-								.append($("<div>")
-									.addClass("table-buttons")
-									.append($("<a>")
-										.addClass("waves-effect waves-light btn plus-bullet")
-										.text("Bullet").attr("contentEditable", "false")
-										.append($("<i>").addClass("material-icons right")
-											.text("add")))
-									.append($("<a>")
-										.addClass("waves-effect waves-light btn minus-bullet")
-										.text("Bullet").attr("contentEditable", "false")
-										.append($("<i>").addClass("material-icons right")
-											.text("remove"))),
-								$("<ul>").css("list-style-position", "inside")
-									.append($("<li>").attr("contentEditable", "true")
-										.css({
-											"list-style-type": style,
-											"text-align": "left"
-							}))), "<br>");
-						}
-						else if(type == "1") {
-							obj.append($("<div>")
-								.addClass("latex_equation")
-								.attr("contentEditable", "false")
-								.append($("<div>")
-									.addClass("table-buttons")
-									.append($("<a>")
-										.addClass("waves-effect waves-light btn plus-bullet")
-										.text("Bullet").attr("contentEditable", "false")
-										.append($("<i>").addClass("material-icons right")
-											.text("add")))
-									.append($("<a>")
-										.addClass("waves-effect waves-light btn minus-bullet")
-										.text("Bullet").attr("contentEditable", "false")
-										.append($("<i>").addClass("material-icons right")
-											.text("remove"))),
-								$("<ol>").css("list-style-position", "inside")
-									.attr("type", style).append($("<li>")
-										.attr("contentEditable", "true")
-										.css("text-align", "left"))), "<br>");
-						}
+						var style =	$('input:radio[name="unordered"]:checked').val();
+						obj.append($("<div>")
+							.addClass("latex_equation")
+							.attr("contentEditable", "false")
+							.append($("<div>")
+								.addClass("table-buttons")
+								.append($("<a>")
+									.addClass("waves-effect waves-light btn plus-bullet")
+									.text("Bullet").attr("contentEditable", "false")
+									.append($("<i>").addClass("material-icons right")
+										.text("add")))
+								.append($("<a>")
+									.addClass("waves-effect waves-light btn minus-bullet")
+									.text("Bullet").attr("contentEditable", "false")
+									.append($("<i>").addClass("material-icons right")
+										.text("remove"))),
+							$("<ul>").css("list-style-position", "inside")
+								.append($("<li>").attr("contentEditable", "true")
+									.css({
+										"list-style-type": style,
+										"text-align": "left"
+						}))), "<br>");
 						$(".lean-overlay").remove();
 						$("#popup").remove();
 						$("#popup_control").remove();
+						$(".plus-bullet").off();
+						$(".minus-bullet").off();
 						$(".plus-bullet").click(function(e) {
 							e.preventDefault();
-							if(type == "0") {
-								$(this).parent().next()
-									.append($("<li>").css({
-									"list-style-type": style,
-									"text-align": "left"
-								}).attr("contentEditable", "true"));
-							}
-							else if(type == "1") {
-								$(this).parent().next()
-									.append($("<li>")
-										.attr("contentEditable", "true")
-										.css("text-align", "left"));
-							}
+							var listing = $(this).parent().next(),
+								styling = listing.children().first()
+									.css("list-style-type");
+							listing.append($("<li>").css({
+								"list-style-type": styling,
+								"text-align": "left"
+							}).attr("contentEditable", "true"));
 						});
 						$(".minus-bullet").click(function(e) {
 							e.preventDefault();
@@ -10300,199 +10126,22 @@ define(function() {
 								top: "10%"
 							});
 							$(".lean-overlay").css("opacity", "2");
-							if(firstCheck != "") {
-								$("#" + firstCheck).click();
-							}
-							if(secondCheck != "") {
-								$("input").each(function(index) {
-									if($(this).attr("value") == secondCheck) {
-										$(this).click();
-									}
-								});
-							}
-							$("#unordered").on("change", function() {
-								if($(this)[0].checked) {
-									$("#popup_submit")
-										.css("pointer-events", "none");
-									$("#ordered-options").remove();
-									var par = $("<p>")
-											.attr("id", "unordered-options")
-											.text("Choose the style:"),
-										label = $("<label>")
-											.addClass("list-label"),
-										input_disc = $("<input>")
-											.addClass("with-gap")
-											.attr({
-												type: "radio",
-												value: "disc",
-												name: "unordered"
-											}),
-										span_disc = $("<span>")
-											.addClass("black-text")
-											.text("Disc"),
-										input_circle = $("<input>")
-											.addClass("with-gap")
-											.attr({
-												type: "radio",
-												value: "circle",
-												name: "unordered"
-											}),
-										span_circle = $("<span>")
-											.addClass("black-text")
-											.text("Circle"),
-										input_square = $("<input>")
-											.addClass("with-gap")
-											.attr({
-												type: "radio",
-												value: "square",
-												name: "unordered"
-											}),
-										span_square = $("<span>")
-											.addClass("black-text")
-											.text("Square");
-									label.append(input_disc,
-										span_disc, input_circle,
-										span_circle, input_square,
-										span_square);
-									par.append(label);
-									$("#list-form").append(par);
-									secondCheck = "";
-									$('input:radio[name="unordered"]')
-										.on("change", function() {
-										if($(this)[0].checked) {
-											$("#popup_submit")
-												.css("pointer-events", "auto");
-											secondCheck = $(this).attr("value");
-										}
-										else {
-											$("#popup_submit")
-												.css("pointer-events", "none");
-										}
-									});
-									firstCheck = $(this).attr("id");
-								}
-								else {
-									$("#unordered-options").remove();
-									if(firstCheck == $(this).attr("id")) {
-										firstCheck = "";
-									}
-								}
-								popup = $("#popup")[0].outerHTML;
-							});
-							$("#ordered").on("change", function() {
-								if($(this)[0].checked) {
-									$("#popup_submit")
-										.css("pointer-events", "none");
-									$("#unordered-options").remove();
-									var par = $("<p>")
-											.attr("id", "ordered-options")
-											.text("Choose the ordering style:"),
-										label = $("<label>")
-											.addClass("list-label"),
-										input_number = $("<input>")
-											.addClass("with-gap")
-											.attr({
-												type: "radio",
-												value: "1",
-												name: "ordered"
-											}),
-										span_number = $("<span>")
-											.addClass("black-text")
-											.text("Numbered"),
-										input_uppercaseLetter = $("<input>")
-											.addClass("with-gap")
-											.attr({
-												type: "radio",
-												value: "A",
-												name: "ordered"
-											}),
-										span_uppercaseLetter = $("<span>")
-											.addClass("black-text")
-											.text("Uppercase Letters"),
-										input_lowercaseLetter = $("<input>")
-											.addClass("with-gap")
-											.attr({
-												type: "radio",
-												value: "a",
-												name: "ordered"
-											}),
-										span_lowercaseLetter = $("<span>")
-											.addClass("black-text")
-											.text("Lowercase Letters"),
-										input_uppercaseRoman = $("<input>")
-											.addClass("with-gap")
-											.attr({
-												type: "radio",
-												value: "I",
-												name: "ordered"
-											}),
-										span_uppercaseRoman = $("<span>")
-											.addClass("black-text")
-											.text("Uppercase Roman Numbers"),
-										input_lowercaseRoman = $("<input>")
-											.addClass("with-gap")
-											.attr({
-												type: "radio",
-												value: "i",
-												name: "ordered"
-											}),
-										span_lowercaseRoman = $("<span>")
-											.addClass("black-text")
-											.text("Lowercase Roman Numbers");
-									label.append(input_number, span_number,
-										input_uppercaseLetter, span_uppercaseLetter,
-										input_lowercaseLetter, span_lowercaseLetter,
-										input_uppercaseRoman, span_uppercaseRoman,
-										input_lowercaseRoman, span_lowercaseRoman);
-									par.append(label);
-									$("#list-form").append(par);
-									secondCheck = "";
-									$('input:radio[name="ordered"]')
-										.on("change", function() {
-										if($(this)[0].checked) {
-											$("#popup_submit")
-												.css("pointer-events", "auto");
-											secondCheck = $(this).attr("value");
-										}
-										else {
-											$("#popup_submit")
-												.css("pointer-events", "none");
-										}
-									});
-									firstCheck = $(this).attr("id");
-								}
-								else {
-									$("#ordered-options").remove();
-									if(firstCheck == $(this).attr("id")) {
-										firstCheck = "";
-									}
-								}
-								popup = $("#popup")[0].outerHTML;
-							});
 							$('input:radio[name="unordered"]')
 								.on("change", function() {
 								if($(this)[0].checked) {
 									$("#popup_submit")
 										.css("pointer-events", "auto");
-									secondCheck = $(this).attr("value");
-								}
-								else {
-									$("#popup_submit")
-										.css("pointer-events", "none");
+									firstCheck = $(this).attr("value");
 								}
 							});
-							$('input:radio[name="ordered"]')
-								.on("change", function() {
-								if($(this)[0].checked) {
-									$("#popup_submit")
-										.css("pointer-events", "auto");
-									secondCheck = $(this).attr("value");
-								}
-								else {
-									$("#popup_submit")
-										.css("pointer-events", "none");
-								}
-							});
+							if(firstCheck != "") {
+								$("input").each(function(index) {
+									if($(this).attr("value") == firstCheck) {
+										$(this).click();
+									}
+								});
+							}
+							popup = $("#popup")[0].outerHTML;
 							$("#popup_exit").click(function(e) {
 								e.preventDefault();
 								$(".lean-overlay").remove();
@@ -10504,77 +10153,249 @@ define(function() {
 							});
 							$("#popup_submit").click(function(e) {
 								e.preventDefault();
-								var type = $('input:radio[name="ordering"]:checked').val(),
-									style = type == "0"
-										? $('input:radio[name="unordered"]:checked').val()
-										: $('input:radio[name="ordered"]:checked').val();
-								if(type == "0") {
-									obj.append($("<div>")
-										.addClass("latex_equation")
-										.attr("contentEditable", "false")
-										.append($("<div>")
-											.addClass("table-buttons")
-											.append($("<a>")
-												.addClass("waves-effect waves-light btn plus-bullet")
-												.text("Bullet").attr("contentEditable", "false")
-												.append($("<i>").addClass("material-icons right")
-													.text("add")))
-											.append($("<a>")
-												.addClass("waves-effect waves-light btn minus-bullet")
-												.text("Bullet").attr("contentEditable", "false")
-												.append($("<i>").addClass("material-icons right")
-													.text("remove"))),
-										$("<ul>").css("list-style-position", "inside")
-											.append($("<li>").attr("contentEditable", "true")
-												.css({
-													"list-style-type": style,
-													"text-align": "left"
-									}))), "<br>");
-								}
-								else if(type == "1") {
-									obj.append($("<div>")
-										.addClass("latex_equation")
-										.attr("contentEditable", "false")
-										.append($("<div>")
-											.addClass("table-buttons")
-											.append($("<a>")
-												.addClass("waves-effect waves-light btn plus-bullet")
-												.text("Bullet").attr("contentEditable", "false")
-												.append($("<i>").addClass("material-icons right")
-													.text("add")))
-											.append($("<a>")
-												.addClass("waves-effect waves-light btn minus-bullet")
-												.text("Bullet").attr("contentEditable", "false")
-												.append($("<i>").addClass("material-icons right")
-													.text("remove"))),
-										$("<ol>").css("list-style-position", "inside")
-											.attr("type", style).append($("<li>")
-												.attr("contentEditable", "true")
-												.css("text-align", "left"))), "<br>");
-								}
+								var	style = $('input:radio[name="unordered"]:checked').val();
+								obj.append($("<div>")
+									.addClass("latex_equation")
+									.attr("contentEditable", "false")
+									.append($("<div>")
+										.addClass("table-buttons")
+										.append($("<a>")
+											.addClass("waves-effect waves-light btn plus-bullet")
+											.text("Bullet").attr("contentEditable", "false")
+											.append($("<i>").addClass("material-icons right")
+												.text("add")))
+										.append($("<a>")
+											.addClass("waves-effect waves-light btn minus-bullet")
+											.text("Bullet").attr("contentEditable", "false")
+											.append($("<i>").addClass("material-icons right")
+												.text("remove"))),
+									$("<ul>").css("list-style-position", "inside")
+										.append($("<li>").attr("contentEditable", "true")
+											.css({
+												"list-style-type": style,
+												"text-align": "left"
+								}))), "<br>");
 								$(".lean-overlay").remove();
 								$("#popup").remove();
 								$("#popup_control").remove();
 								$("body").css("overflow", "auto");
 								$(window).off();
 								exports.resize_modal();
+								$(".plus-bullet").off();
+								$(".minus-bullet").off();
 								$(".plus-bullet").click(function(e) {
 									e.preventDefault();
-									if(type == "0") {
-										$(this).parent().next()
-											.append($("<li>").css({
-											"list-style-type": style,
-											"text-align": "left"
-										}).attr("contentEditable", "true"));
-									}
-									else if(type == "1") {
-										$(this).parent().next()
-											.append($("<li>")
-												.attr("contentEditable", "true")
-												.css("text-align", "left"));
-									}
+									var listing = $(this).parent().next(),
+										styling = listing.children().first()
+											.css("list-style-type");
+									listing.append($("<li>").css({
+										"list-style-type": styling,
+										"text-align": "left"
+									}).attr("contentEditable", "true"));
 								});
 								$(".minus-bullet").click(function(e) {
+									e.preventDefault();
+									var children = $(this).parent()
+										.next().children();
+									if(children.length - 1 == 0) {
+										$(this).parent()
+											.parent().remove();
+									}
+									else {
+										$(this).parent().next()
+											.children().last()
+											.remove();
+									}
+								});
+							});
+						}
+					});
+				});
+			});
+		});
+		$(".format-list-numbered").on("click", function(e) {
+			e.preventDefault();
+			var obj = $(this).parent().parent().parent()
+				.find(".cont_div .latex_body").first();
+			$.get("/pages/dist/modal-min.html")
+				.done(function(content) {
+				$("body").append(content);
+				$(".modal-trigger").leanModal({
+					dismissible: false,
+					opacity: 2,
+					inDuration: 1000,
+					outDuration: 1000
+				});
+				$("body").on("keypress", function(event) {
+				    if(event.which === 10 ||
+				    	event.which === 13) {
+				        return false;
+				    }
+				});
+				$("#popup_title").text("Add Ordered List");
+				$("#popup_modal_footer").append($("<a>")
+					.attr("id", "popup_exit")
+					.addClass("modal-close waves-effect waves-blue btn-flat")
+					.text("Exit"));
+				$.get("/pages/dist/numbered-list-form-min.html")
+					.done(function(form) {
+					$("#popup_body").append(form);
+					$("#popup_submit").css("pointer-events", "none");
+					$("#popup_control").click();
+					var popup = $("#popup")[0].outerHTML,
+						popup_control = $("#popup_control")[0].outerHTML,
+						overlay = $(".lean-overlay")[0].outerHTML,
+						firstCheck = "";
+					$("#popup_submit")
+						.css("pointer-events", "none");
+					$('input:radio[name="ordered"]')
+						.on("change", function() {
+						if($(this)[0].checked) {
+							$("#popup_submit")
+								.css("pointer-events", "auto");
+							firstCheck = $(this).attr("value");
+						}
+						else {
+							$("#popup_submit")
+								.css("pointer-events", "none");
+						}
+					});
+					popup = $("#popup")[0].outerHTML;
+					$("#popup_exit").click(function(e) {
+						e.preventDefault();
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+					});
+					$("#popup_submit").click(function(e) {
+						e.preventDefault();
+						var style =	$('input:radio[name="ordered"]:checked').val();
+						obj.append($("<div>")
+							.addClass("latex_equation")
+							.attr("contentEditable", "false")
+							.append($("<div>")
+								.addClass("table-buttons")
+								.append($("<a>")
+									.addClass("waves-effect waves-light btn plus-numbered")
+									.text("Bullet").attr("contentEditable", "false")
+									.append($("<i>").addClass("material-icons right")
+										.text("add")))
+								.append($("<a>")
+									.addClass("waves-effect waves-light btn minus-numbered")
+									.text("Bullet").attr("contentEditable", "false")
+									.append($("<i>").addClass("material-icons right")
+										.text("remove"))),
+							$("<ol>").css("list-style-position", "inside")
+								.attr("type", style).append($("<li>")
+									.attr("contentEditable", "true")
+									.css("text-align", "left"))), "<br>");
+						$(".lean-overlay").remove();
+						$("#popup").remove();
+						$("#popup_control").remove();
+						$(".plus-numbered").off();
+						$(".minus-numbered").off();
+						$(".plus-numbered").click(function(e) {
+							e.preventDefault();
+							$(this).parent().next()
+								.append($("<li>")
+									.attr("contentEditable", "true")
+									.css("text-align", "left"));
+						});
+						$(".minus-numbered").click(function(e) {
+							e.preventDefault();
+							var children = $(this).parent()
+								.next().children();
+							if(children.length - 1 == 0) {
+								$(this).parent()
+									.parent().remove();
+							}
+							else {
+								$(this).parent().next()
+									.children().last()
+									.remove();
+							}
+						});
+					});
+					$(window).on("resize", function() {
+						if(exports.width_func() >= 992) {
+							$(".lean-overlay").remove();
+							$("#popup").remove();
+							$("#popup_control").remove();
+							var controlWrap = $("<div>").html(popup_control),
+								popupWrap = $("<div>").html(popup),
+								overlayWrap = $("<div>").html(overlay);
+							$("body").append(controlWrap.children().first(),
+								popupWrap.children().first(),
+								overlayWrap.children().first());
+							$("#popup").css({
+								opacity: "1",
+								transform: "scaleX(1)",
+								top: "10%"
+							});
+							$(".lean-overlay").css("opacity", "2");
+							$('input:radio[name="ordered"]')
+								.on("change", function() {
+								if($(this)[0].checked) {
+									$("#popup_submit")
+										.css("pointer-events", "auto");
+									firstCheck = $(this).attr("value");
+								}
+							});
+							if(firstCheck != "") {
+								$("input").each(function(index) {
+									if($(this).attr("value") == firstCheck) {
+										$(this).click();
+									}
+								});
+							}
+							popup = $("#popup")[0].outerHTML;
+							$("#popup_exit").click(function(e) {
+								e.preventDefault();
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+								$("body").css("overflow", "auto");
+								$(window).off();
+								exports.resize_modal();
+							});
+							$("#popup_submit").click(function(e) {
+								e.preventDefault();
+								var style =	$('input:radio[name="ordered"]:checked').val();
+								obj.append($("<div>")
+									.addClass("latex_equation")
+									.attr("contentEditable", "false")
+									.append($("<div>")
+										.addClass("table-buttons")
+										.append($("<a>")
+											.addClass("waves-effect waves-light btn plus-numbered")
+											.text("Bullet").attr("contentEditable", "false")
+											.append($("<i>").addClass("material-icons right")
+												.text("add")))
+										.append($("<a>")
+											.addClass("waves-effect waves-light btn minus-numbered")
+											.text("Bullet").attr("contentEditable", "false")
+											.append($("<i>").addClass("material-icons right")
+												.text("remove"))),
+									$("<ol>").css("list-style-position", "inside")
+										.attr("type", style).append($("<li>")
+											.attr("contentEditable", "true")
+											.css("text-align", "left"))), "<br>");
+								$(".lean-overlay").remove();
+								$("#popup").remove();
+								$("#popup_control").remove();
+								$("body").css("overflow", "auto");
+								$(window).off();
+								exports.resize_modal();
+								$(".plus-numbered").off();
+								$(".minus-numbered").off();
+								$(".plus-numbered").click(function(e) {
+									e.preventDefault();
+									$(this).parent().next()
+										.append($("<li>")
+											.attr("contentEditable", "true")
+											.css("text-align", "left"));
+								});
+								$(".minus-numbered").click(function(e) {
 									e.preventDefault();
 									var children = $(this).parent()
 										.next().children();
@@ -11749,6 +11570,24 @@ define(function() {
 										"data-position": "top",
 										"data-tooltip": "Insert Table Below"
 									}),
+								span_bullet = $("<span>")
+									.addClass("solution_bullet edit-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons format-list-bulleted")
+										.text("format_list_bulleted"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert List Below"
+									}),
+								span_numbered = $("<span>")
+									.addClass("solution_numbered edit-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons format-list-numbered")
+										.text("format_list_numbered"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert List Below"
+									}),
 								span_link = $("<span>")
 									.addClass("solution_link edit-tooltipped")
 									.append($("<i>")
@@ -11757,15 +11596,6 @@ define(function() {
 									.attr({
 										"data-position": "top",
 										"data-tooltip": "Insert Link Below"
-									}),
-								span_bullet = $("<span>")
-									.addClass("solution_bullet edit-tooltipped")
-									.append($("<i>")
-										.addClass("material-icons add-bullet")
-										.text("list"))
-									.attr({
-										"data-position": "top",
-										"data-tooltip": "Insert List Below"
 									}),
 								span_arrow_up = $("<span>")
 									.addClass("solution_arrow_up edit-tooltipped")
@@ -11832,10 +11662,9 @@ define(function() {
 							cont_div.append(latex_body);
 							show_solution.append(span_box,
 								span_table, span_image, span_bullet,
-								span_link, span_note, span_del,
-								span_arrow_up,
-								span_arrow_down,
-								span_toggle, span);
+								span_numbered, span_link, span_note,
+								span_del, span_arrow_up,
+								span_arrow_down, span_toggle, span);
 							accordion.append(show_solution);
 							accordion.append(cont_div);
 							$("#latex").append(accordion);
@@ -11925,6 +11754,24 @@ define(function() {
 										"data-position": "top",
 										"data-tooltip": "Insert Table Below"
 									}),
+								span_bullet = $("<span>")
+									.addClass("solution_bullet edit-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons format-list-bulleted")
+										.text("format_list_bulleted"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert List Below"
+									}),
+								span_numbered = $("<span>")
+									.addClass("solution_numbered edit-tooltipped")
+									.append($("<i>")
+										.addClass("material-icons format-list-numbered")
+										.text("format_list_numbered"))
+									.attr({
+										"data-position": "top",
+										"data-tooltip": "Insert List Below"
+									}),
 								span_link = $("<span>")
 									.addClass("solution_link edit-tooltipped")
 									.append($("<i>")
@@ -11933,15 +11780,6 @@ define(function() {
 									.attr({
 										"data-position": "top",
 										"data-tooltip": "Insert Link Below"
-									}),
-								span_bullet = $("<span>")
-									.addClass("solution_bullet edit-tooltipped")
-									.append($("<i>")
-										.addClass("material-icons add-bullet")
-										.text("list"))
-									.attr({
-										"data-position": "top",
-										"data-tooltip": "Insert List Below"
 									}),
 								span_arrow_up = $("<span>")
 									.addClass("solution_arrow_up edit-tooltipped")
@@ -11993,8 +11831,8 @@ define(function() {
 							cont_div.append(latex_body);
 							show_solution.append(span_box,
 								span_table, span_image,
-								span_bullet, span_link,
-								span_note,
+								span_bullet, span_numbered,
+								span_link, span_note,
 								span_arrow_up,
 								span_arrow_down,
 								span_del, span_toggle,
