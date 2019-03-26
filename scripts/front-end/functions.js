@@ -9969,6 +9969,10 @@ define(function() {
 		$(".add-column").off();
 		$(".remove-row").off();
 		$(".remove-column").off();
+		$(".add-bullet").off();
+		$(".remove-bullet").off();
+		$(".add-numbered").off();
+		$(".remove-numbered").off();
 		$(".note-box").off();
 		$(".solution_display").off();
 		$(".show_solution").each(function(index) {
@@ -10637,6 +10641,51 @@ define(function() {
 				.children().length == 0) {
 				$(this).parent()
 					.parent().remove();
+			}
+		});
+		$(".plus-bullet").click(function(e) {
+			e.preventDefault();
+			var listing = $(this).parent().next(),
+				styling = listing.children().first()
+					.css("list-style-type");
+			listing.append($("<li>").css({
+				"list-style-type": styling,
+				"text-align": "left"
+			}).attr("contentEditable", "true"));
+		});
+		$(".minus-bullet").click(function(e) {
+			e.preventDefault();
+			var children = $(this).parent()
+				.next().children();
+			if(children.length - 1 == 0) {
+				$(this).parent()
+					.parent().remove();
+			}
+			else {
+				$(this).parent().next()
+					.children().last()
+					.remove();
+			}
+		});
+		$(".plus-numbered").click(function(e) {
+			e.preventDefault();
+			$(this).parent().next()
+				.append($("<li>")
+					.attr("contentEditable", "true")
+					.css("text-align", "left"));
+		});
+		$(".minus-numbered").click(function(e) {
+			e.preventDefault();
+			var children = $(this).parent()
+				.next().children();
+			if(children.length - 1 == 0) {
+				$(this).parent()
+					.parent().remove();
+			}
+			else {
+				$(this).parent().next()
+					.children().last()
+					.remove();
 			}
 		});
 		$(".add-link").on("click", function(e) {
@@ -12253,13 +12302,14 @@ define(function() {
 				$.get("/pages/dist/button-min.html")
 					.done(function(button) {
 					$("body").append(button);
+					$("#dev-btn").children("ul").first()
+						.css("pointer-events", "none")
 					exports.committee(cookie, function() {
 						exports.handle_logo_link(page);
 						exports.handle_logo();
 						exports.handle_li_coloring();
 						links.handle_links(router, subjects,
 							topics, sections, examples);
-						// $(".button-tooltipped").tooltip();
 						var interval = setInterval(function() {
 							$.post(statement, {param: db_id})
 								.done(function(comparison) {
