@@ -226,6 +226,7 @@ nav {
 	width: 100%;
 	max-height: 500px;
 	max-width: 500px;
+	border-radius: 15px;
 }
 
 .latex_section {
@@ -248,6 +249,11 @@ nav {
 	font-family: "Georgia";
 	padding: 20px 0 20px 0;
 	font-size: 15px;
+}
+
+.latex_equation ul {
+	font-family: "Roboto", sans-serif;
+	padding-left: 50px;
 }
 
 .latex_equation table {
