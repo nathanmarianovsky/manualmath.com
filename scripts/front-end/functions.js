@@ -11042,6 +11042,7 @@ define(function() {
 				for(; i >= 0; i++) {
 					if(data.title_cms[i] == null ||
 						data.title_cms[i] == "") {
+						accordion.attr("id", "bottomAccordion");
 						break;
 					}
 					var cont_div = "",
