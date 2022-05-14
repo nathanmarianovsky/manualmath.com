@@ -3963,8 +3963,8 @@ define(function() {
 										side_approval: iter.side_approval,
 										cms_approval: "undefined",
 										del_approval: iter.del_approval,
-										title_cms: "undefined",
-										content_cms: "undefined"
+										title_cms: "New Title",
+										content_cms: "New Content"
 									};
 									if(iter.status == 0 && typeof
 										iter.side_approval !== "object") {
