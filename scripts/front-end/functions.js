@@ -12031,7 +12031,7 @@ define(function() {
 											'="false">Column<i class' +
 											'="material-icons right' +
 											'">remove</i></a></div>', ""),
-										reg = new RegExp('<div class' +
+										reg1 = new RegExp('<div class' +
 											'="row note-row" content' +
 											'editable="false"><div' +
 											' class="col s12 m5' +
@@ -12041,9 +12041,22 @@ define(function() {
 											'"black-text"' +
 											' contenteditable' +
 											'="true">.*<\/span' +
-											'><\/div><\/div><\/div>');
+											'><\/div><\/div><\/div>'),
+										reg2 = new RegExp('<div class' +
+											'="table-buttons"><a class' +
+											'="waves-effect waves-light' +
+											' btn plus-numbered"' +
+											' contenteditable="false">' +
+											'Bullet<i class="material-icons right">' +
+											'add</i></a><a class="waves-effect' +
+											' waves-light btn minus-numbered"' +
+											' contenteditable="false">Bullet' +
+											'<i class="material-icons right">' +
+											'remove</i></a></div>');
 									filter = exports.replace_all(filter,
-										reg, "");
+										reg1, "");
+									filter = exports.replace_all(filter,
+										reg2, "");
 									return exports.replace_all(filter,
 										'<div class="table-buttons">' +
 										'<a class="waves-effect ' +

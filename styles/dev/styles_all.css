@@ -251,7 +251,7 @@ nav {
 	font-size: 15px;
 }
 
-.latex_equation ul {
+.latex_equation ul, .latex_equation ol {
 	font-family: "Roboto", sans-serif;
 	padding-left: 50px;
 }
