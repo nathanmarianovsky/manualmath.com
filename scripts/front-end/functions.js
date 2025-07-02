@@ -12057,6 +12057,9 @@ define(function() {
 										reg1, "");
 									filter = exports.replace_all(filter,
 										reg2, "");
+									filter = exports.replace_all(filter,
+										'<li contenteditable="true"',
+										'<li contenteditable="false"');
 									return exports.replace_all(filter,
 										'<div class="table-buttons">' +
 										'<a class="waves-effect ' +
