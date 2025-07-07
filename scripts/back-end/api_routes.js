@@ -89,19 +89,19 @@ exports.add_api_routes = (app, pool) => {
 					object == "topic" || object == "section" ||
 					object == "example") {
 					if(object == "about") {
-						statement += "about WHERE id=0";
+						statement += "about WHERE about.id=0";
 					}
 					else if(object == "subject") {
-						statement += "subject WHERE sid=" + id;
+						statement += "subject WHERE subject.sid=" + id;
 					}
 					else if(object == "topic") {
-						statement += "topic WHERE tid=" + id;
+						statement += "topic WHERE topic.tid=" + id;
 					}
 					else if(object == "section") {
-						statement += "section WHERE section_id=" + id;
+						statement += "section WHERE section.section_id=" + id;
 					}
 					else if(object == "example") {
-						statement += "example WHERE eid=" + id;
+						statement += "example WHERE example.eid=" + id;
 					}
 					pool.query(statement, (err, result) => {
 						if(err) {
@@ -125,23 +125,23 @@ exports.add_api_routes = (app, pool) => {
 					object == "example") {
 					if(object == "about") {
 						statement += "about SET log='" +
-							log + "' WHERE id=0";
+							log + "' WHERE about.id=0";
 					}
 					else if(object == "subject") {
 						statement += "subject SET log='" +
-							log + "' WHERE sid=" + id;
+							log + "' WHERE subject.sid=" + id;
 					}
 					else if(object == "topic") {
 						statement += "topic SET log='" +
-							log + "' WHERE tid=" + id;
+							log + "' WHERE topic.tid=" + id;
 					}
 					else if(object == "section") {
 						statement += "section SET log='" +
-							log + "' WHERE section_id=" + id;
+							log + "' WHERE section.section_id=" + id;
 					}
 					else if(object == "example") {
 						statement += "example SET log='" +
-							log + "' WHERE eid=" + id;
+							log + "' WHERE example.eid=" + id;
 					}
 					pool.query(statement, (err, result) => {
 						if(err) {
@@ -179,16 +179,16 @@ exports.add_api_routes = (app, pool) => {
 				",title_cms,content_cms,cms_approval FROM "
 				: statement = "SELECT title,content FROM ";
 			if(want == "subject") {
-				statement += "subject WHERE sid=";
+				statement += "subject WHERE subject.sid=";
 			}
 			else if(want == "topic") {
-				statement += "topic WHERE tid=";
+				statement += "topic WHERE topic.tid=";
 			}
 			else if(want == "section") {
-				statement += "section WHERE section_id=";
+				statement += "section WHERE section.section_id=";
 			}
 			else if(want == "example") {
-				statement += "example WHERE eid=";
+				statement += "example WHERE example.eid=";
 			}
 			if(want == "subject" || want == "topic"
 				|| want == "section" || want == "example") {
@@ -259,7 +259,7 @@ exports.add_api_routes = (app, pool) => {
 							response.send("0");
 						}
 						if(results.some(elem => elem.sid == param)) { 
-							pool.query("SELECT tid FROM topic WHERE sid="
+							pool.query("SELECT tid FROM topic WHERE topic.sid="
 								+ param, (err, container) => {
 								if(err) {
 									console.error("Error Connecting: " +
@@ -268,12 +268,12 @@ exports.add_api_routes = (app, pool) => {
 								}
 								else {
 									if(container.length != 0) {
-										topicStatement = "DELETE FROM topic WHERE tid IN (";
+										topicStatement = "DELETE FROM topic WHERE topic.tid IN (";
 										container.forEach((iter, iterIndex) => {
 											iterIndex == container.length - 1
 												? topicStatement += iter.tid + ")"
 												: topicStatement += iter.tid + ",";
-											pool.query("SELECT section_id FROM section WHERE tid="
+											pool.query("SELECT section_id FROM section WHERE section.tid="
 												+ iter.tid, (err, holder) => {
 												if(err) {
 													console.error("Error Connecting: " +
@@ -284,7 +284,7 @@ exports.add_api_routes = (app, pool) => {
 													if(holder.length != 0) {
 														if(sectionStatement == "") {
 															sectionStatement = "DELETE FROM" +
-																" section WHERE section_id IN (";
+																" section WHERE section.section_id IN (";
 														}
 														holder.forEach((elem, elemIndex) => {
 															if(elemIndex == holder.length - 1) {
@@ -299,7 +299,7 @@ exports.add_api_routes = (app, pool) => {
 																sectionStatement +=
 																	elem.section_id + ",";
 															}
-															pool.query("SELECT eid FROM example WHERE section_id="
+															pool.query("SELECT eid FROM example WHERE example.section_id="
 																+ elem.section_id, (err, collection) => {
 																if(err) {
 																	console.error("Error Connecting: " +
@@ -310,7 +310,7 @@ exports.add_api_routes = (app, pool) => {
 																	if(collection.length != 0) {
 																		if(exampleStatement == "") {
 																			exampleStatement = "DELETE " +
-																				"FROM example WHERE eid IN (";
+																				"FROM example WHERE example.eid IN (";
 																		}
 																		collection.forEach((item, pos) => {
 																			if(pos == collection.length - 1) {
@@ -352,7 +352,7 @@ exports.add_api_routes = (app, pool) => {
 																									response.send("0");
 																								}
 																								else {
-																									pool.query("DELETE FROM subject WHERE sid="
+																									pool.query("DELETE FROM subject WHERE subject.sid="
 																										+ param, err => {
 																										if(err) {
 																											console.error("Error Connecting: " +
@@ -400,7 +400,7 @@ exports.add_api_routes = (app, pool) => {
 																									}
 																									else {
 																										pool.query("DELETE FROM" +
-																											" subject WHERE sid=" +
+																											" subject WHERE subject.sid=" +
 																											param, err => {
 																											if(err) { 
 																												console.error(
@@ -438,7 +438,7 @@ exports.add_api_routes = (app, pool) => {
 																							}
 																							else {
 																								pool.query("DELETE FROM subject" +
-																									" WHERE sid=" + param, err => {
+																									" WHERE subject.sid=" + param, err => {
 																									if(err) { 
 																										console.error(
 																											"Error Connecting: " +
@@ -488,7 +488,7 @@ exports.add_api_routes = (app, pool) => {
 																					}
 																					else {
 																						pool.query("DELETE FROM subject" +
-																							" WHERE sid=" + param, err => {
+																							" WHERE subject.sid=" + param, err => {
 																							if(err) { 
 																								console.error(
 																									"Error Connecting: " +
@@ -526,7 +526,7 @@ exports.add_api_routes = (app, pool) => {
 																				}
 																				else {
 																					pool.query("DELETE FROM subject" +
-																						" WHERE sid=" + param, err => {
+																						" WHERE subject.sid=" + param, err => {
 																						if(err) { 
 																							console.error(
 																								"Error Connecting: " +
@@ -550,7 +550,7 @@ exports.add_api_routes = (app, pool) => {
 																			response.send("0");
 																		}
 																		else {
-																			pool.query("DELETE FROM subject WHERE sid=" +
+																			pool.query("DELETE FROM subject WHERE subject.sid=" +
 																				param, err => {
 																				if(err) { 
 																					console.error("Error Connecting: " +
@@ -572,7 +572,7 @@ exports.add_api_routes = (app, pool) => {
 										});
 									}
 									else {
-										pool.query("DELETE FROM subject WHERE sid=" + param, err => {
+										pool.query("DELETE FROM subject WHERE subject.sid=" + param, err => {
 											if(err) {
 												console.error("Error Connecting: " + err.stack);
 												response.send("0");
@@ -597,7 +597,7 @@ exports.add_api_routes = (app, pool) => {
 							response.send("0");
 						}
 						if(results.some(elem => elem.tid == param)) {
-							pool.query("SELECT section_id FROM section WHERE tid=" +
+							pool.query("SELECT section_id FROM section WHERE section.tid=" +
 								param, (err, container) => {
 								if(err) {
 									console.error("Error Connecting: " +
@@ -607,12 +607,12 @@ exports.add_api_routes = (app, pool) => {
 								else {
 									if(container.length != 0) {
 										sectionStatement = "DELETE FROM section" +
-											" WHERE section_id IN (";
+											" WHERE section.section_id IN (";
 										container.forEach((iter, iterIndex) => {
 											iterIndex == container.length - 1
 												? sectionStatement += iter.section_id + ")"
 												: sectionStatement += iter.section_id + ",";
-											pool.query("SELECT eid FROM example WHERE section_id=" +
+											pool.query("SELECT eid FROM example WHERE example.section_id=" +
 												iter.section_id, (err, holder) => {
 												if(err) {
 													console.error("Error Connecting: " +
@@ -623,7 +623,7 @@ exports.add_api_routes = (app, pool) => {
 													if(holder.length != 0) {
 														if(exampleStatement == "") {
 															exampleStatement = "DELETE FROM" +
-																" example WHERE eid IN (";
+																" example WHERE example.eid IN (";
 														}
 														holder.forEach((elem, pos) => {
 															if(pos == holder.length - 1) {
@@ -657,7 +657,7 @@ exports.add_api_routes = (app, pool) => {
 																			response.send("0");
 																		}
 																		else {
-																			pool.query("DELETE FROM topic WHERE tid=" +
+																			pool.query("DELETE FROM topic WHERE topic.tid=" +
 																				param, err => {
 																				if(err) {
 																					console.error(
@@ -695,7 +695,7 @@ exports.add_api_routes = (app, pool) => {
 																				response.send("0");
 																			}
 																			else {
-																				pool.query("DELETE FROM topic WHERE tid=" +
+																				pool.query("DELETE FROM topic WHERE topic.tid=" +
 																					param, err => {
 																					if(err) {
 																						console.error(
@@ -720,7 +720,7 @@ exports.add_api_routes = (app, pool) => {
 																		response.send("0");
 																	}
 																	else {
-																		pool.query("DELETE FROM topic WHERE tid=" +
+																		pool.query("DELETE FROM topic WHERE topic.tid=" +
 																			param, err => {
 																			if(err) {
 																				console.error("Error Connecting: " +
@@ -741,7 +741,7 @@ exports.add_api_routes = (app, pool) => {
 										});
 									}
 									else {
-										pool.query("DELETE FROM topic WHERE tid=" + param, err => {
+										pool.query("DELETE FROM topic WHERE topic.tid=" + param, err => {
 											if(err) {
 												console.error("Error Connecting: " + err.stack);
 												response.send("0");
@@ -767,7 +767,7 @@ exports.add_api_routes = (app, pool) => {
 							response.send("0");
 						}
 						if(results.some(elem => elem.section_id == param)) { 
-							pool.query("SELECT eid FROM example WHERE section_id=" +
+							pool.query("SELECT eid FROM example WHERE example.section_id=" +
 								param, (err, container) => {
 								if(err) {
 									console.error("Error Connecting: " +
@@ -777,7 +777,7 @@ exports.add_api_routes = (app, pool) => {
 								else {
 									if(container.length != 0) {
 										exampleStatement = "DELETE FROM" +
-											" example WHERE eid IN (";
+											" example WHERE example.eid IN (";
 										container.forEach((iter, iterIndex) => {
 											iterIndex == container.length - 1
 												? exampleStatement += iter.eid + ")"
@@ -790,7 +790,7 @@ exports.add_api_routes = (app, pool) => {
 												response.send("0");
 											}
 											else {
-												pool.query("DELETE FROM section WHERE section_id=" +
+												pool.query("DELETE FROM section WHERE section.section_id=" +
 													param, err => {
 													if(err) {
 														console.error("Error Connecting: " +
@@ -805,7 +805,7 @@ exports.add_api_routes = (app, pool) => {
 										});
 									}
 									else {
-										pool.query("DELETE FROM section WHERE section_id=" +
+										pool.query("DELETE FROM section WHERE section.section_id=" +
 											param, err => {
 											if(err) {
 												console.error("Error Connecting: " +
@@ -834,7 +834,7 @@ exports.add_api_routes = (app, pool) => {
 							response.send("0");
 						}
 						if(results.some(elem => elem.eid == param)) { 
-							pool.query("DELETE FROM example WHERE eid=" +
+							pool.query("DELETE FROM example WHERE example.eid=" +
 								param, err => {
 								if(err) {
 									console.error("Error Connecting: " +
@@ -996,16 +996,16 @@ exports.add_api_routes = (app, pool) => {
 							: statement += "content_cms=NULL";
 					}
 					if(type == "subject") {
-						statement += " WHERE sid=" + param;
+						statement += " WHERE subject.sid=" + param;
 					}
 					else if(type == "topic") {
-						statement += " WHERE tid=" + param;
+						statement += " WHERE topic.tid=" + param;
 					}
 					else if(type == "section") {
-						statement += " WHERE section_id=" + param;
+						statement += " WHERE section.section_id=" + param;
 					}
 					else if(type == "example") {
-						statement += " WHERE eid=" + param;
+						statement += " WHERE example.eid=" + param;
 					}
 				}
 				else { response.send("The section_id provided is invalid!"); }
@@ -1117,12 +1117,12 @@ exports.add_api_routes = (app, pool) => {
 			if(param == "login") {
 				statement = "SELECT status," +
 					"password FROM contributors" +
-					" WHERE email='" + email + "'";
+					" WHERE contributors.email='" + email + "'";
 			}
 			else if(param == "email") {
 				statement = "SELECT email,status" +
 					" FROM contributors WHERE" +
-					" email='" + email + "'";
+					" contributors.email='" + email + "'";
 			}
 			pool.query(statement, (err, result) => {
 				if(err) {
@@ -1174,7 +1174,7 @@ exports.add_api_routes = (app, pool) => {
 		var email = request.body.email,
 			answer = request.body.answer,
 			statement = "SELECT answer FROM" +
-				" contributors WHERE email='" +
+				" contributors WHERE contributors.email='" +
 				email + "'";
 		pool.query(statement, (err, content) => {
 			if(err) {
@@ -1213,18 +1213,18 @@ exports.add_api_routes = (app, pool) => {
 					statement += ", answer='" +
 						bcrypt.hashSync(answer, 10) + "'";
 				}
-				statement += " WHERE email='"+ email + "'";
+				statement += " WHERE contributors.email='"+ email + "'";
 			}
 			else if(param == "password") {
 				var password = request.body.password;
 				statement = "UPDATE contributors" +
 					" SET password='" + bcrypt.hashSync(password, 10) +
-					"' WHERE email='" + email + "'";
+					"' WHERE contributors.email='" + email + "'";
 			}
 			else if(param == "status") {
 				var value = request.body.status;
 				statement = "UPDATE contributors SET status=" +
-					value + " WHERE email='" + email + "'";
+					value + " WHERE contributors.email='" + email + "'";
 			}
 			else if(param == "approval") {
 				var approval = request.body.approval,
@@ -1234,7 +1234,7 @@ exports.add_api_routes = (app, pool) => {
 					: statement += "'" + approval + "', del=";
 				del == "0" ? statement += "NULL "
 					: statement += "'" + del + "' ";
-				statement += "WHERE email='" + email + "'";
+				statement += "WHERE contributors.email='" + email + "'";
 			}
 			else if(param == "rankApproval") {
 				var rank_approval = request.body.rank_approval,
@@ -1246,7 +1246,7 @@ exports.add_api_routes = (app, pool) => {
 						"', rank_disapproval=";
 				rank_disapproval == "0" ? statement += "NULL " 
 					: statement += "'" + rank_disapproval + "' ";
-				statement += "WHERE email='" + email + "'";
+				statement += "WHERE contributors.email='" + email + "'";
 			}
 			pool.query(statement, err => {
 				if(err) {
@@ -1290,16 +1290,16 @@ exports.add_api_routes = (app, pool) => {
 			}
 			else if(param == "remove") {
 				statement = "DELETE FROM contributors WHERE" +
-					" email='" + email + "'";
+					" contributors.email='" + email + "'";
 			}
 			else if(param == "profile") {
 				statement = "SELECT first_name,last_name," +
-					"question FROM contributors WHERE email='" +
+					"question FROM contributors WHERE contributors.email='" +
 					email + "'";
 			}
 			else if(param == "security") {
 				statement = "SELECT question FROM contributors" +
-					" WHERE email='" + email + "'";
+					" WHERE contributors.email='" + email + "'";
 			}
 			pool.query(statement, (err, result) => {
 				if(err) {
@@ -1343,7 +1343,7 @@ exports.add_api_routes = (app, pool) => {
 			if(param == "check") {
 				statement = "SELECT email FROM" +
 					" `contributor-sessions` WHERE" +
-					" email='" + email + "'";
+					" `contributor-sessions`.email='" + email + "'";
 			}
 			else if(param == "add") {
 				statement = "INSERT INTO" +
@@ -1354,7 +1354,7 @@ exports.add_api_routes = (app, pool) => {
 			else if(param == "remove") {
 				statement = "DELETE FROM " +
 					"`contributor-sessions`" +
-					" WHERE email='" +
+					" WHERE `contributor-sessions`.email='" +
 					email + "'";
 			}
 			pool.query(statement, (err, result) => {
@@ -1394,17 +1394,17 @@ exports.add_api_routes = (app, pool) => {
 			if(param == "add") {
 				statement = "UPDATE contributors" +
 					" SET rank='com-member' WHERE" +
-					" email='" + email + "'";
+					" contributors.email='" + email + "'";
 			}
 			else if(param == "check") {
 				statement = "SELECT rank FROM" +
-					" contributors WHERE email='" +
+					" contributors WHERE contributors.email='" +
 					email + "'";
 			}
 			else if(param == "remove") {
 				statement = "UPDATE contributors" +
 					" SET rank='contributor' WHERE" +
-					" email='" + email + "'";
+					" contributors.email='" + email + "'";
 			}
 			pool.query(statement, (err, result) => {
 				if(err) {
@@ -1445,21 +1445,21 @@ exports.add_api_routes = (app, pool) => {
 			if(param == "unapproved") {
 				statement = "SELECT email,first_name" +
 					",last_name,approval,del FROM" +
-					" contributors WHERE status=0";
+					" contributors WHERE contributors.status=0";
 			}
 			else if(param == "nonmember") {
 				statement = "SELECT email,first_name" +
 					",last_name,rank_approval," +
 					"rank_disapproval FROM" +
-					" contributors WHERE status=1" +
-					" AND rank='contributor'";
+					" contributors WHERE contributors.status=1" +
+					" AND contributors.rank='contributor'";
 			}
 			else if(param == "data") {
 				statement = "SELECT email,first_name" +
 					",last_name,rank,rank_approval" +
 					",rank_disapproval FROM" +
-					" contributors WHERE status=1" +
-					" AND rank!='admin'";
+					" contributors WHERE contributors.status=1" +
+					" AND contributors.rank!='admin'";
 			}
 			pool.query(statement, (err, result) => {
 				if(err) {
@@ -1676,7 +1676,7 @@ exports.add_api_routes = (app, pool) => {
 	app.post("/api/cms/admin/info", (request, response) => {
 		var statement = "SELECT email,first_name" +
 			",last_name FROM contributors WHERE" +
-			" rank='admin'";
+			" contributors.rank='admin'";
 		pool.query(statement, (err, results) => {
 			if(err) {
 				console.error("Error Connecting: " +
@@ -1792,7 +1792,7 @@ exports.add_api_routes = (app, pool) => {
 			statement = "";
 		if(type == "contributors") {
 			statement = "SELECT email FROM" +
-				" contributors WHERE status=1";
+				" contributors WHERE contributors.status=1";
 			pool.query(statement, (err, result) => {
 				if(err) {
 					console.error("Error Connecting: " +
@@ -1808,7 +1808,7 @@ exports.add_api_routes = (app, pool) => {
 		else if(type == "committee") {
 			statement = "SELECT email FROM" +
 				" contributors WHERE" +
-				" rank='com-member'";
+				" contributors.rank='com-member'";
 			pool.query(statement, (err, result) => {
 				if(err) {
 					console.error("Error Connecting: " +
