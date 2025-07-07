@@ -22,18 +22,6 @@ exports.minify_styles = (compressor, yui, fs) => {
 				devpath = "./styles/dev/" + file,
 				distpath = "./styles/dist/" + name[0] +
 					"-min.css";
-			// new compressor.minify({
-			// 	"type": "yui-css",
-			// 	"fileIn": devpath,
-			// 	"fileOut": distpath,
-			// 	"callback": (err, result) => {
-			// 		if(err) {
-			// 			console.log("Minifying the css file "
-			// 				+ file + " threw an error: " +
-			// 				err.stack);
-			// 		}
-			// 	}
-			// });
 			compressor({
 				"compressor": yui,
 				"type": "css",
@@ -53,18 +41,6 @@ exports.minify_styles = (compressor, yui, fs) => {
 
 // Minifies all necessary js files
 exports.minify_js = (compressor, yui, fs) => {
-	// new compressor.minify({
-	// 	"type": "yui-js",
-	// 	"fileIn": "./node_modules/requirejs/require.js",
-	// 	"fileOut": "./scripts/dist/require-min.js",
-	// 	"callback": (err, result) => { 
-	// 		if(err) {
-	// 			console.log("Minifying the requirejs" +
-	// 				" file threw an error: " +
-	// 				err.stack);
-	// 		}
-	// 	}
-	// });
 	compressor({
 		"compressor": yui,
 		"type": "js",
@@ -78,18 +54,6 @@ exports.minify_js = (compressor, yui, fs) => {
 			}
 		}
 	});
-	// new compressor.minify({
-	// 	"type": "yui-js",
-	// 	"fileIn": "./node_modules/router5/dist/amd/router5.js",
-	// 	"fileOut": "./scripts/dist/router5-min.js",
-	// 	"callback": (err, result) => {
-	// 		if(err) {
-	// 			console.log("Minifying the router5" +
-	// 				" file threw an error: " +
-	// 				err.stack);
-	// 	}
-	// 	}
-	// });
 	compressor({
 		"compressor": yui,
 		"type": "js",
@@ -103,18 +67,6 @@ exports.minify_js = (compressor, yui, fs) => {
 			}
 		}
 	});
-	// new compressor.minify({
-	// 	"type": "yui-js",
-	// 	"fileIn": "./scripts/front-end/functions.js",
-	// 	"fileOut": "./scripts/dist/functions-min.js",
-	// 	"callback": (err, result) => {
-	// 		if(err) {
-	// 			console.log("Minifying the functions" +
-	// 				" file threw an error: " +
-	// 				err.stack);
-	// 		}
-	// 	}
-	// });
 	compressor({
 		"compressor": yui,
 		"type": "js",
@@ -128,18 +80,6 @@ exports.minify_js = (compressor, yui, fs) => {
 			}
 		}
 	});
-	// new compressor.minify({
-	// 	"type": "yui-js",
-	// 	"fileIn": "./scripts/front-end/main.js",
-	// 	"fileOut": "./scripts/dist/main-min.js",
-	// 	"callback": (err, result) => {
-	// 		if(err) {
-	// 			console.log("Minifying the main" +
-	// 				" file threw an error: " +
-	// 				err.stack);
-	// 	}
-	// 	}
-	// });
 	compressor({
 		"compressor": yui,
 		"type": "js",
@@ -153,18 +93,6 @@ exports.minify_js = (compressor, yui, fs) => {
 			}
 		}
 	});
-	// new compressor.minify({
-	// 	"type": "yui-js",
-	// 	"fileIn": "./scripts/front-end/config.js",
-	// 	"fileOut": "./scripts/dist/config-min.js",
-	// 	"callback": (err, result) => {
-	// 		if(err) {
-	// 			console.log("Minifying the config" +
-	// 				" file threw an error: " +
-	// 				err.stack);
-	// 		}
-	// 	}
-	// });
 	compressor({
 		"compressor": yui,
 		"type": "js",
@@ -178,18 +106,6 @@ exports.minify_js = (compressor, yui, fs) => {
 			}
 		}
 	});
-	// new compressor.minify({
-	// 	"type": "yui-js",
-	// 	"fileIn": "./scripts/front-end/navs.js",
-	// 	"fileOut": "./scripts/dist/navs-min.js",
-	// 	"callback": (err, result) => {
-	// 		if(err) {
-	// 			console.log("Minifying the navs" +
-	// 				" file threw an error: " +
-	// 				err.stack);
-	// 		}
-	// 	}
-	// });
 	compressor({
 		"compressor": yui,
 		"type": "js",
@@ -203,18 +119,6 @@ exports.minify_js = (compressor, yui, fs) => {
 			}
 		}
 	});
-	// new compressor.minify({
-	// 	"type": "yui-js",
-	// 	"fileIn": "./scripts/front-end/routes.js",
-	// 	"fileOut": "./scripts/dist/routes-min.js",
-	// 	"callback": (err, result) => {
-	// 		if(err) {
-	// 			console.log("Minifying the routes" +
-	// 				" file threw an error: " +
-	// 				err.stack);
-	// 		}
-	// 	}
-	// });
 	compressor({
 		"compressor": yui,
 		"type": "js",
@@ -228,18 +132,6 @@ exports.minify_js = (compressor, yui, fs) => {
 			}
 		}
 	});
-	// new compressor.minify({
-	// 	"type": "yui-js",
-	// 	"fileIn": "./scripts/front-end/links.js",
-	// 	"fileOut": "./scripts/dist/links-min.js",
-	// 	"callback": (err, result) => {
-	// 		if(err) {
-	// 			console.log("Minifying the links" +
-	// 				" file threw an error: " +
-	// 				err.stack);
-	// 		}
-	// 	}
-	// });
 	compressor({
 		"compressor": yui,
 		"type": "js",
