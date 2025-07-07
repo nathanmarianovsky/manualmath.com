@@ -1,6 +1,6 @@
 var fs = require("fs"),
 	mkdirp = require("mkdirp"),
-	compressor = require("node-minify"),
+	compressor = require("@node-minify/core"),
 	minify = require("html-minifier").minify,
 	minifier = require("./scripts/back-end/minifier");
 

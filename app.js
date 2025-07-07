@@ -1,6 +1,6 @@
 // Define the necessary components
 var express = require("express"),
-	mysql = require("mysql"),
+	mysql = require("mysql2"),
 	fs = require("fs"),
 	os = require("os"),
 	recursive = require("recursive-readdir"),

@@ -10,6 +10,7 @@
     "jquery": "^3.7.1",
     "mkdirp": "^3.0.1",
     "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
     "requirejs": "^2.3.7",
     "router5": "^0.6.4",
     "serve-favicon": "^2.5.1"
