@@ -220,6 +220,7 @@ nav {
 
 .latex_body {
 	margin: 10px;
+	line-height: 2;
 }
 
 #latex img {
@@ -297,6 +298,11 @@ nav {
     box-sizing: content-box;
     padding: 30px;
     border-top: none;
+}
+
+.content-link .mjx-chtml {
+	font-size: 100% !important;
+	padding-bottom: 0 !important;
 }
 
 .hidden_div {
